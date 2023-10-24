@@ -2715,7 +2715,7 @@ input, select, textarea {
 	ul.pagination {
 		cursor: default;
 		list-style: none;
-		padding-left: 0;
+		padding-left: 200px;
 	}
 
 		ul.pagination li {
@@ -2794,7 +2794,7 @@ input, select, textarea {
 			display: block;
 			margin-bottom: 1em;
 			width: 100%;
-			-ms-flex: 0 0 auto;
+			/* -ms-flex: 0 0 auto; */
 		}
 
 			.post .image img {
@@ -2990,11 +2990,12 @@ input, select, textarea {
 
 		table td {
 			padding: 0.75em 0.75em;
+			text-align: center;
 		}
 
 		table th {
-			padding: 0 0.75em 0.75em 0.75em;
-			text-align: left;
+			padding: 0.75em 0.75em 0.75em 0.75em;
+			text-align: center;
 			text-transform: uppercase;
 			font-size: 0.9em;
 			font-family: "Raleway", Helvetica, sans-serif;
@@ -3068,7 +3069,7 @@ input, select, textarea {
 
 		.wrapper > .inner {
 			margin: 0 auto;
-			max-width: 90em;
+			max-width: 1080px;
 			width: 90%;
 		}
 
@@ -3630,12 +3631,12 @@ input, select, textarea {
 			}
 
 			.wrapper.sidebar > .inner > .content {
-				width: 75%;
+				width: 80%;
 				padding: 0 4em 0 0;
 			}
 
 			.wrapper.sidebar > .inner > .sidebar {
-				width: 25%;
+				width: 20%;
 			}
 
 		.wrapper.sidebar.left > .inner {
@@ -3646,7 +3647,7 @@ input, select, textarea {
 		}
 
 			.wrapper.sidebar.left > .inner > .content {
-				padding: 0 0 0 4em;
+				padding: 0 0 0 2em;
 			}
 
 		@media screen and (max-width: 980px) {
@@ -4378,7 +4379,7 @@ input, select, textarea {
 	}
 
 		#main > .inner > header.major:first-child {
-			margin-bottom: 6em;
+			margin-bottom: 3em;
 		}
 
 		@media screen and (max-width: 1280px) {
@@ -4555,7 +4556,7 @@ input, select, textarea {
 			right: 0;
 			text-align: right;
 			top: 0;
-			vertical-align: middle;
+			/* vertical-align: middle; */
 			width: 5em;
 		}
 
@@ -4624,4 +4625,30 @@ input, select, textarea {
 					padding: 2.25em 1.25em;
 				}
 
+		}
+
+		li {
+			list-style-type: none;
+		}
+
+/* sidebar - ranking_box */
+
+		.ranking_box {
+			border: 1px solid black;
+			padding: 10px;
+			width: 80%;
+			margin-top: 15px;
+			height: 190px;
+		}
+
+		.ranking_box > ul {
+			margin-top: 10px;
+		}
+		
+		.ranking_box:nth-child(2) {
+			margin-top: 100px;
+		}
+
+		.ranking_box > .button {
+			width: 100%;
 		}
