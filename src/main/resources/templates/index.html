@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>최종 예제 게시판</title>
+    <style>
+        #wrap{
+            width:600px;
+            height:400px;
+            margin:200px auto;
+        }
+        body{ background-color: rgb(245,246,247); }
+        input{
+            box-sizing: border-box;
+            cursor: pointer;
+        }
+        table{ border-collapse: collapse; margin:0 auto;}
+        td,th{ padding: 10px; text-align: center;}
+        .btn_area{
+            margin:0 auto;
+            display: flex;
+            justify-content: center;
+        }
+        .btn_area > *{
+            display:inline-block;
+            margin-left:10px;
+            margin-right:10px;
+        }
+        input[type=text], input[type=password]{
+            padding:10px;
+            width:200px;
+            margin-left:20px;
+            border:1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+        }
+        input[type=text]:focus, input[type=password]:focus{
+            border:1px solid rgb(0,200,80);
+        }
+        input[type=submit]{
+            margin-top:10px;
+            padding:10px 20px;
+            width:120px;
+            border:none;
+            background-color:rgb(0,200,80);
+            border-radius: 5px;
+            color:#fff;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        a{
+            text-decoration:none;
+            box-sizing:border-box;
+            margin-top:10px;
+            padding:10px 20px;
+            width:120px;
+            border:none;
+            background-color:rgb(0,200,80);
+            border-radius: 5px;
+            color:#fff;
+            font-weight: bold;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+<th:block th:if="${joinid != null and joinid != ''}">
+    <script th:inline="javascript">
+        window.onload = function(){
+            alert("가입을 축하합니다!");
+            document.getElementById("userid").value = /*[[${joinid}]]*/'';
+            document.getElementById("userpw").focus();
+        }
+    </script>
+</th:block>
+<div id="wrap">
+    <form name="loginForm" action="/user/login" method="post" onsubmit="return sendit()">
+        <table>
+            <tr>
+                <th>아이디</th>
+                <td>
+                    <label for="userid"><input type="text" id="userid" name="userid" value=""></label>
+                </td>
+            </tr>
+            <tr>
+                <th>비밀번호</th>
+                <td>
+                    <label for="userpw"><input type="password" id="userpw" name="userpw"></label>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div class="btn_area">
+                        <input type="submit" value="로그인">
+                        <a href="/user/join">회원가입</a>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>
+<script>
+    function sendit(){
+        const loginForm = document.loginForm;
+        const userid = loginForm.userid;
+        const userpw = loginForm.userpw;
+
+        if(userid.value == ""){
+            alert("아이디를 입력하세요!");
+            return false;
+        }
+        if(userpw.value == ""){
+            alert("비밀번호를 입력하세요!");
+            return false;
+        }
+        return true;
+    }
+</script>
+</html>
