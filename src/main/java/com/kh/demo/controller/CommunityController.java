@@ -5,12 +5,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/test/*")
-public class TestController {
+@RequestMapping("/community/*")
+public class CommunityController {
 
-    @GetMapping("info")
+    @GetMapping("list")
     public void replaceInfo(){}
 
-    @GetMapping("cal")
-    public void replaceCal(){}
 }
