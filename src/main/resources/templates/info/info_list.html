@@ -9,7 +9,7 @@
 		<title>Untitled</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="/assets/css/main.css" />
+		<link rel="stylesheet" href="/assets/css/index.css" />
 		<noscript><link rel="stylesheet" href="/assets/css/noscript.css" /></noscript>
 	</head>
 	<body class="is-preload">
@@ -17,9 +17,8 @@
 			<!-- Header -->
 			<header id="header">
 				<h1><a href="/">Fit Hub</a></h1>
-				<nav id="nav">
+				<nav class="links">
 					<ul>
-						<li><a href="/">홈</a></li>
 						<li><a href="/info/info_list">정보</a></li>
 						<li><a href="#">칼로리</a></li>
 						<li><a href="#">커뮤니티</a></li>
@@ -29,7 +28,68 @@
 						<li><a href="#" class="button">Sign Up</a></li>
 					</ul>
 				</nav>
+				<nav class="main">
+					<ul>
+						<li class="search">
+							<a class="fa-search" href="#search">Search</a>
+							<form id="search" method="get" action="#">
+								<input type="text" name="query" placeholder="Search" />
+							</form>
+						</li>
+						<li class="menu">
+							<a class="fa-bars" href="#menu">Menu</a>
+						</li>
+					</ul>
+				</nav>
 			</header>
+
+			<!-- Menu -->
+			<section id="menu">
+
+				<!-- Search -->
+				<section>
+					<form class="search" method="get" action="#">
+						<input type="text" name="query" placeholder="Search" />
+					</form>
+				</section>
+
+				<!-- Links -->
+				<section>
+					<ul class="links">
+						<li>
+							<a href="#">
+								<h3>Lorem ipsum</h3>
+								<p>Feugiat tempus veroeros dolor</p>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<h3>Dolor sit amet</h3>
+								<p>Sed vitae justo condimentum</p>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<h3>Feugiat veroeros</h3>
+								<p>Phasellus sed ultricies mi congue</p>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<h3>Etiam sed consequat</h3>
+								<p>Porta lectus amet ultricies</p>
+							</a>
+						</li>
+					</ul>
+				</section>
+
+				<!-- Actions -->
+				<section>
+					<ul class="actions stacked">
+						<li><a href="#" class="button large fit">Log In</a></li>
+					</ul>
+				</section>
+			</section>
 
 			<!-- Main -->
 			<section id="main" class="wrapper sidebar left">
@@ -132,14 +192,16 @@
 				</div>
 			</footer>
 
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.dropotron.min.js"></script>
-			<script src="assets/js/jquery.scrollex.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+			<!-- Scripts -->
+			<script src="/assets/js/jquery.min.js"></script>
+			<script src="/assets/js/jquery.dropotron.min.js"></script>
+			<script src="/assets/js/jquery.scrollex.min.js"></script>
+			<script src="/assets/js/browser.min.js"></script>
+			<script src="/assets/js/breakpoints.min.js"></script>
+			<script src="/assets/js/util.js"></script>
+			<script src="/assets/js/main.js"></script>
 
+			<script src="/assets/js/util_sub.js"></script>
+			<script src="/assets/js/main_sub.js"></script>
 	</body>
 </html>

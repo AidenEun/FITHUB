@@ -1,5 +1,5 @@
 ///
-/// Slate by Pixelarity
+/// Future Imperfect by Pixelarity
 /// pixelarity.com | hello@pixelarity.com
 /// License: pixelarity.com/license
 ///
@@ -34,7 +34,7 @@
 		}
 
 	body {
-		background: _palette(bg);
+		background: _palette(bg-alt);
 
 		// Stops initial animations until page loads.
 			&.is-preload {

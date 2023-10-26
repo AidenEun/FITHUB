@@ -1,69 +1,45 @@
 // Misc.
 	$misc: (
-		z-index-base:		10000
+		z-index-base:				10000
 	);
 
 // Duration.
 	$duration: (
-		nav:				0.5s,
-		transition:			0.2s
+		menu:						0.5s,
+		transition:					0.2s
 	);
 
 // Size.
 	$size: (
-		navPanel-width:		20em,
-		element-height:		2.75em,
-		element-margin:		2em
+		element-height:				2.75em,
+		element-margin:				2em,
+		section-spacing:			3em,
+		section-spacing-small:		1.5em,
+		menu:						25em
 	);
 
 // Font.
 	$font: (
-		family:						('Open Sans', Helvetica, sans-serif),
-		family-heading:				('Raleway', Helvetica, sans-serif),
+		family:						('Source Sans Pro', Helvetica, sans-serif),
 		family-fixed:				('Courier New', monospace),
+		family-heading:				('Raleway', Helvetica, sans-serif),
 		weight:						400,
-		weight-bold:				600,
-		weight-heading:				500,
-		weight-heading-bold:		700,
-		weight-heading-extrabold:	800
+		weight-bold:				700,
+		weight-heading:				400,
+		weight-heading-bold:		800,
+		weight-heading-extrabold:	900,
+		kerning-heading:			0.25em
 	);
 
 // Palette.
 	$palette: (
-		bg:					#fff,
-		fg:					#444,
-		fg-bold:			#444,
-		fg-light:			#bbb,
-		border:				#e6e6e6,
-		border-bg:			#f6f6f6,
-		border2:			#a6a6a6,
-		border2-bg:			#e2e2e2,
-		highlight:			accent1,
-		box:				transparent,
-
-		accent1: (
-			bg:				#444,
-			fg:				#fff,
-			fg-bold:		#fff,
-			fg-light:		#888,
-			border:			rgba(255,255,255,0.25),
-			border-bg:		rgba(255,255,255,0.075),
-			border2:		rgba(255,255,255,0.5),
-			border2-bg:		rgba(255,255,255,0.2),
-			highlight:		accent1,
-			box:			transparent
-		),
-
-		accent2: (
-			bg:				#f6f6f6,
-			fg:				#444,
-			fg-bold:		#444,
-			fg-light:		#bbb,
-			border:			#e6e6e6,
-			border-bg:		rgba(144,144,144,0.075),
-			border2:		#a6a6a6,
-			border2-bg:		rgba(144,144,144,0.2),
-			highlight:		accent1,
-			box:			solid
-		)
+		bg:							#ffffff,
+		bg-alt:						#f4f4f4,
+		fg:							#646464,
+		fg-bold:					#3c3b3b,
+		fg-light:					#aaaaaa,
+		border:						rgba(160,160,160,0.3),
+		border-bg:					rgba(160,160,160,0.075),
+		border-alt:					rgba(160,160,160,0.65),
+		accent:						#2ebaae
 	);
