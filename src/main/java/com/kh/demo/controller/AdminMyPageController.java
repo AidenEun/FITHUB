@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/adminmypage/*")
 public class AdminMyPageController {
 
-    @GetMapping("list")
-    public void replaceInfo(){}
+    @GetMapping("#")
+    public void replace(){}
 
 }

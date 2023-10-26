@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/matching/*")
 public class MatchingController {
 
-    @GetMapping("list")
+    @GetMapping("#")
     public void replace(){}
 
 }

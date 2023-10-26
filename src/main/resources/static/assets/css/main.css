@@ -4631,24 +4631,3 @@ input, select, textarea {
 			list-style-type: none;
 		}
 
-/* sidebar - ranking_box */
-
-		.ranking_box {
-			border: 1px solid black;
-			padding: 10px;
-			width: 80%;
-			margin-top: 15px;
-			height: 190px;
-		}
-
-		.ranking_box > ul {
-			margin-top: 10px;
-		}
-		
-		.ranking_box:nth-child(2) {
-			margin-top: 100px;
-		}
-
-		.ranking_box > .button {
-			width: 100%;
-		}

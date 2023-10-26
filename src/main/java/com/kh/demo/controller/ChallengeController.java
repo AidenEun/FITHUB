@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/challenge/*")
 public class ChallengeController {
 
-    @GetMapping("list")
-    public void replaceInfo(){}
+    @GetMapping("#")
+    public void replace(){}
 
 }

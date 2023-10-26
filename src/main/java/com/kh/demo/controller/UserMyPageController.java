@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/usermypage/*")
 public class UserMyPageController {
 
-    @GetMapping("list")
-    public void replaceInfo(){}
+    @GetMapping("#")
+    public void replace(){}
 
 }
