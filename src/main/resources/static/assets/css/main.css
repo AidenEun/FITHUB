@@ -3070,7 +3070,7 @@ input, select, textarea {
 		.wrapper > .inner {
 			margin: 0 auto;
 			max-width: 1080px;
-			width: 90%;
+			width: 100%;
 		}
 
 		.wrapper + .wrapper {
