@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/calorie/*")
 public class CalorieController {
 
-    @GetMapping("list")
-    public void replaceInfo(){}
+    @GetMapping("#")
+    public void replace(){}
 
 }

@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/info/*")
 public class InfoController {
 
-    @GetMapping("list")
-    public void replaceInfo(){}
+    @GetMapping("info_list")
+    public void replaceInfo(){
+    }
 
 }
