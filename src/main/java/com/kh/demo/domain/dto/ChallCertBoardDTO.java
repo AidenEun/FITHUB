@@ -3,7 +3,7 @@ package com.kh.demo.domain.dto;
 import lombok.Data;
 
 @Data
-public class Chall_cert_boardDTO {
+public class ChallCertBoardDTO {
     private long board_num;
     private String board_title;
     private String board_content;
