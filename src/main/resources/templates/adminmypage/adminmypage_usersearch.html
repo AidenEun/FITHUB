@@ -1,0 +1,265 @@
+<!DOCTYPE HTML>
+<!--
+	Slate by Pixelarity
+	pixelarity.com | hello@pixelarity.com
+	License: pixelarity.com/license
+-->
+<html lang="ko">
+<head>
+	<title>Untitled</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="/assets/css/index.css" />
+	<noscript><link rel="stylesheet" href="/assets/css/noscript.css" /></noscript>
+</head>
+<style>
+	.top_img_box{
+		width: 100%;
+		height: 310px;
+		margin-bottom: 50px;
+		background-color: red;
+	}
+
+	.top_img_box > img {
+		width: 100%;
+		height: 100%;
+	}
+
+	#main {
+		padding: 0;
+	}
+
+	.wrapper {
+		padding: 0;
+		margin-bottom: 100px;
+	}
+
+	#header {
+		background-color: #5a8100;
+	}
+
+	#header nav > ul > li a {
+		color: white;
+	}
+
+	#header h1 a {
+		color: white;
+	}
+
+	#header .main ul li > a {
+		color: white;
+
+	}
+
+	#footer {
+		background-color: #304400;
+	}
+
+	.adminmypadge_content_box {
+		width: 100%;
+	}
+
+	.adminmypadge_content_box:last-child{
+		height: 400px;
+	}
+
+	.actions {
+		float: right;
+	}
+
+	.adminmypage_box {
+		width: 100%;
+		height: 450px;
+		margin-bottom: 40px;
+	}
+
+	.content {
+		width: 30%;
+	}
+
+	ol, ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.admin_board_list {
+		width: 240px;
+		height: 120px;
+		background-color: transparent;
+    	color: #444 !important;
+    	box-shadow: inset 0 0 0 1px #444;
+		margin-top: 20px;
+		text-align: center;
+		padding: 10px;
+		overflow: hidden;
+		white-space: normal; /* 텍스트를 한 줄로 표시하고 줄 바꿈 금지 */
+		text-overflow: ellipsis; /* 텍스트가 너비를 초과하는 경우 "..."으로 표시 */
+		cursor: pointer;
+	}
+
+	.admin_board_list > div {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: normal;
+	}
+
+	tr{
+		background-color: white;
+	}
+
+	.category_button {
+		margin-right: 10px;
+	}
+
+	a {
+		border-bottom: none;
+	}
+
+	.admin_board_list_box {
+		display: flex;
+		justify-content: space-between;
+	}
+</style>
+<body class="is-preload">
+
+<!-- Header -->
+<header id="header">
+	<h1><a href="/">Fit Hub</a></h1>
+	<nav class="links">
+		<ul>
+			<li><a href="/info/info_list">정보</a></li>
+			<li><a href="#">칼로리</a></li>
+			<li><a href="#">커뮤니티</a></li>
+			<li><a href="#">트레이너 매칭</a></li>
+			<li><a href="#">챌린지</a></li>
+			<li><a href="#">제품</a></li>
+		</ul>
+	</nav>
+	<nav class="main">
+		<ul>
+			<li id="login">
+				<a class="login" href="#">Login</a>
+			</li>
+			<li class="search">
+				<a class="fa-search" href="#search">Search</a>
+				<form id="search" method="get" action="#">
+					<input type="text" name="query" placeholder="Search" />
+				</form>
+			</li>
+			<li class="menu">
+				<a class="fa-bars" href="#menu">Menu</a>
+			</li>
+		</ul>
+	</nav>
+</header>
+
+<!-- Menu -->
+<section id="menu">
+
+	<!-- Search -->
+	<section>
+		<form class="search" method="get" action="#">
+			<input type="text" name="query" placeholder="Search" />
+		</form>
+	</section>
+
+	<!-- Links -->
+	<section>
+		<ul class="links">
+			<li>
+				<a href="#">
+					<h3>Lorem ipsum</h3>
+					<p>Feugiat tempus veroeros dolor</p>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<h3>Dolor sit amet</h3>
+					<p>Sed vitae justo condimentum</p>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<h3>Feugiat veroeros</h3>
+					<p>Phasellus sed ultricies mi congue</p>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<h3>Etiam sed consequat</h3>
+					<p>Porta lectus amet ultricies</p>
+				</a>
+			</li>
+		</ul>
+	</section>
+
+	<!-- Actions -->
+	<section>
+		<ul class="actions stacked">
+			<li><a href="#" class="button large fit">Log In</a></li>
+		</ul>
+	</section>
+</section>
+
+<!-- Main -->
+<section id="main" class="wrapper sidebar left">
+	<div class="top_img_box">
+		<img src="/images/pic01.jpg" alt="">
+	</div>
+
+	<div class="inner">
+
+		<header class="major">
+			<h2>유저 검색</h2>
+			<p>관리자 마이페이지</p>
+		</header>
+
+
+
+		<!-- Content -->
+		<div class="content">
+
+		</div>
+
+		<!-- Sidebar -->
+		<div class="sidebar">
+
+			<section>
+				<h3><a href="/adminmypage/adminmypage_list">전체</a></h3>
+				<h3><a href="/adminmypage/adminmypage_report">신고 접수</a></h3>
+				<h3><a href="/adminmypage/adminmypage_trainer">트레이너 신청 내역</a></h3>
+				<h3><a href="/adminmypage/adminmypage_board">관리자 게시물</a></h3>
+				<h3><a href="/adminmypage/adminmypage_usersearch" style="color: #5a8100;">유저 검색</a></h3>
+				<h3><a href="/adminmypage/adminmypage_message">문의함</a></h3>
+			</section>
+
+		</div>
+	</div>
+</section>
+
+<!-- Footer -->
+<footer id="footer">
+	<div class="inner">
+		<p class="copyright">&copy; Untitled Corp. All rights reserved. Lorem ipsum dolor sit amet feugiat tempus aliquam.</p>
+		<ul class="menu">
+			<li><a href="#">Terms<span> of Use</span></a></li>
+			<li><a href="#">Privacy<span> Policy</span></a></li>
+			<li><a href="#">Legal<span> Information</span></a></li>
+		</ul>
+	</div>
+</footer>
+
+<!-- Scripts -->
+<script src="/assets/js/jquery.min.js"></script>
+<script src="/assets/js/jquery.dropotron.min.js"></script>
+<script src="/assets/js/jquery.scrollex.min.js"></script>
+<script src="/assets/js/browser.min.js"></script>
+<script src="/assets/js/breakpoints.min.js"></script>
+<script src="/assets/js/util.js"></script>
+<script src="/assets/js/main.js"></script>
+
+<script src="/assets/js/util_sub.js"></script>
+<script src="/assets/js/main_sub.js"></script>
+</body>
+</html>
