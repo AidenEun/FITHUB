@@ -13,4 +13,7 @@ public class HomeController {
         return "index";
     }
 
+    @GetMapping("/index_sidebar")
+    public void replace(){}
+
 }
