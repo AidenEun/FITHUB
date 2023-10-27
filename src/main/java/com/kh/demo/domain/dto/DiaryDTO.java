@@ -9,16 +9,16 @@ public class DiaryDTO {
     private int today_weight;
     private int exer_calories;
     private int food_calories;
-    private Long today_exer;
-    private Long today_breakfast;
-    private Long today_lunch;
-    private Long today_dinner;
-    private Long today_snack;
+    private String today_exer;
+    private String today_breakfast;
+    private String today_lunch;
+    private String today_dinner;
+    private String today_snack;
     private int carbo;
     private int protein;
     private int fat;
     private String regdate;
     private String diary_title;
     private String diary_content;
-    private Long mychall_num;
+    private String today_chall_num;
 }

@@ -16,4 +16,5 @@ public class TrainerMatchingBoardDTO {
     private long like_cnt;
     private long bookmark_cnt;
     private long view_cnt;
+    private String regdate;
 }

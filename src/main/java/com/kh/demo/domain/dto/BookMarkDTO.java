@@ -8,6 +8,6 @@ public class BookMarkDTO {
     private String user_id;
     private String board_category;
     private Long board_num;
-    private String update_date;
+    private String regdate;
 
 }
