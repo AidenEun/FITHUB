@@ -4643,8 +4643,17 @@ body {
 				height: inherit;
 				line-height: inherit;
 			}
+		#header .main ul li > .login {
+			text-decoration: none;
+			border-bottom: 0;
+			color: #aaaaaa;
+			position: relative;
+			width: 4em;
+			margin-left: 20px;
+			letter-spacing: 2px;
+		}
 
-				#header .main ul li {
+		#header .main ul li:not(#login) {
 					border-left: solid 1px rgba(160, 160, 160, 0.3);
 					height: inherit;
 					line-height: inherit;
@@ -4656,7 +4665,7 @@ body {
 						float: left;
 					}
 
-					#header .main ul li > a {
+					#header .main ul li > a:not(.login) {
 						text-decoration: none;
 						border-bottom: 0;
 						color: #aaaaaa;
