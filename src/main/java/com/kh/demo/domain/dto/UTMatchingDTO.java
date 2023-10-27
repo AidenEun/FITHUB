@@ -3,7 +3,7 @@ package com.kh.demo.domain.dto;
 import lombok.Data;
 
 @Data
-public class U_t_matchingDTO {
+public class UTMatchingDTO {
     private long matching_num;
     private String user_id;
     private String trainer_id;

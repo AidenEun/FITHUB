@@ -3,7 +3,7 @@ package com.kh.demo.domain.dto;
 import lombok.Data;
 
 @Data
-public class Product_boardDTO {
+public class ProductBoardDTO {
     private long board_num;
     private String board_title;
     private String board_content;
