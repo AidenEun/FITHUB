@@ -5,322 +5,489 @@
 	License: pixelarity.com/license
 -->
 <html lang="ko">
-	<head>
-		<title>Untitled</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/index.css" />
-		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-	</head>
-	<body class="is-preload">
+<head>
+	<title>Untitled</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="assets/css/index.css" />
+	<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+</head>
+<style>
+	#side-wrap {
+width: 300px; /* 원하는 가로 크기로 조절 */
+margin: 0 auto; /* 수평 가운데 정렬 */
+padding: 20px; /* 내용과 사이드바 사이의 간격 설정 */
+border: 1px solid #ccc; /* 사각형 테두리 스타일 */
+border-radius: 10px; /* 사각형의 둥글기 설정 */
+}
 
-		<!-- Wrapper -->
+.side_info {
+text-align: center; /* 수평 가운데 정렬을 위한 설정 */
+}
 
-				<!-- Header -->
-					<header id="header" class="alt">
-						<h1><a href="/">Fit Hub</a></h1>
-						<nav class="links">
-							<ul>
-								<li><a href="/info/info_list">정보</a></li>
-								<li><a href="#">칼로리</a></li>
-								<li><a href="#">커뮤니티</a></li>
-								<li><a href="#">트레이너 매칭</a></li>
-								<li><a href="#">챌린지</a></li>
-								<li><a href="#">제품</a></li>
-							</ul>
-						</nav>
-						<nav class="main">
-							<ul>
-									<li id="login">
-										<a class="login" href="#">Login</a>
-									</li>
-								<li class="search">
-									<a class="fa-search" href="#search">Search</a>
-									<form id="search" method="get" action="#">
-										<input type="text" name="query" placeholder="Search" />
-									</form>
-								</li>
-								<li class="menu">
-									<a class="fa-bars" href="#menu">Menu</a>
-								</li>
-							</ul>
-						</nav>
-					</header>
+.prof_img {
+display: inline-block; /* 인라인 블록 요소로 설정 */
+}
 
-				<!-- Menu -->
-					<section id="menu">
+.rating {
+font-size: 18px; /* 등급 텍스트 크기 설정 */
+color: #333;    /* 등급 텍스트 색상 설정 */
+margin-top: 10px; /* 등급과 프로필 사진 사이의 위쪽 여백 설정 */
+}
 
-						<!-- Search -->
-							<section>
-								<form class="search" method="get" action="#">
-									<input type="text" name="query" placeholder="Search" />
-								</form>
-							</section>
+.user-id {
+font-size: 18px; /* 아이디 텍스트 크기 설정 */
+color: #333;    /* 아이디 텍스트 색상 설정 */
+margin-top: 10px; /* 아이디와 프로필 사진 사이의 위쪽 여백 설정 */
+}
+.goal-graph {
+width: 250px; /* 그래프 바의 전체 너비 */
+height: 20px; /* 그래프 바의 높이 (여유 공간을 위해 조정) */
+background-color: #f0f0f0; /* 그래프 바의 배경색 */
+border: 1px solid #ccc; /* 그래프 바 테두리 스타일 */
+border-radius: 20px; /* 그래프 바 테두리 둥글기 */
+margin: 20px; /* 페이지에서 그래프 바와의 간격 */
+display: felx;
+}
 
-						<!-- Links -->
-							<section>
-								<ul class="links">
-									<li>
-										<a href="#">
-											<h3>Lorem ipsum</h3>
-											<p>Feugiat tempus veroeros dolor</p>
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											<h3>Dolor sit amet</h3>
-											<p>Sed vitae justo condimentum</p>
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											<h3>Feugiat veroeros</h3>
-											<p>Phasellus sed ultricies mi congue</p>
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											<h3>Etiam sed consequat</h3>
-											<p>Porta lectus amet ultricies</p>
-										</a>
-									</li>
-								</ul>
-							</section>
+/* Progress Bar (Filled Portion) */
+.progress-bar {
+width: 100%; /* 목표 달성 정도 (예: 100%) */
+height: 100%; /* 그래프 바와 같은 높이 */
+background-color: #4caf50; /* 목표 달성 부분의 배경색 */
+border-radius: 5px; /* 목표 달성 부분의 둥글기 */
+position: relative; /* 포지션 설정 */
+display: flex;
+}
 
-						<!-- Actions -->
-							<section>
-								<ul class="actions stacked">
-									<li><a href="#" class="button large fit">Log In</a></li>
-								</ul>
-							</section>
+/* Progress Segment (날짜별 영역) */
+.progress-segment {
+height: 100%; /* 그래프 바와 같은 높이 */
+background-color: #4caf50; /* 각 날짜별 영역의 배경색 */
+border-radius: 5px; /* 각 날짜별 영역의 둥글기 */
+position: relative; /* 포지션 설정 */
+}
 
-					</section>
+/* Progress Label (Number) */
+.progress-label {
+position: absolute; /* 포지션 설정 */
+top: -20px; /* 그래프 바 위에서 조절 */
+left: 50%;
+transform: translateX(-50%);
+color: #000; /* 숫자 색상 */
+font-weight: bold; /* 굵게 표시 */
+}
 
+.point-container {
+display: flex;
+justify-content: space-between;
+}
 
-				<!-- Main -->
-		<!-- Banner -->
-		<section id="banner">
-			<article>
-				<img src="images/slide01.jpg" alt="" />
-				<div class="inner">
-					<h2><a href="#">Magna tempus. Sed feugiat.</a></h2>
-				</div>
-			</article>
-			<article>
-				<img src="images/slide02.jpg" alt="" />
-				<div class="inner">
-					<h2><a href="#">Aliquam veroeros nullam.</a></h2>
-				</div>
-			</article>
-			<article>
-				<img src="images/slide03.jpg"  alt="" />
-				<div class="inner">
-					<h2><a href="#">Consequat dolore adipiscing.</a></h2>
-				</div>
-			</article>
-		</section>
+#tab-menu {
+display: flex; /* flex 레이아웃 사용 */
+flex-direction: row; /* 가로로 나열 */
+/* 다른 스타일을 추가할 수 있음 */
+justify-content: space-between; /* 간격을 조절하기 위해 */
+width: 300px; /* 전체 탭 메뉴 컨테이너의 너비를 조절 */
+margin: 0 auto; /* 중앙 정렬을 위해 */
+}
 
-	<!-- One -->
-		<section id="one" class="wrapper major-pad">
-			<div class="inner">
-				<section class="spotlight">
-					<div class="content">
-						<h2>Libero bibendum nullam vitae magna sed veroeros</h2>
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin id interdum magna, ultricies aliquet curabitur sed metus pellentesque, ornare sapien quis.</p>
-					</div>
-					<span class="image"><img src="images/pic07.jpg" alt="" /></span>
-				</section>
+#tab-menu div {
+padding: 10px; /* 각 탭 메뉴 아이템의 패딩 */
+cursor: pointer; /* 커서 모양을 포인터로 변경하여 클릭 가능하게 함 */
+/* 다른 스타일을 추가할 수 있음 */
+}
+
+#meal-options {
+display: flex; /* 자식 요소를 수평으로 배열하기 위해 Flexbox 레이아웃 사용 */
+justify-content: center; /* 자식 요소를 수평으로 가운데 정렬 */
+align-items: center; /* 자식 요소를 수직으로 가운데 정렬 */
+}
+
+#meal-options > div {
+margin: 0 10px; /* 각 요소 사이의 간격 조절 (원하는 크기로 조정) */
+}
+
+#meal-options div {
+cursor: pointer;
+}
+
+#tab-menu-container {
+display: flex; /* Flexbox 사용 */
+text-align: left;
+}
+
+#tan-dan-ji-box {
+display: flex; /* 내부의 tan-dan-ji-box도 Flexbox 사용 */
+flex-direction: column; /* 세로로 정렬 */
+}
+
+.today-tab .chall-tab .sub-tab .shop-tab{
+width: 70px; /* 각 탭 메뉴의 너비 */
+height: 70px; /* 각 탭 메뉴의 높이 (너비와 같게 설정하여 정사각형 모양으로 만듦) */
+background-color: #4caf50; /* 배경색을 설정 */
+text-align: center;
+line-height: 70px; /* 텍스트 세로 중앙 정렬을 위해 */
+color: #fff; /* 텍스트 색상 설정 */
+cursor: pointer; /* 마우스 커서를 포인터로 변경 */
+}
+
+#tan-dan-ji-box {
+display: flex; /* Flexbox를 사용하여 자식 요소를 가로로 정렬 */
+flex-direction: column; /* 자식 요소를 세로로 정렬 */
+/* background-color: lightgray; 사각형의 배경색 */
+border: 2px solid gray; /* 사각형 테두리 스타일 */
+padding: 10px; /* 내부 여백 설정 */
+width: 300px; /* 원하는 사각형 너비 설정 */
+text-align: left;
+}
+
+#tan-dan-ji-box > div {
+margin-bottom: 10px; /* 각 항목 아래 여백 설정 */
+}
+
+#another-page {
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100px;
+}
+
+#another-page a {
+text-decoration: none;
+margin: 0 10px;
+}
+</style>
+<body class="is-preload">
+
+<!-- Wrapper -->
+
+<!-- Header -->
+<header id="header" class="alt">
+	<h1><a href="/">Fit Hub</a></h1>
+	<nav class="links">
+		<ul>
+			<li><a href="/info/info_list">정보</a></li>
+			<li><a href="#">칼로리</a></li>
+			<li><a href="#">커뮤니티</a></li>
+			<li><a href="#">트레이너 매칭</a></li>
+			<li><a href="#">챌린지</a></li>
+			<li><a href="#">제품</a></li>
+		</ul>
+	</nav>
+	<nav class="main">
+		<ul>
+			<li id="login">
+				<a class="login" href="#">Login</a>
+			</li>
+			<li class="search">
+				<a class="fa-search" href="#search">Search</a>
+				<form id="search" method="get" action="#">
+					<input type="text" name="query" placeholder="Search" />
+				</form>
+			</li>
+			<li class="menu">
+				<a class="fa-bars" href="#menu">Menu</a>
+			</li>
+		</ul>
+	</nav>
+</header>
+
+<!-- Menu -->
+<section id="menu">
+	<div class="side_info">
+		<img src="images/profile_img.png" class="prof_img" width="102px" height="102px">
+		<div id="my_info">
+			<span>등급 / 닉네임(ID)</span>
+			<div>
+				<span>내 정보</span>
+				<span>로그아웃</span>
 			</div>
-		</section>
-
-	<!-- Two -->
-		<section id="two" class="wrapper content-pad">
-			<div class="inner">
-				<div class="features">
-					<section class="content">
-						<span class="icon-wrapper major"><span class="icon solid fa-pencil-alt"></span></span>
-						<h3>Praesent sed donec</h3>
-						<p>Proin consequat luctus elit, nec blandit tellus ut volutpat magna. mi euismod elementum lectus et consequat etiam lorem etiam sed tempus. Feugiat veroeros lorem ipsum dolor.</p>
-					</section>
-					<section class="content">
-						<span class="icon-wrapper major"><span class="icon solid fa-paper-plane"></span></span>
-						<h3>Commodo mollis</h3>
-						<p>Pellentesque, ornare sapien quis, tristique ante. Proin nec facilisis odio. Integer elementum nunc nec leo interdum, non tristique eros laoreet. Integer vitae erat suscipit commodo.</p>
-					</section>
-					<section class="content">
-						<span class="icon-wrapper major"><span class="icon solid fa-cloud"></span></span>
-						<h3>Magnis curabitur</h3>
-						<p>Duis vulputate sit amet metus quis facilisis. Sed dapibus neque erat fringilla tincidunt. Nullam sapien et sapien, iaculis ac varius ultrices nec metus. Aenean ultricies magna.</p>
-					</section>
+		</div>
+		<div class="goal-graph">
+			<div class="progress-bar">
+				<div class="progress-segment day-1"></div>
+				<div class="progress-label"></div>
+				<div class="progress-segment day-2"></div>
+				<div class="progress-label"></div>
+				<div class="progress-segment day-3"></div>
+				<div class="progress-label"></div>
+				<div class="progress-segment day-4"></div>
+				<div class="progress-label"></div>
+				<div class="progress-segment day-5"></div>
+				<div class="progress-label"></div>
+			</div>
+		</div>
+		<div class="point-container">
+			<div>나의 포인트</div>
+			<span>0p</span>
+		</div>
+		<div id="tab-menu">
+			<div class="today-tab">오늘</div>
+			<div class="chall-tab">도전</div>
+			<div class="sub-tab">구독</div>
+			<div class="shop-tab">쇼핑</div>
+		</div>
+		<div id="tab-menu-container">
+			<div class="today-view">
+				<strong>나의 목표</strong>
+				<p>목표무게</p>
+				<p>목표칼로리</p>
+				<hr>
+				<strong>잔여칼로리: 현재칼로리/목표칼로리</strong>
+				<p>섭취량</p>
+				<p>소비량</p>
+				<div id="meal-options">
+					<div class="brack-fst">아침</div>
+					<div class="lunch">점심</div>
+					<div class="dinner">저녁</div>
+					<div class="snack">간식</div>
+				</div>
+				<div id="tan-dan-ji-box">
+					<div>칼로리</div>
+					<div>탄수화물</div>
+					<div>단백질</div>
+					<div>지방</div>
 				</div>
 			</div>
-		</section>
+		</div>
+	</div>
+	<div id="another-page">
+		<div class="bmi">
+			<a href="#">BMI</a>
+		</div>
+		<div class="health-center">
+			<a href="#">보건소</a>
+		</div>
+		<div class="trainer-apply">
+			<a href="#">트레이너 신청</a>
+		</div>
+	</div>
+</section>
+<!-- Main -->
+<!-- Banner -->
+<section id="banner">
+	<article>
+		<img src="images/slide01.jpg" alt="" />
+		<div class="inner">
+			<h2><a href="#">Magna tempus. Sed feugiat.</a></h2>
+		</div>
+	</article>
+	<article>
+		<img src="images/slide02.jpg" alt="" />
+		<div class="inner">
+			<h2><a href="#">Aliquam veroeros nullam.</a></h2>
+		</div>
+	</article>
+	<article>
+		<img src="images/slide03.jpg"  alt="" />
+		<div class="inner">
+			<h2><a href="#">Consequat dolore adipiscing.</a></h2>
+		</div>
+	</article>
+</section>
 
-	<!-- Three -->
-		<section id="three" class="wrapper style2">
-			<div class="inner">
-				<h2>Etiam sed tellus</h2>
-				<div class="posts">
-					<section class="post">
-						<span class="image"><img src="images/pic01.jpg" alt="" /></span>
-						<div class="content">
-							<h3>Congue portitor</h3>
-							<p>Aenean ultricies magna non sapien rhoncus, ac ullamcorper lorem convallis. Quisque at venenatis nisi, amet finibus mauris. Sed sodales ultricies eros, sit amet sodales sapien.</p>
-							<ul class="actions">
-								<li><a href="#" class="button">More</a></li>
-							</ul>
-						</div>
-					</section>
-					<section class="post">
-						<span class="image"><img src="images/pic02.jpg" alt="" /></span>
-						<div class="content">
-							<h3>Duis nisl euismod</h3>
-							<p>Ultrices nec metus. Aenean ultricies magna et sapien rhoncus ac ullamcorper lorem convallis. Quisque at venenatis nisi amet finibus mauris. Sed sodales ultricies magna etiam.</p>
-							<ul class="actions">
-								<li><a href="#" class="button">More</a></li>
-							</ul>
-						</div>
-					</section>
-					<section class="post">
-						<span class="image"><img src="images/pic03.jpg" alt="" /></span>
-						<div class="content">
-							<h3>Elementum auctor</h3>
-							<p>Quis interdum. Lorem quis lacus justo. Sed libero condimentum vehicula sem vel, mattis amet mauris. Nullam lacinia sit amet felis vel vestibulum. Morbi aliquam aenean.</p>
-							<ul class="actions">
-								<li><a href="#" class="button">More</a></li>
-							</ul>
-						</div>
-					</section>
-					<section class="post">
-						<span class="image"><img src="images/pic04.jpg" alt="" /></span>
-						<div class="content">
-							<h3>Urna vel lacinia</h3>
-							<p>Integer vel tincidunt lacus. Nulla augue nunc, eleifend quis leo ac, maximus interdum tellus. Etiam at vestibulum felis, id efficitur risus. Praesent ac nulla ex. Duis elementum.</p>
-							<ul class="actions">
-								<li><a href="#" class="button">More</a></li>
-							</ul>
-						</div>
-					</section>
-					<section class="post">
-						<span class="image"><img src="images/pic05.jpg" alt="" /></span>
-						<div class="content">
-							<h3>Neque et suscipit</h3>
-							<p>Libero condimentum, vehicula sem vel, mattis mauris. Nullam lacinia sit amet felis vel vestibulum. Morbi in aliquam est. Aenean dapibus porttitor nulla ultrices venenatis.</p>
-							<ul class="actions">
-								<li><a href="#" class="button">More</a></li>
-							</ul>
-						</div>
-					</section>
-					<section class="post">
-						<span class="image"><img src="images/pic06.jpg" alt="" /></span>
-						<div class="content">
-							<h3>Vestibulum placerat</h3>
-							<p>Tristique tellus et ullamcorper. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Praesent mauris risus, pellentesque eu leo non, tincidunt.</p>
-							<ul class="actions">
-								<li><a href="#" class="button">More</a></li>
-							</ul>
-						</div>
-					</section>
-				</div>
+<!-- One -->
+<section id="one" class="wrapper major-pad">
+	<div class="inner">
+		<section class="spotlight">
+			<div class="content">
+				<h2>Libero bibendum nullam vitae magna sed veroeros</h2>
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin id interdum magna, ultricies aliquet curabitur sed metus pellentesque, ornare sapien quis.</p>
 			</div>
+			<span class="image"><img src="images/pic07.jpg" alt="" /></span>
 		</section>
+	</div>
+</section>
 
-	<!-- Contact -->
-		<section id="contact" class="wrapper split">
-			<div class="inner">
-				<section>
-					<h2>Send us a message</h2>
-					<form method="post" action="#">
-						<div class="row gtr-uniform">
-							<div class="col-6 col-12-large col-6-medium col-12-xsmall">
-								<label for="name">Name</label>
-								<input type="text" name="name" id="name" />
-							</div>
-							<div class="col-6 col-12-large col-6-medium col-12-xsmall">
-								<label for="email">Email</label>
-								<input type="email" name="email" id="email" />
-							</div>
-							<div class="col-12">
-								<label for="message">Message</label>
-								<textarea name="message" id="message" rows="5"></textarea>
-							</div>
-							<div class="col-12">
-								<ul class="actions">
-									<li><input type="submit" value="Send Message" class="primary" /></li>
-									<li><input type="reset" value="Reset" /></li>
-								</ul>
-							</div>
-						</div>
-					</form>
-				</section>
-				<section>
-					<h2>Other ways to reach us</h2>
-					<ul class="bulleted-icons">
-						<li>
-							<span class="icon-wrapper"><span class="icon solid fa-envelope"></span></span>
-							<h3>Email</h3>
-							<p><a href="#">information@untitled.tld</a></p>
-						</li>
-						<li>
-							<span class="icon-wrapper"><span class="icon brands fa-twitter"></span></span>
-							<h3>Twitter</h3>
-							<p><a href="#">twitter.com/untitled-tld</a></p>
-						</li>
-						<li>
-							<span class="icon-wrapper"><span class="icon solid fa-phone"></span></span>
-							<h3>Phone</h3>
-							<p>(800) 555-0000</p>
-						</li>
-						<li>
-							<span class="icon-wrapper"><span class="icon brands fa-facebook-f"></span></span>
-							<h3>Facebook</h3>
-							<p><a href="#">facebook.com/untitled-tld</a></p>
-						</li>
-						<li>
-							<span class="icon-wrapper"><span class="icon solid fa-home"></span></span>
-							<h3>Mailing Address</h3>
-							<p>1234 Fictional Avenue<br />
-							Nashville, TN 00000<br />
-							United States
-							</p>
-						</li>
-						<li>
-							<span class="icon-wrapper"><span class="icon brands fa-linkedin-in"></span></span>
-							<h3>LinkedIn</h3>
-							<p><a href="#">linkedin.com/untitled-tld</a></p>
-						</li>
+<!-- Two -->
+<section id="two" class="wrapper content-pad">
+	<div class="inner">
+		<div class="features">
+			<section class="content">
+				<span class="icon-wrapper major"><span class="icon solid fa-pencil-alt"></span></span>
+				<h3>Praesent sed donec</h3>
+				<p>Proin consequat luctus elit, nec blandit tellus ut volutpat magna. mi euismod elementum lectus et consequat etiam lorem etiam sed tempus. Feugiat veroeros lorem ipsum dolor.</p>
+			</section>
+			<section class="content">
+				<span class="icon-wrapper major"><span class="icon solid fa-paper-plane"></span></span>
+				<h3>Commodo mollis</h3>
+				<p>Pellentesque, ornare sapien quis, tristique ante. Proin nec facilisis odio. Integer elementum nunc nec leo interdum, non tristique eros laoreet. Integer vitae erat suscipit commodo.</p>
+			</section>
+			<section class="content">
+				<span class="icon-wrapper major"><span class="icon solid fa-cloud"></span></span>
+				<h3>Magnis curabitur</h3>
+				<p>Duis vulputate sit amet metus quis facilisis. Sed dapibus neque erat fringilla tincidunt. Nullam sapien et sapien, iaculis ac varius ultrices nec metus. Aenean ultricies magna.</p>
+			</section>
+		</div>
+	</div>
+</section>
+
+<!-- Three -->
+<section id="three" class="wrapper style2">
+	<div class="inner">
+		<h2>Etiam sed tellus</h2>
+		<div class="posts">
+			<section class="post">
+				<span class="image"><img src="images/pic01.jpg" alt="" /></span>
+				<div class="content">
+					<h3>Congue portitor</h3>
+					<p>Aenean ultricies magna non sapien rhoncus, ac ullamcorper lorem convallis. Quisque at venenatis nisi, amet finibus mauris. Sed sodales ultricies eros, sit amet sodales sapien.</p>
+					<ul class="actions">
+						<li><a href="#" class="button">More</a></li>
 					</ul>
-				</section>
-			</div>
+				</div>
+			</section>
+			<section class="post">
+				<span class="image"><img src="images/pic02.jpg" alt="" /></span>
+				<div class="content">
+					<h3>Duis nisl euismod</h3>
+					<p>Ultrices nec metus. Aenean ultricies magna et sapien rhoncus ac ullamcorper lorem convallis. Quisque at venenatis nisi amet finibus mauris. Sed sodales ultricies magna etiam.</p>
+					<ul class="actions">
+						<li><a href="#" class="button">More</a></li>
+					</ul>
+				</div>
+			</section>
+			<section class="post">
+				<span class="image"><img src="images/pic03.jpg" alt="" /></span>
+				<div class="content">
+					<h3>Elementum auctor</h3>
+					<p>Quis interdum. Lorem quis lacus justo. Sed libero condimentum vehicula sem vel, mattis amet mauris. Nullam lacinia sit amet felis vel vestibulum. Morbi aliquam aenean.</p>
+					<ul class="actions">
+						<li><a href="#" class="button">More</a></li>
+					</ul>
+				</div>
+			</section>
+			<section class="post">
+				<span class="image"><img src="images/pic04.jpg" alt="" /></span>
+				<div class="content">
+					<h3>Urna vel lacinia</h3>
+					<p>Integer vel tincidunt lacus. Nulla augue nunc, eleifend quis leo ac, maximus interdum tellus. Etiam at vestibulum felis, id efficitur risus. Praesent ac nulla ex. Duis elementum.</p>
+					<ul class="actions">
+						<li><a href="#" class="button">More</a></li>
+					</ul>
+				</div>
+			</section>
+			<section class="post">
+				<span class="image"><img src="images/pic05.jpg" alt="" /></span>
+				<div class="content">
+					<h3>Neque et suscipit</h3>
+					<p>Libero condimentum, vehicula sem vel, mattis mauris. Nullam lacinia sit amet felis vel vestibulum. Morbi in aliquam est. Aenean dapibus porttitor nulla ultrices venenatis.</p>
+					<ul class="actions">
+						<li><a href="#" class="button">More</a></li>
+					</ul>
+				</div>
+			</section>
+			<section class="post">
+				<span class="image"><img src="images/pic06.jpg" alt="" /></span>
+				<div class="content">
+					<h3>Vestibulum placerat</h3>
+					<p>Tristique tellus et ullamcorper. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Praesent mauris risus, pellentesque eu leo non, tincidunt.</p>
+					<ul class="actions">
+						<li><a href="#" class="button">More</a></li>
+					</ul>
+				</div>
+			</section>
+		</div>
+	</div>
+</section>
+
+<!-- Contact -->
+<section id="contact" class="wrapper split">
+	<div class="inner">
+		<section>
+			<h2>Send us a message</h2>
+			<form method="post" action="#">
+				<div class="row gtr-uniform">
+					<div class="col-6 col-12-large col-6-medium col-12-xsmall">
+						<label for="name">Name</label>
+						<input type="text" name="name" id="name" />
+					</div>
+					<div class="col-6 col-12-large col-6-medium col-12-xsmall">
+						<label for="email">Email</label>
+						<input type="email" name="email" id="email" />
+					</div>
+					<div class="col-12">
+						<label for="message">Message</label>
+						<textarea name="message" id="message" rows="5"></textarea>
+					</div>
+					<div class="col-12">
+						<ul class="actions">
+							<li><input type="submit" value="Send Message" class="primary" /></li>
+							<li><input type="reset" value="Reset" /></li>
+						</ul>
+					</div>
+				</div>
+			</form>
 		</section>
+		<section>
+			<h2>Other ways to reach us</h2>
+			<ul class="bulleted-icons">
+				<li>
+					<span class="icon-wrapper"><span class="icon solid fa-envelope"></span></span>
+					<h3>Email</h3>
+					<p><a href="#">information@untitled.tld</a></p>
+				</li>
+				<li>
+					<span class="icon-wrapper"><span class="icon brands fa-twitter"></span></span>
+					<h3>Twitter</h3>
+					<p><a href="#">twitter.com/untitled-tld</a></p>
+				</li>
+				<li>
+					<span class="icon-wrapper"><span class="icon solid fa-phone"></span></span>
+					<h3>Phone</h3>
+					<p>(800) 555-0000</p>
+				</li>
+				<li>
+					<span class="icon-wrapper"><span class="icon brands fa-facebook-f"></span></span>
+					<h3>Facebook</h3>
+					<p><a href="#">facebook.com/untitled-tld</a></p>
+				</li>
+				<li>
+					<span class="icon-wrapper"><span class="icon solid fa-home"></span></span>
+					<h3>Mailing Address</h3>
+					<p>1234 Fictional Avenue<br />
+						Nashville, TN 00000<br />
+						United States
+					</p>
+				</li>
+				<li>
+					<span class="icon-wrapper"><span class="icon brands fa-linkedin-in"></span></span>
+					<h3>LinkedIn</h3>
+					<p><a href="#">linkedin.com/untitled-tld</a></p>
+				</li>
+			</ul>
+		</section>
+	</div>
+</section>
 
-	<!-- Footer -->
-		<footer id="footer">
-			<div class="inner">
-				<p class="copyright">&copy; Untitled Corp. All rights reserved. Lorem ipsum dolor sit amet feugiat tempus aliquam.</p>
-				<ul class="menu">
-					<li><a href="#">Terms<span> of Use</span></a></li>
-					<li><a href="/adminmypage/adminmypage_list">Privacy<span> Policy</span></a></li>
-					<li><a href="#">Legal<span> Information</span></a></li>
-				</ul>
-			</div>
-		</footer>
-					
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.dropotron.min.js"></script>
-			<script src="assets/js/jquery.scrollex.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+<!-- Footer -->
+<footer id="footer">
+	<div class="inner">
+		<p class="copyright">&copy; Untitled Corp. All rights reserved. Lorem ipsum dolor sit amet feugiat tempus aliquam.</p>
+		<ul class="menu">
+			<li><a href="#">Terms<span> of Use</span></a></li>
+			<li><a href="/adminmypage/adminmypage_list">Privacy<span> Policy</span></a></li>
+			<li><a href="#">Legal<span> Information</span></a></li>
+		</ul>
+	</div>
+</footer>
+
+<!-- Scripts -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/jquery.dropotron.min.js"></script>
+<script src="assets/js/jquery.scrollex.min.js"></script>
+<script src="assets/js/browser.min.js"></script>
+<script src="assets/js/breakpoints.min.js"></script>
+<script src="assets/js/util.js"></script>
+<script src="assets/js/main.js"></script>
 
 
-			<script src="assets/js/util_sub.js"></script>
-			<script src="assets/js/main_sub.js"></script>
+<script src="assets/js/util_sub.js"></script>
+<script src="assets/js/main_sub.js"></script>
 
 
 
 
-	</body>
+</body>
 </html>
