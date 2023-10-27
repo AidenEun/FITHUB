@@ -12,6 +12,115 @@
 	<link rel="stylesheet" href="/assets/css/index.css" />
 	<noscript><link rel="stylesheet" href="/assets/css/noscript.css" /></noscript>
 </head>
+<style>
+	.top_img_box{
+		width: 100%;
+		height: 310px;
+		margin-bottom: 50px;
+		background-color: red;
+	}
+
+	.top_img_box > img {
+		width: 100%;
+		height: 100%;
+	}
+
+	#main {
+		padding: 0;
+	}
+
+	.wrapper {
+		padding: 0;
+		margin-bottom: 100px;
+	}
+
+	#header {
+		background-color: #5a8100;
+	}
+
+	#header nav > ul > li a {
+		color: white;
+	}
+
+	#header h1 a {
+		color: white;
+	}
+
+	#header .main ul li > a {
+		color: white;
+
+	}
+
+	#footer {
+		background-color: #304400;
+	}
+
+	.adminmypadge_content_box {
+		width: 100%;
+	}
+
+	.adminmypadge_content_box:last-child{
+		height: 400px;
+	}
+
+	.actions {
+		float: right;
+	}
+
+	.adminmypage_box {
+		width: 100%;
+		height: 450px;
+		margin-bottom: 40px;
+	}
+
+	.content {
+		width: 30%;
+	}
+
+	ol, ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.admin_board_list {
+		width: 240px;
+		height: 120px;
+		background-color: transparent;
+    	color: #444 !important;
+    	box-shadow: inset 0 0 0 1px #444;
+		margin-top: 20px;
+		text-align: center;
+		padding: 10px;
+		overflow: hidden;
+		white-space: normal; /* 텍스트를 한 줄로 표시하고 줄 바꿈 금지 */
+		text-overflow: ellipsis; /* 텍스트가 너비를 초과하는 경우 "..."으로 표시 */
+		cursor: pointer;
+	}
+
+	.admin_board_list > div {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: normal;
+	}
+
+	tr{
+		background-color: white;
+	}
+
+	.category_button {
+		margin-right: 10px;
+	}
+
+	a {
+		border-bottom: none;
+	}
+
+	.admin_board_list_box {
+		display: flex;
+		justify-content: space-between;
+	}
+</style>
 <body class="is-preload">
 
 	<!-- Header -->
@@ -25,11 +134,13 @@
 				<li><a href="#">트레이너 매칭</a></li>
 				<li><a href="#">챌린지</a></li>
 				<li><a href="#">제품</a></li>
-				<li><a href="#" class="button">Sign Up</a></li>
 			</ul>
 		</nav>
 		<nav class="main">
 			<ul>
+				<li id="login">
+					<a class="login" href="#">Login</a>
+				</li>
 				<li class="search">
 					<a class="fa-search" href="#search">Search</a>
 					<form id="search" method="get" action="#">
@@ -93,6 +204,10 @@
 
 	<!-- Main -->
 	<section id="main" class="wrapper sidebar left">
+		<div class="top_img_box">
+			<img src="/images/pic01.jpg" alt="">
+		</div>
+
 		<div class="inner">
 
 			<header class="major">
@@ -100,12 +215,325 @@
 				<p>관리자</p>
 			</header>
 
+
+
 			<!-- Content -->
 			<div class="content">
+				<div class="adminmypage_box">
+					<h2>신고 접수</h2>
+					<div class="adminmypadge_content_box">
+						<table style="text-align: center;">
+							<tr>
+								<td>
+									<a href="#">
+										report.report_num
+									</a>
+								</td>
+								<td>
+									<a href="#">
+										report.user_id
+									</a>
+								</td>
+								<td>
+									<a href="#">
+										report.report_content
+									</a>
+								</td>
+								<td>
+									<a href="#">
+										report.report_date
+									</a>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="#">
+										report.report_num
+									</a>
+								</td>
+								<td>
+									<a href="#">
+										report.user_id
+									</a>
+								</td>
+								<td>
+									<a href="#">
+										report.report_content
+									</a>
+								</td>
+								<td>
+									<a href="#">
+										report.report_date
+									</a>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="#">
+										report.report_num
+									</a>
+								</td>
+								<td>
+									<a href="#">
+										report.user_id
+									</a>
+								</td>
+								<td>
+									<a href="#">
+										report.report_content
+									</a>
+								</td>
+								<td>
+									<a href="#">
+										report.report_date
+									</a>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="#">
+										report.report_num
+									</a>
+								</td>
+								<td>
+									<a href="#">
+										report.user_id
+									</a>
+								</td>
+								<td>
+									<a href="#">
+										report.report_content
+									</a>
+								</td>
+								<td>
+									<a href="#">
+										report.report_date
+									</a>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="#">
+										report.report_num
+									</a>
+								</td>
+								<td>
+									<a href="#">
+										report.user_id
+									</a>
+								</td>
+								<td>
+									<a href="#">
+										report.report_content
+									</a>
+								</td>
+								<td>
+									<a href="#">
+										report.report_date
+									</a>
+								</td>
+							</tr>
+						</table>
+					</div>
+					<ul class="actions">
+						<li><a href="#" class="button">더보기</a></li>
+					</ul>
+				</div>
 
+				<div class="adminmypage_box">
+					<h2>트레이너 신청 내역</h2>
+					<div class="adminmypadge_content_box">
+						<table style="text-align: center;">
+							<tr>
+								<td>
+									<a href="#">
+										signup.signup_num
+									</a>
+								</td>
+								<td>
+									<a href="#">
+										signup.user_id
+									</a>
+								</td>
+								<td>
+									<a href="#">
+										signup.trainer_part
+									</a>
+								</td>
+								<td>
+									<a href="#">
+										signup.trainer_career
+									</a>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="#">
+										signup.signup_num
+									</a>
+								</td>
+								<td>
+									<a href="#">
+										signup.user_id
+									</a>
+								</td>
+								<td>
+									<a href="#">
+										signup.trainer_part
+									</a>
+								</td>
+								<td>
+									<a href="#">
+										signup.trainer_career
+									</a>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="#">
+										signup.signup_num
+									</a>
+								</td>
+								<td>
+									<a href="#">
+										signup.user_id
+									</a>
+								</td>
+								<td>
+									<a href="#">
+										signup.trainer_part
+									</a>
+								</td>
+								<td>
+									<a href="#">
+										signup.trainer_career
+									</a>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="#">
+										signup.signup_num
+									</a>
+								</td>
+								<td>
+									<a href="#">
+										signup.user_id
+									</a>
+								</td>
+								<td>
+									<a href="#">
+										signup.trainer_part
+									</a>
+								</td>
+								<td>
+									<a href="#">
+										signup.trainer_career
+									</a>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="#">
+										signup.signup_num
+									</a>
+								</td>
+								<td>
+									<a href="#">
+										signup.user_id
+									</a>
+								</td>
+								<td>
+									<a href="#">
+										signup.trainer_part
+									</a>
+								</td>
+								<td>
+									<a href="#">
+										signup.trainer_career
+									</a>
+								</td>
+							</tr>
+						</table>
+					</div>
+					<ul class="actions">
+						<li><a href="#" class="button">더보기</a></li>
+					</ul>
+				</div>
 
+				<div class="adminmypage_box">
+					<h2>관리자 게시물</h2>
+					<div class="adminmypadge_content_box">
+						<div class="button category_button">
+							<a href="#">뉴스</a>
+						</div>
+						<div class="button category_button">
+							<a href="#">운동 정보</a>
+						</div>
+						<div class="button category_button">
+							<a href="#">식단 레시피</a>
+						</div>
+						<div class="button category_button">
+							<a href="#">꿀팁</a>
+						</div>
+						<div class="admin_board_list_box">
+							<div>
+								<div class="admin_board_list">
+									<div style="font-weight: bold;">board.board_title</div>
+									<div>board.board_contentboard_contentboard_contentboard_contentboard_content</div>
+									<div>board.view_cnt</div>
+									<div>board.like_cnt</div>
+								</div>
+							</div>
+							<div>
+								<div class="admin_board_list">
+									<div style="font-weight: bold;">board.board_title</div>
+									<div>board.board_contentboard_contentboard_contentboard_contentboard_content</div>
+									<div>board.view_cnt</div>
+									<div>board.like_cnt</div>
+								</div>
+							</div>
+							<div>
+								<div class="admin_board_list">
+									<div style="font-weight: bold;">board.board_title</div>
+									<div>board.board_contentboard_contentboard_contentboard_contentboard_content</div>
+									<div>board.view_cnt</div>
+									<div>board.like_cnt</div>
+								</div>
+							</div>
+						</div>
+						<div class="admin_board_list_box" style="margin-bottom: 25px;">
+							<div>
+								<div class="admin_board_list">
+									<div style="font-weight: bold;">board.board_title</div>
+									<div>board.board_contentboard_contentboard_contentboard_contentboard_content</div>
+									<div>board.view_cnt</div>
+									<div>board.like_cnt</div>
+								</div>
+							</div>
+							<div>
+								<div class="admin_board_list">
+									<div style="font-weight: bold;">board.board_title</div>
+									<div>board.board_contentboard_contentboard_contentboard_contentboard_content</div>
+									<div>board.view_cnt</div>
+									<div>board.like_cnt</div>
+								</div>
+							</div>
+							<div>
+								<div class="admin_board_list">
+									<div style="font-weight: bold;">board.board_title</div>
+									<div>board.board_contentboard_contentboard_contentboard_contentboard_content</div>
+									<div>board.view_cnt</div>
+									<div>board.like_cnt</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<ul class="actions">
+						<li><a href="#" class="button">더보기</a></li>
+					</ul>
+				</div>
 			</div>
-
 
 			<!-- Sidebar -->
 			<div class="sidebar">
@@ -119,14 +547,7 @@
 					<h3><a href="#">문의함</a></h3>
 				</section>
 
-
-				<div class="content">
-					<div>
-						
-					</div>
-				</div>
 			</div>
-
 		</div>
 	</section>
 
