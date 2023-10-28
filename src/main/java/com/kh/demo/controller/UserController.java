@@ -33,7 +33,6 @@ public class UserController {
         UserDTO loginUser = service.login(userid, userpw);
         if(loginUser != null) {
             req.getSession().setAttribute("loginUser", loginUser.getUser_id());
-            System.out.println("test4");
             return "redirect:/board/list";
         }
         else {

@@ -1,19 +1,19 @@
 <!DOCTYPE HTML>
 <!--
-	Future Imperfect by Pixelarity
+	Slate by Pixelarity
 	pixelarity.com | hello@pixelarity.com
 	License: pixelarity.com/license
 -->
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<title>Untitled</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<link rel="stylesheet" href="assets/css/index.css" />
-	<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	<link rel="stylesheet" th:href="@{/assets/css/index.css}" />
+	<noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
 </head>
 <style>
-	#side-wrap {
+#side-wrap {
 width: 300px; /* 원하는 가로 크기로 조절 */
 margin: 0 auto; /* 수평 가운데 정렬 */
 padding: 20px; /* 내용과 사이드바 사이의 간격 설정 */
@@ -179,6 +179,9 @@ margin: 0 10px;
 		<ul>
 			<li id="login">
 				<a class="login" href="#">Login</a>
+				<a class="login" href="/usermypage/user_modify">유저</a>
+				<a class="login" href="/trainermypage/trainer_modify">트레</a>
+				<a class="login" href="#">관리</a>
 			</li>
 			<li class="search">
 				<a class="fa-search" href="#search">Search</a>
@@ -474,17 +477,20 @@ margin: 0 10px;
 </footer>
 
 <!-- Scripts -->
-<script src="assets/js/jquery.min.js"></script>
-<script src="assets/js/jquery.dropotron.min.js"></script>
-<script src="assets/js/jquery.scrollex.min.js"></script>
-<script src="assets/js/browser.min.js"></script>
-<script src="assets/js/breakpoints.min.js"></script>
-<script src="assets/js/util.js"></script>
-<script src="assets/js/main.js"></script>
+<script th:src="@{/assets/js/jquery.min.js}"></script>
+<script th:src="@{/assets/js/jquery.dropotron.min.js}"></script>
+<script th:src="@{/assets/js/jquery.scrollex.min.js}"></script>
+<script th:src="@{/assets/js/browser.min.js}"></script>
+<script th:src="@{/assets/js/breakpoints.min.js}"></script>
+<script th:src="@{/assets/js/util.js}"></script>
+<script th:src="@{/assets/js/main.js}"></script>
 
 
-<script src="assets/js/util_sub.js"></script>
-<script src="assets/js/main_sub.js"></script>
+<script th:src="@{/assets/js/util_sub.js}"></script>
+<script th:src="@{/assets/js/main_sub.js}"></script>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
 

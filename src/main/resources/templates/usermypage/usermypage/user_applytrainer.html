@@ -4,13 +4,13 @@
 	pixelarity.com | hello@pixelarity.com
 	License: pixelarity.com/license
 -->
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<title>Untitled</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<link rel="stylesheet" href="/assets/css/main.css" />
-	<noscript><link rel="stylesheet" href="/assets/css/noscript.css" /></noscript>
+	<link rel="stylesheet" th:href="@{/assets/css/main.css}" />
+	<noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
 </head>
 <body class="is-preload">
 
@@ -36,13 +36,13 @@
 	<div class="inner">
 
 		<header class="major">
-			<h2>정보</h2>
-			<p>전체</p>
+			<h2>마이페이지</h2>
 		</header>
 
 		<!-- Content -->
 		<div class="content">
-			<div class="button" style="margin-bottom: 30px;">글 작성</div>
+
+
 			<table>
 				<tr>
 					<th>제목</th>
@@ -54,52 +54,10 @@
 					<td>bbbb</td>
 					<td>cccc</td>
 				</tr>
-				<tr>
-					<td>aaaa</td>
-					<td>bbbb</td>
-					<td>cccc</td>
-				</tr>
-				<tr>
-					<td>aaaa</td>
-					<td>bbbb</td>
-					<td>cccc</td>
-				</tr>
-				<tr>
-					<td>aaaa</td>
-					<td>bbbb</td>
-					<td>cccc</td>
-				</tr>
-				<tr>
-					<td>aaaa</td>
-					<td>bbbb</td>
-					<td>cccc</td>
-				</tr>
-				<tr>
-					<td>aaaa</td>
-					<td>bbbb</td>
-					<td>cccc</td>
-				</tr>
-				<tr>
-					<td>aaaa</td>
-					<td>bbbb</td>
-					<td>cccc</td>
-				</tr>
-				<tr>
-					<td>aaaa</td>
-					<td>bbbb</td>
-					<td>cccc</td>
-				</tr>
-				<tr>
-					<td>aaaa</td>
-					<td>bbbb</td>
-					<td>cccc</td>
-				</tr>
-				<tr>
-					<td>aaaa</td>
-					<td>bbbb</td>
-					<td>cccc</td>
-				</tr>
+
+
 			</table>
+
 
 		</div>
 
@@ -108,11 +66,14 @@
 		<div class="sidebar">
 
 			<section>
-				<h3><a href="#" style="color: #5a8100;">전체</a></h3>
-				<h3><a href="#">뉴스</a></h3>
-				<h3><a href="#">식단</a></h3>
-				<h3><a href="#">운동</a></h3>
-				<h3><a href="#">꿀팁</a></h3>
+				<h3><a href="/usermypage/user_modify">내 정보 수정</a></h3>
+				<h3><a href="#">나의 다이어리</a></h3>
+				<h3><a href="/usermypage/user_challenge">나의 챌린지</a></h3>
+				<h3><a href="/usermypage/user_subtrainer">구독한 트레이너</a></h3>
+				<h3><a href="/usermypage/user_subbookmark">북마크</a></h3>
+				<h3><a href="/usermypage/user_boardlist">내 게시물</a></h3>
+				<h3><a href="/usermypage/user_message">쪽지함</a></h3>
+				<h3><a href="/usermypage/user_applytrainer">트레이너 전환 신청</a></h3>
 			</section>
 
 		</div>
@@ -133,13 +94,14 @@
 </footer>
 
 <!-- Scripts -->
-<script src="assets/js/jquery.min.js"></script>
-<script src="assets/js/jquery.dropotron.min.js"></script>
-<script src="assets/js/jquery.scrollex.min.js"></script>
-<script src="assets/js/browser.min.js"></script>
-<script src="assets/js/breakpoints.min.js"></script>
-<script src="assets/js/util.js"></script>
-<script src="assets/js/main.js"></script>
+<script th:src="@{/assets/js/jquery.min.js}"></script>
+<script th:src="@{/assets/js/jquery.dropotron.min.js}"></script>
+<script th:src="@{/assets/js/jquery.scrollex.min.js}"></script>
+<script th:src="@{/assets/js/browser.min.js}"></script>
+<script th:src="@{/assets/js/breakpoints.min.js}"></script>
+<script th:src="@{/assets/js/util.js}"></script>
+<script th:src="@{/assets/js/main.js}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 </body>
 </html>
