@@ -1,14 +1,12 @@
 <!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kh.demo.mapper.UserMapper">
-
-    <insert id="insertUser">
-        insert into t_user (userid,userpw,username,usergender,zipcode,addr,addrdetail,addretc,userhobby)
-        values(#{userid},#{userpw},#{username},#{usergender},#{zipcode},#{addr},#{addrdetail},#{addretc},#{userhobby})
-    </insert>
-
-    <select id="findById">
-        select * from t_user where userid=#{userid}
-    </select>
-
+	<insert id="insertUser">
+		insert into user (user_id,user_name,user_nickname,user_pw,weight_goal,calories_goal,user_tel,user_mail,user_height,user_gender,user_age,user_joindate,user_point,user_reportedcnt)
+		values(#{user_id},#{user_name},#{user_nickname},#{user_pw},#{weight_goal},#{calories_goal},#{user_tel},#{user_mail},#{user_height},#{user_gender},#{user_age},#{user_joindate},#{user_point},#{user_reportedcnt})
+	</insert>
+	<select id="findById">
+		select * from user where user_id=#{user_id}
+	</select>
 </mapper>
+

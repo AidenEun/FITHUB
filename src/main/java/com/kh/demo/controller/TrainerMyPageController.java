@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/trainermypage/*")
 public class TrainerMyPageController {
 
-    @GetMapping("#")
-    public void replace(){}
+    @GetMapping("trainer_modify")
+    public void replaceModify(){}
 
+    @GetMapping("trainer_challenge")
+    public void replaceChallenge(){}
 }

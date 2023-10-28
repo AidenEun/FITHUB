@@ -13,9 +13,9 @@ public class PageDTO {
 	private int realEnd;
 	private Long total;
 	private boolean prev,next;
-	private CriteriaWithKeyword cri;
+	private Criteria cri;
 	
-	public PageDTO(Long total, CriteriaWithKeyword cri) {
+	public PageDTO(Long total, Criteria cri) {
 		int pagenum = cri.getPagenum();
 		this.cri = cri;
 		this.total = total;
