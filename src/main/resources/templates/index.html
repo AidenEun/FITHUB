@@ -1,19 +1,19 @@
 <!DOCTYPE HTML>
 <!--
-	Slate by Pixelarity
+	Future Imperfect by Pixelarity
 	pixelarity.com | hello@pixelarity.com
 	License: pixelarity.com/license
 -->
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko">
 <head>
 	<title>Untitled</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<link rel="stylesheet" th:href="@{/assets/css/index.css}" />
-	<noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
+	<link rel="stylesheet" href="assets/css/index.css" />
+	<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 </head>
 <style>
-#side-wrap {
+	#side-wrap {
 width: 300px; /* 원하는 가로 크기로 조절 */
 margin: 0 auto; /* 수평 가운데 정렬 */
 padding: 20px; /* 내용과 사이드바 사이의 간격 설정 */
@@ -96,6 +96,14 @@ margin: 0 auto; /* 중앙 정렬을 위해 */
 padding: 10px; /* 각 탭 메뉴 아이템의 패딩 */
 cursor: pointer; /* 커서 모양을 포인터로 변경하여 클릭 가능하게 함 */
 /* 다른 스타일을 추가할 수 있음 */
+}
+
+.tab-view {
+display: none; /* 모든 탭 뷰 숨김 */
+}
+
+.today-view {
+display: block; /* 오늘 탭만 보이도록 설정 */
 }
 
 #meal-options {
@@ -226,13 +234,13 @@ margin: 0 10px;
 			<span>0p</span>
 		</div>
 		<div id="tab-menu">
-			<div class="today-tab">오늘</div>
-			<div class="chall-tab">도전</div>
-			<div class="sub-tab">구독</div>
+			<div class="tab today-tab">오늘</div>
+			<div class="tab chall-tab">도전</div>
+			<div class="tab sub-tab">구독</div>
 			<div class="shop-tab">쇼핑</div>
 		</div>
 		<div id="tab-menu-container">
-			<div class="today-view">
+			<div class="tab-view today-view">
 				<strong>나의 목표</strong>
 				<p>목표무게</p>
 				<p>목표칼로리</p>
@@ -252,6 +260,12 @@ margin: 0 10px;
 					<div>단백질</div>
 					<div>지방</div>
 				</div>
+			</div>
+			<div class="tab-view chall-view">
+				<p>도전 뷰</p>
+			</div>
+			<div class="tab-view sub-view">
+				<p>구독 뷰</p>
 			</div>
 		</div>
 	</div>
@@ -477,20 +491,34 @@ margin: 0 10px;
 </footer>
 
 <!-- Scripts -->
-<script th:src="@{/assets/js/jquery.min.js}"></script>
-<script th:src="@{/assets/js/jquery.dropotron.min.js}"></script>
-<script th:src="@{/assets/js/jquery.scrollex.min.js}"></script>
-<script th:src="@{/assets/js/browser.min.js}"></script>
-<script th:src="@{/assets/js/breakpoints.min.js}"></script>
-<script th:src="@{/assets/js/util.js}"></script>
-<script th:src="@{/assets/js/main.js}"></script>
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/jquery.dropotron.min.js"></script>
+<script src="assets/js/jquery.scrollex.min.js"></script>
+<script src="assets/js/browser.min.js"></script>
+<script src="assets/js/breakpoints.min.js"></script>
+<script src="assets/js/util.js"></script>
+<script src="assets/js/main.js"></script>
 
 
-<script th:src="@{/assets/js/util_sub.js}"></script>
-<script th:src="@{/assets/js/main_sub.js}"></script>
+<script src="assets/js/util_sub.js"></script>
+<script src="assets/js/main_sub.js"></script>
 
+<script>
+	const tabs = document.querySelectorAll('.tab');
+    const tabViews = document.querySelectorAll('.tab-view');
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    tabs.forEach((tab, index) => {
+        tab.addEventListener('click', () => {
+            // 모든 탭 뷰 숨기기
+            tabViews.forEach((view) => {
+                view.style.display = 'none';
+            });
+
+            // 클릭한 탭에 해당하는 탭 뷰만 보이게 하기
+            tabViews[index].style.display = 'block';
+        });
+    });
+</script>
 
 
 

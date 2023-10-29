@@ -98,6 +98,14 @@
     /* 다른 스타일을 추가할 수 있음 */
 }
 
+.tab-view {
+    display: none; /* 모든 탭 뷰 숨김 */
+}
+
+.today-view {
+    display: block; /* 오늘 탭만 보이도록 설정 */
+}
+
 #meal-options {
     display: flex; /* 자식 요소를 수평으로 배열하기 위해 Flexbox 레이아웃 사용 */
     justify-content: center; /* 자식 요소를 수평으로 가운데 정렬 */
@@ -223,13 +231,13 @@
 								<span>0p</span>
 							</div>
 							<div id="tab-menu">
-								<div class="today-tab">오늘</div>
-								<div class="chall-tab">도전</div>
-								<div class="sub-tab">구독</div>
+								<div class="tab today-tab">오늘</div>
+								<div class="tab chall-tab">도전</div>
+								<div class="tab sub-tab">구독</div>
 								<div class="shop-tab">쇼핑</div>
 							</div>
 							<div id="tab-menu-container">
-								<div class="today-view">
+								<div class="tab-view today-view">
 									<strong>나의 목표</strong>
 									<p>목표무게</p>
 									<p>목표칼로리</p>
@@ -249,6 +257,12 @@
 										<div>단백질</div>
 										<div>지방</div>
 									</div>
+								</div>
+								<div class="tab-view chall-view">
+									<p>도전 뷰</p>
+								</div>
+								<div class="tab-view sub-view">
+									<p>구독 뷰</p>
 								</div>
 							</div>
 						</div>
@@ -485,6 +499,23 @@
 
 			<script src="assets/js/util_sub.js"></script>
 			<script src="assets/js/main_sub.js"></script>
+
+			<script>
+				const tabs = document.querySelectorAll('.tab');
+				const tabViews = document.querySelectorAll('.tab-view');
+
+				tabs.forEach((tab, index) => {
+					tab.addEventListener('click', () => {
+						// 모든 탭 뷰 숨기기
+						tabViews.forEach((view) => {
+							view.style.display = 'none';
+						});
+
+						// 클릭한 탭에 해당하는 탭 뷰만 보이게 하기
+						tabViews[index].style.display = 'block';
+					});
+				});
+			</script>
 
 
 
