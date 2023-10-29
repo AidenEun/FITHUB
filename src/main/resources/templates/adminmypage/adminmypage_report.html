@@ -4,13 +4,13 @@
 	pixelarity.com | hello@pixelarity.com
 	License: pixelarity.com/license
 -->
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<title>Untitled</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<link rel="stylesheet" href="/assets/css/index.css" />
-	<noscript><link rel="stylesheet" href="/assets/css/noscript.css" /></noscript>
+	<link rel="stylesheet" th:href="@{/assets/css/index.css}" />
+	<noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
 </head>
 <style>
 	.top_img_box{
@@ -55,70 +55,16 @@
 		background-color: #304400;
 	}
 
-	.adminmypadge_content_box {
-		width: 100%;
-	}
-
-	.adminmypadge_content_box:last-child{
-		height: 400px;
-	}
-
-	.actions {
-		float: right;
-	}
-
-	.adminmypage_box {
-		width: 100%;
-		height: 450px;
-		margin-bottom: 40px;
-	}
-
-	.content {
-		width: 30%;
-	}
-
-	ol, ul {
-		list-style: none;
-		margin: 0;
-		padding: 0;
-	}
-
-	.admin_board_list {
-		width: 240px;
-		height: 120px;
-		background-color: transparent;
-    	color: #444 !important;
-    	box-shadow: inset 0 0 0 1px #444;
-		margin-top: 20px;
-		text-align: center;
-		padding: 10px;
-		overflow: hidden;
-		white-space: normal; /* 텍스트를 한 줄로 표시하고 줄 바꿈 금지 */
-		text-overflow: ellipsis; /* 텍스트가 너비를 초과하는 경우 "..."으로 표시 */
-		cursor: pointer;
-	}
-
-	.admin_board_list > div {
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: normal;
-	}
-
-	tr{
-		background-color: white;
-	}
-
-	.category_button {
-		margin-right: 10px;
-	}
-
 	a {
 		border-bottom: none;
 	}
 
-	.admin_board_list_box {
-		display: flex;
-		justify-content: space-between;
+	.long_text {
+		width: 180px;
+		max-width: 180px;
+  		white-space: nowrap;
+  		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 </style>
 <body class="is-preload">
@@ -219,7 +165,46 @@
 
 			<!-- Content -->
 			<div class="content">
+				<div class="button" style="margin-right: 10px;">전체</div>
+				<div class="button" style="margin-right: 10px;">유저</div>
+				<div class="button">트레이너</div>
 
+				<table style="text-align: center; margin-top: 20px;">
+					<tr style="font-weight: bold;">
+						<td>신고 번호</td>
+						<td>신고 유저</td>
+						<td>게시글 번호</td>
+						<td>카테고리</td>
+						<td>신고 일자</td>
+					</tr>
+					<tr>
+						<td class="long_text">
+							<a href="#">
+								report.report_num
+							</a>
+						</td>
+						<td class="long_text">
+							<a href="#">
+								report.user_id
+							</a>
+						</td>
+						<td class="long_text">
+							<a href="#">
+								report.report_boardnum
+							</a>
+						</td>
+						<td class="long_text">
+							<a href="#">
+								report.board_category
+							</a>
+						</td>
+						<td class="long_text">
+							<a href="#">
+								report.report_date
+							</a>
+						</td>
+					</tr>
+				</table>
 			</div>
 
 			<!-- Sidebar -->
@@ -251,15 +236,15 @@
 	</footer>
 
 	<!-- Scripts -->
-	<script src="/assets/js/jquery.min.js"></script>
-	<script src="/assets/js/jquery.dropotron.min.js"></script>
-	<script src="/assets/js/jquery.scrollex.min.js"></script>
-	<script src="/assets/js/browser.min.js"></script>
-	<script src="/assets/js/breakpoints.min.js"></script>
-	<script src="/assets/js/util.js"></script>
-	<script src="/assets/js/main.js"></script>
+	<script th:src="@{/assets/js/jquery.min.js}"></script>
+	<script th:src="@{/assets/js/jquery.dropotron.min.js}"></script>
+	<script th:src="@{/assets/js/jquery.scrollex.min.js}"></script>
+	<script th:src="@{/assets/js/browser.min.js}"></script>
+	<script th:src="@{/assets/js/breakpoints.min.js}"></script>
+	<script th:src="@{/assets/js/util.js}"></script>
+	<script th:src="@{/assets/js/main.js}"></script>
 
-	<script src="/assets/js/util_sub.js"></script>
-	<script src="/assets/js/main_sub.js"></script>
+	<script th:src="@{/assets/js/util_sub.js}"></script>
+	<script th:src="@{/assets/js/main_sub.js}"></script>
 </body>
 </html>

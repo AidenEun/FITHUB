@@ -4,13 +4,13 @@
 	pixelarity.com | hello@pixelarity.com
 	License: pixelarity.com/license
 -->
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<title>Untitled</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<link rel="stylesheet" href="/assets/css/index.css" />
-	<noscript><link rel="stylesheet" href="/assets/css/noscript.css" /></noscript>
+	<link rel="stylesheet" th:href="@{/assets/css/index.css}" />
+	<noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
 </head>
 <style>
 	.top_img_box{
@@ -55,70 +55,63 @@
 		background-color: #304400;
 	}
 
-	.adminmypadge_content_box {
-		width: 100%;
-	}
-
-	.adminmypadge_content_box:last-child{
-		height: 400px;
-	}
-
-	.actions {
-		float: right;
-	}
-
-	.adminmypage_box {
-		width: 100%;
-		height: 450px;
-		margin-bottom: 40px;
-	}
-
-	.content {
-		width: 30%;
-	}
-
-	ol, ul {
-		list-style: none;
-		margin: 0;
-		padding: 0;
-	}
-
-	.admin_board_list {
-		width: 240px;
-		height: 120px;
-		background-color: transparent;
-    	color: #444 !important;
-    	box-shadow: inset 0 0 0 1px #444;
-		margin-top: 20px;
-		text-align: center;
-		padding: 10px;
-		overflow: hidden;
-		white-space: normal; /* 텍스트를 한 줄로 표시하고 줄 바꿈 금지 */
-		text-overflow: ellipsis; /* 텍스트가 너비를 초과하는 경우 "..."으로 표시 */
-		cursor: pointer;
-	}
-
-	.admin_board_list > div {
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: normal;
-	}
-
-	tr{
-		background-color: white;
-	}
-
-	.category_button {
-		margin-right: 10px;
-	}
-
 	a {
 		border-bottom: none;
 	}
 
-	.admin_board_list_box {
+	.search{
 		display: flex;
-		justify-content: space-between;
+	}
+	.search-border{
+		border: 1px solid rgb(200, 200, 200);
+		border-radius: 15px;
+		margin-bottom: 50px;
+	}
+	#search_input{
+		height: 60px;
+		border-radius: 10px 0 0 10px;
+		border : 1px solid rgb(200, 200, 200);
+
+	}
+	#search-button{
+		width: 100px;
+		height: 60px;
+		border-radius: 0 10px 10px 0;
+		background-color: gainsboro;
+
+
+	}
+	.search_content{
+		padding: 40px;
+		margin: 0px;
+		background-color: gainsboro;
+
+
+	}
+	.search_content p{
+		font-size: 18px;
+		font-weight: bold;
+		height: 20px;
+	}
+
+	#search_result {
+		display: none;
+	}
+
+	#no_result {
+		display: none;
+	}
+
+	#no_keyword {
+		display: none;
+	}
+
+	.long_text{
+		width: 180px;
+		max-width: 180px;
+  		white-space: nowrap;
+  		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 </style>
 <body class="is-preload">
@@ -219,7 +212,56 @@
 
 		<!-- Content -->
 		<div class="content">
-
+			<div class="search-container">
+				<div class="search">
+					<input type="text" id="search_input" placeholder="유저 아이디를 입력하세요">
+					<input type="button" id="search-button" value="검색" onclick="search()">
+				</div>
+				<div style="margin-top: 30px;" class="button primary fit" id="no_keyword">유저 아이디를 입력해주세요!!</div>
+				<div style="margin-top: 30px;" class="button fit" id="no_result">검색 결과가 없습니다.</div>
+				<table style="text-align: center; margin-top: 50px;" id="search_result">
+					<tr style="font-weight: bold; font-size: 14px;">
+						<td>아이디</td>
+						<td>게시물 수</td>
+						<td>댓글 수</td>
+						<td>신고 횟수</td>
+						<td>신고 당한 횟수</td>
+						<td>정지 상태</td>
+					</tr>
+					<tr>
+						<td class="long_text">
+							<a href="#">
+								user.user_id
+							</a>
+						</td>
+						<td class="long_text">
+							<a href="#">
+								게시글 수
+							</a>
+						</td>
+						<td class="long_text">
+							<a href="#">
+								댓글 수
+							</a>
+						</td>
+						<td class="long_text">
+							<a href="#">
+								신고 횟수
+							</a>
+						</td>
+						<td class="long_text">
+							<a href="#">
+								user.reportedcnt
+							</a>
+						</td>
+						<td class="long_text">
+							<a href="#">
+								정지 상태
+							</a>
+						</td>
+					</tr>
+				</table>
+			</div>
 		</div>
 
 		<!-- Sidebar -->
@@ -250,16 +292,46 @@
 	</div>
 </footer>
 
-<!-- Scripts -->
-<script src="/assets/js/jquery.min.js"></script>
-<script src="/assets/js/jquery.dropotron.min.js"></script>
-<script src="/assets/js/jquery.scrollex.min.js"></script>
-<script src="/assets/js/browser.min.js"></script>
-<script src="/assets/js/breakpoints.min.js"></script>
-<script src="/assets/js/util.js"></script>
-<script src="/assets/js/main.js"></script>
+	<!-- Scripts -->
+	<script th:src="@{/assets/js/jquery.min.js}"></script>
+	<script th:src="@{/assets/js/jquery.dropotron.min.js}"></script>
+	<script th:src="@{/assets/js/jquery.scrollex.min.js}"></script>
+	<script th:src="@{/assets/js/browser.min.js}"></script>
+	<script th:src="@{/assets/js/breakpoints.min.js}"></script>
+	<script th:src="@{/assets/js/util.js}"></script>
+	<script th:src="@{/assets/js/main.js}"></script>
 
-<script src="/assets/js/util_sub.js"></script>
-<script src="/assets/js/main_sub.js"></script>
+	<script th:src="@{/assets/js/util_sub.js}"></script>
+	<script th:src="@{/assets/js/main_sub.js}"></script>
+<script>
+	function search(){
+		const search_input = document.getElementById("search_input");
+		const search_result = document.getElementById("search_result");
+		const no_result = document.getElementById("no_result");
+		const no_keyword = document.getElementById("no_keyword");
+
+		const search_keyword = search_input.value;
+		const isDataFound = true;
+
+		if(search_keyword == ''){
+			no_keyword.style.display = "block";
+
+			search_result.style.display = "none";
+			no_result.style.display = "none";
+		}
+		else if(isDataFound){
+			search_result.style.display = "block";
+
+			no_result.style.display = "none";
+			no_keyword.style.display = "none";
+		}
+		else{
+			no_result.style.display = "block";
+
+			search_result.style.display = "none";
+			no_keyword.style.display = "none";
+		}
+	}
+</script>
 </body>
 </html>
