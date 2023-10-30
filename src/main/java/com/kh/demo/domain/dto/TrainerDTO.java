@@ -17,7 +17,7 @@ public class TrainerDTO {
     private int trainer_height;
     private int trainer_weight;
     private String trainer_gender;
-    private int trainer_age;
+    private int trainer_birth;
     private String trainer_part;
     private String trainer_career;
     private String trainer_intro;

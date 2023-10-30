@@ -15,8 +15,9 @@ public class UserDTO {
     private int user_height;
     private int user_weight;
     private String user_gender;
-    private int user_age;
+    private int user_birth;
     private String user_joindate;
     private Long user_point;
     private int user_reportedcnt;
+    private String user_category;
 }
