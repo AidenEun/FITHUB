@@ -19,4 +19,14 @@ public class ReportServiceImpl implements ReportService{
     public List<ReportDTO> getReportList(Criteria cri) {
         return reportMapper.getReportList(cri);
     }
+
+    @Override
+    public List<ReportDTO> getReportListByUser(Criteria cri) {
+        return reportMapper.getReportListByUser(cri);
+    }
+
+    @Override
+    public List<ReportDTO> getReportListByTrainer(Criteria cri) {
+        return reportMapper.getReportListByTrainer(cri);
+    }
 }

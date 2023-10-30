@@ -9,4 +9,8 @@ import java.util.List;
 @Mapper
 public interface ReportMapper {
     List<ReportDTO> getReportList(Criteria cri);
+
+    List<ReportDTO> getReportListByUser(Criteria cri);
+
+    List<ReportDTO> getReportListByTrainer(Criteria cri);
 }

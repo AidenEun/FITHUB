@@ -1,3 +1,4 @@
+
 const tabs = document.querySelectorAll('.tab');
 const tabViews = document.querySelectorAll('.tab-view');
 
@@ -28,3 +29,4 @@ challTabs.forEach((challTab, index) => {
 
     });
 });
+
