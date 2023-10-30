@@ -3,6 +3,7 @@ package com.kh.demo.controller;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.kh.demo.domain.dto.Criteria;
+import com.kh.demo.domain.dto.PageDTO;
 import com.kh.demo.domain.dto.ReportDTO;
 import com.kh.demo.service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,7 @@ public class AdminMyPageController {
     public void reportList(Criteria cri, Model model) throws Exception{
         List<ReportDTO> reportList = reportService.getReportList(cri);
         model.addAttribute("reportList" , reportList);
+        model.addAttribute("pageMaker",new PageDTO(reportService.getTotal(cri), cri));
     }
 
     @GetMapping("allReport")
