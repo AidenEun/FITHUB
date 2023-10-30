@@ -76,9 +76,9 @@ public class BoardServiceImpl implements BoardService{
 				String path = saveFolder+systemname;
 				
 				FileDTO fdto = new FileDTO();
-				fdto.setBoard_num(boardnum);
-				fdto.setSys_name(systemname);
-				fdto.setOrg_name(orgname);
+				fdto.setBoardNum(boardnum);
+				fdto.setSysName(systemname);
+				fdto.setOrgName(orgname);
 				
 				//실제 파일 업로드
 				file.transferTo(new File(path));
@@ -130,9 +130,9 @@ public class BoardServiceImpl implements BoardService{
 					String path = saveFolder+systemname;
 					
 					FileDTO fdto = new FileDTO();
-					fdto.setBoard_num(board.getBoard_num());
-					fdto.setOrg_name(orgname);
-					fdto.setSys_name(systemname);
+					fdto.setBoardNum(board.getBoard_num());
+					fdto.setOrgName(orgname);
+					fdto.setSysName(systemname);
 					
 					file.transferTo(new File(path));
 					
@@ -180,10 +180,10 @@ public class BoardServiceImpl implements BoardService{
 		if(board.getUser_id().equals(loginUser)) {
 			List<FileDTO> files = fmapper.getFiles(boardnum);
 			for(FileDTO fdto : files) {
-				File file = new File(saveFolder,fdto.getSys_name());
+				File file = new File(saveFolder,fdto.getSysName());
 				if(file.exists()) {
 					file.delete();
-					fmapper.deleteBySystemname(fdto.getSys_name());
+					fmapper.deleteBySystemname(fdto.getSysName());
 				}
 			}
 			return bmapper.deleteBoard(boardnum) == 1;
