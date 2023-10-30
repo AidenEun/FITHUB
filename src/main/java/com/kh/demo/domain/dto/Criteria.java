@@ -44,13 +44,4 @@ public class Criteria {
 				.queryParam("type", type);
 		return builder.toUriString();	//빌더가 가지고 있는 설정대로 문자열 만들기
 	}
-	
-	
 }
-
-
-
-
-
-
-
