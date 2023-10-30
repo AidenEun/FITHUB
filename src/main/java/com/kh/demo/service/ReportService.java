@@ -11,4 +11,6 @@ public interface ReportService {
     List<ReportDTO> getReportListByUser(Criteria cri);
 
     List<ReportDTO> getReportListByTrainer(Criteria cri);
+
+    Long getTotal(Criteria cri);
 }

@@ -29,4 +29,9 @@ public class ReportServiceImpl implements ReportService{
     public List<ReportDTO> getReportListByTrainer(Criteria cri) {
         return reportMapper.getReportListByTrainer(cri);
     }
+
+    @Override
+    public Long getTotal(Criteria cri) {
+        return reportMapper.getTotal(cri);
+    }
 }
