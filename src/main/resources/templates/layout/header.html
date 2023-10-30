@@ -66,7 +66,9 @@
                 <div class="tab today-tab">오늘</div>
                 <div class="tab chall-tab">도전</div>
                 <div class="tab sub-tab">구독</div>
-                <div class="shop-tab">쇼핑</div>
+                <div class="shop-tab">
+                    <a href="#">쇼핑</a>
+                </div>
             </div>
             <div id="tab-menu-container">
                 <div class="tab-view today-view">
@@ -91,10 +93,25 @@
                     </div>
                 </div>
                 <div class="tab-view chall-view">
-                    <p>도전 뷰</p>
+                    <strong>도전</strong>
+                    <div class="my-chall">
+                        <span class="active-tab">진행중</span>
+                        <span class="finish-tab">종료</span>
+                        <div id="chall-list">
+                            <div class="active-chall-listView">
+                                <p>진행중인 챌린지 list</p>
+                            </div>
+                            <div class="finish-chall-listView">
+                                <p>종료된 챌린지 list</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="tab-view sub-view">
-                    <p>구독 뷰</p>
+                    <strong>구독</strong>
+                    <div class="my-sub">
+                        <p>구독한 트레이너 list</p>
+                    </div>
                 </div>
             </div>
         </div>
