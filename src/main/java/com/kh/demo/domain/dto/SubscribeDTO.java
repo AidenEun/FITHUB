@@ -4,8 +4,8 @@ import lombok.Data;
 
 @Data
 public class SubscribeDTO {
-    private Long sub_num;
-    private String user_id;
-    private String trainer_id;
-    private String  sub_date;
+    private Long subNum;
+    private String userId;
+    private String trainerId;
+    private String  subDate;
 }

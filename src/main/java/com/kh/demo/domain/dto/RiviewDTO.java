@@ -4,11 +4,11 @@ import lombok.Data;
 
 @Data
 public class RiviewDTO {
-    private long review_num;
-    private String review_content;
-    private long matching_num;
-    private long matching_board_num;
-    private int star_rating;
-    private String user_id;
+    private long reviewNum;
+    private String reviewContent;
+    private long matchingNum;
+    private long matchingBoardNum;
+    private int starRating;
+    private String userId;
     private String regdate;
 }

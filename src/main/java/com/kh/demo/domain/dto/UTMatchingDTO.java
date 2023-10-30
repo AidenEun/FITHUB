@@ -4,10 +4,10 @@ import lombok.Data;
 
 @Data
 public class UTMatchingDTO {
-    private long matching_num;
-    private String user_id;
-    private String trainer_id;
-    private String user_check;
-    private String trainer_check;
-    private String matching_date;
+    private long matchingNum;
+    private String userId;
+    private String trainerId;
+    private String userCheck;
+    private String trainerCheck;
+    private String matchingDate;
 }

@@ -4,24 +4,24 @@ import lombok.Data;
 
 @Data
 public class TrainerDTO {
-    private String trainer_id;
-    private String trainer_name;
-    private String trainer_nickname;
-    private  String trainer_pw;
-    private String trainer_tel;
-    private String trainer_mail;
-    private String trainer_zipcode;
-    private String trainer_addr;
-    private String trainer_addrdetail;
-    private String trainer_addretc;
-    private int trainer_height;
-    private int trainer_weight;
-    private String trainer_gender;
-    private int trainer_birth;
-    private String trainer_part;
-    private String trainer_career;
-    private String trainer_intro;
-    private String trainer_joindate;
+    private String trainerId;
+    private String trainerName;
+    private String trainerNickname;
+    private  String trainerPw;
+    private String trainerTel;
+    private String trainerMail;
+    private String trainerZipcode;
+    private String trainerAddr;
+    private String trainerAddrdetail;
+    private String trainerAddretc;
+    private int trainerHeight;
+    private int trainerWeight;
+    private String trainerGender;
+    private int trainerBirth;
+    private String trainerPart;
+    private String trainerCareer;
+    private String trainerIntro;
+    private String trainerJoindate;
     private String transferdate;
-    private int trainer_reportedcnt;
+    private int trainerReportedcnt;
 }

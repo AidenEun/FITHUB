@@ -4,10 +4,10 @@ import lombok.Data;
 
 @Data
 public class AdminDTO {
-    private String admin_id;
-    private String admin_name;
-    private String admin_nickname;
-    private String admin_pw;
-    private String admin_tel;
-    private String admin_mail;
+    private String adminId;
+    private String adminName;
+    private String adminNickname;
+    private String adminPw;
+    private String adminTel;
+    private String adminMail;
 }

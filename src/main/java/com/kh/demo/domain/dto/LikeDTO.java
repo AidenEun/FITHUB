@@ -4,10 +4,10 @@ import lombok.Data;
 
 @Data
 public class LikeDTO {
-    private Long like_idx;
-    private String user_id;
-    private String board_category;
-    private Long board_num;
+    private Long likeIdx;
+    private String userId;
+    private String boardCategory;
+    private Long boardNum;
     private String regdate;
 
 }

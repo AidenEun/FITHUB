@@ -4,9 +4,9 @@ import lombok.Data;
 
 @Data
 public class ChallNoticeBoardDTO {
-    private long chall_num;
-    private String chall_category;
-    private String chall_content;
-    private int chall_term;
+    private long challNum;
+    private String challCategory;
+    private String challContent;
+    private int challTerm;
     private String regdate;
 }
