@@ -35,7 +35,7 @@ public class UserMyPageController {
     public void replaceSubBookmark(){}
 
     @GetMapping("user_boardlist")
-    public void list(Criteria cri, Model model) throws Exception {
+    public void user_boardlist(Criteria cri, Model model) throws Exception {
         System.out.println(cri);
         List<BoardDTO> list = service.getBoardList(cri);
         model.addAttribute("list",list);
@@ -45,11 +45,20 @@ public class UserMyPageController {
         model.addAttribute("recent_reply",service.getRecentReplyList(list));
     }
 
-    @GetMapping("user_message")
-    public void replaceMessage(){}
+    @GetMapping("user_messagelist")
+    public void user_messagelist(Criteria cri, Model model) throws Exception {
+        System.out.println(cri);
+        List<BoardDTO> list = service.getBoardList(cri);
+        model.addAttribute("list",list);
+        model.addAttribute("pageMaker",new PageDTO(service.getTotal(cri), cri));
+        model.addAttribute("newly_board",service.getNewlyBoardList(list));
+        model.addAttribute("reply_cnt_list",service.getReplyCntList(list));
+        model.addAttribute("recent_reply",service.getRecentReplyList(list));
+    }
 
     @GetMapping("user_applytrainer")
     public void replaceApplyTrainer(){}
 
-
+    @GetMapping("user_diary")
+    public void replaceDiary(){}
 }
