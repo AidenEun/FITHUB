@@ -51,5 +51,6 @@ public class UserMyPageController {
     @GetMapping("user_applytrainer")
     public void replaceApplyTrainer(){}
 
-
+    @GetMapping("user_diary")
+    public void replaceDiary(){}
 }

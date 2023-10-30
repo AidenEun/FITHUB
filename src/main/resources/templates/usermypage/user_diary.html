@@ -1,0 +1,375 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+    <title>Untitled</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" th:href="@{/assets/css/index.css}" />
+    <noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
+</head>
+<style>
+    *{
+        box-sizing: border-box;
+        margin: 0; padding: 0;
+
+    }
+    /* MAIN IMG 게시글 상단 고정 */
+    #top_main_img{
+        width: 100%;
+        height: 250px;
+        border: 1px solid red;
+    }
+
+    #container1{
+        margin: 0 auto;
+        width: 1080px;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        margin-top: 30px;
+    }
+    /* #container1::after{
+        clear: both;
+    } */
+    #container1 #side_box{
+        /* float: left; */
+        width: 310px;
+        height: 100%;
+        /*border: 1px solid violet;*/
+        /* background-color: antiquewhite; */
+    }
+    #container1 #main_box{
+        /* float: left; */
+        height: 100%;
+        width: 770px;
+        /* border: 1px solid violet; */
+        /* background-color: yellowgreen; */
+    }
+    /* 사이드 카테고리  */
+    #container1 #side_box .cate_list{
+        list-style: none;
+        margin-top: 40px;
+    }
+    #container1 #side_box .cate_list li{
+        margin: 30px;
+
+    }
+    /* 캘린더 스타일 */
+    .calender{
+        width: 650px;
+        margin: 50px;
+        padding: 20px;
+        margin: 0 auto;
+        margin-top: 40px;
+        margin-bottom: 40px;
+        box-shadow: 0px 0px 10px 5px #5a8100b1 ;
+        /* border: 1px solid green; */
+        border-radius: 15px;
+    }
+    .calender .calen_header{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 40px;
+        color:#5a8100;
+
+
+    }
+    .calender .calen_header .year_month{
+        padding: 25px 30px 10px;
+        font-size: 30px;
+    }
+
+    .calender .calen_header .nav{
+        display: flex;
+        /* border: 1px solid #333333; */
+        /* border-radius: 5px; */
+    }
+    .calender .calen_header .nav .nav_btn{
+        box-shadow:none;
+        padding: 0;
+        width: 38px;
+        height: 38px;
+        border: 0;
+        color: #878787 !important;
+        font-size: 1rem;
+        line-height: 38px;
+        border-radius: 50%;
+        /* background-color: #f2f2f2; */
+        cursor: pointer;
+
+    }
+    .calender .calen_header .nav .nav_btn:hover{
+        /* background-color: #f2f2f2; */
+        background-color: rgb(203,211,177);
+    }
+
+    .go_today{
+        box-shadow:none;
+        width: 75px;
+        height: 38px;
+        /* color: #878787 !important; */
+        border: 3px solid #5a8100;
+        padding: 0 10px;
+        margin: 0 10px;
+        border-radius: 5px;
+        /* background-color: #f2f2f2; */
+        cursor: pointer;
+
+    }
+    .go_today:hover{
+        background-color: rgb(203,211,177);
+
+    }
+    .weeks{
+        display: flex;
+        margin: 25px 0;
+    }
+
+    .day{
+        width: calc(100% / 7);
+        text-align: center;
+        font-weight: 600;
+    }
+
+    .dates{
+        display: flex;
+        flex-flow: row wrap;
+        /* height: 500px; */
+        margin-top: 40px;
+        border: 0;
+    }
+
+    .calen_contents .date{
+        width: calc(100% / 7);
+        position: relative;
+        padding: 15px;
+        text-align: center;
+        cursor: pointer;
+    }
+    .calender .calen_contents .date::before{
+        position: absolute;
+        content: "";
+        height: 47px;
+        width: 47px;
+        top: 50%;
+        left: 50%;
+        z-index: -1;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+
+    }
+    .dates .date:hover::before{
+        background-color: #f2f2f2;
+
+    }
+
+
+    .day:nth-child(7n +1 ),
+    .date:nth-child(7n +1){
+        color: #D13E3E;
+    }
+
+    .day:nth-child(7n),
+    .date:nth-child(7n){
+        color: #396ee2;
+    }
+
+    .other{
+        opacity: 0.6;
+    }
+
+    .today{
+        position: relative;
+        color: white;
+    }
+
+    .today::before{
+        position: absolute;
+        top: 70%;
+        left: 50%;
+        transform: translate(-50%, -60%);
+        z-index: -1;
+        width: 47px;
+        height: 47px;
+        display: block;
+        /* border: 2px solid #5a8100; */
+        background-color: #5a8100;
+        /* background-color: rgb(203,211,177); */
+        border-radius: 50%;
+        content:'';
+
+    }
+
+
+</style>
+<body class="is-preload">
+
+<!-- Header -->
+<header id="header">
+    <h1><a href="/">Fit Hub</a></h1>
+    <nav class="links">
+        <ul>
+            <li><a href="/info/info_list">정보</a></li>
+            <li><a href="#">칼로리</a></li>
+            <li><a href="#">커뮤니티</a></li>
+            <li><a href="#">트레이너 매칭</a></li>
+            <li><a href="#">챌린지</a></li>
+            <li><a href="#">제품</a></li>
+        </ul>
+    </nav>
+    <nav class="main">
+        <ul>
+            <li id="login">
+                <a class="login" href="#">Login</a>
+            </li>
+            <li class="search">
+                <a class="fa-search" href="#search">Search</a>
+                <form id="search" method="get" action="#">
+                    <input type="text" name="query" placeholder="Search" />
+                </form>
+            </li>
+            <li class="menu">
+                <a class="fa-bars" href="#menu">Menu</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+<!-- Menu -->
+<section id="menu">
+
+    <!-- Search -->
+    <section>
+        <form class="search" method="get" action="#">
+            <input type="text" name="query" placeholder="Search" />
+        </form>
+    </section>
+
+    <!-- Links -->
+    <section>
+        <ul class="links">
+            <li>
+                <a href="#">
+                    <h3>Lorem ipsum</h3>
+                    <p>Feugiat tempus veroeros dolor</p>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <h3>Dolor sit amet</h3>
+                    <p>Sed vitae justo condimentum</p>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <h3>Feugiat veroeros</h3>
+                    <p>Phasellus sed ultricies mi congue</p>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <h3>Etiam sed consequat</h3>
+                    <p>Porta lectus amet ultricies</p>
+                </a>
+            </li>
+        </ul>
+    </section>
+
+    <!-- Actions -->
+    <section>
+        <ul class="actions stacked">
+            <li><a href="#" class="button large fit">Log In</a></li>
+        </ul>
+    </section>
+</section>
+<div id="top_main_img">
+    이미지 추가 예정
+</div>
+
+<!-- Main -->
+<!-- container 시작 -->
+<!-- <section id="main" class="wrapper">
+
+    <div class="sideBox">
+    </div>
+         <header class="major">
+            <h2>정보</h2>
+            <p>전체</p>
+        </header>
+
+</section> -->
+<div id="container1">
+    <div id="side_box">
+        <h1 style="font-size: 20px">마이페이지</h1>
+        <div>
+            <ul class="cate_list">
+                <li><h1>프로필</h1></li>
+                <li><h1>나의 다이어리</h1></li>
+                <li><h1>나의 챌린지</h1></li>
+                <li><h1>나의 트레이너</h1></li>
+                <li><h1>북마크</h1></li>
+                <li><h1>내가 쓴 게시물</h1></li>
+                <li><h1>내 정보 수정</h1></li>
+            </ul>
+        </div>
+    </div>
+    <div id="main_box">
+        <div class="calender">
+            <div class="calen_header">
+                <div class="year_month"></div>
+                <div class="nav">
+                    <button class="nav_btn go_prev" onclick="prevMonth()">&lt;</button>
+                    <button class="go_today" onclick="goToday()">Today</button>
+                    <button class="nav_btn go_next" onclick="nextMonth()">&gt;</button>
+                </div>
+            </div>
+            <div class="calen_contents">
+                <div class="weeks">
+                    <div class="day">Sun</div>
+                    <div class="day">Mon</div>
+                    <div class="day">Tue</div>
+                    <div class="day">Wed</div>
+                    <div class="day">Thu</div>
+                    <div class="day">Fri</div>
+                    <div class="day">Sat</div>
+                </div>
+                <div class="dates"></div>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+<!-- Footer -->
+<footer id="footer">
+    <div class="inner">
+        <p class="copyright">&copy; Untitled Corp. All rights reserved. Lorem ipsum dolor sit amet feugiat tempus aliquam.</p>
+        <ul class="menu">
+            <li><a href="#">Terms<span> of Use</span></a></li>
+            <li><a href="#">Privacy<span> Policy</span></a></li>
+            <li><a href="#">Legal<span> Information</span></a></li>
+        </ul>
+    </div>
+</footer>
+
+<!-- Scripts -->
+<script th:src="@{/assets/js/jquery.min.js}"></script>
+<script th:src="@{/assets/js/jquery.dropotron.min.js}"></script>
+<script th:src="@{/assets/js/jquery.scrollex.min.js}"></script>
+<script th:src="@{/assets/js/browser.min.js}"></script>
+<script th:src="@{/assets/js/breakpoints.min.js}"></script>
+<script th:src="@{/assets/js/util.js}"></script>
+<script th:src="@{/assets/js/main.js}"></script>
+
+
+<script th:src="@{/assets/js/util_sub.js}"></script>
+<script th:src="@{/assets/js/main_sub.js}"></script>
+<script th:src="@{/assets/js/calender.js}"></script>
+
+<script th:src="@{https://code.jquery.com/jquery-3.6.0.min.js}"></script>
+
+</body>
+</html>
