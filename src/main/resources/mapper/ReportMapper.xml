@@ -38,4 +38,8 @@
         order by report_num desc limit #{startrow},#{amount}
     </select>
 
+    <select id="getTotal">
+        select count(*) from report where
+        <include refid="cri"/> report_num > 0
+    </select>
 </mapper>
