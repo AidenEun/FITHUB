@@ -1,16 +1,16 @@
 <!DOCTYPE HTML>
 <!--
-	Future Imperfect by Pixelarity
+	Slate by Pixelarity
 	pixelarity.com | hello@pixelarity.com
 	License: pixelarity.com/license
 -->
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<title>Untitled</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<link rel="stylesheet" href="assets/css/index.css" />
-	<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	<link rel="stylesheet" th:href="@{/assets/css/index.css}" />
+	<noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
 </head>
 <style>
 	#side-wrap {
@@ -168,119 +168,8 @@ margin: 0 10px;
 </style>
 <body class="is-preload">
 
-<!-- Wrapper -->
-
 <!-- Header -->
-<header id="header" class="alt">
-	<h1><a href="/">Fit Hub</a></h1>
-	<nav class="links">
-		<ul>
-			<li><a href="/info/info_list">정보</a></li>
-			<li><a href="#">칼로리</a></li>
-			<li><a href="#">커뮤니티</a></li>
-			<li><a href="#">트레이너 매칭</a></li>
-			<li><a href="#">챌린지</a></li>
-			<li><a href="#">제품</a></li>
-		</ul>
-	</nav>
-	<nav class="main">
-		<ul>
-			<li id="login">
-				<a class="login" href="#">Login</a>
-				<a class="login" href="/usermypage/user_modify">유저</a>
-				<a class="login" href="/trainermypage/trainer_modify">트레</a>
-				<a class="login" href="/adminmypage/adminmypage_list">관리</a>
-			</li>
-			<li class="search">
-				<a class="fa-search" href="#search">Search</a>
-				<form id="search" method="get" action="#">
-					<input type="text" name="query" placeholder="Search" />
-				</form>
-			</li>
-			<li class="menu">
-				<a class="fa-bars" href="#menu">Menu</a>
-			</li>
-		</ul>
-	</nav>
-</header>
-
-<!-- Menu -->
-<section id="menu">
-	<div class="side_info">
-		<img src="images/profile_img.png" class="prof_img" width="102px" height="102px">
-		<div id="my_info">
-			<span>등급 / 닉네임(ID)</span>
-			<div>
-				<span>내 정보</span>
-				<span>로그아웃</span>
-			</div>
-		</div>
-		<div class="goal-graph">
-			<div class="progress-bar">
-				<div class="progress-segment day-1"></div>
-				<div class="progress-label"></div>
-				<div class="progress-segment day-2"></div>
-				<div class="progress-label"></div>
-				<div class="progress-segment day-3"></div>
-				<div class="progress-label"></div>
-				<div class="progress-segment day-4"></div>
-				<div class="progress-label"></div>
-				<div class="progress-segment day-5"></div>
-				<div class="progress-label"></div>
-			</div>
-		</div>
-		<div class="point-container">
-			<div>나의 포인트</div>
-			<span>0p</span>
-		</div>
-		<div id="tab-menu">
-			<div class="tab today-tab">오늘</div>
-			<div class="tab chall-tab">도전</div>
-			<div class="tab sub-tab">구독</div>
-			<div class="shop-tab">쇼핑</div>
-		</div>
-		<div id="tab-menu-container">
-			<div class="tab-view today-view">
-				<strong>나의 목표</strong>
-				<p>목표무게</p>
-				<p>목표칼로리</p>
-				<hr>
-				<strong>잔여칼로리: 현재칼로리/목표칼로리</strong>
-				<p>섭취량</p>
-				<p>소비량</p>
-				<div id="meal-options">
-					<div class="brack-fst">아침</div>
-					<div class="lunch">점심</div>
-					<div class="dinner">저녁</div>
-					<div class="snack">간식</div>
-				</div>
-				<div id="tan-dan-ji-box">
-					<div>칼로리</div>
-					<div>탄수화물</div>
-					<div>단백질</div>
-					<div>지방</div>
-				</div>
-			</div>
-			<div class="tab-view chall-view">
-				<p>도전 뷰</p>
-			</div>
-			<div class="tab-view sub-view">
-				<p>구독 뷰</p>
-			</div>
-		</div>
-	</div>
-	<div id="another-page">
-		<div class="bmi">
-			<a href="#">BMI</a>
-		</div>
-		<div class="health-center">
-			<a href="#">보건소</a>
-		</div>
-		<div class="trainer-apply">
-			<a href="#">트레이너 신청</a>
-		</div>
-	</div>
-</section>
+<th:block th:replace="~{layout/index_header::header(${session.loginUser})}"></th:block>
 <!-- Main -->
 <!-- Banner -->
 <section id="banner">
@@ -490,18 +379,26 @@ margin: 0 10px;
 	</div>
 </footer>
 
+<!-- Footer -->
+<th:block th:replace="~{layout/footer::footer}"></th:block>
+
 <!-- Scripts -->
-<script src="assets/js/jquery.min.js"></script>
-<script src="assets/js/jquery.dropotron.min.js"></script>
-<script src="assets/js/jquery.scrollex.min.js"></script>
-<script src="assets/js/browser.min.js"></script>
-<script src="assets/js/breakpoints.min.js"></script>
-<script src="assets/js/util.js"></script>
-<script src="assets/js/main.js"></script>
+<script th:src="@{/assets/js/jquery.min.js}"></script>
+<script th:src="@{/assets/js/jquery.dropotron.min.js}"></script>
+<script th:src="@{/assets/js/jquery.scrollex.min.js}"></script>
+<script th:src="@{/assets/js/browser.min.js}"></script>
+<script th:src="@{/assets/js/breakpoints.min.js}"></script>
+<script th:src="@{/assets/js/util.js}"></script>
+<script th:src="@{/assets/js/main.js}"></script>
 
 
-<script src="assets/js/util_sub.js"></script>
-<script src="assets/js/main_sub.js"></script>
+<script th:src="@{/assets/js/util_sub.js}"></script>
+<script th:src="@{/assets/js/main_sub.js}"></script>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js">
+
+</script>
 
 <script>
 	const tabs = document.querySelectorAll('.tab');
