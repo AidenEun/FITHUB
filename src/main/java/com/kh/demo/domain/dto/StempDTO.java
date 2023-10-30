@@ -4,8 +4,8 @@ import lombok.Data;
 
 @Data
 public class StempDTO {
-    private long stemp_num;
-    private String user_id;
-    private long chall_num;
+    private long stempNum;
+    private String userId;
+    private long challNum;
     private String regdate;
 }

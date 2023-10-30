@@ -4,16 +4,16 @@ import lombok.Data;
 
 @Data
 public class FoodDTO {
-    private long food_num;
-    private String food_name;
-    private String food_brand;
+    private long foodNum;
+    private String foodName;
+    private String foodBrand;
     private int kcal;
-    private int food_calories;
+    private int foodCalories;
     private int carbo;
     private int protein;
     private int fat;
     private int cholesterol;
     private int dietaryfiber;
     private int sodium;
-    private long view_cnt;
+    private long viewCnt;
 }

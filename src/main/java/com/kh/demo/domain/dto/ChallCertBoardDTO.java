@@ -4,15 +4,15 @@ import lombok.Data;
 
 @Data
 public class ChallCertBoardDTO {
-    private long board_num;
-    private String board_title;
-    private String board_content;
-    private long chall_num;
-    private String start_date;
-    private String finish_date;
-    private String user_id;
+    private long boardNum;
+    private String boardTitle;
+    private String boardContent;
+    private long challNum;
+    private String startDate;
+    private String finishDate;
+    private String userId;
     private String regdate;
-    private String update_date;
-    private long like_cnt;
-    private long view_cnt;
+    private String updateDate;
+    private long likeCnt;
+    private long viewCnt;
 }

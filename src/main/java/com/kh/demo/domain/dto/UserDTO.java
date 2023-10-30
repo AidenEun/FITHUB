@@ -4,20 +4,20 @@ import lombok.Data;
 
 @Data
 public class UserDTO {
-    private String user_id;
-    private String user_name;
-    private String user_nickname;
-    private String user_pw;
-    private int weight_goal;
-    private int calories_goal;
-    private String user_tel;
-    private String user_mail;
-    private int user_height;
-    private int user_weight;
-    private String user_gender;
-    private int user_birth;
-    private String user_joindate;
-    private Long user_point;
-    private int user_reportedcnt;
-    private String user_category;
+    private String userId;
+    private String userName;
+    private String userNickname;
+    private String userPw;
+    private int weightGoal;
+    private int caloriesGoal;
+    private String userTel;
+    private String userMail;
+    private int userHeight;
+    private int userWeight;
+    private String userGender;
+    private int userBirth;
+    private String userJoindate;
+    private Long userPoint;
+    private int userReportedcnt;
+    private String userCategory;
 }

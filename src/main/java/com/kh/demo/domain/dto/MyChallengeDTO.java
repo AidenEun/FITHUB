@@ -4,9 +4,9 @@ import lombok.Data;
 
 @Data
 public class MyChallengeDTO {
-    private long mychall_num;
-    private String user_id;
-    private long chall_num;
+    private long mychallNum;
+    private String userId;
+    private long challNum;
     private String regdate;
-    private int succ_cnt;
+    private int succCnt;
 }

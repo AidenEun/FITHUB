@@ -4,16 +4,16 @@ import lombok.Data;
 
 @Data
 public class ProductBoardDTO {
-    private long board_num;
-    private String board_title;
-    private String board_content;
+    private long boardNum;
+    private String boardTitle;
+    private String boardContent;
     private String product;
     private String category;
     private String regdate;
-    private String update_date;
-    private long like_cnt;
-    private long bookmark_cnt;
-    private long view_cnt;
-    private String admin_id;
+    private String updateDate;
+    private long likeCnt;
+    private long bookmarkCnt;
+    private long viewCnt;
+    private String adminId;
 
 }

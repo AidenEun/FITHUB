@@ -4,10 +4,10 @@ import lombok.Data;
 
 @Data
 public class BookMarkDTO {
-    private Long bookmark_idx;
-    private String user_id;
-    private String board_category;
-    private Long board_num;
+    private Long bookmarkIdx;
+    private String userId;
+    private String boardCategory;
+    private Long boardNum;
     private String regdate;
 
 }

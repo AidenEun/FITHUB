@@ -5,10 +5,10 @@ import lombok.Data;
 @Data
 public class MessageDTO {
 
-    private long message_num;
+    private long messageNum;
     private String category;
-    private String message_content;
-    private String send_id;
-    private String receive_id;
-    private String send_date;
+    private String messageContent;
+    private String sendId;
+    private String receiveId;
+    private String sendDate;
 }
