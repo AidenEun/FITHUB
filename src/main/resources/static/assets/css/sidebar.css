@@ -1,3 +1,6 @@
+	a{
+        border-bottom: none;
+    }
 	.side_info {
         text-align: center; /* 수평 가운데 정렬을 위한 설정 */
     }
@@ -74,9 +77,6 @@
         cursor: pointer;
     }
 
-    #tab-menu > .shop-tab:hover >{
-        background-color: #ddd;
-    }
 
     .tab {
         cursor: pointer;
@@ -84,6 +84,10 @@
     }
 
     .tab:hover {
+        background-color: #ddd;
+    }
+
+    .page-tab:hover{
         background-color: #ddd;
     }
 
