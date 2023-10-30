@@ -27,9 +27,12 @@ public class AdminMyPageController {
 
     @GetMapping("adminmypage_report")
     public void reportList(Criteria cri, Model model) throws Exception{
+        System.out.println(cri);
         List<ReportDTO> reportList = reportService.getReportList(cri);
         model.addAttribute("reportList" , reportList);
         model.addAttribute("pageMaker",new PageDTO(reportService.getTotal(cri), cri));
+
+        System.out.println(cri.getPagenum());
     }
 
     @GetMapping("allReport")
