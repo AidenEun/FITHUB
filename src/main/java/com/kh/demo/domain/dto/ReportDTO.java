@@ -4,10 +4,10 @@ import lombok.Data;
 
 @Data
 public class ReportDTO {
-    private Long report_num;
-    private String user_id;
-    private String board_category;
-    private Long report_boardnum;
-    private String report_content;
-    private String report_date;
+    private Long reportNum;
+    private String userId;
+    private String boardCategory;
+    private Long reportBoardnum;
+    private String reportContent;
+    private String reportDate;
 }

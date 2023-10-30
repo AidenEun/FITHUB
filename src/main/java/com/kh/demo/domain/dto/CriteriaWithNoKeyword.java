@@ -3,16 +3,16 @@ package com.kh.demo.domain.dto;
 import lombok.Data;
 
 @Data
-public class CriteriaWithKeyword {
+public class CriteriaWithNoKeyword {
 	private int pagenum;
 	private int amount;
 	private int startrow;
 
-	public CriteriaWithKeyword() {
+	public CriteriaWithNoKeyword() {
 		this(1,10);
 	}
 
-	public CriteriaWithKeyword(int pagenum, int amount) {
+	public CriteriaWithNoKeyword(int pagenum, int amount) {
 		this.pagenum = pagenum;
 		this.amount = amount;
 		this.startrow = (this.pagenum - 1) * this.amount;
@@ -24,4 +24,3 @@ public class CriteriaWithKeyword {
 	}
 
 }
-

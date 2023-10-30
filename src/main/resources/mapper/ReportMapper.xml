@@ -1,0 +1,29 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.demo.mapper.ReportMapper">
+    <sql id="cri">
+        <if test="keyword != '' and type != ''">
+            <trim prefixOverrides="or" prefix="(" suffix=") and">
+                <foreach collection="typeArr" item="type">
+                    or
+                    <choose>
+                        <when test="type == 'T'.toString()">
+                            (boardtitle like('%${keyword}%'))
+                        </when>
+                        <when test="type == 'C'.toString()">
+                            (boardcontents like('%${keyword}%'))
+                        </when>
+                        <when test="type == 'W'.toString()">
+                            (userid like('%${keyword}%'))
+                        </when>
+                    </choose>
+                </foreach>
+            </trim>
+        </if>
+    </sql>
+
+    <select id="getReportList">
+        select * from report order by report_num desc limit #{startrow},#{amount}
+    </select>
+
+</mapper>

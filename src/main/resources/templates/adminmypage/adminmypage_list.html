@@ -6,10 +6,11 @@
 -->
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>Untitled</title>
+	<title>Fit Hub</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<link rel="stylesheet" th:href="@{/assets/css/index.css}" />
+	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
 	<noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
 </head>
 <style>
@@ -163,50 +164,80 @@
 
 	<!-- Menu -->
 	<section id="menu">
-
-		<!-- Search -->
-		<section>
-			<form class="search" method="get" action="#">
-				<input type="text" name="query" placeholder="Search" />
-			</form>
-		</section>
-
-		<!-- Links -->
-		<section>
-			<ul class="links">
-				<li>
-					<a href="#">
-						<h3>Lorem ipsum</h3>
-						<p>Feugiat tempus veroeros dolor</p>
-					</a>
-				</li>
-				<li>
-					<a href="#">
-						<h3>Dolor sit amet</h3>
-						<p>Sed vitae justo condimentum</p>
-					</a>
-				</li>
-				<li>
-					<a href="#">
-						<h3>Feugiat veroeros</h3>
-						<p>Phasellus sed ultricies mi congue</p>
-					</a>
-				</li>
-				<li>
-					<a href="#">
-						<h3>Etiam sed consequat</h3>
-						<p>Porta lectus amet ultricies</p>
-					</a>
-				</li>
-			</ul>
-		</section>
-
-		<!-- Actions -->
-		<section>
-			<ul class="actions stacked">
-				<li><a href="#" class="button large fit">Log In</a></li>
-			</ul>
-		</section>
+		<div class="side_info">
+			<img src="/images/profile_img.png" class="prof_img" width="102px" height="102px">
+			<div id="my_info">
+				<span>등급 / 닉네임(ID)</span>
+				<div>
+					<span>내 정보</span>
+					<span>로그아웃</span>
+				</div>
+			</div>
+			<div class="goal-graph">
+				<div class="progress-bar">
+					<div class="progress-segment day-1"></div>
+					<div class="progress-label"></div>
+					<div class="progress-segment day-2"></div>
+					<div class="progress-label"></div>
+					<div class="progress-segment day-3"></div>
+					<div class="progress-label"></div>
+					<div class="progress-segment day-4"></div>
+					<div class="progress-label"></div>
+					<div class="progress-segment day-5"></div>
+					<div class="progress-label"></div>
+				</div>
+			</div>
+			<div class="point-container">
+				<div>나의 포인트</div>
+				<span>0p</span>
+			</div>
+			<div id="tab-menu">
+				<div class="tab today-tab">오늘</div>
+				<div class="tab chall-tab">도전</div>
+				<div class="tab sub-tab">구독</div>
+				<div class="shop-tab">쇼핑</div>
+			</div>
+			<div id="tab-menu-container">
+				<div class="tab-view today-view">
+					<strong>나의 목표</strong>
+					<p>목표무게</p>
+					<p>목표칼로리</p>
+					<hr>
+					<strong>잔여칼로리: 현재칼로리/목표칼로리</strong>
+					<p>섭취량</p>
+					<p>소비량</p>
+					<div id="meal-options">
+						<div class="brack-fst">아침</div>
+						<div class="lunch">점심</div>
+						<div class="dinner">저녁</div>
+						<div class="snack">간식</div>
+					</div>
+					<div id="tan-dan-ji-box">
+						<div>칼로리</div>
+						<div>탄수화물</div>
+						<div>단백질</div>
+						<div>지방</div>
+					</div>
+				</div>
+				<div class="tab-view chall-view">
+					<p>도전 뷰</p>
+				</div>
+				<div class="tab-view sub-view">
+					<p>구독 뷰</p>
+				</div>
+			</div>
+		</div>
+		<div id="another-page">
+			<div class="bmi">
+				<a href="#">BMI</a>
+			</div>
+			<div class="health-center">
+				<a href="#">보건소</a>
+			</div>
+			<div class="trainer-apply">
+				<a href="#">트레이너 신청</a>
+			</div>
+		</div>
 	</section>
 
 	<!-- Main -->
