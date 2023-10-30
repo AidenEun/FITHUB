@@ -7,4 +7,8 @@ import java.util.List;
 
 public interface ReportService {
     List<ReportDTO> getReportList(Criteria cri);
+
+    List<ReportDTO> getReportListByUser(Criteria cri);
+
+    List<ReportDTO> getReportListByTrainer(Criteria cri);
 }

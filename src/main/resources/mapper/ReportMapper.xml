@@ -26,4 +26,16 @@
         select * from report order by report_num desc limit #{startrow},#{amount}
     </select>
 
+    <select id="getReportListByUser">
+        SELECT * FROM report
+        WHERE user_id IN (SELECT user_id FROM user WHERE user_category = 'U')
+        order by report_num desc limit #{startrow},#{amount}
+    </select>
+
+    <select id="getReportListByTrainer">
+        SELECT * FROM report
+        WHERE user_id IN (SELECT trainer_id FROM trainer)
+        order by report_num desc limit #{startrow},#{amount}
+    </select>
+
 </mapper>

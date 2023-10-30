@@ -11,6 +11,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<link rel="stylesheet" th:href="@{/assets/css/index.css}" />
 	<noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
+	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
 </head>
 <style>
 	.top_img_box{
@@ -70,83 +71,7 @@
 <body class="is-preload">
 
 	<!-- Header -->
-	<header id="header">
-		<h1><a href="/">Fit Hub</a></h1>
-		<nav class="links">
-			<ul>
-				<li><a href="/info/info_list">정보</a></li>
-				<li><a href="#">칼로리</a></li>
-				<li><a href="#">커뮤니티</a></li>
-				<li><a href="#">트레이너 매칭</a></li>
-				<li><a href="#">챌린지</a></li>
-				<li><a href="#">제품</a></li>
-			</ul>
-		</nav>
-		<nav class="main">
-			<ul>
-				<li id="login">
-					<a class="login" href="#">Login</a>
-				</li>
-				<li class="search">
-					<a class="fa-search" href="#search">Search</a>
-					<form id="search" method="get" action="#">
-						<input type="text" name="query" placeholder="Search" />
-					</form>
-				</li>
-				<li class="menu">
-					<a class="fa-bars" href="#menu">Menu</a>
-				</li>
-			</ul>
-		</nav>
-	</header>
-
-	<!-- Menu -->
-	<section id="menu">
-
-		<!-- Search -->
-		<section>
-			<form class="search" method="get" action="#">
-				<input type="text" name="query" placeholder="Search" />
-			</form>
-		</section>
-
-		<!-- Links -->
-		<section>
-			<ul class="links">
-				<li>
-					<a href="#">
-						<h3>Lorem ipsum</h3>
-						<p>Feugiat tempus veroeros dolor</p>
-					</a>
-				</li>
-				<li>
-					<a href="#">
-						<h3>Dolor sit amet</h3>
-						<p>Sed vitae justo condimentum</p>
-					</a>
-				</li>
-				<li>
-					<a href="#">
-						<h3>Feugiat veroeros</h3>
-						<p>Phasellus sed ultricies mi congue</p>
-					</a>
-				</li>
-				<li>
-					<a href="#">
-						<h3>Etiam sed consequat</h3>
-						<p>Porta lectus amet ultricies</p>
-					</a>
-				</li>
-			</ul>
-		</section>
-
-		<!-- Actions -->
-		<section>
-			<ul class="actions stacked">
-				<li><a href="#" class="button large fit">Log In</a></li>
-			</ul>
-		</section>
-	</section>
+	<th:block th:replace="~{layout/header::header(${session.loginUser})}"></th:block>
 
 	<!-- Main -->
 	<section id="main" class="wrapper sidebar left">
@@ -165,43 +90,52 @@
 
 			<!-- Content -->
 			<div class="content">
-				<div class="button" style="margin-right: 10px;">전체</div>
-				<div class="button" style="margin-right: 10px;">유저</div>
-				<div class="button">트레이너</div>
+				<div id="allReport" class="button" style="margin-right: 10px;">전체</div>
+				<div id="byUserReport" class="button" style="margin-right: 10px;">유저</div>
+				<div id="byTrainerReport" class="button">트레이너</div>
 
 				<table style="text-align: center; margin-top: 20px;">
-					<tr style="font-weight: bold;">
-						<td>신고 번호</td>
-						<td>신고 유저</td>
-						<td>게시글 번호</td>
-						<td>카테고리</td>
-						<td>신고 일자</td>
-					</tr>
-					<tr>
-						<td class="long_text">
-							<a href="#">
-								report.report_num
-							</a>
-						</td>
-						<td class="long_text">
-							<a href="#">
-								report.user_id
-							</a>
-						</td>
-						<td class="long_text">
-							<a href="#">
-								report.report_boardnum
-							</a>
-						</td>
-						<td class="long_text">
-							<a href="#">
-								report.board_category
-							</a>
-						</td>
-						<td class="long_text">
-							<a href="#">
-								report.report_date
-							</a>
+					<thead>
+						<tr style="font-weight: bold;">
+							<td>신고 번호</td>
+							<td>신고 유저</td>
+							<td>게시글 번호</td>
+							<td>카테고리</td>
+							<td>신고 일자</td>
+						</tr>
+					</thead>
+					<tbody id="data-table">
+						<tr th:if="${reportList != null and reportList.size() > 0}" th:each="reportBoard : ${reportList}">
+							<td class="long_text">
+								<a href="#">
+									[[${reportBoard.reportNum}]]
+								</a>
+							</td>
+							<td class="long_text">
+								<a href="#">
+									[[${reportBoard.userId}]]
+								</a>
+							</td>
+							<td class="long_text">
+								<a href="#">
+									[[${reportBoard.reportBoardnum}]]
+								</a>
+							</td>
+							<td class="long_text">
+								<a href="#">
+									[[${reportBoard.boardCategory}]]
+								</a>
+							</td>
+							<td class="long_text">
+								<a href="#">
+									[[${reportBoard.reportDate}]]
+								</a>
+							</td>
+						</tr>
+					</tbody>
+					<tr th:if="${reportList == null or reportList.size() == 0}">
+						<td colspan="5">
+							접수된 신고가 없습니다!
 						</td>
 					</tr>
 				</table>
@@ -224,16 +158,7 @@
 	</section>
 
 	<!-- Footer -->
-	<footer id="footer">
-		<div class="inner">
-			<p class="copyright">&copy; Untitled Corp. All rights reserved. Lorem ipsum dolor sit amet feugiat tempus aliquam.</p>
-			<ul class="menu">
-				<li><a href="#">Terms<span> of Use</span></a></li>
-				<li><a href="#">Privacy<span> Policy</span></a></li>
-				<li><a href="#">Legal<span> Information</span></a></li>
-			</ul>
-		</div>
-	</footer>
+	<th:block th:replace="~{layout/footer::footer}"></th:block>
 
 	<!-- Scripts -->
 	<script th:src="@{/assets/js/jquery.min.js}"></script>
@@ -246,5 +171,77 @@
 
 	<script th:src="@{/assets/js/util_sub.js}"></script>
 	<script th:src="@{/assets/js/main_sub.js}"></script>
+
+	<script th:src="@{/assets/js/sidebar.js}"></script>
+
+	<script>
+		$(document).ready(function() {
+            $('#allReport').click(function() {
+                $.ajax({
+                    url: '/adminmypage/allReport',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        displayData(data);
+                    },
+                    error: function(error) {
+                        console.error('데이터를 가져오는 중 오류 발생: ' + error);
+                    }
+                });
+            });
+        });
+
+		$(document).ready(function() {
+			$('#byUserReport').click(function() {
+					$.ajax({
+					url: '/adminmypage/reportByUser',
+					type: 'GET',
+					dataType: 'json',
+					success: function(data) {
+						displayData(data);
+					},
+					error: function(error) {
+						console.error('데이터를 가져오는 중 오류 발생: ' + error);
+					}
+				});
+			});
+		})
+
+		$(document).ready(function() {
+			$('#byTrainerReport').click(function() {
+				$.ajax({
+					url: '/adminmypage/reportByTrainer',
+					type: 'GET',
+					dataType: 'json',
+					success: function(data) {
+						displayData(data);
+					},
+					error: function(error) {
+						console.error('데이터를 가져오는 중 오류 발생: ' + error);
+					}
+				});
+			});
+		})
+
+		function displayData(data) {
+			let tableBody = $('#data-table');
+			tableBody.empty();
+
+			if (data != null && data.length > 0) {
+				data.forEach(function (reportBoard) {
+					let row = $('<tr>');
+					row.append('<td class="long_text"><a href="#">' + reportBoard.reportNum + '</a></td>');
+					row.append('<td class="long_text"><a href="#">' + reportBoard.userId + '</a></td>');
+					row.append('<td class="long_text"><a href="#">' + reportBoard.reportBoardnum + '</a></td>');
+					row.append('<td class="long_text"><a href="#">' + reportBoard.boardCategory + '</a></td>');
+					row.append('<td class="long_text"><a href="#">' + reportBoard.reportDate + '</a></td>');
+					tableBody.append(row);
+				});
+			}
+			else {
+				tableBody.append('<tr><td colspan="5">접수된 신고가 없습니다!</td></tr>');
+			}
+		}
+	</script>
 </body>
 </html>
