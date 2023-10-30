@@ -23,7 +23,7 @@ public class UserController {
     @PostMapping("join")
     public String join(UserDTO user, RedirectAttributes ra) {
         if(service.join(user)) {
-            ra.addAttribute("joinid",user.getUser_id());
+            ra.addAttribute("joinid",user.getUserId());
         }
         return "redirect:/";
     }
@@ -32,7 +32,7 @@ public class UserController {
     public String login(String userid, String userpw, HttpServletRequest req) {
         UserDTO loginUser = service.login(userid, userpw);
         if(loginUser != null) {
-            req.getSession().setAttribute("loginUser", loginUser.getUser_id());
+            req.getSession().setAttribute("loginUser", loginUser.getUserId());
             return "redirect:/board/list";
         }
         else {
