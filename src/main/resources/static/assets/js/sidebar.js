@@ -1,4 +1,3 @@
-
 const tabs = document.querySelectorAll('.tab');
 const tabViews = document.querySelectorAll('.tab-view');
 
@@ -30,3 +29,17 @@ challTabs.forEach((challTab, index) => {
     });
 });
 
+const progressBar = document.querySelector('.progress-bar');
+const numbers = progressBar.querySelectorAll('span');
+const numCount = numbers.length;
+
+// 프로그래스 바의 전체 너비
+const progressBarWidth = progressBar.offsetWidth;
+
+// 숫자 사이의 간격을 계산
+const spacing = (progressBarWidth - (numCount * 20)) / (numCount - 1);
+
+// 각 숫자에 간격을 적용
+numbers.forEach((number, index) => {
+    number.style.marginRight = `${index === numCount - 1 ? 0 : spacing}px`;
+});
