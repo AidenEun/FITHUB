@@ -81,13 +81,11 @@ public class AdminMyPageController {
 
     @GetMapping("adminmypage_trainer")
     public void replaceTrainer(Criteria cri, Model model){
-        List<TrainerSignUpDTO> trainerSingupDTO = signUpService.getSignUpList(cri);
-        List<UserDTO> userDTO = userService.getSignUpListInUser(cri);
+        List<TrainerSignUpDTO> trainerSingupDTOList = signUpService.getSignUpList(cri);
+        List<UserDTO> userDTOList = userService.getUserUpdateAge(cri);
 
-        userDTO.forEach(user -> user.setUserBirth(user.getAge())); // 생년월일 필드를 나이로 덮어쓰기
-
-        model.addAttribute("signUpList", trainerSingupDTO);
-        model.addAttribute("signUpListInUser", userDTO);
+        model.addAttribute("signUpList", trainerSingupDTOList);
+        model.addAttribute("signUpListInUser", userDTOList);
     }
 
     @GetMapping("adminmypage_board")
