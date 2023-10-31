@@ -82,7 +82,7 @@ public class AdminMyPageController {
     @GetMapping("adminmypage_trainer")
     public void replaceTrainer(Criteria cri, Model model){
         List<TrainerSignUpDTO> trainerSingupDTOList = signUpService.getSignUpList(cri);
-        List<UserDTO> userDTOList = userService.getUserUpdateAge(cri);
+        List<UserDTO> userDTOList = userService.getSignUpListInUser(cri);
 
         model.addAttribute("signUpList", trainerSingupDTOList);
         model.addAttribute("signUpListInUser", userDTOList);
