@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public List<UserDTO> getUserUpdateAge(Criteria cri) {
+    public List<UserDTO> getSignUpListInUser(Criteria cri) {
         List<UserDTO> userDTOList = umapper.getSignUpListInUser(cri);
 //        for(UserDTO userDTO : userDTOList) {
 //           .......
