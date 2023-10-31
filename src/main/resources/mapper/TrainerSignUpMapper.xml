@@ -1,0 +1,9 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.demo.mapper.TrainerSignUpMapper">
+
+    <select id="getSignUpList">
+        select * from trainer_signup order by signup_num desc limit #{startrow},#{amount}
+    </select>
+
+</mapper>

@@ -2,10 +2,10 @@ package com.kh.demo.controller;
 
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.kh.demo.domain.dto.Criteria;
-import com.kh.demo.domain.dto.PageDTO;
-import com.kh.demo.domain.dto.ReportDTO;
+import com.kh.demo.domain.dto.*;
 import com.kh.demo.service.ReportService;
+import com.kh.demo.service.TrainerSignUpService;
+import com.kh.demo.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -21,6 +21,10 @@ import java.util.List;
 public class AdminMyPageController {
     @Autowired @Qualifier("ReportServiceImpl")
     private ReportService reportService;
+    @Autowired @Qualifier("TrainerSignUpServiceImpl")
+    private TrainerSignUpService signUpService;
+    @Autowired @Qualifier("UserServiceImpl")
+    private UserServiceImpl userService;
 
     @GetMapping("adminmypage_list")
     public void replaceList(){}
@@ -28,6 +32,7 @@ public class AdminMyPageController {
     @GetMapping("adminmypage_report")
     public void reportList(Criteria cri, Model model) throws Exception{
         List<ReportDTO> reportList = reportService.getReportList(cri);
+
         model.addAttribute("reportList" , reportList);
         model.addAttribute("pageMaker",new PageDTO(reportService.getTotal(cri), cri));
     }
@@ -75,7 +80,15 @@ public class AdminMyPageController {
     }
 
     @GetMapping("adminmypage_trainer")
-    public void replaceTrainer(){}
+    public void replaceTrainer(Criteria cri, Model model){
+        List<TrainerSignUpDTO> trainerSingupDTO = signUpService.getSignUpList(cri);
+        List<UserDTO> userDTO = userService.getSignUpListInUser(cri);
+
+        userDTO.forEach(user -> user.setUserBirth(user.getAge())); // 생년월일 필드를 나이로 덮어쓰기
+
+        model.addAttribute("signUpList", trainerSingupDTO);
+        model.addAttribute("signUpListInUser", userDTO);
+    }
 
     @GetMapping("adminmypage_board")
     public void replaceBoard(){}
