@@ -14,7 +14,7 @@ public interface UserService {
 
     UserDTO getDetail(String userid);
 
-    List<UserDTO> getSignUpListInUser(Criteria cri);
+    List<UserDTO> getUserUpdateAge(Criteria cri);
 
     boolean user_modify(UserDTO user);
 }

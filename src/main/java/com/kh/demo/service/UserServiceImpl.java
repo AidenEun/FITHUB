@@ -2,14 +2,16 @@ package com.kh.demo.service;
 
 
 import com.kh.demo.domain.dto.Criteria;
-import com.kh.demo.domain.dto.BoardDTO;
 import com.kh.demo.domain.dto.UserDTO;
 import com.kh.demo.mapper.UserMapper;
+import jakarta.jws.soap.SOAPBinding;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -47,8 +49,26 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public List<UserDTO> getSignUpListInUser(Criteria cri) {
-        return umapper.getSignUpListInUser(cri);
+    public List<UserDTO> getUserUpdateAge(Criteria cri) {
+        List<UserDTO> userDTOList = umapper.getSignUpListInUser(cri);
+//        for(UserDTO userDTO : userDTOList) {
+//           .......
+//        }
+        userDTOList.forEach(userDTO -> {
+            String birthDateStr = userDTO.getUserBirth();
+            if (birthDateStr != null && birthDateStr.length() >= 6) {
+                // 현재 날짜 가져오기
+                LocalDate currentDate = LocalDate.now();
+                int birthYear = Integer.parseInt(birthDateStr.substring(0, 4));
+                int birthMonth = Integer.parseInt(birthDateStr.substring(4, 6));
+                LocalDate birthLocalDate = LocalDate.of(birthYear, birthMonth, 1);
+
+                // 나이 계산
+                Period period = Period.between(birthLocalDate, currentDate);
+                userDTO.setUserAge(period.getYears());
+            }
+        });
+        return userDTOList;
     }
 
     public boolean user_modify(UserDTO user) {
