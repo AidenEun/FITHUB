@@ -34,4 +34,14 @@ public class ReportServiceImpl implements ReportService{
     public Long getTotal(Criteria cri) {
         return reportMapper.getTotal(cri);
     }
+
+    @Override
+    public Long getTotalByUser(Criteria cri) {
+        return reportMapper.getTotalByUser(cri);
+    }
+
+    @Override
+    public Long getTotalByTrainer(Criteria cri) {
+        return reportMapper.getTotalByTrainer(cri);
+    }
 }
