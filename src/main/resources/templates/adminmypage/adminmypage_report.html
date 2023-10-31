@@ -6,7 +6,7 @@
 -->
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>Untitled</title>
+	<title>Fit Hub</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<link rel="stylesheet" th:href="@{/assets/css/index.css}" />
@@ -69,9 +69,9 @@
 	}
 
 	.nowPage {
-    	background-color: #444;
-    	color: #fff;
-    	font-size: 16px;
+		background-color: #444 !important; /* 뒤의 !important는 기존 스타일을 덮어쓰기 위해 사용합니다. */
+		color: #fff;
+		font-size: 16px;
 		padding: 5px 10px;
 	}
 
@@ -83,6 +83,10 @@
 	.pageTr {
 		background-color: white !important;
 		border: none;
+	}
+
+	.now_cate {
+		background-color: red !important;
 	}
 </style>
 <body class="is-preload">
@@ -107,9 +111,9 @@
 
 			<!-- Content -->
 			<div class="content">
-				<div id="allReport" class="button" style="margin-right: 10px;">전체</div>
-				<div id="byUserReport" class="button" style="margin-right: 10px;">유저</div>
-				<div id="byTrainerReport" class="button">트레이너</div>
+				<div id="allReport" class="button report_cate now_cate" style="margin-right: 10px;">전체</div>
+				<div id="byUserReport" class="button report_cate not_cate" style="margin-right: 10px;">유저</div>
+				<div id="byTrainerReport" class="button report_cate not_cate">트레이너</div>
 
 				<table style="text-align: center; margin-top: 20px;">
 					<thead>
@@ -170,11 +174,11 @@
 						</td>
 					</tr>
 				</table>
-				<form name="pageForm" id="pageForm" th:action="@{/adminmypage/adminmypage_report}">
-					<input type="hidden" name="pagenum" th:value="${pageMaker.cri.pagenum}">
-					<input type="hidden" name="amount" th:value="${pageMaker.cri.amount}">
-					<input type="hidden" name="type" th:value="${pageMaker.cri.type}">
-					<input type="hidden" name="keyword" th:value="${pageMaker.cri.keyword}">
+				<form name="pageForm" id="pageForm" th:action="@{/adminmypage/adminmypage_report}" method="get">
+					<input type="hidden" name="pagenum" th:value="${pageMaker.cri.pagenum}" />
+					<input type="hidden" name="amount" th:value="${pageMaker.cri.amount}" />
+					<input type="hidden" name="type" th:value="${pageMaker.cri.type}" />
+					<input type="hidden" name="keyword" th:value="${pageMaker.cri.keyword}" />
 				</form>
 			</div>
 
@@ -197,107 +201,139 @@
 	<!-- Footer -->
 	<th:block th:replace="~{layout/footer::footer}"></th:block>
 
-	<!-- Scripts -->
-	<script th:src="@{/assets/js/jquery.min.js}"></script>
-	<script th:src="@{/assets/js/jquery.dropotron.min.js}"></script>
-	<script th:src="@{/assets/js/jquery.scrollex.min.js}"></script>
-	<script th:src="@{/assets/js/browser.min.js}"></script>
-	<script th:src="@{/assets/js/breakpoints.min.js}"></script>
-	<script th:src="@{/assets/js/util.js}"></script>
-	<script th:src="@{/assets/js/main.js}"></script>
+<!-- Scripts -->
+<script th:src="@{/assets/js/jquery.min.js}"></script>
+<script th:src="@{/assets/js/jquery.dropotron.min.js}"></script>
+<script th:src="@{/assets/js/jquery.scrollex.min.js}"></script>
+<script th:src="@{/assets/js/browser.min.js}"></script>
+<script th:src="@{/assets/js/breakpoints.min.js}"></script>
+<script th:src="@{/assets/js/util.js}"></script>
+<script th:src="@{/assets/js/main.js}"></script>
 
-	<script th:src="@{/assets/js/util_sub.js}"></script>
-	<script th:src="@{/assets/js/main_sub.js}"></script>
+<script th:src="@{/assets/js/util_sub.js}"></script>
+<script th:src="@{/assets/js/main_sub.js}"></script>
 
-	<script th:src="@{/assets/js/sidebar.js}"></script>
+<script th:src="@{/assets/js/sidebar.js}"></script>
 
-	<script>
-		$(document).ready(function() {
-            $('#allReport').click(function() {
-                $.ajax({
-                    url: '/adminmypage/allReport',
-                    type: 'GET',
-                    dataType: 'json',
-                    success: function(data) {
-                        displayData(data);
-                    },
-                    error: function(error) {
-                        console.error('데이터를 가져오는 중 오류 발생: ' + error);
-                    }
-                });
-            });
-        });
+<script>
+	const pageForm = $("#pageForm");
+	$(".changePage").on("click",function(e){
+		//e(이벤트)의 기본 작동 막기
+		e.preventDefault();
+		let pagenum = $(this).attr("href");
+		pageForm.find("input[name='pagenum']").val(pagenum);
+		pageForm.submit();
+	});
 
-		$(document).ready(function() {
-			$('#byUserReport').click(function() {
-				$.ajax({
-					url: '/adminmypage/reportByUser',
-					type: 'GET',
-					dataType: 'json',
-					success: function(data) {
-						displayData(data);
-					},
-					error: function(error) {
-						console.error('데이터를 가져오는 중 오류 발생: ' + error);
-					}
-				});
-			});
-		})
+	function changePage(e) {
+		e.preventDefault();
+		let pagenum = $(this).attr("href");
+		let pageForm = $("#pageForm");
+		pageForm.find("input[name='pagenum']").val(pagenum);
+		pageForm.submit();
+	}
 
-		$(document).ready(function() {
-			$('#byTrainerReport').click(function() {
-				$.ajax({
-					url: '/adminmypage/reportByTrainer',
-					type: 'GET',
-					dataType: 'json',
-					success: function(data) {
-						displayData(data);
-					},
-					error: function(error) {
-						console.error('데이터를 가져오는 중 오류 발생: ' + error);
-					}
-				});
-			});
-		})
+	const report_cate = document.querySelectorAll('.report_cate');
+	let nowCate = document.querySelector('.now_cate');
 
-		function displayData(data) {
-			let tableBody = $('#data-table');
-			tableBody.empty();
-
-			if (data != null && data.length > 0) {
-				data.forEach(function (reportBoard) {
-					let row = $('<tr>');
-					row.append('<td class="long_text"><a href="#">' + reportBoard.reportNum + '</a></td>');
-					row.append('<td class="long_text"><a href="#">' + reportBoard.userId + '</a></td>');
-					row.append('<td class="long_text"><a href="#">' + reportBoard.reportBoardnum + '</a></td>');
-					row.append('<td class="long_text"><a href="#">' + reportBoard.boardCategory + '</a></td>');
-					row.append('<td class="long_text"><a href="#">' + reportBoard.reportDate + '</a></td>');
-					tableBody.append(row);
-				});
+	report_cate.forEach(function(btn) {
+		btn.addEventListener('click', function() {
+			if (btn.classList.contains('now_cate')) {
+			 return;
 			}
-			else {
-				tableBody.append('<tr><td colspan="5">접수된 신고가 없습니다!</td></tr>');
+
+			btn.classList.remove('not_cate');
+			btn.classList.add('now_cate');
+
+			nowCate.classList.remove('now_cate');
+			nowCate.classList.add('not_cate');
+
+			nowCate = btn;
+		});
+	});
+
+	$(document).ready(function() {
+		$('#allReport').click(function() {
+			updatePage('/adminmypage/allReport');
+		});
+	});
+
+	$(document).ready(function() {
+		$('#byUserReport').click(function() {
+			updatePage('/adminmypage/reportByUser');
+		});
+	});
+	
+	$(document).ready(function() {
+		$('#byTrainerReport').click(function() {
+			updatePage('/adminmypage/reportByTrainer');
+		});
+	});
+
+	function updatePage(url) {
+		$.ajax({
+			url: url,
+			type: 'GET',
+			dataType: 'json',
+			success: function (data) {
+				displayData(data);
+				displayPaging(data.pageDTO);
+			},
+			error: function (error) {
+				console.error('데이터를 가져오는 중 오류 발생: ' + error);
+			}
+		});
+	}
+
+    function displayData(data) {
+        var tableBody = $('#data-table');
+        tableBody.empty();
+
+        if (data.reportList != null && data.reportList.length > 0) {
+            data.reportList.forEach(function (reportData) {
+                var row = $('<tr>');
+                row.append('<td class="long_text"><a href="#">' + reportData.reportNum + '</a></td>');
+                row.append('<td class="long_text"><a href="#">' + reportData.userId + '</a></td>');
+                row.append('<td class="long_text"><a href="#">' + reportData.reportBoardnum + '</a></td>');
+                row.append('<td class="long_text"><a href="#">' + reportData.boardCategory + '</a></td>');
+                row.append('<td class="long_text"><a href="#">' + reportData.reportDate + '</a></td>');
+                tableBody.append(row);
+            });
+        }
+        else {
+            tableBody.append('<tr><td colspan="5">접수된 신고가 없습니다!</td></tr>');
+        }
+    }
+
+	function displayPaging(pageDTO) {
+		var startPage = pageDTO.startPage;
+		var endPage = pageDTO.endPage;
+		var prev = pageDTO.prev;
+		var next = pageDTO.next;
+
+		var str = '';
+
+		if (prev) {
+			str += '<a class="changePage" href="' + (startPage - 1) + '"><code>&lt;</code></a>';
+		}
+
+		for (var i = startPage; i <= endPage; i++) {
+			if (i === pageDTO.cri.pagenum) {
+				str += '<span class="nowPage">' + i + '</span> ';
+			} else {
+				str += '<a class="changePage" href="' + i + '">' + i + '</a>';
 			}
 		}
 
-	const pageForm = $("#pageForm");
+		if (next) {
+			str += '<a class="changePage" href="' + (endPage + 1) + '"><code>&gt;</code></a>';
+		}
 
-		$(".changePage").on("click",function(e){
-			//e(이벤트)의 기본 작동 막기
-			e.preventDefault();
-			let pagenum = $(this).attr("href");
-			pageForm.find("input[name='pagenum']").val(pagenum);
-			pageForm.submit();
-		});
-		$(".get").on("click",function(e){
-			e.preventDefault();
-			let boardnum = $(this).attr("href");
-			let url=/*[[@{/board/get}]]*/'';
-			pageForm.append("<input type='hidden' name='boardnum' value='"+boardnum+"'>")
-			pageForm.attr("action",url);
-			pageForm.attr("method","get");
-			pageForm.submit();
-		})
-	</script>
+		var page = $('.pagination');
+		page.html('<tr align="center" valign="middle" class="pageTr"><td>' + str + '</td></tr>');
+
+		$(".changePage").on("click",changePage);
+	}
+</script>
 </body>
 </html>

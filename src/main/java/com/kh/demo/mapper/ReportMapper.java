@@ -15,4 +15,8 @@ public interface ReportMapper {
     List<ReportDTO> getReportListByTrainer(Criteria cri);
 
     Long getTotal(Criteria cri);
+
+    Long getTotalByUser(Criteria cri);
+
+    Long getTotalByTrainer(Criteria cri);
 }

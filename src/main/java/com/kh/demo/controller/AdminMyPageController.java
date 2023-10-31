@@ -27,33 +27,51 @@ public class AdminMyPageController {
 
     @GetMapping("adminmypage_report")
     public void reportList(Criteria cri, Model model) throws Exception{
-        System.out.println(cri);
         List<ReportDTO> reportList = reportService.getReportList(cri);
         model.addAttribute("reportList" , reportList);
         model.addAttribute("pageMaker",new PageDTO(reportService.getTotal(cri), cri));
-
-        System.out.println(cri.getPagenum());
     }
 
     @GetMapping("allReport")
     @ResponseBody
-    public List<ReportDTO> allReportList(Criteria cri, Model model) throws Exception {
+    public String allReportList(Criteria cri, Model model) throws Exception {
+        ObjectNode json = JsonNodeFactory.instance.objectNode();
+
         List<ReportDTO> reportList = reportService.getReportList(cri);
-        return reportList;
+        PageDTO pageDTO = new PageDTO(reportService.getTotal(cri), cri);
+
+        json.putPOJO("reportList", reportList);
+        json.putPOJO("pageDTO", pageDTO);
+
+        return json.toString();
     }
 
     @GetMapping("reportByUser")
     @ResponseBody
-    public List<ReportDTO> reportListByUser(Criteria cri, Model model) throws Exception {
+    public String reportListByUser(Criteria cri, Model model) throws Exception {
+        ObjectNode json = JsonNodeFactory.instance.objectNode();
+
         List<ReportDTO> reportListByUser = reportService.getReportListByUser(cri);
-        return reportListByUser;
+        PageDTO pageDTO = new PageDTO(reportService.getTotalByUser(cri), cri);
+
+        json.putPOJO("reportList", reportListByUser);
+        json.putPOJO("pageDTO", pageDTO);
+
+        return json.toString();
     }
 
     @GetMapping("reportByTrainer")
     @ResponseBody
-    public List<ReportDTO> reportListByTrainer(Criteria cri, Model model) throws Exception {
+    public String reportListByTrainer(Criteria cri, Model model) throws Exception {
+        ObjectNode json = JsonNodeFactory.instance.objectNode();
+
         List<ReportDTO> reportListByTrainer = reportService.getReportListByTrainer(cri);
-        return reportListByTrainer;
+        PageDTO pageDTO = new PageDTO(reportService.getTotalByTrainer(cri), cri);
+
+        json.putPOJO("reportList", reportListByTrainer);
+        json.putPOJO("pageDTO", pageDTO);
+
+        return json.toString();
     }
 
     @GetMapping("adminmypage_trainer")

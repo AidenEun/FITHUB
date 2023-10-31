@@ -39,7 +39,21 @@
     </select>
 
     <select id="getTotal">
-        select count(*) from report where
-        <include refid="cri"/> report_num > 0
+        select count(*) from report where report_num > 0
     </select>
+
+    <select id="getTotalByUser">
+        SELECT COUNT(*)
+        FROM report
+        INNER JOIN user ON report.user_id = user.user_id
+        WHERE report.report_num > 0;
+    </select>
+
+    <select id="getTotalByTrainer">
+        SELECT COUNT(*)
+        FROM report
+        INNER JOIN trainer ON report.user_id = trainer.trainer_id
+        WHERE report.report_num > 0;
+    </select>
+
 </mapper>
