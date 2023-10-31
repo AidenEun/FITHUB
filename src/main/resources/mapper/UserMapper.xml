@@ -4,11 +4,11 @@
 
 	<insert id="insertUser">
 		insert into user (user_id,user_name,user_nickname,user_pw,weight_goal,calories_goal,user_tel,user_mail,user_height,user_gender,user_birth,user_joindate,user_point,user_reportedcnt)
-		values(#{user_id},#{user_name},#{user_nickname},#{user_pw},#{weight_goal},#{calories_goal},#{user_tel},#{user_mail},#{user_height},#{user_gender},#{user_birth},#{user_joindate},#{user_point},#{user_reportedcnt})
+		values(#{userId},#{userName},#{userNickname},#{userPw},#{weightGoal},#{caloriesGoal},#{userTel},#{userMail},#{userHeight},#{userGender},#{userBirth},#{userJoindate},#{userPoint},#{userReportedcnt})
 	</insert>
 
 	<select id="findById">
-		select * from user where user_id=#{user_id}
+		select * from user where user_id=#{userId}
 	</select>
 
 	<select id="getSignUpListInUser">
@@ -17,5 +17,12 @@
 		WHERE user_id IN (SELECT user_id FROM trainer_signup)
 		AND user_category = 'U';
 	</select>
+
+	<update id="updateUser">
+		update user set user_nickname=#{userNickname}, weight_goal=#{weightGoal}, calories_goal=#{caloriesGoal},
+		user_tel=#{userTel}, user_mail=#{userMail}, user_height=#{userHeight}
+		where user_id=#{userId}
+	</update>
+
 </mapper>
 

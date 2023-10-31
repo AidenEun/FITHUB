@@ -16,4 +16,5 @@ public interface UserService {
 
     List<UserDTO> getSignUpListInUser(Criteria cri);
 
+    boolean user_modify(UserDTO user);
 }

@@ -1,0 +1,528 @@
+<!DOCTYPE HTML>
+<!--
+	Slate by Pixelarity
+	pixelarity.com | hello@pixelarity.com
+	License: pixelarity.com/license
+-->
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Untitled</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" th:href="@{/assets/css/index.css}" />
+	<noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
+</head>
+<style>
+	#side-wrap {
+    width: 300px; /* 원하는 가로 크기로 조절 */
+    margin: 0 auto; /* 수평 가운데 정렬 */
+    padding: 20px; /* 내용과 사이드바 사이의 간격 설정 */
+    border: 1px solid #ccc; /* 사각형 테두리 스타일 */
+    border-radius: 10px; /* 사각형의 둥글기 설정 */
+    }
+
+    .side_info {
+    text-align: center; /* 수평 가운데 정렬을 위한 설정 */
+    }
+
+    .prof_img {
+    display: inline-block; /* 인라인 블록 요소로 설정 */
+    }
+
+    .rating {
+    font-size: 18px; /* 등급 텍스트 크기 설정 */
+    color: #333;    /* 등급 텍스트 색상 설정 */
+    margin-top: 10px; /* 등급과 프로필 사진 사이의 위쪽 여백 설정 */
+    }
+
+    .user-id {
+    font-size: 18px; /* 아이디 텍스트 크기 설정 */
+    color: #333;    /* 아이디 텍스트 색상 설정 */
+    margin-top: 10px; /* 아이디와 프로필 사진 사이의 위쪽 여백 설정 */
+    }
+    .goal-graph {
+    width: 250px; /* 그래프 바의 전체 너비 */
+    height: 20px; /* 그래프 바의 높이 (여유 공간을 위해 조정) */
+    background-color: #f0f0f0; /* 그래프 바의 배경색 */
+    border: 1px solid #ccc; /* 그래프 바 테두리 스타일 */
+    border-radius: 20px; /* 그래프 바 테두리 둥글기 */
+    margin: 20px; /* 페이지에서 그래프 바와의 간격 */
+    display: felx;
+    }
+
+    /* Progress Bar (Filled Portion) */
+    .progress-bar {
+    width: 100%; /* 목표 달성 정도 (예: 100%) */
+    height: 100%; /* 그래프 바와 같은 높이 */
+    background-color: #4caf50; /* 목표 달성 부분의 배경색 */
+    border-radius: 5px; /* 목표 달성 부분의 둥글기 */
+    position: relative; /* 포지션 설정 */
+    display: flex;
+    }
+
+    /* Progress Segment (날짜별 영역) */
+    .progress-segment {
+    height: 100%; /* 그래프 바와 같은 높이 */
+    background-color: #4caf50; /* 각 날짜별 영역의 배경색 */
+    border-radius: 5px; /* 각 날짜별 영역의 둥글기 */
+    position: relative; /* 포지션 설정 */
+    }
+
+    /* Progress Label (Number) */
+    .progress-label {
+    position: absolute; /* 포지션 설정 */
+    top: -20px; /* 그래프 바 위에서 조절 */
+    left: 50%;
+    transform: translateX(-50%);
+    color: #000; /* 숫자 색상 */
+    font-weight: bold; /* 굵게 표시 */
+    }
+
+    .point-container {
+    display: flex;
+    justify-content: space-between;
+    }
+
+    #tab-menu {
+    display: flex; /* flex 레이아웃 사용 */
+    flex-direction: row; /* 가로로 나열 */
+    /* 다른 스타일을 추가할 수 있음 */
+    justify-content: space-between; /* 간격을 조절하기 위해 */
+    width: 300px; /* 전체 탭 메뉴 컨테이너의 너비를 조절 */
+    margin: 0 auto; /* 중앙 정렬을 위해 */
+    }
+
+    #tab-menu div {
+    padding: 10px; /* 각 탭 메뉴 아이템의 패딩 */
+    cursor: pointer; /* 커서 모양을 포인터로 변경하여 클릭 가능하게 함 */
+    /* 다른 스타일을 추가할 수 있음 */
+    }
+
+    #meal-options {
+    display: flex; /* 자식 요소를 수평으로 배열하기 위해 Flexbox 레이아웃 사용 */
+    justify-content: center; /* 자식 요소를 수평으로 가운데 정렬 */
+    align-items: center; /* 자식 요소를 수직으로 가운데 정렬 */
+    }
+
+    #meal-options > div {
+    margin: 0 10px; /* 각 요소 사이의 간격 조절 (원하는 크기로 조정) */
+    }
+
+    #meal-options div {
+    cursor: pointer;
+    }
+
+    #tab-menu-container {
+    display: flex; /* Flexbox 사용 */
+    text-align: left;
+    }
+
+    #tan-dan-ji-box {
+    display: flex; /* 내부의 tan-dan-ji-box도 Flexbox 사용 */
+    flex-direction: column; /* 세로로 정렬 */
+    }
+
+    .today-tab .chall-tab .sub-tab .shop-tab{
+    width: 70px; /* 각 탭 메뉴의 너비 */
+    height: 70px; /* 각 탭 메뉴의 높이 (너비와 같게 설정하여 정사각형 모양으로 만듦) */
+    background-color: #4caf50; /* 배경색을 설정 */
+    text-align: center;
+    line-height: 70px; /* 텍스트 세로 중앙 정렬을 위해 */
+    color: #fff; /* 텍스트 색상 설정 */
+    cursor: pointer; /* 마우스 커서를 포인터로 변경 */
+    }
+
+    #tan-dan-ji-box {
+    display: flex; /* Flexbox를 사용하여 자식 요소를 가로로 정렬 */
+    flex-direction: column; /* 자식 요소를 세로로 정렬 */
+    /* background-color: lightgray; 사각형의 배경색 */
+    border: 2px solid gray; /* 사각형 테두리 스타일 */
+    padding: 10px; /* 내부 여백 설정 */
+    width: 300px; /* 원하는 사각형 너비 설정 */
+    text-align: left;
+    }
+
+    #tan-dan-ji-box > div {
+    margin-bottom: 10px; /* 각 항목 아래 여백 설정 */
+    }
+
+    #another-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    }
+
+    #another-page a {
+    text-decoration: none;
+    margin: 0 10px;
+    }
+
+
+
+
+
+	.uInputArea {
+    display: table;
+    width: 100%;
+    height: 30px;
+    padding: 10px 0;
+    border-bottom: 1px solid black;
+	}
+	.uInputArea .uInput label {
+    font-size: 15px;
+    line-height: 30px;
+    color: black;
+    float: left;
+    font-weight: bold;
+	}
+	.uInputArea .uInput .inputBox {
+    overflow: hidden;
+    position: relative;
+	}
+	.uInputArea .uInput:after {
+    content: "";
+    display: block;
+    clear: both;
+	}
+
+	.uInputArea .col:last-child {
+    padding-right: 5px;
+	}
+	.uInputArea .col:first-child {
+		width: 100%;
+		padding-left: 5px;
+	}
+	.uInputArea .col {
+		display: table-cell;
+		vertical-align: top;
+	}
+	.uInputArea .uInput .inputBox .inputText {
+    font-size: 15px;
+    line-height: 30px;
+    color: black;
+    display: block;
+    width: 100%;
+    height: 30px;
+    padding: 0 25px 0 10px;
+    box-sizing: border-box;
+    border: 0;
+    outline: 0;
+    background: none;
+	}
+		.uInputArea .col:last-child {
+		padding-right: 5px;
+	}
+
+	.uInputArea .col {
+		display: table-cell;
+		vertical-align: top;
+	}
+	.uInputArea .uInput .inputBox .btnDel {
+    display: none;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 25px;
+    height: 30px;
+	}
+	.uErrorText {
+    font-size: 13px;
+    line-height: 20px;
+    color: #dc941b;
+    margin-top: 5px;
+    padding: 0 5px;
+	}
+	.uInputArea .uBtnArea {
+    white-space: nowrap;
+    font-size: 0;
+	}
+	.uInputArea .uBtnArea .uBtn {
+    display: inline-block;
+    width: auto;
+    font-size: 13px;
+    height: 30px;
+    margin-left: 5px;
+    color: #666 !important;;
+    border: 0;
+    box-shadow: inset 0 0 0 0;
+	}
+
+</style>
+<body class="is-preload">
+
+<!-- Header -->
+<th:block th:replace="~{layout/header::header(${session.loginUser})}"></th:block>
+
+<!-- Main -->
+<section id="main" class="wrapper sidebar left">
+	<div class="inner">
+
+		<header class="major">
+			<h2>마이페이지</h2>
+			<p>내 정보 수정</p>
+		</header>
+
+		<!-- Content -->
+		<div class="content">
+
+			<form name="myuserForm" method="post" th:action="@{/usermypage/user_myinfo_modify}">
+				<div class="uBlock">
+					<div class="uInputArea">
+						<div class="col">
+							<div class="uInput">
+								<label for="inputId">아이디</label>
+								<div class="inputBox">
+									<input name="userId" type="text" id="inputId" class="inputText" placeholder="6~20자 영문, 숫자" tabindex="1" th:value="${user.userId}" readonly>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="uErrorText" style="display: block;"></div>
+				</div>
+
+				<div class="uBlock">
+					<div class="uInputArea">
+						<div class="col">
+							<div class="uInput">
+								<label for="inputNickName">닉네임</label>
+								<div class="inputBox">
+									<input name="userNickname" type="text" id="inputNickName" class="inputText" placeholder="닉네임" tabindex="2" th:value="${user.userNickname}" >
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="uErrorText" style="display: block;"></div>
+				</div>
+
+				<div class="uBlock">
+					<div class="uInputArea">
+						<div class="col">
+							<div class="uInput">
+								<label for="inputPw">비밀번호</label>
+								<div class="inputBox">
+									<input name="userPw" type="password" id="inputPw" class="inputText" placeholder="8~12자 영문, 숫자, 특수문자" tabindex="3" value="" >
+								</div>
+							</div>
+						</div>
+						<div class="col">
+							<div class="uBtnArea">
+								<button type="button" class="uBtn">보기</button>
+							</div>
+						</div>
+					</div>
+					<div class="uErrorText" style="display: block;"></div>
+				</div>
+
+				<div class="uBlock">
+					<div class="uInputArea">
+						<div class="col">
+							<div class="uInput">
+								<label for="inputPwConfirm">비밀번호 확인</label>
+								<div class="inputBox">
+									<input name="userPwRe" type="password" id="inputPwConfirm" class="inputText" placeholder="8~12자 영문, 숫자, 특수문자" value="" tabindex="4" >
+								</div>
+							</div>
+						</div>
+						<div class="col">
+							<div class="uBtnArea">
+								<button type="button" class="uBtn">보기</button>
+							</div>
+						</div>
+					</div>
+					<div class="uErrorText" style="display:block"></div>
+				</div>
+
+				<div class="uBlock">
+					<div class="uInputArea">
+						<div class="col">
+							<div class="uInput">
+								<label for="inputName">이름</label>
+								<div class="inputBox">
+									<input name="userName" type="text" id="inputName" class="inputText" placeholder="이름" tabindex="5" th:value="${user.userName}" readonly>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="uErrorText" style="display: block;"></div>
+				</div>
+
+				<div class="uBlock">
+					<div class="uInputArea">
+						<div class="col">
+							<div class="uInput">
+								<label for="inputgender">성별</label>
+								<div class="inputBox">
+									<input name="userGender" type="text" id="inputgender" class="inputText" placeholder="성별" tabindex="6" th:value="${user.userGender}" readonly>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="uErrorText" style="display: block;"></div>
+				</div>
+
+
+
+				<div class="uBlock">
+					<div class="uInputArea">
+						<div class="col">
+							<div class="uInput">
+								<label for="inputBirth">생년월일</label>
+								<div class="inputBox">
+									<input name="userBirth" type="text" id="inputBirth" class="inputText" placeholder="생년월일" tabindex="7" th:value="${user.userBirth}" readonly>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="uErrorText" style="display: block;"></div>
+				</div>
+
+				<div class="uBlock">
+					<div class="uInputArea">
+						<div class="col">
+							<div class="uInput">
+								<label for="inputTel">전화번호</label>
+								<div class="inputBox">
+									<input name="userTel" type="text" id="inputTel" class="inputText" placeholder="이메일" tabindex="8" th:value="${user.userTel}">
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="uErrorText" style="display: block;"></div>
+				</div>
+
+				<div class="uBlock">
+					<div class="uInputArea">
+						<div class="col">
+							<div class="uInput">
+								<label for="inputEmail">이메일</label>
+								<div class="inputBox">
+									<input name="userMail" type="text" id="inputEmail" class="inputText" placeholder="이메일" tabindex="9" th:value="${user.userMail}" >
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="uErrorText" style="display: block;"></div>
+				</div>
+
+				<div class="uBlock">
+					<div class="uInputArea">
+						<div class="col">
+							<div class="uInput">
+								<label for="inputWeight">몸무게</label>
+								<div class="inputBox">
+									<input name="userWeight" type="text" id="inputWeight" class="inputText" placeholder="몸무게" tabindex="10" th:value="${user.userWeight}">
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="uErrorText" style="display: block;"></div>
+				</div>
+
+				<div class="uBlock">
+					<div class="uInputArea">
+						<div class="col">
+							<div class="uInput">
+								<label for="inputHeight">키</label>
+								<div class="inputBox">
+									<input name="userHeight" type="text" id="inputHeight" class="inputText" placeholder="키" tabindex="11" th:value="${user.userHeight}" >
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="uErrorText" style="display: block;"></div>
+				</div>
+
+				<div class="uBlock">
+					<div class="uInputArea">
+						<div class="col">
+							<div class="uInput">
+								<label for="inputWeightGoal">목표체중</label>
+								<div class="inputBox">
+									<input name="weightGoal" type="text" id="inputWeightGoal" class="inputText" placeholder="목표체중" tabindex="12" th:value="${user.weightGoal}">
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="uErrorText" style="display: block;"></div>
+				</div>
+
+				<div class="uBlock">
+					<div class="uInputArea">
+						<div class="col">
+							<div class="uInput">
+								<label for="inputCaloriesGoal">목표칼로리</label>
+								<div class="inputBox">
+									<input name="caloriesGoal" type="text" id="inputCaloriesGoal" class="inputText" placeholder="목표칼로리" tabindex="13" th:value="${user.caloriesGoal}">
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="uErrorText" style="display: block;"></div>
+				</div>
+
+				<div class="uBlock">
+					<div class="uInputArea">
+						<div class="col">
+							<div class="uInput">
+								<label for="inputJoinDate">가입일자</label>
+								<div class="inputBox">
+									<input name="userJoindate" type="text" id="inputJoinDate" class="inputText" placeholder="가입일자" tabindex="14" th:value="${user.userJoindate}" readonly>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="uErrorText" style="display: block;"></div>
+				</div>
+
+				<div class="uBlock">
+					<div class="uInputArea">
+						<div class="col">
+							<div class="uInput">
+								<label for="inputReportedcnt">신고당한횟수</label>
+								<div class="inputBox">
+									<input name="userReportedcnt" type="text" id="inputReportedcnt" class="inputText" placeholder="신고당한횟수" tabindex="15" th:value="${user.userReportedcnt}" readonly>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="uErrorText" style="display: block;"></div>
+				</div>
+
+				<a href="javascript:document.myuserForm.submit()" class="button primary small" >수정완료</a>
+				<a th:href="@{/usermypage/user_myinfo}" class="button small">취소</a>
+			</form>
+
+		</div>
+
+
+		<!-- Sidebar -->
+		<th:block th:replace="~{layout/usermypage_sidebar::sidebar}"></th:block>
+
+	</div>
+</section>
+
+<!-- Footer -->
+<th:block th:replace="~{layout/footer::footer}"></th:block>
+
+<!-- Scripts -->
+<script th:src="@{/assets/js/jquery.min.js}"></script>
+<script th:src="@{/assets/js/jquery.dropotron.min.js}"></script>
+<script th:src="@{/assets/js/jquery.scrollex.min.js}"></script>
+<script th:src="@{/assets/js/browser.min.js}"></script>
+<script th:src="@{/assets/js/breakpoints.min.js}"></script>
+<script th:src="@{/assets/js/util_sub.js}"></script>
+<script th:src="@{/assets/js/main_sub.js}"></script>
+
+<script th:src="@{/assets/js/sidebar.js}"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js">
+
+
+
+	<!--document.getElementById('foo').readOnly = false; // readonly 비활성화-->
+
+</script>
+
+</body>
+</html>

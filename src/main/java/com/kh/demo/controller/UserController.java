@@ -36,9 +36,6 @@ public class UserController {
     @PostMapping("login")
     public String login(String userid, String userpw, HttpServletRequest req) {
         UserDTO loginUser = service.login(userid, userpw);
-        System.out.println(userid);
-        System.out.println(userpw);
-        System.out.println(loginUser);
         if(loginUser != null) {
             req.getSession().setAttribute("loginUser", loginUser.getUserId());
             return "redirect:/";

@@ -2,15 +2,15 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kh.demo.mapper.FileMapper">
 	<insert id="insertFile">
-		insert into file values(#{sys_name},#{org_name},#{board_num})
+		insert into file values(#{sysName},#{orgName},#{boardNum})
 	</insert>
 	
 	<select id="getFiles">
-		select * from file where board_num=#{board_num}
+		select * from file where board_num=#{boardNum}
 	</select>
 	
 	<delete id="deleteBySystemname">
-		delete from file where sys_name=#{sys_name}
+		delete from file where sys_name=#{sysName}
 	</delete>
 </mapper>
 
