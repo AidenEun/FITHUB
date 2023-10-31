@@ -15,7 +15,12 @@
         <nav class="main">
             <ul>
                 <li id="login">
-                    <a class="login" href="#">Login</a>
+                    <th:block th:if="${loginUser == null}">
+                        <a class="login" href="/user/login">Login</a>
+                    </th:block>
+                    <th:block th:if="${loginUser != null}">
+                        <a class="login" th:href="@{/user/logout}">logout</a>
+                    </th:block>
                     <a class="login" href="/usermypage/user_modify">유저</a>
                     <a class="login" href="/trainermypage/trainer_modify">트레</a>
                     <a class="login" href="/adminmypage/adminmypage_list">관리</a>

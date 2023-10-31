@@ -4,6 +4,7 @@ import com.kh.demo.domain.dto.UserDTO;
 import com.kh.demo.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,7 +15,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/user/*")
 public class UserController {
+
     @Autowired
+    @Qualifier("userServiceImpl")
     private UserService service;
 
     @GetMapping("join")
@@ -27,13 +30,18 @@ public class UserController {
         }
         return "redirect:/";
     }
+    @GetMapping("login")
+    public void replaceLogin(){}
 
     @PostMapping("login")
     public String login(String userid, String userpw, HttpServletRequest req) {
         UserDTO loginUser = service.login(userid, userpw);
+        System.out.println(userid);
+        System.out.println(userpw);
+        System.out.println(loginUser);
         if(loginUser != null) {
             req.getSession().setAttribute("loginUser", loginUser.getUserId());
-            return "redirect:/board/list";
+            return "redirect:/";
         }
         else {
             return "redirect:/";

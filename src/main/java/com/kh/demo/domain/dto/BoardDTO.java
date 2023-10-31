@@ -4,15 +4,15 @@ import lombok.Data;
 
 @Data
 public class BoardDTO {
-    private long board_num;
-    private String board_category;
-    private String board_title;
-    private String board_content;
-    private String user_id;
-    private String admin_id;
+    private long boardNum;
+    private String boardCategory;
+    private String boardTitle;
+    private String boardContent;
+    private String userId;
+    private String adminId;
     private String regdate;
-    private String update_date;
-    private long like_cnt;
-    private long bookmark_cnt;
-    private long view_cnt;
+    private String updateDate;
+    private long likeCnt;
+    private long bookmarkCnt;
+    private long viewCnt;
 }
