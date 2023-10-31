@@ -2939,7 +2939,9 @@ input, select, textarea {
 		}
 
 			.spotlight .image img {
-				width: 100%;
+				width: 300px;
+                height: auto;
+                margin-left: 100px;
 			}
 
 		@media screen and (max-width: 1280px) {
@@ -4043,6 +4045,7 @@ input, select, textarea {
 		padding: 4em 0 2em 0 ;
 		border-top: solid 1px #e6e6e6;
 		position: relative;
+		background-color: #5a8100;
 	}
 
 		#footer > .inner {
@@ -4451,6 +4454,7 @@ body {
 		-webkit-animation: reveal-header 0.5s ease;
 		-ms-animation: reveal-header 0.5s ease;
 		animation: reveal-header 0.5s ease;
+		background-color: #5a8100;
 	}
 
 	#header.alt {
