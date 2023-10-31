@@ -12,4 +12,20 @@ public class InfoController {
     public void replaceInfo(){
     }
 
+    @GetMapping("info_news")
+    public void replaceInfo_news(){
+    }
+
+    @GetMapping("info_exercise")
+    public void replaceInfo_exercise(){
+    }
+
+    @GetMapping("info_food")
+    public void replaceInfo_food(){
+    }
+
+    @GetMapping("info_tip")
+    public void replaceInfo_tip(){
+    }
+
 }
