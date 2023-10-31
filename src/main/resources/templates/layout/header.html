@@ -45,7 +45,12 @@
             <div id="my_info">
                 <div>
                     <a href="#">내 정보</a>
-                    <a href="#">로그인</a>
+                    <th:block th:if="${loginUser == null}">
+                        <a class="login" href="/user/login">로그인</a>
+                    </th:block>
+                    <th:block th:if="${loginUser != null}">
+                        <a class="login" th:href="@{/user/logout}">로그아웃</a>
+                    </th:block>
                 </div>
                 <span>등급 / 닉네임(ID)</span>
             </div>
@@ -100,8 +105,8 @@
                     </div>
                 </div>
                 <div class="tab-view chall-view">
-                    <strong>도전</strong>
                     <div class="my-chall">
+                        <strong>나의 챌린지</strong><br>
                         <span class="active-tab">진행중</span>
                         <span class="finish-tab">종료</span>
                         <div id="chall-list">
@@ -118,7 +123,7 @@
                 </div>
                 <div class="tab-view sub-view">
                     <div class="sub-view-container">
-                        <strong>구독</strong>
+                        <strong>나의 트레이너</strong>
                         <div class="my-sub">
                             <p>구독한 트레이너 list</p>
                         </div>

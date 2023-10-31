@@ -97,24 +97,34 @@
         display: block; /* 오늘 탭만 보이도록 설정 */
     }
 
+    .chall-view{
+        margin-left: 110px;
+    }
+
     .my-chall{
     	box-sizing: border-box;
-    	border: 1px solid black;
     	width: 250%;
     	height: 100%;
     }
 
-    .active-tab {
-    	box-sizing: border-box;
-    	border: 1px solid black;
-    	cursor: pointer;
-
+    .active-tab,
+    .finish-tab{
+        margin-right: 50px;
     }
 
-    .finish-tab {
+    .active-tab:hover{
     	box-sizing: border-box;
-    	border: 1px solid black;
+        border-radius: 10px;
     	cursor: pointer;
+        background-color: #ddd;
+    }
+
+
+    .finish-tab:hover{
+    	box-sizing: border-box;
+        border-radius: 10px;
+    	cursor: pointer;
+        background-color: #ddd;
     }
 
     .active-chall-listView,
@@ -142,7 +152,6 @@
 
     #chall-list{
     	box-sizing: border-box;
-    	border: 1px solid black;
     }
 
     #meal-options {
