@@ -8,4 +8,6 @@ public interface UserService {
     boolean checkId(String userid);
 
     UserDTO login(String userid, String userpw);
+
+    UserDTO getDetail(String userid);
 }

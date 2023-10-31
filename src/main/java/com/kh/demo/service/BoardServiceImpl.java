@@ -7,6 +7,7 @@ import com.kh.demo.mapper.BoardMapper;
 import com.kh.demo.mapper.FileMapper;
 import com.kh.demo.mapper.ReplyMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -33,6 +34,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
+@Qualifier("BoardServiceImpl")
 public class BoardServiceImpl implements BoardService{
 	@Autowired
 	private BoardMapper bmapper;
@@ -54,7 +56,7 @@ public class BoardServiceImpl implements BoardService{
 		}
 		else {
 			//방금 등록한 게시글 번호
-			Long boardnum = bmapper.getLastNum(board.getUser_id());
+			Long boardnum = bmapper.getLastNum(board.getUserId());
 			boolean flag = false;
 			for(int i=0;i<files.length-1;i++) {
 				MultipartFile file = files[i];
@@ -100,7 +102,7 @@ public class BoardServiceImpl implements BoardService{
 		if(row != 1) {
 			return false;
 		}
-		List<FileDTO> org_file_list = fmapper.getFiles(board.getBoard_num());
+		List<FileDTO> org_file_list = fmapper.getFiles(board.getBoardNum());
 		if(org_file_list.size()==0 && (files == null || files.length == 0)) {
 			return true;
 		}
@@ -130,7 +132,7 @@ public class BoardServiceImpl implements BoardService{
 					String path = saveFolder+systemname;
 					
 					FileDTO fdto = new FileDTO();
-					fdto.setBoardNum(board.getBoard_num());
+					fdto.setBoardNum(board.getBoardNum());
 					fdto.setOrgName(orgname);
 					fdto.setSysName(systemname);
 					
@@ -177,7 +179,7 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public boolean remove(String loginUser, Long boardnum) {
 		BoardDTO board = bmapper.findByNum(boardnum);
-		if(board.getUser_id().equals(loginUser)) {
+		if(board.getUserId().equals(loginUser)) {
 			List<FileDTO> files = fmapper.getFiles(boardnum);
 			for(FileDTO fdto : files) {
 				File file = new File(saveFolder,fdto.getSysName());
@@ -232,7 +234,7 @@ public class BoardServiceImpl implements BoardService{
 	public ArrayList<Integer> getReplyCntList(List<BoardDTO> list) {
 		ArrayList<Integer> reply_cnt_list = new ArrayList<>();
 		for(BoardDTO board : list) {
-			reply_cnt_list.add(rmapper.getTotal(board.getBoard_num()));
+			reply_cnt_list.add(rmapper.getTotal(board.getBoardNum()));
 		}
 		return reply_cnt_list;
 	}
@@ -241,7 +243,7 @@ public class BoardServiceImpl implements BoardService{
 	public ArrayList<String> getRecentReplyList(List<BoardDTO> list) {
 		ArrayList<String> recent_reply = new ArrayList<>();
 		for(BoardDTO board : list) {
-			if(rmapper.getRecentReply(board.getBoard_num()) >= 5) {
+			if(rmapper.getRecentReply(board.getBoardNum()) >= 5) {
 				recent_reply.add("O");
 			}
 			else {

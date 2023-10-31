@@ -22,6 +22,10 @@ public class UserMyPageController {
     @Autowired @Qualifier("UserMyPageServiceImpl")
     private UserMyPageService service;
 
+    @Autowired
+    @Qualifier("BoardServiceImpl")
+    private BoardService serviceboard;
+
 
     @GetMapping("user_modify")
     public void replaceModify(){}
@@ -38,24 +42,24 @@ public class UserMyPageController {
 
     @GetMapping("user_boardlist")
     public void user_boardlist(Criteria cri, Model model) throws Exception {
-//        System.out.println(cri);
-//        List<BoardDTO> list = service.getBoardList(cri);
-//        model.addAttribute("list",list);
-//        model.addAttribute("pageMaker",new PageDTO(service.getTotal(cri), cri));
-//        model.addAttribute("newly_board",service.getNewlyBoardList(list));
-//        model.addAttribute("reply_cnt_list",service.getReplyCntList(list));
-//        model.addAttribute("recent_reply",service.getRecentReplyList(list));
+        System.out.println(cri);
+        List<BoardDTO> list = serviceboard.getBoardList(cri);
+        model.addAttribute("list",list);
+        model.addAttribute("pageMaker",new PageDTO(serviceboard.getTotal(cri), cri));
+        model.addAttribute("newly_board",serviceboard.getNewlyBoardList(list));
+        model.addAttribute("reply_cnt_list",serviceboard.getReplyCntList(list));
+        model.addAttribute("recent_reply",serviceboard.getRecentReplyList(list));
     }
 
     @GetMapping("user_messagelist")
     public void user_messagelist(Criteria cri, Model model) throws Exception {
-//        System.out.println(cri);
-//        List<BoardDTO> list = service.getBoardList(cri);
-//        model.addAttribute("list",list);
-//        model.addAttribute("pageMaker",new PageDTO(service.getTotal(cri), cri));
-//        model.addAttribute("newly_board",service.getNewlyBoardList(list));
-//        model.addAttribute("reply_cnt_list",service.getReplyCntList(list));
-//        model.addAttribute("recent_reply",service.getRecentReplyList(list));
+        System.out.println(cri);
+        List<BoardDTO> list = serviceboard.getBoardList(cri);
+        model.addAttribute("list",list);
+        model.addAttribute("pageMaker",new PageDTO(serviceboard.getTotal(cri), cri));
+        model.addAttribute("newly_board",serviceboard.getNewlyBoardList(list));
+        model.addAttribute("reply_cnt_list",serviceboard.getReplyCntList(list));
+        model.addAttribute("recent_reply",serviceboard.getRecentReplyList(list));
     }
 
     @GetMapping("user_applytrainer")
