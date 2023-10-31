@@ -1,5 +1,7 @@
 package com.kh.demo.service;
 
+
+import com.kh.demo.domain.dto.Criteria;
 import com.kh.demo.domain.dto.BoardDTO;
 import com.kh.demo.domain.dto.UserDTO;
 import com.kh.demo.mapper.UserMapper;
@@ -7,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @Service
 @Qualifier("UserServiceImpl")
@@ -43,12 +47,17 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public List<UserDTO> getSignUpListInUser(Criteria cri) {
+        return umapper.getSignUpListInUser(cri);
+      
+    @Override
     public boolean user_modify(UserDTO user) {
         int row = umapper.updateUser(user);
         if (row != 1) {
             return false;
         }
         return true;
+
     }
 
 }

@@ -166,8 +166,8 @@
 
 		<!-- Content -->
 		<div class="content">
-
 			<table style="text-align: center; margin-top: 20px;">
+				<thead>
 				<tr style="font-weight: bold;">
 					<td>신청 번호</td>
 					<td>신청 유저</td>
@@ -176,39 +176,48 @@
 					<td>나이</td>
 					<td>성별</td>
 				</tr>
-				<tr>
+				</thead>
+				<tbody id="data-table">
+				<tr th:if="${signUpList != null and signUpList.size() > 0}" th:each="signUpBoard : ${signUpList}">
 					<td class="long_text">
 						<a href="#">
-							trainer.signup_num
+							[[${signUpBoard.signupNum}]]
 						</a>
 					</td>
 					<td class="long_text">
 						<a href="#">
-							trainer.user_id
+							[[${signUpBoard.userId}]]
 						</a>
 					</td>
 					<td class="long_text">
 						<a href="#">
-							trainer.trainer_part
+							[[${signUpBoard.trainerPart}]]
 						</a>
 					</td>
 					<td class="long_text">
 						<a href="#">
-							trainer.trainer_career
+							[[${signUpBoard.trainerCareer}]]
 						</a>
 					</td>
 					<td class="long_text">
 						<a href="#">
-							user.user_age
+							[[${signUpListInUser[signUpBoardStat.index].userBirth}]]
 						</a>
 					</td>
 					<td class="long_text">
 						<a href="#">
-							user.user_gender
+							[[${signUpListInUser[signUpBoardStat.index].userGender}]]
 						</a>
 					</td>
 				</tr>
+				</tbody>
+				<tr th:if="${signUpList == null or signUpList.size() == 0}">
+					<td colspan="6">
+						접수된 신고가 없습니다!
+					</td>
+				</tr>
 			</table>
+			<br>
 		</div>
 
 		<!-- Sidebar -->
