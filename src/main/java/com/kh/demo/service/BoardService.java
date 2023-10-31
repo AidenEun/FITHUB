@@ -34,8 +34,9 @@ public interface BoardService {
 	ResponseEntity<Resource> getThumbnailResource(String systemname) throws Exception;
 
 	ResponseEntity<Object> downloadFile(String systemname, String orgname) throws Exception;
-	
-	
+
+
+	List<BoardDTO> getMyBoardList(Criteria cri, String userId);
 }
 
 

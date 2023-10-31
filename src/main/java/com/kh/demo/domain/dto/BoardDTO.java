@@ -9,7 +9,6 @@ public class BoardDTO {
     private String boardTitle;
     private String boardContent;
     private String userId;
-    private String adminId;
     private String regdate;
     private String updateDate;
     private long likeCnt;

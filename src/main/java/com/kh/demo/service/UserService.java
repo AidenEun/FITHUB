@@ -10,4 +10,6 @@ public interface UserService {
     UserDTO login(String userid, String userpw);
 
     UserDTO getDetail(String userid);
+
+    boolean user_modify(UserDTO user);
 }

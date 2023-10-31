@@ -294,6 +294,11 @@ public class BoardServiceImpl implements BoardService{
 		headers.setContentDisposition(ContentDisposition.builder("attachment").filename(dwName).build());
 		return new ResponseEntity<Object>(resource,headers,HttpStatus.OK);
 	}
+
+	@Override
+	public List<BoardDTO> getMyBoardList(Criteria cri, String userId) {
+		return bmapper.getMyList(cri,userId);
+	}
 }
 
 
