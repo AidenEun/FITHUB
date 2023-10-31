@@ -170,6 +170,7 @@
 
 		<header class="major">
 			<h2>마이페이지</h2>
+			<p>내 게시물</p>
 		</header>
 
 
@@ -179,7 +180,7 @@
 			<!-- 게시글 리스트 띄우는 테이블 -->
 			<table class="list">
 				<tr align="right" valign="middle">
-					<td colspan="6">글 개수 : pageMaker.total</td>
+					<td colspan="6">글 개수 : [[${pageMaker.total}]]</td>
 				</tr>
 				<tr align="center" valign="middle">
 					<th width="8%">번호</th>
@@ -190,25 +191,25 @@
 					<th width="10%">조회수</th>
 				</tr>
 				<tr th:if="${list != null and list.size()>0}" th:each="board : ${list}">
-					<td>board.boardnum</td>
+					<td>[[${board.boardNum}]]</td>
 					<td>
 						<sup class="hot" th:if="${recent_reply[boardStat.index] == 'O'}">Hot</sup>
 						<sup class="new" th:if="${newly_board[boardStat.index] == 'O'}">New</sup>
 					</td>
 					<td>
-						<a class="get" th:href="${board.boardnum}">
-							board.boardtitle
+						<a class="get" th:href="${board.boardNum}">
+							[[${board.boardTitle}]]
 							<span class="reply_cnt" th:text="'['+${reply_cnt_list[boardStat.index]}+']'"></span>
 						</a>
 					</td>
-					<td>board.userid</td>
+					<td>[[${board.userId}]]</td>
 					<td>
-						board.regdate
-						<th:block th:if="${board.regdate != board.updatedate}">
+						[[${board.regdate}]]
+						<th:block th:if="${board.regdate != board.updateDate}">
 							(수정됨)
 						</th:block>
 					</td>
-					<td>board.readcount</td>
+					<td>[[${board.viewCnt}]]</td>
 				</tr>
 				<th:block th:if="${list == null or list.size() == 0}">
 					<tr>
@@ -283,6 +284,8 @@
 <script th:src="@{/assets/js/breakpoints.min.js}"></script>
 <script th:src="@{/assets/js/util_sub.js}"></script>
 <script th:src="@{/assets/js/main_sub.js}"></script>
+
+<script th:src="@{/assets/js/sidebar.js}"></script>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script th:inline="javascript">

@@ -24,37 +24,43 @@
 	
 	<insert id="insertBoard">
 		insert into board (board_title,board_content,user_id)
-		values(#{board_title},#{board_content},#{user_id})
+		values(#{boardTitle},#{boardContent},#{userId})
 	</insert>
 	
 	<update id="updateReadCount">
-		update board set view_cnt = view_cnt+1 where board_num = #{board_num}
+		update board set view_cnt = view_cnt+1 where board_num = #{boardNum}
 	</update>
 	<update id="updateBoard">
-		update board set board_title=#{board_title}, board_content=#{board_content},update_date=now()
-		where board_num=#{board_num}
+		update board set board_title=#{boardTitle}, board_content=#{boardContent},update_date=now()
+		where board_num=#{boardNum}
 	</update>
 	
 	<delete id="deleteBoard">
-		delete from board where board_num=#{board_num}
+		delete from board where board_num=#{boardNum}
 	</delete>
 	
 	<select id="getList">
-		select * from board where
-		<include refid="cri"></include>
+		select * from board where user_id="cjw2500" and
+		<include refid="cri"/>
 		<![CDATA[ 
 			0 < board_num order by board_num desc limit #{startrow},#{amount}
 		]]>
 	</select>
+
+	<select id="getMyList">
+		select * from board where user_id=#{userId}
+		order by board_num desc limit #{cri.startrow},#{cri.amount}
+	</select>
+
 	<select id="getTotal">
 		select count(*) from board where
-		<include refid="cri"></include> board_num > 0
+		<include refid="cri"/> board_num > 0
 	</select>
 	<select id="getLastNum">
-		select max(board_num) from board where user_id=#{user_id}
+		select max(boardNum) from board where user_id=#{userId}
 	</select>
 	<select id="findByNum">
-		select * from board where board_num=#{board_num}
+		select * from board where board_num=#{boardNum}
 	</select>
 </mapper>
 

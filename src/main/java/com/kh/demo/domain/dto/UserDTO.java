@@ -15,7 +15,7 @@ public class UserDTO {
     private int userHeight;
     private int userWeight;
     private String userGender;
-    private int userBirth;
+    private String userBirth;
     private String userJoindate;
     private Long userPoint;
     private int userReportedcnt;

@@ -15,8 +15,8 @@ public interface ReplyMapper {
 	int updateReply(ReplyDTO reply);
 	
 	//delete
-	int deleteReply(Long reply_num);
-	int deleteByBoardnum(Long board_num);
+	int deleteReply(Long replynum);
+	int deleteByBoardnum(Long boardnum);
 	
 	//select
 	Long getLastNum(String userid);

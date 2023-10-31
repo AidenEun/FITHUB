@@ -1,16 +1,18 @@
 package com.kh.demo.controller;
 
-import com.kh.demo.domain.dto.BoardDTO;
-import com.kh.demo.domain.dto.Criteria;
-import com.kh.demo.domain.dto.DiaryDTO;
-import com.kh.demo.domain.dto.PageDTO;
+import com.kh.demo.domain.dto.*;
 import com.kh.demo.service.BoardService;
 import com.kh.demo.service.UserMyPageService;
+import com.kh.demo.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -23,13 +25,42 @@ public class UserMyPageController {
     private UserMyPageService service;
 
     @Autowired
+    @Qualifier("UserServiceImpl")
+    private UserService serviceUser;
+
+    @Autowired
     @Qualifier("BoardServiceImpl")
     private BoardService serviceboard;
 
 
-    @GetMapping("user_modify")
-    public void replaceModify(){}
+    @GetMapping("user_myinfo_modify")
+    public void user_myinfo_modify(HttpServletRequest req,Model model){
+        HttpSession session = req.getSession();
+        String loginUser = (String) session.getAttribute("loginUser");
+        UserDTO user = serviceUser.getDetail(loginUser);
+        model.addAttribute("user", user);
+    }
 
+    @GetMapping("user_myinfo")
+    public void user_myinfo(HttpServletRequest req, Model model) {
+        HttpSession session = req.getSession();
+        String loginUser = (String) session.getAttribute("loginUser");
+        UserDTO user = serviceUser.getDetail(loginUser);
+        model.addAttribute("user", user);
+    }
+
+    @PostMapping("user_myinfo_modify")
+    public String user_myinfo_modify(UserDTO userdto, Model model) {
+        System.out.println(userdto);
+        if (serviceUser.user_modify(userdto)){
+            UserDTO user = serviceUser.getDetail(userdto.getUserId());
+            model.addAttribute("user", user);
+            return "redirect:/usermypage/user_myinfo";
+        }
+        else {
+            return "redirect:/";
+        }
+    }
 
     @GetMapping("user_challenge")
     public void replaceChallenge(){}
@@ -41,9 +72,13 @@ public class UserMyPageController {
     public void replaceSubBookmark(){}
 
     @GetMapping("user_boardlist")
-    public void user_boardlist(Criteria cri, Model model) throws Exception {
-        System.out.println(cri);
-        List<BoardDTO> list = serviceboard.getBoardList(cri);
+    public void user_boardlist(Criteria cri, Model model,HttpServletRequest req) throws Exception {
+        HttpSession session = req.getSession();
+        String userId = (String) session.getAttribute("loginUser");
+        List<BoardDTO> list = serviceboard.getMyBoardList(cri,userId);
+      /* List<BoardDTO> list = serviceboard.getBoardList(cri);*/
+        System.out.println("cri : "+cri);
+        System.out.println("list : "+list);
         model.addAttribute("list",list);
         model.addAttribute("pageMaker",new PageDTO(serviceboard.getTotal(cri), cri));
         model.addAttribute("newly_board",serviceboard.getNewlyBoardList(list));
