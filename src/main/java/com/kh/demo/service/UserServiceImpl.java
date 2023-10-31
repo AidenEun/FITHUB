@@ -49,8 +49,8 @@ public class UserServiceImpl implements UserService{
     @Override
     public List<UserDTO> getSignUpListInUser(Criteria cri) {
         return umapper.getSignUpListInUser(cri);
-      
-    @Override
+    }
+
     public boolean user_modify(UserDTO user) {
         int row = umapper.updateUser(user);
         if (row != 1) {
