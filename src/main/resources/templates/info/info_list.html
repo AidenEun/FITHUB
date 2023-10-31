@@ -5,205 +5,128 @@
 	License: pixelarity.com/license
 -->
 <html lang="ko">
-	<head>
-		<title>Untitled</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="/assets/css/index.css" />
-		<noscript><link rel="stylesheet" href="/assets/css/noscript.css" /></noscript>
-	</head>
-	<body class="is-preload">
+<head>
+	<title>Untitled</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="/assets/css/index.css" />
+	<noscript><link rel="stylesheet" href="/assets/css/noscript.css" /></noscript>
+</head>
+<body class="is-preload">
 
-			<!-- Header -->
-			<header id="header">
-				<h1><a href="/">Fit Hub</a></h1>
-				<nav class="links">
-					<ul>
-						<li><a href="/info/info_list">정보</a></li>
-						<li><a href="#">칼로리</a></li>
-						<li><a href="#">커뮤니티</a></li>
-						<li><a href="#">트레이너 매칭</a></li>
-						<li><a href="#">챌린지</a></li>
-						<li><a href="#">제품</a></li>
-					</ul>
-				</nav>
-				<nav class="main">
-					<ul>
-						<li id="login">
-							<a class="login" href="#">Login</a>
-						</li>
-						<li class="search">
-							<a class="fa-search" href="#search">Search</a>
-							<form id="search" method="get" action="#">
-								<input type="text" name="query" placeholder="Search" />
-							</form>
-						</li>
-						<li class="menu">
-							<a class="fa-bars" href="#menu">Menu</a>
-						</li>
-					</ul>
-				</nav>
-			</header>
+<!-- Header -->
+<th:block th:replace="~{layout/header::header(${session.loginUser})}"></th:block>
+<!-- Main -->
+<section id="main" class="wrapper sidebar left">
+	<div class="inner">
 
-			<!-- Menu -->
-			<section id="menu">
+		<header class="major">
+			<h2>정보</h2>
+		</header>
 
-				<!-- Search -->
-				<section>
-					<form class="search" method="get" action="#">
-						<input type="text" name="query" placeholder="Search" />
-					</form>
-				</section>
+		<!-- Content -->
+		<div class="content">
+			<div class="cotent_header"><h2>전체</h2></div>
+			<div class="button" style="margin-bottom: 30px;">글 작성</div>
+			<table>
+				<tr>
+					<th>제목</th>
+					<th>작성자</th>
+					<th>작성일</th>
+				</tr>
+				<tr>
+					<td>aaaa</td>
+					<td>bbbb</td>
+					<td>cccc</td>
+				</tr>
+				<tr>
+					<td>aaaa</td>
+					<td>bbbb</td>
+					<td>cccc</td>
+				</tr>
+				<tr>
+					<td>aaaa</td>
+					<td>bbbb</td>
+					<td>cccc</td>
+				</tr>
+				<tr>
+					<td>aaaa</td>
+					<td>bbbb</td>
+					<td>cccc</td>
+				</tr>
+				<tr>
+					<td>aaaa</td>
+					<td>bbbb</td>
+					<td>cccc</td>
+				</tr>
+				<tr>
+					<td>aaaa</td>
+					<td>bbbb</td>
+					<td>cccc</td>
+				</tr>
+				<tr>
+					<td>aaaa</td>
+					<td>bbbb</td>
+					<td>cccc</td>
+				</tr>
+				<tr>
+					<td>aaaa</td>
+					<td>bbbb</td>
+					<td>cccc</td>
+				</tr>
+				<tr>
+					<td>aaaa</td>
+					<td>bbbb</td>
+					<td>cccc</td>
+				</tr>
+				<tr>
+					<td>aaaa</td>
+					<td>bbbb</td>
+					<td>cccc</td>
+				</tr>
+			</table>
 
-				<!-- Links -->
-				<section>
-					<ul class="links">
-						<li>
-							<a href="#">
-								<h3>Lorem ipsum</h3>
-								<p>Feugiat tempus veroeros dolor</p>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<h3>Dolor sit amet</h3>
-								<p>Sed vitae justo condimentum</p>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<h3>Feugiat veroeros</h3>
-								<p>Phasellus sed ultricies mi congue</p>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<h3>Etiam sed consequat</h3>
-								<p>Porta lectus amet ultricies</p>
-							</a>
-						</li>
-					</ul>
-				</section>
+		</div>
 
-				<!-- Actions -->
-				<section>
-					<ul class="actions stacked">
-						<li><a href="#" class="button large fit">Log In</a></li>
-					</ul>
-				</section>
+
+		<!-- Sidebar -->
+		<div class="sidebar">
+
+			<section>
+				<h3><a href="/info/info_list" style="color: #5a8100;">전체</a></h3>
+				<h3><a href="/info/info_news">뉴스</a></h3>
+				<h3><a href="/info/info_food">식단</a></h3>
+				<h3><a href="/info/info_exercise">운동</a></h3>
+				<h3><a href="/info/info_tip">꿀팁</a></h3>
 			</section>
 
-			<!-- Main -->
-			<section id="main" class="wrapper sidebar left">
-				<div class="inner">
+		</div>
 
-					<header class="major">
-						<h2>정보</h2>
-						<p>전체</p>
-					</header>
+	</div>
+</section>
 
-					<!-- Content -->
-					<div class="content">
-						<div class="button" style="margin-bottom: 30px;">글 작성</div>
-						<table>
-							<tr>
-								<th>제목</th>
-								<th>작성자</th>
-								<th>작성일</th>
-							</tr>
-							<tr>
-								<td>aaaa</td>
-								<td>bbbb</td>
-								<td>cccc</td>
-							</tr>
-							<tr>
-								<td>aaaa</td>
-								<td>bbbb</td>
-								<td>cccc</td>
-							</tr>
-							<tr>
-								<td>aaaa</td>
-								<td>bbbb</td>
-								<td>cccc</td>
-							</tr>
-							<tr>
-								<td>aaaa</td>
-								<td>bbbb</td>
-								<td>cccc</td>
-							</tr>
-							<tr>
-								<td>aaaa</td>
-								<td>bbbb</td>
-								<td>cccc</td>
-							</tr>
-							<tr>
-								<td>aaaa</td>
-								<td>bbbb</td>
-								<td>cccc</td>
-							</tr>
-							<tr>
-								<td>aaaa</td>
-								<td>bbbb</td>
-								<td>cccc</td>
-							</tr>
-							<tr>
-								<td>aaaa</td>
-								<td>bbbb</td>
-								<td>cccc</td>
-							</tr>
-							<tr>
-								<td>aaaa</td>
-								<td>bbbb</td>
-								<td>cccc</td>
-							</tr>
-							<tr>
-								<td>aaaa</td>
-								<td>bbbb</td>
-								<td>cccc</td>
-							</tr>
-						</table>
+<!-- Footer -->
+<footer id="footer">
+	<div class="inner">
+		<p class="copyright">&copy; Untitled Corp. All rights reserved. Lorem ipsum dolor sit amet feugiat tempus aliquam.</p>
+		<ul class="menu">
+			<li><a href="#">Terms<span> of Use</span></a></li>
+			<li><a href="#">Privacy<span> Policy</span></a></li>
+			<li><a href="#">Legal<span> Information</span></a></li>
+		</ul>
+	</div>
+</footer>
 
-					</div>
+<!-- Scripts -->
+<script src="/assets/js/jquery.min.js"></script>
+<script src="/assets/js/jquery.dropotron.min.js"></script>
+<script src="/assets/js/jquery.scrollex.min.js"></script>
+<script src="/assets/js/browser.min.js"></script>
+<script src="/assets/js/breakpoints.min.js"></script>
+<script src="/assets/js/util.js"></script>
+<script src="/assets/js/main.js"></script>
 
-
-					<!-- Sidebar -->
-					<div class="sidebar">
-
-						<section>
-							<h3><a href="#" style="color: #5a8100;">전체</a></h3>
-							<h3><a href="#">뉴스</a></h3>
-							<h3><a href="#">식단</a></h3>
-							<h3><a href="#">운동</a></h3>
-							<h3><a href="#">꿀팁</a></h3>
-						</section>
-
-					</div>
-
-				</div>
-			</section>
-
-			<!-- Footer -->
-			<footer id="footer">
-				<div class="inner">
-					<p class="copyright">&copy; Untitled Corp. All rights reserved. Lorem ipsum dolor sit amet feugiat tempus aliquam.</p>
-					<ul class="menu">
-						<li><a href="#">Terms<span> of Use</span></a></li>
-						<li><a href="#">Privacy<span> Policy</span></a></li>
-						<li><a href="#">Legal<span> Information</span></a></li>
-					</ul>
-				</div>
-			</footer>
-
-			<!-- Scripts -->
-			<script src="/assets/js/jquery.min.js"></script>
-			<script src="/assets/js/jquery.dropotron.min.js"></script>
-			<script src="/assets/js/jquery.scrollex.min.js"></script>
-			<script src="/assets/js/browser.min.js"></script>
-			<script src="/assets/js/breakpoints.min.js"></script>
-			<script src="/assets/js/util.js"></script>
-			<script src="/assets/js/main.js"></script>
-
-			<script src="/assets/js/util_sub.js"></script>
-			<script src="/assets/js/main_sub.js"></script>
-	</body>
+<script src="/assets/js/util_sub.js"></script>
+<script src="/assets/js/main_sub.js"></script>
+</body>
 </html>
