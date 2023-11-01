@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -105,5 +106,27 @@ public class UserMyPageController {
         List<DiaryDTO> diaryList = service.getDiaryList(loginUser);
         model.addAttribute("diaryList",diaryList);
     }
+
+    //userid도 같이 넘어와야함
+    @GetMapping("checklist")
+    public String checklist(String choicedate, RedirectAttributes ra){
+        //작성으로 이동
+        if(service.checkList(choicedate) == null){
+            System.out.println(choicedate);
+            ra.addAttribute("regdate",choicedate);
+            return "redirect:/usermypage/diaryWrite";
+        }
+        //view로 이동
+        else {
+            return "redirect:/usermypage/diaryView";
+        }
+    }
+
+    @GetMapping("diaryWrite")
+    public void replacediaryWrite(){
+
+    }
+    @GetMapping ("diaryView")
+    public void replacediaryView() {}
 
 }

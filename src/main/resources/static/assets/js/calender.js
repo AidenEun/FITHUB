@@ -44,8 +44,9 @@ const renderCalender = () =>{
     dates.forEach((date,i) => {
         const condition = i>= firstDateIndex && i < lastDateIndex +1
             ? 'this' : 'other';
-        dates[i] = `<div class="date"><span class=${condition}>${date}</span></div>`;
+        dates[i] = `<div class="date" onclick="choicedate(${viewYear},${viewMonth},${date})"><span class=${condition}>${date}</span></div>`;
     });
+
 
     document.querySelector(`.dates`).innerHTML = dates.join('');
 
@@ -61,6 +62,18 @@ const renderCalender = () =>{
 };
 
 renderCalender();
+
+// let day = new Date();
+
+function choicedate(viewYear,viewMonth,date){
+
+    let viewrealMonth = viewMonth+1;
+    if(date <10) date = "0"+date;
+    if(viewrealMonth <10) viewrealMonth = "0"+viewrealMonth;
+    // $("#click_date").val(viewYear+"-"+(viewrealMonth)+"-"+date);
+    console.log(viewYear+"-"+(viewrealMonth)+"-"+date);
+    location.replace("/usermypage/checklist?choicedate="+viewYear+"-"+viewrealMonth+"-"+date);
+}
 
 const prevMonth = () =>{
     date.setDate(1);
