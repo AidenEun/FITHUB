@@ -43,8 +43,8 @@ public class UserMyPageServiceImpl implements UserMyPageService{
     }
 
     @Override
-    public DiaryDTO checkList(String choicedate) {
-        DiaryDTO result = umpmapper.checkList(choicedate);
+    public DiaryDTO checkList(String choicedate,String loginUser) {
+        DiaryDTO result = umpmapper.checkList(choicedate,loginUser);
         //작성으로 아동
         if (result == null) {
             return result;
