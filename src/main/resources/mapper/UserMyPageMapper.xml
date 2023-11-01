@@ -17,11 +17,11 @@
 	</delete>
 
 	<select id="getDiaryDetail" resultType="diaryDTO">
-		select * from diary where user_id = #{loginUser} and regdate=#{chicedate}
+		select * from diary where user_id = #{loginUser} and regdate=#{choicedate}
 	</select>
 
 	<select id="checkList" resultType="diaryDTO">
-		select * from diary where user_id = #{loginUser} and regdate=#{chicedate}
+		select * from diary where user_id = #{loginUser} and regdate=#{choicedate}
 	</select>
 </mapper>
 
