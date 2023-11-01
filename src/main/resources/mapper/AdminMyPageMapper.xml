@@ -1,0 +1,135 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.demo.mapper.AdminMyPageMapper">
+    <sql id="cri">
+        <if test="keyword != '' and type != ''">
+            <trim prefixOverrides="or" prefix="(" suffix=") and">
+                <foreach collection="typeArr" item="type">
+                    or
+                    <choose>
+                        <when test="type == 'T'.toString()">
+                            (boardtitle like('%${keyword}%'))
+                        </when>
+                        <when test="type == 'C'.toString()">
+                            (boardcontents like('%${keyword}%'))
+                        </when>
+                        <when test="type == 'W'.toString()">
+                            (userid like('%${keyword}%'))
+                        </when>
+                    </choose>
+                </foreach>
+            </trim>
+        </if>
+    </sql>
+
+<!--Report-->
+    <select id="getReportList">
+        select * from report order by report_num desc limit #{startrow},#{amount}
+    </select>
+
+    <select id="getReportListByUser">
+        SELECT * FROM report
+        WHERE user_id IN (SELECT user_id FROM user WHERE user_category = 'U')
+        order by report_num desc limit #{startrow},#{amount}
+    </select>
+
+    <select id="getReportListByTrainer">
+        SELECT * FROM report
+        WHERE user_id IN (SELECT trainer_id FROM trainer)
+        order by report_num desc limit #{startrow},#{amount}
+    </select>
+
+    <select id="getReportTotal">
+        select count(*) from report where report_num > 0
+    </select>
+
+    <select id="getReportTotalByUser">
+        SELECT COUNT(*)
+        FROM report
+        INNER JOIN user ON report.user_id = user.user_id
+        WHERE report.report_num > 0;
+    </select>
+
+    <select id="getReportTotalByTrainer">
+        SELECT COUNT(*)
+        FROM report
+        INNER JOIN trainer ON report.user_id = trainer.trainer_id
+        WHERE report.report_num > 0;
+    </select>
+
+<!--SignUp-->
+    <select id="getSignUpList">
+        select * from trainer_signup order by signup_num desc limit #{startrow},#{amount}
+    </select>
+
+    <select id="getSignUpTotal">
+        select count(*) from trainer_signup where signup_num > 0
+    </select>
+
+<!--Board-->
+    <select id="getBoardList">
+        SELECT * FROM board
+        WHERE board_category IN ('infoNews', 'infoExer', 'infoFood', 'tip')
+        ORDER BY board_num DESC
+        LIMIT #{startrow}, #{amount}
+    </select>
+
+    <select id="getAdminExerBoardList">
+        SELECT * FROM board
+        WHERE board_category = 'infoExer'
+        ORDER BY board_num DESC
+        LIMIT #{startrow}, #{amount}
+    </select>
+
+    <select id="getAdminNewsBoardList">
+        SELECT * FROM board
+        WHERE board_category = 'infoNews'
+        ORDER BY board_num DESC
+        LIMIT #{startrow}, #{amount}
+    </select>
+
+    <select id="getAdminTipBoardList">
+        SELECT * FROM board
+        WHERE board_category = 'tip'
+        ORDER BY board_num DESC
+        LIMIT #{startrow}, #{amount}
+    </select>
+
+    <select id="getAdminRecipeBoardList">
+        SELECT * FROM board
+        WHERE board_category = 'infoFood'
+        ORDER BY board_num DESC
+        LIMIT #{startrow}, #{amount}
+    </select>
+
+    <select id="getBoardTotal">
+        SELECT COUNT(*) FROM board
+        WHERE board_num > 0
+        AND board_category IN ('infoNews', 'infoExer', 'infoFood', 'tip')
+    </select>
+
+    <select id="getExerBoardTotal">
+        SELECT COUNT(*) FROM board
+        WHERE board_num > 0
+        AND board_category = 'infoExer'
+    </select>
+
+    <select id="getNewsBoardTotal">
+        SELECT COUNT(*) FROM board
+        WHERE board_num > 0
+        AND board_category = 'infoNews'
+    </select>
+
+    <select id="getTipBoardTotal">
+        SELECT COUNT(*) FROM board
+        WHERE board_num > 0
+        AND board_category = 'tip'
+    </select>
+
+    <select id="getRecipeBoardTotal">
+        SELECT COUNT(*) FROM board
+        WHERE board_num > 0
+        AND board_category = 'infoFood'
+    </select>
+
+</mapper>
