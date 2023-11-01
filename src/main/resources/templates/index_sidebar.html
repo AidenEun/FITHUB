@@ -18,43 +18,56 @@
 		<!-- Wrapper -->
 
 				<!-- Header -->
-					<header id="header" class="alt">
-						<h1><a href="/">Fit Hub</a></h1>
-						<nav class="links">
-							<ul>
-								<li><a href="/info/info_list">정보</a></li>
-								<li><a href="#">칼로리</a></li>
-								<li><a href="#">커뮤니티</a></li>
-								<li><a href="#">트레이너 매칭</a></li>
-								<li><a href="#">챌린지</a></li>
-								<li><a href="#">제품</a></li>
-							</ul>
-						</nav>
-						<nav class="main">
-							<ul>
-									<li id="login">
-										<a class="login" href="#">Login</a>
-									</li>
-								<li class="search">
-									<a class="fa-search" href="#search">Search</a>
-									<form id="search" method="get" action="#">
-										<input type="text" name="query" placeholder="Search" />
-									</form>
-								</li>
-								<li class="menu">
-									<a class="fa-bars" href="#menu">Menu</a>
-								</li>
-							</ul>
-						</nav>
-					</header>
+		<header id="header" class="alt">
+			<h1><a href="/" style="color: #fff;">Fit Hub</a></h1>
+			<nav class="links">
+				<ul>
+					<li><a href="/info/info_list"style="color: #fff;">정보</a></li>
+					<li><a href="#"style="color: #fff;">칼로리</a></li>
+					<li><a href="#"style="color: #fff;">커뮤니티</a></li>
+					<li><a href="#"style="color: #fff;">트레이너 매칭</a></li>
+					<li><a href="#"style="color: #fff;">챌린지</a></li>
+					<li><a href="#"style="color: #fff;">제품</a></li>
+					<li><a href="/usermypage/user_diary"style="color: #fff;">다이어리(test)</a></li>
+				</ul>
+			</nav>
+			<nav class="main">
+				<ul>
+					<li id="login">
+
+						<th:block th:if="${loginUser == null}">
+							<a class="login" href="/user/login" style="color: #fff">Login</a>
+						</th:block>
+						<th:block th:if="${loginUser != null}">
+							<a class="login" th:href="@{/user/logout}" style="color: #fff">logout</a>
+						</th:block>
+
+						<a class="login" href="/usermypage/user_myinfo" style="color: #fff">유저</a>
+						<a class="login" href="/trainermypage/trainer_modify" style="color: #fff">트레</a>
+						<a class="login" href="/adminmypage/adminmypage_list" style="color: #fff">관리</a>
+					</li>
+					<li class="search">
+						<a class="fa-search" href="#search" style="color: #fff">Search</a>
+						<form id="search" method="get" action="#">
+							<input type="text" name="query" placeholder="Search" />
+						</form>
+					</li>
+					<li class="menu">
+						<a class="fa-bars" href="#menu" style="color: #fff">Menu</a>
+					</li>
+				</ul>
+			</nav>
+		</header>
 
 				<!-- Menu -->
 					<section id="menu">
 						<div class="side_info">
-							<img src="images/profile_img.png" class="prof_img" width="102px" height="102px">
+							<a href="/usermypage/user_myinfo">
+								<img src="images/profile_img.png" class="prof_img" width="102px" height="102px">
+							</a>
 							<div id="my_info">
 								<div>
-									<a href="#">내 정보</a>
+									<a href="/usermypage/user_myinfo">내 정보</a>
 									<th:block th:if="${loginUser == null}">
 										<a class="login" href="/user/login">로그인</a>
 									</th:block>
@@ -62,7 +75,7 @@
 										<a class="login" th:href="@{/user/logout}">로그아웃</a>
 									</th:block>
 								</div>
-								<span>등급 / 닉네임(ID)</span>
+								<a href="/usermypage/user_myinfo"><span>등급 / 닉네임(ID)</span></a>
 							</div>
 							<div class="goal-graph">
 								<div class="progress-bar">
@@ -141,6 +154,17 @@
 								</div>
 							</div>
 						</div>
+						<div id="another-page">
+							<div class="bmi">
+								<a href="#">BMI</a>
+							</div>
+							<div class="health-center">
+								<a href="#">보건소</a>
+							</div>
+							<div class="trainer-apply">
+								<a href="#">트레이너 신청</a>
+							</div>
+						</div>
 					</section>
 				<!-- Main -->
 		<!-- Banner -->
@@ -170,7 +194,7 @@
 			<div class="inner">
 				<section class="spotlight">
 					<div class="content">
-						<h2>다이어리 쓰러 가기</h2>
+						<h2>다이어리</h2>
 						<p>다이어리 설명</p>
 					</div>
 					<a href="#" class="image"><img src="images/diary_img.png" alt="" /></a>
