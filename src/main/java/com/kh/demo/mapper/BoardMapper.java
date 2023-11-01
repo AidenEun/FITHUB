@@ -15,10 +15,10 @@ public interface BoardMapper {
 	
 	//update
 	int updateBoard(BoardDTO board);
-	int updateReadCount(Long board_num);
+	int updateReadCount(Long boardNum);
 	
 	//delete
-	int deleteBoard(Long board_num);
+	int deleteBoard(Long boardNum);
 	
 	//select
 	List<BoardDTO> getList(Criteria cri);
@@ -26,8 +26,8 @@ public interface BoardMapper {
 	List<BoardDTO> getMyList(Criteria cri, String userId);
 
 	Long getTotal(Criteria cri);
-	Long getLastNum(String user_id);
-	BoardDTO findByNum(Long board_num);
+	Long getLastNum(String userId);
+	BoardDTO findByNum(Long boardNum);
 }
 
 

@@ -9,9 +9,9 @@ import java.util.List;
 public interface FileMapper {
 	int insertFile(FileDTO file);
 	
-	List<FileDTO> getFiles(Long board_num);
+	List<FileDTO> getFiles(Long boardNum);
 	
-	int deleteBySystemname(String sys_name);
+	int deleteBySystemname(String sysName);
 	
-	int deleteByBoardnum(Long board_num);
+	int deleteByBoardnum(Long boardNum);
 }

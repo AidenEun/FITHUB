@@ -40,7 +40,7 @@
 	</delete>
 	
 	<select id="getList">
-		select * from board where user_id="cjw2500" and
+		select * from board where
 		<include refid="cri"/>
 		<![CDATA[ 
 			0 < board_num order by board_num desc limit #{startrow},#{amount}
