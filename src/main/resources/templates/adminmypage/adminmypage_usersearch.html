@@ -6,11 +6,12 @@
 -->
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>Untitled</title>
+	<title>Fit Hub</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<link rel="stylesheet" th:href="@{/assets/css/index.css}" />
 	<noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
+	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
 </head>
 <style>
 	.top_img_box{
@@ -62,31 +63,30 @@
 	.search{
 		display: flex;
 	}
+
 	.search-border{
 		border: 1px solid rgb(200, 200, 200);
 		border-radius: 15px;
 		margin-bottom: 50px;
 	}
+
 	#search_input{
 		height: 60px;
 		border-radius: 10px 0 0 10px;
 		border : 1px solid rgb(200, 200, 200);
-
 	}
+
 	#search-button{
 		width: 100px;
 		height: 60px;
 		border-radius: 0 10px 10px 0;
 		background-color: gainsboro;
-
-
 	}
+
 	.search_content{
 		padding: 40px;
 		margin: 0px;
 		background-color: gainsboro;
-
-
 	}
 	.search_content p{
 		font-size: 18px;
@@ -115,223 +115,154 @@
 	}
 </style>
 <body class="is-preload">
+	<!-- Header -->
+	<th:block th:replace="~{layout/header::header(${session.loginUser})}"></th:block>
 
-<!-- Header -->
-<header id="header">
-	<h1><a href="/">Fit Hub</a></h1>
-	<nav class="links">
-		<ul>
-			<li><a href="/info/info_list">정보</a></li>
-			<li><a href="#">칼로리</a></li>
-			<li><a href="#">커뮤니티</a></li>
-			<li><a href="#">트레이너 매칭</a></li>
-			<li><a href="#">챌린지</a></li>
-			<li><a href="#">제품</a></li>
-		</ul>
-	</nav>
-	<nav class="main">
-		<ul>
-			<li id="login">
-				<a class="login" href="#">Login</a>
-			</li>
-			<li class="search">
-				<a class="fa-search" href="#search">Search</a>
-				<form id="search" method="get" action="#">
-					<input type="text" name="query" placeholder="Search" />
-				</form>
-			</li>
-			<li class="menu">
-				<a class="fa-bars" href="#menu">Menu</a>
-			</li>
-		</ul>
-	</nav>
-</header>
+	<!-- Main -->
+	<section id="main" class="wrapper sidebar left">
+		<div class="top_img_box">
+			<img src="/images/pic01.jpg" alt="">
+		</div>
 
-<!-- Menu -->
-<section id="menu">
+		<div class="inner">
 
-	<!-- Search -->
-	<section>
-		<form class="search" method="get" action="#">
-			<input type="text" name="query" placeholder="Search" />
-		</form>
-	</section>
-
-	<!-- Links -->
-	<section>
-		<ul class="links">
-			<li>
-				<a href="#">
-					<h3>Lorem ipsum</h3>
-					<p>Feugiat tempus veroeros dolor</p>
-				</a>
-			</li>
-			<li>
-				<a href="#">
-					<h3>Dolor sit amet</h3>
-					<p>Sed vitae justo condimentum</p>
-				</a>
-			</li>
-			<li>
-				<a href="#">
-					<h3>Feugiat veroeros</h3>
-					<p>Phasellus sed ultricies mi congue</p>
-				</a>
-			</li>
-			<li>
-				<a href="#">
-					<h3>Etiam sed consequat</h3>
-					<p>Porta lectus amet ultricies</p>
-				</a>
-			</li>
-		</ul>
-	</section>
-
-	<!-- Actions -->
-	<section>
-		<ul class="actions stacked">
-			<li><a href="#" class="button large fit">Log In</a></li>
-		</ul>
-	</section>
-</section>
-
-<!-- Main -->
-<section id="main" class="wrapper sidebar left">
-	<div class="top_img_box">
-		<img src="/images/pic01.jpg" alt="">
-	</div>
-
-	<div class="inner">
-
-		<header class="major">
-			<h2>유저 검색</h2>
-			<p>관리자 마이페이지</p>
-		</header>
+			<header class="major">
+				<h2>유저 검색</h2>
+				<p>관리자 마이페이지</p>
+			</header>
 
 
 
-		<!-- Content -->
-		<div class="content">
-			<div class="search-container">
-				<div class="search">
-					<input type="text" id="search_input" placeholder="유저 아이디를 입력하세요">
-					<input type="button" id="search-button" value="검색" onclick="search()">
+			<!-- Content -->
+			<div class="content">
+				<div class="search-container">
+					<div class="search">
+						<input type="text" id="search_input" placeholder="유저 아이디를 입력하세요">
+						<input type="button" id="search-button" value="검색" onclick="search()">
+					</div>
+					<div style="margin-top: 30px;" class="button primary fit" id="no_keyword">유저 아이디를 입력해주세요!!</div>
+					<table style="text-align: center; margin-top: 50px;" id="search_result">
+						<thead>
+							<tr style="font-weight: bold; font-size: 14px;">
+								<td>아이디</td>
+								<td>게시물 수</td>
+								<td>댓글 수</td>
+								<td>신고 횟수</td>
+								<td>신고 당한 횟수</td>
+								<td>정지 상태</td>
+							</tr>
+						</thead>
+						<tbody id="data-table">
+							<tr th:if="${reportList != null and reportList.size() > 0}" th:each="reportBoard : ${reportList}">
+								<td class="long_text">
+									<a href="#">
+										[[${reportBoard.reportNum}]]
+									</a>
+								</td>
+								<td class="long_text">
+									<a href="#">
+										[[${reportBoard.userId}]]
+									</a>
+								</td>
+								<td class="long_text">
+									<a href="#">
+										[[${reportBoard.reportBoardnum}]]
+									</a>
+								</td>
+								<td class="long_text">
+									<a href="#">
+										[[${reportBoard.boardCategory}]]
+									</a>
+								</td>
+								<td class="long_text">
+									<a href="#">
+										[[${reportBoard.reportDate}]]
+									</a>
+								</td>
+								<td class="long_text">
+									<a href="#">
+										[[${reportBoard.reportDate}]]
+									</a>
+								</td>
+							</tr>
+							<tr th:if="${reportList == null or reportList.size() == 0}">
+								<td colspan="6">
+									접수된 신고가 없습니다!
+								</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
-				<div style="margin-top: 30px;" class="button primary fit" id="no_keyword">유저 아이디를 입력해주세요!!</div>
-				<div style="margin-top: 30px;" class="button fit" id="no_result">검색 결과가 없습니다.</div>
-				<table style="text-align: center; margin-top: 50px;" id="search_result">
-					<tr style="font-weight: bold; font-size: 14px;">
-						<td>아이디</td>
-						<td>게시물 수</td>
-						<td>댓글 수</td>
-						<td>신고 횟수</td>
-						<td>신고 당한 횟수</td>
-						<td>정지 상태</td>
-					</tr>
-					<tr>
-						<td class="long_text">
-							<a href="#">
-								user.user_id
-							</a>
-						</td>
-						<td class="long_text">
-							<a href="#">
-								게시글 수
-							</a>
-						</td>
-						<td class="long_text">
-							<a href="#">
-								댓글 수
-							</a>
-						</td>
-						<td class="long_text">
-							<a href="#">
-								신고 횟수
-							</a>
-						</td>
-						<td class="long_text">
-							<a href="#">
-								user.reportedcnt
-							</a>
-						</td>
-						<td class="long_text">
-							<a href="#">
-								정지 상태
-							</a>
-						</td>
-					</tr>
-				</table>
+			</div>
+
+			<!-- Sidebar -->
+			<div class="sidebar">
+
+				<section>
+					<h3><a href="/adminmypage/adminmypage_list">전체</a></h3>
+					<h3><a href="/adminmypage/adminmypage_report">신고 접수</a></h3>
+					<h3><a href="/adminmypage/adminmypage_trainer">트레이너 신청 내역</a></h3>
+					<h3><a href="/adminmypage/adminmypage_board">관리자 게시물</a></h3>
+					<h3><a href="/adminmypage/adminmypage_usersearch" style="color: #5a8100;">유저 검색</a></h3>
+					<h3><a href="/adminmypage/adminmypage_message">문의함</a></h3>
+				</section>
+
 			</div>
 		</div>
+	</section>
 
-		<!-- Sidebar -->
-		<div class="sidebar">
+	<!-- Footer -->
+	<th:block th:replace="~{layout/footer::footer}"></th:block>
 
-			<section>
-				<h3><a href="/adminmypage/adminmypage_list">전체</a></h3>
-				<h3><a href="/adminmypage/adminmypage_report">신고 접수</a></h3>
-				<h3><a href="/adminmypage/adminmypage_trainer">트레이너 신청 내역</a></h3>
-				<h3><a href="/adminmypage/adminmypage_board">관리자 게시물</a></h3>
-				<h3><a href="/adminmypage/adminmypage_usersearch" style="color: #5a8100;">유저 검색</a></h3>
-				<h3><a href="/adminmypage/adminmypage_message">문의함</a></h3>
-			</section>
+<!-- Scripts -->
+<script th:src="@{/assets/js/jquery.min.js}"></script>
+<script th:src="@{/assets/js/jquery.dropotron.min.js}"></script>
+<script th:src="@{/assets/js/jquery.scrollex.min.js}"></script>
+<script th:src="@{/assets/js/browser.min.js}"></script>
+<script th:src="@{/assets/js/breakpoints.min.js}"></script>
+<script th:src="@{/assets/js/util.js}"></script>
+<script th:src="@{/assets/js/main.js}"></script>
 
-		</div>
-	</div>
-</section>
+<script th:src="@{/assets/js/util_sub.js}"></script>
+<script th:src="@{/assets/js/main_sub.js}"></script>
 
-<!-- Footer -->
-<footer id="footer">
-	<div class="inner">
-		<p class="copyright">&copy; Untitled Corp. All rights reserved. Lorem ipsum dolor sit amet feugiat tempus aliquam.</p>
-		<ul class="menu">
-			<li><a href="#">Terms<span> of Use</span></a></li>
-			<li><a href="#">Privacy<span> Policy</span></a></li>
-			<li><a href="#">Legal<span> Information</span></a></li>
-		</ul>
-	</div>
-</footer>
-
-	<!-- Scripts -->
-	<script th:src="@{/assets/js/jquery.min.js}"></script>
-	<script th:src="@{/assets/js/jquery.dropotron.min.js}"></script>
-	<script th:src="@{/assets/js/jquery.scrollex.min.js}"></script>
-	<script th:src="@{/assets/js/browser.min.js}"></script>
-	<script th:src="@{/assets/js/breakpoints.min.js}"></script>
-	<script th:src="@{/assets/js/util.js}"></script>
-	<script th:src="@{/assets/js/main.js}"></script>
-
-	<script th:src="@{/assets/js/util_sub.js}"></script>
-	<script th:src="@{/assets/js/main_sub.js}"></script>
+<script th:src="@{/assets/js/sidebar.js}"></script>
 <script>
 	function search(){
 		const search_input = document.getElementById("search_input");
 		const search_result = document.getElementById("search_result");
-		const no_result = document.getElementById("no_result");
 		const no_keyword = document.getElementById("no_keyword");
 
 		const search_keyword = search_input.value;
-		const isDataFound = true;
 
 		if(search_keyword == ''){
 			no_keyword.style.display = "block";
-
 			search_result.style.display = "none";
-			no_result.style.display = "none";
 		}
-		else if(isDataFound){
+		else {
 			search_result.style.display = "block";
-
-			no_result.style.display = "none";
-			no_keyword.style.display = "none";
-		}
-		else{
-			no_result.style.display = "block";
-
-			search_result.style.display = "none";
 			no_keyword.style.display = "none";
 		}
 	}
+
+    function search() {
+        const search_input = document.getElementById("search_input");
+        const search_keyword = search_input.value;
+
+        if (search_keyword) {
+            $.ajax({
+                url: '/adminmypage/adminmypage_usersearch',
+                method: 'POST',
+                data: { keyword: search_keyword }, // 서버로 전송할 데이터
+                success: function(data) {
+					displayData(data);
+                },
+                error: function(error) {
+                	console.error('데이터를 가져오는 중 오류 발생: ' + error);
+                }
+            });
+        }
+    }
 </script>
 </body>
 </html>

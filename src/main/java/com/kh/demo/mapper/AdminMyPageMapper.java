@@ -1,9 +1,6 @@
 package com.kh.demo.mapper;
 
-import com.kh.demo.domain.dto.BoardDTO;
-import com.kh.demo.domain.dto.Criteria;
-import com.kh.demo.domain.dto.ReportDTO;
-import com.kh.demo.domain.dto.TrainerSignUpDTO;
+import com.kh.demo.domain.dto.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -48,5 +45,14 @@ public interface AdminMyPageMapper {
     Long getTipBoardTotal(Criteria cri);
 
     Long getRecipeBoardTotal(Criteria cri);
+
+//    UserSearch
+    boolean getTrainerBoolean(String keyword);
+
+    boolean getUserBoolean(String keyword);
+
+    Object getTrainer(String keyword);
+
+    Object getUser(String keyword);
 
 }
