@@ -19,4 +19,6 @@ public interface UserMyPageMapper {
     //select
     List<DiaryDTO> getDiaryList(String loginUser);
     DiaryDTO getDiaryDetail(Long diary_num);
+
+    DiaryDTO checkList(String choicedate);
 }

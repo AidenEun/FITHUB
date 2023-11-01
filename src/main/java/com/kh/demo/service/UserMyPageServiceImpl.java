@@ -16,38 +16,40 @@ public class UserMyPageServiceImpl implements UserMyPageService{
 
     @Autowired
     private UserMyPageMapper umpmapper;
+
     @Override
-    public boolean regist(DiaryDTO diary, MultipartFile files, String loginUser) throws Exception {
+    public boolean registDiary(DiaryDTO diary, MultipartFile[] files) throws Exception {
         return false;
     }
 
     @Override
-    public boolean modify(DiaryDTO diary, MultipartFile[] files, String regdate) {
+    public boolean modifyDiary(DiaryDTO diary, MultipartFile[] files) {
         return false;
     }
 
     @Override
-    public boolean remove(String loginUser, Long diary_num) {
+    public boolean removeDiary(Long diaryNum) {
         return false;
     }
 
     @Override
-    public List<DiaryDTO> getDiaryList(String loginUser) {
-        return umpmapper.getDiaryList(loginUser);
-    }
-
-    @Override
-    public DiaryDTO getDiaryDetail(Long diary_num) {
+    public DiaryDTO getDiaryDetail(String choicedate) {
         return null;
     }
 
     @Override
-    public DiaryDTO findByNum(Long diary_num) {
+    public List<DiaryDTO> getDiaryList(String userid) {
         return null;
     }
 
     @Override
-    public List<FileDTO> getFileList(Long diary_num) {
+    public DiaryDTO checkList(String choicedate) {
+        DiaryDTO result = umpmapper.checkList(choicedate);
+        //작성으로 아동
+        if (result == null) {
+            return result;
+        }
         return null;
+
     }
 }
