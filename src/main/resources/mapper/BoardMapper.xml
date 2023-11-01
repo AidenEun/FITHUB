@@ -40,7 +40,7 @@
 	</delete>
 	
 	<select id="getList">
-		select * from board where user_id="cjw2500" and
+		select * from board where
 		<include refid="cri"/>
 		<![CDATA[ 
 			0 < board_num order by board_num desc limit #{startrow},#{amount}
@@ -57,7 +57,7 @@
 		<include refid="cri"/> board_num > 0
 	</select>
 	<select id="getLastNum">
-		select max(boardNum) from board where user_id=#{userId}
+		select max(board_num) from board where user_id=#{userId}
 	</select>
 	<select id="findByNum">
 		select * from board where board_num=#{boardNum}

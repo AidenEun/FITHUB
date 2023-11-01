@@ -2,6 +2,7 @@ package com.kh.demo.controller;
 
 import com.kh.demo.domain.dto.*;
 import com.kh.demo.service.BoardService;
+import com.kh.demo.service.MessageService;
 import com.kh.demo.service.UserMyPageService;
 import com.kh.demo.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -31,6 +32,10 @@ public class UserMyPageController {
     @Autowired
     @Qualifier("BoardServiceImpl")
     private BoardService serviceboard;
+
+    @Autowired
+    @Qualifier("MessageServiceImpl")
+    private MessageService serviceMessage;
 
 
     @GetMapping("user_myinfo_modify")
@@ -87,14 +92,15 @@ public class UserMyPageController {
     }
 
     @GetMapping("user_messagelist")
-    public void user_messagelist(Criteria cri, Model model) throws Exception {
+    public void user_messagelist(Criteria cri, Model model,HttpServletRequest req) throws Exception {
+        HttpSession session = req.getSession();
+        String userId = (String) session.getAttribute("loginUser");
+        List<MessageDTO> list = serviceMessage.getMyMessageList(cri,userId);
         System.out.println(cri);
-        List<BoardDTO> list = serviceboard.getBoardList(cri);
+        System.out.println("list:"+list);
         model.addAttribute("list",list);
-        model.addAttribute("pageMaker",new PageDTO(serviceboard.getTotal(cri), cri));
-        model.addAttribute("newly_board",serviceboard.getNewlyBoardList(list));
-        model.addAttribute("reply_cnt_list",serviceboard.getReplyCntList(list));
-        model.addAttribute("recent_reply",serviceboard.getRecentReplyList(list));
+        model.addAttribute("pageMaker",new PageDTO(serviceMessage.getTotal(cri), cri));
+        model.addAttribute("newly_Message",serviceMessage.getNewlyMessageList(list));
     }
 
     @GetMapping("user_applytrainer")
