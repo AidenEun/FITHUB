@@ -22,7 +22,8 @@ public interface BoardMapper {
 	
 	//select
 	List<BoardDTO> getList(Criteria cri);
-	List<BoardDTO> getMyList(@Param("cri") Criteria cri,@Param("userId") String userId);
+	/*List<BoardDTO> getMyList(@Param("cri") Criteria cri,@Param("userId") String userId);*/
+	List<BoardDTO> getMyList(Criteria cri, String userId);
 
 	Long getTotal(Criteria cri);
 	Long getLastNum(String user_id);
