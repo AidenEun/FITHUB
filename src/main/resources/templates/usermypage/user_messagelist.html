@@ -169,6 +169,7 @@
 
 		<header class="major">
 			<h2>마이페이지</h2>
+			<p>내 쪽지함</p>
 		</header>
 
 		<!-- Content -->
@@ -183,31 +184,22 @@
 				<tr align="center" valign="middle">
 					<th width="8%">번호</th>
 					<th></th>
-					<th>제목</th>
-					<th width="15%">작성자</th>
+					<th width="15%">보낸사람</th>
+					<th>받는사람</th>
 					<th width="17%">날짜</th>
 					<th width="10%">조회수</th>
 				</tr>
-				<tr th:if="${list != null and list.size()>0}" th:each="board : ${list}">
-					<td>[[${board.boardnum}]]</td>
+				<tr th:if="${list != null and list.size()>0}" th:each="message : ${list}">
+					<td>[[${message.messageNum}]]</td>
 					<td>
-						<sup class="hot" th:if="${recent_reply[boardStat.index] == 'O'}">Hot</sup>
-						<sup class="new" th:if="${newly_board[boardStat.index] == 'O'}">New</sup>
+						<sup class="new" th:if="${newly_Message[messageStat.index] == 'O'}">New</sup>
 					</td>
+					<td>[[${message.sendId}]]</td>
+					<td>[[${message.receiveId}]]</td>
 					<td>
-						<a class="get" th:href="${board.boardnum}">
-							[[${board.boardtitle}]]
-							<span class="reply_cnt" th:text="'['+${reply_cnt_list[boardStat.index]}+']'"></span>
-						</a>
+						[[${message.sendDate}]]
 					</td>
-					<td>[[${board.userid}]]</td>
-					<td>
-						[[${board.regdate}]]
-						<th:block th:if="${board.regdate != board.updatedate}">
-							(수정됨)
-						</th:block>
-					</td>
-					<td>[[${board.readcount}]]</td>
+					<td>x</td>
 				</tr>
 				<th:block th:if="${list == null or list.size() == 0}">
 					<tr>
@@ -216,8 +208,7 @@
 					</tr>
 				</th:block>
 			</table>
-			<br>
-			<!-- 페이징 처리하는 테이블 -->
+			<br>	<!-- 페이징 처리하는 테이블 -->
 			<table class="pagination">
 				<tr align="center" valign="middle">
 					<td>
@@ -258,7 +249,6 @@
 				<input type="hidden" value="10" name="amount">
 			</form>
 		</div>
-
 
 		<form name="pageForm" id="pageForm" th:action="@{/board/list}">
 			<input type="hidden" name="pagenum" th:value="${pageMaker.cri.pagenum}">

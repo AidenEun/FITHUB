@@ -2,6 +2,7 @@ package com.kh.demo.controller;
 
 import com.kh.demo.domain.dto.*;
 import com.kh.demo.service.BoardService;
+import com.kh.demo.service.MessageService;
 import com.kh.demo.service.UserMyPageService;
 import com.kh.demo.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -31,6 +33,10 @@ public class UserMyPageController {
     @Autowired
     @Qualifier("BoardServiceImpl")
     private BoardService serviceboard;
+
+    @Autowired
+    @Qualifier("MessageServiceImpl")
+    private MessageService serviceMessage;
 
 
     @GetMapping("user_myinfo_modify")
@@ -87,14 +93,15 @@ public class UserMyPageController {
     }
 
     @GetMapping("user_messagelist")
-    public void user_messagelist(Criteria cri, Model model) throws Exception {
+    public void user_messagelist(Criteria cri, Model model,HttpServletRequest req) throws Exception {
+        HttpSession session = req.getSession();
+        String userId = (String) session.getAttribute("loginUser");
+        List<MessageDTO> list = serviceMessage.getMyMessageList(cri,userId);
         System.out.println(cri);
-        List<BoardDTO> list = serviceboard.getBoardList(cri);
+        System.out.println("list:"+list);
         model.addAttribute("list",list);
-        model.addAttribute("pageMaker",new PageDTO(serviceboard.getTotal(cri), cri));
-        model.addAttribute("newly_board",serviceboard.getNewlyBoardList(list));
-        model.addAttribute("reply_cnt_list",serviceboard.getReplyCntList(list));
-        model.addAttribute("recent_reply",serviceboard.getRecentReplyList(list));
+        model.addAttribute("pageMaker",new PageDTO(serviceMessage.getTotal(cri), cri));
+        model.addAttribute("newly_Message",serviceMessage.getNewlyMessageList(list));
     }
 
     @GetMapping("user_applytrainer")
@@ -105,5 +112,27 @@ public class UserMyPageController {
         List<DiaryDTO> diaryList = service.getDiaryList(loginUser);
         model.addAttribute("diaryList",diaryList);
     }
+
+    //userid도 같이 넘어와야함
+    @GetMapping("checklist")
+    public String checklist(String choicedate, RedirectAttributes ra){
+        //작성으로 이동
+        if(service.checkList(choicedate) == null){
+            System.out.println(choicedate);
+            ra.addAttribute("regdate",choicedate);
+            return "redirect:/usermypage/diaryWrite";
+        }
+        //view로 이동
+        else {
+            return "redirect:/usermypage/diaryView";
+        }
+    }
+
+    @GetMapping("diaryWrite")
+    public void replacediaryWrite(){
+
+    }
+    @GetMapping ("diaryView")
+    public void replacediaryView() {}
 
 }
