@@ -6,11 +6,12 @@
 -->
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>Untitled</title>
+	<title>Fit Hub</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<link rel="stylesheet" th:href="@{/assets/css/index.css}" />
 	<noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
+	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
 </head>
 <style>
 	.top_img_box{
@@ -67,198 +68,161 @@
   		overflow: hidden;
 		text-overflow: ellipsis;
 	}
+
+	.nowPage {
+		background-color: #444 !important; /* 뒤의 !important는 기존 스타일을 덮어쓰기 위해 사용합니다. */
+		color: #fff;
+		font-size: 16px;
+		padding: 5px 10px;
+	}
+
+	.changePage {
+		font-size: 16px;
+		padding: 5px 10px;
+	}
+
+	.pageTr {
+		background-color: white !important;
+		border: none;
+	}
 </style>
 <body class="is-preload">
 
-<!-- Header -->
-<header id="header">
-	<h1><a href="/">Fit Hub</a></h1>
-	<nav class="links">
-		<ul>
-			<li><a href="/info/info_list">정보</a></li>
-			<li><a href="#">칼로리</a></li>
-			<li><a href="#">커뮤니티</a></li>
-			<li><a href="#">트레이너 매칭</a></li>
-			<li><a href="#">챌린지</a></li>
-			<li><a href="#">제품</a></li>
-		</ul>
-	</nav>
-	<nav class="main">
-		<ul>
-			<li id="login">
-				<a class="login" href="#">Login</a>
-			</li>
-			<li class="search">
-				<a class="fa-search" href="#search">Search</a>
-				<form id="search" method="get" action="#">
-					<input type="text" name="query" placeholder="Search" />
+	<!-- Header -->
+	<th:block th:replace="~{layout/header::header(${session.loginUser})}"></th:block>
+
+	<!-- Main -->
+	<section id="main" class="wrapper sidebar left">
+		<div class="top_img_box">
+			<img src="/images/pic01.jpg" alt="">
+		</div>
+
+		<div class="inner">
+
+			<header class="major">
+				<h2>트레이너 신청 내역</h2>
+				<p>관리자 마이페이지</p>
+			</header>
+
+
+
+			<!-- Content -->
+			<div class="content">
+				<table style="text-align: center; margin-top: 20px;">
+					<thead>
+					<tr style="font-weight: bold;">
+						<td>신청 번호</td>
+						<td>신청 유저</td>
+						<td>파트</td>
+						<td>경력</td>
+						<td>나이</td>
+						<td>성별</td>
+					</tr>
+					</thead>
+					<tbody id="data-table">
+					<tr th:if="${signUpList != null and signUpList.size() > 0}" th:each="signUpBoard : ${signUpList}">
+						<td class="long_text">
+							<a href="#">
+								[[${signUpBoard.signupNum}]]
+							</a>
+						</td>
+						<td class="long_text">
+							<a href="#">
+								[[${signUpBoard.userId}]]
+							</a>
+						</td>
+						<td class="long_text">
+							<a href="#">
+								[[${signUpBoard.trainerPart}]]
+							</a>
+						</td>
+						<td class="long_text">
+							<a href="#">
+								[[${signUpBoard.trainerCareer}]]
+							</a>
+						</td>
+						<td class="long_text">
+							<a href="#">
+								[[${signUpListInUser[signUpBoardStat.index].userAge}]]
+							</a>
+						</td>
+						<td class="long_text">
+							<a href="#">
+								[[${signUpListInUser[signUpBoardStat.index].userGender}]]
+							</a>
+						</td>
+					</tr>
+					</tbody>
+					<tr th:if="${signUpList == null or signUpList.size() == 0}">
+						<td colspan="6">
+							접수된 신고가 없습니다!
+						</td>
+					</tr>
+				</table>
+				<br>
+				<!-- 페이징 처리하는 테이블 -->
+				<table class="pagination">
+					<tr align="center" valign="middle" class="pageTr">
+						<td>
+							<a class="changePage" th:if="${pageMaker.prev}" th:href="${pageMaker.startPage-1}">&lt;</a>
+							<th:block th:each="i : ${#numbers.sequence(pageMaker.startPage,pageMaker.endPage)}">
+								<span class="nowPage" th:text="${i}" th:if="${pageMaker.cri.pagenum == i}"></span>
+								<a class="changePage" th:href="${i}" th:text="${i}" th:unless="${pageMaker.cri.pagenum == i}"></a>
+							</th:block>
+							<a class="changePage" th:if="${pageMaker.next}" th:href="${pageMaker.endPage+1}">&gt;</a>
+						</td>
+					</tr>
+				</table>
+				<form name="pageForm" id="pageForm" th:action="@{/adminmypage/adminmypage_trainer}" method="get">
+					<input type="hidden" name="pagenum" th:value="${pageMaker.cri.pagenum}" />
+					<input type="hidden" name="amount" th:value="${pageMaker.cri.amount}" />
+					<input type="hidden" name="type" th:value="${pageMaker.cri.type}" />
+					<input type="hidden" name="keyword" th:value="${pageMaker.cri.keyword}" />
 				</form>
-			</li>
-			<li class="menu">
-				<a class="fa-bars" href="#menu">Menu</a>
-			</li>
-		</ul>
-	</nav>
-</header>
+			</div>
 
-<!-- Menu -->
-<section id="menu">
+			<!-- Sidebar -->
+			<div class="sidebar">
 
-	<!-- Search -->
-	<section>
-		<form class="search" method="get" action="#">
-			<input type="text" name="query" placeholder="Search" />
-		</form>
-	</section>
-
-	<!-- Links -->
-	<section>
-		<ul class="links">
-			<li>
-				<a href="#">
-					<h3>Lorem ipsum</h3>
-					<p>Feugiat tempus veroeros dolor</p>
-				</a>
-			</li>
-			<li>
-				<a href="#">
-					<h3>Dolor sit amet</h3>
-					<p>Sed vitae justo condimentum</p>
-				</a>
-			</li>
-			<li>
-				<a href="#">
-					<h3>Feugiat veroeros</h3>
-					<p>Phasellus sed ultricies mi congue</p>
-				</a>
-			</li>
-			<li>
-				<a href="#">
-					<h3>Etiam sed consequat</h3>
-					<p>Porta lectus amet ultricies</p>
-				</a>
-			</li>
-		</ul>
-	</section>
-
-	<!-- Actions -->
-	<section>
-		<ul class="actions stacked">
-			<li><a href="#" class="button large fit">Log In</a></li>
-		</ul>
-	</section>
-</section>
-
-<!-- Main -->
-<section id="main" class="wrapper sidebar left">
-	<div class="top_img_box">
-		<img src="/images/pic01.jpg" alt="">
-	</div>
-
-	<div class="inner">
-
-		<header class="major">
-			<h2>트레이너 신청 내역</h2>
-			<p>관리자 마이페이지</p>
-		</header>
+				<section>
+					<h3><a href="/adminmypage/adminmypage_list">전체</a></h3>
+					<h3><a href="/adminmypage/adminmypage_report">신고 접수</a></h3>
+					<h3><a href="/adminmypage/adminmypage_trainer" style="color: #5a8100;">트레이너 신청 내역</a></h3>
+					<h3><a href="/adminmypage/adminmypage_board">관리자 게시물</a></h3>
+					<h3><a href="/adminmypage/adminmypage_usersearch">유저 검색</a></h3>
+					<h3><a href="/adminmypage/adminmypage_message">문의함</a></h3>
+				</section>
 
 
-
-		<!-- Content -->
-		<div class="content">
-			<table style="text-align: center; margin-top: 20px;">
-				<thead>
-				<tr style="font-weight: bold;">
-					<td>신청 번호</td>
-					<td>신청 유저</td>
-					<td>파트</td>
-					<td>경력</td>
-					<td>나이</td>
-					<td>성별</td>
-				</tr>
-				</thead>
-				<tbody id="data-table">
-				<tr th:if="${signUpList != null and signUpList.size() > 0}" th:each="signUpBoard : ${signUpList}">
-					<td class="long_text">
-						<a href="#">
-							[[${signUpBoard.signupNum}]]
-						</a>
-					</td>
-					<td class="long_text">
-						<a href="#">
-							[[${signUpBoard.userId}]]
-						</a>
-					</td>
-					<td class="long_text">
-						<a href="#">
-							[[${signUpBoard.trainerPart}]]
-						</a>
-					</td>
-					<td class="long_text">
-						<a href="#">
-							[[${signUpBoard.trainerCareer}]]
-						</a>
-					</td>
-					<td class="long_text">
-						<a href="#">
-							[[${signUpListInUser[signUpBoardStat.index].userAge}]]
-						</a>
-					</td>
-					<td class="long_text">
-						<a href="#">
-							[[${signUpListInUser[signUpBoardStat.index].userGender}]]
-						</a>
-					</td>
-				</tr>
-				</tbody>
-				<tr th:if="${signUpList == null or signUpList.size() == 0}">
-					<td colspan="6">
-						접수된 신고가 없습니다!
-					</td>
-				</tr>
-			</table>
-			<br>
+			</div>
 		</div>
+	</section>
 
-		<!-- Sidebar -->
-		<div class="sidebar">
+	<!-- Footer -->
+	<th:block th:replace="~{layout/footer::footer}"></th:block>
 
-			<section>
-				<h3><a href="/adminmypage/adminmypage_list">전체</a></h3>
-				<h3><a href="/adminmypage/adminmypage_report">신고 접수</a></h3>
-				<h3><a href="/adminmypage/adminmypage_trainer" style="color: #5a8100;">트레이너 신청 내역</a></h3>
-				<h3><a href="/adminmypage/adminmypage_board">관리자 게시물</a></h3>
-				<h3><a href="/adminmypage/adminmypage_usersearch">유저 검색</a></h3>
-				<h3><a href="/adminmypage/adminmypage_message">문의함</a></h3>
-			</section>
+<!-- Scripts -->
+<script th:src="@{/assets/js/jquery.min.js}"></script>
+<script th:src="@{/assets/js/jquery.dropotron.min.js}"></script>
+<script th:src="@{/assets/js/jquery.scrollex.min.js}"></script>
+<script th:src="@{/assets/js/browser.min.js}"></script>
+<script th:src="@{/assets/js/breakpoints.min.js}"></script>
+<script th:src="@{/assets/js/util.js}"></script>
+<script th:src="@{/assets/js/main.js}"></script>
 
+<script th:src="@{/assets/js/util_sub.js}"></script>
+<script th:src="@{/assets/js/main_sub.js}"></script>
 
-		</div>
-	</div>
-</section>
-
-<!-- Footer -->
-<footer id="footer">
-	<div class="inner">
-		<p class="copyright">&copy; Untitled Corp. All rights reserved. Lorem ipsum dolor sit amet feugiat tempus aliquam.</p>
-		<ul class="menu">
-			<li><a href="#">Terms<span> of Use</span></a></li>
-			<li><a href="#">Privacy<span> Policy</span></a></li>
-			<li><a href="#">Legal<span> Information</span></a></li>
-		</ul>
-	</div>
-</footer>
-
-	<!-- Scripts -->
-	<script th:src="@{/assets/js/jquery.min.js}"></script>
-	<script th:src="@{/assets/js/jquery.dropotron.min.js}"></script>
-	<script th:src="@{/assets/js/jquery.scrollex.min.js}"></script>
-	<script th:src="@{/assets/js/browser.min.js}"></script>
-	<script th:src="@{/assets/js/breakpoints.min.js}"></script>
-	<script th:src="@{/assets/js/util.js}"></script>
-	<script th:src="@{/assets/js/main.js}"></script>
-
-	<script th:src="@{/assets/js/util_sub.js}"></script>
-	<script th:src="@{/assets/js/main_sub.js}"></script>
+<script th:src="@{/assets/js/sidebar.js}"></script>
+<script>
+	const pageForm = $("#pageForm");
+	$(".changePage").on("click",function(e){
+		//e(이벤트)의 기본 작동 막기
+		e.preventDefault();
+		let pagenum = $(this).attr("href");
+		pageForm.find("input[name='pagenum']").val(pagenum);
+		pageForm.submit();
+	});
+</script>
 </body>
 </html>
