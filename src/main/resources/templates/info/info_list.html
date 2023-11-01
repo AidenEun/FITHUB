@@ -9,7 +9,7 @@
 	<title>Untitled</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<link rel="stylesheet" href="/assets/css/index.css" />
+	<link rel="stylesheet" href="/assets/css/infoBoard.css" />
 	<noscript><link rel="stylesheet" href="/assets/css/noscript.css" /></noscript>
 </head>
 <body class="is-preload">
@@ -27,65 +27,62 @@
 		<!-- Content -->
 		<div class="content">
 			<div class="cotent_header"><h2>전체</h2></div>
-			<div class="button" style="margin-bottom: 30px;">글 작성</div>
-			<table>
-				<tr>
+			<div class="button" style="margin-bottom: 30px;float: right;">글 작성</div>
+			<!-- 게시글 리스트 띄우는 테이블 -->
+			<table class="list">
+				<tr align="right" valign="middle">
+					<td colspan="6">글 개수 : [[${pageMaker.total}]]</td>
+				</tr>
+				<tr align="center" valign="middle">
+					<th width="8%">번호</th>
+					<th></th>
 					<th>제목</th>
-					<th>작성자</th>
-					<th>작성일</th>
+					<th width="15%">작성자</th>
+					<th width="17%">날짜</th>
+					<th width="10%">조회수</th>
 				</tr>
-				<tr>
-					<td>aaaa</td>
-					<td>bbbb</td>
-					<td>cccc</td>
+				<tr th:if="${list != null and list.size()>0}" th:each="board : ${list}">
+					<td>[[${board.boardnum}]]</td>
+					<td>
+						<sup class="hot" th:if="${recent_reply[boardStat.index] == 'O'}">Hot</sup>
+						<sup class="new" th:if="${newly_board[boardStat.index] == 'O'}">New</sup>
+					</td>
+					<td>
+						<a class="get" th:href="${board.boardnum}">
+							[[${board.boardtitle}]]
+							<span class="reply_cnt" th:text="'['+${reply_cnt_list[boardStat.index]}+']'"></span>
+						</a>
+					</td>
+					<td>[[${board.userid}]]</td>
+					<td>
+						[[${board.regdate}]]
+						<th:block th:if="${board.regdate != board.updatedate}">
+							(수정됨)
+						</th:block>
+					</td>
+					<td>[[${board.readcount}]]</td>
 				</tr>
-				<tr>
-					<td>aaaa</td>
-					<td>bbbb</td>
-					<td>cccc</td>
-				</tr>
-				<tr>
-					<td>aaaa</td>
-					<td>bbbb</td>
-					<td>cccc</td>
-				</tr>
-				<tr>
-					<td>aaaa</td>
-					<td>bbbb</td>
-					<td>cccc</td>
-				</tr>
-				<tr>
-					<td>aaaa</td>
-					<td>bbbb</td>
-					<td>cccc</td>
-				</tr>
-				<tr>
-					<td>aaaa</td>
-					<td>bbbb</td>
-					<td>cccc</td>
-				</tr>
-				<tr>
-					<td>aaaa</td>
-					<td>bbbb</td>
-					<td>cccc</td>
-				</tr>
-				<tr>
-					<td>aaaa</td>
-					<td>bbbb</td>
-					<td>cccc</td>
-				</tr>
-				<tr>
-					<td>aaaa</td>
-					<td>bbbb</td>
-					<td>cccc</td>
-				</tr>
-				<tr>
-					<td>aaaa</td>
-					<td>bbbb</td>
-					<td>cccc</td>
+				<th:block th:if="${list == null or list.size() == 0}">
+					<tr>
+						<td colspan="6" style="text-align: center; font-size: 20px;">등록된
+							게시글이 없습니다.</td>
+					</tr>
+				</th:block>
+			</table>
+			<br>
+			<!-- 페이징 처리하는 테이블 -->
+			<table class="pagination">
+				<tr align="center" valign="middle">
+					<td>
+						<a class="changePage" th:if="${pageMaker.prev}" th:href="${pageMaker.startPage-1}">&lt;</a>
+						<th:block th:each="i : ${#numbers.sequence(pageMaker.startPage,pageMaker.endPage)}">
+							<span class="nowPage" th:text="${i}" th:if="${pageMaker.cri.pagenum == i}"></span>
+							<a class="changePage" th:href="${i}" th:text="${i}" th:unless="${pageMaker.cri.pagenum == i}"></a>
+						</th:block>
+						<a class="changePage" th:if="${pageMaker.next}" th:href="${pageMaker.endPage+1}">&gt;</a>
+					</td>
 				</tr>
 			</table>
-
 		</div>
 
 

@@ -5,128 +5,125 @@
 	License: pixelarity.com/license
 -->
 <html lang="ko">
-	<head>
-		<title>Untitled</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="/assets/css/index.css" />
-		<noscript><link rel="stylesheet" href="/assets/css/noscript.css" /></noscript>
-	</head>
-	<body class="is-preload">
+<head>
+	<title>Untitled</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="/assets/css/infoBoard.css" />
+	<noscript><link rel="stylesheet" href="/assets/css/noscript.css" /></noscript>
+</head>
+<body class="is-preload">
 
-	<!-- Header -->
-	<th:block th:replace="~{layout/header::header(${session.loginUser})}"></th:block>
-	<!-- Main -->
-	<section id="main" class="wrapper sidebar left">
-		<div class="inner">
+<!-- Header -->
+<th:block th:replace="~{layout/header::header(${session.loginUser})}"></th:block>
+<!-- Main -->
+<section id="main" class="wrapper sidebar left">
+	<div class="inner">
 
-			<header class="major">
-				<h2>정보</h2>
-			</header>
+		<header class="major">
+			<h2>정보</h2>
+		</header>
 
-			<!-- Content -->
-			<div class="content">
-				<div class="cotent_header"><h2>꿀팁</h2></div>
-				<div class="button" style="margin-bottom: 30px;">글 작성</div>
-				<table>
+		<!-- Content -->
+		<div class="content">
+			<div class="cotent_header"><h2>꿀팁</h2></div>
+			<div class="button" style="margin-bottom: 30px;float: right;">글 작성</div>
+			<!-- 게시글 리스트 띄우는 테이블 -->
+			<table class="list">
+				<tr align="right" valign="middle">
+					<td colspan="6">글 개수 : [[${pageMaker.total}]]</td>
+				</tr>
+				<tr align="center" valign="middle">
+					<th width="8%">번호</th>
+					<th></th>
+					<th>제목</th>
+					<th width="15%">작성자</th>
+					<th width="17%">날짜</th>
+					<th width="10%">조회수</th>
+				</tr>
+				<tr th:if="${list != null and list.size()>0}" th:each="board : ${list}">
+					<td>[[${board.boardnum}]]</td>
+					<td>
+						<sup class="hot" th:if="${recent_reply[boardStat.index] == 'O'}">Hot</sup>
+						<sup class="new" th:if="${newly_board[boardStat.index] == 'O'}">New</sup>
+					</td>
+					<td>
+						<a class="get" th:href="${board.boardnum}">
+							[[${board.boardtitle}]]
+							<span class="reply_cnt" th:text="'['+${reply_cnt_list[boardStat.index]}+']'"></span>
+						</a>
+					</td>
+					<td>[[${board.userid}]]</td>
+					<td>
+						[[${board.regdate}]]
+						<th:block th:if="${board.regdate != board.updatedate}">
+							(수정됨)
+						</th:block>
+					</td>
+					<td>[[${board.readcount}]]</td>
+				</tr>
+				<th:block th:if="${list == null or list.size() == 0}">
 					<tr>
-						<th>제목</th>
-						<th>작성자</th>
-						<th>작성일</th>
+						<td colspan="6" style="text-align: center; font-size: 20px;">등록된
+							게시글이 없습니다.</td>
 					</tr>
-					<tr>
-						<td>aaaa</td>
-						<td>bbbb</td>
-						<td>cccc</td>
-					</tr>
-					<tr>
-						<td>aaaa</td>
-						<td>bbbb</td>
-						<td>cccc</td>
-					</tr>
-					<tr>
-						<td>aaaa</td>
-						<td>bbbb</td>
-						<td>cccc</td>
-					</tr>
-					<tr>
-						<td>aaaa</td>
-						<td>bbbb</td>
-						<td>cccc</td>
-					</tr>
-					<tr>
-						<td>aaaa</td>
-						<td>bbbb</td>
-						<td>cccc</td>
-					</tr>
-					<tr>
-						<td>aaaa</td>
-						<td>bbbb</td>
-						<td>cccc</td>
-					</tr>
-					<tr>
-						<td>aaaa</td>
-						<td>bbbb</td>
-						<td>cccc</td>
-					</tr>
-					<tr>
-						<td>aaaa</td>
-						<td>bbbb</td>
-						<td>cccc</td>
-					</tr>
-					<tr>
-						<td>aaaa</td>
-						<td>bbbb</td>
-						<td>cccc</td>
-					</tr>
-					<tr>
-						<td>aaaa</td>
-						<td>bbbb</td>
-						<td>cccc</td>
-					</tr>
-				</table>
-
-			</div>
+				</th:block>
+			</table>
+			<br>
+			<!-- 페이징 처리하는 테이블 -->
+			<table class="pagination">
+				<tr align="center" valign="middle">
+					<td>
+						<a class="changePage" th:if="${pageMaker.prev}" th:href="${pageMaker.startPage-1}">&lt;</a>
+						<th:block th:each="i : ${#numbers.sequence(pageMaker.startPage,pageMaker.endPage)}">
+							<span class="nowPage" th:text="${i}" th:if="${pageMaker.cri.pagenum == i}"></span>
+							<a class="changePage" th:href="${i}" th:text="${i}" th:unless="${pageMaker.cri.pagenum == i}"></a>
+						</th:block>
+						<a class="changePage" th:if="${pageMaker.next}" th:href="${pageMaker.endPage+1}">&gt;</a>
+					</td>
+				</tr>
+			</table>
+		</div>
 
 
-			<!-- Sidebar -->
-			<div class="sidebar">
+		<!-- Sidebar -->
+		<div class="sidebar">
 
-				<section>
-					<h3><a href="/info/info_list">전체</a></h3>
-					<h3><a href="/info/info_news">뉴스</a></h3>
-					<h3><a href="/info/info_food">식단</a></h3>
-					<h3><a href="/info/info_exercise">운동</a></h3>
-					<h3><a href="/info/info_tip" style="color: #5a8100;">꿀팁</a></h3>
-				</section>
-
-			</div>
+			<section>
+				<h3><a href="/info/info_list">전체</a></h3>
+				<h3><a href="/info/info_news">뉴스</a></h3>
+				<h3><a href="/info/info_food">식단</a></h3>
+				<h3><a href="/info/info_exercise">운동</a></h3>
+				<h3><a href="/info/info_tip" style="color: #5a8100;">꿀팁</a></h3>
+			</section>
 
 		</div>
-	</section>
 
-			<!-- Footer -->
-			<footer id="footer">
-				<div class="inner">
-					<p class="copyright">&copy; Untitled Corp. All rights reserved. Lorem ipsum dolor sit amet feugiat tempus aliquam.</p>
-					<ul class="menu">
-						<li><a href="#">Terms<span> of Use</span></a></li>
-						<li><a href="#">Privacy<span> Policy</span></a></li>
-						<li><a href="#">Legal<span> Information</span></a></li>
-					</ul>
-				</div>
-			</footer>
+	</div>
+</section>
 
-			<!-- Scripts -->
-			<script src="/assets/js/jquery.min.js"></script>
-			<script src="/assets/js/jquery.dropotron.min.js"></script>
-			<script src="/assets/js/jquery.scrollex.min.js"></script>
-			<script src="/assets/js/browser.min.js"></script>
-			<script src="/assets/js/breakpoints.min.js"></script>
-			<script src="/assets/js/util.js"></script>
-			<script src="/assets/js/main.js"></script>
+<!-- Footer -->
+<footer id="footer">
+	<div class="inner">
+		<p class="copyright">&copy; Untitled Corp. All rights reserved. Lorem ipsum dolor sit amet feugiat tempus aliquam.</p>
+		<ul class="menu">
+			<li><a href="#">Terms<span> of Use</span></a></li>
+			<li><a href="#">Privacy<span> Policy</span></a></li>
+			<li><a href="#">Legal<span> Information</span></a></li>
+		</ul>
+	</div>
+</footer>
 
-			<script src="/assets/js/util_sub.js"></script>
-			<script src="/assets/js/main_sub.js"></script>
-	</body>
+<!-- Scripts -->
+<script src="/assets/js/jquery.min.js"></script>
+<script src="/assets/js/jquery.dropotron.min.js"></script>
+<script src="/assets/js/jquery.scrollex.min.js"></script>
+<script src="/assets/js/browser.min.js"></script>
+<script src="/assets/js/breakpoints.min.js"></script>
+<script src="/assets/js/util.js"></script>
+<script src="/assets/js/main.js"></script>
+
+<script src="/assets/js/util_sub.js"></script>
+<script src="/assets/js/main_sub.js"></script>
+</body>
 </html>
