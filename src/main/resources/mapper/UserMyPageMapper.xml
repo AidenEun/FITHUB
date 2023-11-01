@@ -1,8 +1,27 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kh.demo.mapper.UserMyPageMapper">
-	<select id="getDiaryList">
-		select * from diary where user_id = #{loginUser}
+
+	<insert id="registDiary">
+		insert into diary (user_id,today_weight,exer_calories,food_calories,today_exer,today_breakfast,today_lunch,today_dinner,today_snack,carbo,protein,fat,regdate,diary_title,diary_content,mychall_num)
+		values(#{userId},#{todayWeight},#{exerCalories},#{foodCalories},#{todayExer},#{todayBreakfast},#{todayLunch},#{todayDinner},#{todaySnack},#{carbo},#{protein},#{fat},#{reddate},#{diaryTitle},#{diaryContent},#{todayChallNum});
+	</insert>
+
+	<update id="modifyDiary">
+		update diary set today_weight=#{todayWeight},exer_calories=#{exerCalories},food_calories=#{foodCalories},today_exer=#{todayExer},today_breakfast=#{todayBreakfast},today_lunch=#{todayLunch},today_dinner=#{todayDinner},
+						 today_snack=#{todaySnack},carbo=#{carbo},protein=#{protein},fat=#{fat},diary_title=#{diaryTitle},diary_content=#{diaryContent},mychall_num=#{todayChallNum} where diary_num=#{diaryNum}
+	</update>
+
+	<delete id="removeDiary">
+		delete from diary where diary_num=#{diaryNum}
+	</delete>
+
+	<select id="getDiaryDetail" resultType="diaryDTO">
+		select * from diary where user_id = #{loginUser} and regdate=#{chicedate}
+	</select>
+
+	<select id="checkList" resultType="diaryDTO">
+		select * from diary where user_id = #{loginUser} and regdate=#{chicedate}
 	</select>
 </mapper>
 

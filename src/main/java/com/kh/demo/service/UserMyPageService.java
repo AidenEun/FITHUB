@@ -7,16 +7,23 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 public interface UserMyPageService {
-    //insert
-    boolean regist(DiaryDTO diary, MultipartFile files,String loginUser) throws Exception;
+    //일기 등록 : insert
+    public boolean registDiary (DiaryDTO diary, MultipartFile[] files) throws Exception;
 
-    //update
-    public boolean modify(DiaryDTO diary, MultipartFile[] files, String regdate);
-    public boolean remove(String loginUser, Long diary_num);
+
+    //일기 수정 : 기록날짜 제외한 모든 수정내용 update
+    public boolean modifyDiary(DiaryDTO diary, MultipartFile[] files);
+
+    //일기 삭제 : delete 다이어리 view에서 삭제 진행
+    public boolean removeDiary(Long diaryNum);
+
     //select
-    List<DiaryDTO> getDiaryList(String loginUser);
-    DiaryDTO getDiaryDetail(Long diary_num);
+    //일기 상세보기(view)
+    public DiaryDTO getDiaryDetail(String choicedate);
 
-    DiaryDTO findByNum(Long diary_num);
-    List<FileDTO> getFileList(Long diary_num);
+    //달력에 존재하는 일기 조회하기
+    public List<DiaryDTO> getDiaryList(String userid);
+
+    //일정 여부 확인
+    public DiaryDTO checkList(String choicedate);
 }
