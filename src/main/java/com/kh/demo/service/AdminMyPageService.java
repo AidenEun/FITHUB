@@ -1,9 +1,6 @@
 package com.kh.demo.service;
 
-import com.kh.demo.domain.dto.BoardDTO;
-import com.kh.demo.domain.dto.Criteria;
-import com.kh.demo.domain.dto.ReportDTO;
-import com.kh.demo.domain.dto.TrainerSignUpDTO;
+import com.kh.demo.domain.dto.*;
 
 import java.util.List;
 
@@ -46,5 +43,7 @@ public interface AdminMyPageService {
     Long getTipBoardTotal(Criteria cri);
 
     Long getRecipeBoardTotal(Criteria cri);
+
+    Object getUser(String keyword);
 
 }

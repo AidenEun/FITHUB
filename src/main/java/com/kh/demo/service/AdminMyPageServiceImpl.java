@@ -1,9 +1,6 @@
 package com.kh.demo.service;
 
-import com.kh.demo.domain.dto.BoardDTO;
-import com.kh.demo.domain.dto.Criteria;
-import com.kh.demo.domain.dto.ReportDTO;
-import com.kh.demo.domain.dto.TrainerSignUpDTO;
+import com.kh.demo.domain.dto.*;
 import com.kh.demo.mapper.AdminMyPageMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -110,4 +107,15 @@ public class AdminMyPageServiceImpl implements AdminMyPageService {
         return adminMyPageMapper.getRecipeBoardTotal(cri);
     }
 
+//    SearchUser
+    @Override
+    public Object getUser(String keyword) {
+        if (adminMyPageMapper.getTrainerBoolean(keyword)) {
+            return adminMyPageMapper.getTrainer(keyword);
+        }
+        else if (adminMyPageMapper.getUserBoolean(keyword)){
+            return adminMyPageMapper.getUser(keyword);
+        }
+        return null;
+    }
 }

@@ -132,4 +132,26 @@
         AND board_category = 'infoFood'
     </select>
 
+<!--UserSearch-->
+    <select id="getTrainerBoolean">
+        SELECT * FROM trainer
+        WHERE trainer_id = #{keyword}
+    </select>
+
+    <select id="getUserBoolean">
+        SELECT * FROM user
+        WHERE user_id = #{keyword}
+        AND user_category = 'U'
+    </select>
+
+    <select id="getTrainer">
+        SELECT * FROM trainer
+        WHERE trainer_id = #{keyword}
+    </select>
+
+    <select id="getUser">
+        SELECT * FROM user
+        WHERE user_id = #{keyword}
+        AND user_category = 'U'
+    </select>
 </mapper>
