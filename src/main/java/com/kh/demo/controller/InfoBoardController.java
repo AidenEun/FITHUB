@@ -9,7 +9,10 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -22,7 +25,7 @@ public class InfoBoardController {
 
 
 
-@GetMapping("info_news")
+    @GetMapping("info_news")
     public void info_news_list(Criteria cri, Model model) throws Exception{
         List<BoardDTO> list = service.getBoardList(cri);
         model.addAttribute("list",list);
@@ -33,7 +36,7 @@ public class InfoBoardController {
     }
 
 
-@GetMapping("info_exercise")
+    @GetMapping("info_exercise")
     public void info_exercise_list(Criteria cri, Model model) throws Exception{
         List<BoardDTO> list = service.getBoardList(cri);
         model.addAttribute("list",list);
@@ -44,7 +47,7 @@ public class InfoBoardController {
     }
 
 
-@GetMapping("info_food")
+    @GetMapping("info_food")
     public void info_food_list(Criteria cri, Model model) throws Exception{
         List<BoardDTO> list = service.getBoardList(cri);
         model.addAttribute("list",list);
@@ -54,7 +57,7 @@ public class InfoBoardController {
         model.addAttribute("recent_reply",service.getRecentReplyList(list));
     }
 
-@GetMapping("info_tip")
+    @GetMapping("info_tip")
     public void info_tip_list(Criteria cri, Model model) throws Exception{
         List<BoardDTO> list = service.getBoardList(cri);
         model.addAttribute("list",list);
@@ -65,7 +68,7 @@ public class InfoBoardController {
     }
 
 
-@GetMapping("info_list")
+    @GetMapping("info_list")
     public void info_list(Criteria cri, Model model) throws Exception{
         List<BoardDTO> list = service.getBoardList(cri);
         model.addAttribute("list",list);
@@ -74,5 +77,23 @@ public class InfoBoardController {
         model.addAttribute("reply_cnt_list",service.getReplyCntList(list));
         model.addAttribute("recent_reply",service.getRecentReplyList(list));
     }
+
+    @GetMapping("info_write")
+    public void info_write(@ModelAttribute("cri") Criteria cri, Model model){
+    }
+
+    @PostMapping("info_write")
+    public String write(BoardDTO board, MultipartFile[] files, Criteria cri) throws Exception{
+        Long boardnum = 0l;	//long 타입의 0(0+l)
+        if(service.regist(board, files)) {
+            boardnum = service.getLastNum(board.getUserId());
+            return "redirect:/info/info_get"+cri.getListLink()+"&boardnum="+boardnum;
+        } //성공시 게시글 보는 페이지로 이동(info_get.html)
+        else {
+            return "redirect:/info/info_list"+cri.getListLink();
+        } //실패시 게시글 목록 페이지로 이동
+    }
+
+
 
 }
