@@ -39,7 +39,7 @@
 		<!-- Content -->
 		<div class="content">
 			<div class="cotent_header"><h2>뉴스</h2></div>
-			<div class="button" th:href="${'/board/write'+pageMaker.cri.listLink}">글 작성</div>
+			<div class="button"><a th:href="${'/info/info_write'+pageMaker.cri.listLink}">글 작성</a></div>
 			<!-- 게시글 리스트 띄우는 테이블 -->
 			<table id="list" class="info_news_list" style="border-bottom: 1px #304400">
 				<!--						<tr  valign="middle">-->
@@ -113,7 +113,6 @@
 				<h3><a href="/info/info_exercise">운동</a></h3>
 				<h3><a href="/info/info_tip">꿀팁</a></h3>
 			</section>
-
 		</div>
 
 	</div>

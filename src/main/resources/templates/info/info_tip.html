@@ -11,6 +11,18 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<link rel="stylesheet" href="/assets/css/infoBoard.css" />
 	<noscript><link rel="stylesheet" href="/assets/css/noscript.css" /></noscript>
+	<style>
+		.content > #list {
+			text-overflow: ellipsis;
+			display: -webkit-box; /* display: -webkit-box => 해당 영역을 box 형태로 관리 */
+			-webkit-line-clamp: 3; /*-webkit-line-clamp => 해당 영역 내 텍스트의 최대 라인수 */
+			-webkit-box-orient: vertical; /* -webkit-box-orient: vertical => box의 흐름 방향을 수직으로 지정 */
+		}
+		.content .button{
+			margin-bottom: 30px;
+			float: right;
+		}
+	</style>
 </head>
 <body class="is-preload">
 
@@ -27,41 +39,46 @@
 		<!-- Content -->
 		<div class="content">
 			<div class="cotent_header"><h2>꿀팁</h2></div>
-			<div class="button" style="margin-bottom: 30px;float: right;">글 작성</div>
+			<div class="button"><a th:href="${'/info/info_write'+pageMaker.cri.listLink}">글 작성</a></div>
 			<!-- 게시글 리스트 띄우는 테이블 -->
-			<table class="list">
-				<tr align="right" valign="middle">
-					<td colspan="6">글 개수 : [[${pageMaker.total}]]</td>
-				</tr>
-				<tr align="center" valign="middle">
-					<th width="8%">번호</th>
-					<th></th>
-					<th>제목</th>
-					<th width="15%">작성자</th>
-					<th width="17%">날짜</th>
-					<th width="10%">조회수</th>
-				</tr>
-				<tr th:if="${list != null and list.size()>0}" th:each="board : ${list}">
-					<td>[[${board.boardnum}]]</td>
-					<td>
-						<sup class="hot" th:if="${recent_reply[boardStat.index] == 'O'}">Hot</sup>
-						<sup class="new" th:if="${newly_board[boardStat.index] == 'O'}">New</sup>
-					</td>
-					<td>
-						<a class="get" th:href="${board.boardnum}">
-							[[${board.boardtitle}]]
-							<span class="reply_cnt" th:text="'['+${reply_cnt_list[boardStat.index]}+']'"></span>
-						</a>
-					</td>
-					<td>[[${board.userid}]]</td>
-					<td>
-						[[${board.regdate}]]
-						<th:block th:if="${board.regdate != board.updatedate}">
-							(수정됨)
-						</th:block>
-					</td>
-					<td>[[${board.readcount}]]</td>
-				</tr>
+			<table id="list" class="info_news_list" style="border-bottom: 1px #304400">
+				<!--						<tr  valign="middle">-->
+				<!--							<td colspan="3">썸네일</td>-->
+				<!--							<td>제목</td>-->
+				<!--						</tr>-->
+				<!--						<tr>-->
+				<!--							<td></td>-->
+				<!--							<td>내용</td>-->
+				<!--						</tr>-->
+				<!--						<tr>-->
+				<!--							<td></td>-->
+				<!--							<td>조회수, 댓글</td>-->
+				<!--						</tr>-->
+				<th:block th:if="${list != null and list.size()>0}" th:each="board : ${list}">
+					<tr valign="middle">
+						<td rowspan="3">
+							<!--								[[${board.썸네일}]]-->
+						</td>
+						<td>
+							<a class="get" th:href="${board.boardNum}">
+								[[${board.boardTitle}]]
+							</a>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<a class="get" th:href="${board.boardNum}">
+								[[${board.boardContent}]]
+							</a>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<span class="reply_cnt" th:text="${reply_cnt_list[boardStat.index]}">댓글수</span>
+							<span [[${board.viewCnt}]]>조회수</span>
+						</td>
+					</tr>
+				</th:block>
 				<th:block th:if="${list == null or list.size() == 0}">
 					<tr>
 						<td colspan="6" style="text-align: center; font-size: 20px;">등록된
