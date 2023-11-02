@@ -120,38 +120,38 @@
 					</tr>
 					</thead>
 					<tbody id="data-table">
-					<tr th:if="${signUpList != null and signUpList.size() > 0}" th:each="signUpBoard : ${signUpList}">
-						<td class="long_text">
-							<a href="#">
-								[[${signUpBoard.signupNum}]]
-							</a>
-						</td>
-						<td class="long_text">
-							<a href="#">
-								[[${signUpBoard.userId}]]
-							</a>
-						</td>
-						<td class="long_text">
-							<a href="#">
-								[[${signUpBoard.trainerPart}]]
-							</a>
-						</td>
-						<td class="long_text">
-							<a href="#">
-								[[${signUpBoard.trainerCareer}]]
-							</a>
-						</td>
-						<td class="long_text">
-							<a href="#">
-								[[${signUpListInUser[signUpBoardStat.index].userAge}]]
-							</a>
-						</td>
-						<td class="long_text">
-							<a href="#">
-								[[${signUpListInUser[signUpBoardStat.index].userGender}]]
-							</a>
-						</td>
-					</tr>
+						<tr th:if="${signUpList != null and signUpList.size() > 0}" th:each="signUpBoard : ${signUpList}">
+							<td class="long_text">
+								<a href="#">
+									[[${signUpBoard.signupNum}]]
+								</a>
+							</td>
+							<td class="long_text">
+								<a href="#">
+									[[${signUpBoard.userId}]]
+								</a>
+							</td>
+							<td class="long_text">
+								<a href="#">
+									[[${signUpBoard.trainerPart}]]
+								</a>
+							</td>
+							<td class="long_text">
+								<a href="#">
+									[[${signUpBoard.trainerCareer}]]
+								</a>
+							</td>
+							<td class="long_text">
+								<a href="#">
+									[[${signUpListInUser[signUpBoardStat.index].userAge}]]
+								</a>
+							</td>
+							<td class="long_text">
+								<a href="#">
+									[[${signUpListInUser[signUpBoardStat.index].userGender}]]
+								</a>
+							</td>
+						</tr>
 					</tbody>
 					<tr th:if="${signUpList == null or signUpList.size() == 0}">
 						<td colspan="6">

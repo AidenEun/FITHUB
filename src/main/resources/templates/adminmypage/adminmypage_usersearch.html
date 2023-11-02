@@ -74,6 +74,7 @@
 		height: 60px;
 		border-radius: 10px 0 0 10px;
 		border : 1px solid rgb(200, 200, 200);
+		padding-left: 150px;
 	}
 
 	#search-button{
@@ -113,6 +114,39 @@
   		overflow: hidden;
 		text-overflow: ellipsis;
 	}
+
+	#ut_option {
+		width: 8%;
+		margin-top: 10px;
+		margin-left: 10px;
+		position: absolute;
+		box-shadow: inset 0 0 0 1px #444;
+	}
+
+	.listTable {
+		display: none;
+	}
+
+	.now_cate {
+		background-color: red !important;
+	}
+
+	.nowPage {
+		background-color: #444 !important; /* 뒤의 !important는 기존 스타일을 덮어쓰기 위해 사용합니다. */
+		color: #fff;
+		font-size: 16px;
+		padding: 5px 10px;
+	}
+
+	.changePage {
+		font-size: 16px;
+		padding: 5px 10px;
+	}
+
+	.pageTr {
+		background-color: white !important;
+		border: none;
+	}
 </style>
 <body class="is-preload">
 	<!-- Header -->
@@ -135,62 +169,57 @@
 
 			<!-- Content -->
 			<div class="content">
-				<div class="search-container">
-					<div class="search">
+				<div id="searchBtn" class="button cate now_cate" style="margin-right: 10px;">검색</div>
+				<div id="userSearchBtn" class="button cate not_cate" style="margin-right: 10px;">유저</div>
+				<div id="trainerSearchBtn" class="button cate not_cate">트레이너</div>
+
+				<div class="searchContainer" id="searchContainer">
+					<div class="search" style="margin-top: 30px;">
+						<select name="" id="ut_option">
+							<option value="user">유저</option>
+							<option value="trainer">트레이너</option>
+						</select>
 						<input type="text" id="search_input" placeholder="유저 아이디를 입력하세요">
 						<input type="button" id="search-button" value="검색" onclick="search()">
 					</div>
-					<div style="margin-top: 30px;" class="button primary fit" id="no_keyword">유저 아이디를 입력해주세요!!</div>
+					<div style="margin-top: 30px;" class="button primary fit" id="no_keyword">검색 결과가 없습니다!!!</div>
 					<table style="text-align: center; margin-top: 50px;" id="search_result">
 						<thead>
-							<tr style="font-weight: bold; font-size: 14px;">
-								<td>아이디</td>
-								<td>게시물 수</td>
-								<td>댓글 수</td>
-								<td>신고 횟수</td>
-								<td>신고 당한 횟수</td>
-								<td>정지 상태</td>
-							</tr>
+
 						</thead>
 						<tbody id="data-table">
-							<tr th:if="${reportList != null and reportList.size() > 0}" th:each="reportBoard : ${reportList}">
-								<td class="long_text">
-									<a href="#">
-										[[${reportBoard.reportNum}]]
-									</a>
-								</td>
-								<td class="long_text">
-									<a href="#">
-										[[${reportBoard.userId}]]
-									</a>
-								</td>
-								<td class="long_text">
-									<a href="#">
-										[[${reportBoard.reportBoardnum}]]
-									</a>
-								</td>
-								<td class="long_text">
-									<a href="#">
-										[[${reportBoard.boardCategory}]]
-									</a>
-								</td>
-								<td class="long_text">
-									<a href="#">
-										[[${reportBoard.reportDate}]]
-									</a>
-								</td>
-								<td class="long_text">
-									<a href="#">
-										[[${reportBoard.reportDate}]]
-									</a>
-								</td>
-							</tr>
-							<tr th:if="${reportList == null or reportList.size() == 0}">
-								<td colspan="6">
-									접수된 신고가 없습니다!
-								</td>
-							</tr>
+
 						</tbody>
+					</table>
+				</div>
+				<div class="listTable" id="listTable">
+					<table style="text-align: center; margin-top: 30px;">
+						<thead>
+							<tr style="font-weight: bold;">
+								<td class="long_text">닉네임</td>
+								<td class="long_text">아이디</td>
+								<td class="long_text">성별</td>
+								<td class="long_text">전화번호</td>
+								<td class="long_text">신고당한 횟수</td>
+							</tr>
+						</thead>
+						<tbody id="data-table2">
+
+						</tbody>
+					</table>
+					<br>
+					<!-- 페이징 처리하는 테이블 -->
+					<table class="pagination">
+						<tr align="center" valign="middle" class="pageTr">
+							<td>
+<!--								<a class="changePage" th:if="${pageMaker.prev}" th:href="${pageMaker.startPage-1}">&lt;</a>-->
+<!--								<th:block th:each="i : ${#numbers.sequence(pageMaker.startPage,pageMaker.endPage)}">-->
+<!--									<span class="nowPage" th:text="${i}" th:if="${pageMaker.cri.pagenum == i}"></span>-->
+<!--									<a class="changePage" th:href="${i}" th:text="${i}" th:unless="${pageMaker.cri.pagenum == i}"></a>-->
+<!--								</th:block>-->
+<!--								<a class="changePage" th:if="${pageMaker.next}" th:href="${pageMaker.endPage+1}">&gt;</a>-->
+							</td>
+						</tr>
 					</table>
 				</div>
 			</div>
@@ -228,32 +257,42 @@
 
 <script th:src="@{/assets/js/sidebar.js}"></script>
 <script>
-	function search(){
-		const search_input = document.getElementById("search_input");
-		const search_result = document.getElementById("search_result");
-		const no_keyword = document.getElementById("no_keyword");
+	const cate = document.querySelectorAll('.cate');
+	let nowCate = document.querySelector('.now_cate');
 
-		const search_keyword = search_input.value;
+	cate.forEach(function(btn) {
+		btn.addEventListener('click', function() {
+			if (btn.classList.contains('now_cate')) {
+			 return;
+			}
 
-		if(search_keyword == ''){
-			no_keyword.style.display = "block";
-			search_result.style.display = "none";
-		}
-		else {
-			search_result.style.display = "block";
-			no_keyword.style.display = "none";
-		}
-	}
+			btn.classList.remove('not_cate');
+			btn.classList.add('now_cate');
+
+			nowCate.classList.remove('now_cate');
+			nowCate.classList.add('not_cate');
+
+			nowCate = btn;
+		});
+	});
 
     function search() {
         const search_input = document.getElementById("search_input");
         const search_keyword = search_input.value;
 
+        const ut_option = document.getElementById("ut_option").value;
+
+        console.log(search_keyword);
+        console.log(ut_option);
+
         if (search_keyword) {
             $.ajax({
                 url: '/adminmypage/adminmypage_usersearch',
                 method: 'POST',
-                data: { keyword: search_keyword }, // 서버로 전송할 데이터
+                data: {
+                	keyword: search_keyword,
+				 	option: ut_option
+				},
                 success: function(data) {
 					displayData(data);
                 },
@@ -263,6 +302,210 @@
             });
         }
     }
+
+	function displayData(data) {
+		const search_input = document.getElementById("search_input");
+ 		const search_result = document.getElementById("search_result");
+		const no_keyword = document.getElementById("no_keyword");
+
+		var tableBody = $('#data-table');
+
+		try {
+			data = JSON.parse(data);
+			if (data.hasOwnProperty("trainerDTO")) {
+				search_result.style.display = "block";
+				no_keyword.style.display = "none";
+
+				tableBody.empty();
+
+				var tableHead = $('<thead>');
+				var tableBody = $('<tbody>');
+
+				var tableHeadRow = $('<tr style="font-weight: bold; font-size: 14px; background-color: white">');
+				tableHeadRow.append('<td class="long_text">닉네임</td>');
+				tableHeadRow.append('<td class="long_text">아이디</td>');
+				tableHeadRow.append('<td class="long_text">성별</td>');
+				tableHeadRow.append('<td class="long_text">트레이너 전환 날짜</td>');
+				tableHeadRow.append('<td class="long_text">신고 당한 횟수</td>');
+				tableHead.append(tableHeadRow);
+
+				var row = $('<tr>');
+				row.append('<td class="long_text"><a href="#">' + data.trainerDTO.trainerNickname + '</a></td>');
+				row.append('<td class="long_text"><a href="#">' + data.trainerDTO.trainerId + '</a></td>');
+				row.append('<td class="long_text"><a href="#">' + data.trainerDTO.trainerGender + '</a></td>');
+				row.append('<td class="long_text"><a href="#">' + data.trainerDTO.transferdate + '</a></td>');
+				row.append('<td class="long_text"><a href="#">' + data.trainerDTO.trainerReportedcnt + '</a></td>');
+				tableBody.append(row);
+
+				$('#data-table').append(tableHead);
+    			$('#data-table').append(tableBody);
+			}
+			else if (data.hasOwnProperty("userDTO")) {
+				search_result.style.display = "block";
+				no_keyword.style.display = "none";
+
+				tableBody.empty();
+
+				var tableHead = $('<thead>');
+				var tableBody = $('<tbody>');
+
+				var tableHeadRow = $('<tr style="font-weight: bold; font-size: 14px; background-color: white">');
+				tableHeadRow.append('<td class="long_text">닉네임</td>');
+				tableHeadRow.append('<td class="long_text">아이디</td>');
+				tableHeadRow.append('<td class="long_text">성별</td>');
+				tableHeadRow.append('<td class="long_text">가입일자</td>');
+				tableHeadRow.append('<td class="long_text">신고 당한 횟수</td>');
+				tableHead.append(tableHeadRow);
+
+				var row = $('<tr>');
+				row.append('<td class="long_text"><a href="#">' + data.userDTO.userNickname + '</a></td>');
+				row.append('<td class="long_text"><a href="#">' + data.userDTO.userId + '</a></td>');
+				row.append('<td class="long_text"><a href="#">' + data.userDTO.userGender + '</a></td>');
+				row.append('<td class="long_text"><a href="#">' + data.userDTO.userJoindate + '</a></td>');
+				row.append('<td class="long_text"><a href="#">' + data.userDTO.userReportedcnt + '</a></td>');
+				tableBody.append(row);
+
+				$('#data-table').append(tableHead);
+    			$('#data-table').append(tableBody);
+			}
+			else if (data.hasOwnProperty("noData")) {
+				no_keyword.style.display = "block";
+				search_result.style.display = "none";
+				search_input.value = "";
+			 	search_input.focus();
+			}
+		} catch (error) {
+			console.error("올바른 데이터 형식이 아닙니다:", error);
+		}
+	}
+
+	const searchButton = document.getElementById("searchBtn");
+	const userSearchBtn  = document.getElementById("userSearchBtn");
+	const trainerSearchBtn = document.getElementById("trainerSearchBtn");
+	const dataTable = document.getElementById("data-table2");
+
+	const searchContainer = document.getElementById("searchContainer");
+	const listTable = document.getElementById("listTable");
+
+
+	$(document).ready(function() {
+		let currentCategory = 'searchUser';
+
+		searchButton.addEventListener("click", function() {
+			searchContainer.style.display = "block";
+			listTable.style.display = "none";
+		});
+
+		userSearchBtn.addEventListener("click", function() {
+			listTable.style.display = "block";
+			searchContainer.style.display = "none";
+
+			currentCategory = 'searchUser';
+			loadPage('/adminmypage/searchUser', 1);
+		});
+
+		trainerSearchBtn.addEventListener("click", function() {
+			listTable.style.display = "block";
+			searchContainer.style.display = "none";
+
+			currentCategory = 'searchTrainer';
+			loadPage('/adminmypage/searchTrainer', 1);
+		});
+
+
+		function loadPage(url, pageNum) {
+			$.ajax({
+				url: url,
+				data: { pageNum: pageNum, category: currentCategory },
+				type: 'GET',
+				dataType: 'json',
+				success: function (data) {
+					displayUserData(data.userList);
+					displayTrainerData(data.trainerList);
+					displayPaging(data.pageDTO);
+				},
+				error: function (error) {
+					console.error('데이터를 가져오는 중 오류 발생: ' + error);
+				}
+			});
+		}
+
+		function displayPaging(pageDTO) {
+			var startPage = pageDTO.startPage;
+			var endPage = pageDTO.endPage;
+			var prev = pageDTO.prev;
+			var next = pageDTO.next;
+
+			var str = '';
+
+			if (prev) {
+				str += '<a class="changePage" href="' + (startPage - 1) + '"><code>&lt;</code></a>';
+			}
+
+			for (var i = startPage; i <= endPage; i++) {
+				if (i === pageDTO.cri.pagenum) {
+					str += '<span class="nowPage">' + i + '</span> ';
+				} else {
+					str += '<a class="changePage" href="' + i + '">' + i + '</a>';
+				}
+			}
+
+			if (next) {
+				str += '<a class="changePage" href="' + (endPage + 1) + '"><code>&gt;</code></a>';
+			}
+
+			var page = $('.pagination');
+			page.html('<tr align="center" valign="middle" class="pageTr"><td>' + str + '</td></tr>');
+
+			// 페이지 버튼 클릭 이벤트를 연결
+			$(".changePage").on("click", function (e) {
+				e.preventDefault(); // 기본 동작 중지
+
+				var pageNum = $(this).attr('href');
+				loadPage('/adminmypage/' + currentCategory, pageNum);
+			});
+		}
+
+		function displayUserData(userList) {
+			var tableBody = $('#data-table2');
+			tableBody.empty();
+
+			if (userList != null && userList.length > 0) {
+				userList.forEach(function (userData) {
+					var row = $('<tr>');
+					row.append('<td class="long_text"><a href="#">' + userData.userNickname + '</a></td>');
+					row.append('<td class="long_text"><a href="#">' + userData.userId + '</a></td>');
+					row.append('<td class="long_text"><a href="#">' + userData.userGender + '</a></td>');
+					row.append('<td class="long_text"><a href="#">' + userData.userTel + '</a></td>');
+					row.append('<td class="long_text"><a href="#">' + userData.userReportedcnt + '</a></td>');
+					tableBody.append(row);
+				});
+			}
+			else {
+				tableBody.append('<tr><td colspan="5">현재 회원이 아무도 없습니다...</td></tr>');
+			}
+		}
+
+		function displayTrainerData(trainerList) {
+			var tableBody = $('#data-table2');
+			tableBody.empty();
+
+			if (trainerList != null && trainerList.length > 0) {
+				trainerList.forEach(function (trainerData) {
+					var row = $('<tr>');
+					row.append('<td class="long_text"><a href="#">' + trainerData.trainerNickname + '</a></td>');
+					row.append('<td class="long_text"><a href="#">' + trainerData.trainerId + '</a></td>');
+					row.append('<td class="long_text"><a href="#">' + trainerData.trainerGender + '</a></td>');
+					row.append('<td class="long_text"><a href="#">' + trainerData.trainerTel + '</a></td>');
+					row.append('<td class="long_text"><a href="#">' + trainerData.trainerReportedcnt + '</a></td>');
+					tableBody.append(row);
+				});
+			}
+			else {
+				tableBody.append('<tr><td colspan="5">현재 회원이 아무도 없습니다...</td></tr>');
+			}
+		}
+	});
 </script>
 </body>
 </html>
