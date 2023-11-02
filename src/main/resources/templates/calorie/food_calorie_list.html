@@ -13,18 +13,59 @@
 	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
 	<noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
 	<style>
-		#main{
-			padding-top: 0px;
-		}
-		.inner{
-			padding-top: 50px;
-		}
+
+
 
 		.top_img_box{
 		width: 100%;
 		height: 310px;
 		margin-bottom: 50px;
-		background-color: green;
+		background-color: red;
+		z-index: 99;
+	}
+
+	.top_img_box > img {
+		width: 100%;
+		height: 100%;
+			z-index: 100;
+	}
+
+	#main {
+		padding: 0;
+	}
+
+	.wrapper {
+		padding: 0;
+		margin-bottom: 100px;
+	}
+
+	#header {
+		background-color: #5a8100;
+	}
+
+	#header nav > ul > li a {
+		color: white;
+	}
+
+	#header h1 a {
+		color: white;
+	}
+
+	#header .main ul li > a {
+		color: white;
+
+	}
+
+	#footer {
+		background-color: #304400;
+	}
+
+
+		#main{
+			padding-top: 0px;
+		}
+		.inner{
+			padding-top: 50px;
 		}
 
 		.top_img_box > img {
@@ -110,10 +151,9 @@
   color: gray;
 }
 	</style>
-<body class="is-preload">
 
 <!-- Header -->
-<th:block th:replace="~{layout/header::header(${session.loginUser})}"></th:block>
+<th:block th:replace="~{layout/header-test::header-test(${session.loginUser})}"></th:block>
 
 <!-- Main -->
 <section id="main" class="wrapper left">
@@ -150,10 +190,10 @@
 				</div>
 				<table class="cal_search_ranking">
 					<tr>
-						<th width="20%" class="cal_tit">순위</th>
-						<th width="40%" class="cal_tit">음식명</th>
-						<th width="20%" class="cal_tit">딘위</th>
-						<th width="20%">칼로리</th>
+						<th style=width="20%" class="cal_tit">순위</th>
+						<th style=width="40%" class="cal_tit">음식명</th>
+						<th style=width="20%" class="cal_tit">딘위</th>
+						<th style=width="20%">칼로리</th>
 					</tr>
 					<tr>
 						<td>aaaa</td>
