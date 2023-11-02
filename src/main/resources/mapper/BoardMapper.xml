@@ -47,10 +47,6 @@
 		]]>
 	</select>
 
-	<select id="getMyList">
-		select * from board where user_id=#{userId}
-		order by board_num desc limit #{cri.startrow},#{cri.amount}
-	</select>
 
 	<select id="getTotal">
 		select count(*) from board where
@@ -62,6 +58,14 @@
 	<select id="findByNum">
 		select * from board where board_num=#{boardNum}
 	</select>
+
+
+	<select id="getMyList">
+		select * from board where user_id=#{userId}
+		order by board_num desc limit #{cri.startrow},#{cri.amount}
+	</select>
+
+
 </mapper>
 
 

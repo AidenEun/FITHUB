@@ -1,6 +1,7 @@
 package com.kh.demo.service;
 
 import com.kh.demo.domain.dto.BoardDTO;
+import com.kh.demo.domain.dto.BookMarkDTO;
 import com.kh.demo.domain.dto.Criteria;
 import com.kh.demo.domain.dto.FileDTO;
 import org.springframework.core.io.Resource;
@@ -36,7 +37,7 @@ public interface BoardService {
 	ResponseEntity<Object> downloadFile(String systemname, String orgname) throws Exception;
 
 
-	List<BoardDTO> getMyBoardList(Criteria cri, String userId);
+
 }
 
 

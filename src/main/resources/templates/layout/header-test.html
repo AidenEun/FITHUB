@@ -1,0 +1,210 @@
+<link xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="header-test(loginUser)">
+    <style>
+        .submenu {
+        width: 150px;
+		position: absolute;
+		font-size:14px;
+		background: skyblue;
+        z-index: 5555;
+        }
+        .submenu li:hover {
+		background: orange;
+		transition: ease 1s;
+		}
+
+    </style>
+    </head>
+    <body>
+    <header id="header">
+        <h1><a href="/" style="color: white;">Fit Hub</a></h1>
+        <nav class="links">
+            <ul>
+                <li class="menu-item"><a href="/info/info_list" style="color: white;">정보</a>
+                    <ul class="submenu">
+                        <li><a href="/info/submenu1">전체</a></li>
+                        <li><a href="/info/submenu2">음식</a></li>
+                        <li><a href="/info/submenu2">운동</a></li>
+                        <li><a href="/info/submenu2">꿀팁</a></li>
+
+                    </ul>
+                </li>
+                <li class="menu-item"><a href="/calorie/food_calorie_list" style="color: white;">칼로리</a>
+                    <ul class="submenu">
+                        <li><a href="/calorie/food_calorie_list">음식칼로리</a></li>
+                        <li><a href="/calorie/exercise_calorie_list">운동칼로리</a></li>
+                    </ul>
+                </li>
+                <li class="menu-item"><a href="#" style="color: white;">커뮤니티</a>
+                    <ul class="submenu">
+                        <li><a href="/info/submenu1">자유게시판</a></li>
+                        <li><a href="/info/submenu2">운동</a></li>
+                        <li><a href="/info/submenu1">식단</a></li>
+                        <li><a href="/info/submenu2">갤러리</a></li>
+                        <li><a href="/info/submenu1">QnA</a></li>
+
+                    </ul>
+                </li>
+                <li class="menu-item"><a href="/matching/matching_list" style="color: white;">트레이너 매칭</a>
+                    <ul class="submenu">
+                        <li><a href="/matching/matching_list">트레이너매칭</a></li>
+                    </ul>
+                </li>
+                <li class="menu-item"><a href="#" style="color: white;">챌린지</a>
+                    <ul class="submenu">
+                        <li><a href="/info/submenu1">챌린지</a></li>
+                    </ul>
+                </li>
+                <li class="menu-item"><a href="#" style="color: white;">제품</a>
+                    <ul class="submenu">
+                        <li><a href="/info/submenu1">식품</a></li>
+                        <li><a href="/info/submenu1">운동 도구</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        <script>
+        const menuItems = document.querySelectorAll('.menu-item');
+
+        menuItems.forEach(item => {
+        const submenu = item.querySelector('.submenu');
+        item.addEventListener('mouseenter', () => {
+        submenu.style.display = 'block';
+        });
+        item.addEventListener('mouseleave', () => {
+        submenu.style.display = 'none';
+        });
+        });
+        </script>
+        <nav class="main">
+            <ul>
+                <li id="login">
+                    <th:block th:if="${loginUser == null}">
+                        <a class="login" href="/user/login"style="color: #fff;">Login</a>
+                    </th:block>
+                    <th:block th:if="${loginUser != null}">
+                        <a class="login" th:href="@{/user/logout}"style="color: #fff;">logout</a>
+                    </th:block>
+                    <a class="login" href="/usermypage/user_myinfo"style="color: #fff;">유저</a>
+                    <a class="login" href="/trainermypage/trainer_modify"style="color: #fff;">트레</a>
+                    <a class="login" href="/adminmypage/adminmypage_list"style="color: #fff;">관리</a>
+                </li>
+                <li class="search">
+                    <a class="fa-search" href="#search"style="color: #fff;">Search</a>
+                    <form id="search" method="get" action="#">
+                        <input type="text" name="query" placeholder="Search" />
+                    </form>
+                </li>
+                <li class="menu">
+                    <a class="fa-bars" href="#menu"style="color: #fff;">Menu</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Menu -->
+    <section id="menu">
+        <div class="side_info">
+            <img src="/images/profile_img.png" class="prof_img" width="102px" height="102px">
+            <div id="my_info">
+                <div>
+                    <a href="#">내 정보</a>
+                    <th:block th:if="${loginUser == null}">
+                        <a class="login" href="/user/login">로그인</a>
+                    </th:block>
+                    <th:block th:if="${loginUser != null}">
+                        <a class="login" th:href="@{/user/logout}">로그아웃</a>
+                    </th:block>
+                </div>
+                <span>등급 / 닉네임(ID)</span>
+            </div>
+            <div class="goal-graph">
+                <div class="progress-bar">
+                    <p class="number">
+                        <span>1</span>
+                        <span>2</span>
+                        <span>3</span>
+                        <span>4</span>
+                        <span>5</span>
+                        <span>6</span>
+                        <span>7</span>
+                    </p>
+                </div>
+            </div>
+            <div class="point-container">
+                <div>나의 포인트</div>
+                <span>0p</span>
+            </div>
+            <div id="tab-menu">
+                <div class="tab today-tab">오늘</div>
+                <div class="tab chall-tab">도전</div>
+                <div class="tab sub-tab">구독</div>
+                <div class="page-tab diary-tab">
+                    <a href="#">일기</a>
+                </div>
+                <div class="page-tab shop-tab">
+                    <a href="#">쇼핑</a>
+                </div>
+            </div>
+            <div id="tab-menu-container">
+                <div class="tab-view today-view">
+                    <strong>나의 목표</strong>
+                    <p>목표무게</p>
+                    <p>목표칼로리</p>
+                    <hr>
+                    <strong>잔여칼로리: 현재칼로리/목표칼로리</strong>
+                    <p>섭취량</p>
+                    <p>소비량</p>
+                    <div id="meal-options">
+                        <div class="brack-fst">아침</div>
+                        <div class="lunch">점심</div>
+                        <div class="dinner">저녁</div>
+                        <div class="snack">간식</div>
+                    </div>
+                    <div id="tan-dan-ji-box">
+                        <div>칼로리</div>
+                        <div>탄수화물</div>
+                        <div>단백질</div>
+                        <div>지방</div>
+                    </div>
+                </div>
+                <div class="tab-view chall-view">
+                    <div class="my-chall">
+                        <strong>나의 챌린지</strong><br>
+                        <span class="active-tab">진행중</span>
+                        <span class="finish-tab">종료</span>
+                        <div id="chall-list">
+                            <div class="active-chall-listView">
+                                <p>진행중인 챌린지 list</p>
+                            </div>
+                            <div class="finish-chall-listView">
+                                <p>종료된 챌린지 list</p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="tab-view sub-view">
+                    <div class="sub-view-container">
+                        <strong>나의 트레이너</strong>
+                        <div class="my-sub">
+                            <p>구독한 트레이너 list</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="another-page">
+            <div class="bmi">
+                <a href="#">BMI</a>
+            </div>
+            <div class="health-center">
+                <a href="#">보건소</a>
+            </div>
+            <div class="trainer-apply">
+                <a href="#">트레이너 신청</a>
+            </div>
+        </div>
+    </section>
+</th:block>

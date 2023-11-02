@@ -1,12 +1,8 @@
 package com.kh.demo.controller;
 
 import com.kh.demo.domain.dto.*;
-import com.kh.demo.service.BoardService;
-import com.kh.demo.service.MessageService;
-import com.kh.demo.service.UserMyPageService;
-import com.kh.demo.service.UserService;
+import com.kh.demo.service.*;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -17,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -32,18 +29,22 @@ public class UserMyPageController {
 
     @Autowired
     @Qualifier("BoardServiceImpl")
-    private BoardService serviceboard;
+    private BoardService serviceBoard;
 
     @Autowired
     @Qualifier("MessageServiceImpl")
     private MessageService serviceMessage;
+
+    @Autowired
+    @Qualifier("BookMarkServiceImpl")
+    private BookMarkService serviceBookMark;
 
 
     @GetMapping("user_myinfo_modify")
     public void user_myinfo_modify(HttpServletRequest req,Model model){
         HttpSession session = req.getSession();
         String loginUser = (String) session.getAttribute("loginUser");
-        UserDTO user = serviceUser.getDetail(loginUser);
+        UserDTO user = service.getUserDetail(loginUser);
         model.addAttribute("user", user);
     }
 
@@ -51,15 +52,15 @@ public class UserMyPageController {
     public void user_myinfo(HttpServletRequest req, Model model) {
         HttpSession session = req.getSession();
         String loginUser = (String) session.getAttribute("loginUser");
-        UserDTO user = serviceUser.getDetail(loginUser);
+        UserDTO user = service.getUserDetail(loginUser);
         model.addAttribute("user", user);
     }
 
     @PostMapping("user_myinfo_modify")
     public String user_myinfo_modify(UserDTO userdto, Model model) {
         System.out.println(userdto);
-        if (serviceUser.user_modify(userdto)){
-            UserDTO user = serviceUser.getDetail(userdto.getUserId());
+        if (service.user_modify(userdto)){
+            UserDTO user = service.getUserDetail(userdto.getUserId());
             model.addAttribute("user", user);
             return "redirect:/usermypage/user_myinfo";
         }
@@ -75,33 +76,43 @@ public class UserMyPageController {
     public void replaceSubTrainer(){}
 
     @GetMapping("user_subbookmark")
-    public void replaceSubBookmark(){}
+    public <list> void user_subbookmark(Criteria cri, Model model, HttpServletRequest req) throws Exception {
+        HttpSession session = req.getSession();
+        String userId = (String) session.getAttribute("loginUser");
+        List<BoardDTO> list = service.getMyBookmark(cri,userId);
+        List<ProductBoardDTO> listProduct = service.getMyBookmarkProduct(cri,userId);
+        System.out.println("list:"+list);
+        System.out.println("listProduct:"+listProduct);
+        model.addAttribute("list",list);
+        model.addAttribute("listProduct",listProduct);
+        model.addAttribute("pageMaker", new PageDTO(service.getBookmarkTotal(cri,userId), cri));
+    }
 
     @GetMapping("user_boardlist")
     public void user_boardlist(Criteria cri, Model model,HttpServletRequest req) throws Exception {
         HttpSession session = req.getSession();
         String userId = (String) session.getAttribute("loginUser");
-        List<BoardDTO> list = serviceboard.getMyBoardList(cri,userId);
-      /* List<BoardDTO> list = serviceboard.getBoardList(cri);*/
+        List<BoardDTO> list = service.getBoardMyList(cri,userId);
+      /* List<BoardDTO> list = serviceBoard.getBoardList(cri);*/
         System.out.println("cri : "+cri);
-        System.out.println("list : "+list);
+        System.out.println("PageDTO : "+new PageDTO(service.getBoardTotal(cri), cri));
         model.addAttribute("list",list);
-        model.addAttribute("pageMaker",new PageDTO(serviceboard.getTotal(cri), cri));
-        model.addAttribute("newly_board",serviceboard.getNewlyBoardList(list));
-        model.addAttribute("reply_cnt_list",serviceboard.getReplyCntList(list));
-        model.addAttribute("recent_reply",serviceboard.getRecentReplyList(list));
+        model.addAttribute("pageMaker",new PageDTO(service.getBoardTotal(cri), cri));
+        model.addAttribute("newly_board",service.getBoardNewlyList(list));
+        model.addAttribute("reply_cnt_list",service.getBoardReplyCntList(list));
+        model.addAttribute("recent_reply",service.getBoardRecentReplyList(list));
     }
 
     @GetMapping("user_messagelist")
     public void user_messagelist(Criteria cri, Model model,HttpServletRequest req) throws Exception {
         HttpSession session = req.getSession();
         String userId = (String) session.getAttribute("loginUser");
-        List<MessageDTO> list = serviceMessage.getMyMessageList(cri,userId);
+        List<MessageDTO> list = service.getMessageMyList(cri,userId);
         System.out.println(cri);
         System.out.println("list:"+list);
         model.addAttribute("list",list);
-        model.addAttribute("pageMaker",new PageDTO(serviceMessage.getTotal(cri), cri));
-        model.addAttribute("newly_Message",serviceMessage.getNewlyMessageList(list));
+        model.addAttribute("pageMaker",new PageDTO(service.getMessageTotal(cri), cri));
+        model.addAttribute("newly_Message",service.getMessageNewlyList(list));
     }
 
     @GetMapping("user_applytrainer")
