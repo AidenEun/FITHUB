@@ -7,13 +7,12 @@ public class FoodDTO {
     private long foodNum;
     private String foodName;
     private String foodBrand;
-    private int kcal;
-    private int foodCalories;
-    private int carbo;
-    private int protein;
-    private int fat;
-    private int cholesterol;
-    private int dietaryfiber;
-    private int sodium;
+    private String foodQuantity;
+    private String foodCalories;
+    private String carbo;
+    private String protein;
+    private String fat;
+    private String sodium;
+    private String cholesterol;
     private long viewCnt;
 }
