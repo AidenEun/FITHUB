@@ -165,6 +165,7 @@ public class AdminMyPageController {
     public String adminRecipeBoardList(@RequestParam("pageNum") int pageNum) throws Exception {
         ObjectNode json = JsonNodeFactory.instance.objectNode();
         Criteria cri = new Criteria(pageNum, 10);
+        System.out.println(cri);
 
         List<BoardDTO> adminRecipeBoardList = adminMyPageService.getAdminRecipeBoard(cri);
         PageDTO pageDTO = new PageDTO(adminMyPageService.getRecipeBoardTotal(cri), cri);
@@ -179,14 +180,60 @@ public class AdminMyPageController {
     public void replaceUserSearch(){}
 
     @PostMapping("adminmypage_usersearch")
-    public String userSearchData(@RequestParam("keyword") String keyword){
+    @ResponseBody
+    public String userSearchData(@RequestParam("keyword") String keyword, @RequestParam("option") String option){
         ObjectNode json = JsonNodeFactory.instance.objectNode();
 
-        Object user = adminMyPageService.getUser(keyword);
+        System.out.println(option);
+        System.out.println(keyword);
 
-        if(user == null){
-            return "X";
+        if (option.equals("trainer")){
+            TrainerDTO trainerDTO = adminMyPageService.getTrainer(keyword);
+            if(trainerDTO != null){
+                json.putPOJO("trainerDTO", trainerDTO);
+            }
+            else {
+                json.put("noData", "noData");
+            }
         }
+        else if (option.equals("user")){
+            UserDTO userDTO = adminMyPageService.getUser(keyword);
+            if (userDTO != null){
+                json.putPOJO("userDTO", userDTO);
+            }
+            else {
+                json.put("noData", "noData");
+            }
+        }
+
+        return json.toString();
+    }
+
+    @GetMapping("searchUser")
+    @ResponseBody
+    public String searchUser(@RequestParam("pageNum") int pageNum){
+        ObjectNode json = JsonNodeFactory.instance.objectNode();
+        Criteria cri = new Criteria(pageNum, 10);
+
+        List<UserDTO> userList = adminMyPageService.getUserList(cri);
+        System.out.println(userList);
+        PageDTO pageDTO = new PageDTO(adminMyPageService.getUserTotal(cri), cri);
+        json.putPOJO("userList", userList);
+        json.putPOJO("pageDTO", pageDTO);
+
+        return json.toString();
+    }
+    @GetMapping("searchTrainer")
+    @ResponseBody
+    public String searchTrainer(@RequestParam("pageNum") int pageNum){
+        ObjectNode json = JsonNodeFactory.instance.objectNode();
+        Criteria cri = new Criteria(pageNum, 10);
+
+        List<TrainerDTO> trainerList = adminMyPageService.getTrainerList(cri);
+        PageDTO pageDTO = new PageDTO(adminMyPageService.getTrainerTotal(cri), cri);
+        json.putPOJO("trainerList", trainerList);
+        json.putPOJO("pageDTO", pageDTO);
+
         return json.toString();
     }
 

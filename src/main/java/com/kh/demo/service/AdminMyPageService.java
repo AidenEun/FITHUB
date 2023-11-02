@@ -44,6 +44,17 @@ public interface AdminMyPageService {
 
     Long getRecipeBoardTotal(Criteria cri);
 
-    Object getUser(String keyword);
+
+    TrainerDTO getTrainer(String keyword);
+
+    UserDTO getUser(String keyword);
+
+    List<UserDTO> getUserList(Criteria cri);
+
+    List<TrainerDTO> getTrainerList(Criteria cri);
+
+    Long getUserTotal(Criteria cri);
+
+    Long getTrainerTotal(Criteria cri);
 
 }

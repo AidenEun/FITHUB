@@ -47,12 +47,16 @@ public interface AdminMyPageMapper {
     Long getRecipeBoardTotal(Criteria cri);
 
 //    UserSearch
-    boolean getTrainerBoolean(String keyword);
+    TrainerDTO getTrainer(String keyword);
 
-    boolean getUserBoolean(String keyword);
+    UserDTO getUser(String keyword);
 
-    Object getTrainer(String keyword);
+    List<UserDTO> getUserList(Criteria cri);
 
-    Object getUser(String keyword);
+    List<TrainerDTO> getTrainerList(Criteria cri);
+
+    Long getUserTotal(Criteria cri);
+
+    Long getTrainerTotal(Criteria cri);
 
 }

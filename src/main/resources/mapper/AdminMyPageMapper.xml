@@ -133,17 +133,6 @@
     </select>
 
 <!--UserSearch-->
-    <select id="getTrainerBoolean">
-        SELECT * FROM trainer
-        WHERE trainer_id = #{keyword}
-    </select>
-
-    <select id="getUserBoolean">
-        SELECT * FROM user
-        WHERE user_id = #{keyword}
-        AND user_category = 'U'
-    </select>
-
     <select id="getTrainer">
         SELECT * FROM trainer
         WHERE trainer_id = #{keyword}
@@ -153,5 +142,23 @@
         SELECT * FROM user
         WHERE user_id = #{keyword}
         AND user_category = 'U'
+    </select>
+
+    <select id="getUserList">
+        SELECT * FROM user
+        limit #{startrow},#{amount}
+    </select>
+
+    <select id="getTrainerList">
+        SELECT * FROM trainer
+        limit #{startrow},#{amount}
+    </select>
+
+    <select id="getUserTotal">
+        SELECT COUNT(*) FROM user
+    </select>
+
+    <select id="getTrainerTotal">
+        SELECT COUNT(*) FROM trainer
     </select>
 </mapper>

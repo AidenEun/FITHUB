@@ -109,13 +109,33 @@ public class AdminMyPageServiceImpl implements AdminMyPageService {
 
 //    SearchUser
     @Override
-    public Object getUser(String keyword) {
-        if (adminMyPageMapper.getTrainerBoolean(keyword)) {
-            return adminMyPageMapper.getTrainer(keyword);
-        }
-        else if (adminMyPageMapper.getUserBoolean(keyword)){
-            return adminMyPageMapper.getUser(keyword);
-        }
-        return null;
+    public TrainerDTO getTrainer(String keyword) {
+        return adminMyPageMapper.getTrainer(keyword);
     }
+
+    @Override
+    public UserDTO getUser(String keyword) {
+        return adminMyPageMapper.getUser(keyword);
+    }
+
+    @Override
+    public List<UserDTO> getUserList(Criteria cri) {
+        return adminMyPageMapper.getUserList(cri);
+    }
+
+    @Override
+    public List<TrainerDTO> getTrainerList(Criteria cri) {
+        return adminMyPageMapper.getTrainerList(cri);
+    }
+
+    @Override
+    public Long getUserTotal(Criteria cri) {
+        return adminMyPageMapper.getUserTotal(cri);
+    }
+
+    @Override
+    public Long getTrainerTotal(Criteria cri) {
+        return adminMyPageMapper.getTrainerTotal(cri);
+    }
+
 }
