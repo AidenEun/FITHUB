@@ -23,9 +23,9 @@
 			<nav class="links">
 				<ul>
 					<li><a href="/info/info_list"style="color: #fff;">정보</a></li>
-					<li><a href="#"style="color: #fff;">칼로리</a></li>
+					<li><a href="/calorie/food_calorie_list"style="color: #fff;">칼로리</a></li>
 					<li><a href="#"style="color: #fff;">커뮤니티</a></li>
-					<li><a href="#"style="color: #fff;">트레이너 매칭</a></li>
+					<li><a href="/matching/matching_list"style="color: #fff;">트레이너 매칭</a></li>
 					<li><a href="#"style="color: #fff;">챌린지</a></li>
 					<li><a href="#"style="color: #fff;">제품</a></li>
 					<li><a href="/usermypage/user_diary"style="color: #fff;">다이어리(test)</a></li>
@@ -99,7 +99,7 @@
 								<div class="tab chall-tab">도전</div>
 								<div class="tab sub-tab">구독</div>
 								<div class="page-tab diary-tab">
-									<a href="#">일기</a>
+									<a href="/usermypage/user_diary">일기</a>
 								</div>
 								<div class="page-tab shop-tab">
 									<a href="#">쇼핑</a>
@@ -108,10 +108,10 @@
 							<div id="tab-menu-container">
 								<div class="tab-view today-view">
 									<strong>나의 목표</strong>
-									<p>목표무게</p>
-									<p>목표칼로리</p>
+									<p>목표무게: <!--<span th:text="${user.weightGoal}"></span>--></p>
+									<p>목표칼로리: <!--<span th:text="${user.caloriesGoal}"></span>--></p>
 									<hr>
-									<strong>잔여칼로리: 현재칼로리/목표칼로리</strong>
+									<strong>잔여칼로리: 현재칼로리/목표칼로리 <!--<span th:text="${user.caloriesGoal}"></span>--></strong>
 									<p>섭취량</p>
 									<p>소비량</p>
 									<div id="meal-options">
@@ -197,7 +197,7 @@
 						<h2>다이어리</h2>
 						<p>다이어리 설명</p>
 					</div>
-					<a href="#" class="image"><img src="images/diary_img.png" alt="" /></a>
+					<a href="/usermypage/user_diary" class="image"><img src="images/diary_img.png" alt="" /></a>
 				</section>
 			</div>
 		</section>
