@@ -120,7 +120,6 @@
 		margin-top: 10px;
 		margin-left: 10px;
 		position: absolute;
-		box-shadow: inset 0 0 0 1px #444;
 	}
 
 	.listTable {
@@ -420,8 +419,11 @@
 				type: 'GET',
 				dataType: 'json',
 				success: function (data) {
-					displayUserData(data.userList);
-					displayTrainerData(data.trainerList);
+					if (data.userList) {
+						displayUserData(data.userList);
+					} else {
+						displayTrainerData(data.trainerList);
+					}
 					displayPaging(data.pageDTO);
 				},
 				error: function (error) {
@@ -477,7 +479,7 @@
 					row.append('<td class="long_text"><a href="#">' + userData.userId + '</a></td>');
 					row.append('<td class="long_text"><a href="#">' + userData.userGender + '</a></td>');
 					row.append('<td class="long_text"><a href="#">' + userData.userTel + '</a></td>');
-					row.append('<td class="long_text"><a href="#">' + userData.userReportedcnt + '</a></td>');
+					row.append('<td class="long_text"><a href="#">' + userData.userReportedcnt + '</a></td></tr>');
 					tableBody.append(row);
 				});
 			}
@@ -502,7 +504,7 @@
 				});
 			}
 			else {
-				tableBody.append('<tr><td colspan="5">현재 회원이 아무도 없습니다...</td></tr>');
+				tableBody.append('<tr><td colspan="5">현재 트레이너가 아무도 없습니다...</td></tr>');
 			}
 		}
 	});
