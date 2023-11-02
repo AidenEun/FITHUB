@@ -44,10 +44,12 @@
     <!-- Menu -->
     <section id="menu">
         <div class="side_info">
-            <img src="images/profile_img.png" class="prof_img" width="102px" height="102px">
+            <a href="/usermypage/user_myinfo">
+                <img src="images/profile_img.png" class="prof_img" width="102px" height="102px">
+            </a>
             <div id="my_info">
                 <div>
-                    <a href="#">내 정보</a>
+                    <a href="/usermypage/user_myinfo">내 정보</a>
                     <th:block th:if="${loginUser == null}">
                         <a class="login" href="/user/login">로그인</a>
                     </th:block>
@@ -55,7 +57,7 @@
                         <a class="login" th:href="@{/user/logout}">로그아웃</a>
                     </th:block>
                 </div>
-                <span>등급 / 닉네임(ID)</span>
+                <a href="/usermypage/user_myinfo"><span>등급 / 닉네임(ID)</span></a>
             </div>
             <div class="goal-graph">
                 <div class="progress-bar">
