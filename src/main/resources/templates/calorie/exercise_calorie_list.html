@@ -4,14 +4,60 @@
 	pixelarity.com | hello@pixelarity.com
 	License: pixelarity.com/license
 -->
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Untitled</title>
+    <title>Fit Hub</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="stylesheet" href="assets/css/index.css" />
-    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+    <link rel="stylesheet" th:href="@{/assets/css/index.css}" />
+    <link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
+    <noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
     <style>
+        .top_img_box{
+        width: 100%;
+        height: 310px;
+        margin-bottom: 50px;
+        background-color: red;
+    }
+
+    .top_img_box > img {
+        width: 100%;
+        height: 100%;
+    }
+
+    #main {
+        padding: 0;
+    }
+
+    .wrapper {
+        padding: 0;
+        margin-bottom: 100px;
+    }
+
+    #header {
+        background-color: #5a8100;
+    }
+
+    #header nav > ul > li a {
+        color: white;
+    }
+
+    #header h1 a {
+        color: white;
+    }
+
+    #header .main ul li > a {
+        color: white;
+
+    }
+
+    #footer {
+        background-color: #304400;
+    }
+
+
+
+
         #main{
             padding-top: 0px;
         }
@@ -19,17 +65,7 @@
             padding-top: 50px;
         }
 
-        .top_img_box{
-        width: 100%;
-        height: 310px;
-        margin-bottom: 50px;
-        background-color: green;
-        }
 
-        .top_img_box > img {
-            width: 100%;
-        height: 100%;
-        }
         .inner > .content{
             width: 1080px;
             margin : 0 auto;
@@ -109,87 +145,10 @@
   color: gray;
 }
     </style>
-</head>
-<body class="is-preload">
 
-<!-- Header -->
-<header id="header">
-    <h1><a href="/">Fit Hub</a></h1>
-    <nav class="links">
-        <ul>
-            <li><a href="/info/info_list">정보</a></li>
-            <li><a href="#">칼로리</a></li>
-            <li><a href="#">커뮤니티</a></li>
-            <li><a href="#">트레이너 매칭</a></li>
-            <li><a href="#">챌린지</a></li>
-            <li><a href="#">제품</a></li>
-        </ul>
-    </nav>
-    <nav class="main">
-        <ul>
-            <li id="login">
-                <a class="login" href="#">Login</a>
-            </li>
-            <li class="search">
-                <a class="fa-search" href="#search">Search</a>
-                <form id="search" method="get" action="#">
-                    <input type="text" name="query" placeholder="Search" />
-                </form>
-            </li>
-            <li class="menu">
-                <a class="fa-bars" href="#menu">Menu</a>
-            </li>
-        </ul>
-    </nav>
-</header>
 
-<!-- Menu -->
-<section id="menu">
-
-    <!-- Search -->
-    <section>
-        <form class="search" method="get" action="#">
-            <input type="text" name="query" placeholder="Search" />
-        </form>
-    </section>
-
-    <!-- Links -->
-    <section>
-        <ul class="links">
-            <li>
-                <a href="#">
-                    <h3>Lorem ipsum</h3>
-                    <p>Feugiat tempus veroeros dolor</p>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <h3>Dolor sit amet</h3>
-                    <p>Sed vitae justo condimentum</p>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <h3>Feugiat veroeros</h3>
-                    <p>Phasellus sed ultricies mi congue</p>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <h3>Etiam sed consequat</h3>
-                    <p>Porta lectus amet ultricies</p>
-                </a>
-            </li>
-        </ul>
-    </section>
-
-    <!-- Actions -->
-    <section>
-        <ul class="actions stacked">
-            <li><a href="#" class="button large fit">Log In</a></li>
-        </ul>
-    </section>
-</section>
+    <!-- Header -->
+    <th:block th:replace="~{layout/header-test::header-test(${session.loginUser})}"></th:block>
 
 <!-- Main -->
 <section id="main" class="wrapper left">
@@ -226,11 +185,11 @@
                 </div>
                 <table class="cal_search_ranking">
                     <tr>
-                        <th width="20%" class="cal_tit">순위</th>
-                        <th width="40%" class="cal_tit">운동명</th>
-                        <th width="20%" class="cal_tit">강도/세트</th>
-                        <th width="20%" class="cal_tit">분/초/횟수</th>
-                        <th width="20%">칼로리</th>
+                        <th style=width="10%" class="cal_tit">순위</th>
+                        <th style=width="40%" class="cal_tit">운동명</th>
+                        <th style=width="15%" class="cal_tit">강도/세트</th>
+                        <th style=width="15%" class="cal_tit">분/초/횟수</th>
+                        <th style=width="20%">칼로리</th>
                     </tr>
                     <tr>
                         <td>aaaa</td>
@@ -449,27 +408,20 @@
 </section>
 
 <!-- Footer -->
-<footer id="footer">
-    <div class="inner">
-        <p class="copyright">&copy; Untitled Corp. All rights reserved. Lorem ipsum dolor sit amet feugiat tempus aliquam.</p>
-        <ul class="menu">
-            <li><a href="#">Terms<span> of Use</span></a></li>
-            <li><a href="#">Privacy<span> Policy</span></a></li>
-            <li><a href="#">Legal<span> Information</span></a></li>
-        </ul>
-    </div>
-</footer>
+<th:block th:replace="~{layout/footer::footer}"></th:block>
 
 <!-- Scripts -->
-<script src="/assets/js/jquery.min.js"></script>
-<script src="/assets/js/jquery.dropotron.min.js"></script>
-<script src="/assets/js/jquery.scrollex.min.js"></script>
-<script src="/assets/js/browser.min.js"></script>
-<script src="/assets/js/breakpoints.min.js"></script>
-<script src="/assets/js/util.js"></script>
-<script src="/assets/js/main.js"></script>
+<script th:src="@{/assets/js/jquery.min.js}"></script>
+<script th:src="@{/assets/js/jquery.dropotron.min.js}"></script>
+<script th:src="@{/assets/js/jquery.scrollex.min.js}"></script>
+<script th:src="@{/assets/js/browser.min.js}"></script>
+<script th:src="@{/assets/js/breakpoints.min.js}"></script>
+<script th:src="@{/assets/js/util.js}"></script>
+<script th:src="@{/assets/js/main.js}"></script>
 
-<script src="/assets/js/util_sub.js"></script>
-<script src="/assets/js/main_sub.js"></script>
+<script th:src="@{/assets/js/util_sub.js}"></script>
+<script th:src="@{/assets/js/main_sub.js}"></script>
+
+<script th:src="@{/assets/js/sidebar.js}"></script>
 </body>
 </html>

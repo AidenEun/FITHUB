@@ -11,4 +11,7 @@ public class CalorieController {
     @GetMapping("food_calorie_list")
     public void food_calorie_list(){}
 
+    @GetMapping("exercise_calorie_list")
+    public void exercise_calorie_list(){}
+
 }
