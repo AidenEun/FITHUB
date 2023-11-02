@@ -1,6 +1,7 @@
 package com.kh.demo.service;
 
 import com.kh.demo.domain.dto.BoardDTO;
+import com.kh.demo.domain.dto.BookMarkDTO;
 import com.kh.demo.domain.dto.Criteria;
 import com.kh.demo.domain.dto.FileDTO;
 import com.kh.demo.mapper.BoardMapper;
@@ -298,6 +299,11 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public List<BoardDTO> getMyBoardList(Criteria cri, String userId) {
 		return bmapper.getMyList(cri,userId);
+	}
+
+	@Override
+	public List<BoardDTO> getMyBookmarkBoardList(BookMarkDTO bookMark, String userId) {
+		return bmapper.getMyBookmarkBoardList(bookMark, userId);
 	}
 }
 

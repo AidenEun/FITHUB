@@ -49,7 +49,7 @@ public class MessageServiceImpl implements MessageService{
 	}
 
 	@Override
-	public ArrayList<String> getNewlyMessageList(List<MessageDTO> list) throws Exception {
+	public ArrayList<String> getNewlyList(List<MessageDTO> list) throws Exception {
 		ArrayList<String> newly_Message = new ArrayList<>();
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date now = new Date();
@@ -66,7 +66,7 @@ public class MessageServiceImpl implements MessageService{
 	}
 
 	@Override
-	public List<MessageDTO> getMyMessageList(Criteria cri, String userId) {
+	public List<MessageDTO> getMyList(Criteria cri, String userId) {
 		return megmapper.getMyList(cri,userId);
 	}
 }

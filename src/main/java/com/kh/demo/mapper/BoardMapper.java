@@ -1,6 +1,7 @@
 package com.kh.demo.mapper;
 
 import com.kh.demo.domain.dto.BoardDTO;
+import com.kh.demo.domain.dto.BookMarkDTO;
 import com.kh.demo.domain.dto.Criteria;
 import com.kh.demo.domain.dto.UserDTO;
 import org.apache.ibatis.annotations.Mapper;
@@ -22,12 +23,12 @@ public interface BoardMapper {
 	
 	//select
 	List<BoardDTO> getList(Criteria cri);
-	/*List<BoardDTO> getMyList(@Param("cri") Criteria cri,@Param("userId") String userId);*/
-	List<BoardDTO> getMyList(Criteria cri, String userId);
 
 	Long getTotal(Criteria cri);
+
 	Long getLastNum(String userId);
 	BoardDTO findByNum(Long boardNum);
+
 }
 
 
