@@ -34,7 +34,6 @@ public interface UserMyPageService {
     /*재우*/
     //메세지
     Long getMessageTotal(Criteria cri);
-    BoardDTO getMessageDetail(Long boardnum);
     Long getMessageLastNum(String userid);
     ArrayList<String> getMessageNewlyList(List<MessageDTO> list) throws Exception;
 
@@ -42,7 +41,6 @@ public interface UserMyPageService {
 
     //보드
     Long getBoardTotal(Criteria cri);
-    List<BoardDTO> getBoardList(Criteria cri);
     BoardDTO getBoardDetail(Long boardnum);
     Long getBoardLastNum(String userid);
     ArrayList<String> getBoardNewlyList(List<BoardDTO> list) throws Exception;
@@ -54,10 +52,8 @@ public interface UserMyPageService {
 
     //북마크
     Long getBookmarkTotal(Criteria cri, String userId);
-    BoardDTO getBookmarkDetail(Long boardnum);
     Long getBookmarkLastNum(String userid);
     ArrayList<String> getBookmarkNewlyList(List<BookMarkDTO> list) throws Exception;
-    List<BookMarkDTO> getBookmarkMyList(Criteria cri, String userId);
     List<BoardDTO> getMyBookmark(Criteria cri, String userId);
     List<ProductBoardDTO> getMyBookmarkProduct(Criteria cri, String userId);
 
@@ -65,4 +61,14 @@ public interface UserMyPageService {
     UserDTO getUserDetail(String userid);
     boolean user_modify(UserDTO user);
 
+    //내구독
+    List<TrainerDTO> getMyScribe(Criteria cri, String userId);
+
+    Long getScribeTotal(Criteria cri, String userId);
+
+    //내 챌린지
+
+    Long getChallengeTotal(Criteria cri, String userId);
+
+    List<ChallNoticeBoardDTO> getMyChallenge(Criteria cri, String userId);
 }

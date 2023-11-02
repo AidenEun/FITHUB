@@ -157,6 +157,95 @@
     text-decoration: none;
     margin: 0 10px;
     }
+
+.title_box td:nth-child(1){
+		text-align: left;
+	}
+	.title_box td:nth-child(2){
+		text-align: right;
+	}
+	.title_box h2, .title_table{
+		margin: 0;
+	}
+
+	.title_box h2:after {
+	    content: "";
+	    display: block;
+	    width: 26px;
+	    height: 4px;
+	    margin: 10px 0 0;
+	    background: #c40f39;
+	}
+	.search_area input[type="button"]{
+		font-size: 9pt;
+		padding: 0.15em 1.5em;
+	}
+	.button{
+		font-size: 9pt;
+		padding: 1em 1.5em;
+	}
+	.search_area input[type="search"] {
+		width : 250px;
+		height: 33px;
+	}
+
+
+    .galleryAll{
+        float: left;
+        width: 29.333%;
+        margin: 0 3.3% 5% 0;
+        border: 1px solid #dadada;
+        box-shadow: 2px 2px 3px rgba(0,0,0,0.2);
+        border-radius: 10px;
+        position: relative;
+        height: 310px;
+    }
+    .g_Imgbox{
+        float: left;
+        width: 100%;
+        height: 205px;
+        overflow: hidden;
+        border: 1px solid #eee;
+        display: flex;
+        flex-wrap: wrap;
+        align-content: center;
+        justify-content: center;
+    }
+    .g_title_box{
+    	text-align : center;
+    }
+
+    .g_title_box span{
+    	font-size: 14px;
+    }
+    .g_title_box_sub{
+    	font-size: 12px;
+    	text-align: left;
+   	    padding: 5px 0 0 20px;
+  		height: 20px;
+
+    }
+    .table_contents{
+ 		margin-bottom: 0;
+ 		border-bottom: solid 1px #eee;;
+    }
+    .pagination td a, .pagination td span{
+		padding : 6px;
+	}
+	.galleryAll a{
+		color: black;
+	}
+	.login_none {
+		display:none;
+	}
+	#content .button{
+	    margin-right: 20px;
+	}
+	.title_box h2{
+		font-size: 28px;
+	}
+
+
 </style>
 <body class="is-preload">
 
@@ -172,26 +261,101 @@
 		</header>
 
 		<!-- Content -->
+		<!-- Content -->
 		<div class="content">
 
-
-			<table>
-				<tr>
-					<th>제목</th>
-					<th>작성자</th>
-					<th>작성일</th>
-				</tr>
-				<tr>
-					<td>aaaa</td>
-					<td>bbbb</td>
-					<td>cccc</td>
+			<!-- 게시글 리스트 띄우는 테이블 -->
+			<table class="list">
+				<tr align="right" valign="middle">
+					<td>글 개수 : pageMaker.total</td>
 				</tr>
 
+				<tr >
+					<td>
+						<th:block th:if="${list != null and list.size()>0}" th:each="trainer : ${list}">
 
+							<div class ="galleryAll">
+								<!-- 갤러리뷰로 이동 -->
+								<a href="#">
+									<div class = "g_Imgbox">
+										<img class="gal_Img thumbnail" style="width:100%;"
+											 src="#" alt="썸네일 이미지">
+									</div>
+									<div class = "g_title_box">
+										<span class="gal_title_name">[[${trainer.trainerId}]]([[${trainer.trainerNickname}]])</span>
+									</div>
+								</a>
+
+								<div class="g_title_box_sub">
+									<span class="gal_title_regdate l_after">구독일 : [[${trainer.subDate}]]</span>
+								</div>
+								<div class="g_title_box_sub">
+									<span>프로필 자세히 보기</span>
+								</div>
+								<div class="g_title_box_sub">
+									<span>쪽지 보내기</span>
+								</div>
+							</div>
+						</th:block>
+
+					</td>
+
+				</tr>
+				<th:block th:if="${list == null or list.size() == 0}">
+					<tr>
+						<td style="text-align: center; font-size: 20px;">등록된
+							게시글이 없습니다.</td>
+					</tr>
+				</th:block>
 			</table>
-
-
+			<br>	<!-- 페이징 처리하는 테이블 -->
+			<table class="pagination">
+				<tr align="center" valign="middle">
+					<td>
+						<a class="changePage" th:if="${pageMaker.prev}" th:href="${pageMaker.startPage-1}">&lt;</a>
+						<th:block th:each="i : ${#numbers.sequence(pageMaker.startPage,pageMaker.endPage)}">
+							<span class="nowPage" th:text="${i}" th:if="${pageMaker.cri.pagenum == i}"></span>
+							<a class="changePage" th:href="${i}" th:text="${i}" th:unless="${pageMaker.cri.pagenum == i}"></a>
+						</th:block>
+						<a class="changePage" th:if="${pageMaker.next}" th:href="${pageMaker.endPage+1}">&gt;</a>
+					</td>
+				</tr>
+			</table>
+			<!-- 글쓰기 버튼 배치하는 테이블 -->
+			<table>
+				<tr align="right" valign="middle">
+					<td>
+						<a class="write" th:href="${'/board/write'+pageMaker.cri.listLink}">글쓰기</a>
+					</td>
+				</tr>
+			</table>
+			<form id="searchForm" th:action="@{/board/list}">
+				<div class="search_area">
+					<label>
+						<select name="type">
+							<option value="" th:selected="${pageMaker.cri.type == null}">검색</option>
+							<option value="T" th:selected="${pageMaker.cri.type == 'T'}">제목</option>
+							<option value="C" th:selected="${pageMaker.cri.type == 'C'}">내용</option>
+							<option value="W" th:selected="${pageMaker.cri.type == 'W'}">작성자</option>
+							<option value="TC" th:selected="${pageMaker.cri.type == 'TC'}">제목 또는 내용</option>
+							<option value="TW" th:selected="${pageMaker.cri.type == 'TW'}">제목 또는 작성자</option>
+							<option value="TCW" th:selected="${pageMaker.cri.type == 'TCW'}">제목 또는 내용 또는 작성자</option>
+						</select>
+					</label>
+					<label for="keyword"></label><input type="text" name="keyword" id="keyword" th:value="${pageMaker.cri.keyword}">
+					<a href="#" class="button primary">검색</a>
+				</div>
+				<input type="hidden" value="1" name="pagenum">
+				<input type="hidden" value="10" name="amount">
+			</form>
 		</div>
+
+		<form name="pageForm" id="pageForm" th:action="@{/board/list}">
+			<input type="hidden" name="pagenum" th:value="${pageMaker.cri.pagenum}">
+			<input type="hidden" name="amount" th:value="${pageMaker.cri.amount}">
+			<input type="hidden" name="type" th:value="${pageMaker.cri.type}">
+			<input type="hidden" name="keyword" th:value="${pageMaker.cri.keyword}">
+		</form>
 
 
 		<!-- Sidebar -->
@@ -214,7 +378,41 @@
 
 <script th:src="@{/assets/js/sidebar.js}"></script>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js">
+
+	const searchForm = $("#searchForm");
+	const pageForm = $("#pageForm");
+
+	$(".changePage").on("click",function(e){
+		//e(이벤트)의 기본 작동 막기
+		e.preventDefault();
+		let pagenum = $(this).attr("href");
+		pageForm.find("input[name='pagenum']").val(pagenum);
+		pageForm.submit();
+	});
+	$(".get").on("click",function(e){
+		e.preventDefault();
+		let boardnum = $(this).attr("href");
+		let url=/*[[@{/board/get}]]*/'';
+		pageForm.append("<input type='hidden' name='boardnum' value='"+boardnum+"'>")
+		pageForm.attr("action",url);
+		pageForm.attr("method","get");
+		pageForm.submit();
+	})
+
+	$("#searchForm a").on("click",sendit);
+	function sendit(){
+		if(!searchForm.find("option:selected").val()){
+			alert("검색 기준을 선택하세요!");
+			return false;
+		}
+		if(!$("input[name='keyword']").val()){
+			alert("키워드를 입력하세요!");
+			return false;
+		}
+		searchForm.submit();
+	}
+</script>
 
 </body>
 </html>

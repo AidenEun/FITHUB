@@ -8,13 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface MessageService {
-	//insert
-
-	
-	//delete
-	public boolean remove(String loginUser, Long boardnum);
-
-	//select
 
 }
 

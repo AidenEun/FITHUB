@@ -23,16 +23,6 @@ public class MessageServiceImpl implements MessageService{
 
 
 
-	@Override
-	public boolean remove(String loginUser, Long boardnum) {
-		BoardDTO board = megmapper.findByNum(boardnum);
-		if(board.getUserId().equals(loginUser)) {
-
-			return megmapper.deleteBoard(boardnum) == 1;
-		}
-		return false;
-	}
-
 
 }
 

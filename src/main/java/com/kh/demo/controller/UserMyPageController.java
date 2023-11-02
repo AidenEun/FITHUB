@@ -70,13 +70,27 @@ public class UserMyPageController {
     }
 
     @GetMapping("user_challenge")
-    public void replaceChallenge(){}
+    public void replaceChallenge(Criteria cri, Model model, HttpServletRequest req) {
+        HttpSession session = req.getSession();
+        String userId = (String) session.getAttribute("loginUser");
+        List<ChallNoticeBoardDTO> list = service.getMyChallenge(cri, userId);
+        model.addAttribute("list",list);
+        model.addAttribute("pageMaker", new PageDTO(service.getChallengeTotal(cri,userId), cri));
+    }
 
     @GetMapping("user_subtrainer")
-    public void replaceSubTrainer(){}
+    public void replaceSubTrainer(Criteria cri, Model model, HttpServletRequest req){
+        HttpSession session = req.getSession();
+        String userId = (String) session.getAttribute("loginUser");
+        List<TrainerDTO> list = service.getMyScribe(cri, userId);
+        model.addAttribute("list",list);
+        model.addAttribute("pageMaker", new PageDTO(service.getScribeTotal(cri,userId), cri));
+    }
 
+
+//북마크 번호 담을려면 보드dto랑 북마크dto 합쳐진 dto 필요
     @GetMapping("user_subbookmark")
-    public <list> void user_subbookmark(Criteria cri, Model model, HttpServletRequest req) throws Exception {
+    public void user_subbookmark(Criteria cri, Model model, HttpServletRequest req) throws Exception {
         HttpSession session = req.getSession();
         String userId = (String) session.getAttribute("loginUser");
         List<BoardDTO> list = service.getMyBookmark(cri,userId);

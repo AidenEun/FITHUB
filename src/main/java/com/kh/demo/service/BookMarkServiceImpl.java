@@ -24,48 +24,6 @@ public class BookMarkServiceImpl implements BookMarkService{
 
 
 
-	@Override
-	public boolean remove(String loginUser, Long boardnum) {
-		BoardDTO board = bookmarkmapper.findByNum(boardnum);
-		if(board.getUserId().equals(loginUser)) {
-
-			return bookmarkmapper.deleteBoard(boardnum) == 1;
-		}
-		return false;
-	}
-
-	@Override
-	public Long getTotal(Criteria cri, String userId) {
-		return bookmarkmapper.getTotal(cri,userId);
-	}
-
-	@Override
-	public BoardDTO getDetail(Long boardnum) {
-		return bookmarkmapper.findByNum(boardnum);
-	}
-
-	@Override
-	public Long getLastNum(String userid) {
-		return bookmarkmapper.getLastNum(userid);
-	}
-
-	@Override
-	public ArrayList<String> getNewlyList(List<BookMarkDTO> list) throws Exception {
-		ArrayList<String> newly_Message = new ArrayList<>();
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		Date now = new Date();
-		for(BookMarkDTO bookmark : list) {
-			Date regdate = df.parse(bookmark.getRegdate());
-			if(now.getTime() - regdate.getTime() < 1000*60*60*2) {
-				newly_Message.add("O");
-			}
-			else {
-				newly_Message.add("X");
-			}
-		}
-		return newly_Message;
-	}
-
 }
 
 
