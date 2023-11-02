@@ -74,6 +74,8 @@ public class UserMyPageController {
         HttpSession session = req.getSession();
         String userId = (String) session.getAttribute("loginUser");
         List<ChallNoticeBoardDTO> list = service.getMyChallenge(cri, userId);
+        System.out.println("list:"+list);
+
         model.addAttribute("list",list);
         model.addAttribute("pageMaker", new PageDTO(service.getChallengeTotal(cri,userId), cri));
     }
@@ -83,6 +85,7 @@ public class UserMyPageController {
         HttpSession session = req.getSession();
         String userId = (String) session.getAttribute("loginUser");
         List<TrainerDTO> list = service.getMyScribe(cri, userId);
+        System.out.println("list:"+list);
         model.addAttribute("list",list);
         model.addAttribute("pageMaker", new PageDTO(service.getScribeTotal(cri,userId), cri));
     }
@@ -130,7 +133,12 @@ public class UserMyPageController {
     }
 
     @GetMapping("user_applytrainer")
-    public void replaceApplyTrainer(){}
+    public void user_applytrainer(HttpServletRequest req,Model model) {
+        HttpSession session = req.getSession();
+        String loginUser = (String) session.getAttribute("loginUser");
+        UserDTO user = service.getUserDetail(loginUser);
+        model.addAttribute("user", user);
+    }
 
     @GetMapping("user_diary")
     public void replaceDiary(String loginUser, Model model) {
