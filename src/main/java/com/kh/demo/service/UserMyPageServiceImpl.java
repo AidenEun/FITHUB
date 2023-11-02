@@ -261,12 +261,12 @@ public class UserMyPageServiceImpl implements UserMyPageService{
     //내 챌린지
     @Override
     public Long getChallengeTotal(Criteria cri, String userId) {
-        return null;
+        return umpmapper.getChallengeTotal(cri,userId);
     }
 
     @Override
     public List<ChallNoticeBoardDTO> getMyChallenge(Criteria cri, String userId) {
-        return null;
+        return umpmapper.getMyChallenge(cri, userId);
     }
 
 }

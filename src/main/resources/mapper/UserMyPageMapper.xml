@@ -116,6 +116,20 @@
 		sub_num > 0
 	</select>
 
+	<!--내 챌린지-->
+	<select id="getChallengeTotal">
+		select count(*) from my_challenge where user_id=#{userId} and
+		chall_num > 0
+	</select>
+
+	<select id="getMyChallenge">
+		select * from chall_notice join my_challenge on my_challenge.chall_num = chall_notice.chall_num
+		where my_challenge.user_id = #{userId}
+		order by my_challenge.sub_regdate desc limit #{cri.startrow},#{cri.amount}
+	</select>
+
+
+
 </mapper>
 
 

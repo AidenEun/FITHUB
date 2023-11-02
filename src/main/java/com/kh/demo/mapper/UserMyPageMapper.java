@@ -57,4 +57,10 @@ public interface UserMyPageMapper {
     List<TrainerDTO> getMyScribe(Criteria cri, String userId);
 
     Long getScribeTotal(Criteria cri, String userId);
+
+    
+    //내챌린지
+    Long getChallengeTotal(Criteria cri, String userId);
+
+    List<ChallNoticeBoardDTO> getMyChallenge(Criteria cri, String userId);
 }
