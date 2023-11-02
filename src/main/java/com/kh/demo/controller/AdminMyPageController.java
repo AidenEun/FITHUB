@@ -216,8 +216,8 @@ public class AdminMyPageController {
         Criteria cri = new Criteria(pageNum, 10);
 
         List<UserDTO> userList = adminMyPageService.getUserList(cri);
-        System.out.println(userList);
         PageDTO pageDTO = new PageDTO(adminMyPageService.getUserTotal(cri), cri);
+
         json.putPOJO("userList", userList);
         json.putPOJO("pageDTO", pageDTO);
 
@@ -231,6 +231,7 @@ public class AdminMyPageController {
 
         List<TrainerDTO> trainerList = adminMyPageService.getTrainerList(cri);
         PageDTO pageDTO = new PageDTO(adminMyPageService.getTrainerTotal(cri), cri);
+
         json.putPOJO("trainerList", trainerList);
         json.putPOJO("pageDTO", pageDTO);
 
