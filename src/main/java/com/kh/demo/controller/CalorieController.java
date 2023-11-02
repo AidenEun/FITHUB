@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class CalorieController {
     public void exercise_calorie_list(){}
 
     @Autowired
-    private CalorieService foodService;
+    private CalorieService calorieService;
 
     @GetMapping("food_calorie_list")
     public String food_calorie_list() {
@@ -29,7 +30,7 @@ public class CalorieController {
     @GetMapping("/search")
     public String search(@RequestParam("keyword") String keyword, Model model) {
         if (keyword != null && !keyword.isEmpty()) {
-            List<FoodDTO> foods = foodService.searchFoods(keyword);
+            List<FoodDTO> foods = calorieService.searchFoods(keyword);
             model.addAttribute("foods", foods);
             model.addAttribute("searchKeyword", keyword);
 
@@ -42,5 +43,12 @@ public class CalorieController {
         return "calorie/food_calorie_search";
     }
 
+    @GetMapping("/getSuggestedFoods")
+    @ResponseBody
+    public List<String> getSuggestedFoods(@RequestParam("keyword") String keyword) {
+        // 키워드를 기반으로 음식 항목을 검색하는 로직을 구현
+        List<String> suggestedFoods = calorieService.getSuggestedFoods(keyword);
+        return suggestedFoods;
+    }
 
 }
