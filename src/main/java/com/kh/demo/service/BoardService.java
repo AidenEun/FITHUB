@@ -37,9 +37,7 @@ public interface BoardService {
 	ResponseEntity<Object> downloadFile(String systemname, String orgname) throws Exception;
 
 
-	List<BoardDTO> getMyBoardList(Criteria cri, String userId);
 
-	List<BoardDTO> getMyBookmarkBoardList(BookMarkDTO bookMarkDTO, String userId);
 }
 
 

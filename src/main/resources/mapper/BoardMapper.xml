@@ -65,10 +65,6 @@
 		order by board_num desc limit #{cri.startrow},#{cri.amount}
 	</select>
 
-	<select id="getMyBookmarkBoardList">
-		select * from board where user_id=#{userId} and board_category =#{bookMark.boardCategory} and board_num=#{bookMark.boardNum}
-	</select>
-
 
 </mapper>
 

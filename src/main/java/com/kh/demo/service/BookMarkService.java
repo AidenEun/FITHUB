@@ -21,11 +21,7 @@ public interface BookMarkService {
 	Long getLastNum(String userid);
 	ArrayList<String> getNewlyList(List<BookMarkDTO> list) throws Exception;
 
-	List<BookMarkDTO> getMyList(Criteria cri, String userId);
 
-	List<BoardDTO> getMyBookmark(Criteria cri, String userId);
-
-	List<ProductBoardDTO> getMyBookmarkProduct(Criteria cri, String userId);
 }
 
 

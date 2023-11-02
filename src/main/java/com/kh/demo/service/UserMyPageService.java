@@ -1,9 +1,11 @@
 package com.kh.demo.service;
 
-import com.kh.demo.domain.dto.DiaryDTO;
-import com.kh.demo.domain.dto.FileDTO;
+import com.kh.demo.domain.dto.*;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface UserMyPageService {
@@ -26,4 +28,41 @@ public interface UserMyPageService {
 
     //일정 여부 확인
     public DiaryDTO checkList(String choicedate,String loginUser);
+
+
+
+    /*재우*/
+    //메세지
+    Long getMessageTotal(Criteria cri);
+    BoardDTO getMessageDetail(Long boardnum);
+    Long getMessageLastNum(String userid);
+    ArrayList<String> getMessageNewlyList(List<MessageDTO> list) throws Exception;
+
+    List<MessageDTO> getMessageMyList(Criteria cri, String userId);
+
+    //보드
+    Long getBoardTotal(Criteria cri);
+    List<BoardDTO> getBoardList(Criteria cri);
+    BoardDTO getBoardDetail(Long boardnum);
+    Long getBoardLastNum(String userid);
+    ArrayList<String> getBoardNewlyList(List<BoardDTO> list) throws Exception;
+    ArrayList<Integer> getBoardReplyCntList(List<BoardDTO> list);
+    ArrayList<String> getBoardRecentReplyList(List<BoardDTO> list);
+
+    List<BoardDTO> getBoardMyList(Criteria cri, String userId);
+
+
+    //북마크
+    Long getBookmarkTotal(Criteria cri, String userId);
+    BoardDTO getBookmarkDetail(Long boardnum);
+    Long getBookmarkLastNum(String userid);
+    ArrayList<String> getBookmarkNewlyList(List<BookMarkDTO> list) throws Exception;
+    List<BookMarkDTO> getBookmarkMyList(Criteria cri, String userId);
+    List<BoardDTO> getMyBookmark(Criteria cri, String userId);
+    List<ProductBoardDTO> getMyBookmarkProduct(Criteria cri, String userId);
+
+    //내정보수정
+    UserDTO getUserDetail(String userid);
+    boolean user_modify(UserDTO user);
+
 }

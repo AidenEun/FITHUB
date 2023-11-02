@@ -33,42 +33,7 @@ public class MessageServiceImpl implements MessageService{
 		return false;
 	}
 
-	@Override
-	public Long getTotal(Criteria cri) {
-		return megmapper.getTotal(cri);
-	}
 
-	@Override
-	public BoardDTO getDetail(Long boardnum) {
-		return megmapper.findByNum(boardnum);
-	}
-
-	@Override
-	public Long getLastNum(String userid) {
-		return megmapper.getLastNum(userid);
-	}
-
-	@Override
-	public ArrayList<String> getNewlyList(List<MessageDTO> list) throws Exception {
-		ArrayList<String> newly_Message = new ArrayList<>();
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		Date now = new Date();
-		for(MessageDTO Message : list) {
-			Date regdate = df.parse(Message.getSendDate());
-			if(now.getTime() - regdate.getTime() < 1000*60*60*2) {
-				newly_Message.add("O");
-			}
-			else {
-				newly_Message.add("X");
-			}
-		}
-		return newly_Message;
-	}
-
-	@Override
-	public List<MessageDTO> getMyList(Criteria cri, String userId) {
-		return megmapper.getMyList(cri,userId);
-	}
 }
 
 
