@@ -1,0 +1,61 @@
+#modal_box{
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0,0,0,0.6) ;
+    display: none;
+    /* display: flex; */
+    justify-content: center;
+    align-items: center;
+}
+
+#modal_box.active{
+    display: flex;
+}
+
+#modal_contents{
+    background-color: #fff;
+    width: 300px;
+    padding: 20px;
+    border-radius: 5px;
+    position: relative;
+}
+#modal_contents h1{
+    text-align: center;
+}
+
+.img_area{
+    display: flex;
+    justify-content: center;
+}
+#profile img{
+    width: 150px;
+    height: 150px;
+
+}
+
+#desc{
+    text-align: center;
+}
+
+.name{
+    font-size: 20px;
+}
+
+#modal_contents button{
+    background-color: #fff;
+    color: #ccc;
+    font-size: 20px;
+    border: none;
+
+
+}
+#close{
+    cursor: pointer;
+}
+
+a{
+    text-decoration:none;
+}
