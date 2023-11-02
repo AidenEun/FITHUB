@@ -1,6 +1,8 @@
 package com.kh.demo.service;
 
 import com.kh.demo.domain.dto.FoodDTO;
+import com.kh.demo.domain.dto.UserDTO;
+import com.kh.demo.mapper.CalorieMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -9,7 +11,12 @@ import java.util.List;
 
 @Service
 public class CalorieServiceImpl implements CalorieService {
-    private final List<FoodDTO> foods = new ArrayList<>(); // Food 엔티티 대신 FoodDTO 사용
+
+    CalorieMapper calmapper;
+
+
+    private final List<FoodDTO> foods = new ArrayList<>();
+
 
     @Override
     public List<FoodDTO> searchFoods(String keyword) {
@@ -20,7 +27,21 @@ public class CalorieServiceImpl implements CalorieService {
                 results.add(food);
             }
         }
-
         return results;
     }
+
+    @Override
+    public List<String> getSuggestedFoods(String keyword) {
+        List<FoodDTO> suggestedFoodDTOs = (List<FoodDTO>) calmapper.findByFoodName(keyword);
+
+        List<String> suggestedFoods = new ArrayList<>();
+
+        for (FoodDTO foodDTO : suggestedFoodDTOs) {
+            suggestedFoods.add(foodDTO.getFoodName());
+        }
+
+        return suggestedFoods;
+    }
+
+
 }
