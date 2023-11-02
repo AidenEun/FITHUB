@@ -43,3 +43,30 @@ const spacing = (progressBarWidth - (numCount * 20)) / (numCount - 1);
 numbers.forEach((number, index) => {
     number.style.marginRight = `${index === numCount - 1 ? 0 : spacing}px`;
 });
+
+document.addEventListener("DOMContentLoaded", function() {
+    // 모든 탭 요소와 컨텐츠 요소를 가져옵니다.
+    const tabs = document.querySelectorAll("#meal-options > div");
+    const contents = document.querySelectorAll("#tan-dan-ji-box > div");
+
+    // 모든 컨텐츠를 숨깁니다.
+    contents.forEach(content => {
+        content.style.display = "none";
+    });
+
+    // 아침 탭에 해당하는 컨텐츠를 표시합니다.
+    contents[0].style.display = "block";
+
+    // 각 탭에 클릭 이벤트 리스너를 추가합니다.
+    tabs.forEach((tab, index) => {
+        tab.addEventListener("click", function() {
+            // 모든 컨텐츠를 숨깁니다.
+            contents.forEach(content => {
+                content.style.display = "none";
+            });
+
+            // 클릭한 탭에 해당하는 컨텐츠를 표시합니다.
+            contents[index].style.display = "block";
+        });
+    });
+});
