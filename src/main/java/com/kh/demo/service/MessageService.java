@@ -15,12 +15,7 @@ public interface MessageService {
 	public boolean remove(String loginUser, Long boardnum);
 
 	//select
-	Long getTotal(Criteria cri);
-	BoardDTO getDetail(Long boardnum);
-	Long getLastNum(String userid);
-	ArrayList<String> getNewlyList(List<MessageDTO> list) throws Exception;
 
-	List<MessageDTO> getMyList(Criteria cri, String userId);
 }
 
 

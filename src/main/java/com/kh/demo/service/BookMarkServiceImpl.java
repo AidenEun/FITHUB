@@ -66,20 +66,6 @@ public class BookMarkServiceImpl implements BookMarkService{
 		return newly_Message;
 	}
 
-	@Override
-	public List<BookMarkDTO> getMyList(Criteria cri, String userId) {
-		return bookmarkmapper.getMyList(cri,userId);
-	}
-
-	@Override
-	public List<BoardDTO> getMyBookmark(Criteria cri, String userId) {
-		return bookmarkmapper.getMyBookmark(cri, userId);
-	}
-
-	@Override
-	public List<ProductBoardDTO> getMyBookmarkProduct(Criteria cri, String userId) {
-		return bookmarkmapper.getMyBookmarkProduct(cri, userId);
-	}
 }
 
 

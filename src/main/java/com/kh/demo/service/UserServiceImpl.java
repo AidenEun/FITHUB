@@ -71,13 +71,6 @@ public class UserServiceImpl implements UserService{
         return userDTOList;
     }
 
-    public boolean user_modify(UserDTO user) {
-        int row = umapper.updateUser(user);
-        if (row != 1) {
-            return false;
-        }
-        return true;
 
-    }
 
 }

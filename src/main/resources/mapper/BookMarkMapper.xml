@@ -46,7 +46,7 @@
 
 	</select><select id="getMyBookmarkProduct">
 		select * from product_board,bookmark where bookmark.user_id=#{userId}
-		and product_board.board_category =bookMark.board_category and product_board.board_num=bookMark.board_num
+		and product_board.category =bookMark.board_category and product_board.board_num=bookMark.board_num
 		order by bookmark.bookmark_idx desc limit #{cri.startrow},#{cri.amount}
 	</select>
 
