@@ -4,142 +4,289 @@
 	pixelarity.com | hello@pixelarity.com
 	License: pixelarity.com/license
 -->
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>Untitled</title>
+	<title>Fit Hub</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<link rel="stylesheet" href="/assets/css/main.css" />
-	<noscript><link rel="stylesheet" href="/assets/css/noscript.css" /></noscript>
+	<link rel="stylesheet" th:href="@{/assets/css/index.css}" />
+	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
+	<noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
 </head>
+<style>
+	.top_img_box{
+		width: 100%;
+		height: 310px;
+		margin-bottom: 50px;
+		background-color: red;
+	}
+
+	.top_img_box > img {
+		width: 100%;
+		height: 100%;
+	}
+
+	#main {
+		padding: 0;
+	}
+
+	.wrapper {
+		padding: 0;
+		margin-bottom: 100px;
+	}
+
+	#header {
+		background-color: #5a8100;
+	}
+
+	#header nav > ul > li a {
+		color: white;
+	}
+
+	#header h1 a {
+		color: white;
+	}
+
+	#header .main ul li > a {
+		color: white;
+
+	}
+
+	#footer {
+		background-color: #304400;
+	}
+   	.trainerRanking{
+   		border: 1px solid black;
+   	}
+#trainerRanking_ranking{
+	border: 1px solid black;
+	height: 200px;
+	text-align: center;
+}
+#trainerRanking_ranking th{
+	border: 1px solid black;
+}
+
+
+#trainerRankling_name{
+border: 1px solid black;
+	height: 70px;
+	text-align: center;
+	}
+	#trainerRankling_name td{
+border: 1px solid black;
+	}
+	#map{
+	margin-bottom: 50px;
+	}
+
+
+
+
+
+
+
+
+	.DietRanking{
+		margin-bottom: 30px;
+	}
+
+	.DietRanking_ranking{
+		border: 3px solid rgb(103, 145, 18);
+	box-sizing: border-box;
+	height: 300px;
+	}
+
+	.subRanking_ranking{
+	border: 3px solid rgb(103, 145, 18);
+	box-sizing: border-box;
+	height: 300px;
+	}
+	.side_ranking{
+		font-weight: bold;
+	}
+	.customoverlay {position:relative;bottom:85px;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;float:left;}
+.customoverlay:nth-of-type(n) {border:0; box-shadow:0px 1px 2px #888;}
+.customoverlay a {display:block;text-decoration:none;color:#000;text-align:center;border-radius:6px;font-size:14px;font-weight:bold;overflow:hidden;background: #d95050;background: #d95050 url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png) no-repeat right 14px center;}
+.customoverlay .title {display:block;text-align:center;background:#fff;margin-right:35px;padding:10px 15px;font-size:14px;font-weight:bold;}
+.customoverlay:after {content:'';position:absolute;margin-left:-12px;left:50%;bottom:-12px;width:22px;height:12px;background:url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
+</style>
 <body class="is-preload">
 
 <!-- Header -->
-<header id="header">
-	<h1><a href="/">Fit Hub</a></h1>
-	<nav id="nav">
-		<ul>
-			<li><a href="/">Home</a></li>
-			<li><a href="/info/info_list">정보</a></li>
-			<li><a href="#">칼로리</a></li>
-			<li><a href="#">커뮤니티</a></li>
-			<li><a href="#">트레이너 매칭</a></li>
-			<li><a href="#">챌린지</a></li>
-			<li><a href="#">제품</a></li>
-			<li><a href="#" class="button">Sign Up</a></li>
-		</ul>
-	</nav>
-</header>
+<th:block th:replace="~{layout/header::header(${session.loginUser})}"></th:block>
 
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">
+	<div class="top_img_box">
+		<img src="/images/pic01.jpg" alt="">
+	</div>
+
 	<div class="inner">
 
 		<header class="major">
-			<h2>정보</h2>
-			<p>전체</p>
+			<h2>트레이너 매칭</h2>
+			<p>매칭 페이지</p>
 		</header>
 
 		<!-- Content -->
 		<div class="content">
-			<div class="button" style="margin-bottom: 30px;">글 작성</div>
-			<table>
-				<tr>
-					<th>제목</th>
-					<th>작성자</th>
-					<th>작성일</th>
-				</tr>
-				<tr>
-					<td>aaaa</td>
-					<td>bbbb</td>
-					<td>cccc</td>
-				</tr>
-				<tr>
-					<td>aaaa</td>
-					<td>bbbb</td>
-					<td>cccc</td>
-				</tr>
-				<tr>
-					<td>aaaa</td>
-					<td>bbbb</td>
-					<td>cccc</td>
-				</tr>
-				<tr>
-					<td>aaaa</td>
-					<td>bbbb</td>
-					<td>cccc</td>
-				</tr>
-				<tr>
-					<td>aaaa</td>
-					<td>bbbb</td>
-					<td>cccc</td>
-				</tr>
-				<tr>
-					<td>aaaa</td>
-					<td>bbbb</td>
-					<td>cccc</td>
-				</tr>
-				<tr>
-					<td>aaaa</td>
-					<td>bbbb</td>
-					<td>cccc</td>
-				</tr>
-				<tr>
-					<td>aaaa</td>
-					<td>bbbb</td>
-					<td>cccc</td>
-				</tr>
-				<tr>
-					<td>aaaa</td>
-					<td>bbbb</td>
-					<td>cccc</td>
-				</tr>
-				<tr>
-					<td>aaaa</td>
-					<td>bbbb</td>
-					<td>cccc</td>
-				</tr>
-			</table>
+			<div class="ranking_box">
+				<h2>트레이너 랭킹</h2>
+				<div>
+					<table class="trainerRanking">
+						<tr id="trainerRanking_ranking">
+							<th>프로필 사진 1</th>
+							<th>프로필 사진 2</th>
+							<th>프로필 사진 3</th>
+							<th>프로필 사진 4</th>
+						</tr>
+						<tr id="trainerRankling_name">
+							<td>프로필 닉네임</td>
+							<td>프로필 닉네임</td>
+							<td>프로필 닉네임</td>
+							<td>프로필 닉네임</td>
+						</tr>
+					</table>
+				</div>
+			</div>
 
+			<div class="trainer_box">
+				<h2>나에게 맞는 트레이너를 매칭해보세요</h2>
+				<div id="map" style="width:740px;height:250px;"></div>
+				<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9d457fe0b04b983671f48d03d84f2fdb"></script>
+				<script>
+					var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+                      mapOption = {
+                            center: new kakao.maps.LatLng(37.54699, 127.09598), // 지도의 중심좌표
+                            level: 4 // 지도의 확대 레벨
+                        };
+
+                    var map = new kakao.maps.Map(mapContainer, mapOption);
+
+                    var imageSrc = '/images/map.png', // 마커이미지의 주소입니다
+                        imageSize = new kakao.maps.Size(64, 69), // 마커이미지의 크기입니다
+                        imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+
+                    // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+                    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
+                        markerPosition = new kakao.maps.LatLng(37.54699, 127.09598); // 마커가 표시될 위치입니다
+
+                    // 마커를 생성합니다
+                    var marker = new kakao.maps.Marker({
+                      position: markerPosition,
+                      image: markerImage // 마커이미지 설정
+                    });
+
+                    // 마커가 지도 위에 표시되도록 설정합니다
+                    marker.setMap(map);
+
+                    // 커스텀 오버레이에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+                    var content = '<div class="customoverlay">' +
+                        '  <a href="https://map.kakao.com/link/map/11394059" target="_blank">' +
+                        '    <span class="title">FITHUB</span>' +    //주소 이름 작성하는곳
+                        '  </a>' +
+                        '</div>';
+
+                    // 커스텀 오버레이가 표시될 위치입니다
+                    var position = new kakao.maps.LatLng(37.54699, 127.09598);
+
+                    // 커스텀 오버레이를 생성합니다
+                    var customOverlay = new kakao.maps.CustomOverlay({
+                        map: map,
+                        position: position,
+                        content: content,
+                        yAnchor: 1
+                    });
+				</script>
+			</div>
+
+			<div class="TrainerMatching_box">
+				<div class="matching_list">
+					<div>
+						<table>
+							<tr>
+								<th colspan="4">닉네임</th>
+								<th class="profile-pic" rowspan="3"><img src="프로필사진1.jpg" alt="프로필 사진"></th>
+							</tr>
+							<tr>
+								<td>별점</td>
+								<td>리뷰수</td>
+								<td>구독수</td>
+								<td>경력</td>
+							</tr>
+							<tr>
+								<td colspan="4">나의 다짐</td>
+							</tr>
+							<tr>
+								<th colspan="4">닉네임</th>
+								<th class="profile-pic" rowspan="3"><img src="프로필사진2.jpg" alt="프로필 사진"></th>
+							</tr>
+							<tr>
+								<td>별점</td>
+								<td>리뷰수</td>
+								<td>구독수</td>
+								<td>경력</td>
+							</tr>
+							<tr>
+								<td colspan="4">나의 다짐</td>
+							</tr>
+							<tr>
+								<th colspan="4">닉네임</th>
+								<th class="profile-pic" rowspan="3"><img src="프로필사진3.jpg" alt="프로필 사진"></th>
+							</tr>
+							<tr>
+								<td>별점</td>
+								<td>리뷰수</td>
+								<td>구독수</td>
+								<td>경력</td>
+							</tr>
+							<tr>
+								<td colspan="4">나의 다짐</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
 		</div>
-
 
 		<!-- Sidebar -->
 		<div class="sidebar">
 
 			<section>
-				<h3><a href="#" style="color: #5a8100;">전체</a></h3>
-				<h3><a href="#">뉴스</a></h3>
-				<h3><a href="#">식단</a></h3>
-				<h3><a href="#">운동</a></h3>
-				<h3><a href="#">꿀팁</a></h3>
+				<h3 class="side_ranking">포인트 순위</h3>
+				<div class="DietRanking">
+						<div class="DietRanking_ranking">
+
+						</div>
+				</div>
+				<h3 class="side_ranking">트레이너 구독 순위</h3>
+				<div class="subRanking">
+						<div class="subRanking_ranking">
+
+						</div>
+				</div>
 			</section>
 
 		</div>
-
 	</div>
 </section>
 
 <!-- Footer -->
-<footer id="footer">
-	<div class="inner">
-		<p class="copyright">&copy; Untitled Corp. All rights reserved. Lorem ipsum dolor sit amet feugiat tempus aliquam.</p>
-		<ul class="menu">
-			<li><a href="#">Terms<span> of Use</span></a></li>
-			<li><a href="#">Privacy<span> Policy</span></a></li>
-			<li><a href="#">Legal<span> Information</span></a></li>
-		</ul>
-	</div>
-</footer>
+<th:block th:replace="~{layout/footer::footer}"></th:block>
 
 <!-- Scripts -->
-<script src="assets/js/jquery.min.js"></script>
-<script src="assets/js/jquery.dropotron.min.js"></script>
-<script src="assets/js/jquery.scrollex.min.js"></script>
-<script src="assets/js/browser.min.js"></script>
-<script src="assets/js/breakpoints.min.js"></script>
-<script src="assets/js/util.js"></script>
-<script src="assets/js/main.js"></script>
+<script th:src="@{/assets/js/jquery.min.js}"></script>
+<script th:src="@{/assets/js/jquery.dropotron.min.js}"></script>
+<script th:src="@{/assets/js/jquery.scrollex.min.js}"></script>
+<script th:src="@{/assets/js/browser.min.js}"></script>
+<script th:src="@{/assets/js/breakpoints.min.js}"></script>
+<script th:src="@{/assets/js/util.js}"></script>
+<script th:src="@{/assets/js/main.js}"></script>
 
+<script th:src="@{/assets/js/util_sub.js}"></script>
+<script th:src="@{/assets/js/main_sub.js}"></script>
+
+<script th:src="@{/assets/js/sidebar.js}"></script>
 </body>
 </html>

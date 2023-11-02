@@ -1,38 +1,38 @@
 <link xmlns:th="http://www.thymeleaf.org">
 <th:block th:fragment="header(loginUser)">
     <header id="header">
-        <h1><a href="/">Fit Hub</a></h1>
+        <h1><a href="/"style="color: #fff;">Fit Hub</a></h1>
         <nav class="links">
             <ul>
-                <li><a href="/info/info_list">정보</a></li>
-                <li><a href="#">칼로리</a></li>
-                <li><a href="#">커뮤니티</a></li>
-                <li><a href="#">트레이너 매칭</a></li>
-                <li><a href="#">챌린지</a></li>
-                <li><a href="#">제품</a></li>
+                <li><a href="/info/info_list"style="color: #fff;">정보</a></li>
+                <li><a href="/calorie/food_calorie_list"style="color: #fff;">칼로리</a></li>
+                <li><a href="#"style="color: #fff;">커뮤니티</a></li>
+                <li><a href="/matching/matching_list"style="color: #fff;">트레이너 매칭</a></li>
+                <li><a href="#"style="color: #fff;">챌린지</a></li>
+                <li><a href="#"style="color: #fff;">제품</a></li>
             </ul>
         </nav>
         <nav class="main">
             <ul>
                 <li id="login">
                     <th:block th:if="${loginUser == null}">
-                        <a class="login" href="/user/login">Login</a>
+                        <a class="login" href="/user/login"style="color: #fff;">Login</a>
                     </th:block>
                     <th:block th:if="${loginUser != null}">
-                        <a class="login" th:href="@{/user/logout}">logout</a>
+                        <a class="login" th:href="@{/user/logout}"style="color: #fff;">logout</a>
                     </th:block>
-                    <a class="login" href="/usermypage/user_myinfo">유저</a>
-                    <a class="login" href="/trainermypage/trainer_modify">트레</a>
-                    <a class="login" href="/adminmypage/adminmypage_list">관리</a>
+                    <a class="login" href="/usermypage/user_myinfo"style="color: #fff;">유저</a>
+                    <a class="login" href="/trainermypage/trainer_modify"style="color: #fff;">트레</a>
+                    <a class="login" href="/adminmypage/adminmypage_list"style="color: #fff;">관리</a>
                 </li>
                 <li class="search">
-                    <a class="fa-search" href="#search">Search</a>
+                    <a class="fa-search" href="#search"style="color: #fff;">Search</a>
                     <form id="search" method="get" action="#">
                         <input type="text" name="query" placeholder="Search" />
                     </form>
                 </li>
                 <li class="menu">
-                    <a class="fa-bars" href="#menu">Menu</a>
+                    <a class="fa-bars" href="#menu"style="color: #fff;">Menu</a>
                 </li>
             </ul>
         </nav>

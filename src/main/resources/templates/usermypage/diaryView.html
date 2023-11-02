@@ -1,13 +1,348 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<!--
+	Slate by Pixelarity
+	pixelarity.com | hello@pixelarity.com
+	License: pixelarity.com/license
+-->
+<html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>diaryView</title>
+    <title>Untitled</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" th:href="@{/assets/css/index.css}" />
+    <noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
 </head>
-<body>
-  <h2>다이어리 상세 view</h2>
-  <h2>${diary.regdate}</h2>
+<style>
+    *{
+        box-sizing: border-box;
+        margin: 0; padding: 0;
 
+    }
+    .td{
+        /* background-color: white !important; */
+    }
+    /* MAIN IMG 게시글 상단 고정 */
+    #top_main_img{
+        width: 100%;
+        height: 250px;
+        border: 1px solid red;
+    }
+
+    #container1{
+        margin: 0 auto;
+        width: 1080px;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+    }
+    /* #container1::after{
+        clear: both;
+    } */
+    #container1 #side_box{
+        /* float: left; */
+        width: 310px;
+        height: 100%;
+        border: 1px solid violet;
+        /* background-color: antiquewhite; */
+    }
+    #container1 #main_box{
+        /* float: left; */
+        height: 100%;
+        width: 770px;
+        /* border: 1px solid violet; */
+        /* background-color: yellowgreen; */
+    }
+    /* 사이드 카테고리  */
+    #container1 #side_box .cate_list{
+        list-style: none;
+    }
+    #container1 #side_box .cate_list li{
+        margin: 30px;
+
+    }
+    .diary_write{
+        margin: 20px;
+    }
+
+    .input_area{
+        display: flex;
+        justify-content: space-between;
+    }
+    .list_area{
+        height: 100px;
+        border: 1px solid green;
+        margin-top: 20px;
+        border-radius: 10px;
+    }
+    .total_area{
+        display: flex;
+        justify-content: space-between;
+    }
+    .diary_contents{
+        resize: none;
+    }
+    .box_flex{
+        display: flex;
+        justify-content: space-between;
+    }
+    tr>td div>input[type=text]:nth-child(2){
+        text-align: right;
+    }
+    tr>td div>input[type=text]:nth-child(3){
+        text-align: right;
+    }
+
+</style>
+<body class="is-preload">
+
+<!-- Header -->
+<th:block th:replace="~{layout/header::header(${session.loginUser})}"></th:block>
+
+<!-- Menu -->
+<section id="menu">
+
+    <!-- Search -->
+    <section>
+        <form class="search" method="get" action="#">
+            <input type="text" name="query" placeholder="Search" />
+        </form>
+    </section>
+
+    <!-- Links -->
+    <section>
+        <ul class="links">
+            <li>
+                <a href="#">
+                    <h3>Lorem ipsum</h3>
+                    <p>Feugiat tempus veroeros dolor</p>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <h3>Dolor sit amet</h3>
+                    <p>Sed vitae justo condimentum</p>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <h3>Feugiat veroeros</h3>
+                    <p>Phasellus sed ultricies mi congue</p>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <h3>Etiam sed consequat</h3>
+                    <p>Porta lectus amet ultricies</p>
+                </a>
+            </li>
+        </ul>
+    </section>
+
+    <!-- Actions -->
+    <section>
+        <ul class="actions stacked">
+            <li><a href="#" class="button large fit">Log In</a></li>
+        </ul>
+    </section>
+</section>
+<div id="top_main_img">
+    이미지 추가 예정
+</div>
+
+<!-- Main -->
+<!-- container 시작 -->
+<!-- <section id="main" class="wrapper">
+
+    <div class="sideBox">
+    </div>
+
+
+
+         <header class="major">
+            <h2>정보</h2>
+            <p>전체</p>
+        </header>
+
+</section> -->
+<div id="container1">
+    <div id="side_box">
+        <div>마이페이지</div>
+        <div>
+            <ul class="cate_list">
+                <li>프로필</li>
+                <li>나의 다이어리</li>
+                <li>나의 챌린지</li>
+                <li>나의 트레이너</li>
+                <li>북마크</li>
+                <li>내가 쓴 게시글</li>
+                <li>내 정보 수정</li>
+            </ul>
+        </div>
+    </div>
+    <div id="main_box">
+        <h1>다이어리 보기</h1>
+        <form id="diaryForm" method="post" th:action="@{/usermypage/diaryView}">
+            <table class="diary_write">
+                <tr>
+                    <td><input type="text" name="writeDate" value="다이어리 날짜" readonly></td>
+                    <td><input type="text" name="nicname" value="닉네임" th:value="${user.userNickname}" readonly></td>
+                </tr>
+                <tr>
+                    <!-- <td></td> -->
+                    <td colspan="2"><input type="text" name="title"  value="제목"></td>
+                </tr>
+                <tr>
+                    <!-- <td></td> -->
+                    <td colspan="2">
+                        <div class="weight_area box_flex">
+                            <div><input type="text" name="todayweigh" value="목표 체중" readonly></div>
+                            <div><input type="text" name="weightGoal" value="weightGoal" readonly></div>
+
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div class="weight_result box_flex">
+                            <div><input type="text" name="todayweigh" placeholder="현재 체중" ></div>
+                            <div><input type="text" value="오늘의 비교" readonly ></div>
+                            <div><input type="text" name="resultlweigh" value="0kg" readonly ></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food_area">
+                        <div class="bf_input input_area">
+                            <input type="text" value="아침">
+                            <input type="text" value="총" >
+                            <input type="text"  value="kcal">
+
+                        </div>
+                        <div class="bf_list list_area">
+                            <input type="hidden" name="todayBf">
+                        </div>
+                    </td>
+                    <td class="food_area">
+                        <div class="lunch_input input_area">
+                            <input type="text" name="lunch" value="점심">
+                            <input type="text" value="총" >
+                            <input type="text"  value="kcal">
+
+
+                        </div>
+                        <div class="lunch_list list_area">
+                            <input type="hidden" name="todayLunch">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food_area">
+                        <div class="dinner_input input_area">
+                            <input type="text"  value="저녁">
+                            <input type="text" value="총" >
+                            <input type="text"  value="kcal">
+
+                        </div>
+                        <div class="dinner_list list_area">
+                            <input type="hidden" name="todayDinner">
+                        </div>
+                    </td>
+                    <td class="food_area">
+                        <div class="snack_input input_area">
+                            <input type="text" name="snack" value="간식">
+                            <input type="text" value="총" >
+                            <input type="text"  value="kcal">
+
+                        </div>
+                        <div class="snack_list list_area">
+                            <input type="hidden" name="todaySnack">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <!-- <td></td> -->
+                    <td colspan="2" class="ex_area">
+                        <div class="ex_input input_area">
+                            <input type="text" name="excrcise" value="운동">
+                            <input type="text" value="총" >
+                            <input type="text"  value="kcal">
+
+                        </div>
+                        <div class="excrcise_list list_area">
+                            <input type="hidden" name="todayExcrcise">
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <div class="total_area">
+
+                            <div>최종칼로리</div>
+                            <div>0kcal</div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="total_area">
+
+                            <div>탄수화물 : 0g</div>
+                            <div>단백질 : 0g</div>
+                            <div>지방 : g</div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <textarea name="diaryContents" class="diary_contents" id="" cols="30" rows="10" placeholder="내용을 입력해 주세요."></textarea>
+                    </td>
+                </tr>
+                <!-- <tr>
+                    <td></td>
+                    <td style="text-align: right"><input type="file" name="diaryfile" id=""></td>
+                </tr> -->
+                <tr class="mychall_area">
+                    <td>
+                        <label><input type="checkbox" name="challBox" value="챌린지num">챌린지name</label>
+                    </td>
+                    <td>
+                        <label><input type="checkbox" name="challBox" value="챌린지num">챌린지name</label>
+                    </td>
+                </tr>
+                <tr style="text-align: right;">
+                    <!-- <td></td> -->
+                    <td colspan="2">
+                        <div>
+                            <input type="submit" value="수정">
+                            <input type="submit" value="목록">
+                        </div>
+
+                    </td>
+
+                </tr>
+            </table>
+
+        </form>
+
+    </div>
+</div>
+<!-- Footer -->
+<th:block th:replace="~{layout/footer::footer}"></th:block>
+
+<!-- Scripts -->
+<script th:src="@{/assets/js/jquery.min.js}"></script>
+<script th:src="@{/assets/js/jquery.dropotron.min.js}"></script>
+<script th:src="@{/assets/js/jquery.scrollex.min.js}"></script>
+<script th:src="@{/assets/js/browser.min.js}"></script>
+<script th:src="@{/assets/js/breakpoints.min.js}"></script>
+<script th:src="@{/assets/js/util.js}"></script>
+<script th:src="@{/assets/js/main.js}"></script>
+
+
+<script th:src="@{/assets/js/util_sub.js}"></script>
+<script th:src="@{/assets/js/main_sub.js}"></script>
+<script th:src="@{/assets/js/calender.js}"></script>
+
+<script th:src="@{https://code.jquery.com/jquery-3.6.0.min.js}"></script>
 
 </body>
 </html>

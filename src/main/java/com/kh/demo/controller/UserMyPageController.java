@@ -124,18 +124,26 @@ public class UserMyPageController {
         model.addAttribute("diaryList",diaryList);
     }
 
-    //userid도 같이 넘어와야함
     @GetMapping("checklist")
-    public String checklist(String choicedate, RedirectAttributes ra){
+    public String checklist(String choicedate,HttpServletRequest req, Model model){
+
+        HttpSession session = req.getSession();
+        String loginUser = (String) session.getAttribute("loginUser");
+
         //작성으로 이동
-        if(service.checkList(choicedate) == null){
+        if(service.checkList(choicedate,loginUser) == null){
             System.out.println(choicedate);
-            ra.addAttribute("regdate",choicedate);
-            return "redirect:/usermypage/diaryWrite";
+
+            UserDTO user = serviceUser.getDetail(loginUser);
+            model.addAttribute("regdate",choicedate);
+            model.addAttribute("user",user);
+            return "/usermypage/diaryWrite";
         }
         //view로 이동
         else {
-            return "redirect:/usermypage/diaryView";
+            UserDTO user = serviceUser.getDetail(loginUser);
+            model.addAttribute("user",user);
+            return "/usermypage/diaryView";
         }
     }
 

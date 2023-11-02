@@ -25,5 +25,5 @@ public interface UserMyPageService {
     public List<DiaryDTO> getDiaryList(String userid);
 
     //일정 여부 확인
-    public DiaryDTO checkList(String choicedate);
+    public DiaryDTO checkList(String choicedate,String loginUser);
 }
