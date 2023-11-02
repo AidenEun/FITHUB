@@ -1,0 +1,61 @@
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.demo.mapper.BookMarkMapper">
+	<sql id="cri">
+		<if test="keyword != '' and type != ''">
+			<trim prefixOverrides="or" prefix="(" suffix=") and">
+				<foreach collection="typeArr" item="type">
+					or
+					<choose>
+						<when test="type == 'T'.toString()">
+							(board_title like('%${keyword}%'))
+						</when>
+						<when test="type == 'C'.toString()">
+							(board_content like('%${keyword}%'))
+						</when>
+						<when test="type == 'W'.toString()">
+							(user_id like('%${keyword}%'))
+						</when>
+					</choose>
+				</foreach>
+			</trim>
+		</if>
+	</sql>
+<!--bookmark_idx : regdate 로 수정 필요 : 임시값이 null이라 오류로 인해-->
+	<select id="getMyList">
+		select * from bookmark where user_id =#{userId}
+		order by bookmark_idx desc limit #{cri.startrow},#{cri.amount}
+	</select>
+
+	<select id="getTotal">
+		select count(*) from bookmark where user_id=#{userId} and
+		bookmark_idx > 0
+	</select>
+	<select id="getLastNum">
+		select max(bookmark_num) from bookmark where user_id=#{userId}
+	</select>
+
+	<!--<select id="getMyBookmark">
+		select * from bookmark where user_id=#{userId}
+	</select>-->
+
+	<select id="getMyBookmark">
+		select * from board,bookmark where bookmark.user_id=#{userId}
+		and board.board_category =bookMark.board_category and board.board_num=bookMark.board_num
+		order by bookmark.bookmark_idx desc limit #{cri.startrow},#{cri.amount}
+
+	</select><select id="getMyBookmarkProduct">
+		select * from product_board,bookmark where bookmark.user_id=#{userId}
+		and product_board.board_category =bookMark.board_category and product_board.board_num=bookMark.board_num
+		order by bookmark.bookmark_idx desc limit #{cri.startrow},#{cri.amount}
+	</select>
+
+
+</mapper>
+
+
+
+
+
+
+

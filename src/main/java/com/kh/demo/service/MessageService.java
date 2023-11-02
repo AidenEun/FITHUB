@@ -18,9 +18,9 @@ public interface MessageService {
 	Long getTotal(Criteria cri);
 	BoardDTO getDetail(Long boardnum);
 	Long getLastNum(String userid);
-	ArrayList<String> getNewlyMessageList(List<MessageDTO> list) throws Exception;
+	ArrayList<String> getNewlyList(List<MessageDTO> list) throws Exception;
 
-	List<MessageDTO> getMyMessageList(Criteria cri, String userId);
+	List<MessageDTO> getMyList(Criteria cri, String userId);
 }
 
 
