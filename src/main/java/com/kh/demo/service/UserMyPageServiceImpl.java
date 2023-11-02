@@ -47,6 +47,13 @@ public class UserMyPageServiceImpl implements UserMyPageService{
     @Autowired
     private UserMapper umapper;
 
+    @Autowired
+    private TrainerMapper subScribemapper;
+
+
+
+
+
 
 
     @Override
@@ -89,17 +96,13 @@ public class UserMyPageServiceImpl implements UserMyPageService{
     //메세지
     @Override
     public Long getMessageTotal(Criteria cri) {
-        return megmapper.getTotal(cri);
+        return umpmapper.getMessageTotal(cri);
     }
 
-    @Override
-    public BoardDTO getMessageDetail(Long boardnum) {
-        return megmapper.findByNum(boardnum);
-    }
 
     @Override
     public Long getMessageLastNum(String userid) {
-        return megmapper.getLastNum(userid);
+        return umpmapper.getMessageLastNum(userid);
     }
 
     @Override
@@ -121,7 +124,7 @@ public class UserMyPageServiceImpl implements UserMyPageService{
 
     @Override
     public List<MessageDTO> getMessageMyList(Criteria cri, String userId) {
-        return megmapper.getMyList(cri,userId);
+        return umpmapper.getMyMessage(cri,userId);
     }
 
 
@@ -129,22 +132,17 @@ public class UserMyPageServiceImpl implements UserMyPageService{
     //보드
     @Override
     public Long getBoardTotal(Criteria cri) {
-        return bmapper.getTotal(cri);
-    }
-
-    @Override
-    public List<BoardDTO> getBoardList(Criteria cri) {
-        return bmapper.getList(cri);
+        return umpmapper.getBoardTotal(cri);
     }
 
     @Override
     public BoardDTO getBoardDetail(Long boardnum) {
-        return bmapper.findByNum(boardnum);
+        return umpmapper.findBoardByNum(boardnum);
     }
 
     @Override
     public Long getBoardLastNum(String userid) {
-        return bmapper.getLastNum(userid);
+        return umpmapper.getBoardLastNum(userid);
     }
 
     @Override
@@ -189,7 +187,7 @@ public class UserMyPageServiceImpl implements UserMyPageService{
 
     @Override
     public List<BoardDTO> getBoardMyList(Criteria cri, String userId) {
-        return bmapper.getMyList(cri,userId);
+        return umpmapper.getMyBoard(cri,userId);
     }
 
 
@@ -197,17 +195,13 @@ public class UserMyPageServiceImpl implements UserMyPageService{
     //북마크
     @Override
     public Long getBookmarkTotal(Criteria cri, String userId) {
-        return bookmarkmapper.getTotal(cri,userId);
+        return umpmapper.getBookmarkTotal(cri,userId);
     }
 
-    @Override
-    public BoardDTO getBookmarkDetail(Long boardnum) {
-        return bookmarkmapper.findByNum(boardnum);
-    }
 
     @Override
     public Long getBookmarkLastNum(String userid) {
-        return bookmarkmapper.getLastNum(userid);
+        return umpmapper.getBookmarkLastNum(userid);
     }
 
     @Override
@@ -227,19 +221,15 @@ public class UserMyPageServiceImpl implements UserMyPageService{
         return newly_Message;
     }
 
-    @Override
-    public List<BookMarkDTO> getBookmarkMyList(Criteria cri, String userId) {
-        return bookmarkmapper.getMyList(cri,userId);
-    }
 
     @Override
     public List<BoardDTO> getMyBookmark(Criteria cri, String userId) {
-        return bookmarkmapper.getMyBookmark(cri, userId);
+        return umpmapper.getMyBookmark(cri, userId);
     }
 
     @Override
     public List<ProductBoardDTO> getMyBookmarkProduct(Criteria cri, String userId) {
-        return bookmarkmapper.getMyBookmarkProduct(cri, userId);
+        return umpmapper.getMyBookmarkProduct(cri, userId);
     }
 
 
@@ -257,4 +247,26 @@ public class UserMyPageServiceImpl implements UserMyPageService{
         }
         return true;
     }
+
+    //내구독
+    @Override
+    public List<TrainerDTO> getMyScribe(Criteria cri, String userId) {
+        return umpmapper.getMyScribe(cri, userId);
+    }
+    @Override
+    public Long getScribeTotal(Criteria cri, String userId) {
+        return umpmapper.getScribeTotal(cri,userId);
+    }
+
+    //내 챌린지
+    @Override
+    public Long getChallengeTotal(Criteria cri, String userId) {
+        return null;
+    }
+
+    @Override
+    public List<ChallNoticeBoardDTO> getMyChallenge(Criteria cri, String userId) {
+        return null;
+    }
+
 }

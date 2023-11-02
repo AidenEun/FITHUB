@@ -24,4 +24,6 @@ public class TrainerDTO {
     private String trainerJoindate;
     private String transferdate;
     private int trainerReportedcnt;
+    //재우
+    private  String subDate;
 }

@@ -29,8 +29,6 @@ public interface BoardMapper {
 	Long getLastNum(String userId);
 	BoardDTO findByNum(Long boardNum);
 
-	/*List<BoardDTO> getMyList(@Param("cri") Criteria cri,@Param("userId") String userId);*/
-	List<BoardDTO> getMyList(Criteria cri, String userId);
 }
 
 
