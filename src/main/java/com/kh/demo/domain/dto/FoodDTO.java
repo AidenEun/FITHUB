@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class FoodDTO {
-    private long foodNum;
+    private Long foodNum;
     private String foodName;
     private String foodBrand;
     private String foodQuantity;
@@ -14,5 +14,7 @@ public class FoodDTO {
     private String fat;
     private String sodium;
     private String cholesterol;
-    private long viewCnt;
+    private Long viewCnt;
+
+
 }
