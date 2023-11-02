@@ -12,4 +12,6 @@ public class TrainerSignUpDTO {
     private String trainerAddretc;
     private String trainerPart;
     private String trainerCareer;
+    private String trainerContent;
+
 }
