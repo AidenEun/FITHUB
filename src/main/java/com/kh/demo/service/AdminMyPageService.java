@@ -58,4 +58,17 @@ public interface AdminMyPageService {
     Long getTrainerTotal(Criteria cri);
 
     Object getUserById(String userId);
+
+    List<MessageDTO> getMessageList(Criteria cri);
+
+    Long getMessageTotal(Criteria cri);
+
+    List<MessageDTO> getMessageByUser(Criteria cri);
+
+    List<MessageDTO> getMessageByTrainer(Criteria cri);
+
+    Long getMessageTotalByUser(Criteria cri);
+
+    Long getMessageTotalByTrainer(Criteria cri);
+
 }

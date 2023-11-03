@@ -12,7 +12,6 @@
 	<link rel="stylesheet" th:href="@{/assets/css/index.css}" />
 	<noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
 	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
-
 	<link rel="stylesheet" th:href="@{/assets/css/profileModal.css}">
 </head>
 <style>
@@ -113,9 +112,9 @@
 
 			<!-- Content -->
 			<div class="content">
-				<div id="allReport" class="button report_cate now_cate" style="margin-right: 10px;">전체</div>
-				<div id="byUserReport" class="button report_cate not_cate" style="margin-right: 10px;">유저</div>
-				<div id="byTrainerReport" class="button report_cate not_cate">트레이너</div>
+				<div id="allReport" class="button cate now_cate" style="margin-right: 10px;">전체</div>
+				<div id="byUserReport" class="button cate not_cate" style="margin-right: 10px;">유저</div>
+				<div id="byTrainerReport" class="button cate not_cate">트레이너</div>
 
 				<table style="text-align: center; margin-top: 20px;">
 					<thead>
@@ -210,13 +209,12 @@
 <script th:src="@{/assets/js/main_sub.js}"></script>
 
 <script th:src="@{/assets/js/sidebar.js}"></script>
-
 <script th:src="@{/assets/js/profile.js}"></script>
 <script>
-	const report_cate = document.querySelectorAll('.report_cate');
+	const cate = document.querySelectorAll('.cate');
 	let nowCate = document.querySelector('.now_cate');
 
-	report_cate.forEach(function(btn) {
+	cate.forEach(function(btn) {
 		btn.addEventListener('click', function() {
 			if (btn.classList.contains('now_cate')) {
 			 return;
@@ -332,52 +330,6 @@
                 modalBox.classList.add("active");
             });
 		}
-
-<!--		function sendUserIdToModal(userId) {-->
-<!--			$.ajax({-->
-<!--				url: '/adminmypage/reportModal',-->
-<!--				method: 'POST',-->
-<!--				data: { userId: userId },-->
-<!--				success: function(data) {-->
-<!--					modal(data);-->
-<!--				},-->
-<!--				error: function(error) {-->
-<!--				}-->
-<!--			});-->
-<!--		}-->
-
-<!--		function modal(data) {-->
-<!--			try {-->
-<!--				data = JSON.parse(data);-->
-<!--				if (data.hasOwnProperty("trainerDTO")) {-->
-<!--					var modalBox = $('.modal_box');-->
-<!--					modalBox.find('.img_area img').attr('src', '/images/profile_img.png');-->
-<!--					modalBox.find('.img_area a').attr('href', '#');-->
-<!--					modalBox.find('.img_area img').attr('alt', data.trainerDTO.trainerId);-->
-<!--					modalBox.find('.name a').text(data.trainerDTO.trainerNickname + '(' + data.trainerDTO.trainerId + ')');-->
-<!--				}-->
-<!--				else if (data.hasOwnProperty("userDTO")) {-->
-<!--					var modalBox = $('.modal_box');-->
-<!--					modalBox.find('.img_area img').attr('src', '/images/profile_img.png');-->
-<!--					modalBox.find('.img_area a').attr('href', '#');-->
-<!--					modalBox.find('.img_area img').attr('alt', data.userDTO.userId);-->
-<!--					modalBox.find('.name a').text(data.userDTO.userNickname + '(' + data.userDTO.userId + ')');-->
-<!--				}-->
-<!--				else if (data.hasOwnProperty("noData")) {-->
-<!--					alert("없는 회원입니다!");-->
-<!--				}-->
-<!--			} catch (error) {-->
-<!--				console.error("올바른 데이터 형식이 아닙니다:", error);-->
-<!--			}-->
-<!--		}-->
-
-<!--		$(".open").on("click", function (e) {-->
-<!--			e.preventDefault();-->
-<!--			var userId = $(this).text();-->
-
-<!--			modalBox.classList.add("active");-->
-<!--			sendUserIdToModal(userId);-->
-<!--		});-->
 	});
 </script>
 </body>

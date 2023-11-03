@@ -132,6 +132,17 @@
 </style>
 <body class="is-preload">
 
+<!--	<th:block th:if="${session.loginUser == null}">-->
+<!--		<script>-->
+<!--			alert("로그인 후 접근 가능합니다!!!");-->
+<!--			location.replace("/");-->
+<!--		</script>-->
+<!--	</th:block>-->
+<!--	<script th:if="${session.loginUser != null}" th:unless="${#strings.contains(session.loginUser, 'admin')}">-->
+<!--		alert("관리자만 접근 가능합니다!!!");-->
+<!--        location.replace("/");-->
+<!--	</script>-->
+
 	<!-- Header -->
 	<th:block th:replace="~{layout/header::header(${session.loginUser})}"></th:block>
 
