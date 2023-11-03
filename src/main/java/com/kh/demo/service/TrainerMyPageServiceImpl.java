@@ -4,21 +4,9 @@ import com.kh.demo.domain.dto.*;
 import com.kh.demo.mapper.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.core.io.Resource;
-import org.springframework.http.ContentDisposition;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,16 +15,20 @@ import java.util.List;
 
 @Service
 @Qualifier("UserMyPageServiceImpl")
-public class UserMyPageServiceImpl implements UserMyPageService{
+public class TrainerMyPageServiceImpl implements TrainerMyPageService{
 
     @Autowired
-    private UserMyPageMapper umpmapper;
+    private TrainerMyPageMapper tmpmapper;
 
     @Autowired
     private ReplyMapper rmapper;
 
     @Autowired
     private UserMapper umapper;
+
+    @Autowired
+    private TrainerMapper tmapper;
+
 
 
     @Override
@@ -67,7 +59,7 @@ public class UserMyPageServiceImpl implements UserMyPageService{
     @Override
     public DiaryDTO checkList(String choicedate,String loginUser) {
 //        System.out.println("Service choicedate : "+choicedate);
-        return umpmapper.checkList(choicedate,loginUser);
+        return tmpmapper.checkList(choicedate,loginUser);
 
     }
 
@@ -79,13 +71,13 @@ public class UserMyPageServiceImpl implements UserMyPageService{
     //메세지
     @Override
     public Long getMessageTotal(Criteria cri) {
-        return umpmapper.getMessageTotal(cri);
+        return tmpmapper.getMessageTotal(cri);
     }
 
 
     @Override
     public Long getMessageLastNum(String userid) {
-        return umpmapper.getMessageLastNum(userid);
+        return tmpmapper.getMessageLastNum(userid);
     }
 
     @Override
@@ -107,7 +99,7 @@ public class UserMyPageServiceImpl implements UserMyPageService{
 
     @Override
     public List<MessageDTO> getMessageMyList(Criteria cri, String userId) {
-        return umpmapper.getMyMessage(cri,userId);
+        return tmpmapper.getMyMessage(cri,userId);
     }
 
 
@@ -115,17 +107,17 @@ public class UserMyPageServiceImpl implements UserMyPageService{
     //보드
     @Override
     public Long getBoardTotal(Criteria cri) {
-        return umpmapper.getBoardTotal(cri);
+        return tmpmapper.getBoardTotal(cri);
     }
 
     @Override
     public BoardDTO getBoardDetail(Long boardnum) {
-        return umpmapper.findBoardByNum(boardnum);
+        return tmpmapper.findBoardByNum(boardnum);
     }
 
     @Override
     public Long getBoardLastNum(String userid) {
-        return umpmapper.getBoardLastNum(userid);
+        return tmpmapper.getBoardLastNum(userid);
     }
 
     @Override
@@ -170,7 +162,7 @@ public class UserMyPageServiceImpl implements UserMyPageService{
 
     @Override
     public List<BoardDTO> getBoardMyList(Criteria cri, String userId) {
-        return umpmapper.getMyBoard(cri,userId);
+        return tmpmapper.getMyBoard(cri,userId);
     }
 
 
@@ -178,13 +170,13 @@ public class UserMyPageServiceImpl implements UserMyPageService{
     //북마크
     @Override
     public Long getBookmarkTotal(Criteria cri, String userId) {
-        return umpmapper.getBookmarkTotal(cri,userId);
+        return tmpmapper.getBookmarkTotal(cri,userId);
     }
 
 
     @Override
     public Long getBookmarkLastNum(String userid) {
-        return umpmapper.getBookmarkLastNum(userid);
+        return tmpmapper.getBookmarkLastNum(userid);
     }
 
     @Override
@@ -207,24 +199,24 @@ public class UserMyPageServiceImpl implements UserMyPageService{
 
     @Override
     public List<BoardDTO> getMyBookmark(Criteria cri, String userId) {
-        return umpmapper.getMyBookmark(cri, userId);
+        return tmpmapper.getMyBookmark(cri, userId);
     }
 
     @Override
     public List<ProductBoardDTO> getMyBookmarkProduct(Criteria cri, String userId) {
-        return umpmapper.getMyBookmarkProduct(cri, userId);
+        return tmpmapper.getMyBookmarkProduct(cri, userId);
     }
 
 
     //내정보수정
     @Override
-    public UserDTO getUserDetail(String userid) {
-        return umapper.findById(userid);
+    public TrainerDTO getUserDetail(String userid) {
+        return tmapper.findById(userid);
     }
 
     @Override
-    public boolean user_modify(UserDTO user) {
-        int row = umapper.updateUser(user);
+    public boolean user_modify(TrainerDTO user) {
+        int row = tmapper.updateUser(user);
         if (row != 1) {
             return false;
         }
@@ -234,22 +226,22 @@ public class UserMyPageServiceImpl implements UserMyPageService{
     //내구독
     @Override
     public List<TrainerDTO> getMyScribe(Criteria cri, String userId) {
-        return umpmapper.getMyScribe(cri, userId);
+        return tmpmapper.getMyScribe(cri, userId);
     }
     @Override
     public Long getScribeTotal(Criteria cri, String userId) {
-        return umpmapper.getScribeTotal(cri,userId);
+        return tmpmapper.getScribeTotal(cri,userId);
     }
 
     //내 챌린지
     @Override
     public Long getChallengeTotal(Criteria cri, String userId) {
-        return umpmapper.getChallengeTotal(cri,userId);
+        return tmpmapper.getChallengeTotal(cri,userId);
     }
 
     @Override
     public List<ChallNoticeBoardDTO> getMyChallenge(Criteria cri, String userId) {
-        return umpmapper.getMyChallenge(cri, userId);
+        return tmpmapper.getMyChallenge(cri, userId);
     }
 
 }

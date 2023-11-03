@@ -11,4 +11,7 @@ import java.util.List;
 @Mapper
 public interface TrainerMapper {
 
+    TrainerDTO findById(String userid);
+
+    int updateUser(TrainerDTO user);
 }

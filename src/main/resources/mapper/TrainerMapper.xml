@@ -2,15 +2,19 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kh.demo.mapper.TrainerMapper">
 
-	<select id="getMyScribe">
-		select * from trainer join subscribe on subscribe.trainer_id = trainer.trainer_id
-		where subscribe.user_id = #{userId}
-		order by subscribe.sub_date desc limit #{cri.startrow},#{cri.amount}
-	</select>
+    <select id="findById">
+        select * from trainer where trainer_id=#{trainerId}
+    </select>
 
-	<select id="getScribeTotal">
-		select count(*) from subscribe where user_id=#{userId} and
-		sub_num > 0
-	</select>
+    <update id="updateUser">
+        update trainer set
+        trainer_nickname=#{trainerNickname},trainer_pw=#{trainerPw}, trainer_tel=#{trainerTel}, trainer_mail=#{trainerMail},
+        trainer_zipcode=#{trainerZipcode},trainer_addr=#{trainerAddr},trainer_addrdetail=#{trainerAddrdetail},trainer_addretc=#{trainerAddretc},
+        trainer_height=#{trainerHeight},trainer_weight=#{trainerWeight},trainer_part=#{trainerPart},trainer_career=#{trainerCareer},
+        trainer_intro=#{trainerIntro}
+        where trainer_id=#{trainerId}
+    </update>
+
+
 </mapper>
 
