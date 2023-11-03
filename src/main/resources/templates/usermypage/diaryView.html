@@ -4,12 +4,14 @@
 	pixelarity.com | hello@pixelarity.com
 	License: pixelarity.com/license
 -->
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Untitled</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="stylesheet" th:href="@{/assets/css/index.css}" />
+    <title>Fit Hub</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+    <link rel="stylesheet" th:href="@{/assets/css/index.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/sidebar.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/profileModal.css}"/>
     <noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
 </head>
 <style>
@@ -98,72 +100,12 @@
 <!-- Header -->
 <th:block th:replace="~{layout/header::header(${session.loginUser})}"></th:block>
 
-<!-- Menu -->
-<section id="menu">
 
-    <!-- Search -->
-    <section>
-        <form class="search" method="get" action="#">
-            <input type="text" name="query" placeholder="Search" />
-        </form>
-    </section>
-
-    <!-- Links -->
-    <section>
-        <ul class="links">
-            <li>
-                <a href="#">
-                    <h3>Lorem ipsum</h3>
-                    <p>Feugiat tempus veroeros dolor</p>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <h3>Dolor sit amet</h3>
-                    <p>Sed vitae justo condimentum</p>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <h3>Feugiat veroeros</h3>
-                    <p>Phasellus sed ultricies mi congue</p>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <h3>Etiam sed consequat</h3>
-                    <p>Porta lectus amet ultricies</p>
-                </a>
-            </li>
-        </ul>
-    </section>
-
-    <!-- Actions -->
-    <section>
-        <ul class="actions stacked">
-            <li><a href="#" class="button large fit">Log In</a></li>
-        </ul>
-    </section>
-</section>
 <div id="top_main_img">
     이미지 추가 예정
 </div>
 
-<!-- Main -->
-<!-- container 시작 -->
-<!-- <section id="main" class="wrapper">
 
-    <div class="sideBox">
-    </div>
-
-
-
-         <header class="major">
-            <h2>정보</h2>
-            <p>전체</p>
-        </header>
-
-</section> -->
 <div id="container1">
     <div id="side_box">
         <div>마이페이지</div>
@@ -337,6 +279,8 @@
 <script th:src="@{/assets/js/util.js}"></script>
 <script th:src="@{/assets/js/main.js}"></script>
 
+<script th:src="@{/assets/js/sidebar.js}"></script>
+<script th:src="@{/assets/js/profile.js}"></script>
 
 <script th:src="@{/assets/js/util_sub.js}"></script>
 <script th:src="@{/assets/js/main_sub.js}"></script>
