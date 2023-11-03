@@ -5,308 +5,347 @@
 	License: pixelarity.com/license
 -->
 <html lang="ko">
-	<head>
-		<title>Untitled</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="/assets/css/infoBoard.css" />
-		<noscript><link rel="stylesheet" href="/assets/css/noscript.css" /></noscript>
-		<style>
-			.info_category {
-				margin-bottom: 30px;
-			}
-			.info_category > h3{
-				margin: 0;
-			}
-			.info_category > h3:after{
-				border-bottom: none;
-			}
-			.info_category > .button{
-				border-radius: 10px;
-				height: 2.5em;
-				line-height: 2.5em;
-			}
-			.write_table > th {
-				text-align: center;
-				vertical-align: middle;
-				width: 60px;
-			}
-			a {
-				border-bottom:none;
-			}
-			.file0_cont{
-				text-align: center;
-				vertical-align: middle;
-			}
-
-			table {
-				border: 1.5px solid black;
-				border-radius: 10px;
-				background-color: transparent;
-			}
-			table tbody tr:nth-child(2n + 1) {
-				background-color: transparent;
-			}
-			.button_table {
-				vertical-align: middle;
-				border: none;
-				height: 2em;
-				line-height: 2em;
-			}
-			.button_table tr > td{
-				border: none;
-			}
-			.button_table tr > td > button{
-				border: 0.8px solid black;
-				border-radius: 10px;
-			}
-			.file0_cont button{
-				padding: 0;
-				border-radius: 10px;
-				height: 30px;
-				width: 85px;
-				vertical-align: middle;
-			}
-			.file0_cont button > a{
-				display: block;
-				width: 100%;
-				line-height: 100%;
-				text-align: center;
-			}
-		</style>
-	</head>
-	<body class="is-preload">
-
-	<!-- Header -->
-	<th:block th:replace="~{layout/header::header(${session.loginUser})}"></th:block>
-	<!-- Main -->
-	<section id="main" class="wrapper sidebar left">
-		<div class="inner">
-
-			<header class="major">
-				<h2>정보</h2>
-			</header>
-
-			<!-- Content -->
-			<div class="content">
-				<div class="cotent_header"><h2>작성하기</h2></div>
-				<div class="info_category">
-					<h3>카테고리 선택</h3>
-					<div class="button" style="margin-right: 10px;">뉴스</div>
-					<div class="button" style="margin-right: 10px;">식단</div>
-					<div class="button" style="margin-right: 10px;">운동</div>
-					<div class="button">꿀팁</div>
-				</div>
-				<form id="boardForm" method="post" name="boardForm" th:action="@{/info/info_write}" enctype="multipart/form-data">
-					<!-- 날아온 네개의 파라미터를 받아 놓음 -->
-					<input type="hidden" th:value="${cri.pagenum}" name="pagenum">
-					<input type="hidden" th:value="${cri.amount}" name="amount">
-					<input type="hidden" th:value="${cri.type}" name="type">
-					<input type="hidden" th:value="${cri.keyword}" name="keyword">
-					<!-- 글작성 테이블 -->
-					<table class="write_table" style="border-collapse: collapse;" border="2">
-						<tr style="height:30px;">
-							<th>제목</th>
-							<td>
-								<input type="text" name="boardTitle" size="50" maxlength="50" placeholder="제목을 입력하세요.">
-							</td>
-						</tr>
-						<tr style="height:30px;">
-							<th>작성자</th>
-							<td>
-								<!-- 로그인유저 작성자에 박아 놓기 -->
-								<input type="text" name="userId" size="50" maxlength="50" th:value="${session.loginUser}" readonly>
-							</td>
-						</tr>
-						<tr style="height:300px;">
-							<th>내 용</th>
-							<td>
-								<textarea name="boardContent" style="width:100%;height:290px;resize:none;"></textarea>
-							</td>
-						</tr>
-						<tr class="r0 at">
-							<th style="vertical-align: middle">파일 첨부1</th>
-							<td class="file0_cont">
-								<div style="float:left;">
-									<input type="file" name="files" id="file0" style="display:none">
-									<span id="file0name">선택된 파일 없음</span>
-								</div>
-								<div style="float:right;">
-									<button><a href="javascript:upload('file0')">파일 선택</a></button>
-									<button><a href="javascript:cancelFile('file0')">첨부 삭제</a></button>
-								</div>
-							</td>
-						</tr>
-					</table>
-				</form>
-				<!-- 등록, 목록 버튼 테이블 -->
-				<table class="button_table">
-					<tr align="center" valign="middle">
-						<td>
-							<button><a href="javascript:sendit()">등록</a></button> <!-- javascript의 sendit 함수 호출 -->
-						</td>
-						<td>
-							<button><a th:href="${'/info/info_list'+cri.listLink}">취소</a></button> <!-- cri.listLink를 붙여 목록으로 돌아가기 -->
-						</td>
-					</tr>
-				</table>
-			</div>
-
-			<!-- Sidebar -->
-			<div class="sidebar">
-				<section>
-					<h3><a href="/info/info_list">전체</a></h3>
-					<h3><a href="/info/info_news">뉴스</a></h3>
-					<h3><a href="/info/info_food">식단</a></h3>
-					<h3><a href="/info/info_exercise">운동</a></h3>
-					<h3><a href="/info/info_tip">꿀팁</a></h3>
-				</section>
-			</div>
-
-		</div>
-	</section>
-
-	<!-- Footer -->
-	<footer id="footer">
-		<div class="inner">
-			<p class="copyright">&copy; Untitled Corp. All rights reserved. Lorem ipsum dolor sit amet feugiat tempus aliquam.</p>
-			<ul class="menu">
-				<li><a href="#">Terms<span> of Use</span></a></li>
-				<li><a href="#">Privacy<span> Policy</span></a></li>
-				<li><a href="#">Legal<span> Information</span></a></li>
-			</ul>
-		</div>
-	</footer>
-
-	<!-- Scripts -->
+<head>
+	<title>Untitled</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="/assets/css/infoBoard.css" />
+	<noscript><link rel="stylesheet" href="/assets/css/noscript.css" /></noscript>
 	<script src="/assets/js/jquery.min.js"></script>
 	<script src="/assets/js/jquery.dropotron.min.js"></script>
 	<script src="/assets/js/jquery.scrollex.min.js"></script>
-	<script src="/assets/js/browser.min.js"></script>
-	<script src="/assets/js/breakpoints.min.js"></script>
-	<script src="/assets/js/util.js"></script>
-	<script src="/assets/js/main.js"></script>
-
-	<script src="/assets/js/util_sub.js"></script>
-	<script src="/assets/js/main_sub.js"></script>
-	</body>
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<script>
-		let i = 0;
-		function upload(name){
-			$("#"+name).click();
+	<!-- summernote -->
+	<script src="/assets/js/summernote/summernote-lite.js"></script>
+	<script src="/assets/js/summernote/lang/summernote-ko-KR.js"></script>
+	<link rel="stylesheet" href="/assets/css/summernote/summernote-lite.css"/>
+	<style>
+		.info_category {
+			margin-bottom: 30px;
 		}
-		//$(선택자).change(함수) : 해당 선택자의 요소에 변화가 일어난다면 넘겨주는 함수 호출
-		$("[type='file']").change(function(e){
-			//e : 파일이 업로드된 상황 자체를 담고있는 객체
-			//e.target : 파일이 업로드가 된 input[type=file] 객체(태그객체)
-			//e.target.files : 파일태그에 업로드를 한 파일 객체들의 배열
-			const file = e.target.files[0];
-			const fileTag = e.target;
+		.info_category > h3{
+			margin: 0;
+		}
+		.info_category > h3:after{
+			border-bottom: none;
+		}
+		.info_category > .button{
+			border-radius: 10px;
+			height: 2.5em;
+			line-height: 2.5em;
+		}
+		.write_table > th {
+			text-align: center;
+			vertical-align: middle;
+			width: 60px;
+		}
+		a {
+			border-bottom:none;
+		}
+		.file0_cont{
+			text-align: center;
+			vertical-align: middle;
+		}
 
-			if(file == undefined){
-				//파일이 업로드 되었다가 없어진 경우
-				cancelFile(fileTag.id);
+		table {
+			border: 1.5px solid black;
+			border-radius: 10px;
+			background-color: transparent;
+		}
+		table tbody tr:nth-child(2n + 1) {
+			background-color: transparent;
+		}
+		.button_table {
+			vertical-align: middle;
+			border: none;
+			height: 2em;
+			line-height: 2em;
+		}
+		.button_table tr > td{
+			border: none;
+		}
+		.button_table tr > td > button{
+			border: 0.8px solid black;
+			border-radius: 10px;
+		}
+		.file0_cont button{
+			padding: 0;
+			border-radius: 10px;
+			height: 30px;
+			width: 85px;
+			vertical-align: middle;
+		}
+		.file0_cont button > a{
+			display: block;
+			width: 100%;
+			line-height: 100%;
+			text-align: center;
+		}
+	</style>
+</head>
+<body class="is-preload">
+
+<!-- Header -->
+<th:block th:replace="~{layout/header::header(${session.loginUser})}"></th:block>
+<!-- Main -->
+<section id="main" class="wrapper sidebar left">
+	<div class="inner">
+
+		<header class="major">
+			<h2>정보</h2>
+		</header>
+
+		<!-- Content -->
+		<div class="content">
+			<div class="cotent_header"><h2>작성하기</h2></div>
+			<div class="info_category">
+				<h3>카테고리 선택</h3>
+				<div class="button" style="margin-right: 10px;">뉴스</div>
+				<div class="button" style="margin-right: 10px;">식단</div>
+				<div class="button" style="margin-right: 10px;">운동</div>
+				<div class="button">꿀팁</div>
+			</div>
+			<form id="boardForm" method="post" name="boardForm" th:action="@{/info/info_write}" enctype="multipart/form-data">
+				<!-- 날아온 네개의 파라미터를 받아 놓음 -->
+				<input type="hidden" th:value="${cri.pagenum}" name="pagenum">
+				<input type="hidden" th:value="${cri.amount}" name="amount">
+				<input type="hidden" th:value="${cri.type}" name="type">
+				<input type="hidden" th:value="${cri.keyword}" name="keyword">
+				<!-- 글작성 테이블 -->
+				<table class="write_table" style="border-collapse: collapse;" border="2">
+					<tr style="height:30px;">
+						<th>제목</th>
+						<td>
+							<input type="text" name="boardTitle" size="50" maxlength="50" placeholder="제목을 입력하세요.">
+						</td>
+					</tr>
+					<tr style="height:30px;">
+						<th>작성자</th>
+						<td>
+							<!-- 로그인유저 작성자에 박아 놓기 -->
+							<input type="text" name="userId" size="50" maxlength="50" th:value="${session.loginUser}" readonly>
+						</td>
+					</tr>
+					<tr style="height:500px;">
+						<th>내 용</th>
+						<td>
+							<textarea id="summernote" name="boardContent" style="width:100%;height:350px;resize:none;"></textarea>
+						</td>
+					</tr>
+					<tr class="r0 at">
+						<th style="vertical-align: middle">파일 첨부1</th>
+						<td class="file0_cont">
+							<div style="float:left;">
+								<input type="file" name="files" id="file0" style="display:none">
+								<span id="file0name">선택된 파일 없음</span>
+							</div>
+							<div style="float:right;">
+								<button><a href="javascript:upload('file0')">파일 선택</a></button>
+								<button><a href="javascript:cancelFile('file0')">첨부 삭제</a></button>
+							</div>
+						</td>
+					</tr>
+				</table>
+			</form>
+			<!-- 등록, 목록 버튼 테이블 -->
+			<table class="button_table">
+				<tr align="center" valign="middle">
+					<td>
+						<button><a href="javascript:sendit()">등록</a></button> <!-- javascript의 sendit 함수 호출 -->
+					</td>
+					<td>
+						<button><a th:href="${'/info/info_list'+cri.listLink}">취소</a></button> <!-- cri.listLink를 붙여 목록으로 돌아가기 -->
+					</td>
+				</tr>
+			</table>
+		</div>
+
+		<!-- Sidebar -->
+		<div class="sidebar">
+			<section>
+				<h3><a href="/info/info_list">전체</a></h3>
+				<h3><a href="/info/info_news">뉴스</a></h3>
+				<h3><a href="/info/info_food">식단</a></h3>
+				<h3><a href="/info/info_exercise">운동</a></h3>
+				<h3><a href="/info/info_tip">꿀팁</a></h3>
+			</section>
+		</div>
+
+	</div>
+</section>
+
+<!-- Footer -->
+<footer id="footer">
+	<div class="inner">
+		<p class="copyright">&copy; Untitled Corp. All rights reserved. Lorem ipsum dolor sit amet feugiat tempus aliquam.</p>
+		<ul class="menu">
+			<li><a href="#">Terms<span> of Use</span></a></li>
+			<li><a href="#">Privacy<span> Policy</span></a></li>
+			<li><a href="#">Legal<span> Information</span></a></li>
+		</ul>
+	</div>
+</footer>
+
+<!-- Scripts -->
+
+<script src="/assets/js/browser.min.js"></script>
+<script src="/assets/js/breakpoints.min.js"></script>
+<script src="/assets/js/util.js"></script>
+<script src="/assets/js/main.js"></script>
+
+<script src="/assets/js/util_sub.js"></script>
+<script src="/assets/js/main_sub.js"></script>
+
+
+</body>
+<script>
+	<!-- summernote	-->
+	$('#summernote').summernote({
+		// 에디터 높이
+		height: 150,
+		// 에디터 한글 설정
+		lang: "ko-KR",
+		// 에디터에 커서 이동 (input창의 autofocus라고 생각)
+		focus : true,
+		toolbar: [
+			// 글꼴 설정
+			['fontname', ['fontname']],
+			// 글자 크기 설정
+			['fontsize', ['fontsize']],
+			// 굵기, 기울임꼴, 밑줄,취소 선, 서식지우기
+			['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+			// 글자색
+			['color', ['forecolor','color']],
+			// 표만들기
+			['table', ['table']],
+			// 글머리 기호, 번호매기기, 문단정렬
+			['para', ['ul', 'ol', 'paragraph']],
+			// 줄간격
+			['height', ['height']],
+			// 코드보기, 확대해서보기, 도움말
+			['view', ['codeview','fullscreen', 'help']]
+		],
+		// 추가한 글꼴
+		fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋음체','바탕체'],
+		// 추가한 폰트사이즈
+		fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
+	});
+</script>
+<script>
+	let i = 0;
+	function upload(name){
+		$("#"+name).click();
+	}
+	//$(선택자).change(함수) : 해당 선택자의 요소에 변화가 일어난다면 넘겨주는 함수 호출
+	$("[type='file']").change(function(e){
+		//e : 파일이 업로드된 상황 자체를 담고있는 객체
+		//e.target : 파일이 업로드가 된 input[type=file] 객체(태그객체)
+		//e.target.files : 파일태그에 업로드를 한 파일 객체들의 배열
+		const file = e.target.files[0];
+		const fileTag = e.target;
+
+		if(file == undefined){
+			//파일이 업로드 되었다가 없어진 경우
+			cancelFile(fileTag.id);
+		}
+		else{
+			//파일이 없었다가 업로드 한 경우
+			//#file0name
+			$("#"+fileTag.id+"name").text(file.name);
+			//업로드 된 파일의 확장자명
+			let ext = file.name.split(".").pop();
+			if(ext == 'jpeg' || ext == 'jpg' || ext == 'png' || ext == 'gif' || ext == 'webp'){
+				$("."+fileTag.id+"_cont .thumbnail").remove();
+				const reader = new FileReader();
+
+				reader.onload = function(ie){
+					const img = document.createElement("img");
+					img.setAttribute("src",ie.target.result)
+					img.setAttribute("class","thumbnail");
+					document.querySelector("."+fileTag.id+"_cont").appendChild(img);
+				}
+				reader.readAsDataURL(file);
 			}
 			else{
-				//파일이 없었다가 업로드 한 경우
-				//#file0name
-				$("#"+fileTag.id+"name").text(file.name);
-				//업로드 된 파일의 확장자명
-				let ext = file.name.split(".").pop();
-				if(ext == 'jpeg' || ext == 'jpg' || ext == 'png' || ext == 'gif' || ext == 'webp'){
-					$("."+fileTag.id+"_cont .thumbnail").remove();
-					const reader = new FileReader();
-
-					reader.onload = function(ie){
-						const img = document.createElement("img");
-						img.setAttribute("src",ie.target.result)
-						img.setAttribute("class","thumbnail");
-						document.querySelector("."+fileTag.id+"_cont").appendChild(img);
-					}
-					reader.readAsDataURL(file);
+				const temp = $("."+fileTag.id+"_cont .thumbnail");
+				if(temp != null){
+					temp.remove();
 				}
-				else{
-					const temp = $("."+fileTag.id+"_cont .thumbnail");
-					if(temp != null){
-						temp.remove();
-					}
-				}
-				//가장 마지막 파일 선택 버튼을 눌렀을 때
-				if(fileTag.id.split("e")[1] == i){
-					const cloneElement = $(".r"+i).clone(true);
-					i++;
-					cloneElement.appendTo("#boardForm tbody")
-					const lastElement = $("#boardForm tbody").children().last();
+			}
+			//가장 마지막 파일 선택 버튼을 눌렀을 때
+			if(fileTag.id.split("e")[1] == i){
+				const cloneElement = $(".r"+i).clone(true);
+				i++;
+				cloneElement.appendTo("#boardForm tbody")
+				const lastElement = $("#boardForm tbody").children().last();
 
-					lastElement.attr("class","r"+i+" at");
-					lastElement.children("th").text("파일 첨부"+(i+1));
-					lastElement.children("td").attr("class","file"+i+"_cont");
+				lastElement.attr("class","r"+i+" at");
+				lastElement.children("th").text("파일 첨부"+(i+1));
+				lastElement.children("td").attr("class","file"+i+"_cont");
 
-					lastElement.find("input[type='file']").attr("name","files");
-					lastElement.find("input[type='file']").attr("id","file"+i);
-					lastElement.find("input[type='file']").val("");
+				lastElement.find("input[type='file']").attr("name","files");
+				lastElement.find("input[type='file']").attr("id","file"+i);
+				lastElement.find("input[type='file']").val("");
 
-					lastElement.find("span").attr("id","file"+i+"name");
-					lastElement.find("span").text("선택된 파일 없음");
+				lastElement.find("span").attr("id","file"+i+"name");
+				lastElement.find("span").text("선택된 파일 없음");
 
-					lastElement.find("a")[0].href = "javascript:upload('file"+i+"')";
-					lastElement.find("a")[1].href = "javascript:cancelFile('file"+i+"')"
-				}
+				lastElement.find("a")[0].href = "javascript:upload('file"+i+"')";
+				lastElement.find("a")[1].href = "javascript:cancelFile('file"+i+"')"
+			}
+
+		}
+	})
+
+	function cancelFile(name){
+		//가장 마지막 첨부 삭제 버튼을 누른 경우
+		if(name.split("e")[1] == i){ return; }
+		//현재 업로드된 파일이 여러개일 때
+		if(i != 0){
+			//tr지우기
+			let temp = Number(name.split("e")[1]);
+			//해당 행 지우기
+			$(".r"+temp).remove();
+			//지워진 다음 행 부터 숫자 바꿔주기
+			for(let j=temp+1;j<=i;j++){
+				const el = $("#boardForm tbody").find(".r"+j);
+				el.attr("class","r"+(j-1)+" at");
+
+				el.children('th').text("파일 첨부"+j);
+
+				el.children('td').attr("class","file"+(j-1)+"_cont");
+
+				const fileTag = el.find("input[type='file']");
+				fileTag.attr("name","file"+(j-1));
+				fileTag.attr("id","file"+(j-1));
+
+				el.find("span").attr("id","file"+(j-1)+"name");
+
+				el.find("a")[0].href = "javascript:upload('file"+(j-1)+"')"
+				el.find("a")[1].href = "javascript:cancelFile('file"+(j-1)+"')"
 
 			}
-		})
+			i--;
+		}
+	}
 
-		function cancelFile(name){
-			//가장 마지막 첨부 삭제 버튼을 누른 경우
-			if(name.split("e")[1] == i){ return; }
-			//현재 업로드된 파일이 여러개일 때
-			if(i != 0){
-				//tr지우기
-				let temp = Number(name.split("e")[1]);
-				//해당 행 지우기
-				$(".r"+temp).remove();
-				//지워진 다음 행 부터 숫자 바꿔주기
-				for(let j=temp+1;j<=i;j++){
-					const el = $("#boardForm tbody").find(".r"+j);
-					el.attr("class","r"+(j-1)+" at");
+	function sendit(){
+		const boardForm = document.boardForm;
 
-					el.children('th').text("파일 첨부"+j);
-
-					el.children('td').attr("class","file"+(j-1)+"_cont");
-
-					const fileTag = el.find("input[type='file']");
-					fileTag.attr("name","file"+(j-1));
-					fileTag.attr("id","file"+(j-1));
-
-					el.find("span").attr("id","file"+(j-1)+"name");
-
-					el.find("a")[0].href = "javascript:upload('file"+(j-1)+"')"
-					el.find("a")[1].href = "javascript:cancelFile('file"+(j-1)+"')"
-
-				}
-				i--;
-			}
+		const boardtitle = boardForm.boardtitle;
+		if(boardtitle.value == ""){
+			alert("제목을 입력하세요!");
+			boardtitle.focus();
+			return false;
 		}
 
-		function sendit(){
-			const boardForm = document.boardForm;
-
-			const boardtitle = boardForm.boardtitle;
-			if(boardtitle.value == ""){
-				alert("제목을 입력하세요!");
-				boardtitle.focus();
-				return false;
-			}
-
-			const boardcontents = boardForm.boardcontents;
-			if(boardcontents.value == ""){
-				alert("내용을 입력하세요!");
-				boardcontents.focus();
-				return false;
-			}
-
-			boardForm.submit();
+		const boardcontents = boardForm.boardcontents;
+		if(boardcontents.value == ""){
+			alert("내용을 입력하세요!");
+			boardcontents.focus();
+			return false;
 		}
-	</script>
+
+		boardForm.submit();
+	}
+</script>
 </html>
