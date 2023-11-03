@@ -1,6 +1,6 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.kh.demo.mapper.UserMyPageMapper">
+<mapper namespace="com.kh.demo.mapper.TrainerMyPageMapper">
 	<sql id="cri">
 		<if test="keyword != '' and type != ''">
 			<trim prefixOverrides="or" prefix="(" suffix=") and">
@@ -36,11 +36,11 @@
 		delete from diary where diary_num=#{diaryNum}
 	</delete>
 
-	<select id="getDiaryDetail" resultType="diaryDTO">
+	<select id="getDiaryDetail">
 		select * from diary where user_id = #{loginUser} and regdate=#{choicedate}
 	</select>
 
-	<select id="checkList" resultType="diaryDTO">
+	<select id="checkList">
 		select * from diary where user_id = #{loginUser} and regdate=#{choicedate}
 	</select>
 
