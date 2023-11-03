@@ -1,22 +1,60 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE HTML>
+<!--
+	Future Imperfect by Pixelarity
+	pixelarity.com | hello@pixelarity.com
+	License: pixelarity.com/license
+-->
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>최종 예제 게시판</title>
+	<title>Untitled</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" th:href="@{/assets/css/login-header.css}" />
+	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
+	<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 </head>
 <style>
-	#wrap{
+	#header {
+  background-color: #5a8100 !important;
+}
+
+#header nav > ul > li a {
+  color: white !important;
+}
+
+#header h1 a {
+  color: white !important;
+}
+
+#header .main ul li > a {
+  color: white !important;
+
+}
+
+#footer {
+  background-color: #304400;
+}
+</style>
+
+<style>
+	#login-wrap{
     width:600px;
     height:400px;
     margin:200px auto;
 }
-body{ background-color: #fff; }
-input{
+.login-body{
+	background-color: #fff;
+}
+.login-btn{
     box-sizing: border-box;
     cursor: pointer;
 }
-table{ border-collapse: collapse; margin:0 auto;}
-td,th{ padding: 10px; text-align: center;}
+.login-tbl{
+	border-collapse: collapse; margin:0 auto;
+}
+.login-tbl > td,th{
+	padding: 10px; text-align: center;
+}
 .btn_area{
     margin:0 auto;
     display: flex;
@@ -51,7 +89,7 @@ input[type=submit]{
     font-weight: bold;
     font-size: 18px;
 }
-a{
+.join-btn{
     text-decoration:none;
     box-sizing:border-box;
     margin-top:10px;
@@ -64,7 +102,7 @@ a{
     font-weight: bold;
     font-size: 18px;
 }
-h2{
+.login{
     text-align: center;
     margin-bottom: 50px;
 }
@@ -81,66 +119,247 @@ h2{
     font-weight: normal;
 }
 </style>
-<body>
-	<th:block th:if="${joinid != null and joinid != ''}">
-		<script th:inline="javascript">
-			window.onload = function(){
-				alert("가입을 축하합니다!");
-				document.getElementById("userid").value = /*[[${joinid}]]*/'';
-				document.getElementById("userpw").focus();
-			}
-		</script>
-	</th:block>
-	<div id="wrap">
-		<form name="loginForm" action="/user/login" method="post" onsubmit="return sendit()">
-			<h2>로그인</h2>
-			<div id="login-box">
-				<table>
-					<tr>
-						<td colspan="2" style="text-align: left;">
-							<span class="login-tit">로그인</span>
-							<br>
-							<span class="login-txt">아이디와 비밀번호를 입력해주세요.</span>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<input type="text" id="userid" name="userid" value="" placeholder="아이디 입력">
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<input type="password" id="userpw" name="userpw" placeholder="비밀번호 입력">
-						</td>
-					</tr>
-					<tr>
-						<td colspan="2">
-							<div class="btn_area">
-								<input type="submit" value="로그인">
-								<a href="/user/join">회원가입</a>
-							</div>
-						</td>
-					</tr>
-				</table>
-			</div>
-		</form>
-	</div>
-</body>
-<script>
-	function sendit(){
-    const loginForm = document.loginForm;
-    const userid = loginForm.userid;
-    const userpw = loginForm.userpw;
+<body class="is-preload">
 
-    if(userid.value == ""){
-        alert("아이디를 입력하세요!");
-        return false;
-    }
-    if(userpw.value == ""){
-        alert("비밀번호를 입력하세요!");
-        return false;
-    }
-    return true;
-}
-</script>
+<!-- Wrapper -->
+
+<!-- Header -->
+<header id="header" class="alt">
+	<h1>
+		<a href="/">
+			Fit
+			<span>Hub</span>
+		</a>
+	</h1>
+	<nav class="links">
+		<ul>
+			<li><a href="/info/info_list" style="color: #fff;">정보</a></li>
+			<li><a href="#"style="color: #fff;">칼로리</a></li>
+			<li><a href="#"style="color: #fff;">커뮤니티</a></li>
+			<li><a href="#"style="color: #fff;">트레이너 매칭</a></li>
+			<li><a href="#"style="color: #fff;">챌린지</a></li>
+			<li><a href="#"style="color: #fff;">제품</a></li>
+			<li><a href="/usermypage/user_diary"style="color: #fff;">다이어리(test)</a></li>
+		</ul>
+	</nav>
+	<nav class="main">
+		<ul>
+			<li id="login">
+
+				<th:block th:if="${loginUser == null}">
+					<a class="login" href="/user/login" style="color: #fff;">Login</a>
+				</th:block>
+				 <th:block th:if="${loginUser != null}">
+                    <a class="login" th:href="@{/user/logout}">logout</a>
+                </th:block>
+
+				<a class="login" href="/usermypage/user_modify">유저</a>
+				<a class="login" href="/trainermypage/trainer_modify">트레</a>
+				<a class="login" href="/adminmypage/adminmypage_list">관리</a>
+			</li>
+			<li class="search">
+				<a class="fa-search" href="#search" style="color: #fff;">Search</a>
+				<form id="search" method="get" action="#">
+					<input type="text" name="query" placeholder="Search" />
+				</form>
+			</li>
+			<li class="menu">
+				<a class="fa-bars" href="#menu" style="color: #fff;">Menu</a>
+			</li>
+		</ul>
+	</nav>
+</header>
+
+<!-- Menu -->
+<section id="menu">
+	<div class="side_info">
+		<img src="images/profile_img.png" class="prof_img" width="102px" height="102px">
+		<div id="my_info">
+			<div>
+				<a href="#">내 정보</a>
+				<th:block th:if="${loginUser == null}">
+					<a class="login" href="/user/login">로그인</a>
+				</th:block>
+				<th:block th:if="${loginUser != null}">
+					<a class="login" th:href="@{/user/logout}">로그아웃</a>
+				</th:block>
+			</div>
+			<span>등급 / 닉네임(ID)</span>
+		</div>
+		<div class="goal-graph">
+			<div class="progress-bar">
+				<p class="number">
+					<span>1</span>
+					<span>2</span>
+					<span>3</span>
+					<span>4</span>
+					<span>5</span>
+					<span>6</span>
+					<span>7</span>
+				</p>
+			</div>
+		</div>
+		<div class="point-container">
+			<div>나의 포인트</div>
+			<span>0p</span>
+		</div>
+		<div id="tab-menu">
+			<div class="tab today-tab">오늘</div>
+			<div class="tab chall-tab">도전</div>
+			<div class="tab sub-tab">구독</div>
+			<div class="page-tab diary-tab">
+				<a href="#">일기</a>
+			</div>
+			<div class="page-tab shop-tab">
+				<a href="#">쇼핑</a>
+			</div>
+		</div>
+		<div id="tab-menu-container">
+			<div class="tab-view today-view">
+				<strong>나의 목표</strong>
+				<p>목표체중</p>
+				<p>목표칼로리</p>
+				<hr>
+				<strong>잔여칼로리: 현재칼로리/목표칼로리</strong>
+				<p>섭취량</p>
+				<p>소비량</p>
+				<div id="meal-options">
+					<div class="brack-fst">아침</div>
+					<div class="lunch">점심</div>
+					<div class="dinner">저녁</div>
+					<div class="snack">간식</div>
+				</div>
+				<div id="tan-dan-ji-box">
+					<div class="today-breakfast">
+						<p>칼로리:아침 칼로리</p>
+						<p>탄수화물</p>
+						<p>단백질</p>
+						<p>지방</p>
+					</div>
+					<div class="today-lunch">
+						<p>칼로리:점심 칼로리</p>
+						<p>탄수화물</p>
+						<p>단백질</p>
+						<p>지방</p>
+					</div>
+					<div class="today-dinner">
+						<p>칼로리:저녁 칼로리</p>
+						<p>탄수화물</p>
+						<p>단백질</p>
+						<p>지방</p>
+					</div>
+					<div class="today-snack">
+						<p>칼로리:간식 칼로리</p>
+						<p>탄수화물</p>
+						<p>단백질</p>
+						<p>지방</p>
+					</div>
+				</div>
+			</div>
+			<div class="tab-view chall-view">
+				<div class="my-chall">
+					<strong>나의 챌린지</strong><br>
+					<span class="active-tab">진행중</span>
+					<span class="finish-tab">종료</span>
+					<div id="chall-list">
+						<div class="active-chall-listView">
+							<p>진행중인 챌린지 list</p>
+						</div>
+						<div class="finish-chall-listView">
+							<p>종료된 챌린지 list</p>
+						</div>
+					</div>
+				</div>
+
+
+			</div>
+			<div class="tab-view sub-view">
+				<div class="sub-view-container">
+					<strong>나의 트레이너</strong>
+					<div class="my-sub">
+						<p>구독한 트레이너 list</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="another-page">
+		<div class="bmi">
+			<a href="#">BMI</a>
+		</div>
+		<div class="health-center">
+			<a href="#">보건소</a>
+		</div>
+		<div class="trainer-apply">
+			<a href="#">트레이너 신청</a>
+		</div>
+	</div>
+</section>
+
+<div id="login-wrap">
+	<form name="loginForm" action="/user/login" method="post" onsubmit="return sendit()">
+		<h2 class="login">로그인</h2>
+		<div id="login-box">
+			<table class="login-tbl">
+				<tr>
+					<td colspan="2" style="text-align: left;">
+						<span class="login-tit">로그인</span>
+						<br>
+						<span class="login-txt">아이디와 비밀번호를 입력해주세요.</span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input type="text" id="userid" name="userid" value="" placeholder="아이디 입력">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input type="password" id="userpw" name="userpw" placeholder="비밀번호 입력">
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<div class="btn_area">
+							<input type="submit" value="로그인" class="login-btn">
+							<a href="/user/join" class="join-btn">회원가입</a>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</form>
+</div>
+
+<!-- Footer -->
+<footer id="footer">
+	<div class="inner">
+		<p class="copyright">&copy; Untitled Corp. All rights reserved. Lorem ipsum dolor sit amet feugiat tempus aliquam.</p>
+		<ul class="menu">
+			<li><a href="#">Terms<span> of Use</span></a></li>
+			<li><a href="/adminmypage/adminmypage_list">Privacy<span> Policy</span></a></li>
+			<li><a href="#">Legal<span> Information</span></a></li>
+		</ul>
+	</div>
+</footer>
+
+<!-- Scripts -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/jquery.dropotron.min.js"></script>
+<script src="assets/js/jquery.scrollex.min.js"></script>
+<script src="assets/js/browser.min.js"></script>
+<script src="assets/js/breakpoints.min.js"></script>
+<script src="assets/js/util.js"></script>
+<script src="assets/js/main.js"></script>
+
+
+<script src="assets/js/util_sub.js"></script>
+<script src="assets/js/main_sub.js"></script>
+
+<script src="assets/js/sidebar.js"></script>
+
+
+
+
+</body>
 </html>
