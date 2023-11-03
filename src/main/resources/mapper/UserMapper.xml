@@ -19,8 +19,8 @@
 	</select>
 
 	<update id="updateUser">
-		update user set user_nickname=#{userNickname}, weight_goal=#{weightGoal}, calories_goal=#{caloriesGoal},
-		user_tel=#{userTel}, user_mail=#{userMail}, user_height=#{userHeight}
+		update user set user_nickname=#{userNickname},user_pw=#{userPw}, weight_goal=#{weightGoal}, calories_goal=#{caloriesGoal},
+		user_tel=#{userTel}, user_mail=#{userMail}, user_height=#{userHeight}, user_weight=#{userWeight}
 		where user_id=#{userId}
 	</update>
 
