@@ -2,6 +2,10 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kh.demo.mapper.CalorieMapper">
     <select id="findByFoodName">
-        SELECT * FROM food WHERE food_name LIKE CONCAT('%', #{keyword}, '%');
+        SELECT * FROM food WHERE foodName LIKE CONCAT('%', #{keyword}, '%') LIMIT 30;
+    </select>
+
+    <select id="getTop30FoodsByViewCnt">
+        SELECT * FROM food ORDER BY viewCnt DESC, foodNum ASC LIMIT 20;
     </select>
 </mapper>

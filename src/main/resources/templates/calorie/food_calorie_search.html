@@ -142,11 +142,17 @@
   transform: translateY(-50%);
   color: gray;
 }
+        #result_foodlist{
+            transition: transform 0.2s;
+        }
+#result_foodlist:hover{
+  transform: scale(1.1); /* 1.1배 확대 */
+}
     </style>
 
 
 <!-- Header -->
-<th:block th:replace="~{layout/header::header(${session.loginUser})}"></th:block>
+<th:block th:replace="~{layout/header-test::header-test(${session.loginUser})}"></th:block>
 
 <!-- Main -->
 <section id="main" class="wrapper left">
@@ -179,50 +185,24 @@
             <hr>
             <div class="food_ranking">
                 <div class="food_search_result">
-                    <p style="color: red;" th:if="${searchKeyword}">검색어: <span th:text="${searchKeyword}"></span></p>
+                    <p>검색어 : </p>
+                    <p style="color: red;" th:if="${searchKeyword}"> <span th:text="${searchKeyword}"></span></p>
                     <p>(으)로</p>
                     <p style="color: red;" class="result_count" th:text="${searchCount} + '개'">0개</p>
                     <p>검색 되었습니다.</p>
                 </div>
-
-
                 <table class="cal_search_ranking">
                     <tr>
                         <th width="60%" class="cal_tit">음식명</th>
                         <th width="40%">칼로리</th>
                     </tr>
-                    <tr th:if="${list != null and list.size()>0}" th:each="food : ${list}">
-                        <td>[[${food.food_name}]]</td>
-                        <td>[[${food.kcal}]]</td>
-                    </tr>
-                    <th:block th:if="${list == null or list.size() == 0}">
-                        <tr>
-                            <td colspan="6" style="text-align: center; font-size: 20px;">등록된
-                                음식이 없습니다.</td>
-                        </tr>
-                    </th:block>
-                </table>
-                <br>
-                <!-- 페이징 처리하는 테이블 -->
-                <table class="pagination">
-                    <tr align="center" valign="middle">
-                        <td>
-                            <a class="changePage" th:if="${pageMaker.prev}" th:href="${pageMaker.startPage-1}">&lt;</a>
-                            <th:block th:each="i : ${#numbers.sequence(pageMaker.startPage,pageMaker.endPage)}">
-                                <span class="nowPage" th:text="${i}" th:if="${pageMaker.cri.pagenum == i}"></span>
-                                <a class="changePage" th:href="${i}" th:text="${i}" th:unless="${pageMaker.cri.pagenum == i}"></a>
-                            </th:block>
-                            <a class="changePage" th:if="${pageMaker.next}" th:href="${pageMaker.endPage+1}">&gt;</a>
-                        </td>
+                    <!-- 검색 결과를 순회하며 출력 -->
+                    <tr th:each="food : ${foods}" id="result_foodlist">
+
+                        <td th:text="${food.foodName}"><a class="get" th:href="${food.foodNum}"></a></td>
+                        <td th:text="${food.foodCalories}"></td>
                     </tr>
                 </table>
-            </div>
-            <form name="pageForm" id="pageForm" th:action="@{/calorie/food_calorie_search}">
-                <input type="hidden" name="pagenum" th:value="${pageMaker.cri.pagenum}">
-                <input type="hidden" name="amount" th:value="${pageMaker.cri.amount}">
-                <input type="hidden" name="type" th:value="${pageMaker.cri.type}">
-                <input type="hidden" name="keyword" th:value="${pageMaker.cri.keyword}">
-            </form>
         </div>
     </div>
 </section>

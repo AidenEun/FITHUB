@@ -2,16 +2,23 @@
 <th:block th:fragment="header-test(loginUser)">
     <style>
         .submenu {
-        width: 150px;
-		position: absolute;
-		font-size:14px;
-		background: skyblue;
-        z-index: 5555;
-        }
-        .submenu li:hover {
-		background: orange;
-		transition: ease 1s;
-		}
+   width: 150px;
+   position: absolute;
+   font-size: 14px;
+   background: skyblue;
+   z-index: 5555;
+   border-radius: 15px;
+ }
+
+ .submenu li {
+   list-style-type: none;
+ }
+
+ .submenu li:hover {
+   background: orange;
+   transition: ease 1s;
+   border-radius: 15px;
+ }
 
     </style>
     </head>
