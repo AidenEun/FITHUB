@@ -1,345 +1,373 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE HTML>
+<!--
+	Future Imperfect by Pixelarity
+	pixelarity.com | hello@pixelarity.com
+	License: pixelarity.com/license
+-->
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Join</title>
-<style>
-	*{
-		box-sizing: border-box;
-	}
-	#wrap{
-		width:520px;
-		margin:0 auto;
-	}
-	body{ background-color:rgb(245,246,247); }
-	input{
-		box-sizing: border-box;
-	}
-	input[type=button], input[type=submit]{
-		cursor: pointer;
-	}
-	table{ border-collapse: collapse; }
-	th{ width:120px; text-align: left; }
-	th::after{
-		content:"";
-		display: inline-block;
-		box-sizing: border-box;
-		width:1px;
-		height:14px;
-	}
-	th, td{ padding: 0px; height:48px;}
-	td{
-		padding-left: 20px;
-		width:400px;
-		height:40px;
-	}
-	input[type=text], input[type=password]{
-		position:relative;
-		display:inline-block;
-		padding:5px 15px 5px 10px;
-		border:1px solid #ccc;
-		width:250px;
-		height:40px;
-		line-height:40px;
-		border-radius: 5px;
-	}
-	input:focus{
-		outline: none;
-		border:1px solid rgb(0,200,80);
-	}
-	td  input[type=text] + input[type=button]{
-		margin-left:10px;
-		padding:0px 10px;
-		background-color: rgb(0,200,80);
-		color:#fff;
-		font-size: 14px;
-		font-weight: bold;
-		border:none;
-		border-radius: 5px;
-		width:80px;
-		height:40px;
-		line-height:40px;
-	}
-	#result {
-		color: #e91e63;
-    	font-weight: bold;
-	}
-	.pw_check{
-		padding:10px 15px;
-		margin:10px 0 0 0;
-		border:1px solid rgb(0,200,80);
-		background:#fff;
-		font-size:80%;
-		font-weight: bold;
-		width:530px;
-	}
-	.pw_check span{
-		display: block;
-		margin-left:10.45px;
-	}
-	.pw_check span::before{
-		content:'';
-	}
-	.pw_check .pct, .pw_check .pcf{
-		margin-left:0px;
-	}
-	.pw_check .pct::before{
-		content:'✔';
-		position: relative;
-		left:-5px;
-	}
-	.pw_check .pcf::before{
-		content:'✖';
-		position: relative;
-		left:-5px;
-	}
-	.pct{
-		color:rgb(0,200,80);
-	}
-	.pcf{
-		color:red;
-	}
-	.gender_area > td{
-		font-size:16px;
-		padding:5px 40px 5px 20px;	
-	}
-	.gender_area > td > div{
-		display:flex;
-		align-items: center;
-		position: relative;
-		width:340px;
-	}
-	.gender_area ul{
-		list-style: none;
-		width:50%;
-		font-size:0;
-		margin: 0;
-		padding: 0;
-	}
-	.gender_area ul:last-of-type{
-		margin-left: 10px;
-	}
-	.gender_area li{
-		display: inline-block;
-		width:50%;
-		margin:0;
-		padding:0;
-		border-radius: 5px 0 0 5px;
-	}
-	.gender_area ul li:last-of-type{
-		border-radius: 0 5px 5px 0;
-	}
-	.gender_area li > input[type=radio]{
-		width:1px;
-		height:1px;
-		margin:-1px;
-		overflow:hidden;
-		position:absolute;
-		-webkit-appearance:none;
-		-moz-appearance:none;
-		appearance:none;
-		border: none;
-	}
-	.gender_area li > label{
-		display: block;
-	    position: relative;
-	    width: 100%;
-	    padding: 6px 0;
-	    border-radius: inherit;
-	    border: 1px solid #ccc;
-	    font-size: 13px;
-	    line-height: 18px;
-	    color: #757575;
-	    text-align: center;
-	    cursor: pointer;
-	}
-	.gender_area li > input[type=radio]:checked+label{
-		border: 1px solid rgb(0,200,80);
-		color:rgb(0,200,80);
-	}
-	.zipcode_area > td > input[type=text]{ width:200px; }
-	.zipcode_area > td > input[type=button]{ width:130px !important; }
-	.addr_area > td > input[type=text],
-	.addr_area + tr > td > input[type=text],
-	.addr_area + tr + tr > td > input[type=text]{
-		width:340px;
-	}
-	.hobby_area > td > div{
-		display:flex;
-		width:360px;
-		flex-wrap:wrap;
-	}
-	.hobby_input {
-		border-bottom: 1px solid #ccc;
-		padding-bottom: 10px;
-	}
-	.hobby_input > input[type=text]{
-		position:relative;
-		top:0;
-	}
-	.hobby_input > input[type=button] {
-		margin-left:20px;
-		padding:10px 10px;
-		background-color:rgb(0,200,80);
-		color:#fff;
-		font-size:14px;
-		font-weight: bold;
-		border:none;
-		border-radius:5px;
-		width:70px;
-	}
-	
-	.hobby_area + tr > th{ text-align:center; }
-	.hobby_list{
-		display: flex;
-		flex-wrap: wrap;
-	}
-	.userhobby{
-		color: #666;
-		height:30px;
-		display:flex;
-		background-color: white;
-		margin-left:10px;
-		margin-top:5px;
-		border:1px solid #ccc;
-		border-radius:50px;
-		padding:3px 10px;
-		cursor: pointer;
-		align-items: center;
-	}
-	.xBox{
-		border:1px solid #ccc;
-		width:16px;
-		height:16px;
-		border-radius: 50%;
-		margin-left: 5px;
-		background:url("/user/images/xBox2.png") 3px 50% / 60% no-repeat;
-	}
-	.submit{
-		padding:10px 10px;
-		margin:30px;
-		background-color:rgb(0,200,80);
-		color:#fff;
-		font-size:20px;
-		font-weight: bold;
-		border:none;
-		border-radius:5px;
-		width:300px;
-	}
-</style>
+	<title>Untitled</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}"/>
+	<link rel="stylesheet" th:href="@{/assets/css/login-header.css}" />
+	<link rel="stylesheet" th:href="@{/assets/css/join.css}"/>
+	<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 </head>
-<body>
-	<div id="wrap">
-		<form name="joinForm" method="post" action="/user/join"
-			onsubmit="return sendit()">
-			<table>
-				<tr>
-					<td id="result" colspan="2">&nbsp;</td>
-				</tr>
-				<tr>
-					<th><label for="userid">아이디</label></th>
-					<td><input type="text" name="userid" id="userid"><input type="button" value="중복검사" onclick="checkId()"></td>
-				</tr>
-				<tr>
-					<th><label for="userpw">비밀번호</label></th>
-					<td><input type="password" name="userpw" id="userpw" onkeyup="pwcheck()"></td>
-				</tr>
-				<tr>
-					<th><label for="userpw_re">비밀번호 확인</label></th>
-					<td><input type="password" name="userpw_re" id="userpw_re" onkeyup="pwcheck()"></td>
-				</tr>
-				<tr>
-					<th colspan="2">
-						<div class="pw_check">
-							<span>영어 대문자, 소문자, 숫자, 특수문자(~,?,!,@,-)를 모두 하나 이상 포함해야 해요 😃</span>
-							<span>최소 8자 이상의 비밀번호가 보안에 안전해요 😄</span>
-							<span>같은 문자가 연속해서 사용되지 않았어요 😆</span>
-							<span>사용할 수 없는 문자가 포함되지 않았어요 🙂</span>
-							<span>비밀번호 확인이 완료되었어요! 😊</span>
+<style>
+	#header {
+  background-color: #5a8100 !important;
+}
+
+#header nav > ul > li a {
+  color: white !important;
+}
+
+#header h1 a {
+  color: white !important;
+}
+
+#header .main ul li > a {
+  color: white !important;
+
+}
+
+#footer {
+  background-color: #304400;
+}
+</style>
+<body class="is-preload">
+
+<!-- Wrapper -->
+
+<!-- Header -->
+<header id="header" class="alt">
+	<h1>
+		<a href="/">
+			Fit
+			<span>Hub</span>
+		</a>
+	</h1>
+	<nav class="links">
+		<ul>
+			<li><a href="/info/info_list" style="color: #fff;">정보</a></li>
+			<li><a href="#"style="color: #fff;">칼로리</a></li>
+			<li><a href="#"style="color: #fff;">커뮤니티</a></li>
+			<li><a href="#"style="color: #fff;">트레이너 매칭</a></li>
+			<li><a href="#"style="color: #fff;">챌린지</a></li>
+			<li><a href="#"style="color: #fff;">제품</a></li>
+			<li><a href="/usermypage/user_diary"style="color: #fff;">다이어리(test)</a></li>
+		</ul>
+	</nav>
+	<nav class="main">
+		<ul>
+			<li id="login">
+
+				<th:block th:if="${loginUser == null}">
+					<a class="login" href="/user/login" style="color: #fff;">Login</a>
+				</th:block>
+				<!-- <th:block th:if="${loginUser != null}">
+                    <a class="login" th:href="@{/user/logout}">logout</a>
+                </th:block> -->
+
+				<a class="login" href="/usermypage/user_modify">유저</a>
+				<a class="login" href="/trainermypage/trainer_modify">트레</a>
+				<a class="login" href="/adminmypage/adminmypage_list">관리</a>
+			</li>
+			<li class="search">
+				<a class="fa-search" href="#search" style="color: #fff;">Search</a>
+				<form id="search" method="get" action="#">
+					<input type="text" name="query" placeholder="Search" />
+				</form>
+			</li>
+			<li class="menu">
+				<a class="fa-bars" href="#menu" style="color: #fff;">Menu</a>
+			</li>
+		</ul>
+	</nav>
+</header>
+
+<!-- Menu -->
+<section id="menu">
+	<div class="side_info">
+		<img src="images/profile_img.png" class="prof_img" width="102px" height="102px">
+		<div id="my_info">
+			<div>
+				<a href="#">내 정보</a>
+				<th:block th:if="${loginUser == null}">
+					<a class="login" href="/user/login">로그인</a>
+				</th:block>
+				<th:block th:if="${loginUser != null}">
+					<a class="login" th:href="@{/user/logout}">로그아웃</a>
+				</th:block>
+			</div>
+			<span>등급 / 닉네임(ID)</span>
+		</div>
+		<div class="goal-graph">
+			<div class="progress-bar">
+				<p class="number">
+					<span>1</span>
+					<span>2</span>
+					<span>3</span>
+					<span>4</span>
+					<span>5</span>
+					<span>6</span>
+					<span>7</span>
+				</p>
+			</div>
+		</div>
+		<div class="point-container">
+			<div>나의 포인트</div>
+			<span>0p</span>
+		</div>
+		<div id="tab-menu">
+			<div class="tab today-tab">오늘</div>
+			<div class="tab chall-tab">도전</div>
+			<div class="tab sub-tab">구독</div>
+			<div class="page-tab diary-tab">
+				<a href="#">일기</a>
+			</div>
+			<div class="page-tab shop-tab">
+				<a href="#">쇼핑</a>
+			</div>
+		</div>
+		<div id="tab-menu-container">
+			<div class="tab-view today-view">
+				<strong>나의 목표</strong>
+				<p>목표체중</p>
+				<p>목표칼로리</p>
+				<hr>
+				<strong>잔여칼로리: 현재칼로리/목표칼로리</strong>
+				<p>섭취량</p>
+				<p>소비량</p>
+				<div id="meal-options">
+					<div class="brack-fst">아침</div>
+					<div class="lunch">점심</div>
+					<div class="dinner">저녁</div>
+					<div class="snack">간식</div>
+				</div>
+				<div id="tan-dan-ji-box">
+					<div class="today-breakfast">
+						<p>칼로리:아침 칼로리</p>
+						<p>탄수화물</p>
+						<p>단백질</p>
+						<p>지방</p>
+					</div>
+					<div class="today-lunch">
+						<p>칼로리:점심 칼로리</p>
+						<p>탄수화물</p>
+						<p>단백질</p>
+						<p>지방</p>
+					</div>
+					<div class="today-dinner">
+						<p>칼로리:저녁 칼로리</p>
+						<p>탄수화물</p>
+						<p>단백질</p>
+						<p>지방</p>
+					</div>
+					<div class="today-snack">
+						<p>칼로리:간식 칼로리</p>
+						<p>탄수화물</p>
+						<p>단백질</p>
+						<p>지방</p>
+					</div>
+				</div>
+			</div>
+			<div class="tab-view chall-view">
+				<div class="my-chall">
+					<strong>나의 챌린지</strong><br>
+					<span class="active-tab">진행중</span>
+					<span class="finish-tab">종료</span>
+					<div id="chall-list">
+						<div class="active-chall-listView">
+							<p>진행중인 챌린지 list</p>
 						</div>
-					</th>
-				</tr>
-				<tr>
-					<th><label for="username">이름</label></th>
-					<td><input type="text" name="username" id="username"></td>
-				</tr>
-				<tr class="gender_area">
-					<th>성별</th>
-					<td>
-						<div>
-							<ul>
-								<li class="radio_item">
-									<input type="radio" id="usergender1" name="usergender" value="M"><label for="usergender1">남자</label>
-								</li>
-								<li class="radio_item">
-									<input type="radio" id="usergender2" name="usergender" value="W"><label for="usergender2">여자</label>
-								</li>
-							</ul>
-							<ul>
-								<li class="radio_item">
-									<input type="radio" id="foreigner1" name="foreigner" value="K"><label for="foreigner1">내국인</label>
-								</li>
-								<li class="radio_item">
-									<input type="radio" id="foreigner2" name="foreigner" value="F"><label for="foreigner2">외국인</label>
-								</li>
-							</ul>
+						<div class="finish-chall-listView">
+							<p>종료된 챌린지 list</p>
 						</div>
-					</td>
-				</tr>
-				<tr class="zipcode_area">
-					<th>우편번호</th>
-					<td><input readonly name="zipcode" type="text"
-						id="sample6_postcode" placeholder="우편번호" onclick="sample6_execDaumPostcode()"><input
-						type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
-					</td>
-				</tr>
-				<tr class="addr_area">
-					<th>주소</th>
-					<td><input readonly name="addr" type="text"
-						id="sample6_address" placeholder="주소"></td>
-				</tr>
-				<tr>
-					<th>상세주소</th>
-					<td><input name="addrdetail" type="text"
-						id="sample6_detailAddress" placeholder="상세주소"></td>
-				</tr>
-				<tr>
-					<th>참고항목</th>
-					<td><input readonly name="addretc" type="text"
-						id="sample6_extraAddress" placeholder="참고항목"></td>
-				</tr>
-				<tr class="hobby_area">
-					<th>취미</th>
-					<td>
-						<div>
-							<div class="hobby_input">
-								<input type="text" name="hobby" onkeyup="hobbyKeyup()"><input type="button" onclick="addHobby()" value="추가">
-							</div>
-							<div class="hobby_list"></div>
-							<input type="hidden" value="" name="userhobby">
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<th colspan="2"><input class="submit" type="button" value="가입 완료" onclick="sendit();"></th>
-				</tr>
-			</table>
-		</form>
+					</div>
+				</div>
+
+
+			</div>
+			<div class="tab-view sub-view">
+				<div class="sub-view-container">
+					<strong>나의 트레이너</strong>
+					<div class="my-sub">
+						<p>구독한 트레이너 list</p>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
-</body>
+	<div id="another-page">
+		<div class="bmi">
+			<a href="#">BMI</a>
+		</div>
+		<div class="health-center">
+			<a href="#">보건소</a>
+		</div>
+		<div class="trainer-apply">
+			<a href="#">트레이너 신청</a>
+		</div>
+	</div>
+</section>
+<!-- Main -->
+<!-- Banner -->
+<!-- <section id="banner">
+    <article>
+        <img src="images/main1_img.png" alt="" />
+        <div class="inner">
+            <h2><a href="#">메인 이미지1</a></h2>
+        </div>
+    </article>
+</section> -->
+
+<div id="wrap">
+	<form name="joinForm" method="post" action="/user/join"
+		  onsubmit="return sendit()">
+		<h2 style="text-align: center;">회원가입</h2>
+		<table>
+			<tr>
+				<td id="result" colspan="2">&nbsp;</td>
+			</tr>
+			<tr>
+				<th><label for="userid">아이디</label></th>
+				<td><input type="text" name="userid" id="userid"><input type="button" value="중복검사" onclick="checkId()"></td>
+			</tr>
+			<tr>
+				<th><label for="userNickName">닉네임</label></th>
+				<td><input type="text" name="userNickName" id="userNickName"></td>
+			</tr>
+			<tr>
+				<th><label for="userpw">비밀번호</label></th>
+				<td><input type="password" name="userpw" id="userpw" onkeyup="pwcheck()"></td>
+			</tr>
+			<tr>
+				<th><label for="userpw_re">비밀번호 확인</label></th>
+				<td><input type="password" name="userpw_re" id="userpw_re" onkeyup="pwcheck()"></td>
+			</tr>
+			<tr>
+				<th colspan="2">
+					<div class="pw_check">
+						<span>영어 대문자, 소문자, 숫자, 특수문자(~,?,!,@,-)를 모두 하나 이상 포함해야 해요 😃</span>
+						<span>최소 8자 이상의 비밀번호가 보안에 안전해요 😄</span>
+						<span>같은 문자가 연속해서 사용되지 않았어요 😆</span>
+						<span>사용할 수 없는 문자가 포함되지 않았어요 🙂</span>
+						<span>비밀번호 확인이 완료되었어요! 😊</span>
+					</div>
+				</th>
+			</tr>
+			<tr>
+				<th><label for="username">이름</label></th>
+				<td><input type="text" name="username" id="username"></td>
+			</tr>
+			<tr class="gender_area">
+				<th>성별</th>
+				<td>
+					<div>
+						<ul>
+							<li class="radio_item">
+								<input type="radio" id="usergender1" name="usergender" value="M"><label for="usergender1">남자</label>
+							</li>
+							<li class="radio_item">
+								<input type="radio" id="usergender2" name="usergender" value="W"><label for="usergender2">여자</label>
+							</li>
+						</ul>
+					</div>
+				</td>
+			</tr>
+			<tr class="zipcode_area">
+				<th>우편번호</th>
+				<td><input readonly name="zipcode" type="text"
+						   id="sample6_postcode" placeholder="우편번호" onclick="sample6_execDaumPostcode()"><input
+						type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
+				</td>
+			</tr>
+			<tr class="addr_area">
+				<th>주소</th>
+				<td><input readonly name="addr" type="text"
+						   id="sample6_address" placeholder="주소"></td>
+			</tr>
+			<tr>
+				<th>상세주소</th>
+				<td><input name="addrdetail" type="text"
+						   id="sample6_detailAddress" placeholder="상세주소"></td>
+			</tr>
+			<tr>
+				<th><label for="userbirthdate">생년월일</label></th>
+				<td><input type="date" name="userbirthdate" id="userbirthdate"></td>
+			</tr>
+			<tr>
+			<tr>
+				<th><label for="usertel">전화번호</label></th>
+				<td><input type="tel" name="usertel" id="usertel" placeholder="전화번호를 입력하세요"></td>
+			</tr>
+			</tr>
+			<tr>
+				<th><label for="useremail">이메일</label></th>
+				<td><input type="email" name="useremail" id="useremail" placeholder="이메일을 입력하세요"></td>
+			</tr>
+			<tr>
+				<th colspan="2">
+					<input class="next-button" type="button" value="다음" onclick="goToNextPage();">
+				</th>
+			</tr>
+			<tr>
+				<th><label for="weight">몸무게 (kg)</label></th>
+				<td><input type="text" name="weight" id="weight"></td>
+			</tr>
+			<tr>
+				<th><label for="height">키 (cm)</label></th>
+				<td><input type="text" name="height" id="height"></td>
+			</tr>
+			<tr>
+				<th><label for="goalWeight">목표 체중 (kg)</label></th>
+				<td><input type="text" name="goalWeight" id="goalWeight"></td>
+			</tr>
+			<tr>
+				<th><label for="goalCalories">목표 칼로리 (kcal)</label></th>
+				<td><input type="text" name="goalCalories" id="goalCalories"></td>
+			</tr>
+			<tr>
+				<th colspan="2"><input class="submit" type="button" value="가입 완료" onclick="sendit();"></th>
+			</tr>
+		</table>
+	</form>
+</div>
+
+<!-- Footer -->
+<footer id="footer">
+	<div class="inner">
+		<p class="copyright">&copy; Untitled Corp. All rights reserved. Lorem ipsum dolor sit amet feugiat tempus aliquam.</p>
+		<ul class="menu">
+			<li><a href="#">Terms<span> of Use</span></a></li>
+			<li><a href="/adminmypage/adminmypage_list">Privacy<span> Policy</span></a></li>
+			<li><a href="#">Legal<span> Information</span></a></li>
+		</ul>
+	</div>
+</footer>
+
+<!-- Scripts -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/jquery.dropotron.min.js"></script>
+<script src="assets/js/jquery.scrollex.min.js"></script>
+<script src="assets/js/browser.min.js"></script>
+<script src="assets/js/breakpoints.min.js"></script>
+<script src="assets/js/util.js"></script>
+<script src="assets/js/main.js"></script>
+
+
+<script src="assets/js/util_sub.js"></script>
+<script src="assets/js/main_sub.js"></script>
+
+<script src="assets/js/sidebar.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script th:src="@{/assets/js/user.js}"></script>
-</html>
 
 
 
 
-
-
-
-
-
-
-
+</body>
 
 
