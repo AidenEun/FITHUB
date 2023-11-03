@@ -20,6 +20,14 @@ public interface AdminMyPageMapper {
 
     Long getReportTotalByTrainer(Criteria cri);
 
+    boolean getUserByIdBoolean(String userId);
+
+    boolean getTrainerByIdBoolean(String userId);
+
+    UserDTO getUserById(String userId);
+
+    TrainerDTO getTrainerById(String userId);
+
 //    SignUp
     List<TrainerSignUpDTO> getSignUpList(Criteria cri);
 

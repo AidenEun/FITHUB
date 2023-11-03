@@ -45,6 +45,17 @@ public class AdminMyPageServiceImpl implements AdminMyPageService {
         return adminMyPageMapper.getReportTotalByTrainer(cri);
     }
 
+    @Override
+    public Object getUserById(String userId) {
+        if (adminMyPageMapper.getUserByIdBoolean(userId)){
+            return adminMyPageMapper.getUserById(userId);
+        }
+        else if (adminMyPageMapper.getTrainerByIdBoolean(userId)) {
+            return adminMyPageMapper.getTrainerById(userId);
+        }
+        return null;
+    }
+
 //    SignUp
     @Override
     public List<TrainerSignUpDTO> getSignUpList(Criteria cri) {

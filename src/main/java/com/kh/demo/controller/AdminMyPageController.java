@@ -1,5 +1,6 @@
 package com.kh.demo.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.kh.demo.domain.dto.*;
@@ -75,6 +76,26 @@ public class AdminMyPageController {
         json.putPOJO("reportList", reportListByTrainer);
         json.putPOJO("pageDTO", pageDTO);
 
+        return json.toString();
+    }
+
+    @PostMapping("reportModal")
+    @ResponseBody
+    public String reportModal(@RequestParam("userId") String userId) throws Exception {
+        ObjectNode json = JsonNodeFactory.instance.objectNode();
+        Object userInfo = adminMyPageService.getUserById(userId);
+
+        if (userInfo instanceof UserDTO) {
+            UserDTO userDTO = (UserDTO) userInfo;
+            json.putPOJO("userDTO", userDTO);
+        }
+        else if (userInfo instanceof TrainerDTO) {
+            TrainerDTO trainerDTO = (TrainerDTO) userInfo;
+            json.putPOJO("trainerDTO", trainerDTO);
+        }
+        else {
+            json.put("noData", "noData");
+        }
         return json.toString();
     }
 

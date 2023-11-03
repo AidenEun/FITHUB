@@ -57,4 +57,5 @@ public interface AdminMyPageService {
 
     Long getTrainerTotal(Criteria cri);
 
+    Object getUserById(String userId);
 }

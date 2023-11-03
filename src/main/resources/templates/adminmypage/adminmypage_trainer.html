@@ -12,6 +12,8 @@
 	<link rel="stylesheet" th:href="@{/assets/css/index.css}" />
 	<noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
 	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
+
+	<link rel="stylesheet" th:href="@{/assets/css/profileModal.css}">
 </head>
 <style>
 	.top_img_box{
@@ -127,9 +129,7 @@
 								</a>
 							</td>
 							<td class="long_text">
-								<a href="#">
-									[[${signUpBoard.userId}]]
-								</a>
+								<a href="#" class="open">[[${signUpBoard.userId}]]</a>
 							</td>
 							<td class="long_text">
 								<a href="#">
@@ -214,6 +214,8 @@
 <script th:src="@{/assets/js/main_sub.js}"></script>
 
 <script th:src="@{/assets/js/sidebar.js}"></script>
+
+<script th:src="@{/assets/js/profile.js}"></script>
 <script>
 	const pageForm = $("#pageForm");
 	$(".changePage").on("click",function(e){

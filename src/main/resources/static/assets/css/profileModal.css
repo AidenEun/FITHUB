@@ -1,4 +1,4 @@
-#modal_box{
+.modal_box{
     position: fixed;
     top: 0;
     left: 0;
@@ -9,20 +9,23 @@
     /* display: flex; */
     justify-content: center;
     align-items: center;
+
+
+    z-index: 1000;
 }
 
-#modal_box.active{
+.modal_box.active{
     display: flex;
 }
 
-#modal_contents{
+.modal_contents{
     background-color: #fff;
     width: 300px;
     padding: 20px;
     border-radius: 5px;
     position: relative;
 }
-#modal_contents h1{
+.modal_contents h1{
     text-align: center;
 }
 
@@ -30,13 +33,13 @@
     display: flex;
     justify-content: center;
 }
-#profile img{
+.profile img{
     width: 150px;
     height: 150px;
 
 }
 
-#desc{
+.desc{
     text-align: center;
 }
 
@@ -44,7 +47,7 @@
     font-size: 20px;
 }
 
-#modal_contents button{
+.modal_contents button{
     background-color: #fff;
     color: #ccc;
     font-size: 20px;
@@ -52,10 +55,6 @@
 
 
 }
-#close{
+.close{
     cursor: pointer;
-}
-
-a{
-    text-decoration:none;
 }

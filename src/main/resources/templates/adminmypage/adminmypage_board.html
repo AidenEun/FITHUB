@@ -12,6 +12,8 @@
 	<link rel="stylesheet" th:href="@{/assets/css/index.css}" />
 	<noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
 	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
+
+	<link rel="stylesheet" th:href="@{/assets/css/profileModal.css}">
 </head>
 <style>
 	.top_img_box{
@@ -140,9 +142,7 @@
 								</a>
 							</td>
 							<td class="long_text">
-								<a href="#">
-									[[${adminBoard.userId}]]
-								</a>
+								<a href="#" class="open">[[${adminBoard.userId}]]</a>
 							</td>
 							<td class="long_text">
 								<a href="#">
@@ -218,6 +218,8 @@
 <script th:src="@{/assets/js/main_sub.js}"></script>
 
 <script th:src="@{/assets/js/sidebar.js}"></script>
+
+<script th:src="@{/assets/js/profile.js}"></script>
 <script>
 	const board_cate = document.querySelectorAll('.board_cate');
 	let nowCate = document.querySelector('.now_cate');
@@ -331,7 +333,7 @@
                     var row = $('<tr>');
                     row.append('<td class="long_text"><a href="#">' + boardData.boardNum + '</a></td>');
                     row.append('<td class="long_text"><a href="#">' + boardData.boardTitle + '</a></td>');
-                    row.append('<td class="long_text"><a href="#">' + boardData.userId + '</a></td>');
+                    row.append('<td class="long_text"><a href="#" class="open">' + boardData.userId + '</a></td>');
                     row.append('<td class="long_text"><a href="#">' + boardData.viewCnt + '</a></td>');
                     row.append('<td class="long_text"><a href="#">' + boardData.likeCnt + '</a></td>');
 
@@ -347,6 +349,13 @@
             else {
                 tableBody.append('<tr><td colspan="6">등록된 게시글이 없습니다!</td></tr>');
             }
+			$(".open").on("click", function (e) {
+                e.preventDefault();
+				var userId = $(this).text();
+
+				sendUserIdToModal(userId);
+                modalBox.classList.add("active");
+            });
         }
     });
 </script>
