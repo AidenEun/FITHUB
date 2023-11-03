@@ -67,4 +67,16 @@ public interface AdminMyPageMapper {
 
     Long getTrainerTotal(Criteria cri);
 
+    List<MessageDTO> getMessageList(Criteria cri);
+
+    Long getMessageTotal(Criteria cri);
+
+    List<MessageDTO> getMessageByUser(Criteria cri);
+
+    List<MessageDTO> getMessageByTrainer(Criteria cri);
+
+    Long getMessageTotalByUser(Criteria cri);
+
+    Long getMessageTotalByTrainer(Criteria cri);
+
 }

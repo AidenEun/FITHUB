@@ -117,8 +117,6 @@ public class AdminMyPageController {
 
         model.addAttribute("boardList" , boardList);
         model.addAttribute("pageMaker",new PageDTO(adminMyPageService.getBoardTotal(cri), cri));
-
-        System.out.println(new PageDTO(adminMyPageService.getBoardTotal(cri), cri));
     }
 
     @GetMapping("allBoard")
@@ -259,7 +257,57 @@ public class AdminMyPageController {
         return json.toString();
     }
 
+//    Message
     @GetMapping("adminmypage_message")
-    public void replaceMessage(){}
+    public void replaceMessage(Criteria cri, Model model){
+        List<MessageDTO> messageList = adminMyPageService.getMessageList(cri);
 
+        model.addAttribute("messageList" , messageList);
+        model.addAttribute("pageMaker",new PageDTO(adminMyPageService.getMessageTotal(cri), cri));
+    }
+
+    @GetMapping("allMessage")
+    @ResponseBody
+    public String allMessage(@RequestParam("pageNum") int pageNum) throws Exception {
+        ObjectNode json = JsonNodeFactory.instance.objectNode();
+        Criteria cri = new Criteria(pageNum, 10);
+
+        List<MessageDTO> messageList = adminMyPageService.getMessageList(cri);
+        PageDTO pageDTO = new PageDTO(adminMyPageService.getMessageTotal(cri), cri);
+
+        json.putPOJO("messageList", messageList);
+        json.putPOJO("pageDTO", pageDTO);
+
+        return json.toString();
+    }
+
+    @GetMapping("byUserMessage")
+    @ResponseBody
+    public String messageByUser(@RequestParam("pageNum") int pageNum) throws Exception {
+        ObjectNode json = JsonNodeFactory.instance.objectNode();
+        Criteria cri = new Criteria(pageNum, 10);
+
+        List<MessageDTO> messageByUser = adminMyPageService.getMessageByUser(cri);
+        PageDTO pageDTO = new PageDTO(adminMyPageService.getMessageTotalByUser(cri), cri);
+
+        json.putPOJO("messageList", messageByUser);
+        json.putPOJO("pageDTO", pageDTO);
+
+        return json.toString();
+    }
+
+    @GetMapping("byTrainerMessage")
+    @ResponseBody
+    public String messageByTrainer(@RequestParam("pageNum") int pageNum) throws Exception {
+        ObjectNode json = JsonNodeFactory.instance.objectNode();
+        Criteria cri = new Criteria(pageNum, 10);
+
+        List<MessageDTO> messageByTrainer = adminMyPageService.getMessageByTrainer(cri);
+        PageDTO pageDTO = new PageDTO(adminMyPageService.getMessageTotalByTrainer(cri), cri);
+
+        json.putPOJO("messageList", messageByTrainer);
+        json.putPOJO("pageDTO", pageDTO);
+
+        return json.toString();
+    }
 }

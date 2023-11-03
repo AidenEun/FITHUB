@@ -56,7 +56,7 @@ public class AdminMyPageServiceImpl implements AdminMyPageService {
         return null;
     }
 
-//    SignUp
+    //    SignUp
     @Override
     public List<TrainerSignUpDTO> getSignUpList(Criteria cri) {
         return adminMyPageMapper.getSignUpList(cri);
@@ -149,4 +149,34 @@ public class AdminMyPageServiceImpl implements AdminMyPageService {
         return adminMyPageMapper.getTrainerTotal(cri);
     }
 
+//    message
+    @Override
+    public List<MessageDTO> getMessageList(Criteria cri) {
+        return adminMyPageMapper.getMessageList(cri);
+    }
+
+    @Override
+    public Long getMessageTotal(Criteria cri) {
+        return adminMyPageMapper.getMessageTotal(cri);
+    }
+
+    @Override
+    public List<MessageDTO> getMessageByUser(Criteria cri) {
+        return adminMyPageMapper.getMessageByUser(cri);
+    }
+
+    @Override
+    public List<MessageDTO> getMessageByTrainer(Criteria cri) {
+        return adminMyPageMapper.getMessageByTrainer(cri);
+    }
+
+    @Override
+    public Long getMessageTotalByUser(Criteria cri) {
+        return adminMyPageMapper.getMessageTotalByUser(cri);
+    }
+
+    @Override
+    public Long getMessageTotalByTrainer(Criteria cri) {
+        return adminMyPageMapper.getMessageTotalByTrainer(cri);
+    }
 }
