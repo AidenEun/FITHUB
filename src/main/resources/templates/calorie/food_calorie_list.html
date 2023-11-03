@@ -150,6 +150,19 @@
   transform: translateY(-50%);
   color: gray;
 }
+		#result_foodlist{
+            transition: transform 0.2s;
+        }
+        #result_foodlist td{
+            transition: transform 0s;
+        }
+#result_foodlist:hover{
+  transform: scaleX(1.05);
+  background-color: #5a8100;
+}
+#result_foodlist:hover td{
+	color:white !important;
+}
 	</style>
 
 <!-- Header -->
@@ -195,8 +208,8 @@
 						<th style=width="20%" class="cal_tit">단위(g)</th>
 						<th style=width="20%">칼로리</th>
 					</tr>
-					<tr th:if="${list != null and list.size()>0}" th:each="food : ${list}">
-						<td>[[${food.rank}]]</td>
+					<tr th:if="${list != null and list.size()>0}" th:each="food, iterStat : ${list}" id="result_foodlist">
+						<td>[[${iterStat.count}]]</td>
 						<td>[[${food.foodName}]]</td>
 						<td>[[${food.foodQuantity}]]</td>
 						<td>[[${food.foodCalories}]]</td>

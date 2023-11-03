@@ -19,10 +19,6 @@ public class CalorieController {
     @GetMapping("exercise_calorie_list")
     public void exercise_calorie_list(){}
 
-    @GetMapping("food_calorie_list")
-    public String food_calorie_list() {
-        return "calorie/food_calorie_list";
-    }
 
     @Autowired
     private CalorieService calorieService;
@@ -49,11 +45,13 @@ public class CalorieController {
         return "calorie/food_calorie_search";
     }
 
-    @GetMapping("list")
-    public void list(Model model) throws Exception {
+    @GetMapping("food_calorie_list")
+    public void food_calorie_list(Model model) throws Exception {
         List<FoodDTO> topFoods = calorieService.getTop30Foods();
-        model.addAttribute("list", topFoods);
-        System.out.println(model);
+        if (topFoods != null && topFoods.size() > 0) {
+            model.addAttribute("list", topFoods);
+        }
+        System.out.println(topFoods);
     }
 }
 
