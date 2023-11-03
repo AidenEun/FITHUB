@@ -272,7 +272,7 @@
 							<div class="uInput">
 								<label for="inputId">아이디</label>
 								<div class="inputBox">
-									<input name="trainerId" type="text" id="inputId" class="inputText" placeholder="6~20자 영문, 숫자" th:value="${trainer.trainerId}" readonly>
+									<input name="trainerId" type="text" id="inputId" class="inputText" placeholder="6~20자 영문, 숫자" th:value="${user.trainerId}" readonly>
 								</div>
 							</div>
 						</div>
@@ -476,25 +476,25 @@
 
 					<tr class="zipcode_area">
 						<th>우편번호</th>
-						<td><input readonly name="trainerZipcode" type="text"
+						<td><input readonly name="trainerZipcode" type="text" th:value="${user.trainerZipcode}"
 								   id="sample6_postcode" placeholder="우편번호" onclick="sample6_execDaumPostcode()"><input
-								type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
+								type="button" onclick="sample6_execDaumPostcode()" value="우편번호">
 						</td>
 					</tr>
 					<tr class="addr_area">
 						<th>주소</th>
 						<td><input readonly name="trainerAddr" type="text"
-								   id="sample6_address" placeholder="주소"></td>
+								   id="sample6_address" placeholder="주소" th:value="${user.trainerAddr}"></td>
 					</tr>
 					<tr>
 						<th>상세주소</th>
 						<td><input readonly name="trainerAddrdetail" type="text"
-								   id="sample6_detailAddress" placeholder="상세주소"></td>
+								   id="sample6_detailAddress" placeholder="상세주소" th:value="${user.trainerAddrdetail}"></td>
 					</tr>
 					<tr>
 						<th>참고항목</th>
 						<td><input readonly name="trainerAddretc" type="text"
-								   id="sample6_extraAddress" placeholder="참고항목"></td>
+								   id="sample6_extraAddress" placeholder="참고항목" th:value="${user.trainerAddretc}"></td>
 					</tr>
 
 					<div class="uBlock">
@@ -503,7 +503,7 @@
 								<div class="uInput">
 									<label for="inputTrainerPart">파트</label>
 									<div class="inputBox">
-										<input readonly name="trainerPart" type="text" id="inputTrainerPart" class="inputText" placeholder="성별" value="" >
+										<input readonly name="trainerPart" type="text" id="inputTrainerPart" class="inputText" placeholder="성별" th:value="urainerPart" >
 									</div>
 								</div>
 							</div>
@@ -518,7 +518,7 @@
 								<div class="uInput">
 									<label for="inputTrainerCareer">경력</label>
 									<div class="inputBox">
-										<input readonly name="trainerCareer" type="text" id="inputTrainerCareer" class="inputText" placeholder="경력" value="" >
+										<input readonly name="trainerCareer" type="text" id="inputTrainerCareer" class="inputText" placeholder="경력" th:value="trainerCareer" >
 									</div>
 								</div>
 							</div>

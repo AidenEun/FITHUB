@@ -4,6 +4,7 @@ import com.kh.demo.domain.dto.*;
 import com.kh.demo.mapper.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ContentDisposition;
@@ -21,9 +22,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @Qualifier("UserMyPageServiceImpl")
@@ -37,6 +41,11 @@ public class UserMyPageServiceImpl implements UserMyPageService{
 
     @Autowired
     private UserMapper umapper;
+
+    @Autowired
+    private ProfileMapper pfmapper;
+    @Value("${profile.dir}")
+    private String saveFolder;
 
 
     @Override
@@ -251,5 +260,62 @@ public class UserMyPageServiceImpl implements UserMyPageService{
     public List<ChallNoticeBoardDTO> getMyChallenge(Criteria cri, String userId) {
         return umpmapper.getMyChallenge(cri, userId);
     }
+
+
+    //트레이너 전환 신청
+
+    @Override
+    public boolean insertApplytrainer(TrainerSignUpDTO user, MultipartFile[] files) throws Exception {
+        int row = umpmapper.insertApplytrainer(user);
+        if(row != 1) {
+            return false;
+        }
+        if(files == null || files.length == 0) {
+            return true;
+        }
+        else {
+            //방금 등록한 게시글 번호
+            boolean flag = false;
+            for(int i=0;i<files.length-1;i++) {
+                MultipartFile file = files[i];
+                //apple.png
+                String orgname = file.getOriginalFilename();
+                //5
+                int lastIdx = orgname.lastIndexOf(".");
+                //.png
+                String extension = orgname.substring(lastIdx);
+
+                LocalDateTime now = LocalDateTime.now();
+                String time = now.format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"));
+
+                //20231005103911237랜덤문자열.png
+                String systemname = time+ UUID.randomUUID().toString()+extension;
+                System.out.println(systemname);
+
+                //실제 저장될 파일의 경로
+                String path = saveFolder+systemname;
+
+                ProfileDTO profdto = new ProfileDTO();
+                profdto.setUserId(user.getUserId());
+                profdto.setSysName(systemname);
+                profdto.setOrgName(orgname);
+
+                //실제 파일 업로드
+                file.transferTo(new File(path));
+
+                flag = pfmapper.insertFile(profdto) == 1;
+
+                if(!flag) {
+                    //업로드 했던 파일 삭제, 게시글 데이터 삭제
+                    return flag;
+                }
+            }
+        }
+        return true;
+    }
+
+
+
+
 
 }

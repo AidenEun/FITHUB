@@ -21,4 +21,6 @@ public class UserDTO {
     private int userReportedcnt;
     private String userCategory;
     private int userAge;
+    //재우
+    private  String subDate;
 }

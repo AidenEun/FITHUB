@@ -98,8 +98,8 @@ public class TrainerMyPageServiceImpl implements TrainerMyPageService{
     }
 
     @Override
-    public List<MessageDTO> getMessageMyList(Criteria cri, String userId) {
-        return tmpmapper.getMyMessage(cri,userId);
+    public List<MessageDTO> getMessageMyList(Criteria cri, String trainerId) {
+        return tmpmapper.getMyMessage(cri,trainerId);
     }
 
 
@@ -161,8 +161,8 @@ public class TrainerMyPageServiceImpl implements TrainerMyPageService{
     }
 
     @Override
-    public List<BoardDTO> getBoardMyList(Criteria cri, String userId) {
-        return tmpmapper.getMyBoard(cri,userId);
+    public List<BoardDTO> getBoardMyList(Criteria cri, String trainerId) {
+        return tmpmapper.getMyBoard(cri,trainerId);
     }
 
 
@@ -198,8 +198,8 @@ public class TrainerMyPageServiceImpl implements TrainerMyPageService{
 
 
     @Override
-    public List<BoardDTO> getMyBookmark(Criteria cri, String userId) {
-        return tmpmapper.getMyBookmark(cri, userId);
+    public List<BoardDTO> getMyBookmark(Criteria cri, String trainerId) {
+        return tmpmapper.getMyBookmark(cri, trainerId);
     }
 
     @Override
@@ -223,9 +223,9 @@ public class TrainerMyPageServiceImpl implements TrainerMyPageService{
         return true;
     }
 
-    //내구독
+    //유저구독
     @Override
-    public List<TrainerDTO> getMyScribe(Criteria cri, String userId) {
+    public List<UserDTO> getMyScribe(Criteria cri, String userId) {
         return tmpmapper.getMyScribe(cri, userId);
     }
     @Override

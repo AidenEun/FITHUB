@@ -63,4 +63,9 @@ public interface UserMyPageMapper {
     Long getChallengeTotal(Criteria cri, String userId);
 
     List<ChallNoticeBoardDTO> getMyChallenge(Criteria cri, String userId);
+
+    //트레이너신청
+    int insertApplytrainer(TrainerSignUpDTO user);
+
+    Long getSignUpLastNum(String userId);
 }

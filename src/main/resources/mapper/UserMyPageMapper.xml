@@ -84,7 +84,7 @@
 	<!--bookmark_idx : regdate 로 수정 필요 : 임시값이 null이라 오류로 인해-->
 	<select id="getBookmarkTotal">
 		select count(*) from bookmark where user_id=#{userId} and
-		bookmark_idx > 0
+		regdate > 0
 	</select>
 	<select id="getBookmarkLastNum">
 		select max(bookmark_num) from bookmark where user_id=#{userId}
@@ -97,13 +97,13 @@
 	<select id="getMyBookmark">
 		select * from board,bookmark where bookmark.user_id=#{userId}
 		and board.board_category =bookMark.board_category and board.board_num=bookMark.board_num
-		order by bookmark.bookmark_idx desc limit #{cri.startrow},#{cri.amount}
+		order by bookmark.regdate desc limit #{cri.startrow},#{cri.amount}
 
 	</select>
 	<select id="getMyBookmarkProduct">
 		select * from product_board,bookmark where bookmark.user_id=#{userId}
 		and product_board.category =bookMark.board_category and product_board.board_num=bookMark.board_num
-		order by bookmark.bookmark_idx desc limit #{cri.startrow},#{cri.amount}
+		order by bookmark.regdate desc limit #{cri.startrow},#{cri.amount}
 	</select>
 
 	<!--내구독-->
@@ -130,6 +130,16 @@
 		order by my_challenge.sub_regdate desc limit #{cri.startrow},#{cri.amount}
 	</select>
 
+	<!--트레이너 신청-->
+	<insert id= "insertApplytrainer">
+		INSERT INTO trainer_signup (user_id, trainer_zipcode, trainer_addr, trainer_addrdetail, trainer_addretc, trainer_part, trainer_career, trainer_content)
+		VALUES
+		(#{userId}, #{trainerZipcode}, #{trainerAddr}, #{trainerAddrdetail},#{trainerAddretc}, #{trainerPart}, #{trainerCareer}, #{trainerContent})
+	</insert>
+
+	<select id="getSignUpLastNum">
+		select max(signup_num) from trainer_signup where user_id=#{userId}
+	</select>
 
 
 </mapper>

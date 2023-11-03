@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
@@ -27,17 +28,6 @@ public class UserMyPageController {
     @Qualifier("UserServiceImpl")
     private UserService serviceUser;
 
-    @Autowired
-    @Qualifier("BoardServiceImpl")
-    private BoardService serviceBoard;
-
-    @Autowired
-    @Qualifier("MessageServiceImpl")
-    private MessageService serviceMessage;
-
-    @Autowired
-    @Qualifier("BookMarkServiceImpl")
-    private BookMarkService serviceBookMark;
 
 
     @GetMapping("user_myinfo_modify")
@@ -138,6 +128,14 @@ public class UserMyPageController {
         String loginUser = (String) session.getAttribute("loginUser");
         UserDTO user = service.getUserDetail(loginUser);
         model.addAttribute("user", user);
+    }
+
+    @PostMapping("applytrainer")
+    public String applytrainer(TrainerSignUpDTO user, MultipartFile[] files) throws Exception{
+        if(service.insertApplytrainer(user,files)){
+            return "redirect:/usermypage/user_applytrainer";
+        }
+        return "redirect:/";
     }
 
     @GetMapping("user_diary")

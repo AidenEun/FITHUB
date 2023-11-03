@@ -1,0 +1,22 @@
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.demo.mapper.ProfileMapper">
+	<insert id="insertFile">
+		insert into profile values(#{userId},#{sysName},#{orgName},"C")
+	</insert>
+	
+	<select id="getFiles">
+		select * from profile where user_id=#{userId}
+	</select>
+	
+	<delete id="deleteBySystemname">
+		delete from profile where sys_name=#{sysName}
+	</delete>
+</mapper>
+
+
+
+
+
+
+

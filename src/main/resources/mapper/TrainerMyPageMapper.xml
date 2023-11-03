@@ -75,7 +75,7 @@
 
 
 	<select id="getMyBoard">
-		select * from board where user_id=#{tarinerId}
+		select * from board where user_id=#{trainerId}
 		order by board_num desc limit #{cri.startrow},#{cri.amount}
 	</select>
 
@@ -96,23 +96,23 @@
 	<select id="getMyBookmark">
 		select * from board,bookmark where bookmark.user_id=#{trainerId}
 		and board.board_category =bookMark.board_category and board.board_num=bookMark.board_num
-		order by bookmark.bookmark_idx desc limit #{cri.startrow},#{cri.amount}
+		order by bookmark.regdate desc limit #{cri.startrow},#{cri.amount}
 
 	</select><select id="getMyBookmarkProduct">
 	select * from product_board,bookmark where bookmark.user_id=#{trainerId}
 	and product_board.category =bookMark.board_category and product_board.board_num=bookMark.board_num
-	order by bookmark.bookmark_idx desc limit #{cri.startrow},#{cri.amount}
+	order by bookmark.regdate desc limit #{cri.startrow},#{cri.amount}
 </select>
 
 	<!--내구독-->
 	<select id="getMyScribe">
-		select * from trainer join subscribe on subscribe.trainer_id = trainer.trainer_id
-		where subscribe.user_id = #{userId}
+		select * from user join subscribe on subscribe.user_id = user.user_id
+		where subscribe.trainer_id = #{trainerId}
 		order by subscribe.sub_date desc limit #{cri.startrow},#{cri.amount}
 	</select>
 
 	<select id="getScribeTotal">
-		select count(*) from subscribe where user_id=#{userId} and
+		select count(*) from subscribe where user_id=#{trainerId} and
 		sub_num > 0
 	</select>
 

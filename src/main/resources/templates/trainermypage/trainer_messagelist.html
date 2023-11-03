@@ -160,7 +160,6 @@
 </style>
 <body class="is-preload">
 
-
 <!-- Header -->
 <th:block th:replace="~{layout/header::header(${session.loginUser})}"></th:block>
 
@@ -170,12 +169,12 @@
 
 		<header class="major">
 			<h2>마이페이지</h2>
-			<p>북마크</p>
+			<p>내 쪽지함</p>
 		</header>
-
 
 		<!-- Content -->
 		<div class="content">
+
 
 			<!-- 게시글 리스트 띄우는 테이블 -->
 			<table class="list">
@@ -183,34 +182,25 @@
 					<td colspan="6">글 개수 : [[${pageMaker.total}]]</td>
 				</tr>
 				<tr align="center" valign="middle">
-					<th width="8%">북마크번호</th>
-					<th>게시판번호</th>
-					<th>제목</th>
-					<th width="15%">작성자</th>
+					<th width="8%">번호</th>
+					<th></th>
+					<th width="15%">보낸사람</th>
+					<th>받는사람</th>
 					<th width="17%">날짜</th>
 					<th width="10%">조회수</th>
 				</tr>
-
-					<tr th:if="${list != null and list.size()>0}" th:each="board : ${list}">
-						<td>x</td>
-						<td>
-							[[${board.boardNum}]]
-		<!--						<sup class="hot" th:if="${recent_reply[boardStat.index] == 'O'}">Hot</sup>
-							<sup class="new" th:if="${newly_board[boardStat.index] == 'O'}">New</sup>-->
-						</td>
-						<td>
-							<a class="get" th:href="${board.boardNum}">
-								[[${board.boardTitle}]]
-								<!--<span class="reply_cnt" th:text="'['+${reply_cnt_list[boardStat.index]}+']'"></span>-->
-							</a>
-						</td>
-						<td>[[${board.userId}]]</td>
-						<td>
-							[[${board.regdate}]]
-						</td>
-						<td>[[${board.viewCnt}]]</td>
-					</tr>
-				</th:block>
+				<tr th:if="${list != null and list.size()>0}" th:each="message : ${list}">
+					<td>[[${message.messageNum}]]</td>
+					<td>
+						<sup class="new" th:if="${newly_Message[messageStat.index] == 'O'}">New</sup>
+					</td>
+					<td>[[${message.sendId}]]</td>
+					<td>[[${message.receiveId}]]</td>
+					<td>
+						[[${message.sendDate}]]
+					</td>
+					<td>x</td>
+				</tr>
 				<th:block th:if="${list == null or list.size() == 0}">
 					<tr>
 						<td colspan="6" style="text-align: center; font-size: 20px;">등록된
@@ -260,17 +250,20 @@
 			</form>
 		</div>
 
-		<form name="pageForm" id="pageForm" th:action="@{/usermypage/user_subbookmark}">
+		<form name="pageForm" id="pageForm" th:action="@{/trainermypage/trainer_messagelist}">
 			<input type="hidden" name="pagenum" th:value="${pageMaker.cri.pagenum}">
 			<input type="hidden" name="amount" th:value="${pageMaker.cri.amount}">
 			<input type="hidden" name="type" th:value="${pageMaker.cri.type}">
 			<input type="hidden" name="keyword" th:value="${pageMaker.cri.keyword}">
 		</form>
 
-		<!-- Sidebar -->
-		<th:block th:replace="~{layout/usermypage_sidebar::sidebar}"></th:block>
 
+
+
+		<!-- Sidebar -->
+		<th:block th:replace="~{layout/trainermypage_sidebar::sidebar}"></th:block>
 	</div>
+
 </section>
 
 <!-- Footer -->
@@ -287,6 +280,9 @@
 
 <script th:src="@{/assets/js/sidebar.js}"></script>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script th:inline="javascript">
 	const searchForm = $("#searchForm");
@@ -321,6 +317,7 @@
 		}
 		searchForm.submit();
 	}
+
 </script>
-</body>
+
 </html>
