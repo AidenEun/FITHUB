@@ -55,10 +55,6 @@ public class CalorieServiceImpl implements CalorieService {
     @Override
     public List<FoodDTO> getTop30Foods() {
         List<FoodDTO> foodDTOs = calmapper.getTop30FoodsByViewCnt();
-        int rank = 1;
-        for (FoodDTO foodDTO : foodDTOs) {
-            foodDTO.setRank(rank++);
-        }
         System.out.println(foodDTOs);
         return foodDTOs;
     }
