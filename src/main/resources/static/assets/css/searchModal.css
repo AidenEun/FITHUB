@@ -1,0 +1,102 @@
+.searchModalBox{
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0,0,0,0.6) ;
+    display: none;
+    /* display: flex; */
+    justify-content: center;
+    align-items: center;
+}
+
+.searchModalBox.active{
+    display: flex;
+}
+
+#modal_contents{
+    background-color: #fff;
+    width: 50%;
+    /* height: 500px; */
+    padding: 20px;
+    border-radius: 5px;
+    position: relative;
+}
+#modal_contents span{
+    text-align: center;
+}
+.modal_box{
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0,0,0,0.6) ;
+    display: none;
+    /* display: flex; */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+#modal_contents button{
+    background-color: #fff;
+    color: #ccc;
+    font-size: 20px;
+    border: none;
+
+}
+
+
+.searchModalBox #modal_contents #search .search_bar{
+    background-color: #ccc !important;
+
+}
+.searchModalBox #modal_contents input[type=search]{
+    opacity: 1;
+    border: 1px solid black;
+    margin-right: 20px;
+
+}
+.searchModalBox #modal_contents input[type=button]{
+    opacity: 1;
+
+}
+.searchModalBox #modal_contents .add{
+    display: flex;
+    justify-content: end;
+}
+
+
+.searchModalBox #modal_contents #modal_search{
+    display: flex;
+    justify-content: space-between;
+    border-radius: 5px;
+}
+.searchModalBox #modal_contents .choice_list{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    height: 200px;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+.searchModalBox #modal_contents .top{
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+}
+.searchModalBox #modal_contents .top #title{
+    margin-left: 30%;
+    font-size: 20px;
+    line-height: 55px;
+}
+.category{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+}
+.category input[type="radio"] + label{
+    font-size: 16px;
+}

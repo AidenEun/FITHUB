@@ -1,0 +1,33 @@
+<!-- 모달 검색창  -->
+<th:block th:fragment="searchModal()">
+<div class="searchModalBox">
+    <div id="modal_contents">
+        <div class="top">
+            <button class="searchclose">&times;</button>
+            <span id="title">칼로리 조회</span>
+        </div>
+
+        <div class="category">
+            <div>
+                <input type="radio" name="searchCategory" id="food" value="food" checked>
+                <label for="food">음식</label>
+            </div>
+            <div>
+                <input type="radio" name="searchCategory" id="exer" value="exer" >
+                <label for="exer">운동</label>
+            </div>
+        </div>
+
+        <div id="modal_search">
+            <input type="search" name="" id="search_bar">
+            <input type="button" value="검색" onclick="calsearch()">
+        </div>
+        <div class="choice_list"></div>
+        <div class="add">
+            <input type="button" value="추가">
+        </div>
+    </div>
+</div>
+
+</th:block>
+
