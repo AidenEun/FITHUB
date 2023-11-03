@@ -192,7 +192,7 @@
 				</tr>
 
 					<tr th:if="${list != null and list.size()>0}" th:each="board : ${list}">
-						<td>x</td>
+						<td>[[${board.regdate}]]</td>
 						<td>
 							[[${board.boardNum}]]
 		<!--						<sup class="hot" th:if="${recent_reply[boardStat.index] == 'O'}">Hot</sup>
@@ -260,7 +260,7 @@
 			</form>
 		</div>
 
-		<form name="pageForm" id="pageForm" th:action="@{/usermypage/user_subbookmark}">
+		<form name="pageForm" id="pageForm" th:action="@{/trainermypage/trainer_subbookmark}">
 			<input type="hidden" name="pagenum" th:value="${pageMaker.cri.pagenum}">
 			<input type="hidden" name="amount" th:value="${pageMaker.cri.amount}">
 			<input type="hidden" name="type" th:value="${pageMaker.cri.type}">
@@ -268,7 +268,7 @@
 		</form>
 
 		<!-- Sidebar -->
-		<th:block th:replace="~{layout/usermypage_sidebar::sidebar}"></th:block>
+		<th:block th:replace="~{layout/trainermypage_sidebar::sidebar}"></th:block>
 
 	</div>
 </section>

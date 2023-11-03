@@ -71,4 +71,9 @@ public interface UserMyPageService {
     Long getChallengeTotal(Criteria cri, String userId);
 
     List<ChallNoticeBoardDTO> getMyChallenge(Criteria cri, String userId);
+
+
+    //트레이너 전환 신청
+    boolean insertApplytrainer(TrainerSignUpDTO user,MultipartFile[] files) throws Exception;
+
 }

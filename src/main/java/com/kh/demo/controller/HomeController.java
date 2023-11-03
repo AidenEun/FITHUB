@@ -19,9 +19,6 @@ public class HomeController {
     @GetMapping("/index_sidebar")
     public void replace(){}
 
-    @PostMapping
-    public void trainer_signup(TrainerSignUpDTO SignUp){
-        System.out.println("SignUp : " +SignUp);
-    }
+
 
 }

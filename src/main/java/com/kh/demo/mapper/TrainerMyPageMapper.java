@@ -28,9 +28,9 @@ public interface TrainerMyPageMapper {
     //메세지
     Long getMessageTotal(Criteria cri);
 
-    Long getMessageLastNum(String userid);
+    Long getMessageLastNum(String trainerId);
 
-    List<MessageDTO> getMyMessage(Criteria cri, String userId);
+    List<MessageDTO> getMyMessage(Criteria cri, String trainerId);
 
 
     //보드
@@ -38,30 +38,30 @@ public interface TrainerMyPageMapper {
 
     BoardDTO findBoardByNum(Long boardnum);
 
-    Long getBoardLastNum(String userid);
+    Long getBoardLastNum(String trainerId);
 
-    List<BoardDTO> getMyBoard(Criteria cri, String userId);
+    List<BoardDTO> getMyBoard(Criteria cri, String trainerId);
 
 
 
     //북마크
-    Long getBookmarkTotal(Criteria cri, String userId);
+    Long getBookmarkTotal(Criteria cri, String trainerId);
 
-    Long getBookmarkLastNum(String userid);
+    Long getBookmarkLastNum(String trainerId);
 
-    List<BoardDTO> getMyBookmark(Criteria cri, String userId);
+    List<BoardDTO> getMyBookmark(Criteria cri, String trainerId);
 
-    List<ProductBoardDTO> getMyBookmarkProduct(Criteria cri, String userId);
+    List<ProductBoardDTO> getMyBookmarkProduct(Criteria cri, String trainerId);
 
 
     //내구독
-    List<TrainerDTO> getMyScribe(Criteria cri, String userId);
+    List<UserDTO> getMyScribe(Criteria cri, String trainerId);
 
-    Long getScribeTotal(Criteria cri, String userId);
+    Long getScribeTotal(Criteria cri, String trainerId);
 
 
     //내챌린지
-    Long getChallengeTotal(Criteria cri, String userId);
+    Long getChallengeTotal(Criteria cri, String trainerId);
 
-    List<ChallNoticeBoardDTO> getMyChallenge(Criteria cri, String userId);
+    List<ChallNoticeBoardDTO> getMyChallenge(Criteria cri, String trainerId);
 }
