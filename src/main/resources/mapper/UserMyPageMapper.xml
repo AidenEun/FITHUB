@@ -1,6 +1,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kh.demo.mapper.UserMyPageMapper">
+
 	<sql id="cri">
 		<if test="keyword != '' and type != ''">
 			<trim prefixOverrides="or" prefix="(" suffix=") and">
@@ -98,11 +99,12 @@
 		and board.board_category =bookMark.board_category and board.board_num=bookMark.board_num
 		order by bookmark.bookmark_idx desc limit #{cri.startrow},#{cri.amount}
 
-	</select><select id="getMyBookmarkProduct">
-	select * from product_board,bookmark where bookmark.user_id=#{userId}
-	and product_board.category =bookMark.board_category and product_board.board_num=bookMark.board_num
-	order by bookmark.bookmark_idx desc limit #{cri.startrow},#{cri.amount}
-</select>
+	</select>
+	<select id="getMyBookmarkProduct">
+		select * from product_board,bookmark where bookmark.user_id=#{userId}
+		and product_board.category =bookMark.board_category and product_board.board_num=bookMark.board_num
+		order by bookmark.bookmark_idx desc limit #{cri.startrow},#{cri.amount}
+	</select>
 
 	<!--내구독-->
 	<select id="getMyScribe">

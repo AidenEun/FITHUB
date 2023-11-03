@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-@Qualifier("UserMyPageServiceImpl")
+@Qualifier("TrainerMyPageServiceImpl")
 public class TrainerMyPageServiceImpl implements TrainerMyPageService{
 
     @Autowired
