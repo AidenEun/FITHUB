@@ -172,9 +172,8 @@
 			<div class="search-border">
 				<div class="search-container">
 					<div class="search">
-						<input type="text" id="search-input" placeholder="검색어를 입력하세요" list="suggested-foods">
-						<datalist id="suggested-foods"></datalist>
-						<input type="button" id="search-button" value="검색">
+						<input type="search" id="search-input">
+						<input type="button" id="search-button" value="검색" onclick="searchFood()">
 					</div>
 				</div>
 				<div class="search_content">
@@ -187,194 +186,20 @@
 			<hr>
 			<div class="food_ranking">
 				<div class="food_raking_title">
-					<p>음식 칼로리 </p><p style="color: red;"> 검색순위 TOP</p>
+					<p>음식 칼로리 </p><p style="color: red;"> 검색순위 TOP 30</p>
 				</div>
 				<table class="cal_search_ranking">
 					<tr>
 						<th style=width="20%" class="cal_tit">순위</th>
 						<th style=width="40%" class="cal_tit">음식명</th>
-						<th style=width="20%" class="cal_tit">단위</th>
+						<th style=width="20%" class="cal_tit">단위(g)</th>
 						<th style=width="20%">칼로리</th>
 					</tr>
-					<tr>
-						<td>aaaa</td>
-						<td>bbbb</td>
-						<td>cccc</td>
-						<td>dddd</td>
-					</tr>
-					<tr>
-						<td>aaaa</td>
-						<td>bbbb</td>
-						<td>cccc</td>
-						<td>dddd</td>
-					</tr>
-					<tr>
-						<td>aaaa</td>
-						<td>bbbb</td>
-						<td>cccc</td>
-						<td>dddd</td>
-					</tr>
-					<tr>
-						<td>aaaa</td>
-						<td>bbbb</td>
-						<td>cccc</td>
-						<td>dddd</td>
-					</tr>
-					<tr>
-						<td>aaaa</td>
-						<td>bbbb</td>
-						<td>cccc</td>
-						<td>dddd</td>
-					</tr>
-					<tr>
-						<td>aaaa</td>
-						<td>bbbb</td>
-						<td>cccc</td>
-						<td>dddd</td>
-					</tr>
-					<tr>
-						<td>aaaa</td>
-						<td>bbbb</td>
-						<td>cccc</td>
-						<td>dddd</td>
-					</tr>
-					<tr>
-						<td>aaaa</td>
-						<td>bbbb</td>
-						<td>cccc</td>
-						<td>dddd</td>
-					</tr>
-					<tr>
-						<td>aaaa</td>
-						<td>bbbb</td>
-						<td>cccc</td>
-						<td>dddd</td>
-					</tr>
-					<tr>
-						<td>aaaa</td>
-						<td>bbbb</td>
-						<td>cccc</td>
-						<td>dddd</td>
-					</tr>
-					<tr>
-						<td>aaaa</td>
-						<td>bbbb</td>
-						<td>cccc</td>
-						<td>dddd</td>
-					</tr>
-					<tr>
-						<td>aaaa</td>
-						<td>bbbb</td>
-						<td>cccc</td>
-						<td>dddd</td>
-					</tr>
-					<tr>
-						<td>aaaa</td>
-						<td>bbbb</td>
-						<td>cccc</td>
-						<td>dddd</td>
-					</tr>
-					<tr>
-						<td>aaaa</td>
-						<td>bbbb</td>
-						<td>cccc</td>
-						<td>dddd</td>
-					</tr>
-					<tr>
-						<td>aaaa</td>
-						<td>bbbb</td>
-						<td>cccc</td>
-						<td>dddd</td>
-					</tr>
-					<tr>
-						<td>aaaa</td>
-						<td>bbbb</td>
-						<td>cccc</td>
-						<td>dddd</td>
-					</tr>
-					<tr>
-						<td>aaaa</td>
-						<td>bbbb</td>
-						<td>cccc</td>
-						<td>dddd</td>
-					</tr>
-					<tr>
-						<td>aaaa</td>
-						<td>bbbb</td>
-						<td>cccc</td>
-						<td>dddd</td>
-					</tr>
-					<tr>
-						<td>aaaa</td>
-						<td>bbbb</td>
-						<td>cccc</td>
-						<td>dddd</td>
-					</tr>
-					<tr>
-						<td>aaaa</td>
-						<td>bbbb</td>
-						<td>cccc</td>
-						<td>dddd</td>
-					</tr>
-					<tr>
-						<td>aaaa</td>
-						<td>bbbb</td>
-						<td>cccc</td>
-						<td>dddd</td>
-					</tr>
-					<tr>
-						<td>aaaa</td>
-						<td>bbbb</td>
-						<td>cccc</td>
-						<td>dddd</td>
-					</tr>
-					<tr>
-						<td>aaaa</td>
-						<td>bbbb</td>
-						<td>cccc</td>
-						<td>dddd</td>
-					</tr>
-					<tr>
-						<td>aaaa</td>
-						<td>bbbb</td>
-						<td>cccc</td>
-						<td>dddd</td>
-					</tr>
-					<tr>
-						<td>aaaa</td>
-						<td>bbbb</td>
-						<td>cccc</td>
-						<td>dddd</td>
-					</tr>
-					<tr>
-						<td>aaaa</td>
-						<td>bbbb</td>
-						<td>cccc</td>
-						<td>dddd</td>
-					</tr>
-					<tr>
-						<td>aaaa</td>
-						<td>bbbb</td>
-						<td>cccc</td>
-						<td>dddd</td>
-					</tr>
-					<tr>
-						<td>aaaa</td>
-						<td>bbbb</td>
-						<td>cccc</td>
-						<td>dddd</td>
-					</tr>
-					<tr>
-						<td>aaaa</td>
-						<td>bbbb</td>
-						<td>cccc</td>
-						<td>dddd</td>
-					</tr>
-					<tr>
-						<td>aaaa</td>
-						<td>bbbb</td>
-						<td>cccc</td>
-						<td>dddd</td>
+					<tr th:if="${list != null and list.size()>0}" th:each="food : ${list}">
+						<td>[[${food.rank}]]</td>
+						<td>[[${food.foodName}]]</td>
+						<td>[[${food.foodQuantity}]]</td>
+						<td>[[${food.foodCalories}]]</td>
 					</tr>
 				</table>
 			</div>
@@ -401,39 +226,19 @@
 </body>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script>
-		$(document).ready(function () {
-            $("#search-input").on("input", function () {
-                var keyword = $(this).val();
-                if (keyword.length >= 1) {
-                    $.ajax({
-                        url: "/calorie/getSuggestedFoods",
-                        method: "GET",
-                        data: { keyword: keyword },
-                        success: function (data) {
-                            var datalist = $("#suggested-foods");
-                            datalist.empty();
-                            data.forEach(function (food) {
-                                datalist.append($("<option>").attr("value", food));
-                            });
-                        },
-                        error: function (error) {
-                            console.log(error);
-                        }
-                    });
-                } else {
-                    $("#suggested-foods").empty();
-                }
-            });
+		function searchFood() {
+            var keyword = $("#search-input").val();
+            if (keyword) {
+                // 검색어를 URL 파라미터로 전달하고, 검색 결과 페이지로 이동합니다.
+                window.location.href = "/calorie/food_calorie_search?keyword=" + keyword;
+            } else {
+                alert("검색어를 입력하세요.");
+            }
+        }
 
-            $("#search-button").click(function () {
-                var keyword = $("#search-input").val();
-                if (keyword) {
-                    // 실제 검색 작업 수행
-                    // 예: window.location.href = "/calorie/search?keyword=" + keyword;
-                } else {
-                    alert("검색어를 입력하세요.");
-                }
-            });
+        // 예: 검색 버튼 클릭 시 searchFood 함수 호출
+        $("#search-button").click(function() {
+            searchFood();
         });
 	</script>
 </html>
