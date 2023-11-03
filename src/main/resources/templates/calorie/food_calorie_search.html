@@ -98,13 +98,13 @@
             padding: 40px;
             margin: 0px;
             background-color: gainsboro;
-
-
+        border-radius:15px;
         }
         .search_content p{
             font-size: 18px;
             font-weight: bold;
             height: 20px;
+
         }
         .FITHUB{
             color: blue;
@@ -142,11 +142,16 @@
   transform: translateY(-50%);
   color: gray;
 }
-        #result_foodlist{
+       	#result_foodlist{
             transition: transform 0.2s;
         }
+
 #result_foodlist:hover{
-  transform: scale(1.1); /* 1.1배 확대 */
+  transform: scaleX(1.05);
+  background-color: #5a8100;
+}
+#result_foodlist:hover td{
+	color:white !important;
 }
     </style>
 
@@ -172,7 +177,7 @@
                 <div class="search-container">
                     <div class="search">
                         <input type="text" id="search-input" placeholder="검색어를 입력하세요">
-                        <input type="button" id="search-button" value="검색" onclick="search()">
+                        <input type="button" id="search-button" value="검색" onclick="searchFood()">
                     </div>
                 </div>
                 <div class="search_content">
@@ -224,4 +229,21 @@
 
 <script th:src="@{/assets/js/sidebar.js}"></script>
 </body>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function searchFood() {
+            var keyword = $("#search-input").val();
+            if (keyword) {
+                // 검색어를 URL 파라미터로 전달하고, 검색 결과 페이지로 이동합니다.
+                window.location.href = "/calorie/food_calorie_search?keyword=" + keyword;
+            } else {
+                alert("검색어를 입력하세요.");
+            }
+        }
+
+        // 예: 검색 버튼 클릭 시 searchFood 함수 호출
+        $("#search-button").click(function() {
+            searchFood();
+        });
+    </script>
 </html>

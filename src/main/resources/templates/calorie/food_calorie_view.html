@@ -1,10 +1,377 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<!--
+	Slate by Pixelarity
+	pixelarity.com | hello@pixelarity.com
+	License: pixelarity.com/license
+-->
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+    <title>Fit Hub</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" th:href="@{/assets/css/index.css}" />
+    <link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
+    <noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
+    <style>
+        .top_img_box{
+        width: 100%;
+        height: 310px;
+        margin-bottom: 50px;
+        background-color: red;
+    }
 
-</body>
+    .top_img_box > img {
+        width: 100%;
+        height: 100%;
+    }
+
+    #main {
+        padding: 0;
+    }
+
+    .wrapper {
+        padding: 0;
+        margin-bottom: 100px;
+    }
+
+    #header {
+        background-color: #5a8100;
+    }
+
+    #header nav > ul > li a {
+        color: white;
+    }
+
+    #header h1 a {
+        color: white;
+    }
+
+    #header .main ul li > a {
+        color: white;
+
+    }
+
+    #footer {
+        background-color: #304400;
+    }
+
+
+
+        #main{
+            padding-top: 0px;
+        }
+        .inner{
+            padding-top: 50px;
+        }
+        .inner > .content{
+            width: 1080px;
+            margin : 0 auto;
+            padding: 0px;
+        }
+        .search-container{
+        padding: 40px;
+
+        }
+        .search{
+            display: flex;
+        }
+        .search-border{
+            border: 1px solid rgb(200, 200, 200);
+            border-radius: 15px;
+            margin-bottom: 50px;
+        }
+        #search-input{
+            height: 60px;
+            border-radius: 10px 0 0 10px;
+            border : 1px solid rgb(200, 200, 200);
+
+        }
+        #search-button{
+            width: 100px;
+            height: 60px;
+            border-radius: 0 10px 10px 0;
+            background-color: gainsboro;
+
+
+        }
+        .search_content{
+            padding: 40px;
+            margin: 0px;
+            background-color: gainsboro;
+            border-radius:15px;
+        }
+        .search_content p{
+            font-size: 18px;
+            font-weight: bold;
+            height: 20px;
+        }
+        .FITHUB{
+            color: blue;
+        }
+        .food_info{
+            color: green;
+        }
+        .food_search_result{
+            display: flex;
+            font-size: 25px;
+            font-weight: bold;
+        }
+        .name_quan_cal tr{
+        height: 40px;
+        }
+
+        .nametag{
+          background-color: rgb(250,237,230);
+        }
+
+        #coment{
+         display: flex;
+            font-size: 15px;
+            font-weight: bold;
+        }
+        #nutrient_title{
+         font-size: 20px;
+            font-weight: bold;
+        }
+        #nutrient{
+        height: 200px;
+        border: 1px solid rgb(240,240,240);
+        border-radius: 15px;
+        margin-bottom: 30px
+        }
+        #exercise_calorie{
+        margin-bottom: 50px
+
+        }
+        .exercise_check{
+        display: flex;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        #exer_cal_border{
+        height: 250px;
+        background-color:gray;
+        border-radius: 10px;
+        z-index:250;
+        display: flex;
+        }
+
+        .exer {
+  background-color: white !important;
+  display: flex; /* Flexbox container 설정 */
+  flex-direction: column;
+  height: 210px;
+  width: 192px;
+  z-index: 300;
+  margin: 20px 20px 20px 0;
+  border-radius: 20px;
+}
+
+.exer:first-child {
+  margin: 20px;
+}
+
+.exer_img {
+  height: 130px;
+  width: 192px;
+  display: inline-block;
+  position: relative;
+}
+
+.exer_img img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  text-align:center;
+}
+#walking{
+position: relative;
+left: 27px;
+}
+#running{
+position: relative;
+left: 29px;
+}
+#jumprope{
+position: relative;
+left: 28px;
+}
+#bicycle{
+position: relative;
+left: 29px;
+}
+        .exer_time{
+        height: 40px;
+        text-align:center;
+        }
+    </style>
+
+
+    <!-- Header -->
+    <th:block th:replace="~{layout/header-test::header-test(${session.loginUser})}"></th:block>
+
+    <!-- Main -->
+    <section id="main" class="wrapper left">
+        <div class="top_img_box">
+            <img src="/images/pic01.jpg" alt="">
+        </div>
+        <div class="inner">
+
+            <header class="major">
+                <h2>음식 칼로리</h2>
+                <p>음식 칼로리 조회</p>
+            </header>
+
+            <!-- Content -->
+            <div class="content">
+                <div class="search-border">
+                    <div class="search-container">
+                        <div class="search">
+                            <input type="text" id="search-input" placeholder="검색어를 입력하세요">
+                            <input type="button" id="search-button" value="검색" onclick="searchFood()">
+                        </div>
+                    </div>
+                    <div class="search_content">
+                        <p>
+                            <span class="FITHUB">FIT HUB</span> 칼로리 조회에서는 <span class="food_info"> 칼로리 뿐만 아니라 영양소 구성</span>도 함께 나와 다이어트뿐 아니라<br>건강한 식습관 형성에도 도움이 됩니다.
+                        </p>
+
+                    </div>
+                </div>
+                <hr>
+                <div class="result_box">
+                    <div class="food_search_result">
+                        <p style="color: red;" th:if="${searchKeyword}"> <span th:text="${searchKeyword}"></span></p>
+                        <p>(으)로</p>
+                        <p>검색한 결과</p>
+                    </div>
+                    <table class="name_quan_cal">
+                        <tr>
+                            <th width="30%" class="nametag">음식명</th>
+                            <td width="70%" food.foodName></td>
+                        </tr>
+                        <tr>
+                            <th width="30%" class="nametag">단위</th>
+                            <td width="70%" food.foodQuantity>g</td>
+                        </tr>
+                        <tr>
+                            <th width="30%" class="nametag">칼로리</th>
+                            <td width="70%" food.foodCalories>kcal</td>
+                        </tr>
+                    </table>
+                    <div id="coment">
+                        <p style="color: red;">[주의]</p>
+                        <p>음식 칼로리는 사용되는 재료와 1인 분량 기준의 차이에 의해 다소 차이가 있을 수 있습니다</p>
+                    </div>
+                </div>
+                <div>
+                    <p id="nutrient_title">영양소 구성</p>
+                    <div id="nutrient">
+
+                    </div>
+                </div>
+                <div id="exercise_calorie">
+                    <div class="exercise_check">
+                        <p style="color: blue;" th:if="${searchKeyword}"> <span th:text="${searchKeyword}"></span></p>
+                        <p>칼로리(</p>
+                        <p style="color: blue;">food.foodCalories</p>
+                        <p>)와 동일한 운동을 확인해보세요.</p>
+                    </div>
+                    <div id="exer_cal_border">
+
+                        <div class="exer">
+                            <div class="exer_img" id="walking">
+                                <img src="/images/walking.png" alt="walking">
+                            </div>
+                            <div class="exer_time">
+                                걷기
+                            </div>
+                            <div class="exer_time">
+                                시간
+                            </div>
+                        </div>
+                        <div class="exer">
+                            <div class="exer_img" id="running">
+                                <img src="/images/running.png" alt="running">
+                            </div>
+                            <div class="exer_time">
+                                달리기
+                            </div>
+                            <div class="exer_time">
+                                시간
+                            </div>
+                        </div>
+                        <div class="exer">
+                            <div class="exer_img" id="jumprope">
+                                <img src="/images/jumprope.jpg" alt="jumprope">
+                            </div>
+                            <div class="exer_time">
+                                줄넘기
+                            </div>
+                            <div class="exer_time">
+                                시간
+                            </div>
+                        </div>
+                        <div class="exer">
+                            <div class="exer_img">
+                                <img src="/images/swim.jpg" alt="swim">
+                            </div>
+                            <div class="exer_time">
+                                수영
+                            </div>
+                            <div class="exer_time">
+                                시간
+                            </div>
+                        </div>
+                        <div class="exer">
+                            <div class="exer_img" id="bicycle">
+                                <img src="/images/bicycle.png" alt="bicycle">
+                            </div>
+                            <div class="exer_time">
+                                자전거
+                            </div>
+                            <div class="exer_time">
+                                시간
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            </div>
+    </section>
+
+    <!-- Footer -->
+    <th:block th:replace="~{layout/footer::footer}"></th:block>
+
+    <!-- Scripts -->
+    <script th:src="@{/assets/js/jquery.min.js}"></script>
+    <script th:src="@{/assets/js/jquery.dropotron.min.js}"></script>
+    <script th:src="@{/assets/js/jquery.scrollex.min.js}"></script>
+    <script th:src="@{/assets/js/browser.min.js}"></script>
+    <script th:src="@{/assets/js/breakpoints.min.js}"></script>
+    <script th:src="@{/assets/js/util.js}"></script>
+    <script th:src="@{/assets/js/main.js}"></script>
+
+    <script th:src="@{/assets/js/util_sub.js}"></script>
+    <script th:src="@{/assets/js/main_sub.js}"></script>
+
+    <script th:src="@{/assets/js/sidebar.js}"></script>
+    </body>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function searchFood() {
+            var keyword = $("#search-input").val();
+            if (keyword) {
+                // 검색어를 URL 파라미터로 전달하고, 검색 결과 페이지로 이동합니다.
+                window.location.href = "/calorie/food_calorie_search?keyword=" + keyword;
+            } else {
+                alert("검색어를 입력하세요.");
+            }
+        }
+
+        // 예: 검색 버튼 클릭 시 searchFood 함수 호출
+        $("#search-button").click(function() {
+            searchFood();
+        });
+    </script>
 </html>
