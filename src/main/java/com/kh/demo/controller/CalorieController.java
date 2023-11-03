@@ -19,6 +19,8 @@ public class CalorieController {
     @GetMapping("exercise_calorie_list")
     public void exercise_calorie_list(){}
 
+    @GetMapping("food_calorie_view")
+    public void exercise_calorie_view(){}
 
     @Autowired
     private CalorieService calorieService;
