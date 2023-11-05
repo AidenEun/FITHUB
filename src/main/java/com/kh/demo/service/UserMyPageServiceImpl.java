@@ -5,21 +5,10 @@ import com.kh.demo.mapper.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.core.io.Resource;
-import org.springframework.http.ContentDisposition;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -87,8 +76,8 @@ public class UserMyPageServiceImpl implements UserMyPageService{
 
     //메세지
     @Override
-    public Long getMessageTotal(Criteria cri) {
-        return umpmapper.getMessageTotal(cri);
+    public Long getMessageTotal(Criteria cri,String userId) {
+        return umpmapper.getMessageTotal(cri, userId);
     }
 
 
@@ -123,8 +112,8 @@ public class UserMyPageServiceImpl implements UserMyPageService{
 
     //보드
     @Override
-    public Long getBoardTotal(Criteria cri) {
-        return umpmapper.getBoardTotal(cri);
+    public Long getBoardTotal(Criteria cri, String userId) {
+        return umpmapper.getBoardTotal(cri,userId);
     }
 
     @Override

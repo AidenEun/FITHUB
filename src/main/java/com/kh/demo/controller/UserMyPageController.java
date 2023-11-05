@@ -12,9 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -102,9 +100,9 @@ public class UserMyPageController {
         List<BoardDTO> list = service.getBoardMyList(cri,userId);
       /* List<BoardDTO> list = serviceBoard.getBoardList(cri);*/
         System.out.println("cri : "+cri);
-        System.out.println("PageDTO : "+new PageDTO(service.getBoardTotal(cri), cri));
+        System.out.println("PageDTO : "+new PageDTO(service.getBoardTotal(cri, userId), cri));
         model.addAttribute("list",list);
-        model.addAttribute("pageMaker",new PageDTO(service.getBoardTotal(cri), cri));
+        model.addAttribute("pageMaker",new PageDTO(service.getBoardTotal(cri,userId), cri));
         model.addAttribute("newly_board",service.getBoardNewlyList(list));
         model.addAttribute("reply_cnt_list",service.getBoardReplyCntList(list));
         model.addAttribute("recent_reply",service.getBoardRecentReplyList(list));
@@ -118,7 +116,7 @@ public class UserMyPageController {
         System.out.println(cri);
         System.out.println("list:"+list);
         model.addAttribute("list",list);
-        model.addAttribute("pageMaker",new PageDTO(service.getMessageTotal(cri), cri));
+        model.addAttribute("pageMaker",new PageDTO(service.getMessageTotal(cri,userId), cri));
         model.addAttribute("newly_Message",service.getMessageNewlyList(list));
     }
 

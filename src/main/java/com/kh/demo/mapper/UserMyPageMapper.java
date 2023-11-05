@@ -25,7 +25,7 @@ public interface UserMyPageMapper {
 
     //재우
     //메세지
-    Long getMessageTotal(Criteria cri);
+    Long getMessageTotal(Criteria cri, String userId);
 
     Long getMessageLastNum(String userid);
 
@@ -33,7 +33,7 @@ public interface UserMyPageMapper {
 
 
     //보드
-    Long getBoardTotal(Criteria cri);
+    Long getBoardTotal(Criteria cri, String userId);
     
     BoardDTO findBoardByNum(Long boardnum);
 
