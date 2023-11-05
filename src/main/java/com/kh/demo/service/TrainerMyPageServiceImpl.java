@@ -70,8 +70,8 @@ public class TrainerMyPageServiceImpl implements TrainerMyPageService{
 
     //메세지
     @Override
-    public Long getMessageTotal(Criteria cri) {
-        return tmpmapper.getMessageTotal(cri);
+    public Long getMessageTotal(Criteria cri, String trainer) {
+        return tmpmapper.getMessageTotal(cri, trainer);
     }
 
 
@@ -106,8 +106,13 @@ public class TrainerMyPageServiceImpl implements TrainerMyPageService{
 
     //보드
     @Override
-    public Long getBoardTotal(Criteria cri) {
-        return tmpmapper.getBoardTotal(cri);
+    public Long getBoardTotal(CriteriaTrainerProfile cri, String trainerId) {
+        return tmpmapper.getBoardTotal(cri, trainerId);
+    }
+
+    @Override
+    public Long getBoardTotal(Criteria cri, String trainerId) {
+        return tmpmapper.getBoardTotal(cri, trainerId);
     }
 
     @Override
@@ -161,10 +166,13 @@ public class TrainerMyPageServiceImpl implements TrainerMyPageService{
     }
 
     @Override
+    public List<BoardDTO> getBoardMyList(CriteriaTrainerProfile cri, String trainerId) {
+        return tmpmapper.getMyBoard(cri,trainerId);
+    }
+    @Override
     public List<BoardDTO> getBoardMyList(Criteria cri, String trainerId) {
         return tmpmapper.getMyBoard(cri,trainerId);
     }
-
 
 
     //북마크

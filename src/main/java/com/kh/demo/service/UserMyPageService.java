@@ -1,8 +1,6 @@
 package com.kh.demo.service;
 
 import com.kh.demo.domain.dto.*;
-import org.springframework.core.io.Resource;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
@@ -33,14 +31,14 @@ public interface UserMyPageService {
 
     /*재우*/
     //메세지
-    Long getMessageTotal(Criteria cri);
+    Long getMessageTotal(Criteria cri, String userId);
     Long getMessageLastNum(String userid);
     ArrayList<String> getMessageNewlyList(List<MessageDTO> list) throws Exception;
 
     List<MessageDTO> getMessageMyList(Criteria cri, String userId);
 
     //보드
-    Long getBoardTotal(Criteria cri);
+    Long getBoardTotal(Criteria cri, String userId);
     BoardDTO getBoardDetail(Long boardnum);
     Long getBoardLastNum(String userid);
     ArrayList<String> getBoardNewlyList(List<BoardDTO> list) throws Exception;

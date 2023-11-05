@@ -2,7 +2,6 @@ package com.kh.demo.controller;
 
 import com.kh.demo.domain.dto.*;
 import com.kh.demo.service.TrainerMyPageService;
-import com.kh.demo.service.UserMyPageService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -23,6 +23,32 @@ public class TrainerMyPageController {
     @Qualifier("TrainerMyPageServiceImpl")
     private TrainerMyPageService service;
 
+
+
+
+    @GetMapping(value = {"trainer_myprofile","trainer_profile"})
+    public String trainer_profile(CriteriaTrainerProfile cri, String trainerId , Model model, HttpServletRequest req) throws Exception {
+
+        String requestURI = req.getRequestURI();
+        TrainerDTO id = service.getUserDetail(trainerId);
+        System.out.println("requestURI : "+requestURI);
+
+        List<BoardDTO>  list = service.getBoardMyList(cri, trainerId);
+
+        System.out.println("cri : " + cri);
+        System.out.println("list : " + list);
+        System.out.println("trainer : " + id);
+        System.out.println("PageDTO : " + new PageDTO(service.getBoardTotal(cri, trainerId), cri));
+        model.addAttribute("list", list);
+        model.addAttribute("trainer", id);
+
+        model.addAttribute("pageMaker", new PageDTO(service.getBoardTotal(cri, trainerId), cri));
+        model.addAttribute("newly_board", service.getBoardNewlyList(list));
+        model.addAttribute("reply_cnt_list", service.getBoardReplyCntList(list));
+        model.addAttribute("recent_reply", service.getBoardRecentReplyList(list));
+
+        return "/trainermypage/trainer_profile";
+    }
 
 
     @GetMapping("trainer_challenge")
@@ -82,9 +108,9 @@ public class TrainerMyPageController {
         /* List<BoardDTO> list = serviceBoard.getBoardList(cri);*/
         System.out.println("cri : "+cri);
         System.out.println("list : "+list);
-        System.out.println("PageDTO : "+new PageDTO(service.getBoardTotal(cri), cri));
+        System.out.println("PageDTO : "+new PageDTO(service.getBoardTotal(cri, id.getTrainerId()), cri));
         model.addAttribute("list",list);
-        model.addAttribute("pageMaker",new PageDTO(service.getBoardTotal(cri), cri));
+        model.addAttribute("pageMaker",new PageDTO(service.getBoardTotal(cri, id.getTrainerId()), cri));
         model.addAttribute("newly_board",service.getBoardNewlyList(list));
         model.addAttribute("reply_cnt_list",service.getBoardReplyCntList(list));
         model.addAttribute("recent_reply",service.getBoardRecentReplyList(list));
@@ -101,7 +127,7 @@ public class TrainerMyPageController {
         System.out.println(cri);
         System.out.println("list:"+list);
         model.addAttribute("list",list);
-        model.addAttribute("pageMaker",new PageDTO(service.getMessageTotal(cri), cri));
+        model.addAttribute("pageMaker",new PageDTO(service.getMessageTotal(cri,id.getTrainerId()), cri));
         model.addAttribute("newly_Message",service.getMessageNewlyList(list));
     }
 

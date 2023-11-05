@@ -26,7 +26,7 @@ public interface TrainerMyPageMapper {
 
     //재우
     //메세지
-    Long getMessageTotal(Criteria cri);
+    Long getMessageTotal(Criteria cri, String trainerId);
 
     Long getMessageLastNum(String trainerId);
 
@@ -34,7 +34,9 @@ public interface TrainerMyPageMapper {
 
 
     //보드
-    Long getBoardTotal(Criteria cri);
+    Long getBoardTotal(Criteria cri, String trainerId);
+
+    Long getBoardTotal(CriteriaTrainerProfile cri, String trainerId);
 
     BoardDTO findBoardByNum(Long boardnum);
 
@@ -42,7 +44,7 @@ public interface TrainerMyPageMapper {
 
     List<BoardDTO> getMyBoard(Criteria cri, String trainerId);
 
-
+    List<BoardDTO> getMyBoard(CriteriaTrainerProfile cri, String trainerId);
 
     //북마크
     Long getBookmarkTotal(Criteria cri, String trainerId);

@@ -205,9 +205,6 @@
 					<td>[[${board.userId}]]</td>
 					<td>
 						[[${board.regdate}]]
-						<th:block th:if="${board.regdate != board.updateDate}">
-							(수정됨)
-						</th:block>
 					</td>
 					<td>[[${board.viewCnt}]]</td>
 				</tr>
@@ -268,7 +265,7 @@
 		</form>
 
 		<!-- Sidebar -->
-		<th:block th:replace="~{layout/trainermypage_sidebar::sidebar}"></th:block>
+		<th:block th:replace="~{layout/trainermypage_sidebar::sidebar(${session.loginUser})}"></th:block>
 
 	</div>
 </section>

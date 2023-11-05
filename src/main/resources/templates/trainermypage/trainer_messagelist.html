@@ -261,7 +261,7 @@
 
 
 		<!-- Sidebar -->
-		<th:block th:replace="~{layout/trainermypage_sidebar::sidebar}"></th:block>
+		<th:block th:replace="~{layout/trainermypage_sidebar::sidebar(${session.loginUser})}"></th:block>
 	</div>
 
 </section>

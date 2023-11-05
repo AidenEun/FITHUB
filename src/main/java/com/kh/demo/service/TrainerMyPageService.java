@@ -31,22 +31,24 @@ public interface TrainerMyPageService {
 
     /*재우*/
     //메세지
-    Long getMessageTotal(Criteria cri);
+    Long getMessageTotal(Criteria cri, String trainer);
     Long getMessageLastNum(String userid);
     ArrayList<String> getMessageNewlyList(List<MessageDTO> list) throws Exception;
 
     List<MessageDTO> getMessageMyList(Criteria cri, String trainerId);
 
     //보드
-    Long getBoardTotal(Criteria cri);
+    Long getBoardTotal(CriteriaTrainerProfile cri, String trainerId);
+
+    Long getBoardTotal(Criteria cri, String trainerId);
     BoardDTO getBoardDetail(Long boardnum);
     Long getBoardLastNum(String userid);
     ArrayList<String> getBoardNewlyList(List<BoardDTO> list) throws Exception;
     ArrayList<Integer> getBoardReplyCntList(List<BoardDTO> list);
     ArrayList<String> getBoardRecentReplyList(List<BoardDTO> list);
 
+    List<BoardDTO> getBoardMyList(CriteriaTrainerProfile cri, String trainerId);
     List<BoardDTO> getBoardMyList(Criteria cri, String trainerId);
-
 
     //북마크
     Long getBookmarkTotal(Criteria cri, String userId);

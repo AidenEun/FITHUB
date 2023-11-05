@@ -54,8 +54,8 @@
 	</select>
 
 	<select id="getMessageTotal">
-		select count(*) from message where
-		<include refid="cri"/> message_num > 0
+		select count(*) from message where send_id=#{trainerId} or receive_id=#{trainerId} and
+		message_num > 0
 	</select>
 	<select id="getMessageLastNum">
 		select max(message_num) from message where user_id=#{trainerId}
@@ -63,8 +63,8 @@
 
 	<!--보드-->
 	<select id="getBoardTotal">
-		select count(*) from board where
-		<include refid="cri"/> board_num > 0
+		select count(*) from board where user_id=#{trainerId} and
+		board_num > 0
 	</select>
 	<select id="getBoardLastNum">
 		select max(board_num) from board where user_id=#{trainerId}
