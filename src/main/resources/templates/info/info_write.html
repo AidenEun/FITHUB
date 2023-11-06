@@ -33,6 +33,10 @@
 			height: 2.5em;
 			line-height: 2.5em;
 		}
+		.info_category .active {
+			background-color: #5a8100; /* 변경할 배경색 */
+			color: white !important; /* 변경할 텍스트색 */
+		}
 		.write_table > th {
 			text-align: center;
 			vertical-align: middle;
@@ -97,19 +101,24 @@
 		<!-- Content -->
 		<div class="content">
 			<div class="cotent_header"><h2>작성하기</h2></div>
-			<div class="info_category">
-				<h3>카테고리 선택</h3>
-				<div class="button" style="margin-right: 10px;">뉴스</div>
-				<div class="button" style="margin-right: 10px;">식단</div>
-				<div class="button" style="margin-right: 10px;">운동</div>
-				<div class="button">꿀팁</div>
-			</div>
+
 			<form id="boardForm" method="post" name="boardForm" th:action="@{/info/info_write}" enctype="multipart/form-data">
 				<!-- 날아온 네개의 파라미터를 받아 놓음 -->
 				<input type="hidden" th:value="${cri.pagenum}" name="pagenum">
 				<input type="hidden" th:value="${cri.amount}" name="amount">
 				<input type="hidden" th:value="${cri.type}" name="type">
 				<input type="hidden" th:value="${cri.keyword}" name="keyword">
+				<input type="hidden" name="boardCategory">
+
+
+				<div class="info_category">
+					<h3>카테고리 선택</h3>
+					<div class="button" style="margin-right: 10px;" onclick="selectCategory('infoNews')">뉴스</div>
+					<div class="button" style="margin-right: 10px;" onclick="selectCategory('infoFood')">식단</div>
+					<div class="button" style="margin-right: 10px;" onclick="selectCategory('infoExer')">운동</div>
+					<div class="button" onclick="selectCategory('tip')">꿀팁</div>
+				</div>
+
 				<!-- 글작성 테이블 -->
 				<table class="write_table" style="border-collapse: collapse;" border="2">
 					<tr style="height:30px;">
@@ -201,7 +210,7 @@
 	<!-- summernote	-->
 	$('#summernote').summernote({
 		// 에디터 높이
-		height: 150,
+		height: 370,
 		// 에디터 한글 설정
 		lang: "ko-KR",
 		// 에디터에 커서 이동 (input창의 autofocus라고 생각)
@@ -221,8 +230,6 @@
 			['para', ['ul', 'ol', 'paragraph']],
 			// 줄간격
 			['height', ['height']],
-			// 코드보기, 확대해서보기, 도움말
-			['view', ['codeview','fullscreen', 'help']]
 		],
 		// 추가한 글꼴
 		fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋음체','바탕체'],
@@ -328,20 +335,45 @@
 		}
 	}
 
+	function selectCategory(boardCategory) {
+		var selectedButton = document.querySelector('.button.active');
+
+		if (selectedButton) {
+			if (selectedButton.getAttribute('onclick') === `selectCategory('${boardCategory}')`) {
+				selectedButton.classList.remove('active');
+				return ;
+			} else {
+				alert("카테고리를 하나만 선택하세요.");
+				return false;
+			}
+		}
+		var clickedButton = document.querySelector(`[onclick="selectCategory('${boardCategory}')"]`);
+		clickedButton.classList.toggle('active');
+
+		console.log("선택된 카테고리:", boardCategory);
+
+		document.boardForm.boardCategory.value = boardCategory;
+	}
 	function sendit(){
 		const boardForm = document.boardForm;
-
-		const boardtitle = boardForm.boardtitle;
-		if(boardtitle.value == ""){
-			alert("제목을 입력하세요!");
-			boardtitle.focus();
+		const boardCategory = boardForm.boardCategory;
+		if(boardCategory.value === ""){
+			alert("카테고리를 선택하세요!");
+			boardCategory.focus();
 			return false;
 		}
 
-		const boardcontents = boardForm.boardcontents;
-		if(boardcontents.value == ""){
+		const boardTitle = boardForm.boardTitle;
+		if(boardTitle.value === ""){
+			alert("제목을 입력하세요!");
+			boardTitle.focus();
+			return false;
+		}
+
+		const boardContent = boardForm.boardContent;
+		if(boardContent.value === ""){
 			alert("내용을 입력하세요!");
-			boardcontents.focus();
+			boardContent.focus();
 			return false;
 		}
 

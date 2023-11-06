@@ -21,10 +21,10 @@
 			</trim>
 		</if> 
 	</sql>
-	
+
 	<insert id="insertBoard">
-		insert into board (board_title,board_content,user_id)
-		values(#{boardTitle},#{boardContent},#{userId})
+		insert into board (board_category,board_title,board_content,user_id)
+		values(#{boardCategory},#{boardTitle},#{boardContent},#{userId})
 	</insert>
 	
 	<update id="updateReadCount">
