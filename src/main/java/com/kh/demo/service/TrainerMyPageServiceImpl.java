@@ -4,9 +4,18 @@ import com.kh.demo.domain.dto.*;
 import com.kh.demo.mapper.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,6 +38,10 @@ public class TrainerMyPageServiceImpl implements TrainerMyPageService{
     @Autowired
     private TrainerMapper tmapper;
 
+    @Autowired
+    private ProfileMapper pfmapper;
+    @Value("${profile.dir}")
+    private String saveFolder;
 
 
     @Override
@@ -250,6 +263,27 @@ public class TrainerMyPageServiceImpl implements TrainerMyPageService{
     @Override
     public List<ChallNoticeBoardDTO> getMyChallenge(Criteria cri, String userId) {
         return tmpmapper.getMyChallenge(cri, userId);
+    }
+
+    //내 프로필
+    @Override
+    public List<FileDTO> getFileList(String trainerId) {
+        return pfmapper.getFiles(trainerId);
+    }
+
+    @Override
+    public ResponseEntity<Resource> getThumbnailResource(String sysName) throws Exception{
+        //경로에 관련된 객체(자원으로 가지고 와야 하는 파일에 대한 경로)
+        Path path = Paths.get(saveFolder+sysName);
+        //경로에 있는 파일의 MIME타입을 조사해서 그대로 담기
+        String contentType = Files.probeContentType(path);
+        //응답 헤더 생성
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_TYPE, contentType);
+
+        //해당 경로(path)에 있는 파일에서부터 뻗어나오는 InputStream(Files.newInputStream)을 통해 자원화(InputStreamResource)
+        Resource resource = new InputStreamResource(Files.newInputStream(path));
+        return new ResponseEntity<>(resource,headers, HttpStatus.OK);
     }
 
 }
