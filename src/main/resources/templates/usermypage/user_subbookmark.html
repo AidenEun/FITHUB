@@ -180,48 +180,50 @@
 			<div id="boardProduct" class="button cate not_cate" style="margin-right: 10px;">제품추천게시판</div>
 			<!-- 게시글 리스트 띄우는 테이블 -->
 			<table class="list">
-				<tr align="right" valign="middle">
-					<td colspan="6">글 개수 : [[${pageMaker.total}]]</td>
-				</tr>
-				<tr align="center" valign="middle">
-					<th class="long_text">북마크번호</th>
-					<th class="long_text">게시판번호</th>
-					<th class="long_text">제목</th>
-					<th class="long_text">작성자</th>
-					<th class="long_text">날짜</th>
-					<th class="long_text">조회수</th>
-				</tr>
-				<tbody id="data-table">
-				<tr th:if="${list != null and list.size()>0}" th:each="board : ${list}">
-					<td class="long_text">x</td>
-					<td class="long_text">
-						[[${board.boardNum}]]
-						<!--						<sup class="hot" th:if="${recent_reply[boardStat.index] == 'O'}">Hot</sup>
-                                            <sup class="new" th:if="${newly_board[boardStat.index] == 'O'}">New</sup>-->
-					</td>
-					<td class="long_text">
-						<a class="get" th:href="${board.boardNum}">
-							[[${board.boardTitle}]]
-							<!--<span class="reply_cnt" th:text="'['+${reply_cnt_list[boardStat.index]}+']'"></span>-->
-						</a>
-					</td>
-					<td class="long_text">[[${board.userId}]]</td>
-					<td>
-						[[${board.regdate}]]
-					</td>
-					<td class="long_text">[[${board.viewCnt}]]</td>
-				</tr>
-
-
-				<th:block th:if="${list == null or list.size() == 0}">
-					<tr>
-						<td colspan="6" style="text-align: center; font-size: 20px;">등록된
-							게시글이 없습니다.</td>
+				<thead id="data-table-head">
+					<tr align="right" valign="middle">
+						<td colspan="6">글 개수 : [[${pageMaker.total}]]</td>
 					</tr>
-				</th:block>
+				</thead>
+					<tr align="center" valign="middle">
+						<th class="long_text">북마크번호</th>
+						<th class="long_text">게시판번호</th>
+						<th class="long_text">제목</th>
+						<th class="long_text">작성자</th>
+						<th class="long_text">날짜</th>
+						<th class="long_text">조회수</th>
+					</tr>
+				<tbody id="data-table">
+					<tr th:if="${list != null and list.size()>0}" th:each="board : ${list}">
+						<td class="long_text">x</td>
+						<td class="long_text">
+							[[${board.boardNum}]]
+							<!--						<sup class="hot" th:if="${recent_reply[boardStat.index] == 'O'}">Hot</sup>
+												<sup class="new" th:if="${newly_board[boardStat.index] == 'O'}">New</sup>-->
+						</td>
+						<td class="long_text">
+							<a class="get" th:href="${board.boardNum}">
+								[[${board.boardTitle}]]
+								<!--<span class="reply_cnt" th:text="'['+${reply_cnt_list[boardStat.index]}+']'"></span>-->
+							</a>
+						</td>
+						<td class="long_text">[[${board.userId}]]</td>
+						<td>
+							[[${board.regdate}]]
+						</td>
+						<td class="long_text">[[${board.viewCnt}]]</td>
+					</tr>
+
+
+					<th:block th:if="${list == null or list.size() == 0}">
+						<tr>
+							<td colspan="6" style="text-align: center; font-size: 20px;">등록된
+							게시글이 없습니다.</td>
+						</tr>
+					</th:block>
 				</tbody>
 			</table>
-			<br>	<!-- 페이징 처리하는 테이블 -->
+			<!-- 페이징 처리하는 테이블 -->
 			<table class="pagination">
 				<tr align="center" valign="middle">
 					<td>
@@ -382,8 +384,16 @@
         }
 
 		function displayData(data) {
+			var tableHead = $('#data-table-head');
+			tableHead.empty();
 			var tableBody = $('#data-table');
 			tableBody.empty();
+
+
+			var headRow = $('<tr align="right" valign="middle">');
+			headRow.append('<td colspan="6">글 개수 : '+data.pageDTO.total+'</td>');
+			tableHead.append(headRow);
+
 			if (data.list != null && data.list.length > 0) {
 				data.list.forEach(function (board) {
 					var row = $('<tr>');
@@ -393,6 +403,7 @@
 					row.append('<td class="long_text"><a href="#" class="open">' + board.userId + '</td>');
 					row.append('<td class="long_text">' + board.regdate + '</td>');
 					row.append('<td class="long_text">' + board.viewCnt + '</td>');
+					row.append('</tr>')
 					tableBody.append(row);
 				});
 			}
