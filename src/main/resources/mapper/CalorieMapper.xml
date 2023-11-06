@@ -6,7 +6,7 @@
     </select>
 
     <select id="getTop30FoodsByViewCnt">
-        SELECT * FROM food ORDER BY viewCnt DESC, food_num ASC LIMIT 30;
+        SELECT * FROM food ORDER BY view_cnt DESC, food_num ASC LIMIT 30;
     </select>
     <select id="getView">
         select * from food where food_num=#{foodNum};
