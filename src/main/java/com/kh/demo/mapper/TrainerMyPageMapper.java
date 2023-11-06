@@ -36,15 +36,11 @@ public interface TrainerMyPageMapper {
     //보드
     Long getBoardTotal(Criteria cri, String trainerId);
 
-    Long getBoardTotal(CriteriaTrainerProfile cri, String trainerId);
-
     BoardDTO findBoardByNum(Long boardnum);
 
     Long getBoardLastNum(String trainerId);
 
     List<BoardDTO> getMyBoard(Criteria cri, String trainerId);
-
-    List<BoardDTO> getMyBoard(CriteriaTrainerProfile cri, String trainerId);
 
     //북마크
     Long getBookmarkTotal(Criteria cri, String trainerId);

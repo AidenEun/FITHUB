@@ -270,7 +270,7 @@
 
 			<table>
 				<tr>
-					<td colspan="6">[[${trainer.trainerNickname}]]님의 게시글<span>글 개수 : [[${pageMaker.total}]]</span></td>
+					<td colspan="6">[[${trainer.trainerNickname}]]님의 게시글<span style="float:right;">글 개수 : [[${pageMaker.total}]]</span></td>
 				</tr>
 				<tr align="center" valign="middle">
 					<th width="8%">번호</th>
@@ -305,14 +305,14 @@
 					</tr>
 				</th:block>
 			</table>
-			<br>	<!-- 페이징 처리하는 테이블 -->
+				<!-- 페이징 처리하는 테이블 -->
 			<table class="pagination">
 				<tr align="center" valign="middle">
 					<td>
 						<a class="changePage" th:if="${pageMaker.prev}" th:href="${pageMaker.startPage-1}">&lt;</a>
 						<th:block th:each="i : ${#numbers.sequence(pageMaker.startPage,pageMaker.endPage)}">
-							<span class="nowPage" th:text="${i}" th:if="${pageMaker.criTP.pagenum == i}"></span>
-							<a class="changePage" th:href="${i}" th:text="${i}" th:unless="${pageMaker.criTP.pagenum == i}"></a>
+							<span class="nowPage" th:text="${i}" th:if="${pageMaker.cri.pagenum == i}"></span>
+							<a class="changePage" th:href="${i}" th:text="${i}" th:unless="${pageMaker.cri.pagenum == i}"></a>
 						</th:block>
 						<a class="changePage" th:if="${pageMaker.next}" th:href="${pageMaker.endPage+1}">&gt;</a>
 					</td>
@@ -338,8 +338,8 @@
 		</div>
 
 		<form name="pageForm" id="pageForm" th:action="@{/trainermypage/trainer_myprofile}">
-			<input type="hidden" name="pagenum" th:value="${pageMaker.criTP.pagenum}">
-			<input type="hidden" name="amount" th:value="${pageMaker.criTP.amount}">
+			<input type="hidden" name="pagenum" th:value="${pageMaker.cri.pagenum}">
+			<input type="hidden" name="amount" th:value="${pageMaker.cri.amount}">
 			<input type="hidden" name="trainerId" th:value="${trainer.trainerId}">
 		</form>
 

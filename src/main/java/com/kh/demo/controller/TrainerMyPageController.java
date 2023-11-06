@@ -29,8 +29,8 @@ public class TrainerMyPageController {
 
 
     @GetMapping(value = {"trainer_myprofile","trainer_profile"})
-    public String trainer_profile(CriteriaTrainerProfile cri, String trainerId , Model model, HttpServletRequest req) throws Exception {
-
+    public String trainer_profile(Criteria cri, String trainerId , Model model, HttpServletRequest req) throws Exception {
+        cri = new Criteria(cri.getPagenum(), 4);
         String requestURI = req.getRequestURI();
         TrainerDTO id = service.getUserDetail(trainerId);
         System.out.println("requestURI : "+requestURI);
@@ -80,6 +80,7 @@ public class TrainerMyPageController {
 
     @GetMapping("trainer_mysubscribeuser")
     public void trainer_mysubscribeuser(Criteria cri, Model model, HttpServletRequest req){
+        cri = new Criteria(cri.getPagenum(), 12);
         HttpSession session = req.getSession();
         String TrainerId = (String) session.getAttribute("loginUser");
 

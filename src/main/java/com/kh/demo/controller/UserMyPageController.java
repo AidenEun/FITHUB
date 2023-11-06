@@ -70,6 +70,7 @@ public class UserMyPageController {
 
     @GetMapping("user_subtrainer")
     public void replaceSubTrainer(Criteria cri, Model model, HttpServletRequest req){
+        cri = new Criteria(cri.getPagenum(), 12);
         HttpSession session = req.getSession();
         String userId = (String) session.getAttribute("loginUser");
         List<TrainerDTO> list = service.getMyScribe(cri, userId);

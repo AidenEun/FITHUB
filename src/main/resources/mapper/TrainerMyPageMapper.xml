@@ -123,7 +123,7 @@
 	</select>
 
 	<select id="getMyChallenge">
-		select * from chall_notice join my_challenge on my_challenge.chall_num = chall_notice.chall_num
+		select * from chall_notice_board join my_challenge on my_challenge.chall_num = chall_notice_board.chall_num
 		where my_challenge.user_id = #{trainerId}
 		order by my_challenge.sub_regdate desc limit #{cri.startrow},#{cri.amount}
 	</select>

@@ -40,8 +40,6 @@ public interface TrainerMyPageService {
     List<MessageDTO> getMessageMyList(Criteria cri, String trainerId);
 
     //보드
-    Long getBoardTotal(CriteriaTrainerProfile cri, String trainerId);
-
     Long getBoardTotal(Criteria cri, String trainerId);
     BoardDTO getBoardDetail(Long boardnum);
     Long getBoardLastNum(String userid);
@@ -49,7 +47,6 @@ public interface TrainerMyPageService {
     ArrayList<Integer> getBoardReplyCntList(List<BoardDTO> list);
     ArrayList<String> getBoardRecentReplyList(List<BoardDTO> list);
 
-    List<BoardDTO> getBoardMyList(CriteriaTrainerProfile cri, String trainerId);
     List<BoardDTO> getBoardMyList(Criteria cri, String trainerId);
 
     //북마크
