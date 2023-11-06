@@ -179,6 +179,10 @@ public class UserMyPageServiceImpl implements UserMyPageService{
         return umpmapper.getBookmarkTotal(cri,userId);
     }
 
+    @Override
+    public Long getBookmarkProductTotal(Criteria cri, String userId) {
+        return umpmapper.getBookmarkProductTotal(cri, userId);
+    }
 
     @Override
     public Long getBookmarkLastNum(String userid) {

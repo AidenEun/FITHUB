@@ -84,8 +84,17 @@
 	<!--bookmark_idx : regdate 로 수정 필요 : 임시값이 null이라 오류로 인해-->
 	<select id="getBookmarkTotal">
 		select count(*) from bookmark where user_id=#{userId} and
-		regdate > 0
+		(board_category='infoNew' or board_category='infoExer' or board_category ='infoFood' or board_category='tip'
+		or board_category='comFree' or board_category='comExer' or board_category='comFood' or board_category='comPhoto'
+		or board_category='comQna')
+		and	regdate > 0
 	</select>
+
+	<select id="getBookmarkProductTotal">
+		select count(*) from bookmark where user_id=#{userId} and (board_category='prodExer' or board_category='prodFood')
+		and regdate > 0
+	</select>
+
 	<select id="getBookmarkLastNum">
 		select max(bookmark_num) from bookmark where user_id=#{userId}
 	</select>

@@ -46,6 +46,8 @@ public interface UserMyPageMapper {
     //북마크
     Long getBookmarkTotal(Criteria cri, String userId);
 
+    Long getBookmarkProductTotal(Criteria cri, String userId);
+
     Long getBookmarkLastNum(String userid);
 
     List<BoardDTO> getMyBookmark(Criteria cri, String userId);

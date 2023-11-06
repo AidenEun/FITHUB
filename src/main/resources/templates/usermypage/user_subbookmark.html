@@ -176,47 +176,50 @@
 
 		<!-- Content -->
 		<div class="content">
-
+			<div id="boardInfo" class="button cate now_cate" style="margin-right: 10px;">정보게시판</div>
+			<div id="boardProduct" class="button cate not_cate" style="margin-right: 10px;">제품추천게시판</div>
 			<!-- 게시글 리스트 띄우는 테이블 -->
 			<table class="list">
 				<tr align="right" valign="middle">
 					<td colspan="6">글 개수 : [[${pageMaker.total}]]</td>
 				</tr>
 				<tr align="center" valign="middle">
-					<th width="8%">북마크번호</th>
-					<th>게시판번호</th>
-					<th>제목</th>
-					<th width="15%">작성자</th>
-					<th width="17%">날짜</th>
-					<th width="10%">조회수</th>
+					<th class="long_text">북마크번호</th>
+					<th class="long_text">게시판번호</th>
+					<th class="long_text">제목</th>
+					<th class="long_text">작성자</th>
+					<th class="long_text">날짜</th>
+					<th class="long_text">조회수</th>
+				</tr>
+				<tbody id="data-table">
+				<tr th:if="${list != null and list.size()>0}" th:each="board : ${list}">
+					<td class="long_text">x</td>
+					<td class="long_text">
+						[[${board.boardNum}]]
+						<!--						<sup class="hot" th:if="${recent_reply[boardStat.index] == 'O'}">Hot</sup>
+                                            <sup class="new" th:if="${newly_board[boardStat.index] == 'O'}">New</sup>-->
+					</td>
+					<td class="long_text">
+						<a class="get" th:href="${board.boardNum}">
+							[[${board.boardTitle}]]
+							<!--<span class="reply_cnt" th:text="'['+${reply_cnt_list[boardStat.index]}+']'"></span>-->
+						</a>
+					</td>
+					<td class="long_text">[[${board.userId}]]</td>
+					<td>
+						[[${board.regdate}]]
+					</td>
+					<td class="long_text">[[${board.viewCnt}]]</td>
 				</tr>
 
-					<tr th:if="${list != null and list.size()>0}" th:each="board : ${list}">
-						<td>x</td>
-						<td>
-							[[${board.boardNum}]]
-		<!--						<sup class="hot" th:if="${recent_reply[boardStat.index] == 'O'}">Hot</sup>
-							<sup class="new" th:if="${newly_board[boardStat.index] == 'O'}">New</sup>-->
-						</td>
-						<td>
-							<a class="get" th:href="${board.boardNum}">
-								[[${board.boardTitle}]]
-								<!--<span class="reply_cnt" th:text="'['+${reply_cnt_list[boardStat.index]}+']'"></span>-->
-							</a>
-						</td>
-						<td>[[${board.userId}]]</td>
-						<td>
-							[[${board.regdate}]]
-						</td>
-						<td>[[${board.viewCnt}]]</td>
-					</tr>
-				</th:block>
+
 				<th:block th:if="${list == null or list.size() == 0}">
 					<tr>
 						<td colspan="6" style="text-align: center; font-size: 20px;">등록된
 							게시글이 없습니다.</td>
 					</tr>
 				</th:block>
+				</tbody>
 			</table>
 			<br>	<!-- 페이징 처리하는 테이블 -->
 			<table class="pagination">
@@ -289,38 +292,122 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script th:inline="javascript">
-	const searchForm = $("#searchForm");
-	const pageForm = $("#pageForm");
+	const cate = document.querySelectorAll('.cate');
+	let nowCate = document.querySelector('.now_cate');
 
-	$(".changePage").on("click",function(e){
-		//e(이벤트)의 기본 작동 막기
-		e.preventDefault();
-		let pagenum = $(this).attr("href");
-		pageForm.find("input[name='pagenum']").val(pagenum);
-		pageForm.submit();
+	cate.forEach(function(btn) {
+		btn.addEventListener('click', function() {
+			if (btn.classList.contains('now_cate')) {
+			 return;
+			}
+
+			btn.classList.remove('not_cate');
+			btn.classList.add('now_cate');
+
+			nowCate.classList.remove('now_cate');
+			nowCate.classList.add('not_cate');
+
+			nowCate = btn;
+		});
 	});
-	$(".get").on("click",function(e){
-		e.preventDefault();
-		let boardnum = $(this).attr("href");
-		let url=/*[[@{/board/get}]]*/'';
-		pageForm.append("<input type='hidden' name='boardnum' value='"+boardnum+"'>")
-		pageForm.attr("action",url);
-		pageForm.attr("method","get");
-		pageForm.submit();
-	})
 
-	$("#searchForm a").on("click",sendit);
-	function sendit(){
-		if(!searchForm.find("option:selected").val()){
-			alert("검색 기준을 선택하세요!");
-			return false;
+	$(document).ready(function() {
+        let category = 'board_info';
+        loadPage('/usermypage/board_info', 1);
+
+        $('#boardInfo').click(function() {
+            category = 'board_info';
+            loadPage('/usermypage/board_info', 1);
+        });
+
+        $('#boardProduct').click(function() {
+            category = 'board_product';
+            loadPage('/usermypage/board_product', 1);
+        });
+
+
+        // 페이지 데이터를 불러오는 함수
+        function loadPage(url, pageNum) {
+            $.ajax({
+                url: url,
+                data: { pageNum: pageNum, category: category },
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    // 게시글 목록 업데이트
+                    displayData(data);
+                    // 페이징 버튼 업데이트
+                    displayPaging(data.pageDTO);
+                },
+                error: function (error) {
+                    console.error('데이터를 가져오는 중 오류 발생: ' + error);
+                }
+            });
+        }
+
+        function displayPaging(pageDTO) {
+            var startPage = pageDTO.startPage;
+            var endPage = pageDTO.endPage;
+            var prev = pageDTO.prev;
+            var next = pageDTO.next;
+
+            var str = '';
+
+            if (prev) {
+                str += '<a class="changePage" href="' + (startPage - 1) + '"><code>&lt;</code></a>';
+            }
+
+            for (var i = startPage; i <= endPage; i++) {
+                if (i === pageDTO.cri.pagenum) {
+                    str += '<span class="nowPage">' + i + '</span> ';
+                } else {
+                    str += '<a class="changePage" href="' + i + '">' + i + '</a>';
+                }
+            }
+
+            if (next) {
+                str += '<a class="changePage" href="' + (endPage + 1) + '"><code>&gt;</code></a>';
+            }
+
+            var page = $('.pagination');
+            page.html('<tr align="center" valign="middle"><td>' + str + '</td></tr>');
+
+            // 페이지 버튼 클릭 이벤트를 연결
+            $(".changePage").on("click", function (e) {
+                e.preventDefault(); // 기본 동작 중지
+
+                var pageNum = $(this).attr('href');
+                loadPage('/usermypage/' + category, pageNum);
+            });
+        }
+
+		function displayData(data) {
+			var tableBody = $('#data-table');
+			tableBody.empty();
+			if (data.list != null && data.list.length > 0) {
+				data.list.forEach(function (board) {
+					var row = $('<tr>');
+					row.append('<td class="long_text">x</td>');
+					row.append('<td class="long_text">' + board.boardNum + '</td>');
+					row.append('<td class="long_text">' + board.boardTitle+ '</td>');
+					row.append('<td class="long_text"><a href="#" class="open">' + board.userId + '</td>');
+					row.append('<td class="long_text">' + board.regdate + '</td>');
+					row.append('<td class="long_text">' + board.viewCnt + '</td>');
+					tableBody.append(row);
+				});
+			}
+			else {
+				tableBody.append('<tr><td colspan="5">등록된 게시글이 없습니다.</td></tr>');
+			}
+            $(".open").on("click", function (e) {
+                e.preventDefault();
+				var userId = $(this).text();
+
+				sendUserIdToModal(userId);
+                modalBox.classList.add("active");
+            });
 		}
-		if(!$("input[name='keyword']").val()){
-			alert("키워드를 입력하세요!");
-			return false;
-		}
-		searchForm.submit();
-	}
+	});
 </script>
 </body>
 </html>

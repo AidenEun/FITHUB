@@ -1,5 +1,7 @@
 package com.kh.demo.controller;
 
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.kh.demo.domain.dto.*;
 import com.kh.demo.service.*;
 import jakarta.servlet.http.HttpServletRequest;
@@ -8,9 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -80,18 +80,54 @@ public class UserMyPageController {
     }
 
 
-//북마크 번호 담을려면 보드dto랑 북마크dto 합쳐진 dto 필요
+    //북마크 번호 담을려면 보드dto랑 북마크dto 합쳐진 dto 필요
     @GetMapping("user_subbookmark")
     public void user_subbookmark(Criteria cri, Model model, HttpServletRequest req) throws Exception {
         HttpSession session = req.getSession();
         String userId = (String) session.getAttribute("loginUser");
         List<BoardDTO> list = service.getMyBookmark(cri,userId);
         List<ProductBoardDTO> listProduct = service.getMyBookmarkProduct(cri,userId);
-        System.out.println("list:"+list);
-        System.out.println("listProduct:"+listProduct);
+
         model.addAttribute("list",list);
         model.addAttribute("listProduct",listProduct);
         model.addAttribute("pageMaker", new PageDTO(service.getBookmarkTotal(cri,userId), cri));
+    }
+
+    @GetMapping("board_info")
+    @ResponseBody
+    public String board_info(@RequestParam("pageNum") int pageNum, HttpServletRequest req) throws Exception{
+        HttpSession session = req.getSession();
+        String userId = (String) session.getAttribute("loginUser");
+
+        ObjectNode json = JsonNodeFactory.instance.objectNode();
+        Criteria cri = new Criteria(pageNum, 10);
+
+        List<BoardDTO> list = service.getMyBookmark(cri,userId);
+        PageDTO pageDTO = new PageDTO(service.getBookmarkTotal(cri,userId), cri);
+        System.out.println("list:"+list);
+        json.putPOJO("list", list);
+        json.putPOJO("pageDTO", pageDTO);
+
+        return json.toString();
+    }
+
+    @GetMapping("board_product")
+    @ResponseBody
+    public String board_product(@RequestParam("pageNum") int pageNum, HttpServletRequest req) throws Exception {
+        HttpSession session = req.getSession();
+        String userId = (String) session.getAttribute("loginUser");
+
+        ObjectNode json = JsonNodeFactory.instance.objectNode();
+        Criteria cri = new Criteria(pageNum, 10);
+
+        List<ProductBoardDTO> list = service.getMyBookmarkProduct(cri,userId);
+        PageDTO pageDTO = new PageDTO(service.getBookmarkProductTotal(cri,userId), cri);
+        System.out.println("listProduct:"+list);
+
+        json.putPOJO("list", list);
+        json.putPOJO("pageDTO", pageDTO);
+
+        return json.toString();
     }
 
     @GetMapping("user_boardlist")

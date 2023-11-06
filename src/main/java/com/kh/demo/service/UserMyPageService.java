@@ -55,6 +55,9 @@ public interface UserMyPageService {
     List<BoardDTO> getMyBookmark(Criteria cri, String userId);
     List<ProductBoardDTO> getMyBookmarkProduct(Criteria cri, String userId);
 
+    Long getBookmarkProductTotal(Criteria cri, String userId);
+
+
     //내정보수정
     UserDTO getUserDetail(String userid);
     boolean user_modify(UserDTO user);
