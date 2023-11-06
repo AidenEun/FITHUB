@@ -290,3 +290,20 @@ function deleteHobby(e){
 	console.log(userhobby);
 }
 
+function goToNextPage() {
+    document.querySelectorAll('#page1').forEach(function(el) {
+        el.style.display = 'none';
+    });
+    document.querySelectorAll('#page2').forEach(function(el) {
+        el.style.display = 'block';
+    });
+}
+
+function goToPrevPage() {
+    document.querySelectorAll('#page2').forEach(function(el) {
+        el.style.display = 'none';
+    });
+    document.querySelectorAll('#page1').forEach(function(el) {
+        el.style.display = 'block';
+    });
+}
