@@ -141,6 +141,25 @@ function pwcheck(){
     	pwTest[4] = true;
     }
 }
+
+// 비밀번호 입력란
+const passwordInput = document.getElementById('userpw');
+
+// 비밀번호 체크 요소
+const pwCheck = document.querySelector('#page1 .pw_check');
+
+// 비밀번호 입력란에 입력이 발생할 때 호출되는 함수
+function onPasswordInput() {
+    if (passwordInput.value.length > 0) {
+        pwCheck.style.display = 'block';
+    } else {
+        pwCheck.style.display = 'none';
+    }
+}
+
+// 비밀번호 입력란에 입력 감지 이벤트 추가
+passwordInput.addEventListener('input', onPasswordInput);
+
 function checkId(){
 	const xhr = new XMLHttpRequest();
 	const result = document.getElementById("result");

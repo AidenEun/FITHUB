@@ -19,6 +19,9 @@ public class HomeController {
     @GetMapping("/index_sidebar")
     public void replace(){}
 
+    @GetMapping("/user/agree")
+    public void agree(){}
+
 
 
 }
