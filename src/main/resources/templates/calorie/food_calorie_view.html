@@ -12,6 +12,7 @@
     <link rel="stylesheet" th:href="@{/assets/css/index.css}" />
     <link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
     <noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
         .top_img_box{
         width: 100%;
@@ -134,13 +135,18 @@
             font-weight: bold;
         }
         #nutrient{
-        height: 200px;
-        border: 1px solid rgb(240,240,240);
-        border-radius: 15px;
+        height: 250px;
+
+
         margin-bottom: 30px
+         display: flex;
+            justify-content: center;
         }
+
+
         #exercise_calorie{
-        margin-bottom: 50px
+        margin-top: 50px;
+        margin-bottom: 50px;
 
         }
         .exercise_check{
@@ -196,6 +202,9 @@ left: 29px;
 position: relative;
 left: 28px;
 }
+#swim img{
+border-radius: 20px;
+}
 #bicycle{
 position: relative;
 left: 29px;
@@ -203,6 +212,27 @@ left: 29px;
         .exer_time{
         height: 40px;
         text-align:center;
+        }
+        #nutrient_total{
+        display:flex;
+        }
+
+        .nutrient_text{
+ display: flex;
+        flex-direction: column;
+        gap: 7px; /* 간격을 조절하세요 */
+        }
+        .nutrient_text p{
+            font-size: 10px;
+            font-weight:bold;
+            display: flex;
+        }
+        .nutrient_text img{
+                position: relative;
+    width: 10px;
+    height: 10px;
+    top: 7px;
+    right: 5px;
         }
     </style>
 
@@ -219,7 +249,7 @@ left: 29px;
 
             <header class="major">
                 <h2>음식 칼로리</h2>
-                <p>음식 칼로리 조회</p>
+                <p>음식 칼로리 상세 조회</p>
             </header>
 
             <!-- Content -->
@@ -241,22 +271,22 @@ left: 29px;
                 <hr>
                 <div class="result_box">
                     <div class="food_search_result">
-                        <p style="color: red;" th:if="${searchKeyword}"> <span th:text="${searchKeyword}"></span></p>
+                        <p style="color: red;">[[${food.foodName}]]</span></p>
                         <p>(으)로</p>
                         <p>검색한 결과</p>
                     </div>
                     <table class="name_quan_cal">
                         <tr>
                             <th width="30%" class="nametag">음식명</th>
-                            <td width="70%" food.foodName></td>
+                            <td width="70%">[[${food.foodName}]]</td>
                         </tr>
                         <tr>
                             <th width="30%" class="nametag">단위</th>
-                            <td width="70%" food.foodQuantity>g</td>
+                            <td width="70%">[[${food.foodQuantity}]]g</td>
                         </tr>
                         <tr>
                             <th width="30%" class="nametag">칼로리</th>
-                            <td width="70%" food.foodCalories>kcal</td>
+                            <td width="70%">[[${food.foodCalories}]]kcal</td>
                         </tr>
                     </table>
                     <div id="coment">
@@ -266,16 +296,25 @@ left: 29px;
                 </div>
                 <div>
                     <p id="nutrient_title">영양소 구성</p>
-                    <div id="nutrient">
+                    <div id="nutrient_total">
+                        <div id="nutrient">
 
+                        </div>
+                        <div class="nutrient_text">
+                            <p><img src="/images/blue.png" alt="blue">탄수화물<span>[[${food.carbo}]]</span>g</p>
+                            <p><img src="/images/orange.png" alt="orange">프로틴<span>[[${food.protein}]]</span>g</p>
+                            <p><img src="/images/green.png" alt="green">지방<span>[[${food.fat}]]</span>g</p>
+                            <p><img src="/images/pink.png" alt="pink">나트륨<span>[[${food.sodium}]]</span>g</p>
+                            <p><img src="/images/red.png" alt="red">콜레스테롤<span>[[${food.cholesterol}]]</span>g</p>
+                        </div>
                     </div>
                 </div>
                 <div id="exercise_calorie">
                     <div class="exercise_check">
-                        <p style="color: blue;" th:if="${searchKeyword}"> <span th:text="${searchKeyword}"></span></p>
+                        <p style="color: blue;">[[${food.foodName}]]</p>
                         <p>칼로리(</p>
-                        <p style="color: blue;">food.foodCalories</p>
-                        <p>)와 동일한 운동을 확인해보세요.</p>
+                        <p style="color: blue;">[[${food.foodCalories}]]</p>
+                        <p>)g과 동일한 운동을 확인해보세요.</p>
                     </div>
                     <div id="exer_cal_border">
 
@@ -287,7 +326,7 @@ left: 29px;
                                 걷기
                             </div>
                             <div class="exer_time">
-                                시간
+                                <span id="walking_result"></span>분
                             </div>
                         </div>
                         <div class="exer">
@@ -298,7 +337,7 @@ left: 29px;
                                 달리기
                             </div>
                             <div class="exer_time">
-                                시간
+                                <span id="running_result"></span>분
                             </div>
                         </div>
                         <div class="exer">
@@ -309,18 +348,18 @@ left: 29px;
                                 줄넘기
                             </div>
                             <div class="exer_time">
-                                시간
+                                <span id="jumprope_result"></span>분
                             </div>
                         </div>
                         <div class="exer">
-                            <div class="exer_img">
+                            <div class="exer_img" id="swim">
                                 <img src="/images/swim.jpg" alt="swim">
                             </div>
                             <div class="exer_time">
                                 수영
                             </div>
                             <div class="exer_time">
-                                시간
+                                <span id="swim_result"></span>분
                             </div>
                         </div>
                         <div class="exer">
@@ -331,7 +370,7 @@ left: 29px;
                                 자전거
                             </div>
                             <div class="exer_time">
-                                시간
+                                <span id="bicycle_result"></span>분
                             </div>
                         </div>
                         <br>
@@ -359,19 +398,79 @@ left: 29px;
     </body>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        function searchFood() {
-            var keyword = $("#search-input").val();
-            if (keyword) {
-                // 검색어를 URL 파라미터로 전달하고, 검색 결과 페이지로 이동합니다.
-                window.location.href = "/calorie/food_calorie_search?keyword=" + keyword;
-            } else {
-                alert("검색어를 입력하세요.");
-            }
-        }
+        window.onload = function() {
+     // 운동별 결과 계산 및 표시
+     calculateAndDisplay("walking", 60, 2);
+     calculateAndDisplay("running", 60, 6);
+     calculateAndDisplay("jumprope", 60, 10);
+     calculateAndDisplay("swim", 60, 7);
+     calculateAndDisplay("bicycle", 60, 8);
+ };
 
-        // 예: 검색 버튼 클릭 시 searchFood 함수 호출
-        $("#search-button").click(function() {
-            searchFood();
-        });
+ function calculateAndDisplay(activity, foodCalories, factor) {
+     var result = (foodCalories / 60 / factor) * 60;
+     var resultElement = document.getElementById(activity + "_result");
+     resultElement.textContent = result.toFixed(0); // 소수점 없이 정수로 표시
+ }
+         function searchFood() {
+             var keyword = $("#search-input").val();
+             if (keyword) {
+                 // 검색어를 URL 파라미터로 전달하고, 검색 결과 페이지로 이동합니다.
+                 window.location.href = "/calorie/food_calorie_search?keyword=" + keyword;
+             } else {
+                 alert("검색어를 입력하세요.");
+             }
+         }
+
+         // 예: 검색 버튼 클릭 시 searchFood 함수 호출
+         $("#search-button").click(function() {
+             searchFood();
+         });
+
+
+
+
+ var data = [
+     { name: "탄수화물", value: parseFloat([[${food.carbo}]]), color: "blue" },
+     { name: "단백질", value: parseFloat([[${food.protein}]]), color: "orange" },
+     { name: "지방", value: parseFloat([[${food.fat}]]), color: "green" },
+     { name: "나트륨", value: parseFloat([[${food.sodium}]]), color: "pink" },
+     { name: "콜레스테롤", value: parseFloat([[${food.cholesterol}]]), color: "red" }
+ ];
+
+ // 데이터를 백분율로 변환
+ var total = data.reduce(function(acc, d) { return acc + d.value; }, 0);
+ data.forEach(function(d) { d.percent = (d.value / total) * 100; });
+
+ var width = 700; // 원하는 너비 값
+ var height = 240; // 원하는 높이 값
+
+ var svg = d3.select("#nutrient")
+     .append("svg")
+     .attr("width", width)
+     .attr("height", height);
+
+ // 퍼센트 바를 추가 (원형)
+ var centerX = width / 2;
+ var centerY = height / 2;
+ var radius = Math.min(centerX, centerY) - 10; // 원의 반지름 (내부 여백을 위해 10px 제외)
+
+ var startAngle = 0;
+ data.forEach(function(d) {
+     var endAngle = startAngle + (d.percent / 100) * 360; // 각도를 계산 (0 ~ 360)
+     var arc = d3.arc()
+         .innerRadius(0) // 내부 반지름
+         .outerRadius(radius) // 외부 반지름
+         .startAngle(startAngle * (Math.PI / 180)) // 시작 각도 (라디안)
+         .endAngle(endAngle * (Math.PI / 180)); // 종료 각도 (라디안)
+
+     svg.append("path")
+         .attr("d", arc)
+         .attr("fill", d.color)
+         .attr("transform", "translate(" + centerX + "," + centerY + ")"); // 중심으로 이동
+
+     startAngle = endAngle; // 다음 퍼센트 바의 시작 각도
+ });
+
     </script>
 </html>

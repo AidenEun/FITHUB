@@ -58,5 +58,14 @@ public class CalorieServiceImpl implements CalorieService {
         System.out.println(foodDTOs);
         return foodDTOs;
     }
+    @Override
+    public FoodDTO foodView(Long foodNum){
+        return calmapper.getView(foodNum);
+    };
+
+    @Override
+    public void updateViewCount(Long foodNum) {
+        calmapper.updateViewCount(foodNum);
+    }
 
 }

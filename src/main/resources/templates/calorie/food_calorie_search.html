@@ -168,7 +168,7 @@
 
         <header class="major">
             <h2>음식 칼로리</h2>
-            <p>음식 칼로리 조회</p>
+            <p>음식 칼로리 검색 조회</p>
         </header>
 
         <!-- Content -->
@@ -205,6 +205,7 @@
                     <tr th:each="food : ${foods}" id="result_foodlist">
 
                         <td th:text="${food.foodName}"><a class="get" th:href="${food.foodNum}"></a></td>
+
                         <td th:text="${food.foodCalories}"></td>
                     </tr>
                 </table>
