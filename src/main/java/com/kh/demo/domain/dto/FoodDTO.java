@@ -16,12 +16,13 @@ public class FoodDTO {
     private String sodium;
     private String cholesterol;
     private Long viewCnt;
-    private double relevanceScore; // 관련성 점수 필드 추가
+    private Double relevanceScore; // 관련성 점수 필드 추가
 
     // 생성자, getter 및 setter 메서드 등...
 
     public void setRelevanceScore(double relevanceScore) {
         this.relevanceScore = relevanceScore;
     }
+
 
 }

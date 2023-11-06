@@ -207,13 +207,16 @@
 					</tr>
 					<tr th:if="${list != null and list.size()>0}" th:each="food, iterStat : ${list}" id="result_foodlist">
 						<td>[[${iterStat.count}]]</td>
-						<td>[[${food.foodName}]]</td>
+						<td><a class="get" th:href="${food.foodNum}">[[${food.foodName}]]</a></td>
 						<td>[[${food.foodQuantity}]]</td>
 						<td>[[${food.foodCalories}]]</td>
 					</tr>
 				</table>
 			</div>
 		</div>
+<!--		<form name="foodForm" id="foodForm" th:action="@{/calorie/food_calorie_list}">-->
+
+<!--		</form>-->
 	</div>
 </section>
 
@@ -250,5 +253,27 @@
         $("#search-button").click(function() {
             searchFood();
         });
+
+<!--		$(".get").on("click", function(e) {-->
+<!--		let foodNum = $(this).attr("href");-->
+<!--		let url=/*[[@{//calorie/food_calorie_view}]]*/'';-->
+<!--		foodForm.append("<input type='hidden' name='foodNum' value='"+foodNum+"'>")-->
+<!--		foodForm.attr("action",url);-->
+<!--		foodForm.attr("method","get");-->
+<!--		foodForm.submit();-->
+<!--	})-->
+
+
+		$(document).ready(function() {
+    $('.get').click(function(event) {
+    event.preventDefault();
+      var foodNum = $(this).attr('href'); // 'foodNum' 값을 가져옴
+      // 다음 페이지 URL 구성
+      var Url = '/calorie/food_calorie_view?foodNum=' + foodNum;
+
+      // 페이지 이동
+      window.location.href = Url;
+    });
+  });
 	</script>
 </html>

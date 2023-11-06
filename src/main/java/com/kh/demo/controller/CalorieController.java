@@ -1,8 +1,13 @@
 package com.kh.demo.controller;
 
+import com.fasterxml.jackson.databind.DatabindContext;
 import com.kh.demo.domain.dto.FoodDTO;
 import com.kh.demo.service.CalorieService;
 import com.kh.demo.service.CalorieServiceImpl;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,8 +24,6 @@ public class CalorieController {
     @GetMapping("exercise_calorie_list")
     public void exercise_calorie_list(){}
 
-    @GetMapping("food_calorie_view")
-    public void exercise_calorie_view(){}
 
     @Autowired
     private CalorieService calorieService;
@@ -46,6 +49,40 @@ public class CalorieController {
         }
         return "calorie/food_calorie_search";
     }
+    @GetMapping("/calorie/food_calorie_view")
+    public String get(@RequestParam Long foodNum, HttpServletRequest req, HttpServletResponse resp, Model model) {
+        FoodDTO food = calorieService.foodView(foodNum);
+
+        if (food == null) {
+            return "error";
+        }
+        HttpSession session = req.getSession();
+        model.addAttribute("food", food);
+        System.out.println(food);
+        // foodNum에 대한 조회수 증가 처리
+        Cookie[] cookies = req.getCookies();
+        Cookie viewFood = null;
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("view_food" + foodNum)) {
+                    viewFood = cookie;
+                    break;
+                }
+            }
+        }
+        if (viewFood == null) {
+            // 조회수 증가
+            calorieService.updateViewCount(foodNum);
+            // "view_food{foodNum}" 이름의 쿠키(유효기간: 3600초)를 생성해서 클라이언트 컴퓨터에 저장
+            Cookie cookie = new Cookie("view_food" + foodNum, "r");
+            cookie.setMaxAge(3600);
+            resp.addCookie(cookie);
+            System.out.println("cookie" + cookie);
+        }
+
+        return "calorie/food_calorie_view";
+    }
+
 
     @GetMapping("food_calorie_list")
     public void food_calorie_list(Model model) throws Exception {

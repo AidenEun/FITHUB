@@ -13,4 +13,8 @@ public interface CalorieMapper {
     List<FoodDTO> findByFoodName(String keyword);
 
     List<FoodDTO> getTop30FoodsByViewCnt();
+
+    FoodDTO getView(Long foodNum);
+
+    void updateViewCount(Long foodNum);
 }

@@ -13,4 +13,9 @@ public interface CalorieService {
     List<FoodDTO> getTop30Foods();
 
     List<FoodDTO> searchFoods(String keyword);
+
+
+    FoodDTO foodView(Long foodNum);
+
+    void updateViewCount(Long foodNum);
 }
