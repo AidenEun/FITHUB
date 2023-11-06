@@ -1,18 +1,19 @@
-<!-- 모달 검색창  -->
-<div class="modal_box">
-    <div class="modal_contents">
-        <button class="close">&times;</button>
-        <h1 class="title">프로필</h1>
-        <div class="profile">
-            <div class="img_area">
-                <a href="#"><img src="/images/profile_img.png" alt="userid"></a>
-            </div>
-            <div class="desc">
-                <p class="name"><a></a></p>
-                <p><a href="#">프로필 자세히 보기</a></p>
-                <p><a href="#">쪽지 보내기</a></p>
+<th:block th:fragment="profileModal()" xmlns:th="http://www.thymeleaf.org">
+    <div class="modal_box">
+        <div class="modal_contents">
+            <button class="close">&times;</button>
+            <h1 class="title">프로필</h1>
+            <div class="profile">
+                <div class="img_area">
+                    <a href="#"><img src="/images/profile_img.png" alt="userid"></a>
+                </div>
+                <div class="desc">
+                    <p class="name"><a></a></p>
+                    <p><a href="#">프로필 자세히 보기</a></p>
+                    <p><a href="#">쪽지 보내기</a></p>
+                </div>
             </div>
         </div>
     </div>
-</div>
+</th:block>
 

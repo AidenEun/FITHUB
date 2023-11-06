@@ -69,12 +69,37 @@
 		text-overflow: ellipsis;
 	}
 
-	.search_form {
-	}
-
 	.region_btn{
 		display: flex;
 		flex-wrap: wrap; /* 아이템이 넘칠 때 다음 줄로 내려감 */
+		gap: 10px; /* 좌우 간격을 10px로 지정 */
+    	margin: 10px 0; /* 위아래 간격을 10px로 지정 */
+	}
+
+	.region_btn button {
+		width: 130px;
+	}
+
+	.search_form {
+		display: flex;
+		align-items: center;
+	}
+
+	#keyword {
+		text-align: center;
+	}
+
+	#search_btn {
+		cursor: pointer;
+		margin-left: 10px;
+	}
+
+	#clear_btn {
+		position: relative;
+		top: 1px;
+		right: 130px;
+		cursor: pointer;
+		color: white;
 	}
 
 	.map_wrap, .map_wrap * {margin:0;padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
@@ -119,6 +144,9 @@
 	<!-- Header -->
 	<th:block th:replace="~{layout/header::header(${session.loginUser})}"></th:block>
 
+	<!-- Modal -->
+	<th:block th:replace="~{layout/profileModal::profileModal()}"></th:block>
+
 	<!-- Main -->
 	<section id="main" class="wrapper sidebar left">
 		<div class="top_img_box">
@@ -129,7 +157,7 @@
 
 			<header class="major">
 				<h2>보건소 찾기</h2>
-				<p>찾고 싶은 지역명을 입력해보세요</p>
+				<p>지역명을 입력해보세요</p>
 			</header>
 
 
@@ -158,8 +186,9 @@
 			<!-- Sidebar -->
 			<div class="sidebar">
 				<form onsubmit="searchPlaces(); return false;" class="search_form">
-					<input type="text" value="" id="keyword" size="15" placeholder="ex) 사당">
+					<input type="text" value="" id="keyword" size="15" placeholder="ex) 과천">
 					<button type="submit" id="search_btn">검색하기</button>
+					<div id="clear_btn">X</div>
 				</form>
 
 				<div class="region_btn">
@@ -198,7 +227,6 @@
 
 <script th:src="@{/assets/js/sidebar.js}"></script>
 <script th:src="@{/assets/js/profile.js}"></script>
-<!--<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=98de89a050032a5897c2cc25c922b1e8"></script>-->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=98de89a050032a5897c2cc25c922b1e8&libraries=services"></script>
 <script>
 	// 마커를 담을 배열입니다
@@ -435,6 +463,25 @@
 
 		ps.keywordSearch(keyword, placesSearchCB);
 	}
+
+	document.addEventListener("DOMContentLoaded", function () {
+		var keywordInput = document.getElementById("keyword");
+		var clearButton = document.getElementById("clear_btn");
+
+		keywordInput.addEventListener("input", function () {
+			if (keywordInput.value) {
+				clearButton.style.color = "#444";
+			}
+			else {
+				clearButton.style.color = "white";
+			}
+		});
+
+		clearButton.addEventListener("click", function () {
+			keywordInput.value = "";
+			clearButton.style.color = "white";
+		});
+	});
 </script>
 </body>
 </html>
