@@ -4,14 +4,15 @@
 	<insert id="insertFile">
 		insert into profile values(#{userId},#{sysName},#{orgName},"C")
 	</insert>
-	
+
 	<select id="getFiles">
-		select * from profile where user_id=#{userId}
+		select * from profile where user_id=#{trainerId} and profile_category='P'
 	</select>
-	
+
 	<delete id="deleteBySystemname">
 		delete from profile where sys_name=#{sysName}
 	</delete>
+
 </mapper>
 
 

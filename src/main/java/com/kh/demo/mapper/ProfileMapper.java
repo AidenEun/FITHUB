@@ -10,7 +10,7 @@ import java.util.List;
 public interface ProfileMapper {
 	int insertFile(ProfileDTO profile);
 	
-	List<FileDTO> getFiles(Long boardNum);
+	List<FileDTO> getFiles(String trainerId);
 	
 	int deleteBySystemname(String sysName);
 	

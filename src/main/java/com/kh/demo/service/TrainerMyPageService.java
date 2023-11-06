@@ -1,6 +1,8 @@
 package com.kh.demo.service;
 
 import com.kh.demo.domain.dto.*;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
@@ -72,5 +74,8 @@ public interface TrainerMyPageService {
 
     List<ChallNoticeBoardDTO> getMyChallenge(Criteria cri, String userId);
 
+    //트레이너 프로필
+    List<FileDTO> getFileList(String trainerId);
 
+    ResponseEntity<Resource> getThumbnailResource(String sysName) throws Exception;
 }

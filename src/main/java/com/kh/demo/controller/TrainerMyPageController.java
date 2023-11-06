@@ -6,6 +6,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,8 +41,13 @@ public class TrainerMyPageController {
         System.out.println("list : " + list);
         System.out.println("trainer : " + id);
         System.out.println("PageDTO : " + new PageDTO(service.getBoardTotal(cri, trainerId), cri));
+
+        System.out.println("get:"+service.getFileList(trainerId));
+
         model.addAttribute("list", list);
         model.addAttribute("trainer", id);
+
+        model.addAttribute("files",service.getFileList(trainerId));
 
         model.addAttribute("pageMaker", new PageDTO(service.getBoardTotal(cri, trainerId), cri));
         model.addAttribute("newly_board", service.getBoardNewlyList(list));
@@ -48,6 +55,11 @@ public class TrainerMyPageController {
         model.addAttribute("recent_reply", service.getBoardRecentReplyList(list));
 
         return "/trainermypage/trainer_profile";
+    }
+
+    @GetMapping("thumbnail")
+    public ResponseEntity<Resource> thumbnail(String sysName) throws Exception{
+        return service.getThumbnailResource(sysName);
     }
 
 

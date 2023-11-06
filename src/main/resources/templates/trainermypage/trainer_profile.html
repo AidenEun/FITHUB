@@ -157,6 +157,23 @@
     text-decoration: none;
     margin: 0 10px;
     }
+
+/* 프로필 */
+
+.thumbnail_box .thumbnail_img{
+	width: 25%;
+    height: 300px;
+    float: left;
+    border-radius: 5px;
+}
+
+.thumbnail_box .thumbnail_div{
+	width: 75%;
+    height: 300px;
+    float: left;
+}
+
+
 </style>
 <body class="is-preload">
 
@@ -170,7 +187,7 @@
 
 		<header class="major">
 			<h2>마이페이지</h2>
-			<p>내 게시물</p>
+			<p>트레이너 프로필</p>
 		</header>
 
 
@@ -178,43 +195,54 @@
 		<div class="content">
 
 			<!-- 게시글 리스트 띄우는 테이블 -->
-			<table class="list">
-				<tr align="left" valign="middle">
-					<td rowspan="5">
-						<div>
-							<img src="#" alt="">
-						</div>
-					</td>
-					<th>닉네임(아이디) : </th>
-					<td>[[${trainer.trainerId}]]</td>
-				</tr>
-
-				<tr>
-
-					<th>파트</th>
-					<td>[[${trainer.trainerPart}]]</td>
-				</tr>
-				<tr>
-
-					<th>경력</th>
-					<td>[[${trainer.trainerCareer}]]</td>
-				</tr>
-				<tr>
-
-					<th>구독자수</th>
-					<td>${}</td>
-				</tr>
-				<tr>
-
-					<td><a href="#">구독하기</a></td>
-					<th:block th:if="loginUser == trainer.trainerId">
-						<td><a href="#">수정하기</a></td>
+			<div class="thumbnail_box">
+				<div class="thumbnail_img">
+					<th:block th:if="${files != null and files.size() > 0}" th:each="file : ${files}">
+						<th:block th:with="sar=${file.orgName.split('[.]')}">
+							<th:block th:with="ext=${sar[sar.length-1]}">
+								<th:block th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}">
+										<img style="width:100%;" th:src="@{/trainermypage/thumbnail (sysName=${file.sysName})}">
+								</th:block>
+							</th:block>
+						</th:block>
 					</th:block>
-				</tr>
-				<tr>
-					<td>사진변경</td>
-				</tr>
-			</table>
+					<th:block th:unless="${files != null and files.size() > 0}">
+						<img style="width:100%;" th:src="@{/trainermypage/thumbnail (sysName='profile_img.png')}">
+					</th:block>
+				</div>
+				<div class="thumbnail_div">
+					<table>
+						<tr>
+							<td>닉네임(아이디) : </td>
+							<td>[[${trainer.trainerId}]]</td>
+						</tr>
+						<tr>
+							<td>파트</td>
+							<td>[[${trainer.trainerPart}]]</td>
+						</tr>
+						<tr>
+							<td>경력</td>
+							<td>[[${trainer.trainerCareer}]]</td>
+						</tr>
+						<tr>
+							<td>구독자수</td>
+							<td>${}</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td>
+								<th:block th:if="${session.loginUser} != ${trainer.trainerId}">
+									<a href="#">구독하기</a>
+								</th:block>
+								<th:block th:if="${session.loginUser} == ${trainer.trainerId}">
+									<a href="#">수정하기</a>
+								</th:block>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+
 
 			<table>
 				<tr>
@@ -223,7 +251,7 @@
 				<tr>
 					<td>
 						<div>
-							<textarea name="" style="height:200px; resize:none"></textarea>
+							<textarea name="" style="height:100px; resize:none">[[${trainer.trainerIntro}]]</textarea>
 						</div>
 					</td>
 				</tr>
@@ -242,7 +270,15 @@
 
 			<table>
 				<tr>
-					<td colspan="6">[[${trainer.trainerNickname}]]님의 게시글</td>
+					<td colspan="6">[[${trainer.trainerNickname}]]님의 게시글<span>글 개수 : [[${pageMaker.total}]]</span></td>
+				</tr>
+				<tr align="center" valign="middle">
+					<th width="8%">번호</th>
+					<th></th>
+					<th>제목</th>
+					<th width="15%">작성자</th>
+					<th width="17%">날짜</th>
+					<th width="10%">조회수</th>
 				</tr>
 				<tr th:if="${list != null and list.size()>0}" th:each="board : ${list}">
 					<td>[[${board.boardNum}]]</td>
@@ -279,6 +315,20 @@
 							<a class="changePage" th:href="${i}" th:text="${i}" th:unless="${pageMaker.criTP.pagenum == i}"></a>
 						</th:block>
 						<a class="changePage" th:if="${pageMaker.next}" th:href="${pageMaker.endPage+1}">&gt;</a>
+					</td>
+				</tr>
+			</table>
+
+			<!--다이어리-->
+			<table>
+				<tr>
+					<td>[[${trainer.trainerNickname}]]님의 다이어리</td>
+				</tr>
+				<tr>
+					<td>
+						<div>
+
+						</div>
 					</td>
 				</tr>
 			</table>
