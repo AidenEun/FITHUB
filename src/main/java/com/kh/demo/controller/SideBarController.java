@@ -42,4 +42,9 @@ public class SideBarController {
     @GetMapping("#")
     public void replace(){}
 
+    @GetMapping("bmi")
+    public void BMI(){
+
+    }
+
 }
