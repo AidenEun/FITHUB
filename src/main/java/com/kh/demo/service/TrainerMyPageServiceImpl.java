@@ -118,10 +118,6 @@ public class TrainerMyPageServiceImpl implements TrainerMyPageService{
 
 
     //보드
-    @Override
-    public Long getBoardTotal(CriteriaTrainerProfile cri, String trainerId) {
-        return tmpmapper.getBoardTotal(cri, trainerId);
-    }
 
     @Override
     public Long getBoardTotal(Criteria cri, String trainerId) {
@@ -178,10 +174,6 @@ public class TrainerMyPageServiceImpl implements TrainerMyPageService{
         return recent_reply;
     }
 
-    @Override
-    public List<BoardDTO> getBoardMyList(CriteriaTrainerProfile cri, String trainerId) {
-        return tmpmapper.getMyBoard(cri,trainerId);
-    }
     @Override
     public List<BoardDTO> getBoardMyList(Criteria cri, String trainerId) {
         return tmpmapper.getMyBoard(cri,trainerId);
