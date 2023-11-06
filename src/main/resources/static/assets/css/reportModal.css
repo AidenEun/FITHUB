@@ -1,0 +1,94 @@
+.report_modal_box{
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0,0,0,0.6) ;
+    display: none;
+    /* display: flex; */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.report_modal_box.active{
+    display: flex;
+}
+
+.report_modal_contents{
+    background-color: #fff;
+    width: 430px;
+    padding: 20px;
+    border-radius: 5px;
+    position: relative;
+}
+
+.report_modal_contents h1{
+    text-align: center;
+}
+
+.report_modal_contents button{
+    background-color: #fff;
+    color: #ccc;
+    font-size: 20px;
+    border: none;
+
+}
+
+.reportClose{
+    cursor: pointer;
+}
+
+.title {
+    margin-top: 30px;
+    margin-bottom: 0px;
+    font-size: 20px;
+}
+
+.title:after {
+    border-bottom: none;
+}
+
+ul {
+    margin: 0;
+}
+
+li {
+    list-style-type: none;
+    margin-bottom: 10px;
+}
+
+li > label {
+    line-height: 1.8;
+}
+
+.description {
+    display: none;
+    font-size: 13px;
+}
+
+#otherDescription {
+    display: block;
+    height: 50px; /* 원하는 높이로 조정 */
+    resize: none; /* 사용자가 수직으로 조절 가능하도록 설정 */
+    cursor: text; /* 마우스 커서를 텍스트 커서로 변경 */
+    border: 1px solid #ccc; /* 선택적으로 테두리 스타일을 추가 */
+}
+
+#otherDescription:focus {
+    border: 1px solid red; /* 포커스 상태일 때 테두리 스타일 변경 */
+}
+
+.title-container {
+    display: flex;
+    align-items: center; /* 수직 정렬 */
+}
+
+.title-container .reportClose {
+    margin-right: 90px; /* 버튼과 제목 사이의 간격 설정 */
+}
+
+.reportForm {
+    margin: 0;
+}

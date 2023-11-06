@@ -1,0 +1,82 @@
+<th:block th:fragment="reportModal()" xmlns:th="http://www.thymeleaf.org">
+    <div class="report_modal_box">
+        <div class="report_modal_contents">
+
+            <div class="title-container">
+                <button class="reportClose">&times;</button>
+                <h1 class="title">신고하기</h1>
+            </div>
+
+            <div style="font-weight: bold; margin-top: 20px;">신고 사유 선택</div>
+            <form class="reportForm">
+                <ul>
+                    <li>
+                        <input type="radio" id="o1" name="reportReason" value="o1">
+                        <label for="o1">욕설, 비방, 차별, 혐오</label>
+                        <p class="description description-o1">
+                            욕설을 사용하여 타인을 비방하거나 모욕하는 행위<br>
+                            지역, 장애, 성별 등을 차별하거나 혐오감을 조장하는 행위<br>
+                            타인의 감정을 상하게 하거나 불쾌감을 유발하는 행위
+                        </p>
+                    </li>
+                    <li>
+                        <input type="radio" id="o2" name="reportReason" value="o2">
+                        <label for="o2">홍보, 영리목적</label>
+                        <p class="description description-o2">
+                            상업적, 홍보, 영리 목적으로 서비스를 이용하는 행위<br>
+                            상업적, 홍보, 영리 목적으로 계정을 생성, 이용하는 행위
+                        </p>
+                    </li>
+                    <li>
+                        <input type="radio" id="o3" name="reportReason" value="o3">
+                        <label for="o3">불법 정보</label>
+                        <p class="description description-o3">
+                            불법적인 사행성, 도박 사이트를 홍보하는 행위<br>
+                            불법 제품을 판매하거나 홍보하는 행위<br>
+                            범법 행위에 대한 정보를 제공하는 행위
+                        </p>
+                    </li>
+                    <li>
+                        <input type="radio" id="o4" name="reportReason" value="o4">
+                        <label for="o4">음란, 청소년 유해</label>
+                        <p class="description description-o4">
+                            과도한 신체 노출이나 음란한 행위를 묘사하는 행위<br>
+                            성적 수치심이나 불쾌감을 유발할 수 있는 내용을 게시하는 행위<br>
+                            성매매 관련 정보를 공유하는 행위
+                        </p>
+                    </li>
+                    <li>
+                        <input type="radio" id="o5" name="reportReason" value="o5">
+                        <label for="o5">도배, 스팸</label>
+                        <p class="description description-o5">
+                            동일한 내용을 반복적으로 등록하는 행위<br>
+                            시스템의 취약점을 이용하여 유해한 내용을 게시하는 행위
+                        </p>
+                    </li>
+                    <li>
+                        <input type="radio" id="o6" name="reportReason" value="o6">
+                        <label for="o6">개인 정보 노출, 유포, 거래</label>
+                        <p class="description description-o6">
+                            타인의 개인정보를 탈취, 유포, 거래하려는 행위<br>
+                            계정을 타인에게 판매, 양도, 대여하는 행위<br>
+                            타인의 개인정보를 다수에게 공개된 게시판 등에 노출하는 행위
+                        </p>
+                    </li>
+                    <li>
+                        <input type="radio" id="o7" name="reportReason" value="o7">
+                        <label for="o7">기타</label>
+                        <textarea style="display: none;" id="otherDescription" class="description description-o7">
+                        </textarea>
+                    </li>
+                </ul>
+                <input type="hidden" id="boardNum" name="boardNum" value="">
+                <input type="hidden" id="boardCategory" name="boardCategory" value="">
+                <div class="button-container">
+                    <div class="button cancelButton">취소</div>
+                    <div class="button confirmButton">확인</div>
+                </div>
+            </form>
+        </div>
+    </div>
+</th:block>
+
