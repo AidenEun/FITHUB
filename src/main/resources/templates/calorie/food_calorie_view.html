@@ -154,7 +154,7 @@
             font-size: 20px;
             font-weight: bold;
         }
-        #exer_cal_border{
+        #exec_cal_border{
         height: 250px;
         background-color:gray;
         border-radius: 10px;
@@ -162,7 +162,7 @@
         display: flex;
         }
 
-        .exer{
+        .exec{
   background-color: white !important;
   display: flex; /* Flexbox container 설정 */
   flex-direction: column;
@@ -173,18 +173,18 @@
   border-radius: 20px;
 }
 
-.exer:first-child {
+.exec:first-child{
   margin: 20px;
 }
 
-.exer_img {
+.exec_img{
   height: 130px;
   width: 192px;
   display: inline-block;
   position: relative;
 }
 
-.exer_img img {
+.exec_img img{
   display: block;
   max-width: 100%;
   max-height: 100%;
@@ -209,7 +209,7 @@ border-radius: 20px;
 position: relative;
 left: 29px;
 }
-        .exer_time{
+        .exec_time{
         height: 40px;
         text-align:center;
         }
@@ -314,62 +314,62 @@ left: 29px;
                         <p style="color: blue;">[[${food.foodName}]]</p>
                         <p>칼로리(</p>
                         <p style="color: blue;">[[${food.foodCalories}]]</p>
-                        <p>)g과 동일한 운동을 확인해보세요.</p>
+                        <p>)kcal과 동일한 운동을 확인해보세요.</p>
                     </div>
-                    <div id="exer_cal_border">
+                    <div id="exec_cal_border">
 
-                        <div class="exer">
-                            <div class="exer_img" id="walking">
+                        <div class="exec">
+                            <div class="exec_img" id="walking">
                                 <img src="/images/walking.png" alt="walking">
                             </div>
-                            <div class="exer_time">
+                            <div class="exec_time">
                                 걷기
                             </div>
-                            <div class="exer_time">
+                            <div class="exec_time">
                                 <span id="walking_result"></span>분
                             </div>
                         </div>
-                        <div class="exer">
-                            <div class="exer_img" id="running">
+                        <div class="exec">
+                            <div class="exec_img" id="running">
                                 <img src="/images/running.png" alt="running">
                             </div>
-                            <div class="exer_time">
+                            <div class="exec_time">
                                 달리기
                             </div>
-                            <div class="exer_time">
+                            <div class="exec_time">
                                 <span id="running_result"></span>분
                             </div>
                         </div>
-                        <div class="exer">
-                            <div class="exer_img" id="jumprope">
+                        <div class="exec">
+                            <div class="exec_img" id="jumprope">
                                 <img src="/images/jumprope.jpg" alt="jumprope">
                             </div>
-                            <div class="exer_time">
+                            <div class="exec_time">
                                 줄넘기
                             </div>
-                            <div class="exer_time">
+                            <div class="exec_time">
                                 <span id="jumprope_result"></span>분
                             </div>
                         </div>
-                        <div class="exer">
-                            <div class="exer_img" id="swim">
+                        <div class="exec">
+                            <div class="exec_img" id="swim">
                                 <img src="/images/swim.jpg" alt="swim">
                             </div>
-                            <div class="exer_time">
+                            <div class="exec_time">
                                 수영
                             </div>
-                            <div class="exer_time">
+                            <div class="exec_time">
                                 <span id="swim_result"></span>분
                             </div>
                         </div>
-                        <div class="exer">
-                            <div class="exer_img" id="bicycle">
+                        <div class="exec">
+                            <div class="exec_img" id="bicycle">
                                 <img src="/images/bicycle.png" alt="bicycle">
                             </div>
-                            <div class="exer_time">
+                            <div class="exec_time">
                                 자전거
                             </div>
-                            <div class="exer_time">
+                            <div class="exec_time">
                                 <span id="bicycle_result"></span>분
                             </div>
                         </div>
