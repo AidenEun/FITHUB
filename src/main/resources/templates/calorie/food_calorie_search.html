@@ -246,5 +246,17 @@
         $("#search-button").click(function() {
             searchFood();
         });
+
+        $(document).ready(function() {
+    $('.get').click(function(event) {
+    event.preventDefault();
+      var foodNum = $(this).attr('href'); // 'foodNum' 값을 가져옴
+      // 다음 페이지 URL 구성
+      var Url = '/calorie/food_calorie_view?foodNum=' + foodNum;
+
+      // 페이지 이동
+      window.location.href = Url;
+    });
+  });
     </script>
 </html>
