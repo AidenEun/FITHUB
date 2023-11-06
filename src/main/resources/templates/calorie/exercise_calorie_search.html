@@ -98,13 +98,13 @@
             padding: 40px;
             margin: 0px;
             background-color: gainsboro;
-
-
+        border-radius:15px;
         }
         .search_content p{
             font-size: 18px;
             font-weight: bold;
             height: 20px;
+
         }
         .FITHUB{
             color: blue;
@@ -142,80 +142,122 @@
   transform: translateY(-50%);
   color: gray;
 }
+       	#result_foodlist{
+            transition: transform 0.2s;
+        }
+
+#result_foodlist:hover{
+  transform: scaleX(1.05);
+  background-color: #5a8100;
+}
+#result_foodlist:hover td{
+	color:white !important;
+}
     </style>
+
 
     <!-- Header -->
     <th:block th:replace="~{layout/header-test::header-test(${session.loginUser})}"></th:block>
 
-<!-- Main -->
-<section id="main" class="wrapper left">
-    <div class="top_img_box">
-        <img src="/images/pic01.jpg" alt="">
-    </div>
-    <div class="inner">
+    <!-- Main -->
+    <section id="main" class="wrapper left">
+        <div class="top_img_box">
+            <img src="/images/pic01.jpg" alt="">
+        </div>
+        <div class="inner">
 
-        <header class="major">
-            <h2>운동 칼로리</h2>
-            <p>운동 칼로리 조회</p>
-        </header>
+            <header class="major">
+                <h2>운동 칼로리</h2>
+                <p>운동 칼로리 검색 조회</p>
+            </header>
 
-        <!-- Content -->
-        <div class="content">
-            <div class="search-border">
-                <div class="search-container">
-                    <div class="search">
-                        <input type="text" id="search-input" placeholder="검색어를 입력하세요">
-                        <input type="button" id="search-button" value="검색" onclick="search()">
+            <!-- Content -->
+            <div class="content">
+                <div class="search-border">
+                    <div class="search-container">
+                        <div class="search">
+                            <input type="text" id="search-input" placeholder="검색어를 입력하세요">
+                            <input type="button" id="search-button" value="검색" onclick="searchExec()">
+                        </div>
+                    </div>
+                    <div class="search_content">
+                        <p>
+                            <span class="FITHUB">FIT HUB</span> 칼로리 조회에서는 <span class="food_info"> 칼로리 뿐만 아니라 영양소 구성</span>도 함께 나와 다이어트뿐 아니라<br>건강한 식습관 형성에도 도움이 됩니다.
+                        </p>
+
                     </div>
                 </div>
-                <div class="search_content">
-                    <p>
-                        <span class="FITHUB">FIT HUB</span> 칼로리 조회에서는 <span class="food_info"> 칼로리 뿐만 아니라 영양소 구성</span>도 함께 나와 다이어트뿐 아니라<br>건강한 식습관 형성에도 도움이 됩니다.
-                    </p>
+                <hr>
+                <div class="food_ranking">
+                    <div class="food_search_result">
+                        <p>검색어 : </p>
+                        <p style="color: red;" th:if="${searchKeyword}"> <span th:text="${searchKeyword}"></span></p>
+                        <p>(으)로</p>
+                        <p style="color: red;" class="result_count" th:text="${searchCount} + '개'">0개</p>
+                        <p>검색 되었습니다.</p>
+                    </div>
+                    <table class="cal_search_ranking">
+                        <tr>
+                            <th width="60%" class="cal_tit">음식명</th>
+                            <th width="40%">칼로리</th>
+                        </tr>
+                        <!-- 검색 결과를 순회하며 출력 -->
+                        <tr th:each="exec : ${execs}" id="result_execlist">
 
+                            <td th:text="${exec.execName}"><a class="get2" th:href="${exec.execNum}"></a></td>
+
+                            <td th:text="${exec.execCalories}"></td>
+                        </tr>
+                    </table>
                 </div>
             </div>
-            <hr>
-            <div class="food_ranking">
-                <div class="food_search_result">
-                    <p style="color: red;" class="search_result">검색어</p>
-                    <p>(으)로</p>
-                    <p style="color: red;" class="result_count">count</p>
-                    <p>개 검색 되었습니다.</p>
-                </div>
+    </section>
+
+    <!-- Footer -->
+    <th:block th:replace="~{layout/footer::footer}"></th:block>
+
+    <!-- Scripts -->
+    <script th:src="@{/assets/js/jquery.min.js}"></script>
+    <script th:src="@{/assets/js/jquery.dropotron.min.js}"></script>
+    <script th:src="@{/assets/js/jquery.scrollex.min.js}"></script>
+    <script th:src="@{/assets/js/browser.min.js}"></script>
+    <script th:src="@{/assets/js/breakpoints.min.js}"></script>
+    <script th:src="@{/assets/js/util.js}"></script>
+    <script th:src="@{/assets/js/main.js}"></script>
+
+    <script th:src="@{/assets/js/util_sub.js}"></script>
+    <script th:src="@{/assets/js/main_sub.js}"></script>
+
+    <script th:src="@{/assets/js/sidebar.js}"></script>
+    </body>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function searchExec() {
+            var keyword = $("#search-input").val();
+            if (keyword) {
+                // 검색어를 URL 파라미터로 전달하고, 검색 결과 페이지로 이동합니다.
+                window.location.href = "/calorie/exercise_calorie_search?keyword=" + keyword;
+            } else {
+                alert("검색어를 입력하세요.");
+            }
+        }
+
+        // 예: 검색 버튼 클릭 시 searchFood 함수 호출
+        $("#search-button").click(function() {
+            searchExec();
+        });
 
 
-                <table class="cal_search_ranking">
-                    <tr>
-                        <th width="60%" class="cal_tit">운동명</th>
-                        <th width="40%">칼로리</th>
-                    </tr>
-                    <tr>
-                        <td>[[${board.food_name}]]</td>
-                        <td>[[${board.kcal}]]</td>
-                    </tr>
+        $(document).ready(function() {
+    $('.get2').click(function(event) {
+    event.preventDefault();
+      var execNum = $(this).attr('href');
+      // 다음 페이지 URL 구성
+      var Url = '/calorie/exercise_calorie_view?execNum=' + execNum;
 
-                </table>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Footer -->
-<th:block th:replace="~{layout/footer::footer}"></th:block>
-
-<!-- Scripts -->
-<script th:src="@{/assets/js/jquery.min.js}"></script>
-<script th:src="@{/assets/js/jquery.dropotron.min.js}"></script>
-<script th:src="@{/assets/js/jquery.scrollex.min.js}"></script>
-<script th:src="@{/assets/js/browser.min.js}"></script>
-<script th:src="@{/assets/js/breakpoints.min.js}"></script>
-<script th:src="@{/assets/js/util.js}"></script>
-<script th:src="@{/assets/js/main.js}"></script>
-
-<script th:src="@{/assets/js/util_sub.js}"></script>
-<script th:src="@{/assets/js/main_sub.js}"></script>
-
-<script th:src="@{/assets/js/sidebar.js}"></script>
-</body>
+      // 페이지 이동
+      window.location.href = Url;
+    });
+  });
+    </script>
 </html>
