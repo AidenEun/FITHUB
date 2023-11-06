@@ -100,3 +100,25 @@
 .category input[type="radio"] + label{
     font-size: 16px;
 }
+
+#search_result{
+    margin: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-top: 14px;
+}
+#search_result th,#search_result tr{
+    text-align: center;
+}
+#data-table tr:hover{
+    background-color: #ebede1;
+    cursor: pointer;
+}
+.foodData.checked{
+    background-color: #5a8100;
+    color: white;
+
+}
+.foodData.checked:hover{
+    color: black;
+}
