@@ -12,6 +12,13 @@ close.addEventListener("click", () => {
     modalBox.classList.remove("active");
 });
 
+$(".open").on("click", function (e) {
+    e.preventDefault();
+    var userId = $(this).text();
+
+    modalBox.classList.add("active");
+    sendUserIdToModal(userId);
+});
 
 function sendUserIdToModal(userId) {
     $.ajax({
@@ -23,7 +30,7 @@ function sendUserIdToModal(userId) {
         },
         error: function(error) {
         }
-});
+    });
 }
 
 function modal(data) {
@@ -50,11 +57,3 @@ function modal(data) {
         console.error("올바른 데이터 형식이 아닙니다:", error);
     }
 }
-
-$(".open").on("click", function (e) {
-    e.preventDefault();
-    var userId = $(this).text();
-
-    modalBox.classList.add("active");
-    sendUserIdToModal(userId);
-});
