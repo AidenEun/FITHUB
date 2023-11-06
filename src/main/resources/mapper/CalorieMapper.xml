@@ -12,6 +12,11 @@
     <select id="getViewF">
         select * from food where food_num=#{foodNum};
     </select>
+
+    <select id="FindFoodNameModal">
+        SELECT * FROM food WHERE food_name LIKE CONCAT('%', #{keyword}, '%') ORDER BY view_cnt DESC LIMIT 3;
+    </select>
+
     <update id="updateViewCountF">
         update food set view_cnt = view_cnt + 1 where food_num = #{foodNum}
     </update>

@@ -126,7 +126,7 @@
         <form id="diaryForm" method="post" th:action="@{/usermypage/diaryView}">
             <table class="diary_write">
                 <tr>
-                    <td><input type="text" name="writeDate" value="다이어리 날짜" readonly></td>
+                    <td><input type="text" name="writeDate" th:value="${regdate}" readonly></td>
                     <td><input type="text" name="nicname" value="닉네임" th:value="${user.userNickname}" readonly></td>
                 </tr>
                 <tr>

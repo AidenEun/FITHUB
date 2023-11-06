@@ -1,33 +1,58 @@
 <!-- 모달 검색창  -->
 <th:block th:fragment="searchModal()">
-<div class="searchModalBox">
-    <div id="modal_contents">
-        <div class="top">
-            <button class="searchclose">&times;</button>
-            <span id="title">칼로리 조회</span>
-        </div>
-
-        <div class="category">
-            <div>
-                <input type="radio" name="searchCategory" id="food" value="food" checked>
-                <label for="food">음식</label>
+    <div class="searchModalBox">
+        <div id="modal_contents">
+            <div class="top">
+                <button class="searchclose">&times;</button>
+                <span id="title">칼로리 조회</span>
             </div>
-            <div>
-                <input type="radio" name="searchCategory" id="exer" value="exer" >
-                <label for="exer">운동</label>
-            </div>
-        </div>
 
-        <div id="modal_search">
-            <input type="search" name="" id="search_bar">
-            <input type="button" value="검색" onclick="calsearch()">
-        </div>
-        <div class="choice_list"></div>
-        <div class="add">
-            <input type="button" value="추가">
+            <div class="category">
+                <div>
+                    <input type="radio" name="searchCategory" id="bf" value="bf" >
+                    <label for="bf">아침</label>
+                </div>
+                <div>
+                    <input type="radio" name="searchCategory" id="lunch" value="lunch" >
+                    <label for="lunch">점심</label>
+                </div>
+                <div>
+                    <input type="radio" name="searchCategory" id="dinner" value="dinner">
+                    <label for="dinner">저녁</label>
+                </div>
+                <div>
+                    <input type="radio" name="searchCategory" id="snack" value="snack" >
+                    <label for="snack">간식</label>
+                </div>
+                <div>
+                    <input type="radio" name="searchCategory" id="exer" value="exer">
+                    <label for="exer">운동</label>
+                </div>
+            </div>
+
+            <div id="modal_search">
+                <input type="search" name="" id="search_bar">
+                <input type="button" value="검색" onclick="calsearch()">
+            </div>
+            <div class="choice_list">
+                <!--                <div id="no_keyword">검색 결과가 없습니다</div>-->
+                <!--                <div class="listTable" id="listTable">-->
+                <input type="hidden" id="searchModalResult">
+                <table style="text-align: center" id="search_result">
+                    <thead id="table-header">
+
+                    </thead>
+                    <tbody id="data-table">
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="add">
+                <input type="button" value="추가" onclick="sendResult()">
+            </div>
         </div>
     </div>
-</div>
+
 
 </th:block>
 

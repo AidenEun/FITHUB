@@ -1,6 +1,8 @@
 package com.kh.demo.controller;
 
 import com.fasterxml.jackson.databind.DatabindContext;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.kh.demo.domain.dto.ExerciseDTO;
 import com.kh.demo.domain.dto.FoodDTO;
 import com.kh.demo.service.CalorieService;
@@ -12,17 +14,13 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Controller
 @RequestMapping("/calorie/*")
 public class CalorieController {
-
-
 
 
     @Autowired
@@ -97,6 +95,19 @@ public class CalorieController {
         System.out.println(topFoods);
     }
 
+    @PostMapping("foodModal_search")
+    @ResponseBody
+    public String foodModal_search(@RequestParam("keyword") String keyword) {
+        ObjectNode json = JsonNodeFactory.instance.objectNode();
+
+        System.out.println(keyword);
+
+        List<FoodDTO> foodList = calorieService.getFindFood(keyword);
+        System.out.println(foodList);
+        json.putPOJO("foodList", foodList);
+
+        return json.toString();
+    }
 
 
     @GetMapping("exercise_calorie_search")

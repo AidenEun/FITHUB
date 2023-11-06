@@ -72,6 +72,11 @@ public class CalorieServiceImpl implements CalorieService {
         calmapper.updateViewCountF(foodNum);
     }
 
+    @Override
+    public List<FoodDTO> getFindFood(String keyword) {
+
+        return calmapper.FindFoodNameModal(keyword);
+    }
 
     public List<ExerciseDTO> searchExecs(String keyword) {
         System.out.println(keyword);
