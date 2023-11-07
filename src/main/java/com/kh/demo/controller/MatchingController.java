@@ -29,5 +29,22 @@ public class MatchingController {
         model.addAttribute("recent_reply",MatchingService.getRecentReplyList(list));
     }
 
+    @GetMapping("matching_write")
+    public void write(Criteria cri, Model model) throws Exception {
+        List<TrainerMatchingBoardDTO> list = MatchingService.getmatchingList();
+        model.addAttribute("list", list);
+        model.addAttribute("pageMaker",new PageDTO(MatchingService.getTotal(cri), cri));
+        model.addAttribute("newly_board",MatchingService.getNewlyBoardList(list));
+        model.addAttribute("recent_reply",MatchingService.getRecentReplyList(list));
+    }
+    @GetMapping("matching_view")
+    public void view(Criteria cri, Model model) throws Exception {
+        List<TrainerMatchingBoardDTO> list = MatchingService.getmatchingList();
+        model.addAttribute("list", list);
+        model.addAttribute("pageMaker",new PageDTO(MatchingService.getTotal(cri), cri));
+        model.addAttribute("newly_board",MatchingService.getNewlyBoardList(list));
+        model.addAttribute("recent_reply",MatchingService.getRecentReplyList(list));
+    }
+
 
 }
