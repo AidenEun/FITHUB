@@ -3,7 +3,7 @@ package com.kh.demo.domain.dto;
 import lombok.Data;
 
 @Data
-public class RiviewDTO {
+public class ReviewDTO {
     private long reviewNum;
     private String reviewContent;
     private long matchingNum;

@@ -22,7 +22,7 @@ $(".open").on("click", function (e) {
 
 function sendUserIdToModal(userId) {
     $.ajax({
-        url: '/adminmypage/reportModal',
+        url: '/adminmypage/profileModal',
         method: 'POST',
         data: { userId: userId },
         success: function(data) {

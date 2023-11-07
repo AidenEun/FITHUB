@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@Qualifier("ReportServiceImpl")
+@Qualifier("AdminMyPageServiceImpl")
 public class AdminMyPageServiceImpl implements AdminMyPageService {
     @Autowired
     private AdminMyPageMapper adminMyPageMapper;
@@ -43,6 +43,16 @@ public class AdminMyPageServiceImpl implements AdminMyPageService {
     @Override
     public Long getReportTotalByTrainer(Criteria cri) {
         return adminMyPageMapper.getReportTotalByTrainer(cri);
+    }
+
+    @Override
+    public List<ReportDTO> getDoneReportList(Criteria cri) {
+        return adminMyPageMapper.getDoneReportList(cri);
+    }
+
+    @Override
+    public Long getDoneReportTotal(Criteria cri) {
+        return adminMyPageMapper.getDoneReportTotal(cri);
     }
 
     @Override
@@ -179,4 +189,91 @@ public class AdminMyPageServiceImpl implements AdminMyPageService {
     public Long getMessageTotalByTrainer(Criteria cri) {
         return adminMyPageMapper.getMessageTotalByTrainer(cri);
     }
+
+//    Modal
+    @Override
+    public ReportDTO getReportDTO(Long reportNum) {
+        ReportDTO reportDTO =  adminMyPageMapper.getReportDTO(reportNum);
+        switch (reportDTO.getReportContent()) {
+            case "o1" -> {
+                String newReportContent = "욕설, 비방, 차별, 혐오";
+
+                reportDTO.setReportContent(newReportContent);
+            }
+            case "o2" -> {
+                String newReportContent = "홍보, 영리 목적";
+
+                reportDTO.setReportContent(newReportContent);
+            }
+            case "o3" -> {
+                String newReportContent = "불법 정보";
+
+                reportDTO.setReportContent(newReportContent);
+            }
+            case "o4" -> {
+                String newReportContent = "음란, 청소년 유해";
+
+                reportDTO.setReportContent(newReportContent);
+            }
+            case "o5" -> {
+                String newReportContent = "개인 정보 노출, 유포, 거래";
+
+                reportDTO.setReportContent(newReportContent);
+            }
+            case "o6" -> {
+                String newReportContent = "도배, 스팸";
+
+                reportDTO.setReportContent(newReportContent);
+            }
+        }
+        switch (reportDTO.getBoardCategory()) {
+            case "tip" -> {
+                String newBoardCategory = "꿀팁";
+
+                reportDTO.setBoardCategory(newBoardCategory);
+            }
+            case "comFree" -> {
+                String newBoardCategory = "커뮤니티-자유";
+
+                reportDTO.setBoardCategory(newBoardCategory);
+            }
+            case "comExer" -> {
+                String newBoardCategory = "커뮤니티-운동";
+
+                reportDTO.setBoardCategory(newBoardCategory);
+            }
+            case "comFood" -> {
+                String newBoardCategory = "커뮤니티-식단";
+
+                reportDTO.setBoardCategory(newBoardCategory);
+            }
+            case "comPhoto" -> {
+                String newBoardCategory = "커뮤니티-갤러리";
+
+                reportDTO.setBoardCategory(newBoardCategory);
+            }
+            case "comQna" -> {
+                String newBoardCategory = "커뮤니티-고민QnA";
+
+                reportDTO.setBoardCategory(newBoardCategory);
+            }
+            case "review" -> {
+                String newBoardCategory = "리뷰";
+
+                reportDTO.setBoardCategory(newBoardCategory);
+            }
+            case "meGeneral" -> {
+                String newBoardCategory = "일반 쪽지";
+
+                reportDTO.setBoardCategory(newBoardCategory);
+            }
+            case "challCert" -> {
+                String newBoardCategory = "챌린지 인증";
+
+                reportDTO.setBoardCategory(newBoardCategory);
+            }
+        }
+        return reportDTO;
+    }
+
 }

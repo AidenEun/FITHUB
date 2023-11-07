@@ -12,8 +12,10 @@
 	<link rel="stylesheet" th:href="@{/assets/css/index.css}" />
 	<noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
 	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
+
 	<link rel="stylesheet" th:href="@{/assets/css/profileModal.css}">
 	<link rel="stylesheet" th:href="@{/assets/css/reportModal.css}">
+	<link rel="stylesheet" th:href="@{/assets/css/reportAdminModal.css}">
 </head>
 <style>
 	.top_img_box{
@@ -88,7 +90,11 @@
 	}
 
 	.now_cate {
-		background-color: red !important;
+		background-color: #ebede1 !important;
+	}
+
+	.button:hover {
+		background-color: #ebede1 !important;
 	}
 </style>
 <body class="is-preload">
@@ -99,6 +105,7 @@
 	<!-- Modal -->
 	<th:block th:replace="~{layout/profileModal::profileModal()}"></th:block>
 	<th:block th:replace="~{layout/reportModal::reportModal()}"></th:block>
+	<th:block th:replace="~{layout/reportAdminModal::reportAdminModal()}"></th:block>
 
 	<!-- Main -->
 	<section id="main" class="wrapper sidebar left">
@@ -119,7 +126,8 @@
 			<div class="content">
 				<div id="allReport" class="button cate now_cate" style="margin-right: 10px;">전체</div>
 				<div id="byUserReport" class="button cate not_cate" style="margin-right: 10px;">유저</div>
-				<div id="byTrainerReport" class="button cate not_cate">트레이너</div>
+				<div id="byTrainerReport" class="button cate not_cate" style="margin-right: 10px;">트레이너</div>
+				<div id="doneReport" class="button cate not_cate">처리완료</div>
 
 				<table style="text-align: center; margin-top: 20px;">
 					<thead>
@@ -129,7 +137,7 @@
 							<td class="long_text">게시글 번호</td>
 							<td class="long_text">카테고리</td>
 							<td class="long_text">신고 일자</td>
-							<td class="long_text">신고하기</td>
+							<td class="long_text">처리</td>
 						</tr>
 					</thead>
 					<tbody id="data-table">
@@ -145,12 +153,12 @@
 								</a>
 							</td>
 							<td class="long_text">
-								<a href="#" class="boardNum">
+								<a href="#">
 									[[${reportBoard.reportBoardnum}]]
 								</a>
 							</td>
 							<td class="long_text">
-								<a href="#" class="boardCategory">
+								<a href="#">
 									[[${reportBoard.boardCategory}]]
 								</a>
 							</td>
@@ -160,7 +168,7 @@
 								</a>
 							</td>
 							<td class="long_text">
-								<a href="#" class="reportOpen" data-reportNum="신고하기">신고하기</a>
+								<a href="#" class="reportOpen">처리하기</a>
 							</td>
 						</tr>
 						<tr th:if="${reportList == null or reportList.size() == 0}">
@@ -220,6 +228,7 @@
 <script th:src="@{/assets/js/sidebar.js}"></script>
 <script th:src="@{/assets/js/profile.js}"></script>
 <script th:src="@{/assets/js/reportModal.js}"></script>
+<script th:src="@{/assets/js/reportAdminModal.js}"></script>
 <script>
 	const cate = document.querySelectorAll('.cate');
 	let nowCate = document.querySelector('.now_cate');
@@ -257,6 +266,11 @@
         $('#byTrainerReport').click(function() {
             currentCategory = 'byTrainer';
             loadPage('/adminmypage/byTrainerReport', 1);
+        });
+
+        $('#doneReport').click(function() {
+            currentCategory = 'done';
+            loadPage('/adminmypage/doneReport', 1);
         });
 
         // 페이지 데이터를 불러오는 함수
@@ -320,14 +334,26 @@
 
 			if (data.reportList != null && data.reportList.length > 0) {
 				data.reportList.forEach(function (reportData) {
-					var row = $('<tr>');
-					row.append('<td class="long_text"><a href="#">' + reportData.reportNum + '</a></td>');
-					row.append('<td class="long_text"><a href="#" class="open">' + reportData.userId + '</a></td>');
-					row.append('<td class="long_text"><a href="#" class="boardNum">' + reportData.reportBoardnum + '</a></td>');
-					row.append('<td class="long_text"><a href="#" class="boardCategory">' + reportData.boardCategory + '</a></td>');
-					row.append('<td class="long_text"><a href="#">' + reportData.reportDate + '</a></td>');
-					row.append('<td class="long_text"><a href="#" class="reportOpen" data-reportNum="' + reportData.reportBoardnum + '">신고하기</a></td>');
-					tableBody.append(row);
+					if (reportData.reportYn === 'n') {
+						var row = $('<tr>');
+						row.append('<td class="long_text"><a href="#" class="reportNum">' + reportData.reportNum + '</a></td>');
+						row.append('<td class="long_text"><a href="#" class="open">' + reportData.userId + '</a></td>');
+						row.append('<td class="long_text"><a href="#">' + reportData.reportBoardnum + '</a></td>');
+						row.append('<td class="long_text"><a href="#">' + reportData.boardCategory + '</a></td>');
+						row.append('<td class="long_text"><a href="#">' + reportData.reportDate + '</a></td>');
+						row.append('<td class="long_text"><a href="#" class="reportAdminOpen button">처리하기</a></td>');
+						tableBody.append(row);
+					}
+					else if (reportData.reportYn === 'y') {
+						var row = $('<tr>');
+						row.append('<td class="long_text"><a href="#" class="reportNum">' + reportData.reportNum + '</a></td>');
+						row.append('<td class="long_text"><a href="#" class="open">' + reportData.userId + '</a></td>');
+						row.append('<td class="long_text"><a href="#">' + reportData.reportBoardnum + '</a></td>');
+						row.append('<td class="long_text"><a href="#">' + reportData.boardCategory + '</a></td>');
+						row.append('<td class="long_text"><a href="#">' + reportData.reportDate + '</a></td>');
+						row.append('<td class="long_text"><a href="#" class="reportAdminOpen button disabled">처리하기</a></td>');
+						tableBody.append(row);
+					}
 				});
 			}
 			else {
@@ -342,7 +368,7 @@
                 modalBox.classList.add("active");
             });
 
-			$('.reportOpen').on('click', reportModal);
+            $('.reportAdminOpen').on('click', reportAdminModal);
 		}
 	});
 </script>

@@ -24,31 +24,40 @@
 
 <!--Report-->
     <select id="getReportList">
-        select * from report order by report_num desc limit #{startrow},#{amount}
+        SELECT * FROM report
+        WHERE report_yn = 'n'
+        ORDER BY report_num DESC
+        LIMIT #{startrow}, #{amount}
     </select>
 
     <select id="getReportListByUser">
         SELECT * FROM report
-        WHERE user_id IN (SELECT user_id FROM user WHERE user_category = 'U')
+        WHERE report_yn = 'n'
+        AND user_id IN (SELECT user_id FROM user WHERE user_category = 'U')
         order by report_num desc limit #{startrow},#{amount}
     </select>
 
     <select id="getReportListByTrainer">
         SELECT * FROM report
-        WHERE user_id IN (SELECT trainer_id FROM trainer)
+        WHERE report_yn = 'n'
+        AND user_id IN (SELECT trainer_id FROM trainer)
         order by report_num desc
         limit #{startrow},#{amount}
     </select>
 
     <select id="getReportTotal">
-        select count(*) from report where report_num > 0
+        SELECT COUNT(*) FROM report
+        WHERE report_yn = 'n'
+        AND report_num > 0;
     </select>
 
     <select id="getReportTotalByUser">
         SELECT COUNT(*)
         FROM report
         INNER JOIN user ON report.user_id = user.user_id
-        WHERE report.report_num > 0;
+        WHERE report_yn = 'n'
+        AND user.user_category = 'U'
+        AND report.report_num > 0;
     </select>
 
     <select id="getReportTotalByTrainer">
@@ -58,28 +67,17 @@
         WHERE report.report_num > 0;
     </select>
 
-    <select id="getUserByIdBoolean">
-        SELECT COUNT(*)
-        FROM user
-        WHERE user_id = #{userId}
+    <select id="getDoneReportList">
+        SELECT * FROM report
+        WHERE report_yn = 'y'
+        ORDER BY report_num DESC
+        LIMIT #{startrow}, #{amount}
     </select>
 
-    <select id="getTrainerByIdBoolean">
-        SELECT COUNT(*)
-        FROM trainer
-        WHERE trainer_id = #{userId}
-    </select>
-
-    <select id="getUserById">
-        SELECT *
-        FROM user
-        WHERE user_id = #{userId}
-    </select>
-
-    <select id="getTrainerById">
-        SELECT *
-        FROM trainer
-        WHERE trainer_id = #{userId}
+    <select id="getDoneReportTotal">
+        SELECT COUNT(*) FROM report
+        WHERE report_yn = 'y'
+        AND report_num > 0;
     </select>
 
 <!--SignUp-->
@@ -229,6 +227,37 @@
         INNER JOIN trainer ON message.send_id = trainer.trainer_id
         WHERE message.message_num > 0
         AND message.receive_id LIKE '%admin';
+    </select>
+
+<!--Modal-->
+    <select id="getUserByIdBoolean">
+        SELECT COUNT(*)
+        FROM user
+        WHERE user_id = #{userId}
+    </select>
+
+    <select id="getTrainerByIdBoolean">
+        SELECT COUNT(*)
+        FROM trainer
+        WHERE trainer_id = #{userId}
+    </select>
+
+    <select id="getUserById">
+        SELECT *
+        FROM user
+        WHERE user_id = #{userId}
+    </select>
+
+    <select id="getTrainerById">
+        SELECT *
+        FROM trainer
+        WHERE trainer_id = #{userId}
+    </select>
+
+    <select id="getReportDTO">
+        SELECT *
+        FROM report
+        WHERE report_num = #{reportNum}
     </select>
 
 </mapper>
