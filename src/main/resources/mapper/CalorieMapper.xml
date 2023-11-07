@@ -17,6 +17,14 @@
         SELECT * FROM food WHERE food_name LIKE CONCAT('%', #{keyword}, '%') ORDER BY view_cnt DESC LIMIT 3;
     </select>
 
+    <select id="FindExecNameModal">
+        SELECT * FROM exercise WHERE exec_name LIKE CONCAT('%', #{keyword}, '%') LIMIT 3;
+    </select>
+
+    <select id="findByFoodNum">
+        SELECT * FROM food where food_num = #{foodnum};
+    </select>
+
     <update id="updateViewCountF">
         update food set view_cnt = view_cnt + 1 where food_num = #{foodNum}
     </update>

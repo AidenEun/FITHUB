@@ -78,6 +78,16 @@ public class CalorieServiceImpl implements CalorieService {
         return calmapper.FindFoodNameModal(keyword);
     }
 
+    @Override
+    public List<FoodDTO> getFood(String foodNumber) {
+        return calmapper.findByFoodNum(foodNumber);
+    }
+
+    @Override
+    public List<ExerciseDTO> getFindExec(String keyword) {
+        return calmapper.FindExecNameModal(keyword);
+    }
+
     public List<ExerciseDTO> searchExecs(String keyword) {
         System.out.println(keyword);
         List<ExerciseDTO> databaseResults = calmapper.findByExecName(keyword);

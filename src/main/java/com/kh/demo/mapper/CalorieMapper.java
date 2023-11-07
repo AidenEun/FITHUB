@@ -28,4 +28,8 @@ public interface CalorieMapper {
     void updateViewCountE(Long execNum);
 
     List<FoodDTO> FindFoodNameModal(String keyword);
+
+    List<FoodDTO> findByFoodNum(String foodNumber);
+
+    List<ExerciseDTO> FindExecNameModal(String keyword);
 }

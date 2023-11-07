@@ -30,4 +30,8 @@ public interface CalorieService {
     void updateViewCountE(Long execNum);
 
     List<FoodDTO> getFindFood(String keyword);
+
+    List<FoodDTO> getFood(String foodNumber);
+
+    List<ExerciseDTO> getFindExec(String keyword);
 }
