@@ -28,7 +28,8 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public boolean checkId(String userid) {
-        return false;
+        UserDTO user = umapper.findById(userid);
+        return user != null;
     }
 
 
