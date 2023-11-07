@@ -1,0 +1,31 @@
+<th:block th:fragment="reportAdminModal()" xmlns:th="http://www.thymeleaf.org">
+    <div class="report_Admin_modal_box">
+        <div class="report_Admin_modal_contents">
+
+            <div class="title-container">
+                <button class="reportAdminClose button">&times;</button>
+                <h1 class="title">신고 처리 하기</h1>
+            </div>
+            <table id="reportAdminTable">
+                <thead>
+                    <tr style="font-weight: bold; text-align: center;">
+                        <td class="long_text" style="width: 5%;">신고 번호</td>
+                        <td class="long_text">신고한 아이디</td>
+                        <td class="long_text">신고당한 아이디</td>
+                        <td class="long_text">게시글 카테고리</td>
+                        <td class="long_text">게시글 번호</td>
+                        <td class="long_text">신고 일자</td>
+                    </tr>
+                </thead>
+                <tbody id="report-table">
+
+                </tbody>
+            </table>
+            <div class="report-button-container">
+                <div class="button cancelReportAdminButton">취소</div>
+                <div class="button confirmReportAdminButton">처리</div>
+            </div>
+        </div>
+    </div>
+</th:block>
+

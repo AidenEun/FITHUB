@@ -51,9 +51,11 @@ document.getElementById("otherDescription").addEventListener("click", function (
 
 function reportModal(e){
     e.preventDefault();
+    var reportedUserId = $(this).closest('tr').find('.writer').text();
     var boardNum = $(this).closest('tr').find('.boardNum').text();
     var boardCategory = $(this).closest('tr').find('.boardCategory').text();
 
+    document.querySelector('#reportedUserId').value = reportedUserId;
     document.querySelector('#boardNum').value = boardNum;
     document.querySelector('#boardCategory').value = boardCategory;
 
@@ -80,14 +82,22 @@ cancelButton.addEventListener("click", () => {
 });
 
 confirmButton.addEventListener("click", () => {
-    const reportContent = document.querySelector('input[name="reportReason"]:checked').value;
+    const reportContentRadio = document.querySelector('input[name="reportReason"]:checked');
+    let reportContent;
+
+    if (reportContentRadio.value === 'o7') {
+        // "기타"를 선택한 경우 텍스트 내용을 reportContent에 할당
+        reportContent = otherDescriptionTextarea.value;
+    } else {
+        reportContent = reportContentRadio.value;
+    }
+    const reportedUserId = document.querySelector('#reportedUserId').value;
     const reportBoardnum = document.querySelector('#boardNum').value;
     const boardCategory = document.querySelector('#boardCategory').value;
 
-    alert(boardCategory);
-
     const data = {
         reportContent: reportContent,
+        reportedUserId: reportedUserId,
         reportBoardnum: reportBoardnum,
         boardCategory: boardCategory
     };

@@ -79,4 +79,10 @@ public interface AdminMyPageMapper {
 
     Long getMessageTotalByTrainer(Criteria cri);
 
+    List<ReportDTO> getDoneReportList(Criteria cri);
+
+    Long getDoneReportTotal(Criteria cri);
+
+    ReportDTO getReportDTO(Long reportNum);
+
 }

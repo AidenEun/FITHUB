@@ -17,7 +17,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/adminmypage/*")
 public class AdminMyPageController {
-    @Autowired @Qualifier("ReportServiceImpl")
+    @Autowired @Qualifier("AdminMyPageServiceImpl")
     private AdminMyPageService adminMyPageService;
     @Autowired @Qualifier("UserServiceImpl")
     private UserServiceImpl userService;
@@ -79,23 +79,18 @@ public class AdminMyPageController {
         return json.toString();
     }
 
-    @PostMapping("reportModal")
+    @GetMapping("doneReport")
     @ResponseBody
-    public String reportModal(@RequestParam("userId") String userId) throws Exception {
+    public String doneReportList(@RequestParam("pageNum") int pageNum) throws Exception {
         ObjectNode json = JsonNodeFactory.instance.objectNode();
-        Object userInfo = adminMyPageService.getUserById(userId);
+        Criteria cri = new Criteria(pageNum, 10);
 
-        if (userInfo instanceof UserDTO) {
-            UserDTO userDTO = (UserDTO) userInfo;
-            json.putPOJO("userDTO", userDTO);
-        }
-        else if (userInfo instanceof TrainerDTO) {
-            TrainerDTO trainerDTO = (TrainerDTO) userInfo;
-            json.putPOJO("trainerDTO", trainerDTO);
-        }
-        else {
-            json.put("noData", "noData");
-        }
+        List<ReportDTO> doneReportList = adminMyPageService.getDoneReportList(cri);
+        PageDTO pageDTO = new PageDTO(adminMyPageService.getDoneReportTotal(cri), cri);
+
+        json.putPOJO("reportList", doneReportList);
+        json.putPOJO("pageDTO", pageDTO);
+
         return json.toString();
     }
 
@@ -307,6 +302,38 @@ public class AdminMyPageController {
 
         json.putPOJO("messageList", messageByTrainer);
         json.putPOJO("pageDTO", pageDTO);
+
+        return json.toString();
+    }
+
+//  Modal
+    @PostMapping("profileModal")
+    @ResponseBody
+    public String reportModal(@RequestParam("userId") String userId) throws Exception {
+        ObjectNode json = JsonNodeFactory.instance.objectNode();
+        Object userInfo = adminMyPageService.getUserById(userId);
+
+        if (userInfo instanceof UserDTO) {
+            UserDTO userDTO = (UserDTO) userInfo;
+            json.putPOJO("userDTO", userDTO);
+        }
+        else if (userInfo instanceof TrainerDTO) {
+            TrainerDTO trainerDTO = (TrainerDTO) userInfo;
+            json.putPOJO("trainerDTO", trainerDTO);
+        }
+        else {
+            json.put("noData", "noData");
+        }
+        return json.toString();
+    }
+
+    @PostMapping("reportAdminModal")
+    @ResponseBody
+    public String reportAdminModal(@RequestParam("reportNum") Long reportNum) throws Exception {
+        ObjectNode json = JsonNodeFactory.instance.objectNode();
+        ReportDTO reportDTO = adminMyPageService.getReportDTO(reportNum);
+
+        json.putPOJO("reportDTO", reportDTO);
 
         return json.toString();
     }
