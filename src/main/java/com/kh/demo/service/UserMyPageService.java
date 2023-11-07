@@ -31,11 +31,12 @@ public interface UserMyPageService {
 
     /*재우*/
     //메세지
-    Long getMessageTotal(Criteria cri, String userId);
+    Long getMessageTotal(Criteria cri, String userId, String message);
     Long getMessageLastNum(String userid);
     ArrayList<String> getMessageNewlyList(List<MessageDTO> list) throws Exception;
 
-    List<MessageDTO> getMessageMyList(Criteria cri, String userId);
+    List<MessageDTO> getMessageMyList(Criteria cri, String userId, String message);
+
 
     //보드
     Long getBoardTotal(Criteria cri, String userId);
@@ -68,13 +69,13 @@ public interface UserMyPageService {
     Long getScribeTotal(Criteria cri, String userId);
 
     //내 챌린지
+    List<ChallNoticeBoardDTO> getMyChallenge(Criteria cri, String userId, String challCategory, String challTerm);
 
-    Long getChallengeTotal(Criteria cri, String userId);
-
-    List<ChallNoticeBoardDTO> getMyChallenge(Criteria cri, String userId);
+    Long getChallengeTotal(Criteria cri, String userId, String challCategory, String challTerm);
 
 
     //트레이너 전환 신청
     boolean insertApplytrainer(TrainerSignUpDTO user,MultipartFile[] files) throws Exception;
+
 
 }

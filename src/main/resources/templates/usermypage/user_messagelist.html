@@ -174,8 +174,9 @@
 
 		<!-- Content -->
 		<div class="content">
-
-
+			<div id="messageAll" class="button cate now_cate message" style="margin-right: 10px;">전체보기</div>
+			<div id="messageSend" class="button cate not_cate message" style="margin-right: 10px;">보낸쪽지함</div>
+			<div id="messageReceive" class="button cate now_cate message" style="margin-right: 10px;">받은쪽지함</div>
 			<!-- 게시글 리스트 띄우는 테이블 -->
 			<table class="list">
 				<tr align="right" valign="middle">
@@ -255,9 +256,12 @@
 			<input type="hidden" name="amount" th:value="${pageMaker.cri.amount}">
 			<input type="hidden" name="type" th:value="${pageMaker.cri.type}">
 			<input type="hidden" name="keyword" th:value="${pageMaker.cri.keyword}">
+			<input type="hidden" name="message" th:value="${param.message}">
 		</form>
 
+		<form name="messageForm" id="messageForm" th:action="@{/usermypage/user_messagelist}">
 
+		</form>
 
 
 		<!-- Sidebar -->
@@ -291,6 +295,9 @@
 	$(".changePage").on("click",function(e){
 		//e(이벤트)의 기본 작동 막기
 		e.preventDefault();
+		if(pageForm.find("input[name='message']").val() == "" || pageForm.find("input[name='message']").val() == null){
+			pageForm.find("input[name='message']").val("messageAll");
+		}
 		let pagenum = $(this).attr("href");
 		pageForm.find("input[name='pagenum']").val(pagenum);
 		pageForm.submit();
@@ -317,6 +324,35 @@
 		}
 		searchForm.submit();
 	}
+
+	const cate = document.querySelectorAll('.cate');
+	let nowCate = document.querySelector('.now_cate');
+
+	cate.forEach(function(btn) {
+		btn.addEventListener('click', function() {
+			if (btn.classList.contains('now_cate')) {
+			 return;
+			}
+
+			btn.classList.remove('not_cate');
+			btn.classList.add('now_cate');
+
+			nowCate.classList.remove('now_cate');
+			nowCate.classList.add('not_cate');
+
+			nowCate = btn;
+		});
+	});
+
+	const messageForm = $("#messageForm");
+	$(".message").on("click",function(e){
+		e.preventDefault();
+		let category = $(this).attr("id");
+		messageForm.append("<input type='hidden' name='message' value='"+category+"'>");
+		messageForm.attr("method","get");
+		messageForm.submit();
+	});
+
 
 </script>
 
