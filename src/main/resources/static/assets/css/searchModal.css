@@ -122,3 +122,10 @@
 .foodData.checked:hover{
     color: black;
 }
+.execData.checked{
+    background-color: #5a8100;
+    color: white;
+}
+.execData.checked:hover{
+    color: black;
+}

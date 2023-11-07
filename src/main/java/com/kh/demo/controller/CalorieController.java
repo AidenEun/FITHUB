@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -108,7 +109,55 @@ public class CalorieController {
 
         return json.toString();
     }
+    @PostMapping("execModal_search")
+    @ResponseBody
+    public String execModal_search(@RequestParam("keyword") String keyword){
+        ObjectNode json = JsonNodeFactory.instance.objectNode();
+//        System.out.println("운동 : "+keyword);
 
+        List<ExerciseDTO> execList = calorieService.getFindExec(keyword);
+//        System.out.println(execList);
+
+        json.putPOJO("execList",execList);
+
+        return json.toString();
+    }
+
+    @PostMapping("getfoodInfo")
+    @ResponseBody
+    public String getfoodInfo(@RequestParam("todayAllList") String todayAllList) {
+        ObjectNode json = JsonNodeFactory.instance.objectNode();
+        System.out.println(todayAllList);
+
+        String[] todayListArr = todayAllList.split(",");
+
+        System.out.println(Arrays.toString(todayListArr));
+        double allCarbo = 0.0;
+        double allProtein = 0.0;
+        double allFat = 0.0;
+        String foodNumber = "";
+
+        for (int i = 0; i < todayListArr.length; i++) {
+            foodNumber = todayListArr[i];
+            List<FoodDTO> todayFoodDTOList = calorieService.getFood(foodNumber);
+            for (int j = 0; j < todayFoodDTOList.size(); j++) {
+
+                allCarbo += Double.parseDouble(todayFoodDTOList.get(j).getCarbo());
+                allProtein += Double.parseDouble(todayFoodDTOList.get(j).getProtein());
+                allFat += Double.parseDouble(todayFoodDTOList.get(j).getFat());
+            }
+
+        }
+        double resultCarbo = Math.round(allCarbo * 100.0) / 100.0;
+        double resultProtein = Math.round(allProtein * 100.0) / 100.0;
+        double resultFat = Math.round(allFat * 100.0) / 100.0;
+
+        double[] result = {resultCarbo, resultProtein, resultFat};
+
+        json.putPOJO("todayfoodInfo", result);
+
+        return json.toString();
+    }
 
     @GetMapping("exercise_calorie_search")
     public String showExecCalories(@RequestParam("keyword") String keyword, Model model) {

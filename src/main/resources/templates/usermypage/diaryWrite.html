@@ -184,15 +184,26 @@
     .food_area .list_area {
         text-align: center;
         padding: 10px;
+        display: block;
+        height: 100px;
 
+    }
+
+    .excrcise_list.list_area {
+        text-align: center;
+        padding: 10px;
+        display: block;
+        height: 100px;
     }
 
     .total_area input[type=text] {
         text-align: center !important;
     }
-    .total_area #carbo, .total_area #protein, .total_area #fat{
+
+    .total_area #carbo, .total_area #protein, .total_area #fat {
         text-align: right !important;
     }
+
 
 </style>
 <body class="is-preload">
@@ -264,28 +275,27 @@
                     <td class="food_area">
                         <div class="bf_input input_area">
                             <input type="text" value="아침" readonly>
-                            <input type="hidden" name="todayBf">
-                            <!--              <input type="text" value="총" >-->
+                            <input type="hidden" name="todayBf" id="todayBf">
                             <input type="text" id="bfCal" value="0" readonly>
                             <input type="text" value="kcal" readonly>
                             <input type="button" class="opensearch">
                         </div>
-                        <div class="bf_list list_area" id="bf_result">
-                        </div>
+                        <input type="text" class="bf_list list_area" id="bf_result" readonly onfocus="this.blur();">
+
                         <div><input type="button" value="전체 삭제" onclick="removebf()"></div>
+                        <!--                        <input type="text" name="todayBf"  readonly>-->
                     </td>
                     <td class="food_area">
                         <div class="lunch_input input_area">
-                            <input type="text" name="lunch" value="점심" readonly>
+                            <input type="text" value="점심" readonly>
                             <input type="hidden" name="todaylunch">
-                            <!--              <input type="text" value="총" >-->
                             <input type="text" id="lunchCal" value="0" readonly>
                             <input type="text" value="kcal" readonly>
                             <input type="button" class="opensearch">
                         </div>
-                        <div class="bf_list list_area" id="lunch_result">
-                        </div>
+                        <input type="text" class="bf_list list_area" id="lunch_result">
                         <div><input type="button" value="전체 삭제" onclick="removelunch()"></div>
+                        <!--                        <input type="text" name="todaylunch" readonly >-->
                     </td>
                 </tr>
                 <tr>
@@ -293,50 +303,50 @@
                         <div class="dinner_input input_area">
                             <input type="text" value="저녁" readonly>
                             <input type="hidden" name="todaydinner">
-                            <!--              <input type="text" value="총" >-->
                             <input type="text" id="dinnerCal" value="0" readonly>
                             <input type="text" value="kcal" readonly>
                             <input type="button" class="opensearch">
                         </div>
-                        <div class="bf_list list_area" id="dinner_result">
-                        </div>
+                        <input type="text" class="bf_list list_area" id="dinner_result">
+
                         <div><input type="button" value="전체 삭제" onclick="removedinner()"></div>
+                        <!--                        <input type="text" name="todaydinner">-->
                     </td>
                     <td class="food_area">
                         <div class="snack_input input_area">
-                            <input type="text" name="snack" value="간식" readonly>
+                            <input type="text" value="간식" readonly>
                             <input type="hidden" name="todaysnack">
-                            <!--              <input type="text" value="총" >-->
                             <input type="text" id="snackCal" value="0" readonly>
                             <input type="text" value="kcal" readonly>
                             <input type="button" class="opensearch">
                         </div>
-                        <div class="bf_list list_area" id="snack_result">
-                        </div>
+                        <input type="text" class="bf_list list_area" id="snack_result">
+
                         <div><input type="button" value="전체 삭제" onclick="removesnack()"></div>
+                        <!--                        <input type="text" name="todaysnack">-->
                     </td>
                 </tr>
                 <tr>
                     <!-- <td></td> -->
                     <td colspan="2" class="ex_area">
                         <div class="ex_input input_area">
-                            <input type="text" name="excrcise" value="운동" readonly>
+                            <input type="text" value="운동" readonly>
                             <input type="hidden" name="todayExcrcise">
-                            <!--              <input type="text" value="총" >-->
                             <input type="text" id="exerCal" value="0" readonly>
-                            <input type="text" value="kcal" readonly style="text-align: right;">
+                            <input type="text" value="kcal" readonly style="text-align: left;">
                             <input type="button" class="opensearch">
                         </div>
-                        <div class="excrcise_list list_area" id="exer_result">
-                        </div>
+                        <input type="text" class="excrcise_list list_area" id="exer_result">
+
                         <div><input type="button" value="전체 삭제" onclick="removeexer()"></div>
+                        <!--                        <input type="text" name="todayExcrcise">-->
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2">
                         <div class="total_area" style="text-align: center">
-                            <input type="button" onclick="totalResult()" value="최종 칼로리" style="margin-right: 15px">
-                            <input type="text" id="totalFood"  value="총 음식칼로리" readonly>
+                            <input type="button" onclick="totalsum()" value="최종 칼로리" style="margin-right: 15px">
+                            <input type="text" id="totalFood" value="총 음식칼로리" readonly>
                             <input type="text" value="-" readonly>
                             <input type="text" id="totalexer" value="총 운동칼로리" readonly>
                             <input type="text" value="=" readonly>
@@ -346,12 +356,25 @@
                 </tr>
                 <tr>
                     <td colspan="2">
+                        <div class="total_area" style="text-align: center">
+                            <input type="text" value="목표 칼로리" readonly>
+                            <input type="text" th:value="${user.caloriesGoal}+kcal" id="caloriesGoal" readonly>
+                            <input type="text" value="-" readonly>
+                            <input type="text" id="totalCal" value="오늘 칼로리" readonly>
+                            <input type="text" value="=" readonly>
+                            <input type="text" id="todayCal" value="0kcal" readonly>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="2">
                         <div class="total_area" style="display: flex; justify-content: space-between">
                             <input type="text" value="탄수화물" readonly>
                             <input type="text" id="carbo" value="0g" readonly>
 
                             <input type="text" value="단백질" readonly>
-                            <input type="text" id="protein" value="0g" readonly >
+                            <input type="text" id="protein" value="0g" readonly>
 
                             <input type="text" value="지방" readonly>
                             <input type="text" id="fat" value="0g" readonly>
@@ -437,44 +460,118 @@
 </script>
 <script>
     function removebf() {
-        document.getElementById("bf_result").innerHTML = "";
+        document.getElementById("bf_result").value = "";
         document.getElementById("bfCal").value = 0;
+        document.getElementsByName("todayBf")[0].value = "";
+
     }
 
     function removelunch() {
-        document.getElementById("lunch_result").innerHTML = "";
+        document.getElementById("lunch_result").value = "";
         document.getElementById("lunchCal").value = 0;
+        document.getElementsByName("todaylunch")[0].value = "";
+
     }
 
     function removedinner() {
-        document.getElementById("dinner_result").innerHTML = "";
+        document.getElementById("dinner_result").value = "";
         document.getElementById("dinnerCal").value = 0;
+        document.getElementsByName("todaydinner")[0].value = "";
     }
 
     function removesnack() {
-        document.getElementById("snack_result").innerHTML = "";
+        document.getElementById("snack_result").value = "";
         document.getElementById("snackCal").value = 0;
+        document.getElementsByName("todaysnack")[0].value = "";
     }
 
     function removeexer() {
-        document.getElementById("exer_result").innerHTML = "";
+        document.getElementById("exer_result").value = "";
         document.getElementById("exerCal").value = 0;
+        document.getElementsByName("todayExcrcise")[0].value = "";
     }
-    function totalResult(){
-        const totalexer =Number(document.getElementById("exerCal").value);
 
+    function totalsum() {
+        const totalexer = Number(document.getElementById("exerCal").value);
         const bttotal = Number(document.getElementById("bfCal").value);
         const lunchtotal = Number(document.getElementById("lunchCal").value);
         const dinnertal = Number(document.getElementById("dinnerCal").value);
         const snacktotal = Number(document.getElementById("snackCal").value);
 
+        const caloriesGoa = document.getElementById("caloriesGoal").value;
+        console.log(caloriesGoa);
+        const goalNum = caloriesGoa.slice(0, -4);
+
+
         const foodtotal = Number(bttotal + lunchtotal + dinnertal + snacktotal);
-
+        var totalsum = Number(foodtotal - totalexer);
+        var todaycal = Number(goalNum - totalsum);
         console.log(foodtotal);
-        let todaySum = foodtotal-totalexer;
+        console.log(totalexer);
 
-        console.log(todaySum);
+        console.log(totalsum);
+        document.getElementById("totalFood").value = foodtotal + "kcal";
+        document.getElementById("totalexer").value = totalexer + "kcal";
+        document.getElementById("totalCal").value = totalsum + "kcal";
+        document.getElementById("totalResult").value = totalsum + "kcal";
+        document.getElementById("todayCal").value = todaycal + "kcal";
+
+        const todaybfList = $("input[name=todayBf]").val();
+        const todayLunchList = $("input[name=todaylunch]").val();
+        const todaydinnerList = $("input[name=todaydinner]").val();
+        const todaysnackList = $("input[name=todaysnack]").val();
+
+        console.log("아침 :" + todaybfList);
+        console.log("점심 :" + todayLunchList);
+        console.log("저녁 :" + todaydinnerList);
+        console.log("간식 : " + todaysnackList);
+
+        const allListarr = [todaybfList, todayLunchList, todaydinnerList, todaysnackList];
+        var todayAllList = "";
+
+        for (var i = 0; i < allListarr.length; i++) {
+
+            if (allListarr[i] != "") {
+                todayAllList += (allListarr[i] + ",");
+            } else {
+                todayAllList += allListarr[i];
+            }
+        }
+        todayAllList = todayAllList.replace(/,$/, '');
+
+        console.log(todayAllList);
+
+        if (todayAllList) {
+            $.ajax({
+                url: '/calorie/getfoodInfo',
+                method: 'POST',
+                data: {
+                    todayAllList: todayAllList
+                },
+                dataType: 'json',
+                success: function (data) {
+                    displayData(data.todayfoodInfo);
+
+                },
+                error: function (error) {
+                    console.error('데이터를 가져오는 중 오류 발생' + error);
+                }
+
+            })
+        }
+
     }
+
+    function displayData(todayfoodInfo) {
+        console.log(todayfoodInfo);
+        // console.log(todayfoodInfo[0]);
+        // console.log(todayfoodInfo[1]);
+        // console.log(todayfoodInfo[2]);
+        document.getElementById("carbo").value=todayfoodInfo[0]+"g";
+        document.getElementById("protein").value=todayfoodInfo[1]+"g";
+        document.getElementById("fat").value=todayfoodInfo[2]+"g";
+    }
+
 </script>
 </body>
 </html>
