@@ -37,13 +37,6 @@ public class TrainerMyPageController {
 
         List<BoardDTO>  list = service.getBoardMyList(cri, trainerId);
 
-        System.out.println("cri : " + cri);
-        System.out.println("list : " + list);
-        System.out.println("trainer : " + id);
-        System.out.println("PageDTO : " + new PageDTO(service.getBoardTotal(cri, trainerId), cri));
-
-        System.out.println("get:"+service.getFileList(trainerId));
-
         model.addAttribute("list", list);
         model.addAttribute("trainer", id);
 

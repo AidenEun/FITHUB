@@ -76,8 +76,16 @@ public class UserMyPageServiceImpl implements UserMyPageService{
 
     //메세지
     @Override
-    public Long getMessageTotal(Criteria cri,String userId) {
-        return umpmapper.getMessageTotal(cri, userId);
+    public Long getMessageTotal(Criteria cri, String userId, String message) {
+        if(message.equals("messageAll")){
+            return umpmapper.getMessageTotal(cri, userId);
+        } else if (message.equals("messageSend")) {
+            return umpmapper.getMessageTotalSend(cri,userId);
+        } else {
+            return umpmapper.getMessageTotalReceive(cri,userId);
+        }
+
+
     }
 
 
@@ -104,8 +112,14 @@ public class UserMyPageServiceImpl implements UserMyPageService{
     }
 
     @Override
-    public List<MessageDTO> getMessageMyList(Criteria cri, String userId) {
-        return umpmapper.getMyMessage(cri,userId);
+    public List<MessageDTO> getMessageMyList(Criteria cri, String userId, String message) {
+        if(message.equals("messageAll")){
+            return umpmapper.getMyMessageAll(cri,userId);
+        } else if (message.equals("messageSend")) {
+            return umpmapper.getMyMessageSend(cri,userId);
+        } else {
+            return umpmapper.getMyMessageReceive(cri,userId);
+        }
     }
 
 
@@ -245,15 +259,47 @@ public class UserMyPageServiceImpl implements UserMyPageService{
 
     //내 챌린지
     @Override
-    public Long getChallengeTotal(Criteria cri, String userId) {
-        return umpmapper.getChallengeTotal(cri,userId);
+    public List<ChallNoticeBoardDTO> getMyChallenge(Criteria cri, String userId, String challCategory, String challTerm) {
+        if(challCategory.equals("challAll")){
+            if (challTerm.equals("challengeAll")){
+                return umpmapper.getMyChallengeAllAll(cri, userId);
+
+            }else {
+                return umpmapper.getMyChallengeAllTerm(cri, userId, challTerm);
+
+            }
+        } else{
+            if (challTerm.equals("challengeAll")){
+                return umpmapper.getMyChallengeCategoryAll(cri, userId, challCategory);
+
+            } else {
+                return umpmapper.getMyChallengeCategoryTerm(cri, userId, challCategory,challTerm);
+
+            }
+        }
     }
+
 
     @Override
-    public List<ChallNoticeBoardDTO> getMyChallenge(Criteria cri, String userId) {
-        return umpmapper.getMyChallenge(cri, userId);
-    }
+    public Long getChallengeTotal(Criteria cri, String userId, String challCategory, String challTerm) {
+        if(challCategory.equals("challAll")){
+            if (challTerm.equals("challengeAll")){
+                return umpmapper.getChallengeAllAllTotal(cri,userId);
 
+            }else {
+                return umpmapper.getChallengeAllTermTotal(cri,userId,challTerm);
+
+            }
+        } else{
+            if (challTerm.equals("challengeAll")){
+                return umpmapper.getChallengeCategoryAllTotal(cri,userId,challCategory);
+
+            } else {
+                return umpmapper.getChallengeCategoryTermTotal(cri,userId,challCategory,challTerm);
+
+            }
+        }
+    }
 
     //트레이너 전환 신청
 
@@ -306,6 +352,7 @@ public class UserMyPageServiceImpl implements UserMyPageService{
         }
         return true;
     }
+
 
 
 

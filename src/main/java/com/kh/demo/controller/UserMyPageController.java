@@ -57,16 +57,29 @@ public class UserMyPageController {
         }
     }
 
+
     @GetMapping("user_challenge")
-    public void replaceChallenge(Criteria cri, Model model, HttpServletRequest req) {
+    public void replaceChallenge( String challCategory ,String challTerm ,Criteria cri, Model model, HttpServletRequest req) {
         HttpSession session = req.getSession();
         String userId = (String) session.getAttribute("loginUser");
-        List<ChallNoticeBoardDTO> list = service.getMyChallenge(cri, userId);
-        System.out.println("list:"+list);
+        System.out.println("challCategory : "+challCategory);
+        System.out.println("challTerm : "+challTerm);
 
+        if(challCategory == null){
+            challCategory = "challAll";
+        }
+        if(challTerm == null){
+            challTerm = "challengeAll";
+        }
+
+        List<ChallNoticeBoardDTO> list = service.getMyChallenge(cri, userId,challCategory,challTerm);
+        System.out.println("list:"+list);
         model.addAttribute("list",list);
-        model.addAttribute("pageMaker", new PageDTO(service.getChallengeTotal(cri,userId), cri));
+        model.addAttribute("pageMaker", new PageDTO(service.getChallengeTotal(cri,userId, challCategory,challTerm), cri));
     }
+
+
+
 
     @GetMapping("user_subtrainer")
     public void replaceSubTrainer(Criteria cri, Model model, HttpServletRequest req){
@@ -85,11 +98,6 @@ public class UserMyPageController {
     public void user_subbookmark(Criteria cri, Model model, HttpServletRequest req) throws Exception {
         HttpSession session = req.getSession();
         String userId = (String) session.getAttribute("loginUser");
-        List<BoardDTO> list = service.getMyBookmark(cri,userId);
-        List<ProductBoardDTO> listProduct = service.getMyBookmarkProduct(cri,userId);
-
-        model.addAttribute("list",list);
-        model.addAttribute("listProduct",listProduct);
         model.addAttribute("pageMaker", new PageDTO(service.getBookmarkTotal(cri,userId), cri));
     }
 
@@ -104,7 +112,6 @@ public class UserMyPageController {
 
         List<BoardDTO> list = service.getMyBookmark(cri,userId);
         PageDTO pageDTO = new PageDTO(service.getBookmarkTotal(cri,userId), cri);
-        System.out.println("list:"+list);
         json.putPOJO("list", list);
         json.putPOJO("pageDTO", pageDTO);
 
@@ -117,13 +124,13 @@ public class UserMyPageController {
         HttpSession session = req.getSession();
         String userId = (String) session.getAttribute("loginUser");
 
+
+
         ObjectNode json = JsonNodeFactory.instance.objectNode();
         Criteria cri = new Criteria(pageNum, 10);
 
         List<ProductBoardDTO> list = service.getMyBookmarkProduct(cri,userId);
         PageDTO pageDTO = new PageDTO(service.getBookmarkProductTotal(cri,userId), cri);
-        System.out.println("listProduct:"+list);
-
         json.putPOJO("list", list);
         json.putPOJO("pageDTO", pageDTO);
 
@@ -146,14 +153,18 @@ public class UserMyPageController {
     }
 
     @GetMapping("user_messagelist")
-    public void user_messagelist(Criteria cri, Model model,HttpServletRequest req) throws Exception {
+    public void user_messagelist(String message ,Criteria cri,Model model,HttpServletRequest req) throws Exception {
         HttpSession session = req.getSession();
         String userId = (String) session.getAttribute("loginUser");
-        List<MessageDTO> list = service.getMessageMyList(cri,userId);
+        if(message == null){
+            message = "messageAll";
+        }
+        List<MessageDTO> list = service.getMessageMyList(cri,userId,message);
+
         System.out.println(cri);
         System.out.println("list:"+list);
         model.addAttribute("list",list);
-        model.addAttribute("pageMaker",new PageDTO(service.getMessageTotal(cri,userId), cri));
+        model.addAttribute("pageMaker",new PageDTO(service.getMessageTotal(cri,userId,message), cri));
         model.addAttribute("newly_Message",service.getMessageNewlyList(list));
     }
 

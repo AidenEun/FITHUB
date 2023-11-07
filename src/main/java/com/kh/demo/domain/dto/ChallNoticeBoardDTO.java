@@ -8,7 +8,7 @@ public class ChallNoticeBoardDTO {
     private String challCategory;
     private String challName;
     private String challContent;
-    private int challTerm;
+    private String challTerm;
     private String regdate;
 
     //재우

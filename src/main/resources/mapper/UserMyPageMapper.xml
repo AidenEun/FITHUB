@@ -49,8 +49,18 @@
 
 	<!--재우-->
 	<!--메세지-->
-	<select id="getMyMessage">
+	<select id="getMyMessageAll">
 		select * from message where send_id=#{userId} or receive_id=#{userId}
+		order by message_num desc limit #{cri.startrow},#{cri.amount}
+	</select>
+
+	<select id="getMyMessageSend">
+		select * from message where send_id=#{userId}
+		order by message_num desc limit #{cri.startrow},#{cri.amount}
+	</select>
+
+	<select id="getMyMessageReceive">
+		select * from message where receive_id=#{userId}
 		order by message_num desc limit #{cri.startrow},#{cri.amount}
 	</select>
 
@@ -58,6 +68,15 @@
 		select count(*) from message where  send_id=#{userId} or receive_id=#{userId} and
 		message_num > 0
 	</select>
+	<select id="getMessageTotalSend">
+		select count(*) from message where  send_id=#{userId} and
+		message_num > 0
+	</select>
+	<select id="getMessageTotalReceive">
+		select count(*) from message where receive_id=#{userId} and
+		message_num > 0
+	</select>
+
 	<select id="getMessageLastNum">
 		select max(message_num) from message where user_id=#{userId}
 	</select>
@@ -128,16 +147,74 @@
 	</select>
 
 	<!--내 챌린지-->
-	<select id="getChallengeTotal">
-		select count(*) from my_challenge where user_id=#{userId} and
-		chall_num > 0
+<!--	<select id="getChallengeTotal">
+		select count(my_challenge.chall_num) from my_challenge
+		join chall_notice_board on chall_notice_board.chall_num = my_challenge.chall_num
+		where my_challenge.user_id=#{userId} and
+		my_challenge.mychall_num > 0
+	</select>-->
+
+	<select id="getChallengeAllAllTotal">
+		select count(my_challenge.chall_num) from my_challenge
+		join chall_notice_board on chall_notice_board.chall_num = my_challenge.chall_num
+		where my_challenge.user_id = #{userId} and
+		my_challenge.mychall_num > 0
 	</select>
 
-	<select id="getMyChallenge">
-		select * from chall_notice_board join my_challenge on my_challenge.chall_num = chall_notice_board.chall_num
+	<select id="getChallengeAllTermTotal">
+		select count(my_challenge.chall_num) from my_challenge
+		join chall_notice_board on chall_notice_board.chall_num = my_challenge.chall_num
+		where my_challenge.user_id = #{userId} and chall_notice_board.chall_term = #{challTerm} and
+		my_challenge.mychall_num > 0
+	</select>
+
+	<select id="getChallengeCategoryAllTotal">
+		select count(my_challenge.chall_num) from my_challenge
+		join chall_notice_board on chall_notice_board.chall_num = my_challenge.chall_num
+		where my_challenge.user_id = #{userId} and chall_notice_board.chall_category =#{challCategory} and
+		my_challenge.mychall_num > 0
+	</select>
+
+	<select id="getChallengeCategoryTermTotal">
+		select count(my_challenge.chall_num) from my_challenge
+		join chall_notice_board on chall_notice_board.chall_num = my_challenge.chall_num
+		where my_challenge.user_id = #{userId} and chall_notice_board.chall_term = #{challTerm} and chall_notice_board.chall_category =#{challCategory} and
+		my_challenge.mychall_num > 0
+	</select>
+<!--	<select id="getMyChallenge">
+		select * from chall_notice_board
+		join my_challenge on my_challenge.chall_num = chall_notice_board.chall_num
+		where my_challenge.user_id = #{userId}
+		order by my_challenge.sub_regdate desc limit #{cri.startrow},#{cri.amount}
+	</select>-->
+	<select id="getMyChallengeAllAll">
+		select * from chall_notice_board
+		join my_challenge on my_challenge.chall_num = chall_notice_board.chall_num
 		where my_challenge.user_id = #{userId}
 		order by my_challenge.sub_regdate desc limit #{cri.startrow},#{cri.amount}
 	</select>
+
+	<select id="getMyChallengeAllTerm">
+		select * from chall_notice_board
+		join my_challenge on my_challenge.chall_num = chall_notice_board.chall_num
+		where my_challenge.user_id = #{userId} and chall_notice_board.chall_term =#{challTerm}
+		order by my_challenge.sub_regdate desc limit #{cri.startrow},#{cri.amount}
+	</select>
+
+	<select id="getMyChallengeCategoryAll">
+		select * from chall_notice_board
+		join my_challenge on my_challenge.chall_num = chall_notice_board.chall_num
+		where my_challenge.user_id = #{userId} and chall_notice_board.chall_category = #{challCategory}
+		order by my_challenge.sub_regdate desc limit #{cri.startrow},#{cri.amount}
+	</select>
+
+	<select id="getMyChallengeCategoryTerm">
+		select * from chall_notice_board
+		join my_challenge on my_challenge.chall_num = chall_notice_board.chall_num
+		where my_challenge.user_id = #{userId} and chall_notice_board.chall_term = #{challTerm} and chall_notice_board.chall_category = #{challCategory}
+		order by my_challenge.sub_regdate desc limit #{cri.startrow},#{cri.amount}
+	</select>
+
 
 	<!--트레이너 신청-->
 	<insert id= "insertApplytrainer">
