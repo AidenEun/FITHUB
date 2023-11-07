@@ -3626,22 +3626,22 @@ input, select, textarea {
 			}
 
 			.wrapper.style3 {
-            				box-sizing: border-box;
-            				/* border: 1px solid black; */
-            				background-color: rgb(240, 229, 215);
-            			}
+                box-sizing: border-box;
+                /* border: 1px solid black; */
+                background-color: rgb(240, 229, 215);
+            }
 
-            			.wrapper.style4{
-            				box-sizing: border-box;
-            				/* border: 1px solid black; */
-            				background-color: rgb(203, 211, 177);
-            			}
+            .wrapper.style4{
+                box-sizing: border-box;
+                /* border: 1px solid black; */
+                background-color: rgb(203, 211, 177);
+            }
 
-            			.wrapper.style5{
-            				box-sizing: border-box;
-            				/* border: 1px solid black; */
-            				background-color: rgb(240, 229, 215);
-            			}
+            .wrapper.style5{
+                box-sizing: border-box;
+                /* border: 1px solid black; */
+                background-color: rgb(240, 229, 215);
+            }
 
 		.wrapper.sidebar > .inner {
 			display: -moz-flex;
