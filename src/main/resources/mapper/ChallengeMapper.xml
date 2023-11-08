@@ -1,0 +1,16 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.demo.mapper.ChallengeMapper">
+
+    <select id="getIngMychall">
+        select *
+        from my_challenge
+                 join chall_notice_board on chall_notice_board.chall_num = my_challenge.chall_num
+        where date_add(date(my_challenge.sub_regdate), interval chall_notice_board.chall_term day)
+            >
+            date (now())
+          and my_challenge.user_id=#{userid};
+
+    </select>
+</mapper>
+

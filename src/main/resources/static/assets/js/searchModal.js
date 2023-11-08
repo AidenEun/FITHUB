@@ -201,17 +201,17 @@ function sendResult() {
         var orgNum = document.getElementsByName("todayBf")[0];
 
 
-        if (orgcontents.value.trim() !== "") {
+        if (orgcontents.innerHTML.trim() !== "") {
             // console.log(orgcontents.innerHTML);
             // console.log("기존 내용 존재");
 
-            orgcontents.value += "," + results.join(",");
+            orgcontents.innerHTML += "," + results.join(",");
             orgNum.value += "," + numresults.join(",");
 
 
         } else {
             // console.log("기존 내용 없음");
-            orgcontents.value += results.join(",");
+            orgcontents.innerHTML += results.join(",");
             orgNum.value += numresults.join(",");
 
         }
@@ -225,12 +225,12 @@ function sendResult() {
         var orgcontents = document.getElementById("lunch_result");
         var orgNum = document.getElementsByName("todaylunch")[0];
 
-        if (orgcontents.value.trim() !== "") {
-            orgcontents.value += "," + results.join(",");
+        if (orgcontents.innerHTML.trim() !== "") {
+            orgcontents.innerHTML += "," + results.join(",");
             orgNum.value += "," + numresults.join(",");
 
         } else {
-            orgcontents.value += results.join(",");
+            orgcontents.innerHTML += results.join(",");
             orgNum.value += numresults.join(",");
         }
         var orgString = document.getElementById("lunchCal").value;
@@ -242,12 +242,12 @@ function sendResult() {
         var orgcontents = document.getElementById("dinner_result");
         var orgNum = document.getElementsByName("todaydinner")[0];
 
-        if (orgcontents.value.trim() !== "") {
-            orgcontents.value += "," + results.join(",");
+        if (orgcontents.innerHTML.trim() !== "") {
+            orgcontents.innerHTML += "," + results.join(",");
             orgNum.value += "," + numresults.join(",");
 
         } else {
-            orgcontents.value += results.join(",");
+            orgcontents.innerHTML += results.join(",");
             orgNum.value += numresults.join(",");
         }
         var orgString = document.getElementById("dinnerCal").value;
@@ -258,12 +258,12 @@ function sendResult() {
         var orgcontents = document.getElementById("snack_result");
         var orgNum = document.getElementsByName("todaysnack")[0];
 
-        if (orgcontents.value.trim() !== "") {
-            orgcontents.value += "," + results.join(",");
+        if (orgcontents.innerHTML.trim() !== "") {
+            orgcontents.innerHTML += "," + results.join(",");
             orgNum.value += "," + numresults.join(",");
 
         } else {
-            orgcontents.value += results.join(",");
+            orgcontents.innerHTML += results.join(",");
             orgNum.value += numresults.join(",");
         }
 
@@ -276,12 +276,12 @@ function sendResult() {
         var orgcontents = document.getElementById("exer_result");
         var orgNum = document.getElementsByName("todayExcrcise")[0];
 
-        if (orgcontents.value.trim() !== "") {
-            orgcontents.value += "," + results.join(",");
+        if (orgcontents.innerHTML.trim() !== "") {
+            orgcontents.innerHTML += "," + results.join(",");
             orgNum.value += "," + numresults.join(",");
 
         } else {
-            orgcontents.value += results.join(",");
+            orgcontents.innerHTML += results.join(",");
             orgNum.value += numresults.join(",");
         }
         var orgString = document.getElementById("exerCal").value;

@@ -9,4 +9,5 @@ public class MyChallengeDTO {
     private long challNum;
     private String regdate;
     private int succCnt;
+    private String challName;
 }
