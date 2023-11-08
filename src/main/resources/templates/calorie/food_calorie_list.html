@@ -166,7 +166,7 @@
 	</style>
 
 <!-- Header -->
-<th:block th:replace="~{layout/header-test::header-test(${session.loginUser})}"></th:block>
+<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user})}"></th:block>
 
 <!-- Main -->
 <section id="main" class="wrapper left">

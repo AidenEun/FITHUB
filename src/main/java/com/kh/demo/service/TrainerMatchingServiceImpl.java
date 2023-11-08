@@ -44,7 +44,7 @@ public class TrainerMatchingServiceImpl implements TrainerMatchingService {
         return new ArrayList<>();
     }
 
-    boolean regist(TrainerMatchingBoardDTO board, MultipartFile[] files) throws Exception{
+    public boolean regist(TrainerMatchingBoardDTO board, MultipartFile[] files){
         int row = tmmapper.insertBoard(board);
         if(row != 1) {
             return false;
@@ -58,9 +58,10 @@ public class TrainerMatchingServiceImpl implements TrainerMatchingService {
 
 
 
-    Long getLastNum(String trainerId){
+    public Long getLastNum(String trainerId){
 
-
+// 임시로 빈 ArrayList를 반환
+        return 0L;
     };
 
 }

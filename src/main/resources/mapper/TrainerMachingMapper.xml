@@ -1,7 +1,33 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kh.demo.mapper.TrainerMatchingMapper">
+    <sql id="cri">
+        <if test="keyword != '' and type != ''">
+            <trim prefixOverrides="or" prefix="(" suffix=") and">
+                <foreach collection="typeArr" item="type">
+                    or
+                    <choose>
+                        <when test="type == 'T'.toString()">
+                            (boardtitle like('%${keyword}%'))
+                        </when>
+                        <when test="type == 'C'.toString()">
+                            (boardcontents like('%${keyword}%'))
+                        </when>
+                        <when test="type == 'W'.toString()">
+                            (userid like('%${keyword}%'))
+                        </when>
+                    </choose>
+                </foreach>
+            </trim>
+        </if>
+    </sql>
 
-
+    <insert id="insertBoard">
+        insert into project (boardtitle,trainerId,expirationTime,availConsultWeeks,availConsultTime,trainerZipcode,trainerAddr,trainerAddrdetail,boardContent)
+        values(#{boardtitle},#{trainerId}),#{expirationTime}#{availConsultWeeks},#{availConsultTime}),#{trainerZipcode}#{trainerAddr},#{trainerAddrdetail}),#{boardContent})
+    </insert>
+    <select id="getLastNum">
+        select max(boardnum) from project where trainer_id=#{trainerId}
+    </select>
 
 </mapper>
