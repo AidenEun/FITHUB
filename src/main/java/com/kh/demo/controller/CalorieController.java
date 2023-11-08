@@ -178,40 +178,7 @@ public class CalorieController {
         }
         return "calorie/exercise_calorie_search";
     }
-//    @GetMapping("/calorie/exercise_calorie_view")
-//    public String get2(@RequestParam Long execNum, HttpServletRequest req, HttpServletResponse resp, Model model) {
-//        ExerciseDTO exec = calorieService.execViewE(execNum);
-//
-//        if (exec == null) {
-//            return "error";
-//        }
-//        HttpSession session = req.getSession();
-//        model.addAttribute("exec", exec);
-//        System.out.println(exec);
-//        // foodNum에 대한 조회수 증가 처리
-//        Cookie[] cookies = req.getCookies();
-//        Cookie viewExer = null;
-//        if (cookies != null) {
-//            for (Cookie cookie : cookies) {
-//                if (cookie.getName().equals("view_exec" + execNum)) {
-//                    viewExer = cookie;
-//                    System.out.println("view_food" + viewExer.getValue());
-//                    break;
-//                }
-//            }
-//        }
-//        if (viewExer == null) {
-//            // 조회수 증가
-//            calorieService.updateViewCountE(execNum);
-//            // "view_food{foodNum}" 이름의 쿠키(유효기간: 3600초)를 생성해서 클라이언트 컴퓨터에 저장
-//            Cookie cookie = new Cookie("view_exec" + execNum, "r");
-//            cookie.setMaxAge(3600);
-//            resp.addCookie(cookie);
-//            System.out.println("cookie" + cookie);
-//        }
-//
-//        return "calorie/exercise_calorie_view";
-//    }
+
 
     @GetMapping("/calorie/exercise_calorie_view")
     public String get2(@RequestParam Long execNum, HttpServletRequest req, HttpServletResponse resp, Model model) {
