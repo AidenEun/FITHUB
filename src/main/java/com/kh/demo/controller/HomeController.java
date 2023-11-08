@@ -37,14 +37,21 @@ public class HomeController {
         UserDTO user = service.getDetail(loginUser);
         TrainerDTO trainer = serviceTrainer.getDetail(loginUser);
         AdminDTO admin = serviceAdmin.getDetail(loginUser);
-        if(admin != null){
-            req.getSession().setAttribute("user",admin);
-        } else if (trainer != null) {
-            req.getSession().setAttribute("user",trainer);
-        } else if (user != null){
-            req.getSession().setAttribute("user",user);
-        }
 
+
+        if(admin != null){
+            req.getSession().setAttribute("admin",admin);
+            return "index";
+        } else if (trainer != null) {
+            req.getSession().setAttribute("trainer",trainer);
+            return "index";
+        } else if(user!=null){
+            req.getSession().setAttribute("user",user);
+            return "index";
+        }
+        System.out.println("user:"+user);
+        System.out.println("trainer:"+trainer);
+        System.out.println("admin:"+admin);
         return "index";
     }
 
