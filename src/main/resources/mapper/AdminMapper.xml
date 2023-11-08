@@ -1,0 +1,10 @@
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.demo.mapper.AdminMapper">
+
+    <select id="findById">
+        select * from admin where admin_id=#{trainerId}
+    </select>
+
+</mapper>
+
