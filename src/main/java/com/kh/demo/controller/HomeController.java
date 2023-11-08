@@ -49,9 +49,6 @@ public class HomeController {
             req.getSession().setAttribute("user",user);
             return "index";
         }
-        System.out.println("user:"+user);
-        System.out.println("trainer:"+trainer);
-        System.out.println("admin:"+admin);
         return "index";
     }
 
