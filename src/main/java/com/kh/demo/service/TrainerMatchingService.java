@@ -2,6 +2,7 @@ package com.kh.demo.service;
 
 import com.kh.demo.domain.dto.Criteria;
 import com.kh.demo.domain.dto.TrainerMatchingBoardDTO;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,4 +15,8 @@ public interface TrainerMatchingService {
     ArrayList<String> getRecentReplyList(List<TrainerMatchingBoardDTO> list);
 
     ArrayList<String> getNewlyBoardList(List<TrainerMatchingBoardDTO> list) throws Exception;
+
+    boolean regist(TrainerMatchingBoardDTO board, MultipartFile[] files);
+
+    Long getLastNum(String trainerId);
 }
