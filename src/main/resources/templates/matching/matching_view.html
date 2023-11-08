@@ -215,7 +215,7 @@ border-bottom:none;
 
     <header class="major">
       <h2>트레이너 매칭</h2>
-      <p>매칭 글 쓰기 페이지</p>
+      <p>매칭 페이지</p>
     </header>
 
     <!-- Content -->
@@ -351,92 +351,7 @@ border-bottom:none;
 <script th:src="@{/assets/js/main_sub.js}"></script>
 
 <script th:src="@{/assets/js/sidebar.js}"></script>
-<!-- summernote -->
-<script src="/assets/js/summernote/summernote-lite.js"></script>
-<script src="/assets/js/summernote/lang/summernote-ko-KR.js"></script>
-<link rel="stylesheet" href="/assets/css/summernote/summernote-lite.css"/>
-<!-- kakao 주소 API-->
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-</body>
-<!-- datepicker -->
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<!-- 카카오 주소 검색 -->
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
-  //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
-  function sample4_execDaumPostcode() {
-      new daum.Postcode({
-          oncomplete: function(data) {
-              // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-
-              // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
-              // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-              var roadAddr = data.roadAddress; // 도로명 주소 변수
-              var extraRoadAddr = ''; // 참고 항목 변수
-
-              // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-              // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-              if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-                  extraRoadAddr += data.bname;
-              }
-              // 건물명이 있고, 공동주택일 경우 추가한다.
-              if(data.buildingName !== '' && data.apartment === 'Y'){
-                 extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-              }
-              // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-              if(extraRoadAddr !== ''){
-                  extraRoadAddr = ' (' + extraRoadAddr + ')';
-              }
-
-              // 우편번호와 주소 정보를 해당 필드에 넣는다.
-              document.getElementById('sample4_postcode').value = data.zonecode;
-              document.getElementById("sample4_roadAddress").value = roadAddr;
-              document.getElementById("sample4_jibunAddress").value = data.jibunAddress;
-
-              // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
-              if(roadAddr !== ''){
-                  document.getElementById("sample4_extraAddress").value = extraRoadAddr;
-              } else {
-                  document.getElementById("sample4_extraAddress").value = '';
-              }
-
-
-
-              var guideTextBox = document.getElementById("guide");
-              // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
-              if(data.autoRoadAddress) {
-                  var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
-                  guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
-                  guideTextBox.style.display = 'block';
-
-              } else if(data.autoJibunAddress) {
-                  var expJibunAddr = data.autoJibunAddress;
-                  guideTextBox.innerHTML = '(예상 지번 주소 : ' + expJibunAddr + ')';
-                  guideTextBox.style.display = 'block';
-              } else {
-                  guideTextBox.innerHTML = '';
-                  guideTextBox.style.display = 'none';
-              }
-              document.getElementById("sample4_detailAddress").focus();
-          }
-      }).open();
-  }
-
-$(function() {
-  $("#expiration_time").datepicker({
-      dateFormat: "yy.mm.dd",
-      minDate: 0, // 오늘 이전의 날짜를 선택 못하게 함
-      onClose: function(selectedDate) {
-      // 선택한 날짜를 지정된 형식으로 표시
-      var formattedDate = $.datepicker.formatDate("yy.mm.dd", new Date(selectedDate));
-      $(this).val(formattedDate);
-      }
-  });
-});
 
 const myElement = document.getElementById("myElement");
 
@@ -452,60 +367,5 @@ myElement.addEventListener("click", () => {
   // 클릭 시 다른 동작 수행
 });
 
-
-
-
-
-
-    <!-- summernote	-->
-    $('#summernote').summernote({
-        // 에디터 높이
-        height: 370,
-        // 에디터 한글 설정
-        lang: "ko-KR",
-        // 에디터에 커서 이동 (input창의 autofocus라고 생각)
-        focus : true,
-        toolbar: [
-            // 글꼴 설정
-            ['fontname', ['fontname']],
-            // 글자 크기 설정
-            ['fontsize', ['fontsize']],
-            // 굵기, 기울임꼴, 밑줄,취소 선, 서식지우기
-            ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
-            // 글자색
-            ['color', ['forecolor','color']],
-            // 표만들기
-            ['table', ['table']],
-            // 글머리 기호, 번호매기기, 문단정렬
-            ['para', ['ul', 'ol', 'paragraph']],
-            // 줄간격
-            ['height', ['height']],
-        ],
-        // 추가한 글꼴
-        fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋음체','바탕체'],
-        // 추가한 폰트사이즈
-        fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
-    });
-
-
-    function sendit(){
-        const boardForm = document.boardForm;
-
-        const boardTitle = boardForm.boardTitle;
-        if(boardTitle.value === ""){
-            alert("제목을 입력하세요!");
-            boardTitle.focus();
-            return false;
-        }
-
-        const boardContent = boardForm.boardContent;
-        if(boardContent.value === ""){
-            alert("내용을 입력하세요!");
-            boardContent.focus();
-            return false;
-        }
-
-        boardForm.submit();
-    }
 </script>
 </html>

@@ -23,17 +23,17 @@ public class TrainerMatchingServiceImpl implements TrainerMatchingService {
 
 
     @Autowired
-    TrainerMatchingMapper tmmapper;
+    private TrainerMatchingMapper tmmapper;
 
     @Autowired
     private TrainerMapper tmapper;
 
     @Autowired
-    ReviewMapper rvmapper;
+    private ReviewMapper rvmapper;
 
     @Override
-    public List<TrainerMatchingBoardDTO> getmatchingList() {
-        return tmmapper.getList();
+    public List<TrainerMatchingBoardDTO> getmatchingList(Criteria cri) {
+        return tmmapper.getList(cri);
     }
 
     public boolean regist(TrainerMatchingBoardDTO board){
@@ -44,50 +44,17 @@ public class TrainerMatchingServiceImpl implements TrainerMatchingService {
         return true;
     };
 
-    @Override
-    public Long getTotal(Criteria cri) {
-        return tmmapper.getTotal(cri);
-    }
 
-    @Override
-    public ArrayList<String> getRecentReplyList(List<TrainerMatchingBoardDTO> list) {
-        ArrayList<String> recent_reply = new ArrayList<>();
-        for(TrainerMatchingBoardDTO board : list) {
-            if(rvmapper.getRecentReply(board.getBoardNum()) >= 5) {
-                recent_reply.add("O");
-            }
-            else {
-                recent_reply.add("X");
-            }
-        }
-        return recent_reply;
-    }
 
-    @Override
-    public ArrayList<Integer> getReplyCntList(List<TrainerMatchingBoardDTO> list) {
-        ArrayList<Integer> reply_cnt_list = new ArrayList<>();
+/*    @Override
+    public ArrayList<Integer> getReviewCntList(List<TrainerMatchingBoardDTO> list) {
+        ArrayList<Integer> review_cnt_list = new ArrayList<>();
         for(TrainerMatchingBoardDTO board : list) {
-            reply_cnt_list.add(rvmapper.getTotal(board.getBoardNum()));
+            review_cnt_list.add(rvmapper.getTotal(board.getBoardNum()));
         }
-        return reply_cnt_list;
-    }
+        return review_cnt_list;
+    }*/
 
-    @Override
-    public ArrayList<String> getNewlyBoardList(List<TrainerMatchingBoardDTO> list) throws Exception {
-        ArrayList<String> newly_board = new ArrayList<>();
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date now = new Date();
-        for(TrainerMatchingBoardDTO board : list) {
-            Date regdate = df.parse(board.getRegdate());
-            if(now.getTime() - regdate.getTime() < 1000*60*60*2) {
-                newly_board.add("O");
-            }
-            else {
-                newly_board.add("X");
-            }
-        }
-        return newly_board;
-    }
 
 
 
@@ -95,7 +62,11 @@ public class TrainerMatchingServiceImpl implements TrainerMatchingService {
 
     public Long getLastNum(String trainerId){
         return tmmapper.getLastNum(trainerId);
-    };
+    }
+
+
+
+    ;
 
     public String getNickname(String trainerId){
         return tmapper.getNickname(trainerId);

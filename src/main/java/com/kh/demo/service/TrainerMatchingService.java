@@ -8,19 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface TrainerMatchingService {
-    List<TrainerMatchingBoardDTO> getmatchingList();
-
-    Long getTotal(Criteria cri);
-
-    ArrayList<String> getRecentReplyList(List<TrainerMatchingBoardDTO> list);
-
-    ArrayList<String> getNewlyBoardList(List<TrainerMatchingBoardDTO> list) throws Exception;
+    List<TrainerMatchingBoardDTO> getmatchingList(Criteria cri);
 
     boolean regist(TrainerMatchingBoardDTO board);
 
     Long getLastNum(String trainerId);
 
-    ArrayList<Integer> getReplyCntList(List<TrainerMatchingBoardDTO> list);
+   /* ArrayList<Integer> getReviewCntList(List<TrainerMatchingBoardDTO> list);*/
 
     String getNickname(String trainerId);
 
