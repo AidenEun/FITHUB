@@ -10,4 +10,9 @@ public interface TrainerMapper {
     TrainerDTO findById(String userid);
 
     int updateUser(TrainerDTO user);
+    
+
+    String getNickname(String trainerId);
+
+    String getCareer(String trainerId);
 }

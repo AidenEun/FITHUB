@@ -23,11 +23,21 @@
     </sql>
 
     <insert id="insertBoard">
-        insert into project (boardtitle,trainerId,expirationTime,availConsultWeeks,availConsultTime,trainerZipcode,trainerAddr,trainerAddrdetail,boardContent)
-        values(#{boardtitle},#{trainerId}),#{expirationTime}#{availConsultWeeks},#{availConsultTime}),#{trainerZipcode}#{trainerAddr},#{trainerAddrdetail}),#{boardContent})
+        insert into trainer_matching_board (board_title, trainer_id, expiration_time, avail_consult_weeks, avail_consult_time, trainer_zipcode, trainer_addr, trainer_addrdetail, board_content)
+        values (#{boardTitle}, #{trainerId}, #{expirationTime}, #{availConsultWeeks}, #{availConsultTime}, #{trainerZipcode}, #{trainerAddr}, #{trainerAddrdetail}, #{boardContent})
     </insert>
-    <select id="getLastNum">
-        select max(boardnum) from project where trainer_id=#{trainerId}
+    <select id="getList">
+        select * from trainer_matching_board where
+        <include refid="cri"></include>
+        <![CDATA[
+			0 < board_num order by board_num desc limit #{startrow},#{amount}
+		]]>
     </select>
-
+    <select id="getTotal">
+        select count(*) from trainer_matching_board where
+        <include refid="cri"></include> board_num > 0
+    </select>
+    <select id="getLastNum">
+        select max(board_num) from trainer_matching_board where trainer_id=#{trainerId}
+    </select>
 </mapper>

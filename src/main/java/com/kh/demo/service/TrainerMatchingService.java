@@ -16,7 +16,13 @@ public interface TrainerMatchingService {
 
     ArrayList<String> getNewlyBoardList(List<TrainerMatchingBoardDTO> list) throws Exception;
 
-    boolean regist(TrainerMatchingBoardDTO board, MultipartFile[] files);
+    boolean regist(TrainerMatchingBoardDTO board);
 
     Long getLastNum(String trainerId);
+
+    ArrayList<Integer> getReplyCntList(List<TrainerMatchingBoardDTO> list);
+
+    String getNickname(String trainerId);
+
+    String getCareer(String trainerId);
 }

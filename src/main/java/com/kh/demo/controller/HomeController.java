@@ -38,9 +38,9 @@ public class HomeController {
         TrainerDTO trainer = serviceTrainer.getDetail(loginUser);
         AdminDTO admin = serviceAdmin.getDetail(loginUser);
         if(admin != null){
-            req.getSession().setAttribute("user",admin);
+            req.getSession().setAttribute("admin",admin);
         } else if (trainer != null) {
-            req.getSession().setAttribute("user",trainer);
+            req.getSession().setAttribute("trainer",trainer);
         } else if (user != null){
             req.getSession().setAttribute("user",user);
         }
