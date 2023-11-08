@@ -158,12 +158,12 @@
             <div id="tab-menu-container">
                 <div class="tab-view today-view">
                     <strong>나의 목표</strong>
-                    <th:block th:if="${loginUser != null}">
+                    <th:block th:if="${user !=null}">
                         <p>목표체중 : <span th:text="${user.weightGoal}"></span></p>
                         <p>목표칼로리 : <span th:text="${user.caloriesGoal}"></span></p>
+                        <strong>잔여칼로리: 현재칼로리/목표칼로리</strong>
+                        <hr>
                     </th:block>
-                    <hr>
-                    <strong>잔여칼로리: 현재칼로리/목표칼로리</strong>
                     <p>섭취량</p>
                     <p>소비량</p>
                     <div id="meal-options">
