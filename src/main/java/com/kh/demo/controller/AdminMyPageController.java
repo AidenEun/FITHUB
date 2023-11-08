@@ -6,8 +6,10 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.kh.demo.domain.dto.*;
 import com.kh.demo.service.AdminMyPageService;
 import com.kh.demo.service.UserServiceImpl;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -333,8 +335,40 @@ public class AdminMyPageController {
         ObjectNode json = JsonNodeFactory.instance.objectNode();
         ReportDTO reportDTO = adminMyPageService.getReportDTO(reportNum);
 
+        System.out.println(reportDTO);
+
         json.putPOJO("reportDTO", reportDTO);
 
         return json.toString();
+    }
+
+    @PostMapping("reportConfirm")
+    public ResponseEntity<String> reportConfirm(@RequestBody ReportDTO reportData, HttpSession session) {
+        Long reportNum = reportData.getReportNum();
+        ReportDTO reportDTO = adminMyPageService.getReportDTO(reportNum);
+        String reportedUser = reportDTO.getReportedUser();
+        Long boardNum = reportDTO.getReportBoardnum();
+        String boardCategory = reportDTO.getBoardCategory();
+        String userId = reportDTO.getUserId();
+
+        adminMyPageService.updateReportYn(reportNum);
+        adminMyPageService.updateReportedUser(reportedUser, boardNum, boardCategory);
+        adminMyPageService.insertMessageDoneReport(userId);
+
+        return ResponseEntity.ok("신고 처리가 완료 되었습니다.");
+    }
+
+    @PostMapping("reportCancel")
+    public ResponseEntity<String> reportCancel(@RequestBody ReportDTO reportData, HttpSession session) {
+        Long reportNum = reportData.getReportNum();
+        ReportDTO reportDTO = adminMyPageService.getReportDTO(reportNum);
+        Long boardNum = reportDTO.getReportBoardnum();
+        String boardCategory = reportDTO.getBoardCategory();
+        String userId = reportDTO.getUserId();
+
+        adminMyPageService.updateReportYn(reportNum);
+        adminMyPageService.insertMessageCancelReport(userId);
+
+        return ResponseEntity.ok("신고 철회가 완료 되었습니다.");
     }
 }

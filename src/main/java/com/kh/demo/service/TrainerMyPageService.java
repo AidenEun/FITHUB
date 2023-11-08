@@ -33,11 +33,11 @@ public interface TrainerMyPageService {
 
     /*재우*/
     //메세지
-    Long getMessageTotal(Criteria cri, String trainer);
+    Long getMessageTotal(Criteria cri, String trainer, String message);
     Long getMessageLastNum(String userid);
     ArrayList<String> getMessageNewlyList(List<MessageDTO> list) throws Exception;
 
-    List<MessageDTO> getMessageMyList(Criteria cri, String trainerId);
+    List<MessageDTO> getMessageMyList(Criteria cri, String trainerId, String message);
 
     //보드
     Long getBoardTotal(Criteria cri, String trainerId);
@@ -51,6 +51,8 @@ public interface TrainerMyPageService {
 
     //북마크
     Long getBookmarkTotal(Criteria cri, String userId);
+    Long getBookmarkProductTotal(Criteria cri, String trainerId);
+
     Long getBookmarkLastNum(String userid);
     ArrayList<String> getBookmarkNewlyList(List<BookMarkDTO> list) throws Exception;
     List<BoardDTO> getMyBookmark(Criteria cri, String trainerId);
@@ -66,13 +68,13 @@ public interface TrainerMyPageService {
     Long getScribeTotal(Criteria cri, String userId);
 
     //내 챌린지
+    Long getChallengeTotal(Criteria cri, String trainerId, String challCategory, String challTerm);
 
-    Long getChallengeTotal(Criteria cri, String userId);
-
-    List<ChallNoticeBoardDTO> getMyChallenge(Criteria cri, String userId);
-
+    List<ChallNoticeBoardDTO> getMyChallenge(Criteria cri, String trainerId, String challCategory, String challTerm);
     //트레이너 프로필
     List<FileDTO> getFileList(String trainerId);
 
     ResponseEntity<Resource> getThumbnailResource(String sysName) throws Exception;
+
+
 }

@@ -77,5 +77,12 @@ public interface AdminMyPageService {
 
     ReportDTO getReportDTO(Long reportNum);
 
+    void updateReportYn(Long reportNum);
+
+    void updateReportedUser(String reportedUser, Long boardNum, String boardCategory);
+
+    void insertMessageDoneReport(String userId);
+
+    void insertMessageCancelReport(String userId);
 
 }

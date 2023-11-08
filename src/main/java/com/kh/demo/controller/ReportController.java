@@ -20,14 +20,13 @@ public class ReportController {
     @PostMapping("/report")
     public ResponseEntity<String> report(@RequestBody ReportDTO reportData, HttpSession session) {
         String reportContent = reportData.getReportContent();
-        String reportedUserId = reportData.getReportedUserId();
+        String reportedUser = reportData.getReportedUser();
         Long boardNum = reportData.getReportBoardnum();
         String boardCategory = reportData.getBoardCategory();
         Object userId = session.getAttribute("loginUser");
 
-        if(reportService.reportRegist(userId, boardCategory, boardNum, reportContent, reportedUserId)){
+        if(reportService.reportRegist(userId, boardCategory, boardNum, reportContent, reportedUser)){
             return ResponseEntity.ok("신고가 처리되었습니다.");
-
         }
         return null;
     }
