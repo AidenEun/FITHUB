@@ -3083,14 +3083,14 @@ input, select, textarea {
         			padding: 6em 0 4em 0 ;
         			box-sizing: border-box;
         			/* border: 1px solid black; */
-        			background-color: rgb(240, 229, 215);
+        			background-color: #ffffff;
         }
 
 		.wrapper.content-pad {
         			padding: 0;
         			box-sizing: border-box;
         			/* border: 1px solid black; */
-        			background-color: rgb(240, 229, 215);
+        			background-color: #ffffff;
         }
 
 			.wrapper.content-pad .content {
@@ -3372,7 +3372,7 @@ input, select, textarea {
 			}
 
 		.wrapper.style2 {
-        			background-color: rgb(203, 211, 177);
+        			background-color: #ebede1;
         			color: #444;
         			border-top: 0;
         			box-sizing: border-box;
@@ -3628,19 +3628,19 @@ input, select, textarea {
 			.wrapper.style3 {
                 box-sizing: border-box;
                 /* border: 1px solid black; */
-                background-color: rgb(240, 229, 215);
+                background-color: #FBFBF9;
             }
 
             .wrapper.style4{
                 box-sizing: border-box;
                 /* border: 1px solid black; */
-                background-color: rgb(203, 211, 177);
+                background-color: #FFFFFF;
             }
 
             .wrapper.style5{
                 box-sizing: border-box;
                 /* border: 1px solid black; */
-                background-color: rgb(240, 229, 215);
+                background-color: #FBFBF9;;
             }
 
 		.wrapper.sidebar > .inner {
@@ -4071,7 +4071,7 @@ input, select, textarea {
 		padding: 4em 0 2em 0 ;
 		border-top: solid 1px #e6e6e6;
 		position: relative;
-		background-color: #5a8100;
+		background-color: #606C3A;
 	}
 
 		#footer > .inner {
@@ -4480,7 +4480,7 @@ body {
 		-webkit-animation: reveal-header 0.5s ease;
 		-ms-animation: reveal-header 0.5s ease;
 		animation: reveal-header 0.5s ease;
-		background-color: #5a8100;
+		background-color: #8FA746;
 	}
 
 	#header.alt {
@@ -4906,7 +4906,7 @@ body {
         			box-sizing: border-box;
         			/* border: 1px solid black; */
         			text-align: center;
-        			background-color: rgb(203, 211, 177);
+        			background-color: #ccd3b4;
         		}
         		.select-btn{
         			display: flex;
