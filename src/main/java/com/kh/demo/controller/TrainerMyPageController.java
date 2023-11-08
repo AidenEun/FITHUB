@@ -1,5 +1,7 @@
 package com.kh.demo.controller;
 
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.kh.demo.domain.dto.*;
 import com.kh.demo.service.TrainerMyPageService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -10,9 +12,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,17 +57,27 @@ public class TrainerMyPageController {
 
 
     @GetMapping("trainer_challenge")
-    public void trainer_challenge(Criteria cri, Model model, HttpServletRequest req) {
+    public void trainer_challenge(String challCategory ,String challTerm ,Criteria cri, Model model, HttpServletRequest req) {
         HttpSession session = req.getSession();
         String TrainerId = (String) session.getAttribute("loginUser");
 
         TrainerDTO id = service.getUserDetail(TrainerId);
 
-        List<ChallNoticeBoardDTO> list = service.getMyChallenge(cri, id.getTrainerId());
+        System.out.println("challCategory : "+challCategory);
+        System.out.println("challTerm : "+challTerm);
+
+        if(challCategory == null){
+            challCategory = "challAll";
+        }
+        if(challTerm == null){
+            challTerm = "challengeAll";
+        }
+
+        List<ChallNoticeBoardDTO> list = service.getMyChallenge(cri, id.getTrainerId(),challCategory,challTerm);
         System.out.println("list:"+list);
 
         model.addAttribute("list",list);
-        model.addAttribute("pageMaker", new PageDTO(service.getChallengeTotal(cri,id.getTrainerId()), cri));
+        model.addAttribute("pageMaker", new PageDTO(service.getChallengeTotal(cri,id.getTrainerId(),challCategory,challTerm), cri));
     }
 
 
@@ -103,6 +113,47 @@ public class TrainerMyPageController {
         model.addAttribute("pageMaker", new PageDTO(service.getBookmarkTotal(cri,id.getTrainerId()), cri));
     }
 
+    @GetMapping("board_info")
+    @ResponseBody
+    public String board_info(@RequestParam("pageNum") int pageNum, HttpServletRequest req) throws Exception{
+        HttpSession session = req.getSession();
+        String TrainerId = (String) session.getAttribute("loginUser");
+
+        TrainerDTO id = service.getUserDetail(TrainerId);
+
+        ObjectNode json = JsonNodeFactory.instance.objectNode();
+        Criteria cri = new Criteria(pageNum, 10);
+
+        List<BoardDTO> list = service.getMyBookmark(cri,id.getTrainerId());
+        PageDTO pageDTO = new PageDTO(service.getBookmarkTotal(cri,id.getTrainerId()), cri);
+        json.putPOJO("list", list);
+        json.putPOJO("pageDTO", pageDTO);
+
+        return json.toString();
+    }
+
+    @GetMapping("board_product")
+    @ResponseBody
+    public String board_product(@RequestParam("pageNum") int pageNum, HttpServletRequest req) throws Exception {
+        HttpSession session = req.getSession();
+        String TrainerId = (String) session.getAttribute("loginUser");
+
+        TrainerDTO id = service.getUserDetail(TrainerId);
+
+        ObjectNode json = JsonNodeFactory.instance.objectNode();
+        Criteria cri = new Criteria(pageNum, 10);
+
+        List<ProductBoardDTO> list = service.getMyBookmarkProduct(cri,id.getTrainerId());
+        PageDTO pageDTO = new PageDTO(service.getBookmarkProductTotal(cri,id.getTrainerId()), cri);
+        json.putPOJO("list", list);
+        json.putPOJO("pageDTO", pageDTO);
+
+        return json.toString();
+    }
+
+
+
+
     @GetMapping("trainer_boardlist")
     public void trainer_boardlist(Criteria cri, Model model,HttpServletRequest req) throws Exception {
         HttpSession session = req.getSession();
@@ -123,17 +174,21 @@ public class TrainerMyPageController {
     }
 
     @GetMapping("trainer_messagelist")
-    public void trainer_messagelist(Criteria cri, Model model, HttpServletRequest req) throws Exception {
+    public void trainer_messagelist(String message ,Criteria cri,Model model,HttpServletRequest req) throws Exception {
         HttpSession session = req.getSession();
         String TrainerId = (String) session.getAttribute("loginUser");
 
         TrainerDTO id = service.getUserDetail(TrainerId);
 
-        List<MessageDTO> list = service.getMessageMyList(cri,id.getTrainerId());
+        if(message == null){
+            message = "messageAll";
+        }
+
+        List<MessageDTO> list = service.getMessageMyList(cri,id.getTrainerId(),message);
         System.out.println(cri);
         System.out.println("list:"+list);
         model.addAttribute("list",list);
-        model.addAttribute("pageMaker",new PageDTO(service.getMessageTotal(cri,id.getTrainerId()), cri));
+        model.addAttribute("pageMaker",new PageDTO(service.getMessageTotal(cri,id.getTrainerId(),message), cri));
         model.addAttribute("newly_Message",service.getMessageNewlyList(list));
     }
 

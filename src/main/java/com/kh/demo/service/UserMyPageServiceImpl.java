@@ -88,6 +88,17 @@ public class UserMyPageServiceImpl implements UserMyPageService{
 
     }
 
+    @Override
+    public List<MessageDTO> getMessageMyList(Criteria cri, String userId, String message) {
+        if(message.equals("messageAll")){
+            return umpmapper.getMyMessageAll(cri,userId);
+        } else if (message.equals("messageSend")) {
+            return umpmapper.getMyMessageSend(cri,userId);
+        } else {
+            return umpmapper.getMyMessageReceive(cri,userId);
+        }
+    }
+
 
     @Override
     public Long getMessageLastNum(String userid) {
@@ -111,16 +122,7 @@ public class UserMyPageServiceImpl implements UserMyPageService{
         return newly_Message;
     }
 
-    @Override
-    public List<MessageDTO> getMessageMyList(Criteria cri, String userId, String message) {
-        if(message.equals("messageAll")){
-            return umpmapper.getMyMessageAll(cri,userId);
-        } else if (message.equals("messageSend")) {
-            return umpmapper.getMyMessageSend(cri,userId);
-        } else {
-            return umpmapper.getMyMessageReceive(cri,userId);
-        }
-    }
+
 
 
 

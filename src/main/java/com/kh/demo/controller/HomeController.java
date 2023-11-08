@@ -37,14 +37,20 @@ public class HomeController {
         UserDTO user = service.getDetail(loginUser);
         TrainerDTO trainer = serviceTrainer.getDetail(loginUser);
         AdminDTO admin = serviceAdmin.getDetail(loginUser);
+
+
         if(admin != null){
             req.getSession().setAttribute("admin",admin);
+            return "index";
+          
         } else if (trainer != null) {
             req.getSession().setAttribute("trainer",trainer);
-        } else if (user != null){
-            req.getSession().setAttribute("user",user);
-        }
+            return "index";
+        } else if(user!=null){
 
+            req.getSession().setAttribute("user",user);
+            return "index";
+        }
         return "index";
     }
 
@@ -54,6 +60,7 @@ public class HomeController {
     @GetMapping("/user/agree")
     public void agree(){}
 
-
+    @GetMapping("/user/joinTest")
+    public void joinTest(){}
 
 }

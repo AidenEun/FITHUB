@@ -85,4 +85,32 @@ public interface AdminMyPageMapper {
 
     ReportDTO getReportDTO(Long reportNum);
 
+    void updateReportYn(Long reportNum);
+
+    void updateReportedUser(String reportedUser);
+
+    void updateReportedTrainer(String reportedUser);
+
+    void insertMessageReportedUser(String reportedUser);
+
+    boolean selectBoard(Long boardNum);
+
+    boolean selectReview(Long boardNum);
+
+    boolean selectMessage(Long boardNum);
+
+    boolean selectChallCert(Long boardNum);
+
+    void deleteReportedBoard(Long boardNum, String boardCategory);
+
+    void deleteReportedReview(Long boardNum);
+
+    void deleteReportedMessage(Long boardNum, String boardCategory);
+
+    void deleteReportedChallCert(Long boardNum);
+
+    void insertMessageDoneReport(String userId);
+
+    void insertMessageCancelReport(String userId);
+
 }

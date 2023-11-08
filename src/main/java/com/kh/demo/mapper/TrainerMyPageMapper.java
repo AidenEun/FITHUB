@@ -27,10 +27,17 @@ public interface TrainerMyPageMapper {
     //재우
     //메세지
     Long getMessageTotal(Criteria cri, String trainerId);
+    Long getMessageTotalSend(Criteria cri, String trainer);
+    Long getMessageTotalReceive(Criteria cri, String trainer);
+
+    List<MessageDTO> getMyMessageAll(Criteria cri, String trainerId, String message);
+    List<MessageDTO> getMyMessageSend(Criteria cri, String trainerId, String message);
+    List<MessageDTO> getMyMessageReceive(Criteria cri, String trainerId, String message);
 
     Long getMessageLastNum(String trainerId);
 
     List<MessageDTO> getMyMessage(Criteria cri, String trainerId);
+
 
 
     //보드
@@ -44,6 +51,7 @@ public interface TrainerMyPageMapper {
 
     //북마크
     Long getBookmarkTotal(Criteria cri, String trainerId);
+    Long getBookmarkProductTotal(Criteria cri, String trainerId);
 
     Long getBookmarkLastNum(String trainerId);
 
@@ -59,7 +67,13 @@ public interface TrainerMyPageMapper {
 
 
     //내챌린지
-    Long getChallengeTotal(Criteria cri, String trainerId);
+    List<ChallNoticeBoardDTO> getMyChallengeAllAll(Criteria cri, String trainerId);
+    List<ChallNoticeBoardDTO> getMyChallengeAllTerm(Criteria cri, String trainerId, String challTerm);
+    List<ChallNoticeBoardDTO> getMyChallengeCategoryAll(Criteria cri, String trainerId, String challCategory);
+    List<ChallNoticeBoardDTO> getMyChallengeCategoryTerm(Criteria cri, String trainerId, String challCategory, String challTerm);
 
-    List<ChallNoticeBoardDTO> getMyChallenge(Criteria cri, String trainerId);
+    Long getChallengeAllAllTotal(Criteria cri, String trainerId);
+    Long getChallengeAllTermTotal(Criteria cri, String trainerId, String challTerm);
+    Long getChallengeCategoryAllTotal(Criteria cri, String trainerId, String challCategory);
+    Long getChallengeCategoryTermTotal(Criteria cri, String trainerId, String challCategory, String challTerm);
 }

@@ -83,8 +83,25 @@ public class TrainerMyPageServiceImpl implements TrainerMyPageService{
 
     //메세지
     @Override
-    public Long getMessageTotal(Criteria cri, String trainer) {
-        return tmpmapper.getMessageTotal(cri, trainer);
+    public Long getMessageTotal(Criteria cri, String trainer, String message) {
+        if(message.equals("messageAll")){
+            return tmpmapper.getMessageTotal(cri, trainer);
+        } else if (message.equals("messageSend")) {
+            return tmpmapper.getMessageTotalSend(cri,trainer);
+        } else {
+            return tmpmapper.getMessageTotalReceive(cri,trainer);
+        }
+    }
+
+    @Override
+    public List<MessageDTO> getMessageMyList(Criteria cri, String trainerId, String message) {
+        if(message.equals("messageAll")){
+            return tmpmapper.getMyMessageAll(cri,trainerId,message);
+        } else if (message.equals("messageSend")) {
+            return tmpmapper.getMyMessageSend(cri,trainerId,message);
+        } else {
+            return tmpmapper.getMyMessageReceive(cri,trainerId,message);
+        }
     }
 
 
@@ -110,10 +127,7 @@ public class TrainerMyPageServiceImpl implements TrainerMyPageService{
         return newly_Message;
     }
 
-    @Override
-    public List<MessageDTO> getMessageMyList(Criteria cri, String trainerId) {
-        return tmpmapper.getMyMessage(cri,trainerId);
-    }
+
 
 
 
@@ -185,7 +199,10 @@ public class TrainerMyPageServiceImpl implements TrainerMyPageService{
     public Long getBookmarkTotal(Criteria cri, String userId) {
         return tmpmapper.getBookmarkTotal(cri,userId);
     }
-
+    @Override
+    public Long getBookmarkProductTotal(Criteria cri, String userId) {
+        return tmpmapper.getBookmarkProductTotal(cri, userId);
+    }
 
     @Override
     public Long getBookmarkLastNum(String userid) {
@@ -248,15 +265,46 @@ public class TrainerMyPageServiceImpl implements TrainerMyPageService{
 
     //내 챌린지
     @Override
-    public Long getChallengeTotal(Criteria cri, String userId) {
-        return tmpmapper.getChallengeTotal(cri,userId);
+    public Long getChallengeTotal(Criteria cri, String userId, String challCategory, String challTerm) {
+        if(challCategory.equals("challAll")){
+            if (challTerm.equals("challengeAll")){
+                return tmpmapper.getChallengeAllAllTotal(cri,userId);
+
+            }else {
+                return tmpmapper.getChallengeAllTermTotal(cri,userId,challTerm);
+
+            }
+        } else{
+            if (challTerm.equals("challengeAll")){
+                return tmpmapper.getChallengeCategoryAllTotal(cri,userId,challCategory);
+
+            } else {
+                return tmpmapper.getChallengeCategoryTermTotal(cri,userId,challCategory,challTerm);
+
+            }
+        }
     }
 
     @Override
-    public List<ChallNoticeBoardDTO> getMyChallenge(Criteria cri, String userId) {
-        return tmpmapper.getMyChallenge(cri, userId);
-    }
+    public List<ChallNoticeBoardDTO> getMyChallenge(Criteria cri, String userId, String challCategory, String challTerm) {
+        if(challCategory.equals("challAll")){
+            if (challTerm.equals("challengeAll")){
+                return tmpmapper.getMyChallengeAllAll(cri, userId);
 
+            }else {
+                return tmpmapper.getMyChallengeAllTerm(cri, userId, challTerm);
+
+            }
+        } else{
+            if (challTerm.equals("challengeAll")){
+                return tmpmapper.getMyChallengeCategoryAll(cri, userId, challCategory);
+
+            } else {
+                return tmpmapper.getMyChallengeCategoryTerm(cri, userId, challCategory,challTerm);
+
+            }
+        }
+    }
     //내 프로필
     @Override
     public List<FileDTO> getFileList(String trainerId) {

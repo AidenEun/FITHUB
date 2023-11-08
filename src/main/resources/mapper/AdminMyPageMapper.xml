@@ -260,4 +260,84 @@
         WHERE report_num = #{reportNum}
     </select>
 
+    <update id="updateReportYn">
+        UPDATE report
+        SET report_yn = 'y'
+        WHERE report_num = #{reportNum}
+    </update>
+
+    <update id="updateReportedUser">
+        UPDATE user
+        SET user_reportedcnt = user_reportedcnt+1
+        WHERE user_id = #{reportedUser}
+    </update>
+
+    <update id="updateReportedTrainer">
+        UPDATE trainer
+        SET trainer_reportedcnt = trainer_reportedcnt+1
+        WHERE trainer_id = #{reportedUser}
+    </update>
+
+    <insert id="insertMessageReportedUser">
+        INSERT INTO message (category, message_content, send_id, receive_id)
+        VALUES ('meGeneral', '본인의 게시글이 신고를 받아 삭제 처리되었습니다. 서비스 이용에 주의 바랍니다.', 'admin', #{reportedUser})
+    </insert>
+
+    <select id="selectBoard">
+        SELECT COUNT(*)
+        FROM board
+        WHERE board_num = #{boardNum}
+        AND board_category IN ('tip', 'comFree', 'comExer', 'comFood', 'comPhoto', 'comQna')
+    </select>
+
+    <select id="selectReview">
+        SELECT COUNT(*)
+        FROM review
+        WHERE review_num = #{boardNum}
+    </select>
+
+    <select id="selectMessage">
+        SELECT COUNT(*)
+        FROM message
+        WHERE message_num = #{boardNum}
+        AND category = 'meGeneral'
+    </select>
+
+    <select id="selectChallCert">
+        SELECT COUNT(*)
+        FROM chall_cert_board
+        WHERE board_num = #{boardNum}
+    </select>
+
+    <delete id="deleteReportedBoard">
+        DELETE FROM board
+        WHERE board_num = #{boardNum}
+        AND board_category = #{boardCategory}
+    </delete>
+
+    <delete id="deleteReportedReview">
+        DELETE FROM review
+        WHERE review_num = #{boardNum}
+    </delete>
+
+    <delete id="deleteReportedMessage">
+        DELETE FROM message
+        WHERE message_num = #{boardNum}
+        AND category = #{boardCategory}
+    </delete>
+
+    <delete id="deleteReportedChallCert">
+        DELETE FROM chall_cert_board
+        WHERE board_num = #{boardNum}
+    </delete>
+
+    <insert id="insertMessageDoneReport">
+        INSERT INTO message (category, message_content, send_id, receive_id)
+        VALUES ('meGeneral', '접수하신 신고가 처리되었습니다.', 'admin', #{userId})
+    </insert>
+
+    <insert id="insertMessageCancelReport">
+        INSERT INTO message (category, message_content, send_id, receive_id)
+        VALUES ('meGeneral', '접수하신 신고가 철회되었습니다.', 'admin', #{userId})
+    </insert>
 </mapper>
