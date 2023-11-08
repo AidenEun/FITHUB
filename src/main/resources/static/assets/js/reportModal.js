@@ -55,7 +55,7 @@ function reportModal(e){
     var boardNum = $(this).closest('tr').find('.boardNum').text();
     var boardCategory = $(this).closest('tr').find('.boardCategory').text();
 
-    document.querySelector('#reportedUserId').value = reportedUserId;
+    document.querySelector('#reportedUser').value = reportedUser;
     document.querySelector('#boardNum').value = boardNum;
     document.querySelector('#boardCategory').value = boardCategory;
 
@@ -91,13 +91,13 @@ confirmButton.addEventListener("click", () => {
     } else {
         reportContent = reportContentRadio.value;
     }
-    const reportedUserId = document.querySelector('#reportedUserId').value;
+    const reportedUser = document.querySelector('#reportedUser').value;
     const reportBoardnum = document.querySelector('#boardNum').value;
     const boardCategory = document.querySelector('#boardCategory').value;
 
     const data = {
         reportContent: reportContent,
-        reportedUserId: reportedUserId,
+        reportedUser: reportedUser,
         reportBoardnum: reportBoardnum,
         boardCategory: boardCategory
     };
