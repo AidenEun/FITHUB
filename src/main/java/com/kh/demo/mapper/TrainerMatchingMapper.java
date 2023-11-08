@@ -10,9 +10,8 @@ import java.util.List;
 public interface TrainerMatchingMapper {
     int insertBoard(TrainerMatchingBoardDTO board);
 
-    List<TrainerMatchingBoardDTO> getList();
+    List<TrainerMatchingBoardDTO> getList(Criteria cri);
 
-    Long getTotal(Criteria cri);
 
     Long getLastNum(String trainerId);
 }

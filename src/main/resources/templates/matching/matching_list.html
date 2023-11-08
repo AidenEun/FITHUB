@@ -236,25 +236,14 @@ border: 1px solid black;
 					<div>
 						<table>
 							<tr th:if="${list != null and list.size()>0}" th:each="board : ${list}">
-								<td data-trainer-id="[[${board.trainer_id}]]">
-								<div>
-									<table>
-										<tr>
-											<th class="trainerNickname"></th>
-											<th class="profile-pic" rowspan="3">프로필 사진 1</th>
-										</tr>
-										<tr>
-											<td>[[${board.likeCnt}]]</td>
-											<td>리뷰수</td>
-											<td>[[${board.bookmarkCnt}]]</td>
-											<td class="trainerCareer"></td>
-										</tr>
-										<tr>
-											<td colspan="4">[[${board.boardtitle}]]</td>
-										</tr>
-									</table>
-								</div>
-								</td>
+								<td data-trainer-id="[[${board.trainer_id}]]"></td>
+								<th class="trainerNickname"></th>
+								<span class="review_cnt" th:text="'['+${review_cnt_list[boardStat.index]}+']'"></span>
+								<th class="profile-pic">프로필 사진 1</th>
+								<td>[[${board.likeCnt}]]</td>
+								<td>[[${board.bookmarkCnt}]]</td>
+								<td class="trainerCareer"></td>
+								<td>[[${board.boardtitle}]]</td>
 							</tr>
 						</table>
 					</div>

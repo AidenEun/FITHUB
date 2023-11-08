@@ -28,15 +28,12 @@
     </insert>
     <select id="getList">
         select * from trainer_matching_board where
-        <include refid="cri"></include>
+<!--        <include refid="cri"></include>-->
         <![CDATA[
 			0 < board_num order by board_num desc limit #{startrow},#{amount}
 		]]>
     </select>
-    <select id="getTotal">
-        select count(*) from trainer_matching_board where
-        <include refid="cri"></include> board_num > 0
-    </select>
+
     <select id="getLastNum">
         select max(board_num) from trainer_matching_board where trainer_id=#{trainerId}
     </select>
