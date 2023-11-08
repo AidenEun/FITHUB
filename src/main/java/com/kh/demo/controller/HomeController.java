@@ -42,10 +42,12 @@ public class HomeController {
         if(admin != null){
             req.getSession().setAttribute("admin",admin);
             return "index";
+          
         } else if (trainer != null) {
             req.getSession().setAttribute("trainer",trainer);
             return "index";
         } else if(user!=null){
+
             req.getSession().setAttribute("user",user);
             return "index";
         }

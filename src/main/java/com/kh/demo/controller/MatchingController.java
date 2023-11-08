@@ -6,15 +6,13 @@ import com.kh.demo.service.TrainerMatchingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import com.kh.demo.domain.dto.Criteria;
 import org.springframework.ui.Model;
-import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/matching/*")
@@ -30,7 +28,8 @@ public class MatchingController {
         model.addAttribute("list", list);
         model.addAttribute("pageMaker",new PageDTO(MatchingService.getTotal(cri), cri));
         model.addAttribute("newly_board",MatchingService.getNewlyBoardList(list));
-        model.addAttribute("recent_reply",MatchingService.getRecentReplyList(list));
+//        model.addAttribute("reply_cnt_list",MatchingService.getReplyCntList(list));
+//        model.addAttribute("recent_reply",MatchingService.getRecentReplyList(list));
     }
 
     @GetMapping("matching_write")
@@ -39,9 +38,9 @@ public class MatchingController {
     }
 
     @PostMapping("matching_write")
-    public String write(TrainerMatchingBoardDTO board, MultipartFile[] files, Criteria cri) throws Exception{
+    public String write(TrainerMatchingBoardDTO board, Criteria cri) throws Exception{
         Long boardnum = 0l;
-        if(MatchingService.regist(board, files)) {
+        if(MatchingService.regist(board)) {
             boardnum = MatchingService.getLastNum(board.getTrainerId());
             return "redirect:/matching/matching_view"+cri.getListLink()+"&boardnum="+boardnum;
         }
@@ -61,5 +60,16 @@ public class MatchingController {
         model.addAttribute("recent_reply",MatchingService.getRecentReplyList(list));
     }
 
+
+    @GetMapping("/getTrainerInfo")
+    @ResponseBody
+    public Map<String, String> getTrainerInfo(@RequestParam("trainerId") String trainerId) {
+        Map<String, String> trainerInfo = new HashMap<>();
+        String nickname = MatchingService.getNickname(trainerId);
+                String career = MatchingService.getCareer(trainerId);
+                trainerInfo.put("nickname", nickname);
+        trainerInfo.put("career", career);
+        return trainerInfo;
+    }
 
 }
