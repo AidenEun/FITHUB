@@ -61,6 +61,7 @@ public class HomeController {
     @GetMapping("/user/agree")
     public void agree(){}
 
-
+    @GetMapping("/user/joinTest")
+    public void joinTest(){}
 
 }

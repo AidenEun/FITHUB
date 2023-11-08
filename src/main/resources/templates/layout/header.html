@@ -89,7 +89,7 @@
                 <ul>
                     <li id="login">
                         <th:block th:if="${loginUser == null}">
-                            <a class="login" href="/user/login"style="color: #fff;">Login</a>
+                            <a class="login" th:href="{@/user/login}"style="color: #fff;">Login</a>
                         </th:block>
                         <th:block th:if="${loginUser != null}">
                             <a class="login" th:href="@{/user/logout}"style="color: #fff;">logout</a>
@@ -113,13 +113,17 @@
 
         <!-- Menu -->
         <section id="menu">
+            <div class="side-not-login">
+                <p>로그인하세요</p>
+                <a th:href="@{/user/login}">로그인</a>
+            </div>
             <div class="side_info">
                 <img src="/images/profile_img.png" class="prof_img" width="102px" height="102px">
                 <div id="my_info">
                     <div>
                         <a href="#">내 정보</a>
                         <th:block th:if="${loginUser == null}">
-                            <a class="login" href="/user/login">로그인</a>
+                            <a class="login" th:href="{@/user/login}">로그인</a>
                         </th:block>
                         <th:block th:if="${loginUser != null}">
                             <a class="login" th:href="@{/user/logout}">로그아웃</a>
@@ -233,7 +237,7 @@
                 <div class="health-center">
                     <a href="/sidebar/healthCenter">보건소</a>
                 </div>
-                <div class="trainer-apply">
+                <div class="trainer-apply" th:if="${session.user != null}">
                     <a href="#">트레이너 신청</a>
                 </div>
             </div>
