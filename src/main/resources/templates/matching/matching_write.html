@@ -217,12 +217,12 @@ transition: transform 0.2s;
             <div class="cotent_header"><h2>매칭 글 작성하기</h2></div>
 
             <form id="boardForm" method="post" name="boardForm" th:action="@{/matching/matching_write}" enctype="multipart/form-data">
-                <!-- 날아온 네개의 파라미터를 받아 놓음 -->
-<!--                <input type="hidden" th:value="${cri.pagenum}" name="pagenum">-->
-<!--                <input type="hidden" th:value="${cri.amount}" name="amount">-->
-<!--                <input type="hidden" th:value="${cri.type}" name="type">-->
-<!--                <input type="hidden" th:value="${cri.keyword}" name="keyword">-->
-<!--                <input type="hidden" name="boardCategory">-->
+                 날아온 네개의 파라미터를 받아 놓음
+                <input type="hidden" th:value="${cri.pagenum}" name="pagenum">
+                <input type="hidden" th:value="${cri.amount}" name="amount">
+                <input type="hidden" th:value="${cri.type}" name="type">
+                <input type="hidden" th:value="${cri.keyword}" name="keyword">
+                <input type="hidden" name="boardCategory">
 
 
                 <!-- 글작성 테이블 -->
@@ -242,13 +242,13 @@ transition: transform 0.2s;
                         <td class="datepicker">
 
                             <label for="expiration_time"><b style="color: gray"></b></label>
-                            <input type="text" id="expiration_time" placeholder="마감 일을 지정해주세요">
+                            <input type="text" id="expiration_time" name="expirationTime" placeholder="마감 일을 지정해주세요">
                         </td>
                     </tr>
                     <tr>
                         <th class="font-size">상담 가능 요일</th>
                         <td>
-                            <select id="avail_consult_weeks" class="font-size2">
+                            <select id="avail_consult_weeks" name="availConsultWeeks" class="font-size2">
                                 <option>전체 요일 가능</option>
                                 <option>월요일</option>
                                 <option>화요일</option>
@@ -261,7 +261,7 @@ transition: transform 0.2s;
                         </td>
                         <th class="font-size">상담 가능 시간</th>
                         <td>
-                            <select id="avail_consult_time" class="font-size2">
+                            <select id="avail_consult_time" name="availConsultTime" class="font-size2">
                                 <option>편한 시간 가능</option>
                                 <option>09:00 ~ 12:00</option>
                                 <option>12:00 ~ 15:00</option>
@@ -271,13 +271,13 @@ transition: transform 0.2s;
                         </td>
                     </tr>
                     <tr>
-                        <th colspan="2" class="adrr_text"><input type="text" id="trainer_zipcode" placeholder="우편번호"></th>
+                        <th colspan="2" class="adrr_text"><input type="text" id="trainerZipcode" placeholder="우편번호"></th>
                         <td colspan="2"><input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br></td>
                     </tr>
                     <tr>
-                        <th colspan="2" class="adrr_text"><input type="text" id="trainer_addr" placeholder="도로명주소"></th>
+                        <th colspan="2" class="adrr_text"><input type="text" name="trainerAddr" id="trainer_addr" placeholder="도로명주소"></th>
                         <span id="guide" style="color:#999;display:none"></span>
-                        <td colspan="2" class="adrr_text"><input type="text" id="trainer_addrdetail" placeholder="상세주소"></td>
+                        <td colspan="2" class="adrr_text"><input type="text" id="trainerAddrdetail" placeholder="상세주소"></td>
                     </tr>
                     <tr id="content_title">
                         <th colspan="4">트레이닝 매칭 글 작성해주세요.</th>
@@ -296,8 +296,8 @@ transition: transform 0.2s;
                         <a href="javascript:sendit()">등록</a> <!-- javascript의 sendit 함수 호출 -->
                     </td>
                     <td>
-                       <a th:href="${'/matching/matching_list'}">취소</a>
-<!--                        <a th:href="${'/matching/matching_list'+cri.listLink}">취소</a> &lt;!&ndash; cri.listLink를 붙여 목록으로 돌아가기 &ndash;&gt;-->
+
+                        <a th:href="${'/matching/matching_list'+cri.listLink}">취소</a> <!-- cri.listLink를 붙여 목록으로 돌아가기 -->
                     </td>
                 </tr>
             </table>

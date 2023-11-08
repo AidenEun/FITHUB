@@ -11,6 +11,7 @@ public class TrainerMatchingBoardDTO {
     private String trainerAddr;
     private String trainerAddrdetail;
     private String trainerAddretc;
+    private String availConsultWeeks;
     private String availConsultTime;
     private String expirationTime;
     private long likeCnt;
