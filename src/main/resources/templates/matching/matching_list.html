@@ -4,7 +4,7 @@
 	pixelarity.com | hello@pixelarity.com
 	License: pixelarity.com/license
 -->
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:tr="http://www.w3.org/1999/html">
 <head>
 	<title>Fit Hub</title>
 	<meta charset="utf-8" />
@@ -178,7 +178,7 @@ border: 1px solid black;
 						<tr align="right" valign="middle">
 							<td><h2 class="ma_title">나에게 맞는 트레이너를 매칭해보세요</h2></td>
 							<td>
-								<a class="write" th:href="${'/matching/matching_write'+pageMaker.cri.listLink}">매칭 글 작성</a>
+								<a class="write" th:href="${'/matching/matching_write'}">매칭 글 작성</a>
 							</td>
 						</tr>
 					</table>
@@ -234,51 +234,31 @@ border: 1px solid black;
 			<div class="TrainerMatching_box">
 				<div class="matching_list">
 					<div>
-						<table>
-							<tr th:if="${list != null and list.size()>0}" th:each="board : ${list}">
-								<td data-trainer-id="[[${board.trainer_id}]]"></td>
-								<th class="trainerNickname"></th>
-								<span class="review_cnt" th:text="'['+${review_cnt_list[boardStat.index]}+']'"></span>
-								<th class="profile-pic">프로필 사진 1</th>
-								<td>[[${board.likeCnt}]]</td>
-								<td>[[${board.bookmarkCnt}]]</td>
-								<td class="trainerCareer"></td>
-								<td>[[${board.boardtitle}]]</td>
-							</tr>
-						</table>
+						<th:block  th:if="${list != null and list.size()>0}" th:each="board : ${list}">
+							<div >
+								<table>
+									<tr>
+										<td data-trainer-id="[[${board.trainer_id}]]"></td>
+										<th class="trainerNickname" colspan="2"></th>
+										<!--<span class="review_cnt" th:text="'['+${review_cnt_list[boardStat.index]}+']'"></span>-->
+									</tr>
+									<tr>
+										<td>[[${board.likeCnt}]]</td>
+										<td>[[${board.bookmarkCnt}]]</td>
+										<td class="trainerCareer"></td>
+									</tr>
+									<tr>
+										<td colspan="3">[[${board.boardTitle}]]</td>
+									</tr>
+								</table>
+								<div class="profile-pic">
+									프로필 사진 1
+								</div>
+							</div>
+						</th:block>
+
 					</div>
-					<table class="pagination">
-						<tr align="center" valign="middle">
-							<td>
-								<a class="changePage" th:if="${pageMaker.prev}" th:href="${pageMaker.startPage-1}">&lt;</a>
-								<th:block th:each="i : ${#numbers.sequence(pageMaker.startPage,pageMaker.endPage)}">
-									<span class="nowPage" th:text="${i}" th:if="${pageMaker.cri.pagenum == i}"></span>
-									<a class="changePage" th:href="${i}" th:text="${i}" th:unless="${pageMaker.cri.pagenum == i}"></a>
-								</th:block>
-								<a class="changePage" th:if="${pageMaker.next}" th:href="${pageMaker.endPage+1}">&gt;</a>
-							</td>
-						</tr>
-					</table>
 
-					<!-- 글쓰기 버튼 배치하는 테이블 -->
-
-					<form id="searchForm" th:action="@{/board/list}">
-						<div class="search_area">
-							<select name="type">
-								<option value="" th:selected="${pageMaker.cri.type == null}">검색</option>
-								<option value="T" th:selected="${pageMaker.cri.type == 'T'}">제목</option>
-								<option value="C" th:selected="${pageMaker.cri.type == 'C'}">내용</option>
-								<option value="W" th:selected="${pageMaker.cri.type == 'W'}">작성자</option>
-								<option value="TC" th:selected="${pageMaker.cri.type == 'TC'}">제목 또는 내용</option>
-								<option value="TW" th:selected="${pageMaker.cri.type == 'TW'}">제목 또는 작성자</option>
-								<option value="TCW" th:selected="${pageMaker.cri.type == 'TCW'}">제목 또는 내용 또는 작성자</option>
-							</select>
-							<input type="text" name="keyword" id="keyword" th:value="${pageMaker.cri.keyword}">
-							<a href="#" class="button primary">검색</a>
-						</div>
-						<input type="hidden" value="1" name="pagenum">
-						<input type="hidden" value="10" name="amount">
-					</form>
 				</div>
 			</div>
 		</div>
@@ -324,6 +304,25 @@ border: 1px solid black;
 <script th:src="@{/assets/js/sidebar.js}"></script>
 </body>
 <script>
+	$(document).ready(function() {
+    $('td[data-trainer-id]').each(function() {
+        var trainerId = $(this).data('trainer-id');
+        var nicknameCell = $(this).closest('tr').find('.trainerNickname'); // .trainerNickname 클래스를 가진 <th> 요소 선택
+        var careerCell = $(this).closest('tr').find('.trainerCareer'); // .trainerCareer 클래스를 가진 <td> 요소 선택
+
+        $.ajax({
+            url: '/matching/getTrainerInfo',
+            data: { trainerId: trainerId },
+            success: function(data) {
+                nicknameCell.text(data.nickname);
+                careerCell.text(data.career);
+            }
+        });
+    });
+});
+
+
+
 	const searchForm = $("#searchForm");
 	const pageForm = $("#pageForm");
 
@@ -360,21 +359,6 @@ border: 1px solid black;
 
 
 
-	$(document).ready(function() {
-    $('td[data-trainer-id]').each(function() {
-        var trainerId = $(this).data('trainer-id');
-        var nicknameCell = $(this).closest('tr').find('.trainerNickname'); // .trainerNickname 클래스를 가진 <th> 요소 선택
-        var careerCell = $(this).closest('tr').find('.trainerCareer'); // .trainerCareer 클래스를 가진 <td> 요소 선택
 
-        $.ajax({
-            url: '/matching/getTrainerInfo',
-            data: { trainerId: trainerId },
-            success: function(data) {
-                nicknameCell.text(data.nickname);
-                careerCell.text(data.career);
-            }
-        });
-    });
-});
 </script>
 </html>
