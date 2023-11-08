@@ -27,7 +27,8 @@ public class HomeController {
         String loginUser= (String)session.getAttribute("loginUser");
         UserDTO user = service.getDetail(loginUser);
 
-        model.addAttribute("user", user);
+        req.getSession().setAttribute("user", user);
+
         return "index";
     }
 

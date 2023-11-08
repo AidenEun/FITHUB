@@ -38,6 +38,8 @@ public class UserController {
         UserDTO loginUser = service.login(userid, userpw);
         if(loginUser != null) {
             req.getSession().setAttribute("loginUser", loginUser.getUserId());
+            UserDTO user = service.getDetail(loginUser.getUserId());
+            req.getSession().setAttribute("user", user);
             return "redirect:/";
         }
         else {
