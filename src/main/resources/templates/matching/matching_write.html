@@ -197,7 +197,7 @@ transition: transform 0.2s;
 </style>
 
 <!-- Header -->
-<th:block th:replace="~{layout/header-test::header-test(${session.loginUser})}"></th:block>
+<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user})}"></th:block>
 
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">
@@ -236,7 +236,7 @@ transition: transform 0.2s;
                     <tr>
                         <th>작성자</th>
                         <td>
-                            <input type="text" name="userId" th:value="${session.loginUser}" readonly>
+                            <input type="text" name="trainerId" th:value="${session.loginUser}" readonly>
                         </td>
                         <th>만료 일시</th>
                         <td class="datepicker">
