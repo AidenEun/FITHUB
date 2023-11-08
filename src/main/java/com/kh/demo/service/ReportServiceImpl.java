@@ -12,8 +12,8 @@ public class ReportServiceImpl implements ReportService{
     private ReportMapper reportMapper;
 
     @Override
-    public boolean reportRegist(Object userId, String boardCategory, Long boardNum, String reportContent, String reportedUserId){
-        int row = reportMapper.insertReport(userId, boardCategory, boardNum, reportContent, reportedUserId);
+    public boolean reportRegist(Object userId, String boardCategory, Long boardNum, String reportContent, String reportedUser){
+        int row = reportMapper.insertReport(userId, boardCategory, boardNum, reportContent, reportedUser);
 
         return row == 1;
     }

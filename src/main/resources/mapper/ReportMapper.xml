@@ -3,6 +3,6 @@
 <mapper namespace="com.kh.demo.mapper.ReportMapper">
     <insert id="insertReport">
         insert into report (user_id, board_category, report_boardnum, report_content, reported_user)
-        values (#{userId}, #{boardCategory}, #{boardNum}, #{reportContent}, #{reportedUserId})
+        values (#{userId}, #{boardCategory}, #{boardNum}, #{reportContent}, #{reportedUser})
     </insert>
 </mapper>

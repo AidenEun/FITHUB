@@ -160,7 +160,9 @@
 						var pos = parseInt($window.scrollTop()) - parseInt($t.position().top);
 
 						$t.css('background-position', 'center ' + (pos * (-1 * intensity)) + 'px');
-
+						if(pos * (-1 * intensity) == 0){
+                            $t.css('background-position', 'center 100%, center 100%, center 0px');
+						}
 					});
 
 			};

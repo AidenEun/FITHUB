@@ -276,4 +276,43 @@ public class AdminMyPageServiceImpl implements AdminMyPageService {
         return reportDTO;
     }
 
+    @Override
+    public void updateReportYn(Long reportNum) {
+        adminMyPageMapper.updateReportYn(reportNum);
+    }
+
+    @Override
+    public void updateReportedUser(String reportedUser, Long boardNum, String boardCategory) {
+        if (adminMyPageMapper.getTrainerByIdBoolean(reportedUser)) {
+            adminMyPageMapper.updateReportedTrainer(reportedUser);
+        }
+        else if (adminMyPageMapper.getUserByIdBoolean(reportedUser)){
+            adminMyPageMapper.updateReportedUser(reportedUser);
+        }
+        adminMyPageMapper.insertMessageReportedUser(reportedUser);
+
+        if(adminMyPageMapper.selectBoard(boardNum)){
+            adminMyPageMapper.deleteReportedBoard(boardNum, boardCategory);
+        }
+        else if (adminMyPageMapper.selectReview(boardNum)){
+            adminMyPageMapper.deleteReportedReview(boardNum);
+        }
+        else if (adminMyPageMapper.selectMessage(boardNum)){
+            adminMyPageMapper.deleteReportedMessage(boardNum, boardCategory);
+        }
+        else if (adminMyPageMapper.selectChallCert(boardNum)){
+            adminMyPageMapper.deleteReportedChallCert(boardNum);
+        }
+    }
+
+    @Override
+    public void insertMessageDoneReport(String userId) {
+        adminMyPageMapper.insertMessageDoneReport(userId);
+    }
+
+    @Override
+    public void insertMessageCancelReport(String userId) {
+        adminMyPageMapper.insertMessageCancelReport(userId);
+    }
+
 }
