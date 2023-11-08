@@ -85,7 +85,7 @@
             <div id="tab-menu-container">
                 <div class="tab-view today-view">
                     <strong>나의 목표</strong>
-                    <th:block th:if="${session.loginUser != null}">
+                    <th:block th:if="${loginUser != null}">
                         <p>목표체중 : <span th:text="${user.weightGoal}"></span></p>
                         <p>목표칼로리 : <span th:text="${user.caloriesGoal}"></span></p>
                     </th:block>

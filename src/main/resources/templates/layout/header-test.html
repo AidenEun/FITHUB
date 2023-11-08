@@ -1,5 +1,5 @@
 <link xmlns:th="http://www.thymeleaf.org">
-<th:block th:fragment="header-test(loginUser)">
+<th:block th:fragment="header-test(loginUser,user)">
     <style>
         .submenu {
    width: 150px;
@@ -158,8 +158,10 @@
             <div id="tab-menu-container">
                 <div class="tab-view today-view">
                     <strong>나의 목표</strong>
-                    <p>목표무게</p>
-                    <p>목표칼로리</p>
+                    <th:block th:if="${loginUser != null}">
+                        <p>목표체중 : <span th:text="${user.weightGoal}"></span></p>
+                        <p>목표칼로리 : <span th:text="${user.caloriesGoal}"></span></p>
+                    </th:block>
                     <hr>
                     <strong>잔여칼로리: 현재칼로리/목표칼로리</strong>
                     <p>섭취량</p>

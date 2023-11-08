@@ -7,9 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.kh.demo.domain.dto.Criteria;
 import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.List;
 
 @Controller
@@ -30,13 +34,24 @@ public class MatchingController {
     }
 
     @GetMapping("matching_write")
-    public void write(Criteria cri, Model model) throws Exception {
-        List<TrainerMatchingBoardDTO> list = MatchingService.getmatchingList();
-        model.addAttribute("list", list);
-        model.addAttribute("pageMaker",new PageDTO(MatchingService.getTotal(cri), cri));
-        model.addAttribute("newly_board",MatchingService.getNewlyBoardList(list));
-        model.addAttribute("recent_reply",MatchingService.getRecentReplyList(list));
+    public void write(@ModelAttribute("cri") Criteria cri,Model model) {
+        System.out.println(cri);
     }
+
+    @PostMapping("matching_write")
+    public String write(TrainerMatchingBoardDTO board, MultipartFile[] files, Criteria cri) throws Exception{
+        Long boardnum = 0l;
+        if(MatchingService.regist(board, files)) {
+            boardnum = MatchingService.getLastNum(board.getTrainerId());
+            return "redirect:/matching/matching_view"+cri.getListLink()+"&boardnum="+boardnum;
+        }
+        else {
+            return "redirect:/matching/matching_list"+cri.getListLink();
+        }
+    }
+
+
+
     @GetMapping("matching_view")
     public void view(Criteria cri, Model model) throws Exception {
         List<TrainerMatchingBoardDTO> list = MatchingService.getmatchingList();
