@@ -110,9 +110,13 @@
 		</if>
 	</sql>
 
-	<insert id="registDiary">
+	<insert id="insertDiary">
 		insert into diary (user_id,today_weight,exer_calories,food_calories,today_exer,today_breakfast,today_lunch,today_dinner,today_snack,carbo,protein,fat,regdate,diary_title,diary_content,mychall_num)
-		values(#{userId},#{todayWeight},#{exerCalories},#{foodCalories},#{todayExer},#{todayBreakfast},#{todayLunch},#{todayDinner},#{todaySnack},#{carbo},#{protein},#{fat},#{reddate},#{diaryTitle},#{diaryContent},#{todayChallNum});
+		values(#{userId},#{todayWeight},#{exerCalories},#{foodCalories},#{todayExer},#{todayBreakfast},#{todayLunch},#{todayDinner},#{todaySnack},#{carbo},#{protein},#{fat},#{regdate},#{diaryTitle},#{diaryContent},#{todayChallNum})
+	</insert>
+
+	<insert id="insertStamp">
+		insert into stamp (chall_num,user_id,regdate) values (#{sccChallNum},#{userId},#{diarydate})
 	</insert>
 
 	<update id="modifyDiary">

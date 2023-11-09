@@ -13,10 +13,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @Qualifier("UserMyPageServiceImpl")
@@ -43,9 +40,9 @@ public class UserMyPageServiceImpl implements UserMyPageService{
     }
 
     @Override
-    public boolean registDiary(DiaryDTO diary) {
+    public int registDiary(DiaryDTO diary) {
 
-        return false;
+        return umpmapper.insertDiary(diary);
     }
 
     @Override
@@ -361,9 +358,14 @@ public class UserMyPageServiceImpl implements UserMyPageService{
         return true;
     }
 
+    @Override
+    public boolean addStemp(int sccChallNum, HashMap<String, String> diaryInfo) {
+        String userid = diaryInfo.get("userid");
+        String diarydate = diaryInfo.get("diarydate");
 
+        return umpmapper.insertStamp(sccChallNum,userid,diarydate) > 0;
 
-
+    }
 
 
 }
