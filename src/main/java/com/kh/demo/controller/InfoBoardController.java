@@ -27,6 +27,7 @@ public class InfoBoardController {
 
     @GetMapping("info_news")
     public void info_news_list(Criteria cri, Model model) throws Exception{
+        cri.setBoardCategory("infoNews");
         List<BoardDTO> list = service.getBoardList(cri);
         model.addAttribute("list",list);
         model.addAttribute("pageMaker",new PageDTO(service.getTotal(cri), cri));
@@ -37,7 +38,8 @@ public class InfoBoardController {
 
 
     @GetMapping("info_exercise")
-    public void info_exercise_list(Criteria cri, Model model) throws Exception{
+    public void info_exer_list(Criteria cri, Model model) throws Exception{
+        cri.setBoardCategory("infoExer");
         List<BoardDTO> list = service.getBoardList(cri);
         model.addAttribute("list",list);
         model.addAttribute("pageMaker",new PageDTO(service.getTotal(cri), cri));
@@ -49,6 +51,7 @@ public class InfoBoardController {
 
     @GetMapping("info_food")
     public void info_food_list(Criteria cri, Model model) throws Exception{
+        cri.setBoardCategory("infoFood");
         List<BoardDTO> list = service.getBoardList(cri);
         model.addAttribute("list",list);
         model.addAttribute("pageMaker",new PageDTO(service.getTotal(cri), cri));
@@ -59,6 +62,7 @@ public class InfoBoardController {
 
     @GetMapping("info_tip")
     public void info_tip_list(Criteria cri, Model model) throws Exception{
+        cri.setBoardCategory("infoTip");
         List<BoardDTO> list = service.getBoardList(cri);
         model.addAttribute("list",list);
         model.addAttribute("pageMaker",new PageDTO(service.getTotal(cri), cri));
@@ -70,12 +74,17 @@ public class InfoBoardController {
 
     @GetMapping("info_list")
     public void info_list(Criteria cri, Model model) throws Exception{
-        List<BoardDTO> list = service.getBoardList(cri);
-        model.addAttribute("list",list);
+
+        List<BoardDTO> newsList = service.getNewsList(cri);
+        List<BoardDTO> exerList = service.getExerList(cri);
+        List<BoardDTO> foodList = service.getFoodList(cri);
+        List<BoardDTO> tipList = service.getTipList(cri);
+        model.addAttribute("newsList",newsList);
+        model.addAttribute("exerList",exerList);
+        model.addAttribute("foodList",foodList);
+        model.addAttribute("tipList",tipList);
         model.addAttribute("pageMaker",new PageDTO(service.getTotal(cri), cri));
-        model.addAttribute("newly_board",service.getNewlyBoardList(list));
-        model.addAttribute("reply_cnt_list",service.getReplyCntList(list));
-        model.addAttribute("recent_reply",service.getRecentReplyList(list));
+
     }
 
     @GetMapping("info_write")
@@ -83,7 +92,7 @@ public class InfoBoardController {
     }
 
     @PostMapping("info_write")
-    public String write(BoardDTO board, MultipartFile[] files, Criteria cri) throws Exception{
+    public String info_write(BoardDTO board, MultipartFile[] files, Criteria cri) throws Exception{
         Long boardnum = 0l;	//long 타입의 0(0+l)
         if(service.regist(board, files)) {
             boardnum = service.getLastNum(board.getUserId());

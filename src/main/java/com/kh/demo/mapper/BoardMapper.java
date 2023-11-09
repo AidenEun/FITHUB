@@ -13,18 +13,22 @@ import java.util.List;
 public interface BoardMapper {
 	//insert
 	int insertBoard(BoardDTO board);
-	
+
 	//update
 	int updateBoard(BoardDTO board);
 	int updateReadCount(Long boardNum);
-	
+
 	//delete
 	int deleteBoard(Long boardNum);
-	
+
 	//select
 	List<BoardDTO> getList(Criteria cri);
-
 	Long getTotal(Criteria cri);
+
+	List<BoardDTO> getNewsList(Criteria cri);
+	List<BoardDTO> getExerList(Criteria cri);
+	List<BoardDTO> getFoodList(Criteria cri);
+	List<BoardDTO> getTipList(Criteria cri);
 
 	Long getLastNum(String userId);
 	BoardDTO findByNum(Long boardNum);
