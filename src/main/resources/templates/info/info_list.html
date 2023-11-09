@@ -12,12 +12,12 @@
 	<link rel="stylesheet" href="/assets/css/infoBoard.css" />
 	<noscript><link rel="stylesheet" href="/assets/css/noscript.css" /></noscript>
 	<style>
-		.content > #list {
-			text-overflow: ellipsis;
-			display: -webkit-box; /* display: -webkit-box => 해당 영역을 box 형태로 관리 */
-			-webkit-line-clamp: 3; /*-webkit-line-clamp => 해당 영역 내 텍스트의 최대 라인수 */
-			-webkit-box-orient: vertical; /* -webkit-box-orient: vertical => box의 흐름 방향을 수직으로 지정 */
-		}
+		/*.boardContent {*/
+		/*	text-overflow: ellipsis;*/
+		/*	display: -webkit-box; !* display: -webkit-box => 해당 영역을 box 형태로 관리 *!*/
+		/*	-webkit-line-clamp: 3; !*-webkit-line-clamp => 해당 영역 내 텍스트의 최대 라인수 *!*/
+		/*	-webkit-box-orient: vertical; !* -webkit-box-orient: vertical => box의 흐름 방향을 수직으로 지정 *!*/
+		/*}*/
 		.content .button{
 			float: right;
 			margin-top: 5px;
@@ -56,14 +56,25 @@
 		.content table tr .boardTitle b{
 			line-height: 15px !important;
 			font-size: 12px !important;
-			overflow: hidden;
-			text-overflow: ellipsis;
+			overflow: hidden !important;
+			text-overflow: ellipsis !important;
 		}
 		.content table tr .boardContent{
 			height: 100px !important;
 			font-size: 10px !important;
 			overflow: hidden;
 			text-overflow: ellipsis;
+			display: -webkit-box;
+			-webkit-line-clamp: 3;
+			-webkit-box-orient: vertical;
+			text-decoration: none !important;
+		}
+		.content table tr .boardContent p, .boardContent span, .boardContent b{
+			display: inline;
+			font-size: 10px !important;
+			text-decoration: none !important;
+			font-weight: normal;
+
 		}
 		.boardContent span img{
 			display: none;
