@@ -57,16 +57,20 @@ public class UserServiceImpl implements UserService{
 //        }
         userDTOList.forEach(userDTO -> {
             String birthDateStr = userDTO.getUserBirth();
-            if (birthDateStr != null && birthDateStr.length() >= 6) {
+            if (birthDateStr != null && birthDateStr.length() == 8) {
                 // 현재 날짜 가져오기
                 LocalDate currentDate = LocalDate.now();
                 int birthYear = Integer.parseInt(birthDateStr.substring(0, 4));
                 int birthMonth = Integer.parseInt(birthDateStr.substring(4, 6));
-                LocalDate birthLocalDate = LocalDate.of(birthYear, birthMonth, 1);
+                int birthDay = Integer.parseInt(birthDateStr.substring(6, 8));
+                LocalDate birthLocalDate = LocalDate.of(birthYear, birthMonth, birthDay);
 
                 // 나이 계산
                 Period period = Period.between(birthLocalDate, currentDate);
                 userDTO.setUserAge(period.getYears());
+            }
+            else {
+                userDTO.setUserAge(-1); // 또는 다른 값을 사용하여 오류를 표시
             }
         });
         return userDTOList;

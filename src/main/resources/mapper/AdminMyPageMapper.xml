@@ -340,4 +340,17 @@
         INSERT INTO message (category, message_content, send_id, receive_id)
         VALUES ('meGeneral', '접수하신 신고가 철회되었습니다.', 'admin', #{userId})
     </insert>
+
+    <select id="getSignUpDTO">
+        SELECT *
+        FROM trainer_signup
+        WHERE signup_num = #{signupNum}
+    </select>
+
+    <select id="getSignUpFile">
+        SELECT *
+        FROM profile
+        WHERE user_id = #{userId}
+        AND profile_category = 'C';
+    </select>
 </mapper>

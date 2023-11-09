@@ -315,4 +315,14 @@ public class AdminMyPageServiceImpl implements AdminMyPageService {
         adminMyPageMapper.insertMessageCancelReport(userId);
     }
 
+    @Override
+    public TrainerSignUpDTO getSignUpDTO(Long signupNum) {
+        return adminMyPageMapper.getSignUpDTO(signupNum);
+    }
+
+    @Override
+    public ProfileDTO getSignUpFile(String userId) {
+        return adminMyPageMapper.getSignUpFile(userId);
+    }
+
 }

@@ -371,4 +371,18 @@ public class AdminMyPageController {
 
         return ResponseEntity.ok("신고 철회가 완료 되었습니다.");
     }
+
+    @PostMapping("signUpModal")
+    @ResponseBody
+    public String signUpModal(@RequestParam("signupNum") Long signupNum) throws Exception {
+        ObjectNode json = JsonNodeFactory.instance.objectNode();
+        TrainerSignUpDTO signUpDTO = adminMyPageService.getSignUpDTO(signupNum);
+        String userId = signUpDTO.getUserId();
+        ProfileDTO profileDTO = adminMyPageService.getSignUpFile(userId);
+
+        json.putPOJO("profileDTO", profileDTO);
+        json.putPOJO("signUpDTO", signUpDTO);
+
+        return json.toString();
+    }
 }
