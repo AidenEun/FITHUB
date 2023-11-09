@@ -7,5 +7,5 @@ public class ProfileDTO {
     private String userId;
     private String sysName;
     private String orgName;
-    private String profileCatefory;
+    private String profileCategory;
 }

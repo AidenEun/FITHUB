@@ -113,4 +113,8 @@ public interface AdminMyPageMapper {
 
     void insertMessageCancelReport(String userId);
 
+    TrainerSignUpDTO getSignUpDTO(Long signupNum);
+
+    ProfileDTO getSignUpFile(String userId);
+
 }
