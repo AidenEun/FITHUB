@@ -3,28 +3,15 @@ const closeSignUp = document.querySelector(".signUpClose");
 const signUpModalBox = document.querySelector('.signUp_modal_box');
 
 closeSignUp.addEventListener("click", () => {
-//    clearSignUpModalContent();
     signUpModalBox.classList.remove("active");
 });
 
 // 모달 외부 클릭 시 모달 창 닫기
 signUpModalBox.addEventListener('click', (e) => {
     if (e.target === signUpModalBox) {
-//        clearSignUpModalContent();
         signUpModalBox.classList.remove("active");
     }
 });
-
-// 모달 내용 초기화 함수
-function clearSignUpModalContent() {
-//    var tableBody = document.getElementById('signUp-table');
-//    tableBody.innerHTML = "";
-//
-//    var signUpContentBox = document.getElementById('signUp-content-box');
-//    if (signUpContentBox) {
-//        signUpContentBox.remove();
-//    }
-}
 
 function signUpModal(e){
     e.preventDefault();
@@ -66,58 +53,68 @@ function signUpModalDom(data) {
 
     var newRow = $('<tr style="text-align: center;">');
     var imageContainer = $('<td colspan="8" class="long_text imageContainer">');
+    var innerDiv = $('<div>');
+
+    // innerDiv에 CSS 스타일 추가
+    innerDiv.css({
+        'display': 'flex',
+        'justify-content': 'center',
+        'align-items': 'center',
+        'width': '100%'
+    });
+
     if (data.profileDTO != null && data.profileDTO.length > 0) {
         data.profileDTO.forEach(function (profileData, i) {
             if (i < 3 && profileData.orgName) {
                 var ext = profileData.orgName.split(".");
                 var imageSrc = '/trainermypage/thumbnail?sysName=' + profileData.sysName;
                 if (ext.indexOf("jpg") !== -1 || ext.indexOf("jpeg") !== -1 || ext.indexOf("png") !== -1 || ext.indexOf("gif") !== -1 || ext.indexOf("webp") !== -1) {
-                    imageContainer.append('<div><img class="signUpImage" src="' + imageSrc + '"></div>');
+                    innerDiv.append('<div class="signUpImageBox"><img class="signUpImage" src="' + imageSrc + '"></div>');
                 }
-                newRow.append(imageContainer);
             }
         });
+        imageContainer.append(innerDiv);
     }
     else {
         newRow.append('<td class="long_text" colspan="8"><div class="button fit" style="cursor: auto !important;">등록된 경력 사진이 없습니다!!</div></td>')
     }
+    newRow.append(imageContainer);
     tableBody.append(newRow);
 
     $('.open').on('click', profileModalOpen);
 }
 
-document.querySelector('.confirmButton').addEventListener('click', function() {
+document.querySelector('.confirmSignUpButton').addEventListener('click', function() {
     alert("승인");
-//    const reportNum = document.querySelector('#reportNumInput').value;
-//
-//    const data = {
-//        reportNum: reportNum
-//    };
-//
-//    fetch('/adminmypage/reportConfirm', {
-//        method: 'POST',
-//        headers: {
-//            'Content-Type': 'application/json'
-//        },
-//        body: JSON.stringify(data)
-//    })
-//    .then(response => {
-//        if (response.ok) {
-//            window.alert('신고 처리 완료!!');
-//            location.reload();
-//        } else {
-//            window.alert('신고 처리 실패. 다시 시도하세요.');
-//        }
-//    })
-//    .catch(error => {
-//        window.alert('오류 발생: ' + error.message);
-//    });
-//
-//    clearReportModalContent();
-//    reportAdminModalBox.classList.remove("active");
+    const signupNum = document.querySelector('#signupNumInput').value;
+
+    const data = {
+        signupNum: signupNum
+    };
+
+    fetch('/adminmypage/signUpConfirm', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        if (response.ok) {
+            window.alert('트레이너 전환 승인 완료!!');
+            location.reload();
+        } else {
+            window.alert('트레이너 전환 승인 실패. 다시 시도하세요.');
+        }
+    })
+    .catch(error => {
+        window.alert('오류 발생: ' + error.message);
+    });
+
+    signUpModalBox.classList.remove("active");
 });
 
-document.querySelector('.cancelButton').addEventListener('click', function() {
+document.querySelector('.cancelSignUpButton').addEventListener('click', function() {
     alert("거절");
 //    const reportNum = document.querySelector('#reportNumInput').value;
 //
@@ -144,6 +141,5 @@ document.querySelector('.cancelButton').addEventListener('click', function() {
 //            window.alert('오류 발생: ' + error.message);
 //        });
 //
-//        clearReportModalContent();
-//        reportAdminModalBox.classList.remove("active");
+//        signUpModalBox.classList.remove("active");
 });

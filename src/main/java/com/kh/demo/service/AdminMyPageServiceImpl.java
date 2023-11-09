@@ -354,4 +354,13 @@ public class AdminMyPageServiceImpl implements AdminMyPageService {
         return adminMyPageMapper.getSignUpFile(userId);
     }
 
+    @Override
+    public void signUpConfirm(TrainerSignUpDTO signUpDTO, UserDTO userDTO) {
+        System.out.println(userDTO);
+//        adminMyPageMapper.updateUserCategory(userDTO.getUserId());
+//        adminMyPageMapper.insertTrainer(signUpDTO, userDTO);
+//        adminMyPageMapper.insertMessageConfirmSignUp(userDTO.getUserId());
+//        adminMyPageMapper.deleteSignUp(signUpDTO.getSignupNum());
+    }
+
 }
