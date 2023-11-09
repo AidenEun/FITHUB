@@ -18,4 +18,6 @@ public interface ProfileMapper {
 
 
 	ProfileDTO getProfileInfo(String trainerId);
+
+    ProfileDTO getCareerInfo(String trainerId);
 }

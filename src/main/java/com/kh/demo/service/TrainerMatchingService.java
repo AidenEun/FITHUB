@@ -1,6 +1,7 @@
 package com.kh.demo.service;
 
 import com.kh.demo.domain.dto.Criteria;
+import com.kh.demo.domain.dto.FoodDTO;
 import com.kh.demo.domain.dto.TrainerDTO;
 import com.kh.demo.domain.dto.TrainerMatchingBoardDTO;
 import org.springframework.core.io.Resource;
@@ -21,4 +22,7 @@ public interface TrainerMatchingService {
 
     ResponseEntity<Resource> getThumbnailResource(String sysName) throws Exception;
 
+    List<TrainerMatchingBoardDTO> boardView(Long boardNum);
+
+    void updateViewCount(Long boardNum);
 }
