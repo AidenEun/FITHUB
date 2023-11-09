@@ -16,6 +16,9 @@
 	<select id="getProfileInfo">
 		select * from profile where user_id=#{trainerId} and profile_category='P'
 	</select>
+	<select id="getCareerInfo">
+		select * from profile where user_id=#{trainerId} and profile_category='C'
+	</select>
 
 </mapper>
 

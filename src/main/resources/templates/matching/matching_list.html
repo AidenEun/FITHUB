@@ -244,7 +244,7 @@ height:152.469px;
 				<div class="matching_list">
 					<div>
 						<th:block th:if="${list != null and list.size() > 0}" th:each="board : ${list}">
-							<a th:href="@{'/matching_view?boardNum=' + ${board.boardNum}}">
+							<a class="get" th:href="${board.boardNum}">
 							<div id="list_table">
 
 								<table id="list_info">
@@ -334,15 +334,20 @@ height:152.469px;
 		pageForm.find("input[name='pagenum']").val(pagenum);
 		pageForm.submit();
 	});
-	$(".get").on("click",function(e){
-		e.preventDefault();
-		let boardnum = $(this).attr("href");
-		let url=/*[[@{/board/get}]]*/'';
-		pageForm.append("<input type='hidden' name='boardnum' value='"+boardnum+"'>")
-		pageForm.attr("action",url);
-		pageForm.attr("method","get");
-		pageForm.submit();
-	})
+
+
+ $('.get').click(function(event) {
+    event.preventDefault();
+      var boardNum = $(this).attr('href');
+      console.log(boardNum);
+      // 다음 페이지 URL 구성
+      var Url = '/matching/matching_view?boardNum=' + boardNum;
+		console.log(Url);
+      // 페이지 이동
+      window.location.href = Url;
+
+  });
+
 
 	$("#searchForm a").on("click",sendit);
 	function sendit(){

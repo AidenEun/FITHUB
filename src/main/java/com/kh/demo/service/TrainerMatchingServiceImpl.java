@@ -1,9 +1,6 @@
 package com.kh.demo.service;
 
-import com.kh.demo.domain.dto.Criteria;
-import com.kh.demo.domain.dto.ProfileDTO;
-import com.kh.demo.domain.dto.TrainerDTO;
-import com.kh.demo.domain.dto.TrainerMatchingBoardDTO;
+import com.kh.demo.domain.dto.*;
 import com.kh.demo.mapper.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -80,7 +77,24 @@ public class TrainerMatchingServiceImpl implements TrainerMatchingService {
     };
 
 
+    public List<TrainerMatchingBoardDTO> boardView(Long boardNum){
+        List<TrainerMatchingBoardDTO> list = tmmapper.boardView(boardNum);
 
+        for (TrainerMatchingBoardDTO board : list) {
+            // 각각의 board에 대한 trainer 정보를 가져와서 설정
+            ProfileDTO profileInfo = pfmapper.getProfileInfo(board.getTrainerId());
+            ProfileDTO careerInfo = pfmapper.getCareerInfo(board.getTrainerId());
+            TrainerDTO trainerInfo = tmapper.getTrainerInfo(board.getTrainerId());
+            board.setProfileInfo(profileInfo);
+            board.setTrainerInfo(trainerInfo);
+
+        }
+        return list;
+    };
+
+    public void updateViewCount(Long boardNum){
+        tmmapper.updateViewCount(boardNum);
+    };
 
 /*    @Override
     public ArrayList<Integer> getReviewCntList(List<TrainerMatchingBoardDTO> list) {
