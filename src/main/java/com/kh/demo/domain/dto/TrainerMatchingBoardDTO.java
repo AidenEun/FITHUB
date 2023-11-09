@@ -21,6 +21,7 @@ public class TrainerMatchingBoardDTO {
 
 
     private TrainerDTO trainerInfo;
+    private ProfileDTO profileInfo;
 
     public TrainerDTO getTrainerInfo() {
         return trainerInfo;
@@ -30,6 +31,5 @@ public class TrainerMatchingBoardDTO {
         this.trainerInfo = trainerInfo;
     }
 
-    public void setProfileInfo(ProfileDTO profileInfo) {
-    }
+    public void setProfileInfo(ProfileDTO profileInfo) {  this.profileInfo = profileInfo;  }
 }

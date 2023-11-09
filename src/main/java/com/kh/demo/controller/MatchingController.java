@@ -6,6 +6,8 @@ import com.kh.demo.domain.dto.TrainerMatchingBoardDTO;
 import com.kh.demo.service.TrainerMatchingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import com.kh.demo.domain.dto.Criteria;
@@ -29,6 +31,11 @@ public class MatchingController {
         model.addAttribute("list", list);
 
        /* model.addAttribute("review_cnt_list",MatchingService.getReviewCntList(list));*/
+    }
+
+    @GetMapping("thumbnail")
+    public ResponseEntity<Resource> thumbnail(String sysName) throws Exception{
+        return MatchingService.getThumbnailResource(sysName);
     }
 
     @GetMapping("matching_write")

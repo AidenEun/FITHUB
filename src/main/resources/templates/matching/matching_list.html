@@ -243,33 +243,38 @@ height:152.469px;
 			<div class="TrainerMatching_box">
 				<div class="matching_list">
 					<div>
-						<th:block  th:if="${list != null and list.size()>0}" th:each="board : ${list}">
+						<th:block th:if="${list != null and list.size() > 0}" th:each="board : ${list}">
+							<a th:href="@{'/matching_view?boardNum=' + ${board.boardNum}}">
 							<div id="list_table">
+
 								<table id="list_info">
 									<tr>
 										<th id="trainerNickname" colspan="3">
 											<span th:text="${board.trainerInfo.trainerNickname}"></span>
 										</th>
-										<!--<span class="review_cnt" th:text="'['+${review_cnt_list[boardStat.index]}+']'"></span>-->
 									</tr>
 									<tr>
 										<td>[[${board.likeCnt}]]</td>
 										<td>[[${board.bookmarkCnt}]]</td>
 										<td id="trainerCareer">
-											<span th:text="${board.trainerInfo.trainerCareer}">년</span>
+											<span th:text="${board.trainerInfo.trainerCareer}"></span>
 										</td>
 									</tr>
 									<tr>
 										<td colspan="3">[[${board.boardTitle}]]</td>
 									</tr>
 								</table>
-								<div class="profile-file" th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}">
-									<img style="width:100%;" th:src="@{/board/profileInfo/thumbnail (systemname=${file.systemname})}">
+								<div class="profile-file">
+									<th:block th:if="${board.profileInfo != null}">
+										<img style="width:100%; height:100%;" th:src="@{/matching/thumbnail (sysName=${board.profileInfo.sysName})}">
+									</th:block>
 								</div>
-							</div>
-						</th:block>
 
+							</div>
+							</a>
+						</th:block>
 					</div>
+
 
 				</div>
 			</div>

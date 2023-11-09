@@ -222,7 +222,7 @@ border-bottom:none;
     <div class="content">
       <div class="cotent_header"><h2>매칭 글 작성하기</h2></div>
 
-      <form id="boardForm" method="post" name="boardForm" th:action="@{/matching/matching_write}">
+      <form>
 
         <input type="hidden" th:value="${cri.pagenum}" name="pagenum">
         <input type="hidden" th:value="${cri.amount}" name="amount">
