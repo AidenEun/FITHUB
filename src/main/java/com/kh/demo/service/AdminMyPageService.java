@@ -1,8 +1,6 @@
 package com.kh.demo.service;
 
 import com.kh.demo.domain.dto.*;
-import org.springframework.core.io.Resource;
-import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -90,5 +88,7 @@ public interface AdminMyPageService {
     TrainerSignUpDTO getSignUpDTO(Long signupNum);
 
     List<ProfileDTO> getSignUpFile(String userId);
+
+    void signUpConfirm(TrainerSignUpDTO signUpDTO, UserDTO userDTO);
 
 }

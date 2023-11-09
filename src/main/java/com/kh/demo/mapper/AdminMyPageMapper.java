@@ -117,4 +117,12 @@ public interface AdminMyPageMapper {
 
     List<ProfileDTO> getSignUpFile(String userId);
 
+    void updateUserCategory(String userId);
+
+    void insertTrainer(TrainerSignUpDTO signUpDTO, UserDTO userDTO);
+
+    void insertMessageConfirmSignUp(String userId);
+
+    void deleteSignUp(Long signupNum);
+
 }
