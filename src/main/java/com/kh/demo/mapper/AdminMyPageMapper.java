@@ -115,6 +115,6 @@ public interface AdminMyPageMapper {
 
     TrainerSignUpDTO getSignUpDTO(Long signupNum);
 
-    ProfileDTO getSignUpFile(String userId);
+    List<ProfileDTO> getSignUpFile(String userId);
 
 }

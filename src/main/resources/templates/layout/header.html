@@ -91,7 +91,7 @@
                 <ul>
                     <li id="login">
                         <th:block th:if="${loginUser == null}">
-                            <a class="login" th:href="{@/user/login}"style="color: #fff;">Login</a>
+                            <a class="login" th:href="@{/user/login}"style="color: #fff;">Login</a>
                         </th:block>
                         <th:block th:if="${loginUser != null}">
                             <a class="login" th:href="@{/user/logout}"style="color: #fff;">logout</a>
@@ -125,7 +125,7 @@
                     <div>
                         <a href="#">내 정보</a>
                         <th:block th:if="${loginUser == null}">
-                            <a class="login" th:href="{@/user/login}">로그인</a>
+                            <a class="login" th:href="@{/user/login}">로그인</a>
                         </th:block>
                         <th:block th:if="${loginUser != null}">
                             <a class="login" th:href="@{/user/logout}">로그아웃</a>
