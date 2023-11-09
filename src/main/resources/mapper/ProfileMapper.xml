@@ -14,7 +14,7 @@
 	</delete>
 
 	<select id="getProfileInfo">
-		select * from trainer where user_id=#{trainerId};
+		select * from profile where user_id=#{trainerId} and profile_category='P'
 	</select>
 
 </mapper>
