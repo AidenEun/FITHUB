@@ -18,4 +18,18 @@ public class TrainerMatchingBoardDTO {
     private long bookmarkCnt;
     private long viewCnt;
     private String regdate;
+
+
+    private TrainerDTO trainerInfo;
+
+    public TrainerDTO getTrainerInfo() {
+        return trainerInfo;
+    }
+
+    public void setTrainerInfo(TrainerDTO trainerInfo) {
+        this.trainerInfo = trainerInfo;
+    }
+
+    public void setProfileInfo(ProfileDTO profileInfo) {
+    }
 }

@@ -15,10 +15,7 @@
         where trainer_id=#{trainerId}
     </update>
 
-    <select id="getNickname">
-        select * from trainer where trainer_id=#{trainerId};
-    </select>
-    <select id="getCareer">
+    <select id="getTrainerInfo">
         select * from trainer where trainer_id=#{trainerId};
     </select>
 

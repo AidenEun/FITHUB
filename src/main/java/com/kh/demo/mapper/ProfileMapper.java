@@ -15,4 +15,7 @@ public interface ProfileMapper {
 	int deleteBySystemname(String sysName);
 	
 	int deleteByBoardnum(Long boardNum);
+
+
+	ProfileDTO getProfileInfo(String trainerId);
 }

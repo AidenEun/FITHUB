@@ -13,6 +13,10 @@
 		delete from profile where sys_name=#{sysName}
 	</delete>
 
+	<select id="getProfileInfo">
+		select * from trainer where user_id=#{trainerId};
+	</select>
+
 </mapper>
 
 

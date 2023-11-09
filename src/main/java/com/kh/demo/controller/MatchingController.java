@@ -1,6 +1,7 @@
 package com.kh.demo.controller;
 
 import com.kh.demo.domain.dto.PageDTO;
+import com.kh.demo.domain.dto.TrainerDTO;
 import com.kh.demo.domain.dto.TrainerMatchingBoardDTO;
 import com.kh.demo.service.TrainerMatchingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,15 +58,5 @@ public class MatchingController {
     }
 
 
-    @GetMapping("/getTrainerInfo")
-    @ResponseBody
-    public Map<String, String> getTrainerInfo(@RequestParam("trainerId") String trainerId) {
-        Map<String, String> trainerInfo = new HashMap<>();
-        String nickname = MatchingService.getNickname(trainerId);
-                String career = MatchingService.getCareer(trainerId);
-                trainerInfo.put("nickname", nickname);
-        trainerInfo.put("career", career);
-        return trainerInfo;
-    }
 
 }
