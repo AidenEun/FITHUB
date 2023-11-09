@@ -7,5 +7,5 @@ import java.util.List;
 
 @Mapper
 public interface ChallengeMapper {
-    List<MyChallengeDTO> getIngMychall(String userid);
+    List<MyChallengeDTO> getIngMychall(String userid, String choicedate);
 }

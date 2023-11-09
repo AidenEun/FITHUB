@@ -246,11 +246,14 @@
     </div>
 
     <div id="main_box">
-        <form id="diaryForm" action="" method="post">
+        <form id="diaryForm" action="/usermypage/diaryWrite" method="post" onclick="return check()">
 
             <table class="diary_write">
                 <tr>
-                    <td><input type="text" name="writeDate" th:value="${regdate}" readonly onfocus="this.blur();"></td>
+                    <td>
+                        <input type="hidden" name="choicedate" th:value="${regdate}">
+                        <input type="text" name="writeDate" th:value="${regdate}" readonly onfocus="this.blur();">
+                    </td>
                     <td>
                         <input type="text" name="nicname" th:value="${user.userNickname}" readonly
                                onfocus="this.blur();">
@@ -582,15 +585,18 @@
         const mychallview = document.getElementById("challList");
         mychallview.classList.remove("hiddenList")
 
+        const choicedate = document.getElementsByName("choicedate")[0].value;
         const userid = document.getElementById("userid").value;
-
+        // console.log(choicedate);
+        // console.log(writeDate);
         // console.log(userid);
-        if (userid) {
+        if (userid,choicedate) {
             $.ajax({
                 url: '/challenge/myChallInfo',
                 method: 'POST',
                 data: {
-                    userid: userid
+                    userid: userid,
+                    choicedate: choicedate
                 },
                 dataType: 'json',
                 success: function (data) {
@@ -633,6 +639,19 @@
             tableBody.append(row);
         }
 
+    }
+    function check(){
+        const mychallBtn = document.getElementById("mychallBtn");
+
+        if(mychallBtn.classList.contains("viewchallBtn")){
+            return true;
+
+        }
+        else {
+            alert("진행 중인 챌린지 현황을 확인해 주세요!")
+            mychallBtn.focus();
+            return false;
+        }
     }
 
 </script>

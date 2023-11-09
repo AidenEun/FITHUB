@@ -220,4 +220,27 @@ public class UserMyPageController {
     @GetMapping ("diaryView")
     public void replacediaryView() {}
 
+    @PostMapping("diaryWrite")
+    public String diaryWrite(String choicedate,DiaryDTO diary){
+
+        if(service.registDiary(diary)){
+            return "redirect:/usermypage/getdiary?choicedate"+choicedate;
+        }
+
+        //실패시 다시 캘린더로
+        //return "redirect:/usermypage/user_diary?choicedate"+choicedate;
+        return "redirect:/usermypage/user_diary";
+
+    }
 }
+//    @PostMapping("info_write")
+//    public String write(BoardDTO board, MultipartFile[] files, Criteria cri) throws Exception{
+//        Long boardnum = 0l;	//long 타입의 0(0+l)
+//        if(service.regist(board, files)) {
+//            boardnum = service.getLastNum(board.getUserId());
+//            return "redirect:/info/info_get"+cri.getListLink()+"&boardnum="+boardnum;
+//        } //성공시 게시글 보는 페이지로 이동(info_get.html)
+//        else {
+//            return "redirect:/info/info_list"+cri.getListLink();
+//        } //실패시 게시글 목록 페이지로 이동
+//    }

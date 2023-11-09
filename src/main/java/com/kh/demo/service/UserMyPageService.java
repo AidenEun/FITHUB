@@ -8,8 +8,11 @@ import java.util.List;
 
 public interface UserMyPageService {
     //일기 등록 : insert
+    //파일첨부 가능(업데이트)
     public boolean registDiary (DiaryDTO diary, MultipartFile[] files) throws Exception;
 
+    //파일첨부 없음.(1차)
+    boolean registDiary(DiaryDTO diary);
 
     //일기 수정 : 기록날짜 제외한 모든 수정내용 update
     public boolean modifyDiary(DiaryDTO diary, MultipartFile[] files);
@@ -76,6 +79,5 @@ public interface UserMyPageService {
 
     //트레이너 전환 신청
     boolean insertApplytrainer(TrainerSignUpDTO user,MultipartFile[] files) throws Exception;
-
 
 }
