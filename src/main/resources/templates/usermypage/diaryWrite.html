@@ -218,6 +218,13 @@
         text-align: center;
     }
 
+    input[readonly] {
+        pointer-events: none;
+    }
+    .input_area input[type=text]:nth-child(1){
+        text-align: center;
+    }
+
 </style>
 <body class="is-preload">
 
@@ -247,17 +254,17 @@
     </div>
 
     <div id="main_box">
-        <form id="diaryForm" action="/usermypage/diaryWrite" method="post">
+<!--        <form id="diaryForm" action="/usermypage/diaryWrite" method="post">-->
+        <form id="diaryForm" th:action="@{/usermypage/diaryWrite}" method="post">
 
             <table class="diary_write">
                 <tr>
                     <td>
                         <input type="hidden" name="choicedate" th:value="${regdate}">
-                        <input type="text" name="regdate" th:value="${regdate}" readonly onfocus="this.blur();">
+                        <input type="text" name="regdate" th:value="${regdate}" readonly>
                     </td>
                     <td>
-                        <input type="text" th:value="${user.userNickname}" readonly
-                               onfocus="this.blur();">
+                        <input type="text" th:value="${user.userNickname}" readonly>
                         <input type="hidden" id="userid" name="userId" th:value="${user.userId}">
                     </td>
                 </tr>
@@ -270,16 +277,16 @@
                     <!-- <td></td> -->
                     <td colspan="2">
                         <div class="weight_area box_flex">
-                            <div><input type="text" value="목표 체중" readonly onfocus="this.blur();"></div>
+                            <div><input type="text" value="목표 체중" readonly></div>
 
-                            <div><input type="text" id="weightGoal" value="50kg"></div>
+                            <div><input type="text" id="weightGoal" th:value="${user.weightGoal}" readonly></div>
 
-                            <div><input type="text" value="현재 체중" readonly onfocus="this.blur();"></div>
+                            <div><input type="text" value="현재 체중" readonly></div>
 
                             <div><input type="text" name="todayWeight" id="todayweigh"
                                         placeholder="0" onfocus="this.placeholder = '' " onkeyup="weighsum()"></div>
 
-                            <div><input type="text" value="kg" readonly onfocus="this.blur();"></div>
+                            <div><input type="text" value="kg" readonly></div>
                         </div>
                     </td>
                 </tr>
@@ -304,7 +311,6 @@
                         <div class="bf_list list_area" id="bf_result" readonly>
                         </div>
                         <div><input type="button" value="전체 삭제" onclick="removebf()"></div>
-                        <!--                        <input type="text" name="todayBf"  readonly>-->
                     </td>
                     <td class="food_area">
                         <div class="lunch_input input_area">
@@ -316,7 +322,6 @@
                         </div>
                         <div type="text" class="bf_list list_area" id="lunch_result"></div>
                         <div><input type="button" value="전체 삭제" onclick="removelunch()"></div>
-                        <!--                        <input type="text" name="todaylunch" readonly >-->
                     </td>
                 </tr>
                 <tr>
@@ -331,7 +336,6 @@
                         <div type="text" class="bf_list list_area" id="dinner_result"></div>
 
                         <div><input type="button" value="전체 삭제" onclick="removedinner()"></div>
-                        <!--                        <input type="text" name="todaydinner">-->
                     </td>
                     <td class="food_area">
                         <div class="snack_input input_area">
@@ -344,7 +348,6 @@
                         <div type="text" class="bf_list list_area" id="snack_result"></div>
 
                         <div><input type="button" value="전체 삭제" onclick="removesnack()"></div>
-                        <!--                        <input type="text" name="todaysnack">-->
                     </td>
                 </tr>
                 <tr>
@@ -360,7 +363,6 @@
                         <div type="text" class="excrcise_list list_area" id="exer_result"></div>
 
                         <div><input type="button" value="전체 삭제" onclick="removeexer()"></div>
-                        <!--                        <input type="text" name="todayExcrcise">-->
                     </td>
                 </tr>
                 <tr>

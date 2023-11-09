@@ -20,7 +20,7 @@ public interface UserMyPageMapper {
     //select
     List<DiaryDTO> getDiaryList(String loginUser);
 
-    DiaryDTO getDiaryDetail(Long diary_num);
+    DiaryDTO getDiaryDetail(String choicedate, String loginUser);
 
     DiaryDTO checkList(String choicedate, String loginUser);
 
@@ -95,4 +95,5 @@ public interface UserMyPageMapper {
     Long getSignUpLastNum(String userId);
 
     int insertStamp(int sccChallNum, String userId, String diarydate);
+
 }
