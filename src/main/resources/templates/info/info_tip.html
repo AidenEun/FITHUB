@@ -12,12 +12,6 @@
 	<link rel="stylesheet" href="/assets/css/infoBoard.css" />
 	<noscript><link rel="stylesheet" href="/assets/css/noscript.css" /></noscript>
 	<style>
-		.content > #list {
-			text-overflow: ellipsis;
-			display: -webkit-box; /* display: -webkit-box => 해당 영역을 box 형태로 관리 */
-			-webkit-line-clamp: 3; /*-webkit-line-clamp => 해당 영역 내 텍스트의 최대 라인수 */
-			-webkit-box-orient: vertical; /* -webkit-box-orient: vertical => box의 흐름 방향을 수직으로 지정 */
-		}
 		.content .button{
 			margin-bottom: 30px;
 			float: right;
@@ -32,6 +26,60 @@
 		.content .button a{
 			color: white;
 			font-size: 14.5px;
+		}
+		table {
+			background-color: transparent;
+		}
+		table tbody tr:nth-child(2n + 1) {
+			background-color: transparent;
+		}
+		table p{
+			margin-bottom: 0;
+		}
+		table td{
+			padding: 5px 10px;
+			vertical-align: middle;
+		}
+		#thumbnail{
+			width: 210px !important;
+			height: 190px !important;
+			background-color: #5a8100;
+			padding: 10px;
+		}
+		#thumbnail #img{
+			width: 190px !important;
+			height: 170px !important;
+			background-color: beige;
+		}
+		#boardtitle{
+			padding: 0;
+		}
+		#boardtitle b{
+			font-size: 15px !important;
+		}
+
+		#boardcontent{
+			height: 100px !important;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			display: -webkit-box; /* display: -webkit-box => 해당 영역을 box 형태로 관리 */
+			-webkit-line-clamp: 3; /*-webkit-line-clamp => 해당 영역 내 텍스트의 최대 라인수 */
+			-webkit-box-orient: vertical; /* -webkit-box-orient: vertical => box의 흐름 방향을 수직으로 지정 */
+		}
+		#boardcontent p, #boardcontent span, #boardcontent b{
+			display: inline;
+			font-size: 14px !important;
+			text-decoration: none !important;
+			font-weight: normal;
+		}
+		#boardcontent img{
+			display: none;
+		}
+		#cnt {
+			height: 30px;
+			font-size: 12px;
+			line-height: 12px;
+			padding: 5px 11px;
 		}
 	</style>
 </head>
@@ -58,27 +106,27 @@
 				<table id="list" class="info_tip_list" style="border-bottom: 1px #304400">
 					<th:block th:if="${list != null and list.size()>0}" th:each="board : ${list}">
 						<tr valign="middle">
-							<td rowspan="3">
-								썸네일
+							<td id="thumbnail" rowspan="3" style="width: 100%">
+								<div id="img">썸네일</div>
 								<!--/*								[[${board.썸네일}]]*/-->
 							</td>
-							<td>
-								<a class="get" th:href="${board.boardNum}">
+							<td style="height: 35px; padding: 5px 10px;">
+								<a class="get" id="boardtitle" th:href="${board.boardNum}">
 									<b>[[${board.boardTitle}]]</b>
 								</a>
 							</td>
 						</tr>
 						<tr>
-							<td>
-								<a class="get" th:href="${board.boardNum}" th:utext="${board.boardContent}">
-
+							<td style="height: 45px; font-size: 14px;" >
+								<a class="get" id="boardcontent" th:href="${board.boardNum}" th:utext="${board.boardContent}">
 								</a>
 							</td>
 						</tr>
 						<tr>
-							<td>
-								<span class="reply_cnt" th:text="${reply_cnt_list[boardStat.index]}">댓글수</span>
-								<span [[${board.viewCnt}]]>조회수</span>
+							<td id="cnt" >
+								<span style="margin-right: 10px; margin-left: 5px;">댓글수 0</span>
+								<!--								<span class="reply_cnt" th:text="${reply_cnt_list[boardStat.index]}">댓글수</span>-->
+								<span [[${board.viewCnt}]]>조회수 0</span>
 							</td>
 						</tr>
 					</th:block>
