@@ -43,6 +43,12 @@ public class UserMyPageServiceImpl implements UserMyPageService{
     }
 
     @Override
+    public boolean registDiary(DiaryDTO diary) {
+
+        return false;
+    }
+
+    @Override
     public boolean modifyDiary(DiaryDTO diary, MultipartFile[] files) {
         return false;
     }

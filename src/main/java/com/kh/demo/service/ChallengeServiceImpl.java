@@ -15,7 +15,7 @@ public class ChallengeServiceImpl implements ChallengeService{
     @Autowired
     private ChallengeMapper challMapper;
     @Override
-    public List<MyChallengeDTO> findMychall(String userid) {
-        return challMapper.getIngMychall(userid);
+    public List<MyChallengeDTO> findMychall(String userid,String choicedate) {
+        return challMapper.getIngMychall(userid,choicedate);
     }
 }
