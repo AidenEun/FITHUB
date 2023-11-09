@@ -45,7 +45,7 @@ public class BoardServiceImpl implements BoardService{
 	private FileMapper fmapper;
 	@Value("${file.dir}")
 	private String saveFolder;
-	
+
 	@Override
 	public boolean regist(BoardDTO board, MultipartFile[] files) throws Exception {
 		int row = bmapper.insertBoard(board);
@@ -67,7 +67,7 @@ public class BoardServiceImpl implements BoardService{
 				int lastIdx = orgname.lastIndexOf(".");
 				//.png
 				String extension = orgname.substring(lastIdx);
-				
+
 				LocalDateTime now = LocalDateTime.now();
 				String time = now.format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"));
 
@@ -77,17 +77,17 @@ public class BoardServiceImpl implements BoardService{
 
 				//실제 저장될 파일의 경로
 				String path = saveFolder+systemname;
-				
+
 				FileDTO fdto = new FileDTO();
 				fdto.setBoardNum(boardnum);
 				fdto.setSysName(systemname);
 				fdto.setOrgName(orgname);
-				
+
 				//실제 파일 업로드
 				file.transferTo(new File(path));
-				
+
 				flag = fmapper.insertFile(fdto) == 1;
-				
+
 				if(!flag) {
 					//업로드 했던 파일 삭제, 게시글 데이터 삭제
 					return flag;
@@ -129,16 +129,16 @@ public class BoardServiceImpl implements BoardService{
 					String time = now.format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"));
 					String systemname = time+UUID.randomUUID().toString()+extension;
 					sysnames.add(systemname);
-					
+
 					String path = saveFolder+systemname;
-					
+
 					FileDTO fdto = new FileDTO();
 					fdto.setBoardNum(board.getBoardNum());
 					fdto.setOrgName(orgname);
 					fdto.setSysName(systemname);
-					
+
 					file.transferTo(new File(path));
-					
+
 					flag = fmapper.insertFile(fdto) == 1;
 					if(!flag) {
 						break;
@@ -205,6 +205,26 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
+	public List<BoardDTO> getNewsList(Criteria cri) {
+		return bmapper.getNewsList(cri);
+	}
+
+	@Override
+	public List<BoardDTO> getExerList(Criteria cri) {
+		return bmapper.getExerList(cri);
+	}
+
+	@Override
+	public List<BoardDTO> getFoodList(Criteria cri) {
+		return bmapper.getFoodList(cri);
+	}
+
+	@Override
+	public List<BoardDTO> getTipList(Criteria cri) {
+		return bmapper.getTipList(cri);
+	}
+
+	@Override
 	public BoardDTO getDetail(Long boardnum) {
 		return bmapper.findByNum(boardnum);
 	}
@@ -258,7 +278,7 @@ public class BoardServiceImpl implements BoardService{
 	public List<FileDTO> getFileList(Long boardnum) {
 		return fmapper.getFiles(boardnum);
 	}
-	
+
 	@Override
 	public ResponseEntity<Resource> getThumbnailResource(String systemname) throws Exception{
 		//경로에 관련된 객체(자원으로 가지고 와야 하는 파일에 대한 경로)
@@ -268,7 +288,7 @@ public class BoardServiceImpl implements BoardService{
 		//응답 헤더 생성
 		HttpHeaders headers = new HttpHeaders();
 		headers.add(HttpHeaders.CONTENT_TYPE, contentType);
-		
+
 		//해당 경로(path)에 있는 파일에서부터 뻗어나오는 InputStream(Files.newInputStream)을 통해 자원화(InputStreamResource)
 		Resource resource = new InputStreamResource(Files.newInputStream(path));
 		return new ResponseEntity<>(resource,headers,HttpStatus.OK);
@@ -280,18 +300,18 @@ public class BoardServiceImpl implements BoardService{
 		Path path = Paths.get(saveFolder+systemname);
 		//해당 경로(path)에 있는 파일에서부터 뻗어나오는 InputStream(Files.newInputStream)을 통해 자원화(InputStreamResource)
 		Resource resource = new InputStreamResource(Files.newInputStream(path));
-		
+
 		File file = new File(saveFolder,systemname);
-		
+
 		HttpHeaders headers = new HttpHeaders();
 		String dwName = "";
-		
+
 		try {
 			dwName = URLEncoder.encode(orgname,"UTF-8").replaceAll("\\+","%20");
 		} catch (UnsupportedEncodingException e) {
 			dwName = URLEncoder.encode(file.getName(),"UTF-8").replaceAll("\\+","%20");
 		}
-		
+
 		headers.setContentDisposition(ContentDisposition.builder("attachment").filename(dwName).build());
 		return new ResponseEntity<Object>(resource,headers,HttpStatus.OK);
 	}
