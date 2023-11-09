@@ -23,7 +23,7 @@ public interface UserMyPageService {
 
     //select
     //일기 상세보기(view)
-    public DiaryDTO getDiaryDetail(String choicedate);
+    DiaryDTO getDiaryDetail(String choicedate, String loginUser);
 
     //달력에 존재하는 일기 조회하기
     public List<DiaryDTO> getDiaryList(String userid);
@@ -82,4 +82,5 @@ public interface UserMyPageService {
     boolean insertApplytrainer(TrainerSignUpDTO user,MultipartFile[] files) throws Exception;
 
     boolean addStemp(int sccChallNum, HashMap<String, String> diaryInfo);
+
 }
