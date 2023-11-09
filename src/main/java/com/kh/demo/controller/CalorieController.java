@@ -100,25 +100,23 @@ public class CalorieController {
     @ResponseBody
     public String foodModal_search(@RequestParam("keyword") String keyword) {
         ObjectNode json = JsonNodeFactory.instance.objectNode();
-
-        System.out.println(keyword);
+//        System.out.println(keyword);
 
         List<FoodDTO> foodList = calorieService.getFindFood(keyword);
-        System.out.println(foodList);
+//        System.out.println(foodList);
         json.putPOJO("foodList", foodList);
 
         return json.toString();
     }
+
     @PostMapping("execModal_search")
     @ResponseBody
-    public String execModal_search(@RequestParam("keyword") String keyword){
+    public String execModal_search(@RequestParam("keyword") String keyword) {
         ObjectNode json = JsonNodeFactory.instance.objectNode();
-//        System.out.println("운동 : "+keyword);
 
         List<ExerciseDTO> execList = calorieService.getFindExec(keyword);
-//        System.out.println(execList);
 
-        json.putPOJO("execList",execList);
+        json.putPOJO("execList", execList);
 
         return json.toString();
     }
@@ -127,11 +125,9 @@ public class CalorieController {
     @ResponseBody
     public String getfoodInfo(@RequestParam("todayAllList") String todayAllList) {
         ObjectNode json = JsonNodeFactory.instance.objectNode();
-        System.out.println(todayAllList);
 
         String[] todayListArr = todayAllList.split(",");
 
-        System.out.println(Arrays.toString(todayListArr));
         double allCarbo = 0.0;
         double allProtein = 0.0;
         double allFat = 0.0;

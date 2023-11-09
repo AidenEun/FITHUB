@@ -4,6 +4,7 @@ import com.kh.demo.domain.dto.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public interface UserMyPageService {
@@ -12,7 +13,7 @@ public interface UserMyPageService {
     public boolean registDiary (DiaryDTO diary, MultipartFile[] files) throws Exception;
 
     //파일첨부 없음.(1차)
-    boolean registDiary(DiaryDTO diary);
+    int registDiary(DiaryDTO diary);
 
     //일기 수정 : 기록날짜 제외한 모든 수정내용 update
     public boolean modifyDiary(DiaryDTO diary, MultipartFile[] files);
@@ -80,4 +81,5 @@ public interface UserMyPageService {
     //트레이너 전환 신청
     boolean insertApplytrainer(TrainerSignUpDTO user,MultipartFile[] files) throws Exception;
 
+    boolean addStemp(int sccChallNum, HashMap<String, String> diaryInfo);
 }

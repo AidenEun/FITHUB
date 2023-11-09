@@ -26,14 +26,14 @@
             const weightGoalNum = document.querySelector("#weightGoal").value;
             const weightGoal = weightGoalNum.slice(0, -2);
 
-            if (48 <= window.event.keyCode && window.event.keyCode <= 57 || window.event.keyCode == 8) {
+            if (48 <= window.event.keyCode && window.event.keyCode <= 57 || window.event.keyCode == 8 || window.event.keyCode == 190) {
 
 
                 const todayweigh = document.querySelector("#todayweigh");
 
                 let resultweigh = Number(weightGoal) - Number(todayweigh.value);
 
-                document.querySelector("#resultweigh").value = resultweigh;
+                document.querySelector("#resultweigh").value = resultweigh.toFixed(2);
             } else {
                 alert("숫자만 입력하세요")
                 document.querySelector("#todayweigh").value = "";
@@ -180,7 +180,7 @@
         display: block;
         height: 100px;
         width: 364.1px;
-        overflow-y : auto;
+        overflow-y: auto;
 
     }
 
@@ -190,7 +190,7 @@
         display: block;
         height: 100px;
         width: 750.20px;
-        overflow-y : auto;
+        overflow-y: auto;
 
     }
 
@@ -213,7 +213,8 @@
     .challcheckList.hiddenList {
         display: none;
     }
-    .mychall_area{
+
+    .mychall_area {
         text-align: center;
     }
 
@@ -246,23 +247,24 @@
     </div>
 
     <div id="main_box">
-        <form id="diaryForm" action="/usermypage/diaryWrite" method="post" onclick="return check()">
+        <form id="diaryForm" action="/usermypage/diaryWrite" method="post">
 
             <table class="diary_write">
                 <tr>
                     <td>
                         <input type="hidden" name="choicedate" th:value="${regdate}">
-                        <input type="text" name="writeDate" th:value="${regdate}" readonly onfocus="this.blur();">
+                        <input type="text" name="regdate" th:value="${regdate}" readonly onfocus="this.blur();">
                     </td>
                     <td>
-                        <input type="text" name="nicname" th:value="${user.userNickname}" readonly
+                        <input type="text" th:value="${user.userNickname}" readonly
                                onfocus="this.blur();">
-                        <input type="hidden" id="userid" th:value="${user.userId}">
+                        <input type="hidden" id="userid" name="userId" th:value="${user.userId}">
                     </td>
                 </tr>
                 <tr>
                     <!-- <td></td> -->
-                    <td colspan="2"><input type="text" name="title" id="" value="제목"></td>
+                    <td colspan="2"><input type="text" name="diaryTitle" placeholder="제목을 입력하세요"
+                                           onfocus="this.placeholder = '' "></td>
                 </tr>
                 <tr>
                     <!-- <td></td> -->
@@ -270,12 +272,12 @@
                         <div class="weight_area box_flex">
                             <div><input type="text" value="목표 체중" readonly onfocus="this.blur();"></div>
 
-                            <div><input type="text" name="weightGoal" id="weightGoal" value="50kg"></div>
+                            <div><input type="text" id="weightGoal" value="50kg"></div>
 
                             <div><input type="text" value="현재 체중" readonly onfocus="this.blur();"></div>
 
-                            <div><input type="text" name="todayweigh" id="todayweigh"
-                                        placeholder="0" onfocus="this.placeholder = ''" onkeyup="weighsum()"></div>
+                            <div><input type="text" name="todayWeight" id="todayweigh"
+                                        placeholder="0" onfocus="this.placeholder = '' " onkeyup="weighsum()"></div>
 
                             <div><input type="text" value="kg" readonly onfocus="this.blur();"></div>
                         </div>
@@ -285,7 +287,7 @@
                     <td colspan="2">
                         <div class="weight_result box_flex">
                             <div><input type="text" value="오늘의 비교" readonly onfocus="this.blur();"></div>
-                            <div><input type="text" id="resultweigh" name="resultweigh" value="0" readonly></div>
+                            <div><input type="text" id="resultweigh" value="0" readonly></div>
                             <div><input type="text" value="kg" readonly></div>
                         </div>
                     </td>
@@ -294,7 +296,7 @@
                     <td class="food_area">
                         <div class="bf_input input_area">
                             <input type="text" value="아침" readonly>
-                            <input type="hidden" name="todayBf" id="todayBf">
+                            <input type="hidden" name="todayBreakfast">
                             <input type="text" id="bfCal" value="0" readonly>
                             <input type="text" value="kcal" readonly>
                             <input type="button" class="opensearch">
@@ -307,7 +309,7 @@
                     <td class="food_area">
                         <div class="lunch_input input_area">
                             <input type="text" value="점심" readonly>
-                            <input type="hidden" name="todaylunch">
+                            <input type="hidden" name="todayLunch">
                             <input type="text" id="lunchCal" value="0" readonly>
                             <input type="text" value="kcal" readonly>
                             <input type="button" class="opensearch">
@@ -321,7 +323,7 @@
                     <td class="food_area">
                         <div class="dinner_input input_area">
                             <input type="text" value="저녁" readonly>
-                            <input type="hidden" name="todaydinner">
+                            <input type="hidden" name="todayDinner">
                             <input type="text" id="dinnerCal" value="0" readonly>
                             <input type="text" value="kcal" readonly>
                             <input type="button" class="opensearch">
@@ -334,7 +336,7 @@
                     <td class="food_area">
                         <div class="snack_input input_area">
                             <input type="text" value="간식" readonly>
-                            <input type="hidden" name="todaysnack">
+                            <input type="hidden" name="todaySnack">
                             <input type="text" id="snackCal" value="0" readonly>
                             <input type="text" value="kcal" readonly>
                             <input type="button" class="opensearch">
@@ -350,7 +352,7 @@
                     <td colspan="2" class="ex_area">
                         <div class="ex_input input_area">
                             <input type="text" value="운동" readonly>
-                            <input type="hidden" name="todayExcrcise">
+                            <input type="hidden" name="todayExer">
                             <input type="text" id="exerCal" value="0" readonly>
                             <input type="text" value="kcal" readonly style="text-align: left;">
                             <input type="button" class="opensearch">
@@ -365,9 +367,9 @@
                     <td colspan="2">
                         <div class="total_area" style="text-align: center">
                             <input type="button" onclick="totalsum()" value="최종 칼로리" style="margin-right: 15px">
-                            <input type="text" id="totalFood" value="총 음식칼로리" readonly>
+                            <input type="text" id="totalFood" placeholder="총 음식칼로리" readonly>
                             <input type="text" value="-" readonly>
-                            <input type="text" id="totalexer" value="총 운동칼로리" readonly>
+                            <input type="text" id="totalexer" placeholder="총 운동칼로리" readonly>
                             <input type="text" value="=" readonly>
                             <input type="text" id="totalResult" value="0kcal" readonly>
                         </div>
@@ -382,6 +384,7 @@
                             <input type="text" id="totalCal" value="오늘 칼로리" readonly>
                             <input type="text" value="=" readonly>
                             <input type="text" id="todayCal" value="0kcal" readonly>
+
                         </div>
                     </td>
                 </tr>
@@ -397,12 +400,18 @@
 
                             <input type="text" value="지방" readonly>
                             <input type="text" id="fat" value="0g" readonly>
+                            <!--     칼로리 hidden박스 구역                       -->
+                            <input type="hidden" name="foodCalories">
+                            <input type="hidden" name="exerCalories">
+                            <input type="hidden" name="carbo">
+                            <input type="hidden" name="protein">
+                            <input type="hidden" name="fat">
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <textarea name="diaryContents" class="diary_contents" cols="30" rows="10" id="summernote"
+                        <textarea name="diaryContent" class="diary_contents" cols="30" rows="10" id="summernote"
                                   placeholder="내용을 입력해 주세요."></textarea>
                     </td>
                 </tr>
@@ -431,7 +440,7 @@
 
                 <tr style="text-align: right;">
 
-                    <td colspan="2"><input type="submit" value="작성완료"></td>
+                    <td colspan="2"><input type="submit" value="작성완료" onclick="return check()"></td>
                 </tr>
 
 
@@ -467,64 +476,65 @@
     function removebf() {
         document.getElementById("bf_result").innerHTML = "";
         document.getElementById("bfCal").value = 0;
-        document.getElementsByName("todayBf")[0].value = "";
+        document.getElementsByName("todayBreakfast")[0].value = "";
 
     }
 
     function removelunch() {
         document.getElementById("lunch_result").innerHTML = "";
         document.getElementById("lunchCal").value = 0;
-        document.getElementsByName("todaylunch")[0].value = "";
+        document.getElementsByName("todayLunch")[0].value = "";
 
     }
 
     function removedinner() {
         document.getElementById("dinner_result").innerHTML = "";
         document.getElementById("dinnerCal").value = 0;
-        document.getElementsByName("todaydinner")[0].value = "";
+        document.getElementsByName("todayDinner")[0].value = "";
     }
 
     function removesnack() {
         document.getElementById("snack_result").innerHTML = "";
         document.getElementById("snackCal").value = 0;
-        document.getElementsByName("todaysnack")[0].value = "";
+        document.getElementsByName("todaySnack")[0].value = "";
     }
 
     function removeexer() {
         document.getElementById("exer_result").innerHTML = "";
         document.getElementById("exerCal").value = 0;
-        document.getElementsByName("todayExcrcise")[0].value = "";
+        document.getElementsByName("todayExer")[0].value = "";
     }
 
     function totalsum() {
         const totalexer = Number(document.getElementById("exerCal").value);
-        const bttotal = Number(document.getElementById("bfCal").value);
+        const bftotal = Number(document.getElementById("bfCal").value);
         const lunchtotal = Number(document.getElementById("lunchCal").value);
         const dinnertal = Number(document.getElementById("dinnerCal").value);
         const snacktotal = Number(document.getElementById("snackCal").value);
 
         const caloriesGoa = document.getElementById("caloriesGoal").value;
-        // console.log(caloriesGoa);
         const goalNum = caloriesGoa.slice(0, -4);
 
 
-        const foodtotal = Number(bttotal + lunchtotal + dinnertal + snacktotal);
-        var totalsum = Number(foodtotal - totalexer);
-        var todaycal = Number(goalNum - totalsum);
-        // console.log(foodtotal);
-        // console.log(totalexer);
+        const foodtotal = Number(bftotal + lunchtotal + dinnertal + snacktotal).toFixed(1);
+        var totalsum = Number(foodtotal - totalexer).toFixed(1);
+        var todaycal = Number(goalNum - totalsum).toFixed(1);
 
-        console.log(totalsum);
+        // console.log(totalsum);
         document.getElementById("totalFood").value = foodtotal + "kcal";
         document.getElementById("totalexer").value = totalexer + "kcal";
         document.getElementById("totalCal").value = totalsum + "kcal";
         document.getElementById("totalResult").value = totalsum + "kcal";
         document.getElementById("todayCal").value = todaycal + "kcal";
 
-        const todaybfList = $("input[name=todayBf]").val();
-        const todayLunchList = $("input[name=todaylunch]").val();
-        const todaydinnerList = $("input[name=todaydinner]").val();
-        const todaysnackList = $("input[name=todaysnack]").val();
+        // hidden박스
+        document.getElementsByName("foodCalories")[0].value = foodtotal;
+        document.getElementsByName("exerCalories")[0].value = totalexer;
+
+        const todaybfList = $("input[name=todayBreakfast]").val();
+        const todayLunchList = $("input[name=todayLunch]").val();
+        const todaydinnerList = $("input[name=todayDinner]").val();
+        const todaysnackList = $("input[name=todaySnack]").val();
 
         // console.log("아침 :" + todaybfList);
         // console.log("점심 :" + todayLunchList);
@@ -543,8 +553,6 @@
             }
         }
         todayAllList = todayAllList.replace(/,$/, '');
-
-        console.log(todayAllList);
 
         if (todayAllList) {
             $.ajax({
@@ -568,13 +576,14 @@
     }
 
     function displayData(todayfoodInfo) {
-        console.log(todayfoodInfo);
-        // console.log(todayfoodInfo[0]);
-        // console.log(todayfoodInfo[1]);
-        // console.log(todayfoodInfo[2]);
         document.getElementById("carbo").value = todayfoodInfo[0] + "g";
         document.getElementById("protein").value = todayfoodInfo[1] + "g";
         document.getElementById("fat").value = todayfoodInfo[2] + "g";
+
+    //     hidden 박스 저장
+        document.getElementsByName("carbo")[0].value = todayfoodInfo[0];
+        document.getElementsByName("protein")[0].value = todayfoodInfo[1];
+        document.getElementsByName("fat")[0].value = todayfoodInfo[2];
     }
 
     function checkMychall() {
@@ -587,10 +596,8 @@
 
         const choicedate = document.getElementsByName("choicedate")[0].value;
         const userid = document.getElementById("userid").value;
-        // console.log(choicedate);
-        // console.log(writeDate);
-        // console.log(userid);
-        if (userid,choicedate) {
+
+        if (userid, choicedate) {
             $.ajax({
                 url: '/challenge/myChallInfo',
                 method: 'POST',
@@ -610,8 +617,9 @@
             })
         }
     }
-    function displayMyChallData(myChallDTOList){
-        // console.log(myChallDTOList)
+
+    function displayMyChallData(myChallDTOList) {
+
         var tableBody = $('#chall-table');
 
         if (myChallDTOList != null && myChallDTOList.length > 0) {
@@ -621,11 +629,11 @@
                 var myChallData1 = myChallDTOList[i];
                 var myChallData2 = i + 1 < myChallDTOList.length ? myChallDTOList[i + 1] : null;
 
-                row.append('<td><input type="checkbox" name="mychallBox" id="' + myChallData1.challNum + '" value="' + myChallData1.challNum + '"/>\n' +
+                row.append('<td><input type="checkbox" name="todayChallNum" id="' + myChallData1.challNum + '" value="' + myChallData1.challNum + '"/>\n' +
                     '        <label for="' + myChallData1.challNum + '">' + myChallData1.challName + '</label></td>');
 
                 if (myChallData2) {
-                    row.append('<td><input type="checkbox" name="mychallBox" id="' + myChallData2.challNum + '" value="' + myChallData2.challNum + '"/>\n' +
+                    row.append('<td><input type="checkbox" name="todayChallNum" id="' + myChallData2.challNum + '" value="' + myChallData2.challNum + '"/>\n' +
                         '        <label for="' + myChallData2.challNum + '">' + myChallData2.challName + '</label></td>');
                 } else {
                     row.append('<td></td>');
@@ -635,19 +643,21 @@
             }
         } else {
             var row = $('<tr class="mychall_area">');
-            row.append('<td colspan="2" style="text-align: center;">진행 중인 챌린지가 없습니다.</td>');
+            row.append('<td style="text-align: center;">진행 중인 챌린지가 없습니다.</td>');
+            row.append('<td><input type="hidden" name="todayChallNum" value="0"></td>');
             tableBody.append(row);
         }
 
     }
-    function check(){
+
+    function check() {
         const mychallBtn = document.getElementById("mychallBtn");
 
-        if(mychallBtn.classList.contains("viewchallBtn")){
+        if (mychallBtn.classList.contains("viewchallBtn")) {
+            alert("다이어리 작성 완료!")
             return true;
 
-        }
-        else {
+        } else {
             alert("진행 중인 챌린지 현황을 확인해 주세요!")
             mychallBtn.focus();
             return false;

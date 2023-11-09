@@ -13,13 +13,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 @Controller
 @RequestMapping("/usermypage/*")
 public class UserMyPageController {
 
-    @Autowired @Qualifier("UserMyPageServiceImpl")
+    @Autowired
+    @Qualifier("UserMyPageServiceImpl")
     private UserMyPageService service;
 
     @Autowired
@@ -27,9 +30,8 @@ public class UserMyPageController {
     private UserService serviceUser;
 
 
-
     @GetMapping("user_myinfo_modify")
-    public void user_myinfo_modify(HttpServletRequest req,Model model){
+    public void user_myinfo_modify(HttpServletRequest req, Model model) {
         HttpSession session = req.getSession();
         String loginUser = (String) session.getAttribute("loginUser");
         UserDTO user = service.getUserDetail(loginUser);
@@ -47,49 +49,46 @@ public class UserMyPageController {
     @PostMapping("user_myinfo_modify")
     public String user_myinfo_modify(UserDTO userdto, Model model) {
         System.out.println(userdto);
-        if (service.user_modify(userdto)){
+        if (service.user_modify(userdto)) {
             UserDTO user = service.getUserDetail(userdto.getUserId());
             model.addAttribute("user", user);
             return "redirect:/usermypage/user_myinfo";
-        }
-        else {
+        } else {
             return "redirect:/";
         }
     }
 
 
     @GetMapping("user_challenge")
-    public void replaceChallenge( String challCategory ,String challTerm ,Criteria cri, Model model, HttpServletRequest req) {
+    public void replaceChallenge(String challCategory, String challTerm, Criteria cri, Model model, HttpServletRequest req) {
         HttpSession session = req.getSession();
         String userId = (String) session.getAttribute("loginUser");
-        System.out.println("challCategory : "+challCategory);
-        System.out.println("challTerm : "+challTerm);
+        System.out.println("challCategory : " + challCategory);
+        System.out.println("challTerm : " + challTerm);
 
-        if(challCategory == null){
+        if (challCategory == null) {
             challCategory = "challAll";
         }
-        if(challTerm == null){
+        if (challTerm == null) {
             challTerm = "challengeAll";
         }
 
-        List<ChallNoticeBoardDTO> list = service.getMyChallenge(cri, userId,challCategory,challTerm);
-        System.out.println("list:"+list);
-        model.addAttribute("list",list);
-        model.addAttribute("pageMaker", new PageDTO(service.getChallengeTotal(cri,userId, challCategory,challTerm), cri));
+        List<ChallNoticeBoardDTO> list = service.getMyChallenge(cri, userId, challCategory, challTerm);
+        System.out.println("list:" + list);
+        model.addAttribute("list", list);
+        model.addAttribute("pageMaker", new PageDTO(service.getChallengeTotal(cri, userId, challCategory, challTerm), cri));
     }
 
 
-
-
     @GetMapping("user_subtrainer")
-    public void replaceSubTrainer(Criteria cri, Model model, HttpServletRequest req){
+    public void replaceSubTrainer(Criteria cri, Model model, HttpServletRequest req) {
         cri = new Criteria(cri.getPagenum(), 12);
         HttpSession session = req.getSession();
         String userId = (String) session.getAttribute("loginUser");
         List<TrainerDTO> list = service.getMyScribe(cri, userId);
-        System.out.println("list:"+list);
-        model.addAttribute("list",list);
-        model.addAttribute("pageMaker", new PageDTO(service.getScribeTotal(cri,userId), cri));
+        System.out.println("list:" + list);
+        model.addAttribute("list", list);
+        model.addAttribute("pageMaker", new PageDTO(service.getScribeTotal(cri, userId), cri));
     }
 
 
@@ -98,20 +97,20 @@ public class UserMyPageController {
     public void user_subbookmark(Criteria cri, Model model, HttpServletRequest req) throws Exception {
         HttpSession session = req.getSession();
         String userId = (String) session.getAttribute("loginUser");
-        model.addAttribute("pageMaker", new PageDTO(service.getBookmarkTotal(cri,userId), cri));
+        model.addAttribute("pageMaker", new PageDTO(service.getBookmarkTotal(cri, userId), cri));
     }
 
     @GetMapping("board_info")
     @ResponseBody
-    public String board_info(@RequestParam("pageNum") int pageNum, HttpServletRequest req) throws Exception{
+    public String board_info(@RequestParam("pageNum") int pageNum, HttpServletRequest req) throws Exception {
         HttpSession session = req.getSession();
         String userId = (String) session.getAttribute("loginUser");
 
         ObjectNode json = JsonNodeFactory.instance.objectNode();
         Criteria cri = new Criteria(pageNum, 10);
 
-        List<BoardDTO> list = service.getMyBookmark(cri,userId);
-        PageDTO pageDTO = new PageDTO(service.getBookmarkTotal(cri,userId), cri);
+        List<BoardDTO> list = service.getMyBookmark(cri, userId);
+        PageDTO pageDTO = new PageDTO(service.getBookmarkTotal(cri, userId), cri);
         json.putPOJO("list", list);
         json.putPOJO("pageDTO", pageDTO);
 
@@ -125,12 +124,11 @@ public class UserMyPageController {
         String userId = (String) session.getAttribute("loginUser");
 
 
-
         ObjectNode json = JsonNodeFactory.instance.objectNode();
         Criteria cri = new Criteria(pageNum, 10);
 
-        List<ProductBoardDTO> list = service.getMyBookmarkProduct(cri,userId);
-        PageDTO pageDTO = new PageDTO(service.getBookmarkProductTotal(cri,userId), cri);
+        List<ProductBoardDTO> list = service.getMyBookmarkProduct(cri, userId);
+        PageDTO pageDTO = new PageDTO(service.getBookmarkProductTotal(cri, userId), cri);
         json.putPOJO("list", list);
         json.putPOJO("pageDTO", pageDTO);
 
@@ -138,38 +136,38 @@ public class UserMyPageController {
     }
 
     @GetMapping("user_boardlist")
-    public void user_boardlist(Criteria cri, Model model,HttpServletRequest req) throws Exception {
+    public void user_boardlist(Criteria cri, Model model, HttpServletRequest req) throws Exception {
         HttpSession session = req.getSession();
         String userId = (String) session.getAttribute("loginUser");
-        List<BoardDTO> list = service.getBoardMyList(cri,userId);
-      /* List<BoardDTO> list = serviceBoard.getBoardList(cri);*/
-        System.out.println("cri : "+cri);
-        System.out.println("PageDTO : "+new PageDTO(service.getBoardTotal(cri, userId), cri));
-        model.addAttribute("list",list);
-        model.addAttribute("pageMaker",new PageDTO(service.getBoardTotal(cri,userId), cri));
-        model.addAttribute("newly_board",service.getBoardNewlyList(list));
-        model.addAttribute("reply_cnt_list",service.getBoardReplyCntList(list));
-        model.addAttribute("recent_reply",service.getBoardRecentReplyList(list));
+        List<BoardDTO> list = service.getBoardMyList(cri, userId);
+        /* List<BoardDTO> list = serviceBoard.getBoardList(cri);*/
+        System.out.println("cri : " + cri);
+        System.out.println("PageDTO : " + new PageDTO(service.getBoardTotal(cri, userId), cri));
+        model.addAttribute("list", list);
+        model.addAttribute("pageMaker", new PageDTO(service.getBoardTotal(cri, userId), cri));
+        model.addAttribute("newly_board", service.getBoardNewlyList(list));
+        model.addAttribute("reply_cnt_list", service.getBoardReplyCntList(list));
+        model.addAttribute("recent_reply", service.getBoardRecentReplyList(list));
     }
 
     @GetMapping("user_messagelist")
-    public void user_messagelist(String message ,Criteria cri,Model model,HttpServletRequest req) throws Exception {
+    public void user_messagelist(String message, Criteria cri, Model model, HttpServletRequest req) throws Exception {
         HttpSession session = req.getSession();
         String userId = (String) session.getAttribute("loginUser");
-        if(message == null){
+        if (message == null) {
             message = "messageAll";
         }
-        List<MessageDTO> list = service.getMessageMyList(cri,userId,message);
+        List<MessageDTO> list = service.getMessageMyList(cri, userId, message);
 
         System.out.println(cri);
-        System.out.println("list:"+list);
-        model.addAttribute("list",list);
-        model.addAttribute("pageMaker",new PageDTO(service.getMessageTotal(cri,userId,message), cri));
-        model.addAttribute("newly_Message",service.getMessageNewlyList(list));
+        System.out.println("list:" + list);
+        model.addAttribute("list", list);
+        model.addAttribute("pageMaker", new PageDTO(service.getMessageTotal(cri, userId, message), cri));
+        model.addAttribute("newly_Message", service.getMessageNewlyList(list));
     }
 
     @GetMapping("user_applytrainer")
-    public void user_applytrainer(HttpServletRequest req,Model model) {
+    public void user_applytrainer(HttpServletRequest req, Model model) {
         HttpSession session = req.getSession();
         String loginUser = (String) session.getAttribute("loginUser");
         UserDTO user = service.getUserDetail(loginUser);
@@ -177,8 +175,8 @@ public class UserMyPageController {
     }
 
     @PostMapping("applytrainer")
-    public String applytrainer(TrainerSignUpDTO user, MultipartFile[] files) throws Exception{
-        if(service.insertApplytrainer(user,files)){
+    public String applytrainer(TrainerSignUpDTO user, MultipartFile[] files) throws Exception {
+        if (service.insertApplytrainer(user, files)) {
             return "redirect:/usermypage/user_applytrainer";
         }
         return "redirect:/";
@@ -187,60 +185,70 @@ public class UserMyPageController {
     @GetMapping("user_diary")
     public void replaceDiary(String loginUser, Model model) {
         List<DiaryDTO> diaryList = service.getDiaryList(loginUser);
-        model.addAttribute("diaryList",diaryList);
+        model.addAttribute("diaryList", diaryList);
     }
 
     @GetMapping("checklist")
-    public String checklist(String choicedate,HttpServletRequest req, Model model){
+    public String checklist(String choicedate, HttpServletRequest req, Model model) {
 
         HttpSession session = req.getSession();
         String loginUser = (String) session.getAttribute("loginUser");
 
         //작성으로 이동
-        if(service.checkList(choicedate,loginUser) == null){
-            System.out.println(choicedate);
+        if (service.checkList(choicedate, loginUser) == null) {
+//            System.out.println(choicedate);
 
             UserDTO user = serviceUser.getDetail(loginUser);
-            model.addAttribute("regdate",choicedate);
-            model.addAttribute("user",user);
+            model.addAttribute("regdate", choicedate);
+            model.addAttribute("user", user);
             return "/usermypage/diaryWrite";
         }
         //view로 이동
         else {
             UserDTO user = serviceUser.getDetail(loginUser);
-            model.addAttribute("user",user);
+            model.addAttribute("user", user);
             return "/usermypage/diaryView";
         }
     }
 
     @GetMapping("diaryWrite")
-    public void replacediaryWrite(){
+    public void replacediaryWrite() {
 
     }
-    @GetMapping ("diaryView")
-    public void replacediaryView() {}
+
+    @GetMapping("diaryView")
+    public void replacediaryView() {
+    }
 
     @PostMapping("diaryWrite")
-    public String diaryWrite(String choicedate,DiaryDTO diary){
+    public String diaryWrite(String choicedate, DiaryDTO diary) {
+        int result = service.registDiary(diary);
+        if(result == 1){
+            if(diary.getTodayChallNum() == null){
+                return "redirect:/usermypage/getdiary?choicedate" + choicedate;
+            }
+            else{
+                String[] sccChallNumArr = (diary.getTodayChallNum()).split(",");
+                int sccChallNum = 0;
+                HashMap<String, String> diaryInfo = new HashMap<String, String>();
+                diaryInfo.put("diarydate", diary.getRegdate());
+                diaryInfo.put("userid", diary.getUserId());
 
-        if(service.registDiary(diary)){
-            return "redirect:/usermypage/getdiary?choicedate"+choicedate;
+                for (int i = 0; i < sccChallNumArr.length; i++) {
+                    sccChallNum = Integer.parseInt(sccChallNumArr[i]);
+                    if (service.addStemp(sccChallNum, diaryInfo)) {
+                    } else {
+                        System.out.println("스탬프 적립 실패");
+                    }
+                }
+                //성공시
+            }
+            return "redirect:/usermypage/getdiary?choicedate" + choicedate;
         }
-
         //실패시 다시 캘린더로
         //return "redirect:/usermypage/user_diary?choicedate"+choicedate;
         return "redirect:/usermypage/user_diary";
-
     }
 }
-//    @PostMapping("info_write")
-//    public String write(BoardDTO board, MultipartFile[] files, Criteria cri) throws Exception{
-//        Long boardnum = 0l;	//long 타입의 0(0+l)
-//        if(service.regist(board, files)) {
-//            boardnum = service.getLastNum(board.getUserId());
-//            return "redirect:/info/info_get"+cri.getListLink()+"&boardnum="+boardnum;
-//        } //성공시 게시글 보는 페이지로 이동(info_get.html)
-//        else {
-//            return "redirect:/info/info_list"+cri.getListLink();
-//        } //실패시 게시글 목록 페이지로 이동
-//    }
+
+

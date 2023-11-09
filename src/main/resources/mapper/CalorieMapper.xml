@@ -14,11 +14,11 @@
     </select>
 
     <select id="FindFoodNameModal">
-        SELECT * FROM food WHERE food_name LIKE CONCAT('%', #{keyword}, '%') ORDER BY view_cnt DESC LIMIT 3;
+        SELECT * FROM food WHERE food_name LIKE CONCAT('%', #{keyword}, '%') ORDER BY view_cnt DESC, food_num ASC LIMIT 20;
     </select>
 
     <select id="FindExecNameModal">
-        SELECT * FROM exercise WHERE exec_name LIKE CONCAT('%', #{keyword}, '%') LIMIT 3;
+        SELECT * FROM exercise WHERE exec_name LIKE CONCAT('%', #{keyword}, '%') ORDER BY view_cnt DESC, exec_num ASC LIMIT 20;
     </select>
 
     <select id="findByFoodNum">
