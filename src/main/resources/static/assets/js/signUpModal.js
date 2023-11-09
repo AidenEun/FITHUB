@@ -49,23 +49,41 @@ function sendSignUpNumToModal(signupNum) {
 }
 
 function signUpModalDom(data) {
-    alert("dom");
-//    var data = JSON.parse(data);
-//    var tableBody = $('#report-table');
-//    tableBody.empty();
-//
-//    var row = $('<tr style="text-align: center;">');
-//    row.append('<td class="long_text"><a href="#">' + data.reportDTO.reportNum + '</a></td>');
-//    row.append('<td class="long_text"><a href="#" class="open">' + data.reportDTO.userId + '</a></td>');
-//    row.append('<td class="long_text"><a href="#">' + data.reportDTO.reportedUser + '</a></td>');
-//    row.append('<td class="long_text"><a href="#">' + data.reportDTO.boardCategory + '</a></td>');
-//    row.append('<td class="long_text"><a href="#">' + data.reportDTO.reportBoardnum + '</a></td>');
-//    row.append('<td class="long_text"><a href="#">' + data.reportDTO.reportDate + '</a></td>');
-//    tableBody.append(row);
-//
-//    var newRow = $('<tr style="text-align: center;">');
-//    newRow.append('<td class="long_text" colspan="6"><div class="button fit" style="cursor: auto !important;">신고 내용 : ' + data.reportDTO.reportContent + '</div></td>');
-//    tableBody.append(newRow);
+    var data = JSON.parse(data);
+    var tableBody = $('#signUp-table');
+    tableBody.empty();
+
+    var row = $('<tr style="text-align: center;">');
+    row.append('<td class="long_text"><a href="#">' + data.signUpDTO.signupNum + '</a></td>');
+    row.append('<td class="long_text"><a href="#" class="open">' + data.signUpDTO.userId + '</a></td>');
+    row.append('<td class="long_text"><a href="#">' + data.signUpDTO.trainerPart + '</a></td>');
+    row.append('<td class="long_text"><a href="#">' + data.signUpDTO.trainerCareer + '</a></td>');
+    row.append('<td class="long_text"><a href="#">' + data.signUpDTO.trainerContent + '</a></td>');
+    row.append('<td class="long_text"><a href="#">' + data.userDTO.userAge + '</a></td>');
+    row.append('<td class="long_text"><a href="#">' + data.userDTO.userGender + '</a></td>');
+    row.append('<td class="long_text"><a href="#">' + data.userDTO.userReportedcnt + '</a></td>');
+    tableBody.append(row);
+
+    var newRow = $('<tr style="text-align: center;">');
+    var imageContainer = $('<td colspan="8" class="long_text imageContainer">');
+    if (data.profileDTO != null && data.profileDTO.length > 0) {
+        data.profileDTO.forEach(function (profileData, i) {
+            if (i < 3 && profileData.orgName) {
+                var ext = profileData.orgName.split(".");
+                var imageSrc = '/trainermypage/thumbnail?sysName=' + profileData.sysName;
+                if (ext.indexOf("jpg") !== -1 || ext.indexOf("jpeg") !== -1 || ext.indexOf("png") !== -1 || ext.indexOf("gif") !== -1 || ext.indexOf("webp") !== -1) {
+                    imageContainer.append('<div><img class="signUpImage" src="' + imageSrc + '"></div>');
+                }
+                newRow.append(imageContainer);
+            }
+        });
+    }
+    else {
+        newRow.append('<td class="long_text" colspan="8"><div class="button fit" style="cursor: auto !important;">등록된 경력 사진이 없습니다!!</div></td>')
+    }
+    tableBody.append(newRow);
+
+    $('.open').on('click', profileModalOpen);
 }
 
 document.querySelector('.confirmButton').addEventListener('click', function() {
