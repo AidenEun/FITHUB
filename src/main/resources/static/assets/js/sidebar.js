@@ -30,18 +30,21 @@ challTabs.forEach((challTab, index) => {
 });
 
 const progressBar = document.querySelector('.progress-bar');
-const numbers = progressBar.querySelectorAll('span');
-const numCount = numbers.length;
+const attBtn = document.querySelector('.att-btn');
+let filledGauges = 0;
 
-// 프로그래스 바의 전체 너비
-const progressBarWidth = progressBar.offsetWidth;
+attBtn.addEventListener('click', () => {
+    if (filledGauges < 7) {
+        filledGauges++;
+        progressBar.value = filledGauges;
 
-// 숫자 사이의 간격을 계산
-const spacing = (progressBarWidth - (numCount * 20)) / (numCount - 1);
-
-// 각 숫자에 간격을 적용
-numbers.forEach((number, index) => {
-    number.style.marginRight = `${index === numCount - 1 ? 0 : spacing}px`;
+        if (filledGauges === 7) {
+            setTimeout(() => {
+                progressBar.value = 0;
+                filledGauges = 0;
+            }, 1000); // 1000ms(1초) 후 초기화
+        }
+    }
 });
 
 document.addEventListener("DOMContentLoaded", function() {
