@@ -62,6 +62,17 @@ public class MatchingController {
     public String get(@RequestParam Long boardNum, HttpServletRequest req, HttpServletResponse resp, Model model) {
         List<TrainerMatchingBoardDTO> list = MatchingService.boardView(boardNum);
 
+        for (TrainerMatchingBoardDTO board : list) {
+
+            ProfileDTO profileInfo = MatchingService.getProfileInfo(board.getTrainerId());
+            ProfileDTO careerInfo = MatchingService.getCareerInfo(board.getTrainerId());
+            TrainerDTO trainerInfo = MatchingService.getTrainerInfo(board.getTrainerId());
+
+            model.addAttribute("profileInfo", profileInfo);
+            model.addAttribute("careerInfo",careerInfo);
+            model.addAttribute("trainerInfo",trainerInfo);
+        }
+        model.addAttribute("list", list);
 
 
         if (list == null) {
