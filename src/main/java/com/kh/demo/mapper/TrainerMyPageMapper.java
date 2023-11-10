@@ -65,6 +65,7 @@ public interface TrainerMyPageMapper {
 
     Long getScribeTotal(Criteria cri, String trainerId);
 
+    Long getTrainerScribeTotal(String trainerId);
 
     //내챌린지
     List<ChallNoticeBoardDTO> getMyChallengeAllAll(Criteria cri, String trainerId);
@@ -76,4 +77,7 @@ public interface TrainerMyPageMapper {
     Long getChallengeAllTermTotal(Criteria cri, String trainerId, String challTerm);
     Long getChallengeCategoryAllTotal(Criteria cri, String trainerId, String challCategory);
     Long getChallengeCategoryTermTotal(Criteria cri, String trainerId, String challCategory, String challTerm);
+
+    //내 프로필
+    int updateTrainer(TrainerDTO trainer);
 }

@@ -9,8 +9,67 @@
         where date_add(date(my_challenge.sub_regdate), interval chall_notice_board.chall_term day)
             >
             date (now())
-          and my_challenge.user_id=#{userid};
+          and my_challenge.user_id=#{userId};
 
     </select>
+
+    <!--재우-->
+    <sql id="cri">
+        <if test="keyword != '' and type != ''">
+            <trim prefixOverrides="or" prefix="(" suffix=") and">
+                <foreach collection="typeArr" item="type">
+                    or
+                    <choose>
+                        <when test="type == 'T'.toString()">
+                            (board_title like('%${keyword}%'))
+                        </when>
+                        <when test="type == 'C'.toString()">
+                            (board_content like('%${keyword}%'))
+                        </when>
+                        <when test="type == 'W'.toString()">
+                            (user_id like('%${keyword}%'))
+                        </when>
+                    </choose>
+                </foreach>
+            </trim>
+        </if>
+    </sql>
+
+    <insert id="insertBoard">
+        insert into chall_cert_board (board_title,board_content,chall_num,start_date,finish_date,user_id)
+        values(#{boardTitle},#{boardContent},#{challNum},#{startDate},#{finishDate},#{userId})
+    </insert>
+
+    <update id="updateReadCount">
+        update chall_cert_board set view_cnt = view_cnt+1 where board_num = #{boardNum}
+    </update>
+    <update id="updateBoard">
+        update chall_cert_board set board_title=#{boardTitle}, board_content=#{boardContent},update_date=now()
+        where board_num=#{boardNum}
+    </update>
+
+    <delete id="deleteBoard">
+        delete from chall_cert_board where board_num=#{boardNum}
+    </delete>
+
+    <select id="getList">
+        select * from chall_cert_board where
+        <include refid="cri"></include>
+        <![CDATA[
+			0 < board_num order by board_num desc limit #{startrow},#{amount}
+		]]>
+    </select>
+    <select id="getTotal">
+        select count(*) from chall_cert_board where
+        <include refid="cri"></include> board_num > 0
+    </select>
+    <select id="getLastNum">
+        select max(board_num) from chall_cert_board where user_id=#{userId}
+    </select>
+    <select id="findByNum">
+        select * from chall_cert_board where board_num=#{boardNum}
+    </select>
+
+
 </mapper>
 

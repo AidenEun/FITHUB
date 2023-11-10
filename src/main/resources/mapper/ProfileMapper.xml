@@ -5,9 +5,14 @@
 		insert into profile values(#{userId},#{sysName},#{orgName},"C")
 	</insert>
 
-	<select id="getFiles">
+	<select id="getProFiles">
 		select * from profile where user_id=#{trainerId} and profile_category='P'
 	</select>
+
+	<select id="getFiles">
+		select * from profile where user_id=#{trainerId} and profile_category='C'
+	</select>
+
 
 	<delete id="deleteBySystemname">
 		delete from profile where sys_name=#{sysName}

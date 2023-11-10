@@ -13,18 +13,23 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @Qualifier("TrainerMyPageServiceImpl")
-public class TrainerMyPageServiceImpl implements TrainerMyPageService{
+public class TrainerMyPageServiceImpl implements TrainerMyPageService {
 
     @Autowired
     private TrainerMyPageMapper tmpmapper;
@@ -41,8 +46,12 @@ public class TrainerMyPageServiceImpl implements TrainerMyPageService{
     @Autowired
     private ProfileMapper pfmapper;
     @Value("${profile.dir}")
-    private String saveFolder;
+    private String saveProfileFolder;
 
+    @Autowired
+    private FileMapper fmapper;
+    @Value("${file.dir}")
+    private String saveFolder;
 
     @Override
     public boolean registDiary(DiaryDTO diary, MultipartFile[] files) throws Exception {
@@ -70,9 +79,9 @@ public class TrainerMyPageServiceImpl implements TrainerMyPageService{
     }
 
     @Override
-    public DiaryDTO checkList(String choicedate,String loginUser) {
+    public DiaryDTO checkList(String choicedate, String loginUser) {
 //        System.out.println("Service choicedate : "+choicedate);
-        return tmpmapper.checkList(choicedate,loginUser);
+        return tmpmapper.checkList(choicedate, loginUser);
 
     }
 
@@ -84,23 +93,23 @@ public class TrainerMyPageServiceImpl implements TrainerMyPageService{
     //메세지
     @Override
     public Long getMessageTotal(Criteria cri, String trainer, String message) {
-        if(message.equals("messageAll")){
+        if (message.equals("messageAll")) {
             return tmpmapper.getMessageTotal(cri, trainer);
         } else if (message.equals("messageSend")) {
-            return tmpmapper.getMessageTotalSend(cri,trainer);
+            return tmpmapper.getMessageTotalSend(cri, trainer);
         } else {
-            return tmpmapper.getMessageTotalReceive(cri,trainer);
+            return tmpmapper.getMessageTotalReceive(cri, trainer);
         }
     }
 
     @Override
     public List<MessageDTO> getMessageMyList(Criteria cri, String trainerId, String message) {
-        if(message.equals("messageAll")){
-            return tmpmapper.getMyMessageAll(cri,trainerId,message);
+        if (message.equals("messageAll")) {
+            return tmpmapper.getMyMessageAll(cri, trainerId, message);
         } else if (message.equals("messageSend")) {
-            return tmpmapper.getMyMessageSend(cri,trainerId,message);
+            return tmpmapper.getMyMessageSend(cri, trainerId, message);
         } else {
-            return tmpmapper.getMyMessageReceive(cri,trainerId,message);
+            return tmpmapper.getMyMessageReceive(cri, trainerId, message);
         }
     }
 
@@ -115,20 +124,16 @@ public class TrainerMyPageServiceImpl implements TrainerMyPageService{
         ArrayList<String> newly_Message = new ArrayList<>();
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date now = new Date();
-        for(MessageDTO Message : list) {
+        for (MessageDTO Message : list) {
             Date regdate = df.parse(Message.getSendDate());
-            if(now.getTime() - regdate.getTime() < 1000*60*60*2) {
+            if (now.getTime() - regdate.getTime() < 1000 * 60 * 60 * 2) {
                 newly_Message.add("O");
-            }
-            else {
+            } else {
                 newly_Message.add("X");
             }
         }
         return newly_Message;
     }
-
-
-
 
 
     //보드
@@ -153,12 +158,11 @@ public class TrainerMyPageServiceImpl implements TrainerMyPageService{
         ArrayList<String> newly_board = new ArrayList<>();
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date now = new Date();
-        for(BoardDTO board : list) {
+        for (BoardDTO board : list) {
             Date regdate = df.parse(board.getRegdate());
-            if(now.getTime() - regdate.getTime() < 1000*60*60*2) {
+            if (now.getTime() - regdate.getTime() < 1000 * 60 * 60 * 2) {
                 newly_board.add("O");
-            }
-            else {
+            } else {
                 newly_board.add("X");
             }
         }
@@ -168,7 +172,7 @@ public class TrainerMyPageServiceImpl implements TrainerMyPageService{
     @Override
     public ArrayList<Integer> getBoardReplyCntList(List<BoardDTO> list) {
         ArrayList<Integer> reply_cnt_list = new ArrayList<>();
-        for(BoardDTO board : list) {
+        for (BoardDTO board : list) {
             reply_cnt_list.add(rmapper.getTotal(board.getBoardNum()));
         }
         return reply_cnt_list;
@@ -177,11 +181,10 @@ public class TrainerMyPageServiceImpl implements TrainerMyPageService{
     @Override
     public ArrayList<String> getBoardRecentReplyList(List<BoardDTO> list) {
         ArrayList<String> recent_reply = new ArrayList<>();
-        for(BoardDTO board : list) {
-            if(rmapper.getRecentReply(board.getBoardNum()) >= 5) {
+        for (BoardDTO board : list) {
+            if (rmapper.getRecentReply(board.getBoardNum()) >= 5) {
                 recent_reply.add("O");
-            }
-            else {
+            } else {
                 recent_reply.add("X");
             }
         }
@@ -190,15 +193,16 @@ public class TrainerMyPageServiceImpl implements TrainerMyPageService{
 
     @Override
     public List<BoardDTO> getBoardMyList(Criteria cri, String trainerId) {
-        return tmpmapper.getMyBoard(cri,trainerId);
+        return tmpmapper.getMyBoard(cri, trainerId);
     }
 
 
     //북마크
     @Override
     public Long getBookmarkTotal(Criteria cri, String userId) {
-        return tmpmapper.getBookmarkTotal(cri,userId);
+        return tmpmapper.getBookmarkTotal(cri, userId);
     }
+
     @Override
     public Long getBookmarkProductTotal(Criteria cri, String userId) {
         return tmpmapper.getBookmarkProductTotal(cri, userId);
@@ -214,12 +218,11 @@ public class TrainerMyPageServiceImpl implements TrainerMyPageService{
         ArrayList<String> newly_Message = new ArrayList<>();
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date now = new Date();
-        for(BookMarkDTO bookmark : list) {
+        for (BookMarkDTO bookmark : list) {
             Date regdate = df.parse(bookmark.getRegdate());
-            if(now.getTime() - regdate.getTime() < 1000*60*60*2) {
+            if (now.getTime() - regdate.getTime() < 1000 * 60 * 60 * 2) {
                 newly_Message.add("O");
-            }
-            else {
+            } else {
                 newly_Message.add("X");
             }
         }
@@ -258,28 +261,29 @@ public class TrainerMyPageServiceImpl implements TrainerMyPageService{
     public List<UserDTO> getMyScribe(Criteria cri, String userId) {
         return tmpmapper.getMyScribe(cri, userId);
     }
+
     @Override
     public Long getScribeTotal(Criteria cri, String userId) {
-        return tmpmapper.getScribeTotal(cri,userId);
+        return tmpmapper.getScribeTotal(cri, userId);
     }
 
     //내 챌린지
     @Override
     public Long getChallengeTotal(Criteria cri, String userId, String challCategory, String challTerm) {
-        if(challCategory.equals("challAll")){
-            if (challTerm.equals("challengeAll")){
-                return tmpmapper.getChallengeAllAllTotal(cri,userId);
-
-            }else {
-                return tmpmapper.getChallengeAllTermTotal(cri,userId,challTerm);
-
-            }
-        } else{
-            if (challTerm.equals("challengeAll")){
-                return tmpmapper.getChallengeCategoryAllTotal(cri,userId,challCategory);
+        if (challCategory.equals("challAll")) {
+            if (challTerm.equals("challengeAll")) {
+                return tmpmapper.getChallengeAllAllTotal(cri, userId);
 
             } else {
-                return tmpmapper.getChallengeCategoryTermTotal(cri,userId,challCategory,challTerm);
+                return tmpmapper.getChallengeAllTermTotal(cri, userId, challTerm);
+
+            }
+        } else {
+            if (challTerm.equals("challengeAll")) {
+                return tmpmapper.getChallengeCategoryAllTotal(cri, userId, challCategory);
+
+            } else {
+                return tmpmapper.getChallengeCategoryTermTotal(cri, userId, challCategory, challTerm);
 
             }
         }
@@ -287,34 +291,39 @@ public class TrainerMyPageServiceImpl implements TrainerMyPageService{
 
     @Override
     public List<ChallNoticeBoardDTO> getMyChallenge(Criteria cri, String userId, String challCategory, String challTerm) {
-        if(challCategory.equals("challAll")){
-            if (challTerm.equals("challengeAll")){
+        if (challCategory.equals("challAll")) {
+            if (challTerm.equals("challengeAll")) {
                 return tmpmapper.getMyChallengeAllAll(cri, userId);
 
-            }else {
+            } else {
                 return tmpmapper.getMyChallengeAllTerm(cri, userId, challTerm);
 
             }
-        } else{
-            if (challTerm.equals("challengeAll")){
+        } else {
+            if (challTerm.equals("challengeAll")) {
                 return tmpmapper.getMyChallengeCategoryAll(cri, userId, challCategory);
 
             } else {
-                return tmpmapper.getMyChallengeCategoryTerm(cri, userId, challCategory,challTerm);
+                return tmpmapper.getMyChallengeCategoryTerm(cri, userId, challCategory, challTerm);
 
             }
         }
     }
+
     //내 프로필
     @Override
-    public List<FileDTO> getFileList(String trainerId) {
+    public List<ProfileDTO> getProFileList(String trainerId) {
+        return pfmapper.getProFiles(trainerId);
+    }
+    @Override
+    public List<ProfileDTO> getFileList(String trainerId) {
         return pfmapper.getFiles(trainerId);
     }
 
     @Override
-    public ResponseEntity<Resource> getThumbnailResource(String sysName) throws Exception{
+    public ResponseEntity<Resource> getThumbnailResource(String sysName) throws Exception {
         //경로에 관련된 객체(자원으로 가지고 와야 하는 파일에 대한 경로)
-        Path path = Paths.get(saveFolder+sysName);
+        Path path = Paths.get(saveProfileFolder + sysName);
         //경로에 있는 파일의 MIME타입을 조사해서 그대로 담기
         String contentType = Files.probeContentType(path);
         //응답 헤더 생성
@@ -323,7 +332,83 @@ public class TrainerMyPageServiceImpl implements TrainerMyPageService{
 
         //해당 경로(path)에 있는 파일에서부터 뻗어나오는 InputStream(Files.newInputStream)을 통해 자원화(InputStreamResource)
         Resource resource = new InputStreamResource(Files.newInputStream(path));
-        return new ResponseEntity<>(resource,headers, HttpStatus.OK);
+        return new ResponseEntity<>(resource, headers, HttpStatus.OK);
     }
 
+    @Override
+    public boolean trainer_modify(TrainerDTO trainer, MultipartFile[] files, String updateCnt) throws IOException {
+        int row = tmpmapper.updateTrainer(trainer);
+        if (row != 1) {
+            return false;
+        }
+        List<ProfileDTO> org_file_list = pfmapper.getFiles(trainer.getTrainerId());
+        if(org_file_list.size()==0 && (files == null || files.length == 0)) {
+            return true;
+        }
+        else {
+            if(files != null) {
+                boolean flag = false;
+                //후에 비즈니스 로직 실패 시 원래대로 복구하기 위해 업로드 성공했던 파일들도 삭제해주어야 한다.
+                //업로드 성공한 파일들의 이름을 해당 리스트에 추가하면서 로직을 진행한다.
+                ArrayList<String> sysnames = new ArrayList<>();
+                System.out.println("service : "+files.length);
+                for(int i=0;i<files.length-1;i++) {
+                    MultipartFile file = files[i];
+                    String orgname = file.getOriginalFilename();
+                    //수정의 경우 중간에 있는 파일은 수정이 되지 않은 경우도 있다.
+                    //그런 경우의 file의 orgname은 null 이거나 "" 이다.
+                    //따라서 업로드가 될 필요가 없으므로 continue로 다음 파일로 넘어간다.
+                    if(orgname == null || orgname.equals("")) {
+                        continue;
+                    }
+                    int lastIdx = orgname.lastIndexOf(".");
+                    String extension = orgname.substring(lastIdx);
+                    LocalDateTime now = LocalDateTime.now();
+                    String time = now.format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"));
+                    String systemname = time+ UUID.randomUUID().toString()+extension;
+                    sysnames.add(systemname);
+
+                    String path = saveProfileFolder+systemname;
+
+                    ProfileDTO profdto = new ProfileDTO();
+                    profdto.setUserId(trainer.getTrainerId());
+                    profdto.setSysName(systemname);
+                    profdto.setOrgName(orgname);
+
+                    //실제 파일 업로드
+                    file.transferTo(new File(path));
+
+                    flag = pfmapper.insertFile(profdto) == 1;
+                    if(!flag) {
+                        break;
+                    }
+                }
+                //강제탈출(실패)
+                if(!flag) {
+                    //아까 추가했던 systemname들(업로드 성공한 파일의 systemname)을 꺼내오면서
+                    //실제 파일이 존재한다면 삭제 진행
+                    for(String systemname : sysnames) {
+                        File file = new File(saveProfileFolder,systemname);
+                        if(file.exists()) {
+                            file.delete();
+                        }
+                        pfmapper.deleteBySystemname(systemname);
+                    }
+                }
+            }
+            //지워져야 할 파일(기존에 있었던 파일들 중 수정된 파일)들의 이름 추출
+            String[] deleteNames = updateCnt.split("\\\\");
+            for(int i=1;i<deleteNames.length;i++) {
+                File file = new File(saveProfileFolder,deleteNames[i]);
+                //해당 파일 삭제
+                if(file.exists()) {
+                    file.delete();
+                    //DB상에서도 삭제
+                    pfmapper.deleteBySystemname(deleteNames[i]);
+                }
+            }
+            return true;
+        }
+    }
 }
+

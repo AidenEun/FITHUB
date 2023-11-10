@@ -138,9 +138,11 @@
 	</select>
 
 	<select id="getScribeTotal">
-		select count(*) from subscribe where user_id=#{trainerId} and
-		sub_num > 0
+		select count(*) from subscribe where trainer_id=#{trainerId}
 	</select>
+
+
+
 
 	<!--내 챌린지-->
 	<select id="getChallengeAllAllTotal">
@@ -203,8 +205,12 @@
 		where my_challenge.user_id = #{trainerId} and chall_notice_board.chall_term = #{challTerm} and chall_notice_board.chall_category = #{challCategory}
 		order by my_challenge.sub_regdate desc limit #{cri.startrow},#{cri.amount}
 	</select>
-
-
+<!--내프로필-->
+	<update id="updateTrainer">
+		update trainer set
+		trainer_nickname=#{trainerNickname}, trainer_part=#{trainerPart},trainer_career=#{trainerCareer}, trainer_intro=#{trainerIntro}
+		where trainer_id=#{trainerId}
+	</update>
 </mapper>
 
 

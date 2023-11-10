@@ -27,17 +27,16 @@ public class UserMyPageController {
     private UserService serviceUser;
 
 
-
-    @GetMapping("user_myinfo_modify")
-    public void user_myinfo_modify(HttpServletRequest req,Model model){
+    @GetMapping("user_myinfo")
+    public void user_myinfo(HttpServletRequest req, Model model) {
         HttpSession session = req.getSession();
         String loginUser = (String) session.getAttribute("loginUser");
         UserDTO user = service.getUserDetail(loginUser);
         model.addAttribute("user", user);
     }
 
-    @GetMapping("user_myinfo")
-    public void user_myinfo(HttpServletRequest req, Model model) {
+    @GetMapping("user_myinfo_modify")
+    public void user_myinfo_modify(HttpServletRequest req,Model model){
         HttpSession session = req.getSession();
         String loginUser = (String) session.getAttribute("loginUser");
         UserDTO user = service.getUserDetail(loginUser);

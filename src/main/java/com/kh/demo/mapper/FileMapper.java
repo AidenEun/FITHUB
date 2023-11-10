@@ -10,7 +10,7 @@ public interface FileMapper {
 	int insertFile(FileDTO file);
 	
 	List<FileDTO> getFiles(Long boardNum);
-	
+
 	int deleteBySystemname(String sysName);
 	
 	int deleteByBoardnum(Long boardNum);
