@@ -1,5 +1,8 @@
 package com.kh.demo.controller;
 
+import com.fasterxml.jackson.databind.DatabindContext;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.kh.demo.domain.dto.*;
 import com.kh.demo.service.TrainerMatchingService;
 import jakarta.servlet.http.Cookie;
@@ -108,6 +111,74 @@ public class MatchingController {
         return "matching/matching_view";
     }
 
+    @PostMapping("profileModal")
+    @ResponseBody
+    public String reportModal(@RequestParam("trainerNickname") String trainerNickname) throws Exception {
+        ObjectNode json = JsonNodeFactory.instance.objectNode();
+        Object userInfo = MatchingService.getUserByNickname(trainerNickname);
+
+        if (userInfo instanceof UserDTO) {
+            UserDTO userDTO = (UserDTO) userInfo;
+            json.putPOJO("userDTO", userDTO);
+        }
+        else if (userInfo instanceof TrainerDTO) {
+            TrainerDTO trainerDTO = (TrainerDTO) userInfo;
+            json.putPOJO("trainerDTO", trainerDTO);
+        }
+        else {
+            json.put("noData", "noData");
+        }
+        return json.toString();
+    }
+
+    @PostMapping("u_t_matchModal")
+    @ResponseBody
+    public String matchingModal(@RequestParam("trainerId") String trainerId, HttpServletRequest req) throws Exception {
+        ObjectNode json = JsonNodeFactory.instance.objectNode();
+        HttpSession session = req.getSession();
+        String userId = (String) session.getAttribute("loginUser");
+        // Retrieve board information by trainerId
+        TrainerMatchingBoardDTO boardInfo = MatchingService.getBoardBytrainerId(trainerId);
+        System.out.println(boardInfo);
+        UTMatchingDTO utInfo = MatchingService.getutBytrainerId(trainerId);
+        System.out.println(utInfo);
+        if (boardInfo instanceof TrainerMatchingBoardDTO) {
+            TrainerMatchingBoardDTO trainerMatchingBoardDTO = (TrainerMatchingBoardDTO) boardInfo;
+            json.putPOJO("trainerMatchingBoardDTO", trainerMatchingBoardDTO);
+            System.out.println(trainerMatchingBoardDTO);
+            // Retrieve userId from the session
+            System.out.println(userId);
+            // Add userId to the JSON response
+            json.putPOJO("userId", userId);
+
+            if (utInfo != null) {
+                UTMatchingDTO utMatchingDTO = (UTMatchingDTO) utInfo;
+                json.putPOJO("utMatchingDTO", utMatchingDTO);
+                System.out.println(utInfo);
+            }
+        } else {
+            json.put("noData", "noData");
+        }
+
+        // Add trainerId to the JSON response
+        json.put("trainerId", trainerId);
+        System.out.println("JSON Response: " + json.toString());
+        return json.toString();
+    }
+
+    @PostMapping("apply")
+    @ResponseBody
+    public String u_t_matching(@RequestParam("userId") String userId, @RequestParam("trainerId") String trainerId) throws Exception {
+        UTMatchingDTO newMatching = new UTMatchingDTO();
+        newMatching.setUserId(userId);
+        newMatching.setTrainerId(trainerId);
+
+        // 기타 필요한 데이터 설정
+
+        MatchingService.saveMatching(newMatching); // 여기서 적절한 서비스 메서드를 호출하여 데이터베이스에 insert
+
+        return "success"; // 적절한 응답 메시지
+    }
 
 
 }

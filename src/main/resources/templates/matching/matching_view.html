@@ -13,7 +13,8 @@
   <link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
   <noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
 
-
+  <!-- Modal -->
+  <link rel="stylesheet" th:href="@{/assets/css/matchingModal.css}">
 
 </head>
 <style>
@@ -109,6 +110,10 @@ width: 700px;
   width: 200px;
  height: 250px;
 }
+#careerInfo img:hover{
+  transform: scale(1.5);
+    transition: transform 0.2s;
+}
 #content_title th{
  padding-top: 20px;
 }
@@ -161,6 +166,9 @@ width: 700px;
 
 <!-- Header -->
 <th:block th:replace="~{layout/header::header(${session.loginUser},${session.user})}"></th:block>
+
+<!-- Modal -->
+<th:block th:replace="~{layout/matchingModal::matchingModal()}"></th:block>
 
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">
@@ -313,7 +321,7 @@ width: 700px;
       <table class="button_table">
         <tr align="center" valign="middle">
           <td>
-            <a>신청하기</a>
+            <a href="#" class="open" data-trainer-id="${trainerInfo.trainerId}">신청하기</a>
           </td>
           <td>
             <a th:href="${'/matching/matching_list'}">취소</a>
@@ -361,22 +369,20 @@ width: 700px;
 <script th:src="@{/assets/js/main_sub.js}"></script>
 
 <script th:src="@{/assets/js/sidebar.js}"></script>
+<script th:src="@{/assets/js/matching_u_t_matching.js}"></script>
 <script>
 
-const myElement = document.getElementById("myElement");
 
-myElement.addEventListener("mouseover", () => {
-  myElement.style.transform = "scale(1.3)";
-});
 
-myElement.addEventListener("mouseleave", () => {
-  myElement.style.transform = "scale(1)";
-});
-
-myElement.addEventListener("click", () => {
-  // 클릭 시 다른 동작 수행
-});
-
+  $(document).ready(function () {
+     $(".open").on("click", function (e) {
+         e.preventDefault();
+         var trainerId = '[[${trainerInfo.trainerId}]]';
+         console.log("Trainer ID:", trainerId);
+         sendTrainerIdToModal(trainerId);
+         modalBox.classList.add("active");
+     });
+ });
 
 </script>
 </html>

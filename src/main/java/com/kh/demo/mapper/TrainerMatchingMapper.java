@@ -1,8 +1,7 @@
 package com.kh.demo.mapper;
 
-import com.kh.demo.domain.dto.TrainerMatchingBoardDTO;
+import com.kh.demo.domain.dto.*;
 import org.apache.ibatis.annotations.Mapper;
-import com.kh.demo.domain.dto.Criteria;
 
 import java.util.List;
 
@@ -18,4 +17,18 @@ public interface TrainerMatchingMapper {
    void updateViewCount(Long boardNum);
 
     List<TrainerMatchingBoardDTO> boardView(Long boardNum);
+
+    boolean getUserByIdBoolean(String trainerNickname);
+
+    boolean getTrainerByIdBoolean(String trainerNickname);
+
+    UserDTO getUserById(String trainerNickname);
+
+    TrainerDTO getTrainerById(String trainerNickname);
+
+    TrainerMatchingBoardDTO getBoardBytrainerId(String trainerId);
+
+    void saveMatching(UTMatchingDTO newMatching);
+
+    UTMatchingDTO getutBytrainerId(String trainerId);
 }

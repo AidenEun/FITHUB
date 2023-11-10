@@ -28,4 +28,12 @@ public interface TrainerMatchingService {
     ProfileDTO getCareerInfo(String trainerId);
 
     TrainerDTO getTrainerInfo(String trainerId);
+
+    Object getUserByNickname(String trainerNickname);
+
+    TrainerMatchingBoardDTO getBoardBytrainerId(String trainerId);
+
+    void saveMatching(UTMatchingDTO newMatching);
+
+    UTMatchingDTO getutBytrainerId(String trainerId);
 }
