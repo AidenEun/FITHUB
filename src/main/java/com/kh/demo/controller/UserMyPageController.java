@@ -197,7 +197,6 @@ public class UserMyPageController {
         //작성으로 이동
         if (service.checkList(choicedate, loginUser) == null) {
 //            System.out.println(choicedate);
-
             UserDTO user = serviceUser.getDetail(loginUser);
             model.addAttribute("regdate", choicedate);
             model.addAttribute("user", user);
@@ -207,7 +206,7 @@ public class UserMyPageController {
         else {
             UserDTO user = serviceUser.getDetail(loginUser);
             model.addAttribute("user", user);
-            return "/usermypage/diaryView";
+            return "redirect:/usermypage/diaryView?choicedate="+choicedate;
         }
     }
 
@@ -217,7 +216,16 @@ public class UserMyPageController {
     }
 
     @GetMapping("diaryView")
-    public void replacediaryView() {
+    public void replacediaryView(String choicedate, HttpServletRequest req, Model model) {
+        HttpSession session = req.getSession();
+        String loginUser = (String) session.getAttribute("loginUser");
+        UserDTO user = serviceUser.getDetail(loginUser);
+        DiaryDTO diary =service.getDiaryDetail(choicedate, loginUser);
+
+        model.addAttribute("user", user);
+        model.addAttribute("diary", diary);
+//        System.out.println(diary);
+
     }
 
     @PostMapping("diaryWrite")
@@ -225,7 +233,7 @@ public class UserMyPageController {
         int result = service.registDiary(diary);
         if(result == 1){
             if(diary.getTodayChallNum() == null){
-                return "redirect:/usermypage/getdiary?choicedate" + choicedate;
+                return "redirect:/usermypage/diaryView?choicedate="+choicedate;
             }
             else{
                 String[] sccChallNumArr = (diary.getTodayChallNum()).split(",");
@@ -241,13 +249,12 @@ public class UserMyPageController {
                         System.out.println("스탬프 적립 실패");
                     }
                 }
-                //성공시
             }
-            return "redirect:/usermypage/getdiary?choicedate" + choicedate;
+            return "redirect:/usermypage/diaryView?choicedate="+choicedate;
         }
         //실패시 다시 캘린더로
         //return "redirect:/usermypage/user_diary?choicedate"+choicedate;
-        return "redirect:/usermypage/user_diary";
+        return "/usermypage/user_diary";
     }
 }
 
