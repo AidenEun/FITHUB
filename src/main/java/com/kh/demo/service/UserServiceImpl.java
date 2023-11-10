@@ -27,17 +27,17 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public boolean checkId(String userid) {
-        UserDTO user = umapper.findById(userid);
-        return user != null;
+    public boolean checkId(String userId) {
+        UserDTO user = umapper.findById(userId);
+        return user == null;
     }
 
 
     @Override
-    public UserDTO login(String userid, String userpw) {
-        UserDTO user = umapper.findById(userid);
+    public UserDTO login(String userId, String userPw) {
+        UserDTO user = umapper.findById(userId);
         if(user != null) {
-            if(user.getUserPw().equals(userpw)) {
+            if(user.getUserPw().equals(userPw)) {
                 return user;
             }
         }
@@ -45,8 +45,8 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public UserDTO getDetail(String userid) {
-        return umapper.findById(userid);
+    public UserDTO getDetail(String userId) {
+        return umapper.findById(userId);
     }
 
     @Override
