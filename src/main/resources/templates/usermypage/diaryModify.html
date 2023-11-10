@@ -26,14 +26,14 @@
             const weightGoalNum = document.querySelector("#weightGoal").value;
             const weightGoal = weightGoalNum.slice(0, -2);
 
-            if (48 <= window.event.keyCode && window.event.keyCode <= 57 || window.event.keyCode == 8) {
+            if (48 <= window.event.keyCode && window.event.keyCode <= 57 || window.event.keyCode == 8 || window.event.keyCode == 190) {
 
 
                 const todayweigh = document.querySelector("#todayweigh");
 
                 let resultweigh = Number(weightGoal) - Number(todayweigh.value);
 
-                document.querySelector("#resultweigh").value = resultweigh;
+                document.querySelector("#resultweigh").value = resultweigh.toFixed(2);
             } else {
                 alert("숫자만 입력하세요")
                 document.querySelector("#todayweigh").value = "";
@@ -221,8 +221,7 @@
     input[readonly] {
         pointer-events: none;
     }
-
-    .input_area input[type=text]:nth-child(1) {
+    .input_area input[type=text]:nth-child(1){
         text-align: center;
     }
 
@@ -255,8 +254,8 @@
     </div>
 
     <div id="main_box">
-        <!--        <form id="diaryForm" action="/usermypage/diaryWrite" method="post">-->
-        <form id="diaryForm" th:action="@{/usermypage/diaryWrite}" method="post">
+<!--        <form id="diaryForm" action="/usermypage/diaryWrite" method="post">-->
+        <form id="diaryForm" th:action="@{/usermypage/diaryView}" method="post">
 
             <table class="diary_write">
                 <tr>
@@ -271,8 +270,8 @@
                 </tr>
                 <tr>
                     <!-- <td></td> -->
-                    <td colspan="2"><input type="text" name="diaryTitle" id="diaryTitle" placeholder="제목을 입력하세요"
-                                           onfocus="this.placeholder = ''"></td>
+                    <td colspan="2"><input type="text" name="diaryTitle" placeholder="제목을 입력하세요"
+                                           onfocus="this.placeholder = '' "></td>
                 </tr>
                 <tr>
                     <!-- <td></td> -->
@@ -280,12 +279,12 @@
                         <div class="weight_area box_flex">
                             <div><input type="text" value="목표 체중" readonly></div>
 
-                            <div><input type="text" id="weightGoal" th:value="${user.weightGoal}+kg" readonly></div>
+                            <div><input type="text" id="weightGoal" th:value="${user.weightGoal}" readonly></div>
 
                             <div><input type="text" value="현재 체중" readonly></div>
 
-                            <div><input type="text" name="todayWeight" id="todayweigh" placeholder="0"
-                                        onfocus="this.placeholder = '' " onkeyup="weighsum()"></div>
+                            <div><input type="text" name="todayWeight" id="todayweigh"
+                                        placeholder="0" onfocus="this.placeholder = '' " onkeyup="weighsum()"></div>
 
                             <div><input type="text" value="kg" readonly></div>
                         </div>
@@ -404,11 +403,11 @@
                             <input type="text" value="지방" readonly>
                             <input type="text" id="fat" value="0g" readonly>
                             <!--     칼로리 hidden박스 구역                       -->
-                            <input type="hidden" name="foodCalories" value="0">
-                            <input type="hidden" name="exerCalories" value="0">
-                            <input type="hidden" name="carbo" value="0">
-                            <input type="hidden" name="protein" value="0">
-                            <input type="hidden" name="fat" value="0">
+                            <input type="hidden" name="foodCalories">
+                            <input type="hidden" name="exerCalories">
+                            <input type="hidden" name="carbo">
+                            <input type="hidden" name="protein">
+                            <input type="hidden" name="fat">
                         </div>
                     </td>
                 </tr>
@@ -442,12 +441,12 @@
                 </tr>
 
                 <tr style="text-align: right;">
-
                     <td colspan="2">
                         <div>
-                            <input type="button" value="작성취소" onclick="location.href='/usermypage/user_diary'">
-                            <input type="button" value="작성완료" onclick="sendit()">
+                            <input type="button" value="취소" onclick="cancel()">
+                            <input type="submit" value="수정 완료">
                         </div>
+
                     </td>
                 </tr>
 
@@ -588,7 +587,7 @@
         document.getElementById("protein").value = todayfoodInfo[1] + "g";
         document.getElementById("fat").value = todayfoodInfo[2] + "g";
 
-        //     hidden 박스 저장
+    //     hidden 박스 저장
         document.getElementsByName("carbo")[0].value = todayfoodInfo[0];
         document.getElementsByName("protein")[0].value = todayfoodInfo[1];
         document.getElementsByName("fat")[0].value = todayfoodInfo[2];
@@ -658,36 +657,23 @@
 
     }
 
-    function sendit() {
+    function check() {
         const mychallBtn = document.getElementById("mychallBtn");
-        const diaryTitle = document.getElementsByName("diaryTitle")[0];
-        const todayweigh = document.getElementById("todayweigh");
-        const diaryContent = document.getElementsByName("diaryContent")[0];
 
-        if (diaryTitle.value === "") {
-            alert("제목을 입력 해주세요!")
-            diaryTitle.focus();
-            return false;
-        }
-        if(todayweigh.value ===""){
-            alert("오늘의 체중을 입력 해주세요!")
-            todayweigh.focus();
-            return false;
-        }
-        if(diaryContent.value === ""){
-            alert("내용을 입력해 해주세요!")
-            diaryContent.focus();
-            return false;
-        }
-        if (mychallBtn.classList.contains("viewchallBtn") === false) {
+        if (mychallBtn.classList.contains("viewchallBtn")) {
+            alert("다이어리 작성 완료!")
+            return true;
+
+        } else {
             alert("진행 중인 챌린지 현황을 확인해 주세요!")
             mychallBtn.focus();
             return false;
         }
-        if(confirm("최종 칼로리가 정말 맞습니까?") == true){
-            document.getElementById("diaryForm").submit();
-        }
-        return false;
+    }
+
+    function cancel(){
+        const choicedate = document.getElementsByName("choicedate")[0].value;
+        location.href = "/usermypage/diaryView?choicedate="+choicedate;
     }
 
 </script>
