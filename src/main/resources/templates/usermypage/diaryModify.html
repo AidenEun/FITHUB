@@ -21,7 +21,7 @@
     <script th:src="@{/assets/js/jquery.scrollex.min.js}"></script>
 
     <script>
-        function weighsum(e) {
+        function weightsum(e) {
 
             const weightGoalNum = document.querySelector("#weightGoal").value;
             const weightGoal = weightGoalNum.slice(0, -2);
@@ -29,14 +29,14 @@
             if (48 <= window.event.keyCode && window.event.keyCode <= 57 || window.event.keyCode == 8 || window.event.keyCode == 190) {
 
 
-                const todayweigh = document.querySelector("#todayweigh");
+                const todayweight = document.querySelector("#todayweight");
 
-                let resultweigh = Number(weightGoal) - Number(todayweigh.value);
+                let resultweight = Number(weightGoal) - Number(todayweight.value);
 
-                document.querySelector("#resultweigh").value = resultweigh.toFixed(2);
+                document.querySelector("#resultweight").value = resultweight.toFixed(2);
             } else {
                 alert("숫자만 입력하세요")
-                document.querySelector("#todayweigh").value = "";
+                document.querySelector("#todayweight").value = "";
 
             }
 
@@ -283,8 +283,8 @@
 
                             <div><input type="text" value="현재 체중" readonly></div>
 
-                            <div><input type="text" name="todayWeight" id="todayweigh"
-                                        placeholder="0" onfocus="this.placeholder = '' " onkeyup="weighsum()"></div>
+                            <div><input type="text" name="todayWeight" id="todayweight"
+                                        placeholder="0" onfocus="this.placeholder = '' " onkeyup="weightsum()"></div>
 
                             <div><input type="text" value="kg" readonly></div>
                         </div>
@@ -294,7 +294,7 @@
                     <td colspan="2">
                         <div class="weight_result box_flex">
                             <div><input type="text" value="오늘의 비교" readonly onfocus="this.blur();"></div>
-                            <div><input type="text" id="resultweigh" value="0" readonly></div>
+                            <div><input type="text" id="resultweight" value="0" readonly></div>
                             <div><input type="text" value="kg" readonly></div>
                         </div>
                     </td>

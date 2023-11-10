@@ -41,6 +41,9 @@
     <select id="getViewE">
         select * from exercise where exec_num=#{execNum};
     </select>
+    <select id="findByExecNum">
+        select * from exercise where exec_num=#{ExecNum}
+    </select>
     <update id="updateViewCountE">
         update exercise set view_cnt = view_cnt+1 where exec_num = #{execNum}
     </update>

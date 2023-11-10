@@ -26,17 +26,17 @@
             const weightGoalNum = document.querySelector("#weightGoal").value;
             const weightGoal = weightGoalNum.slice(0, -2);
 
-            if (48 <= window.event.keyCode && window.event.keyCode <= 57 || window.event.keyCode == 8) {
+            if (48 <= window.event.keyCode && window.event.keyCode <= 57 || window.event.keyCode == 8 || window.event.keyCode == 190) {
 
 
-                const todayweigh = document.querySelector("#todayweigh");
+                const todayweight = document.querySelector("#todayweight");
 
-                let resultweigh = Number(weightGoal) - Number(todayweigh.value);
+                let resultweight = Number(weightGoal) - Number(todayweight.value);
 
-                document.querySelector("#resultweigh").value = resultweigh;
+                document.querySelector("#resultweight").value = resultweight.toFixed(2);
             } else {
                 alert("숫자만 입력하세요")
-                document.querySelector("#todayweigh").value = "";
+                document.querySelector("#todayweight").value = "";
 
             }
 
@@ -284,8 +284,8 @@
 
                             <div><input type="text" value="현재 체중" readonly></div>
 
-                            <div><input type="text" name="todayWeight" id="todayweigh" placeholder="0"
-                                        onfocus="this.placeholder = '' " onkeyup="weighsum()"></div>
+                            <div><input type="text" name="todayWeight" id="todayweight" placeholder="0"
+                                        onfocus="this.placeholder = '' " onkeyup="weightsum()"></div>
 
                             <div><input type="text" value="kg" readonly></div>
                         </div>
@@ -295,7 +295,7 @@
                     <td colspan="2">
                         <div class="weight_result box_flex">
                             <div><input type="text" value="오늘의 비교" readonly onfocus="this.blur();"></div>
-                            <div><input type="text" id="resultweigh" value="0" readonly></div>
+                            <div><input type="text" id="resultweight" value="0" readonly></div>
                             <div><input type="text" value="kg" readonly></div>
                         </div>
                     </td>
@@ -661,7 +661,7 @@
     function sendit() {
         const mychallBtn = document.getElementById("mychallBtn");
         const diaryTitle = document.getElementsByName("diaryTitle")[0];
-        const todayweigh = document.getElementById("todayweigh");
+        const todayweight = document.getElementById("todayweight");
         const diaryContent = document.getElementsByName("diaryContent")[0];
 
         if (diaryTitle.value === "") {
@@ -669,9 +669,9 @@
             diaryTitle.focus();
             return false;
         }
-        if(todayweigh.value ===""){
+        if(todayweight.value ===""){
             alert("오늘의 체중을 입력 해주세요!")
-            todayweigh.focus();
+            todayweight.focus();
             return false;
         }
         if(diaryContent.value === ""){

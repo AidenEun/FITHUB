@@ -52,7 +52,7 @@ public class UserMyPageServiceImpl implements UserMyPageService{
 
     @Override
     public boolean removeDiary(Long diaryNum) {
-        return false;
+        return umpmapper.deleteDiary(diaryNum) == 1;
     }
 
     @Override
