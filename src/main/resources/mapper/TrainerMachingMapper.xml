@@ -46,6 +46,42 @@
         update trainer_matching_board set view_cnt = view_cnt + 1 where board_num=#{boardNum}
     </update>
 
+    <!-- Modal -->
+    <select id="getUserByIdBoolean">
+        SELECT COUNT(*)
+        FROM user
+        WHERE user_nickname = #{trainerNickname}
+    </select>
 
+    <select id="getTrainerByIdBoolean">
+        SELECT COUNT(*)
+        FROM trainer
+        WHERE trainer_nickname = #{trainerNickname}
+    </select>
 
+    <select id="getUserById">
+        SELECT *
+        FROM user
+        WHERE user_nickname = #{trainerNickname}
+    </select>
+
+    <select id="getTrainerById">
+        SELECT *
+        FROM trainer
+        WHERE trainer_nickname = #{trainerNickname}
+    </select>
+    <select id="getBoardBytrainerId">
+        SELECT *
+        FROM trainer_matching_board
+        WHERE trainer_id = #{trainerId}
+    </select>
+    <insert id="saveMatching">
+        insert into u_t_matching (user_id, trainer_id)
+        values (#{userId}, #{trainerId})
+    </insert>
+    <select id="getutBytrainerId">
+        SELECT *
+        FROM u_t_matching
+        WHERE trainer_id = #{trainerId}
+    </select>
 </mapper>

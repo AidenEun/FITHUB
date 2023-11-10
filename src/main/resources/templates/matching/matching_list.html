@@ -12,6 +12,8 @@
 	<link rel="stylesheet" th:href="@{/assets/css/index.css}" />
 	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
 	<noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
+
+	<link rel="stylesheet" th:href="@{/assets/css/profileModal.css}">
 </head>
 <style>
 	.top_img_box{
@@ -112,8 +114,13 @@ border:1px solid black;
 width: 200px;
 height:152.469px;
 }
-
-
+.open:hover{
+	color: red;
+}
+#list_table:hover{
+	transform: scale(1.02);
+    transition: transform 0.2s;
+}
 
 
 
@@ -145,6 +152,8 @@ height:152.469px;
 <!-- Header -->
 <th:block th:replace="~{layout/header::header(${session.loginUser},${session.user})}"></th:block>
 
+<!-- Modal -->
+<th:block th:replace="~{layout/profileModal::profileModal()}"></th:block>
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">
 	<div class="top_img_box">
@@ -242,7 +251,7 @@ height:152.469px;
 
 			<div class="TrainerMatching_box">
 				<div class="matching_list">
-					<div>
+					<div class="list_hover">
 						<th:block th:if="${list != null and list.size() > 0}" th:each="board : ${list}">
 							<a class="get" th:href="${board.boardNum}">
 							<div id="list_table">
@@ -250,7 +259,7 @@ height:152.469px;
 								<table id="list_info">
 									<tr>
 										<th id="trainerNickname" colspan="3">
-											<span th:text="${board.trainerInfo.trainerNickname}"></span>
+											<a href="#" class="open"><span th:text="${board.trainerInfo.trainerNickname}"></span></a>
 										</th>
 									</tr>
 									<tr>
@@ -319,6 +328,9 @@ height:152.469px;
 <script th:src="@{/assets/js/main_sub.js}"></script>
 
 <script th:src="@{/assets/js/sidebar.js}"></script>
+<script th:src="@{/assets/js/matching_profile.js}"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </body>
 <script>
 
@@ -362,6 +374,21 @@ height:152.469px;
 		searchForm.submit();
 	}
 
+$(document).ready(function () {
+        $(".open").click(function (e) {
+            e.stopPropagation();
+            e.preventDefault(); // 기본 동작 방지 (링크 이동 취소)
+            // 여기에 원하는 동작 추가
+        });
+    });
+
+	$(".open").on("click", function (e) {
+                e.preventDefault();
+				var userId = $(this).text();
+
+				sendUserIdToModal(userId);
+                modalBox.classList.add("active");
+            });
 
 
 

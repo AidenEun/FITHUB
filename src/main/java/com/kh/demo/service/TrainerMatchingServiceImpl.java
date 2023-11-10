@@ -123,11 +123,35 @@ public class TrainerMatchingServiceImpl implements TrainerMatchingService {
     @Override
     public Long getLastNum(String trainerId){
         return tmmapper.getLastNum(trainerId);
+    };
+
+    public Object getUserByNickname(String trainerNickname){
+        if (tmmapper.getUserByIdBoolean(trainerNickname)){
+            return tmmapper.getUserById(trainerNickname);
+        }
+        else if (tmmapper.getTrainerByIdBoolean(trainerNickname)) {
+            return tmmapper.getTrainerById(trainerNickname);
+        }
+        return null;
+    };
+    @Override
+    public TrainerMatchingBoardDTO getBoardBytrainerId(String trainerId){
+            return tmmapper.getBoardBytrainerId(trainerId);
+    };
+    @Override
+    public void saveMatching(UTMatchingDTO newMatching){
+        tmmapper.saveMatching(newMatching);
+    };
+    @Override
+    public UTMatchingDTO getutBytrainerId(String trainerId) {
+        Object result = tmmapper.getutBytrainerId(trainerId);
+
+        if (result != null) {
+            // 데이터가 존재할 때 UTMatchingDTO로 변환하여 반환
+            return (UTMatchingDTO) result;
+        } else {
+            // 데이터가 없을 때
+            return null;
+        }
     }
-
-
-
-    ;
-
-
 }
