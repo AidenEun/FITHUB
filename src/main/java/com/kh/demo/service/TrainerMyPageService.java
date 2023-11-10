@@ -5,6 +5,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,9 +73,10 @@ public interface TrainerMyPageService {
 
     List<ChallNoticeBoardDTO> getMyChallenge(Criteria cri, String trainerId, String challCategory, String challTerm);
     //트레이너 프로필
-    List<FileDTO> getFileList(String trainerId);
+    List<ProfileDTO> getProFileList(String trainerId);
+    List<ProfileDTO> getFileList(String trainerId);
 
     ResponseEntity<Resource> getThumbnailResource(String sysName) throws Exception;
 
-
+    boolean trainer_modify(TrainerDTO trainer, MultipartFile[] files, String updateCnt) throws IOException;
 }

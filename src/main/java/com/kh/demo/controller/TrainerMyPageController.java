@@ -13,7 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,26 +30,59 @@ public class TrainerMyPageController {
 
 
 
-    @GetMapping(value = {"trainer_myprofile","trainer_profile"})
+    @GetMapping(value = {"trainer_myprofile","trainer_profile","trainer_profile_modify"})
     public String trainer_profile(Criteria cri, String trainerId , Model model, HttpServletRequest req) throws Exception {
         cri = new Criteria(cri.getPagenum(), 4);
         String requestURI = req.getRequestURI();
-        TrainerDTO id = service.getUserDetail(trainerId);
         System.out.println("requestURI : "+requestURI);
 
-        List<BoardDTO>  list = service.getBoardMyList(cri, trainerId);
+        if(!requestURI.equals("/trainermypage/trainer_profile")){
+            HttpSession session = req.getSession();
+            trainerId = (String) session.getAttribute("loginUser");
+        }
 
+        TrainerDTO id = service.getUserDetail(trainerId);
+
+        List<BoardDTO>  list = service.getBoardMyList(cri, trainerId);
         model.addAttribute("list", list);
         model.addAttribute("trainer", id);
+        System.out.println("trainerid"+id);
+        model.addAttribute("subPageMaker", new PageDTO(service.getScribeTotal(cri, trainerId), cri));
+
+
+        model.addAttribute("Profiles",service.getProFileList(trainerId));
 
         model.addAttribute("files",service.getFileList(trainerId));
+        System.out.println("Profiles"+service.getProFileList(trainerId));
+        System.out.println("files"+service.getFileList(trainerId));
 
         model.addAttribute("pageMaker", new PageDTO(service.getBoardTotal(cri, trainerId), cri));
         model.addAttribute("newly_board", service.getBoardNewlyList(list));
         model.addAttribute("reply_cnt_list", service.getBoardReplyCntList(list));
         model.addAttribute("recent_reply", service.getBoardRecentReplyList(list));
 
-        return "/trainermypage/trainer_profile";
+        if (requestURI.equals("/trainermypage/trainer_myprofile")){
+            return "/trainermypage/trainer_profile";
+        }
+
+        return requestURI;
+    }
+
+
+    @PostMapping("trainer_myprofile_modify")
+    public String trainer_myprofile_modify(TrainerDTO trainerdto,String updateCnt , Model model , MultipartFile[] files) throws IOException {
+        System.out.println(trainerdto);
+        if(files != null){
+            for (int i = 0; i < files.length; i++) {
+                System.out.println("controller : "+files[i].getOriginalFilename());
+            }
+        }
+        if (service.trainer_modify(trainerdto,files,updateCnt)){
+            return "redirect:/trainermypage/trainer_myprofile";
+        }
+        else {
+            return "redirect:/";
+        }
     }
 
     @GetMapping("thumbnail")

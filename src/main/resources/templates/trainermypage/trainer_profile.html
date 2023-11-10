@@ -162,18 +162,36 @@
 
 .thumbnail_box .thumbnail_img{
 	width: 25%;
-    height: 300px;
+    height: 310px;
     float: left;
     border-radius: 5px;
 }
-
-.thumbnail_box .thumbnail_div{
-	width: 75%;
-    height: 300px;
-    float: left;
+.thumbnail_img .thumbnail_img_top{
+	height: 260px;
+}
+.thumbnail_img .thumbnail_img_bottom{
+    text-align: center;
+    padding: 11px;
+	height: 50px;
 }
 
+.thumbnail_box .thumbnail_div{
+    width: 75%;
+    height: 310px;
+    float: left;
+    margin-bottom: 30px;
+	font-size : 11px;
 
+}
+
+	img.thumbnail{
+		display:block;
+		clear:both;
+		width:100px;
+	}
+	table.careerTable tr th{
+		width: 15%;
+	}
 </style>
 <body class="is-preload">
 
@@ -195,78 +213,122 @@
 		<div class="content">
 
 			<!-- 게시글 리스트 띄우는 테이블 -->
+			<form id="profileForm" name="profileForm" method="post" th:action="@{/trainermypage/trainer_myprofile}" enctype="multipart/form-data">
+
 			<div class="thumbnail_box">
 				<div class="thumbnail_img">
-					<th:block th:if="${files != null and files.size() > 0}" th:each="file : ${files}">
-						<th:block th:with="sar=${file.orgName.split('[.]')}">
-							<th:block th:with="ext=${sar[sar.length-1]}">
-								<th:block th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}">
+					<div class="thumbnail_img_top">
+						<th:block th:if="${profiles != null and profiles.size() > 0}" th:each="file : ${profiles}">
+							<th:block th:with="sar=${file.orgName.split('[.]')}">
+								<th:block th:with="ext=${sar[sar.length-1]}">
+									<th:block th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}">
 										<img style="width:100%;" th:src="@{/trainermypage/thumbnail (sysName=${file.sysName})}">
+									</th:block>
 								</th:block>
 							</th:block>
 						</th:block>
-					</th:block>
-					<th:block th:unless="${files != null and files.size() > 0}">
-						<img style="width:100%;" th:src="@{/trainermypage/thumbnail (sysName='profile_img.png')}">
-					</th:block>
-				</div>
-				<div class="thumbnail_div">
-					<table>
-						<tr>
-							<td>닉네임(아이디) : </td>
-							<td>[[${trainer.trainerId}]]</td>
-						</tr>
-						<tr>
-							<td>파트</td>
-							<td>[[${trainer.trainerPart}]]</td>
-						</tr>
-						<tr>
-							<td>경력</td>
-							<td>[[${trainer.trainerCareer}]]</td>
-						</tr>
-						<tr>
-							<td>구독자수</td>
-							<td>${}</td>
-						</tr>
-						<tr>
-							<td></td>
-							<td>
-								<th:block th:if="${session.loginUser} != ${trainer.trainerId}">
-									<a href="#">구독하기</a>
-								</th:block>
-								<th:block th:if="${session.loginUser} == ${trainer.trainerId}">
-									<a href="#">수정하기</a>
-								</th:block>
-							</td>
-						</tr>
-					</table>
-				</div>
-			</div>
-
-
-			<table>
-				<tr>
-					<th>나의 소개	</th>
-				</tr>
-				<tr>
-					<td>
-						<div>
-							<textarea name="" style="height:100px; resize:none">[[${trainer.trainerIntro}]]</textarea>
-						</div>
-					</td>
-				</tr>
-			</table>
-
-			<table>
-				<tr>
-					<th>트레이너 자격증 및 경력사항</th>
-				</tr>
-				<tr>
-					<div>
-
+						<th:block th:unless="${profiles != null and profiles.size() > 0}">
+							<img style="width:100%;" th:src="@{/trainermypage/thumbnail (sysName='profile_img.png')}">
+						</th:block>
 					</div>
-				</tr>
-			</table>
+					<div class="thumbnail_img_bottom">
+					</div>
+				</div>
+
+						<div class="thumbnail_div">
+						<table style="margin: auto 0;">
+							<tr>
+								<td width="20%">닉네임(아이디)</td>
+								<td>
+									<div class="inputBox">
+										<input readonly  name="trainerNickname" type="text" id="trainerNickname" class="inputText" placeholder="닉네임" th:value="${trainer.trainerNickname}" >
+									</div>
+								</td>
+								<td>
+									<div class="inputBox">
+										<input readonly name="trainerId" type="text" id="trainerId" class="inputText" placeholder="아이디" th:value="${trainer.trainerId}" >
+									</div>
+								</td>
+
+							</tr>
+							<tr>
+								<td>파트</td>
+								<td colspan="2">
+									<div class="inputBox">
+										<input readonly name="trainerPart" type="text" id="trainerPart" class="inputText" placeholder="파트" th:value="${trainer.trainerPart}" >
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>경력</td>
+								<td colspan="2">
+									<div class="inputBox">
+										<input readonly name="trainerCareer" type="text" id="trainerCareer" class="inputText" placeholder="파트" th:value="${trainer.trainerCareer}" >
+									</div>
+								</td>
+
+							</tr>
+							<tr>
+								<td>구독자수</td>
+								<td colspan="2">
+									<div class="inputBox">
+										<input readonly name="subscribe" type="text" id="subscribe" class="inputText" placeholder="구독자수" th:value="${subPageMaker.total}" >
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td colspan="2">
+									<th:block th:if="${session.loginUser} != ${trainer.trainerId}">
+										<a href="#">구독하기</a>
+									</th:block>
+									<th:block th:if="${session.loginUser} == ${trainer.trainerId}">
+										<a href="/trainermypage/trainer_profile_modify">수정하기</a>
+									</th:block>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+
+
+				<table>
+					<tr>
+						<th>나의 소개	</th>
+					</tr>
+					<tr>
+						<td>
+							<div>
+								<textarea readonly name="trainerIntro" class="inputText" id="trainerIntro" style="height:100px; resize:none">[[${trainer.trainerIntro}]]</textarea>
+							</div>
+						</td>
+					</tr>
+				</table>
+
+				<table class="careerTable">
+					<tr>
+						<th colspan="2">트레이너 자격증 및 경력사항</th>
+					</tr>
+					<tr th:class="${'r'+fileStat.index}" th:if="${files != null and files.size() > 0}" th:each="file : ${files}">
+						<th>파일 첨부[[${fileStat.index+1}]]</th>
+						<td th:class="${'file'+fileStat.index+'_cont'}">
+							<div style="float:left;">
+								<input type="file" name="files" th:id="${'file'+fileStat.index}" style="display:none">
+								<span th:id="${'file'+fileStat.index+'name'}" th:text="${file.orgName}"></span>
+							</div>
+
+							<input type="hidden" name="orgname" th:value="${file.orgName}">
+							<th:block th:with="sar=${file.orgName.split('[.]')}">
+								<th:block th:with="ext=${sar[sar.length-1]}">
+									<img th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}" th:src="@{/trainermypage/thumbnail (sysName=${file.sysName})}" class="thumbnail">
+								</th:block>
+							</th:block>
+						</td>
+					</tr>
+
+					<input type="hidden" value="" name="updateCnt" id="updateCnt">
+				</table>
+			</form>
 
 			<table>
 				<tr>
@@ -365,7 +427,12 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script th:inline="javascript">
-	const pageForm = $("#pageForm");
+
+
+
+
+
+		const pageForm = $("#pageForm");
 
 	$(".changePage").on("click",function(e){
 		//e(이벤트)의 기본 작동 막기

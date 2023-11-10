@@ -157,97 +157,9 @@
     text-decoration: none;
     margin: 0 10px;
     }
-
-.title_box td:nth-child(1){
-		text-align: left;
-	}
-	.title_box td:nth-child(2){
-		text-align: right;
-	}
-	.title_box h2, .title_table{
-		margin: 0;
-	}
-
-	.title_box h2:after {
-	    content: "";
-	    display: block;
-	    width: 26px;
-	    height: 4px;
-	    margin: 10px 0 0;
-	    background: #c40f39;
-	}
-	.search_area input[type="button"]{
-		font-size: 9pt;
-		padding: 0.15em 1.5em;
-	}
-	.button{
-		font-size: 9pt;
-		padding: 1em 1.5em;
-	}
-	.search_area input[type="search"] {
-		width : 250px;
-		height: 33px;
-	}
-
-
-    .galleryAll{
-        float: left;
-        width: 29.333%;
-        margin: 0 3.3% 5% 0;
-        border: 1px solid #dadada;
-        box-shadow: 2px 2px 3px rgba(0,0,0,0.2);
-        border-radius: 10px;
-        position: relative;
-        height: 310px;
-    }
-    .g_Imgbox{
-        float: left;
-        width: 100%;
-        height: 205px;
-        overflow: hidden;
-        border: 1px solid #eee;
-        display: flex;
-        flex-wrap: wrap;
-        align-content: center;
-        justify-content: center;
-    }
-    .g_title_box{
-    	text-align : center;
-    }
-
-    .g_title_box span{
-    	font-size: 14px;
-    }
-    .g_title_box_sub{
-    	font-size: 12px;
-    	text-align: left;
-   	    padding: 5px 0 0 20px;
-  		height: 20px;
-
-    }
-    .table_contents{
- 		margin-bottom: 0;
- 		border-bottom: solid 1px #eee;;
-    }
-    .pagination td a, .pagination td span{
-		padding : 6px;
-	}
-	.galleryAll a{
-		color: black;
-	}
-	.login_none {
-		display:none;
-	}
-	#content .button{
-	    margin-right: 20px;
-	}
-	.title_box h2{
-		font-size: 28px;
-	}
-
-
 </style>
 <body class="is-preload">
+
 
 <!-- Header -->
 <th:block th:replace="~{layout/header::header(${session.loginUser},${session.user})}"></th:block>
@@ -258,116 +170,79 @@
 
 		<header class="major">
 			<h2>마이페이지</h2>
+			<p>내 게시물</p>
 		</header>
 
-		<!-- Content -->
+
 		<!-- Content -->
 		<div class="content">
-
-			<!-- 게시글 리스트 띄우는 테이블 -->
-			<table class="list">
-				<tr align="right" valign="middle">
-					<td>글 개수 :[[${pageMaker.total}]]</td>
-				</tr>
-
-				<tr >
-					<td>
-						<th:block th:if="${list != null and list.size()>0}" th:each="trainer : ${list}">
-
-							<div class ="galleryAll">
-								<!-- 갤러리뷰로 이동 -->
-								<a href="#">
-									<div class = "g_Imgbox">
-										<img class="gal_Img thumbnail" style="width:100%;"
-											 src="#" alt="썸네일 이미지">
-									</div>
-									<div class = "g_title_box">
-										<span class="gal_title_name">[[${trainer.trainerId}]]([[${trainer.trainerNickname}]])</span>
-									</div>
-								</a>
-
-								<div class="g_title_box_sub">
-									<span class="gal_title_regdate l_after">구독일 : [[${trainer.subDate}]]</span>
-								</div>
-								<div class="g_title_box_sub">
-									<span>프로필 자세히 보기</span>
-								</div>
-								<div class="g_title_box_sub">
-									<span>쪽지 보내기</span>
-								</div>
-							</div>
-						</th:block>
-
+		<form id="boardForm" method="post" name="boardForm" th:action="@{/challenge/write}" enctype="multipart/form-data">
+			<input type="hidden" th:value="${cri.pagenum}" name="pagenum">
+			<input type="hidden" th:value="${cri.amount}" name="amount">
+			<input type="hidden" th:value="${cri.type}" name="type">
+			<input type="hidden" th:value="${cri.keyword}" name="keyword">
+			<table style="border-collapse: collapse;" border="1">
+				<tr style="height:30px;">
+					<th colspan="2" style="text-align:center; width:150px;">제목</th>
+					<td colspan="2">
+						<input type="text" name="boardTitle" size="50" maxlength="50" placeholder="제목을 입력하세요">
 					</td>
-
 				</tr>
-				<th:block th:if="${list == null or list.size() == 0}">
-					<tr>
-						<td style="text-align: center; font-size: 20px;">등록된
-							게시글이 없습니다.</td>
-					</tr>
-				</th:block>
-			</table>
-			<br>	<!-- 페이징 처리하는 테이블 -->
-			<table class="pagination">
-				<tr align="center" valign="middle">
+				<tr style="height:30px;">
+					<th style="text-align:center; width:150px;">작성자</th>
 					<td>
-						<a class="changePage" th:if="${pageMaker.prev}" th:href="${pageMaker.startPage-1}">&lt;</a>
-						<th:block th:each="i : ${#numbers.sequence(pageMaker.startPage,pageMaker.endPage)}">
-							<span class="nowPage" th:text="${i}" th:if="${pageMaker.cri.pagenum == i}"></span>
-							<a class="changePage" th:href="${i}" th:text="${i}" th:unless="${pageMaker.cri.pagenum == i}"></a>
-						</th:block>
-						<a class="changePage" th:if="${pageMaker.next}" th:href="${pageMaker.endPage+1}">&gt;</a>
+						<input type="text" name="userId" size="50" maxlength="50" th:value="${session.loginUser}" readonly>
+					</td>
+					<td>챌린지번호</td>
+					<td>[[${board.challNum}]]</td>
+				</tr>
+				<tr>
+					<td>챌린지시작</td>
+					<td>[[${board.startDate}]]</td>
+					<td>챌린지종료</td>
+					<td>[[${board.finishDate}]]</td>
+				</tr>
+
+				<tr style="height:300px;">
+					<th colspan="2" style="text-align:center; width:150px;">내 용</th>
+					<td colspan="2">
+						<textarea name="boardContent" style="width:700px;height:290px;resize:none;"></textarea>
+					</td>
+				</tr>
+				<tr class="r0 at">
+					<th colspan="2">파일 첨부1</th>
+					<td colspan="2" class="file0_cont">
+						<div style="float:left;">
+							<input type="file" name="files" id="file0" style="display:none">
+							<span id="file0name">선택된 파일 없음</span>
+						</div>
+						<div style="float:right; margin-right: 100px;">
+							<a href="javascript:upload('file0')">파일 선택</a>
+							<a href="javascript:cancelFile('file0')">첨부 삭제</a>
+						</div>
 					</td>
 				</tr>
 			</table>
-			<!-- 글쓰기 버튼 배치하는 테이블 -->
-			<table>
-				<tr align="right" valign="middle">
-					<td>
-						<a class="write" th:href="${'/board/write'+pageMaker.cri.listLink}">글쓰기</a>
-					</td>
-				</tr>
-			</table>
-			<form id="searchForm" th:action="@{/usermypage/user_subtrainer}">
-				<div class="search_area">
-					<label>
-						<select name="type">
-							<option value="" th:selected="${pageMaker.cri.type == null}">검색</option>
-							<option value="T" th:selected="${pageMaker.cri.type == 'T'}">제목</option>
-							<option value="C" th:selected="${pageMaker.cri.type == 'C'}">내용</option>
-							<option value="W" th:selected="${pageMaker.cri.type == 'W'}">작성자</option>
-							<option value="TC" th:selected="${pageMaker.cri.type == 'TC'}">제목 또는 내용</option>
-							<option value="TW" th:selected="${pageMaker.cri.type == 'TW'}">제목 또는 작성자</option>
-							<option value="TCW" th:selected="${pageMaker.cri.type == 'TCW'}">제목 또는 내용 또는 작성자</option>
-						</select>
-					</label>
-					<label for="keyword"></label><input type="text" name="keyword" id="keyword" th:value="${pageMaker.cri.keyword}">
-					<a href="#" class="button primary">검색</a>
-				</div>
-				<input type="hidden" value="1" name="pagenum">
-				<input type="hidden" value="10" name="amount">
-			</form>
-		</div>
-
-		<form name="pageForm" id="pageForm" th:action="@{/usermypage/user_subtrainer}">
-			<input type="hidden" name="pagenum" th:value="${pageMaker.cri.pagenum}">
-			<input type="hidden" name="amount" th:value="${pageMaker.cri.amount}">
-			<input type="hidden" name="type" th:value="${pageMaker.cri.type}">
-			<input type="hidden" name="keyword" th:value="${pageMaker.cri.keyword}">
 		</form>
-
-
-		<!-- Sidebar -->
-		<th:block th:replace="~{layout/usermypage_sidebar::sidebar}"></th:block>
+		<table class="btn_area">
+			<tr align="right" valign="middle">
+				<td>
+					<a href="javascript:sendit()">등록</a>
+					<a th:href="${'/challenge/list'+cri.listLink}">목록</a>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<!-- Sidebar -->
+	<th:block th:replace="~{layout/rank_sidebar::sidebar}"></th:block>
 
 	</div>
-</section>
+	</section>
 
-<!-- Footer -->
-<th:block th:replace="~{layout/footer::footer}"></th:block>
+	<!-- Footer -->
+	<th:block th:replace="~{layout/footer::footer}"></th:block>
 
-<!-- Scripts -->
+	<!-- Scripts -->
 <script th:src="@{/assets/js/jquery.min.js}"></script>
 <script th:src="@{/assets/js/jquery.dropotron.min.js}"></script>
 <script th:src="@{/assets/js/jquery.scrollex.min.js}"></script>
@@ -379,40 +254,137 @@
 <script th:src="@{/assets/js/sidebar.js}"></script>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script th:inline="javascript">
-	const searchForm = $("#searchForm");
-	const pageForm = $("#pageForm");
-
-	$(".changePage").on("click",function(e){
-		//e(이벤트)의 기본 작동 막기
-		e.preventDefault();
-		let pagenum = $(this).attr("href");
-		pageForm.find("input[name='pagenum']").val(pagenum);
-		pageForm.submit();
-	});
-	$(".get").on("click",function(e){
-		e.preventDefault();
-		let boardnum = $(this).attr("href");
-		let url=/*[[@{/board/get}]]*/'';
-		pageForm.append("<input type='hidden' name='boardnum' value='"+boardnum+"'>")
-		pageForm.attr("action",url);
-		pageForm.attr("method","get");
-		pageForm.submit();
+<script>
+	let i = 0;
+	function upload(name){
+		$("#"+name).click();
+	}
+	//$(선택자).change(함수) : 해당 선택자의 요소에 변화가 일어난다면 넘겨주는 함수 호출
+	$("[type='file']").change(function(e){
+		//e : 파일이 업로드된 상황 자체를 담고있는 객체
+		//e.target : 파일이 업로드가 된 input[type=file] 객체(태그객체)
+		//e.target.files : 파일태그에 업로드를 한 파일 객체들의 배열
+		const file = e.target.files[0];
+		const fileTag = e.target;
+		
+		if(file == undefined){
+			//파일이 업로드 되었다가 없어진 경우
+			cancelFile(fileTag.id);
+		}
+		else{
+			//파일이 없었다가 업로드 한 경우
+			//#file0name
+			$("#"+fileTag.id+"name").text(file.name);
+			//업로드 된 파일의 확장자명
+			let ext = file.name.split(".").pop();
+			if(ext == 'jpeg' || ext == 'jpg' || ext == 'png' || ext == 'gif' || ext == 'webp'){
+				$("."+fileTag.id+"_cont .thumbnail").remove();
+				const reader = new FileReader();
+				
+				reader.onload = function(ie){
+					const img = document.createElement("img");
+					img.setAttribute("src",ie.target.result)
+					img.setAttribute("class","thumbnail");
+					document.querySelector("."+fileTag.id+"_cont").appendChild(img);
+				}
+				reader.readAsDataURL(file);
+			}
+			else{
+				const temp = $("."+fileTag.id+"_cont .thumbnail");
+				if(temp != null){
+					temp.remove();
+				}
+			}
+			//가장 마지막 파일 선택 버튼을 눌렀을 때
+			if(fileTag.id.split("e")[1] == i){
+				const cloneElement = $(".r"+i).clone(true);
+				i++;
+				cloneElement.appendTo("#boardForm tbody")
+				const lastElement = $("#boardForm tbody").children().last();
+				
+				lastElement.attr("class","r"+i+" at");
+				lastElement.children("th").text("파일 첨부"+(i+1));
+				lastElement.children("td").attr("class","file"+i+"_cont");
+				
+				lastElement.find("input[type='file']").attr("name","files");
+				lastElement.find("input[type='file']").attr("id","file"+i);
+				lastElement.find("input[type='file']").val("");
+				
+				lastElement.find("span").attr("id","file"+i+"name");
+				lastElement.find("span").text("선택된 파일 없음");
+				
+				lastElement.find("a")[0].href = "javascript:upload('file"+i+"')";
+				lastElement.find("a")[1].href = "javascript:cancelFile('file"+i+"')"
+			}
+			
+		}
 	})
 
-	$("#searchForm a").on("click",sendit);
+	function cancelFile(name){
+		//가장 마지막 첨부 삭제 버튼을 누른 경우
+		if(name.split("e")[1] == i){ return; }
+		//현재 업로드된 파일이 여러개일 때
+		if(i != 0){
+			//tr지우기
+			let temp = Number(name.split("e")[1]);
+			//해당 행 지우기
+			$(".r"+temp).remove();
+			//지워진 다음 행 부터 숫자 바꿔주기
+			for(let j=temp+1;j<=i;j++){
+				const el = $("#boardForm tbody").find(".r"+j);
+				el.attr("class","r"+(j-1)+" at");
+				
+				el.children('th').text("파일 첨부"+j);
+				
+				el.children('td').attr("class","file"+(j-1)+"_cont");
+				
+				const fileTag = el.find("input[type='file']");
+				fileTag.attr("name","file"+(j-1));
+				fileTag.attr("id","file"+(j-1));
+				
+				el.find("span").attr("id","file"+(j-1)+"name");
+				
+				el.find("a")[0].href = "javascript:upload('file"+(j-1)+"')"
+				el.find("a")[1].href = "javascript:cancelFile('file"+(j-1)+"')"
+				
+			}
+			i--;
+		}
+	}
+	
 	function sendit(){
-		if(!searchForm.find("option:selected").val()){
-			alert("검색 기준을 선택하세요!");
+		const boardForm = document.boardForm;
+		
+		const boardtitle = boardForm.boardTitle;
+		if(boardtitle.value == ""){
+			alert("제목을 입력하세요!");
+			boardtitle.focus();
 			return false;
 		}
-		if(!$("input[name='keyword']").val()){
-			alert("키워드를 입력하세요!");
+		
+		const boardcontents = boardForm.boardContent;
+		if(boardcontents.value == ""){
+			alert("내용을 입력하세요!");
+			boardcontents.focus();
 			return false;
 		}
-		searchForm.submit();
+		
+		boardForm.submit();
 	}
 </script>
-
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

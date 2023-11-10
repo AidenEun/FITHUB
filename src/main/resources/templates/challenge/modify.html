@@ -1,0 +1,426 @@
+<!DOCTYPE HTML>
+<!--
+	Slate by Pixelarity
+	pixelarity.com | hello@pixelarity.com
+	License: pixelarity.com/license
+-->
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Untitled</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" th:href="@{/assets/css/index.css}" />
+	<noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
+</head>
+<style>
+	#side-wrap {
+    width: 300px; /* 원하는 가로 크기로 조절 */
+    margin: 0 auto; /* 수평 가운데 정렬 */
+    padding: 20px; /* 내용과 사이드바 사이의 간격 설정 */
+    border: 1px solid #ccc; /* 사각형 테두리 스타일 */
+    border-radius: 10px; /* 사각형의 둥글기 설정 */
+    }
+
+    .side_info {
+    text-align: center; /* 수평 가운데 정렬을 위한 설정 */
+    }
+
+    .prof_img {
+    display: inline-block; /* 인라인 블록 요소로 설정 */
+    }
+
+    .rating {
+    font-size: 18px; /* 등급 텍스트 크기 설정 */
+    color: #333;    /* 등급 텍스트 색상 설정 */
+    margin-top: 10px; /* 등급과 프로필 사진 사이의 위쪽 여백 설정 */
+    }
+
+    .user-id {
+    font-size: 18px; /* 아이디 텍스트 크기 설정 */
+    color: #333;    /* 아이디 텍스트 색상 설정 */
+    margin-top: 10px; /* 아이디와 프로필 사진 사이의 위쪽 여백 설정 */
+    }
+    .goal-graph {
+    width: 250px; /* 그래프 바의 전체 너비 */
+    height: 20px; /* 그래프 바의 높이 (여유 공간을 위해 조정) */
+    background-color: #f0f0f0; /* 그래프 바의 배경색 */
+    border: 1px solid #ccc; /* 그래프 바 테두리 스타일 */
+    border-radius: 20px; /* 그래프 바 테두리 둥글기 */
+    margin: 20px; /* 페이지에서 그래프 바와의 간격 */
+    display: felx;
+    }
+
+    /* Progress Bar (Filled Portion) */
+    .progress-bar {
+    width: 100%; /* 목표 달성 정도 (예: 100%) */
+    height: 100%; /* 그래프 바와 같은 높이 */
+    background-color: #4caf50; /* 목표 달성 부분의 배경색 */
+    border-radius: 5px; /* 목표 달성 부분의 둥글기 */
+    position: relative; /* 포지션 설정 */
+    display: flex;
+    }
+
+    /* Progress Segment (날짜별 영역) */
+    .progress-segment {
+    height: 100%; /* 그래프 바와 같은 높이 */
+    background-color: #4caf50; /* 각 날짜별 영역의 배경색 */
+    border-radius: 5px; /* 각 날짜별 영역의 둥글기 */
+    position: relative; /* 포지션 설정 */
+    }
+
+    /* Progress Label (Number) */
+    .progress-label {
+    position: absolute; /* 포지션 설정 */
+    top: -20px; /* 그래프 바 위에서 조절 */
+    left: 50%;
+    transform: translateX(-50%);
+    color: #000; /* 숫자 색상 */
+    font-weight: bold; /* 굵게 표시 */
+    }
+
+    .point-container {
+    display: flex;
+    justify-content: space-between;
+    }
+
+    #tab-menu {
+    display: flex; /* flex 레이아웃 사용 */
+    flex-direction: row; /* 가로로 나열 */
+    /* 다른 스타일을 추가할 수 있음 */
+    justify-content: space-between; /* 간격을 조절하기 위해 */
+    width: 300px; /* 전체 탭 메뉴 컨테이너의 너비를 조절 */
+    margin: 0 auto; /* 중앙 정렬을 위해 */
+    }
+
+    #tab-menu div {
+    padding: 10px; /* 각 탭 메뉴 아이템의 패딩 */
+    cursor: pointer; /* 커서 모양을 포인터로 변경하여 클릭 가능하게 함 */
+    /* 다른 스타일을 추가할 수 있음 */
+    }
+
+    #meal-options {
+    display: flex; /* 자식 요소를 수평으로 배열하기 위해 Flexbox 레이아웃 사용 */
+    justify-content: center; /* 자식 요소를 수평으로 가운데 정렬 */
+    align-items: center; /* 자식 요소를 수직으로 가운데 정렬 */
+    }
+
+    #meal-options > div {
+    margin: 0 10px; /* 각 요소 사이의 간격 조절 (원하는 크기로 조정) */
+    }
+
+    #meal-options div {
+    cursor: pointer;
+    }
+
+    #tab-menu-container {
+    display: flex; /* Flexbox 사용 */
+    text-align: left;
+    }
+
+    #tan-dan-ji-box {
+    display: flex; /* 내부의 tan-dan-ji-box도 Flexbox 사용 */
+    flex-direction: column; /* 세로로 정렬 */
+    }
+
+    .today-tab .chall-tab .sub-tab .shop-tab{
+    width: 70px; /* 각 탭 메뉴의 너비 */
+    height: 70px; /* 각 탭 메뉴의 높이 (너비와 같게 설정하여 정사각형 모양으로 만듦) */
+    background-color: #4caf50; /* 배경색을 설정 */
+    text-align: center;
+    line-height: 70px; /* 텍스트 세로 중앙 정렬을 위해 */
+    color: #fff; /* 텍스트 색상 설정 */
+    cursor: pointer; /* 마우스 커서를 포인터로 변경 */
+    }
+
+    #tan-dan-ji-box {
+    display: flex; /* Flexbox를 사용하여 자식 요소를 가로로 정렬 */
+    flex-direction: column; /* 자식 요소를 세로로 정렬 */
+    /* background-color: lightgray; 사각형의 배경색 */
+    border: 2px solid gray; /* 사각형 테두리 스타일 */
+    padding: 10px; /* 내부 여백 설정 */
+    width: 300px; /* 원하는 사각형 너비 설정 */
+    text-align: left;
+    }
+
+    #tan-dan-ji-box > div {
+    margin-bottom: 10px; /* 각 항목 아래 여백 설정 */
+    }
+
+    #another-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    }
+
+    #another-page a {
+    text-decoration: none;
+    margin: 0 10px;
+    }
+</style>
+<body class="is-preload">
+
+
+<!-- Header -->
+<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user})}"></th:block>
+
+<!-- Main -->
+<section id="main" class="wrapper sidebar left">
+	<div class="inner">
+
+		<header class="major">
+			<h2>마이페이지</h2>
+			<p>내 게시물</p>
+		</header>
+
+
+		<!-- Content -->
+		<div class="content">
+		<form id="boardForm" method="post" name="boardForm" th:action="@{/challenge/modify}" enctype="multipart/form-data">
+			<input type="hidden" th:value="${cri.pagenum}" name="pagenum">
+			<input type="hidden" th:value="${cri.amount}" name="amount">
+			<input type="hidden" th:value="${cri.type}" name="type">
+			<input type="hidden" th:value="${cri.keyword}" name="keyword">
+			<input type="hidden" th:value="${board.boardNum}" name="boardNum">
+			<table style="border-collapse: collapse;" border="1">
+				<tr style="height:30px;">
+					<th style="text-align:center; width:150px;">제목</th>
+					<td>
+						<input type="text" name="boardTitle" size="50" maxlength="50" th:value="${board.boardTitle}">
+					</td>
+				</tr>
+				<tr style="height:30px;">
+					<th style="text-align:center; width:150px;">작성자</th>
+					<td>
+						<input type="text" name="userId" size="50" maxlength="50" th:value="${session.loginUser}" readonly>
+					</td>
+				</tr>
+				<tr style="height:300px;">
+					<th style="text-align:center; width:150px;">내 용</th>
+					<td>
+						<textarea name="boardContent" style="width:700px;height:290px;resize:none;">[[${board.boardContent}]]</textarea>
+					</td>
+				</tr>
+				<tr th:class="${'r'+fileStat.index}" th:if="${files != null and files.size() > 0}" th:each="file : ${files}">
+					<th>파일 첨부[[${fileStat.index+1}]]</th>
+					<td th:class="${'file'+fileStat.index+'_cont'}">
+						<div style="float:left;">
+							<input type="file" name="files" th:id="${'file'+fileStat.index}" style="display:none">
+							<span th:id="${'file'+fileStat.index+'name'}" th:text="${file.orgName}"></span>
+						</div>
+						<div style="float:right; margin-right: 100px;">
+							<!-- <a href="javascript:upload('file5','DateTIMEUUID.png')"> -->
+							<a th:href="'javascript:upload(\'file'+${fileStat.index}+'\',\''+${file.sysName}+'\')'">파일 선택</a>
+							<a th:href="'javascript:cancelFile(\'file'+${fileStat.index}+'\',\''+${file.sysName}+'\')'">첨부 삭제</a>
+						</div>
+						<input type="hidden" name="orgName" th:value="${file.orgName}">
+						<th:block th:with="sar=${file.orgName.split('[.]')}">
+							<th:block th:with="ext=${sar[sar.length-1]}">
+								<img th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}" th:src="@{/challenge/thumbnail (sys_name=${file.sysName})}" class="thumbnail">
+							</th:block>
+						</th:block>
+					</td>
+				</tr>
+				<tr th:class="${'r'+files.size()}">
+					<th>파일 첨부[[${files.size()+1}]]</th>
+					<td th:class="${'file'+files.size()+'_cont'}">
+						<div style="float:left;">
+							<input type="file" name="files" th:id="${'file'+files.size()}" style="display:none">
+							<span th:id="${'file'+files.size()+'name'}">선택된 파일 없음</span>
+						</div>
+						<div style="float:right; margin-right: 100px;">
+							<!-- <a href="javascript:upload('file9','')"> -->
+							<a th:href="'javascript:upload(\'file'+${files.size()}+'\',\'\')'">파일 선택</a>
+							<!-- <a href="javascript:cancelFile('file9','')"> -->
+							<a th:href="'javascript:cancelFile(\'file'+${files.size()}+'\',\'\')'">첨부 삭제</a>
+						</div>
+					</td>
+				</tr>
+				<input type="hidden" value="" name="updateCnt" id="updateCnt">
+			</table>
+		</form>
+		<table class="btn_area">
+			<tr align="right" valign="middle">
+				<td>
+					<a href="javascript:document.boardForm.submit()">수정완료</a>
+					<a th:href="${'/challenge/list'+cri.listLink}">목록</a>
+				</td>
+			</tr>
+		</table>
+	</div>
+		<!-- Sidebar -->
+		<th:block th:replace="~{layout/rank_sidebar::sidebar}"></th:block>
+
+	</div>
+</section>
+
+<!-- Footer -->
+<th:block th:replace="~{layout/footer::footer}"></th:block>
+
+<!-- Scripts -->
+<script th:src="@{/assets/js/jquery.min.js}"></script>
+<script th:src="@{/assets/js/jquery.dropotron.min.js}"></script>
+<script th:src="@{/assets/js/jquery.scrollex.min.js}"></script>
+<script th:src="@{/assets/js/browser.min.js}"></script>
+<script th:src="@{/assets/js/breakpoints.min.js}"></script>
+<script th:src="@{/assets/js/util_sub.js}"></script>
+<script th:src="@{/assets/js/main_sub.js}"></script>
+
+<script th:src="@{/assets/js/sidebar.js}"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script th:inline="javascript">
+	let i = /*[[${files.size()}]]*/'';
+	let orgSize = i;
+	
+	let updateCheck = false;
+	let uploadCheck = false;
+	const updateCnt = $("#updateCnt");
+	
+	let num = 0;
+	
+	const orgname = document.getElementsByName("orgName");
+	const org_thumbnail = {};
+	for(let j=0;j<orgname.length;j++){
+		org_thumbnail[orgname[j].value] = document.querySelector(".file"+j+"_cont .thumbnail")
+	}
+	let sysname = "";
+	console.log(orgname);
+	console.log(org_thumbnail);
+	function cancelFile(name,systemname){
+		updateCnt.val(updateCnt.val()+"\\"+systemname)
+		let num = name.split("e")[1];
+		if(num == i){
+			return;
+		}
+		if(i != 0){
+			//tr지우기
+			let temp = Number(name.split("e")[1]);
+			//해당 행 지우기
+			$(".r"+temp).remove();
+			//지워진 다음 행 부터 숫자 바꿔주기
+			for(let j=temp+1;j<=i;j++){
+				const el = $("#boardForm tbody").find(".r"+j);
+				el.attr("class","r"+(j-1)+" at");
+				
+				el.children('th').text("파일 첨부"+j);
+				
+				el.children('td').attr("class","file"+(j-1)+"_cont");
+				
+				const fileTag = el.find("input[type='file']");
+				fileTag.attr("name","files");
+				fileTag.attr("id","file"+(j-1));
+				
+				el.find("span").attr("id","file"+(j-1)+"name");
+
+				el.find("a")[0].href = "javascript:upload('file"+(j-1)+"')"
+				//el.find("a")[1].href = "javascript:cancelFile('file"+(j-1)+"','"+el.find("span").text()+"')"
+				el.find("a")[1].href = decodeURI(el.find("a")[1].href.replace("'file"+j+"'","'file"+(j-1)+"'"));
+				
+			}
+			i--;
+		}
+	}
+	function upload(name,systemname){
+		let temp = $("#"+name+"name").text();
+		num = Number(name.split("e")[1]);
+		if(temp == '선택된 파일 없음'){
+			$("#"+name).click();
+		}
+		else{
+			updateCnt.val(updateCnt.val()+"\\"+systemname)
+			sysname = systemname;
+			$("#"+name).click();
+		}
+	}
+	$("[type='file']").change(function(e){
+		const file = e.target.files[0];
+		const fileTag = e.target;
+		
+		if(file == undefined){
+			if(!$("."+fileTag.id+"_cont [name='orgname']").val()){
+				//비어있던 곳에 파일이 업로드 되었다가 취소한 경우
+				cancelFile(fileTag.id);
+			}
+			else{
+				let n = orgname[num].value;
+				let ext = n.split(".").pop();
+				updateCnt.val(updateCnt.val().replaceAll("\\"+sysname,""));
+				console.log(num);
+				$("#file"+num+"name").text(n);
+				if(ext == 'jpeg' || ext == 'jpg' || ext == 'png' || ext == 'gif' || ext == 'webp'){
+					$("."+fileTag.id+"_cont .thumbnail").remove();
+					document.querySelector("."+fileTag.id+"_cont").appendChild(org_thumbnail[n]);
+				}
+				else{
+					if(document.querySelector("."+fileTag.id+"_cont .thumbnail")){
+						$("."+fileTag.id+"_cont .thumbnail").remove();
+					}
+				}
+				sysname = "";
+			}
+		}
+		else{
+			uploadCheck = true;
+			//파일이 없었다가 업로드 한 경우
+			//#file0name
+			$("#"+fileTag.id+"name").text(file.name);
+			//업로드 된 파일의 확장자명
+			let ext = file.name.split(".").pop();
+			if(ext == 'jpeg' || ext == 'jpg' || ext == 'png' || ext == 'gif' || ext == 'webp'){
+				$("."+fileTag.id+"_cont .thumbnail").remove();
+				const reader = new FileReader();
+				
+				reader.onload = function(ie){
+					const img = document.createElement("img");
+					img.setAttribute("src",ie.target.result)
+					img.setAttribute("class","thumbnail");
+					document.querySelector("."+fileTag.id+"_cont").appendChild(img);
+				}
+				reader.readAsDataURL(file);
+			}
+			else{
+				const temp = $("."+fileTag.id+"_cont .thumbnail");
+				if(temp != null){
+					temp.remove();
+				}
+			}
+			//가장 마지막 파일 선택 버튼을 눌렀을 때
+			if(num == i){
+				const cloneElement = $(".r"+i).clone(true);
+				i++;
+				cloneElement.appendTo("#boardForm tbody")
+				const lastElement = $("#boardForm tbody").children().last();
+				
+				lastElement.attr("class","r"+i+" at");
+				lastElement.children("th").text("파일 첨부"+(i+1));
+				lastElement.children("td").attr("class","file"+i+"_cont");
+				
+				lastElement.find("input[type='file']").attr("name","files");
+				lastElement.find("input[type='file']").attr("id","file"+i);
+				lastElement.find("input[type='file']").val("");
+				
+				lastElement.find("span").attr("id","file"+i+"name");
+				lastElement.find("span").text("선택된 파일 없음");
+				
+				lastElement.find("a")[0].href = "javascript:upload('file"+i+"','')";
+				lastElement.find("a")[1].href = "javascript:cancelFile('file"+i+"','선택된 파일 없음')"
+			}
+			
+		}
+	})
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
