@@ -2,8 +2,8 @@ let flag = false;
 let pwTest = [false,false,false,false,false]
 function sendit(){
     const joinForm = document.joinForm;
-    
-    const userid = joinForm.userid;
+
+    const userid = joinForm.userId;
     if(userid.value == ""){
         alert("아이디를 입력하세요!")
         userid.focus();
@@ -14,7 +14,7 @@ function sendit(){
         userid.focus();
         return false;
     }
-    
+
     const result = document.getElementById("result");
     if(result.innerHTML == "&nbsp;"){
     	alert("아이디 중복검사를 진행해주세요!");
@@ -26,9 +26,9 @@ function sendit(){
     	userid.focus();
     	return false;
     }
-    
+
     const userpw = joinForm.userpw;
-    
+
     for(let i=0;i<5;i++){
     	if(!pwTest[i]){
     		alert("비밀번호 확인을 다시하세요!");
@@ -118,17 +118,22 @@ const passwordInput = document.getElementById('userpw');
 // 비밀번호 체크 요소
 const pwCheck = document.querySelector('#page1 .pw_check');
 
-// 비밀번호 입력란에 입력이 발생할 때 호출되는 함수
-function onPasswordInput() {
-    if (passwordInput.value.length > 0) {
-        pwCheck.style.display = 'block';
-    } else {
-        pwCheck.style.display = 'none';
+// 확인: passwordInput이 존재하면 이벤트 리스너 추가
+if (passwordInput) {
+    // 비밀번호 입력란에 입력이 발생할 때 호출되는 함수
+    function onPasswordInput() {
+        if (passwordInput.value.length > 0) {
+            pwCheck.style.display = 'block';
+        } else {
+            pwCheck.style.display = 'none';
+        }
     }
-}
 
-// 비밀번호 입력란에 입력 감지 이벤트 추가
-passwordInput.addEventListener('input', onPasswordInput);
+    // 비밀번호 입력란에 입력 감지 이벤트 추가
+    passwordInput.addEventListener('input', onPasswordInput);
+} else {
+    console.error('passwordInput이 존재하지 않습니다.');
+}
 
 function checkId(){
 	const xhr = new XMLHttpRequest();
