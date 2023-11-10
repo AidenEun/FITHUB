@@ -67,7 +67,7 @@ public class TrainerMatchingServiceImpl implements TrainerMatchingService {
         Resource resource = new InputStreamResource(Files.newInputStream(path));
         return new ResponseEntity<>(resource,headers, HttpStatus.OK);
     }
-
+    @Override
     public boolean regist(TrainerMatchingBoardDTO board){
         int row = tmmapper.insertBoard(board);
         if(row != 1) {
@@ -76,22 +76,33 @@ public class TrainerMatchingServiceImpl implements TrainerMatchingService {
         return true;
     };
 
-
+    @Override
     public List<TrainerMatchingBoardDTO> boardView(Long boardNum){
         List<TrainerMatchingBoardDTO> list = tmmapper.boardView(boardNum);
 
-        for (TrainerMatchingBoardDTO board : list) {
-            // 각각의 board에 대한 trainer 정보를 가져와서 설정
-            ProfileDTO profileInfo = pfmapper.getProfileInfo(board.getTrainerId());
-            ProfileDTO careerInfo = pfmapper.getCareerInfo(board.getTrainerId());
-            TrainerDTO trainerInfo = tmapper.getTrainerInfo(board.getTrainerId());
-            board.setProfileInfo(profileInfo);
-            board.setTrainerInfo(trainerInfo);
-
-        }
         return list;
     };
+    @Override
+    public ProfileDTO getProfileInfo(String trainerId){
+        ProfileDTO profileInfo = pfmapper.getProfileInfo(trainerId);
+        return profileInfo;
+    };
+    @Override
+    public ProfileDTO getCareerInfo(String trainerId){
+        ProfileDTO careerInfo = pfmapper.getCareerInfo(trainerId);
+        return careerInfo;
+    };
+    @Override
+    public TrainerDTO getTrainerInfo(String trainerId){
+        TrainerDTO trainerInfo = tmapper.getTrainerInfo(trainerId);
+        return trainerInfo;
+    };
 
+
+
+
+
+    @Override
     public void updateViewCount(Long boardNum){
         tmmapper.updateViewCount(boardNum);
     };
@@ -109,7 +120,7 @@ public class TrainerMatchingServiceImpl implements TrainerMatchingService {
 
 
 
-
+    @Override
     public Long getLastNum(String trainerId){
         return tmmapper.getLastNum(trainerId);
     }

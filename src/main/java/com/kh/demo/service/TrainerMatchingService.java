@@ -1,9 +1,6 @@
 package com.kh.demo.service;
 
-import com.kh.demo.domain.dto.Criteria;
-import com.kh.demo.domain.dto.FoodDTO;
-import com.kh.demo.domain.dto.TrainerDTO;
-import com.kh.demo.domain.dto.TrainerMatchingBoardDTO;
+import com.kh.demo.domain.dto.*;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,4 +22,10 @@ public interface TrainerMatchingService {
     List<TrainerMatchingBoardDTO> boardView(Long boardNum);
 
     void updateViewCount(Long boardNum);
+
+    ProfileDTO getProfileInfo(String trainerId);
+
+    ProfileDTO getCareerInfo(String trainerId);
+
+    TrainerDTO getTrainerInfo(String trainerId);
 }
