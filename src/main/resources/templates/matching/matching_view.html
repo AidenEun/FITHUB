@@ -71,13 +71,44 @@
       background-color: white !important;
       height: 30px;
   }
+.write_table:hover {
+    transform: scale(1.04);
+    transition: transform 0.2s;
+    box-shadow: 8px 8px 11px rgba(0, 0, 0, 0.3); /* 그림자 효과 추가 */
 
+}
+
+.write_table:active {
+    transform: scale(1.04);
+}
   .write_table tr:hover{
       background-color: #ebede1 !important;
        transition: transform 0.2s;
   }
 
-
+.cotent_header{
+  font-size: 30px;
+  font-weight:bold;
+  margin-bottom: 50px;
+}
+#profileInfo{
+width: 350px;
+}
+#profileInfo img{
+max-width: 100%;
+    height: auto;
+    display: block; /* 이미지 사이에 생기는 여백을 제거하기 위해 추가 */
+    margin: auto; /* 이미지를 가운데 정렬하기 위해 추가 */
+}
+#careerInfo{
+width: 700px;
+ height: 270px;
+}
+#careerInfo img{
+  margin: auto;
+  width: 200px;
+ height: 250px;
+}
 #content_title th{
  padding-top: 20px;
 }
@@ -147,7 +178,7 @@
     <!-- Content -->
     <div class="content">
       <th:block th:if="${list != null and list.size() > 0}" th:each="board : ${list}">
-      <div class="cotent_header">[[${trainerInfo.trainerNickname}]]님의 글입니다</div>
+      <div class="cotent_header"><span>[[${trainerInfo.trainerNickname}]]님의 글입니다</div>
 
         <form>
 
@@ -173,9 +204,9 @@
               </td>
             </tr>
             <tr>
-              <th rowspan="6">
-                <th:block th:if="${careerInfo != null}">
-                <img style="width:100%; height:100%;" th:src="@{/matching/thumbnail (sysName=${careerInfo.sysName})}">
+              <th rowspan="6" id="profileInfo">
+                <th:block th:if="${profileInfo != null}">
+                <img style="width:100%; height:100%;" th:src="@{/matching/thumbnail (sysName=${profileInfo.sysName})}">
               </th:block></th>
               <th>트레이너</th>
               <th>상담가능시간</th>
@@ -198,18 +229,19 @@
               <th>[[${trainerInfo.trainerCareer}]]</th>
             </tr>
             <tr>
-              <th colspan="2" ><h3>나의 소개</h3></th>
+              <th colspan="2" >트레이너 소개</th>
             </tr>
             <tr>
               <th colspan="2" >[[${trainerInfo.trainerIntro}]]</th>
             </tr>
             <tr>
-              <th colspan="3"><h3>트레이너의 위치</h3></th>
+              <th colspan="3">트레이너의 위치</th>
             </tr>
             <tr>
               <th colspan="3">[[${board.trainerAddr}]]</th>
             </tr>
             <tr>
+              <th colspan="3">
               <div id="map" style="width:100%;height:350px;"></div>
               <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9d457fe0b04b983671f48d03d84f2fdb&libraries=services"></script>
               <script>
@@ -226,7 +258,7 @@
                 var geocoder = new kakao.maps.services.Geocoder();
 
                 var address = '[[${board.trainerAddr}]]';
-                var nickName = '[[${trainerInfo.trainerNickname}]]';
+
 
                 // 주소로 좌표를 검색합니다
                 geocoder.addressSearch(address, function(result, status) {
@@ -244,7 +276,7 @@
 
                         // 인포윈도우로 장소에 대한 설명을 표시합니다
                         var infowindow = new kakao.maps.InfoWindow({
-                            content: '<div style="width:150px;text-align:center;padding:6px 0;">nickName</div>'
+                            content: '<div style="width:150px;text-align:center;padding:6px 0;">[[${trainerInfo.trainerNickname}]]</div>'
                         });
                         infowindow.open(map, marker);
 
@@ -253,9 +285,10 @@
                     }
                 });
               </script>
+              </th>
             </tr>
             <tr>
-              <th colspan="3"><h3>내용</h3></th>
+              <th colspan="3">내용</th>
             </tr>
             <tr style="height:380px;" id="content_tr">
               <td colspan="3">
@@ -263,13 +296,13 @@
               </td>
             </tr>
             <tr>
-              <th><h3>경력 및 자격 사진</h3></th>
+              <th>경력 및 자격 사진</th>
             </tr>
           </table>
           <div>
-            <div>
+            <div id="careerInfo">
               <th:block th:if="${careerInfo != null}">
-                <img style="width:100%; height:100%;" th:src="@{/matching/thumbnail (sysName=${careerInfo.sysName})}">
+                <img th:src="@{/matching/thumbnail (sysName=${careerInfo.sysName})}">
               </th:block>
             </div>
           </div>
