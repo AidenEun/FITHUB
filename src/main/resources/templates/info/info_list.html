@@ -218,6 +218,12 @@
 				<div class="button"><a th:href="${'/info/info_tip'}">더보기</a></div>
 			</div>
 			<hr>
+			<form name="pageForm" id="pageForm" th:action="@{/info/info_list}">
+				<input type="hidden" name="pagenum" th:value="${pageMaker.cri.pagenum}">
+				<input type="hidden" name="amount" th:value="${pageMaker.cri.amount}">
+				<input type="hidden" name="type" th:value="${pageMaker.cri.type}">
+				<input type="hidden" name="keyword" th:value="${pageMaker.cri.keyword}">
+			</form>
 		</div>
 
 
@@ -261,4 +267,19 @@
 <script src="/assets/js/util_sub.js"></script>
 <script src="/assets/js/main_sub.js"></script>
 </body>
+<script th:inline="javascript">
+
+	const pageForm = $("#pageForm");
+
+	$(".get").on("click",function(e){
+		e.preventDefault();
+		let boardNum = $(this).attr("href");
+		let url=/*[[@{/info/info_get}]]*/'';
+		pageForm.append("<input type='hidden' name='boardNum' value='"+boardNum+"'>")
+		pageForm.attr("action",url);
+		pageForm.attr("method","get");
+		pageForm.submit();
+	})
+
+</script>
 </html>

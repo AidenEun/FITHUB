@@ -29,6 +29,7 @@ public interface BoardService {
 	List<BoardDTO> getExerList(Criteria cri);
 	List<BoardDTO> getFoodList(Criteria cri);
 	List<BoardDTO> getTipList(Criteria cri);
+
 	BoardDTO getDetail(Long boardnum);
 	Long getLastNum(String userid);
 	ArrayList<String> getNewlyBoardList(List<BoardDTO> list) throws Exception;
