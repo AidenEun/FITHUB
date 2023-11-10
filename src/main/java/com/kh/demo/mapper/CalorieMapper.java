@@ -32,4 +32,6 @@ public interface CalorieMapper {
     List<FoodDTO> findByFoodNum(String foodNumber);
 
     List<ExerciseDTO> FindExecNameModal(String keyword);
+
+    List<ExerciseDTO> findByExecNum(String ExecNum);
 }

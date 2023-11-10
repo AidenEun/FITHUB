@@ -13,8 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 
 @Controller
@@ -24,6 +24,9 @@ public class UserMyPageController {
     @Autowired
     @Qualifier("UserMyPageServiceImpl")
     private UserMyPageService service;
+
+    @Autowired
+    private CalorieService calorieService;
 
     @Autowired
     @Qualifier("UserServiceImpl")
@@ -206,7 +209,7 @@ public class UserMyPageController {
         else {
             UserDTO user = serviceUser.getDetail(loginUser);
             model.addAttribute("user", user);
-            return "redirect:/usermypage/diaryView?choicedate="+choicedate;
+            return "redirect:/usermypage/diaryView?choicedate=" + choicedate;
         }
     }
 
@@ -215,15 +218,148 @@ public class UserMyPageController {
 
     }
 
-    @GetMapping("diaryView")
+    @GetMapping(value = {"diaryView", "diaryModify"})
     public void replacediaryView(String choicedate, HttpServletRequest req, Model model) {
         HttpSession session = req.getSession();
         String loginUser = (String) session.getAttribute("loginUser");
         UserDTO user = serviceUser.getDetail(loginUser);
-        DiaryDTO diary =service.getDiaryDetail(choicedate, loginUser);
+        DiaryDTO diary = service.getDiaryDetail(choicedate, loginUser);
+
+        //오늘의 비교 계산
+        double resultweight = Math.round((user.getWeightGoal() - diary.getTodayWeight()) * 100.0) / 100.0;
+
+        //각 음식, 운동 num 번호가 있는 배열
+//        String[] sccChallNumArr = (diary.getTodayChallNum()).split(",");
+        String bfNumlist = diary.getTodayBreakfast();
+        String lunchNumlist = diary.getTodayLunch();
+        String dinnerNumlist = diary.getTodayDinner();
+        String snackNumlist = diary.getTodaySnack();
+        String exerNumlist = diary.getTodayExer();
+
+        String[] todayAlllist = {bfNumlist, lunchNumlist, dinnerNumlist, snackNumlist, exerNumlist};
+        String breakfast = "";
+        String lunch = "";
+        String dinner = "";
+        String snack = "";
+        String exer = "";
+
+        for (int i = 0; i < todayAlllist.length; i++) {
+//            System.out.println(todayAlllist[i]);
+            if (todayAlllist[i].isEmpty()) {
+//                System.out.println("빈문자열"+ i);
+            } else {
+                if (i == 0) {
+                    String[] bfArr = todayAlllist[i].split(",");
+                    ArrayList<String> bfnameList = new ArrayList<String>();
+                    for (String data : bfArr) {
+                        List<FoodDTO> bfDTOList = calorieService.findfoodName(data);
+                        for (FoodDTO dtoData : bfDTOList) {
+                            bfnameList.add(dtoData.getFoodName());
+                        }
+                    }
+                    for (int j = 0; j < bfnameList.size(); j++) {
+                        String breakfast1 = "";
+                        if (j == bfnameList.size() - 1) {
+                            breakfast1 += bfnameList.get(j);
+                        } else {
+                            breakfast1 += (bfnameList.get(j) + ",");
+                        }
+                        breakfast += breakfast1;
+
+                    }
+
+                } else if (i == 1) {
+                    String[] lunchArr = todayAlllist[i].split(",");
+                    ArrayList<String> lunchnameList = new ArrayList<String>();
+                    for (String data : lunchArr) {
+                        List<FoodDTO> lunchDTOList = calorieService.findfoodName(data);
+                        for (FoodDTO dtoData : lunchDTOList) {
+                            lunchnameList.add(dtoData.getFoodName());
+                        }
+                    }
+                    for (int j = 0; j < lunchnameList.size(); j++) {
+                        String lunch1 = "";
+                        if (j == lunchnameList.size() - 1) {
+                            lunch1 += lunchnameList.get(j);
+                        } else {
+                            lunch1 += (lunchnameList.get(j) + ",");
+                        }
+                        lunch += lunch1;
+
+                    }
+                } else if (i == 2) {
+                    String[] dinnerArr = todayAlllist[i].split(",");
+                    ArrayList<String> dinnernameList = new ArrayList<String>();
+                    for (String data : dinnerArr) {
+                        List<FoodDTO> dinnerDTOList = calorieService.findfoodName(data);
+                        for (FoodDTO dtoData : dinnerDTOList) {
+                            dinnernameList.add(dtoData.getFoodName());
+                        }
+                    }
+                    for (int j = 0; j < dinnernameList.size(); j++) {
+                        String dinner1 = "";
+                        if (j == dinnernameList.size() - 1) {
+                            dinner1 += dinnernameList.get(j);
+                        } else {
+                            dinner1 += (dinnernameList.get(j) + ",");
+                        }
+                        dinner += dinner1;
+
+                    }
+                } else if (i == 3) {
+                    String[] snackArr = todayAlllist[i].split(",");
+                    ArrayList<String> snacknameList = new ArrayList<String>();
+                    for (String data : snackArr) {
+                        List<FoodDTO> snackDTOList = calorieService.findfoodName(data);
+                        for (FoodDTO dtoData : snackDTOList) {
+                            snacknameList.add(dtoData.getFoodName());
+                        }
+                    }
+                    for (int j = 0; j < snacknameList.size(); j++) {
+                        String snack1 = "";
+                        if (j == snacknameList.size() - 1) {
+                            snack1 += snacknameList.get(j);
+                        } else {
+                            snack1 += (snacknameList.get(j) + ",");
+                        }
+                        snack += snack1;
+
+                    }
+                } else if (i == 4) {
+                    String[] exerArr = todayAlllist[i].split(",");
+                    ArrayList<String> exernameList = new ArrayList<String>();
+                    for (String data : exerArr) {
+                        List<ExerciseDTO> exerDTOList = calorieService.findExecName(data);
+                        for (ExerciseDTO dtoData : exerDTOList) {
+                            exernameList.add(dtoData.getExecName());
+                        }
+                    }
+                    for (int j = 0; j < exernameList.size(); j++) {
+                        String exer1 = "";
+                        if (j == exernameList.size() - 1) {
+                            exer1 += exernameList.get(j);
+                        } else {
+                            exer1 += (exernameList.get(j) + ",");
+                        }
+                        exer += exer1;
+
+                    }
+                } else {
+                    System.out.println("해당사항없음 오류");
+                }
+
+            }
+        }
 
         model.addAttribute("user", user);
         model.addAttribute("diary", diary);
+        model.addAttribute("resultweight", resultweight);
+        model.addAttribute("breakfast", breakfast);
+        model.addAttribute("lunch", lunch);
+        model.addAttribute("dinner", dinner);
+        model.addAttribute("snack", snack);
+        model.addAttribute("exer", exer);
+
 //        System.out.println(diary);
 
     }
@@ -231,11 +367,10 @@ public class UserMyPageController {
     @PostMapping("diaryWrite")
     public String diaryWrite(String choicedate, DiaryDTO diary) {
         int result = service.registDiary(diary);
-        if(result == 1){
-            if(diary.getTodayChallNum() == null){
-                return "redirect:/usermypage/diaryView?choicedate="+choicedate;
-            }
-            else{
+        if (result == 1) {
+            if (diary.getTodayChallNum() == null) {
+                return "redirect:/usermypage/diaryView?choicedate=" + choicedate;
+            } else {
                 String[] sccChallNumArr = (diary.getTodayChallNum()).split(",");
                 int sccChallNum = 0;
                 HashMap<String, String> diaryInfo = new HashMap<String, String>();
@@ -250,11 +385,24 @@ public class UserMyPageController {
                     }
                 }
             }
-            return "redirect:/usermypage/diaryView?choicedate="+choicedate;
+            return "redirect:/usermypage/diaryView?choicedate=" + choicedate;
         }
         //실패시 다시 캘린더로
         //return "redirect:/usermypage/user_diary?choicedate"+choicedate;
         return "/usermypage/user_diary";
+    }
+
+    @PostMapping("diaryModify")
+    public void diaryModify(Long diaryNum, DiaryDTO diary) {
+
+    }
+
+    @PostMapping("diaryRemove")
+    public String diaryRemove(Long diaryNum, String choicedate) {
+        if (service.removeDiary(diaryNum)) {
+            return "/usermypage/user_diary";
+        }
+        return "redirect:/usermypage/diaryView?choicedate=" + choicedate;
     }
 }
 

@@ -15,6 +15,7 @@
     <noscript>
         <link rel="stylesheet" th:href="@{/assets/css/noscript.css}"/>
     </noscript>
+
 </head>
 <style>
     * {
@@ -196,8 +197,6 @@
     }
 
 
-
-
 </style>
 <body class="is-preload">
 
@@ -226,12 +225,13 @@
         </div>
     </div>
     <div id="main_box">
-        <form id="diaryForm" method="post" th:action="@{/usermypage/diaryModify}">
+        <form id="diaryForm" th:action="@{/usermypage/diaryRemove}" method="post">
             <table class="diary_write">
                 <tr>
                     <td>
                         <input type="hidden" name="choicedate" th:value="${diary.regdate}">
                         <input type="text" name="regdate" th:value="${diary.regdate}" readonly>
+                        <input type="hidden" name="diaryNum" th:value="${diary.diaryNum}">
                     </td>
                     <td>
                         <input type="text" th:value="${user.userNickname}" readonly>
@@ -252,7 +252,7 @@
 
                             <div><input type="text" value="현재 체중" readonly></div>
 
-                            <div><input type="text" name="todayWeight" id="todayweigh"
+                            <div><input type="text" name="todayWeight" id="todayweight"
                                         th:value="${diary.todayWeight}+kg">
                             </div>
                         </div>
@@ -262,8 +262,7 @@
                     <td colspan="2">
                         <div class="weight_result box_flex">
                             <div><input type="text" value="오늘의 비교" readonly></div>
-                            <div><input type="text" id="resultweigh"
-                                        th:value="${user.weightGoal}-${diary.todayWeight}+kg" readonly></div>
+                            <div><input type="text" id="resultweight" readonly th:value="${resultweight}+kg"></div>
                         </div>
                     </td>
                 </tr>
@@ -271,20 +270,20 @@
                     <td class="food_area">
                         <div class="bf_input input_area">
                             <input type="text" value="아침" readonly>
-                            <input type="hidden" name="todayBreakfast">
+                            <input type="hidden" name="todayBreakfast" th:value="${diary.todayBreakfast}">
                             <input type="text" id="bfCal" value="총" readonly>
                             <input type="text" value="kcal" readonly>
                         </div>
-                        <div class="bf_list list_area" id="bf_result" readonly></div>
+                        <div class="bf_list list_area" id="bf_result" th:text="${breakfast}" readonly></div>
                     </td>
                     <td class="food_area">
                         <div class="lunch_input input_area">
                             <input type="text" value="점심" readonly>
-                            <input type="hidden" name="todayLunch">
+                            <input type="hidden" name="todayLunch" th:value="${diary.todayLunch}">
                             <input type="text" id="lunchCal" value="총" readonly>
                             <input type="text" value="kcal" readonly>
                         </div>
-                        <div type="text" class="bf_list list_area" id="lunch_result" readonly>
+                        <div type="text" class="bf_list list_area" id="lunch_result" th:text="${lunch}" readonly >
                         </div>
                     </td>
                 </tr>
@@ -292,21 +291,21 @@
                     <td class="food_area">
                         <div class="dinner_input input_area">
                             <input type="text" value="저녁" readonly>
-                            <input type="hidden" name="todayDinner">
+                            <input type="hidden" name="todayDinner" th:value="${diary.todayDinner}">
                             <input type="text" id="dinnerCal" value="총" readonly>
                             <input type="text" value="kcal" readonly>
                         </div>
-                        <div type="text" class="bf_list list_area" id="dinner_result"></div>
+                        <div type="text" class="bf_list list_area" id="dinner_result" th:text="${dinner}" readonly></div>
 
                     </td>
                     <td class="food_area">
                         <div class="snack_input input_area">
                             <input type="text" value="간식" readonly>
-                            <input type="hidden" name="todaySnack">
+                            <input type="hidden" name="todaySnack" th:value="${diary.todaySnack}">
                             <input type="text" id="snackCal" value="총" readonly>
                             <input type="text" value="kcal" readonly>
                         </div>
-                        <div type="text" class="bf_list list_area" id="snack_result"></div>
+                        <div type="text" class="bf_list list_area" id="snack_result" th:text="${snack}" readonly></div>
 
                     </td>
                 </tr>
@@ -315,11 +314,12 @@
                     <td colspan="2" class="ex_area">
                         <div class="ex_input input_area">
                             <input type="text" value="운동" readonly>
-                            <input type="hidden" name="todayExer">
+                            <input type="hidden" name="todayExer" th:value="${diary.todayExer}">
                             <input type="text" id="exerCal" value="총" readonly>
-                            <input type="text" value="kcal" readonly style="text-align: left;">
+                            <input type="text" th:value="${diary.exerCalories != null ? diary.exerCalories+'kcal' : '0kcal'}" readonly style="text-align: left;">
                         </div>
-                        <div type="text" class="excrcise_list list_area" id="exer_result"></div>
+                        <div type="text" class="excrcise_list list_area" id="exer_result" th:text="${exer}" readonly>
+                        </div>
                     </td>
                 </tr>
                 <tr>
@@ -366,12 +366,6 @@
                             <input type="text" value="지방" readonly>
                             <input type="text" th:value="${diary.fat != null ? diary.fat+'g' : '0g'}" readonly>
 
-                            <!--     칼로리 hidden박스 구역                       -->
-                            <input type="hidden" name="foodCalories">
-                            <input type="hidden" name="exerCalories">
-                            <input type="hidden" name="carbo">
-                            <input type="hidden" name="protein">
-                            <input type="hidden" name="fat">
                         </div>
                     </td>
                 </tr>
@@ -413,13 +407,12 @@
                     <td>
                         <div style="text-align: right">
                             <input type="button" value="목록" onclick="location.href='/usermypage/user_diary'">
-                            <input type="submit" value="수정">
+                            <input type="button" value="수정" onclick="moveModify()">
                         </div>
                     </td>
                 </tr>
 
             </table>
-
         </form>
 
     </div>
@@ -448,11 +441,16 @@
     // function backcalender() {
     //     location.href = "/usermypage/user_diary";
     // }
-    function diaryremove(){
-        const choicedate = document.getElementsByName("choicedate")[0].value;
-        location.href = "/usermypage/diaryRemove?chicedate=";
+    function diaryremove() {
+        if (confirm("정말 삭제하시겠습니까?") == true) {
+            document.getElementById("diaryForm").submit();
+        }
     }
 
+    function moveModify() {
+        const choicedate = document.getElementsByName("choicedate")[0].value;
+        location.href = "/usermypage/diaryModify?choicedate=" + choicedate;
+    }
 </script>
 </body>
 </html>
