@@ -1,10 +1,10 @@
 package com.kh.demo.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.kh.demo.domain.dto.*;
 import com.kh.demo.service.AdminMyPageService;
+import com.kh.demo.service.TrainerMyPageService;
 import com.kh.demo.service.UserServiceImpl;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +23,8 @@ public class AdminMyPageController {
     private AdminMyPageService adminMyPageService;
     @Autowired @Qualifier("UserServiceImpl")
     private UserServiceImpl userService;
+    @Autowired @Qualifier("TrainerMyPageServiceImpl")
+    private TrainerMyPageService trainerMyPageService;
 
     @GetMapping("adminmypage_list")
     public void replaceList(){}
@@ -370,5 +372,34 @@ public class AdminMyPageController {
         adminMyPageService.insertMessageCancelReport(userId);
 
         return ResponseEntity.ok("신고 철회가 완료 되었습니다.");
+    }
+
+    @PostMapping("signUpModal")
+    @ResponseBody
+    public String signUpModal(@RequestParam("signupNum") Long signupNum) throws Exception {
+        ObjectNode json = JsonNodeFactory.instance.objectNode();
+
+        TrainerSignUpDTO signUpDTO = adminMyPageService.getSignUpDTO(signupNum);
+        String userId = signUpDTO.getUserId();
+        List<ProfileDTO> profileDTO = adminMyPageService.getSignUpFile(userId);
+        UserDTO userDTO = adminMyPageService.getUser(userId);
+
+        json.putPOJO("profileDTO", profileDTO);
+        json.putPOJO("signUpDTO", signUpDTO);
+        json.putPOJO("userDTO", userDTO);
+
+        return json.toString();
+    }
+
+    @PostMapping("signUpConfirm")
+    public ResponseEntity<String> signUpConfirm(@RequestBody TrainerSignUpDTO signUpDATA){
+        Long signupNum = signUpDATA.getSignupNum();
+        TrainerSignUpDTO signUpDTO = adminMyPageService.getSignUpDTO(signupNum);
+        String userId = signUpDTO.getUserId();
+        UserDTO userDTO = adminMyPageService.getUser(userId);
+
+        adminMyPageService.signUpConfirm(signUpDTO, userDTO);
+
+        return ResponseEntity.ok("트레이너 전환 승인이 완료 되었습니다.");
     }
 }

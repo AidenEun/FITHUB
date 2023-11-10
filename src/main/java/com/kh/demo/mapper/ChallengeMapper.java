@@ -9,7 +9,7 @@ import java.util.List;
 
 @Mapper
 public interface ChallengeMapper {
-    List<MyChallengeDTO> getIngMychall(String userId);
+
 
     
     /*재우*/
@@ -28,5 +28,7 @@ public interface ChallengeMapper {
     Long getTotal(Criteria cri);
     Long getLastNum(String userId);
     BoardDTO findByNum(Long boardNum);
+
+    List<MyChallengeDTO> getIngMychall(String userid, String choicedate);
 
 }

@@ -4,12 +4,16 @@ import com.kh.demo.domain.dto.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public interface UserMyPageService {
     //일기 등록 : insert
+    //파일첨부 가능(업데이트)
     public boolean registDiary (DiaryDTO diary, MultipartFile[] files) throws Exception;
 
+    //파일첨부 없음.(1차)
+    int registDiary(DiaryDTO diary);
 
     //일기 수정 : 기록날짜 제외한 모든 수정내용 update
     public boolean modifyDiary(DiaryDTO diary, MultipartFile[] files);
@@ -19,7 +23,7 @@ public interface UserMyPageService {
 
     //select
     //일기 상세보기(view)
-    public DiaryDTO getDiaryDetail(String choicedate);
+    DiaryDTO getDiaryDetail(String choicedate, String loginUser);
 
     //달력에 존재하는 일기 조회하기
     public List<DiaryDTO> getDiaryList(String userid);
@@ -77,5 +81,6 @@ public interface UserMyPageService {
     //트레이너 전환 신청
     boolean insertApplytrainer(TrainerSignUpDTO user,MultipartFile[] files) throws Exception;
 
+    boolean addStemp(int sccChallNum, HashMap<String, String> diaryInfo);
 
 }

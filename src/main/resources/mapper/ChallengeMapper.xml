@@ -8,8 +8,9 @@
                  join chall_notice_board on chall_notice_board.chall_num = my_challenge.chall_num
         where date_add(date(my_challenge.sub_regdate), interval chall_notice_board.chall_term day)
             >
-            date (now())
-          and my_challenge.user_id=#{userId};
+
+            date (#{choicedate})
+          and my_challenge.user_id=#{userid};
 
     </select>
 

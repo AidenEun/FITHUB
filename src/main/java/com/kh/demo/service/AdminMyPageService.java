@@ -85,4 +85,10 @@ public interface AdminMyPageService {
 
     void insertMessageCancelReport(String userId);
 
+    TrainerSignUpDTO getSignUpDTO(Long signupNum);
+
+    List<ProfileDTO> getSignUpFile(String userId);
+
+    void signUpConfirm(TrainerSignUpDTO signUpDTO, UserDTO userDTO);
+
 }

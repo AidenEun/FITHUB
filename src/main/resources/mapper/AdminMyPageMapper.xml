@@ -340,4 +340,38 @@
         INSERT INTO message (category, message_content, send_id, receive_id)
         VALUES ('meGeneral', '접수하신 신고가 철회되었습니다.', 'admin', #{userId})
     </insert>
+
+    <select id="getSignUpDTO">
+        SELECT *
+        FROM trainer_signup
+        WHERE signup_num = #{signupNum}
+    </select>
+
+    <select id="getSignUpFile">
+        SELECT *
+        FROM profile
+        WHERE user_id = #{userId}
+        AND profile_category = 'C';
+    </select>
+
+    <update id="updateUserCategory">
+        UPDATE user
+        SET user_category = 'T'
+        WHERE user_id = #{userId}
+    </update>
+
+    <insert id="insertTrainer">
+        INSERT INTO trainer (trainer_id, trainer_name, trainer_nickname, trainer_pw, trainer_tel, trainer_mail, trainer_zipcode, trainer_addr, trainer_addrdetail, trainer_addretc, trainer_height, trainer_weight, trainer_gender, trainer_birth, trainer_part, trainer_career, trainer_intro, trainer_joindate, trainer_reportedcnt)
+        VALUES (#{userId}, #{userName}, #{userNickname}, #{userPw}, #{userTel}, #{userMail}, #{trainerZipcode}, #{trainerAddr}, #{trainerAddrdetail}, #{trainerAddretc}, #{userHeight}, #{userWeight}, #{userGender}, #{userBirth}, #{trainerPart}, #{trainerCareer}, #{trainerContent}, #{userJoindate}, #{userReportedcnt})
+    </insert>
+
+    <insert id="insertMessageConfirmSignUp">
+        INSERT INTO message (category, message_content, send_id, receive_id)
+        VALUES ('meGeneral', '트레이너 신청이 승인되었습니다.', 'admin', #{userId})
+    </insert>
+
+    <delete id="deleteSignUp">
+        DELETE FROM trainer_signup
+        WHERE signup_num = #{signupNum}
+    </delete>
 </mapper>

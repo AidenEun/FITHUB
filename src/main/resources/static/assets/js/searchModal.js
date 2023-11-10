@@ -23,7 +23,7 @@ function calsearch() {
 
 
     // console.log(search_input);
-    console.log(search_keyword);
+    // console.log(search_keyword);
 
     const category = document.querySelector('input[name="searchCategory"]:checked');
 
@@ -32,7 +32,7 @@ function calsearch() {
     } else {
         const category = document.querySelector('input[name="searchCategory"]:checked').value;
         if (category === "bf" || category === "lunch" || category === "dinner" || category === "snack") {
-            console.log("음식으로 보내기");
+            // console.log("음식으로 보내기");
             if (search_keyword) {
                 $.ajax({
                     url: '/calorie/foodModal_search',
@@ -51,7 +51,7 @@ function calsearch() {
                 })
             }
         } else {
-            console.log("운동으로 보내기");
+            // console.log("운동으로 보내기");
             $.ajax({
                 url: '/calorie/execModal_search',
                 method: 'POST',
@@ -78,7 +78,7 @@ function calsearch() {
         // 테이블 헤더를 찾아 제거
         tableBody.prev('thead').remove();
 
-        console.log(foodList);
+        // console.log(foodList);
         if (foodList != null && foodList.length > 0) {
             var tableHead = $('<thead>');
             var tableHeadRow = $('<tr>');
@@ -129,7 +129,7 @@ function displayExecData(execList) {
     // 테이블 헤더를 찾아 제거
     tableBody.prev('thead').remove();
 
-    console.log(execList);
+    // console.log(execList);
     if (execList != null && execList.length > 0) {
         var tableHead = $('<thead>');
         var tableHeadRow = $('<tr>');
@@ -198,7 +198,7 @@ function sendResult() {
     if (category == "bf") {
 
         var orgcontents = document.getElementById("bf_result");
-        var orgNum = document.getElementsByName("todayBf")[0];
+        var orgNum = document.getElementsByName("todayBreakfast")[0];
 
 
         if (orgcontents.innerHTML.trim() !== "") {
@@ -223,7 +223,7 @@ function sendResult() {
 
     } else if (category == "lunch") {
         var orgcontents = document.getElementById("lunch_result");
-        var orgNum = document.getElementsByName("todaylunch")[0];
+        var orgNum = document.getElementsByName("todayLunch")[0];
 
         if (orgcontents.innerHTML.trim() !== "") {
             orgcontents.innerHTML += "," + results.join(",");
@@ -240,7 +240,7 @@ function sendResult() {
     } else if (category == "dinner") {
 
         var orgcontents = document.getElementById("dinner_result");
-        var orgNum = document.getElementsByName("todaydinner")[0];
+        var orgNum = document.getElementsByName("todayDinner")[0];
 
         if (orgcontents.innerHTML.trim() !== "") {
             orgcontents.innerHTML += "," + results.join(",");
@@ -256,7 +256,7 @@ function sendResult() {
 
     } else if (category == "snack") {
         var orgcontents = document.getElementById("snack_result");
-        var orgNum = document.getElementsByName("todaysnack")[0];
+        var orgNum = document.getElementsByName("todaySnack")[0];
 
         if (orgcontents.innerHTML.trim() !== "") {
             orgcontents.innerHTML += "," + results.join(",");
@@ -274,7 +274,7 @@ function sendResult() {
     } else if (category == "exer") {
 
         var orgcontents = document.getElementById("exer_result");
-        var orgNum = document.getElementsByName("todayExcrcise")[0];
+        var orgNum = document.getElementsByName("todayExer")[0];
 
         if (orgcontents.innerHTML.trim() !== "") {
             orgcontents.innerHTML += "," + results.join(",");

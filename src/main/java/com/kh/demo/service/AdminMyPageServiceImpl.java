@@ -4,8 +4,16 @@ import com.kh.demo.domain.dto.*;
 import com.kh.demo.mapper.AdminMyPageMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 
 @Service
@@ -136,7 +144,28 @@ public class AdminMyPageServiceImpl implements AdminMyPageService {
 
     @Override
     public UserDTO getUser(String keyword) {
-        return adminMyPageMapper.getUser(keyword);
+        UserDTO userDTO = adminMyPageMapper.getUser(keyword);
+
+        String birthDateWithHyphen = userDTO.getUserBirth();
+        String[] parts = birthDateWithHyphen.split("-");
+        String birthDateWithoutHyphen = String.join("", parts);
+
+        if (birthDateWithoutHyphen != null && birthDateWithoutHyphen.length() == 8) {
+            // 현재 날짜 가져오기
+            LocalDate currentDate = LocalDate.now();
+            int birthYear = Integer.parseInt(birthDateWithoutHyphen.substring(0, 4));
+            int birthMonth = Integer.parseInt(birthDateWithoutHyphen.substring(4, 6));
+            int birthDay = Integer.parseInt(birthDateWithoutHyphen.substring(6, 8));
+            LocalDate birthLocalDate = LocalDate.of(birthYear, birthMonth, birthDay);
+
+            // 나이 계산
+            Period period = Period.between(birthLocalDate, currentDate);
+            userDTO.setUserAge(period.getYears());
+        }
+        else {
+            userDTO.setUserAge(-1); // 또는 다른 값을 사용하여 오류를 표시
+        }
+        return userDTO;
     }
 
     @Override
@@ -313,6 +342,25 @@ public class AdminMyPageServiceImpl implements AdminMyPageService {
     @Override
     public void insertMessageCancelReport(String userId) {
         adminMyPageMapper.insertMessageCancelReport(userId);
+    }
+
+    @Override
+    public TrainerSignUpDTO getSignUpDTO(Long signupNum) {
+        return adminMyPageMapper.getSignUpDTO(signupNum);
+    }
+
+    @Override
+    public List<ProfileDTO> getSignUpFile(String userId) {
+        return adminMyPageMapper.getSignUpFile(userId);
+    }
+
+    @Override
+    public void signUpConfirm(TrainerSignUpDTO signUpDTO, UserDTO userDTO) {
+        System.out.println(userDTO);
+//        adminMyPageMapper.updateUserCategory(userDTO.getUserId());
+//        adminMyPageMapper.insertTrainer(signUpDTO, userDTO);
+//        adminMyPageMapper.insertMessageConfirmSignUp(userDTO.getUserId());
+//        adminMyPageMapper.deleteSignUp(signUpDTO.getSignupNum());
     }
 
 }

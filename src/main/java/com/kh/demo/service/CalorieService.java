@@ -34,4 +34,8 @@ public interface CalorieService {
     List<FoodDTO> getFood(String foodNumber);
 
     List<ExerciseDTO> getFindExec(String keyword);
+
+    List<FoodDTO> findfoodName(String foodNum);
+
+    List<ExerciseDTO> findExecName(String execNum);
 }

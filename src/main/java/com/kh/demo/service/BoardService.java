@@ -14,17 +14,22 @@ import java.util.List;
 public interface BoardService {
 	//insert
 	boolean regist(BoardDTO board, MultipartFile[] files) throws Exception;
-	
+
 	//update
 	public boolean modify(BoardDTO board, MultipartFile[] files, String updateCnt) throws Exception;
 	public void updateReadCount(Long boardnum);
-	
+
 	//delete
 	public boolean remove(String loginUser, Long boardnum);
-	
+
 	//select
 	Long getTotal(Criteria cri);
 	List<BoardDTO> getBoardList(Criteria cri);
+	List<BoardDTO> getNewsList(Criteria cri);
+	List<BoardDTO> getExerList(Criteria cri);
+	List<BoardDTO> getFoodList(Criteria cri);
+	List<BoardDTO> getTipList(Criteria cri);
+
 	BoardDTO getDetail(Long boardnum);
 	Long getLastNum(String userid);
 	ArrayList<String> getNewlyBoardList(List<BoardDTO> list) throws Exception;

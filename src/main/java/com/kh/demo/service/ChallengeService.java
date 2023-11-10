@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface ChallengeService {
-    List<MyChallengeDTO> findMychall(String userid);
+
 
 
 
@@ -39,5 +39,8 @@ public interface ChallengeService {
     ResponseEntity<Resource> getThumbnailResource(String systemname) throws Exception;
 
     ResponseEntity<Object> downloadFile(String systemname, String orgname) throws Exception;
+
+
+    List<MyChallengeDTO> findMychall(String userid,String choicedate);
 
 }

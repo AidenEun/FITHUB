@@ -14,6 +14,7 @@
 	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
 
 	<link rel="stylesheet" th:href="@{/assets/css/profileModal.css}">
+	<link rel="stylesheet" th:href="@{/assets/css/signUpModal.css}">
 </head>
 <style>
 	.top_img_box{
@@ -87,6 +88,10 @@
 		background-color: white !important;
 		border: none;
 	}
+
+	.button:hover {
+		background-color: #ebede1 !important;
+	}
 </style>
 <body class="is-preload">
 
@@ -95,6 +100,7 @@
 
 	<!-- Modal -->
 	<th:block th:replace="~{layout/profileModal::profileModal()}"></th:block>
+	<th:block th:replace="~{layout/signUpModal::signUpModal()}"></th:block>
 
 	<!-- Main -->
 	<section id="main" class="wrapper sidebar left">
@@ -116,20 +122,17 @@
 				<table style="text-align: center; margin-top: 20px;">
 					<thead>
 					<tr style="font-weight: bold;">
-						<td>신청 번호</td>
-						<td>신청 유저</td>
-						<td>파트</td>
-						<td>경력</td>
-						<td>나이</td>
-						<td>성별</td>
+						<td class="long_text" style="width: 10%;">신청 번호</td>
+						<td class="long_text">신청 유저</td>
+						<td class="long_text">파트</td>
+						<td class="long_text">경력</td>
+						<td class="long_text" >처리</td>
 					</tr>
 					</thead>
 					<tbody id="data-table">
 						<tr th:if="${signUpList != null and signUpList.size() > 0}" th:each="signUpBoard : ${signUpList}">
 							<td class="long_text">
-								<a href="#">
-									[[${signUpBoard.signupNum}]]
-								</a>
+								<a href="#" class="signupNum">[[${signUpBoard.signupNum}]]</a>
 							</td>
 							<td class="long_text">
 								<a href="#" class="open">[[${signUpBoard.userId}]]</a>
@@ -145,19 +148,12 @@
 								</a>
 							</td>
 							<td class="long_text">
-								<a href="#">
-									[[${signUpListInUser[signUpBoardStat.index].userAge}]]
-								</a>
-							</td>
-							<td class="long_text">
-								<a href="#">
-									[[${signUpListInUser[signUpBoardStat.index].userGender}]]
-								</a>
+								<a href="#" class="button signUpOpen">처리하기</a>
 							</td>
 						</tr>
 					</tbody>
 					<tr th:if="${signUpList == null or signUpList.size() == 0}">
-						<td colspan="6">
+						<td colspan="5">
 							현재 신청이 없습니다!!
 						</td>
 					</tr>
@@ -219,6 +215,7 @@
 <script th:src="@{/assets/js/sidebar.js}"></script>
 
 <script th:src="@{/assets/js/profile.js}"></script>
+<script th:src="@{/assets/js/signUpModal.js}"></script>
 <script>
 	const pageForm = $("#pageForm");
 	$(".changePage").on("click",function(e){
@@ -228,6 +225,8 @@
 		pageForm.find("input[name='pagenum']").val(pagenum);
 		pageForm.submit();
 	});
+
+	$('.signUpOpen').on('click', signUpModal);
 </script>
 </body>
 </html>

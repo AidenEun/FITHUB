@@ -12,13 +12,13 @@ close.addEventListener("click", () => {
     modalBox.classList.remove("active");
 });
 
-$(".open").on("click", function (e) {
+function profileModalOpen(e){
     e.preventDefault();
     var userId = $(this).text();
 
     modalBox.classList.add("active");
     sendUserIdToModal(userId);
-});
+}
 
 function sendUserIdToModal(userId) {
     $.ajax({

@@ -1,0 +1,34 @@
+<th:block th:fragment="signUpModal()" xmlns:th="http://www.thymeleaf.org">
+    <div class="signUp_modal_box">
+        <div class="signUp_modal_contents">
+
+            <div class="title-container">
+                <button class="signUpClose">&times;</button>
+                <h1 class="title">트레이너 신청 처리</h1>
+            </div>
+            <table id="signUpTable">
+                <thead>
+                <tr style="font-weight: bold; text-align: center;">
+                    <td class="long_text">신청 번호</td>
+                    <td class="long_text">아이디</td>
+                    <td class="long_text">파트</td>
+                    <td class="long_text">경력</td>
+                    <td class="long_text">내용</td>
+                    <td class="long_text">나이</td>
+                    <td class="long_text">성별</td>
+                    <td class="long_text">신고 당한 횟수</td>
+                </tr>
+                </thead>
+                <tbody id="signUp-table">
+
+                </tbody>
+            </table>
+            <input type="hidden" id="signupNumInput" name="signupNumInput" value="">
+            <div class="button-container">
+                <div class="button cancelSignUpButton">거절</div>
+                <div class="button confirmSignUpButton">승인</div>
+            </div>
+        </div>
+    </div>
+</th:block>
+

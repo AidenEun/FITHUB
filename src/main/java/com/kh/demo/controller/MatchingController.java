@@ -1,13 +1,17 @@
 package com.kh.demo.controller;
 
-import com.kh.demo.domain.dto.PageDTO;
-import com.kh.demo.domain.dto.TrainerMatchingBoardDTO;
+import com.kh.demo.domain.dto.*;
 import com.kh.demo.service.TrainerMatchingService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import com.kh.demo.domain.dto.Criteria;
 import org.springframework.ui.Model;
 
 import java.util.HashMap;
@@ -30,6 +34,11 @@ public class MatchingController {
        /* model.addAttribute("review_cnt_list",MatchingService.getReviewCntList(list));*/
     }
 
+    @GetMapping("thumbnail")
+    public ResponseEntity<Resource> thumbnail(String sysName) throws Exception{
+        return MatchingService.getThumbnailResource(sysName);
+    }
+
     @GetMapping("matching_write")
     public void write(@ModelAttribute("cri") Criteria cri,Model model) {
         System.out.println(cri);
@@ -49,23 +58,56 @@ public class MatchingController {
 
 
 
-    @GetMapping("matching_view")
-    public void view(Criteria cri, Model model) throws Exception {
-        List<TrainerMatchingBoardDTO> list = MatchingService.getmatchingList(cri);
+    @GetMapping("/matching/matching_view")
+    public String get(@RequestParam Long boardNum, HttpServletRequest req, HttpServletResponse resp, Model model) {
+        List<TrainerMatchingBoardDTO> list = MatchingService.boardView(boardNum);
+
+        for (TrainerMatchingBoardDTO board : list) {
+
+            ProfileDTO profileInfo = MatchingService.getProfileInfo(board.getTrainerId());
+            ProfileDTO careerInfo = MatchingService.getCareerInfo(board.getTrainerId());
+            TrainerDTO trainerInfo = MatchingService.getTrainerInfo(board.getTrainerId());
+
+            model.addAttribute("profileInfo", profileInfo);
+            model.addAttribute("careerInfo",careerInfo);
+            model.addAttribute("trainerInfo",trainerInfo);
+        }
         model.addAttribute("list", list);
 
+
+        if (list == null) {
+            return "error";
+        }
+
+        HttpSession session = req.getSession();
+        model.addAttribute("list", list);
+
+        // foodNum에 대한 조회수 증가 처리
+        Cookie[] cookies = req.getCookies();
+        boolean hasViewed = false;
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("view_board" + boardNum)) {
+                    hasViewed = true;
+                    break;
+                }
+            }
+        }
+
+        if (!hasViewed) {
+            // 조회수 증가
+            MatchingService.updateViewCount(boardNum);
+
+            // "view_food{foodNum}" 이름의 쿠키(유효기간: 3600초)를 생성해서 클라이언트 컴퓨터에 저장
+            Cookie cookie = new Cookie("view_food" + boardNum, "viewed");
+            cookie.setMaxAge(3600);
+            resp.addCookie(cookie);
+        }
+
+        return "matching/matching_view";
     }
 
 
-    @GetMapping("/getTrainerInfo")
-    @ResponseBody
-    public Map<String, String> getTrainerInfo(@RequestParam("trainerId") String trainerId) {
-        Map<String, String> trainerInfo = new HashMap<>();
-        String nickname = MatchingService.getNickname(trainerId);
-                String career = MatchingService.getCareer(trainerId);
-                trainerInfo.put("nickname", nickname);
-        trainerInfo.put("career", career);
-        return trainerInfo;
-    }
 
 }

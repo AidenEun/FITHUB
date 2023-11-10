@@ -3,6 +3,7 @@ package com.kh.demo.mapper;
 import com.kh.demo.domain.dto.*;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Mapper
@@ -18,9 +19,10 @@ public interface UserMyPageMapper {
 
     //select
     List<DiaryDTO> getDiaryList(String loginUser);
-    DiaryDTO getDiaryDetail(Long diary_num);
 
-    DiaryDTO checkList(String choicedate,String loginUser);
+    DiaryDTO getDiaryDetail(String choicedate, String loginUser);
+
+    DiaryDTO checkList(String choicedate, String loginUser);
 
 
     //재우
@@ -42,15 +44,14 @@ public interface UserMyPageMapper {
 
     //보드
     Long getBoardTotal(Criteria cri, String userId);
-    
+
     BoardDTO findBoardByNum(Long boardnum);
 
     Long getBoardLastNum(String userid);
 
     List<BoardDTO> getMyBoard(Criteria cri, String userId);
 
-    
-    
+
     //북마크
     Long getBookmarkTotal(Criteria cri, String userId);
 
@@ -62,7 +63,7 @@ public interface UserMyPageMapper {
 
     List<ProductBoardDTO> getMyBookmarkProduct(Criteria cri, String userId);
 
-    
+
     //내구독
     List<TrainerDTO> getMyScribe(Criteria cri, String userId);
 
@@ -71,14 +72,20 @@ public interface UserMyPageMapper {
 
     //내챌린지
     Long getChallengeAllAllTotal(Criteria cri, String userId);
+
     Long getChallengeAllTermTotal(Criteria cri, String userId, String challTerm);
+
     Long getChallengeCategoryAllTotal(Criteria cri, String userId, String challCategory);
+
     Long getChallengeCategoryTermTotal(Criteria cri, String userId, String challCategory, String challTerm);
 
 
     List<ChallNoticeBoardDTO> getMyChallengeAllAll(Criteria cri, String userId);
+
     List<ChallNoticeBoardDTO> getMyChallengeAllTerm(Criteria cri, String userId, String challTerm);
+
     List<ChallNoticeBoardDTO> getMyChallengeCategoryAll(Criteria cri, String userId, String challCategory);
+
     List<ChallNoticeBoardDTO> getMyChallengeCategoryTerm(Criteria cri, String userId, String challCategory, String challTerm);
 
 
@@ -87,6 +94,6 @@ public interface UserMyPageMapper {
 
     Long getSignUpLastNum(String userId);
 
-
+    int insertStamp(int sccChallNum, String userId, String diarydate);
 
 }

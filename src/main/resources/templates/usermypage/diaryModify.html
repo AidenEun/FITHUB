@@ -1,0 +1,681 @@
+<!DOCTYPE HTML>
+<!--
+	Slate by Pixelarity
+	pixelarity.com | hello@pixelarity.com
+	License: pixelarity.com/license
+-->
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Fit Hub</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+    <link rel="stylesheet" th:href="@{/assets/css/index.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/sidebar.css}"/>
+    <noscript>
+        <link rel="stylesheet" th:href="@{/assets/css/noscript.css}"/>
+    </noscript>
+
+    <script th:src="@{/assets/js/diaryWrite.js}"></script>
+    <script th:src="@{/assets/js/jquery.min.js}"></script>
+    <script th:src="@{/assets/js/jquery.dropotron.min.js}"></script>
+    <script th:src="@{/assets/js/jquery.scrollex.min.js}"></script>
+
+    <script>
+        function weightsum(e) {
+
+            const weightGoalNum = document.querySelector("#weightGoal").value;
+            const weightGoal = weightGoalNum.slice(0, -2);
+
+            if (48 <= window.event.keyCode && window.event.keyCode <= 57 || window.event.keyCode == 8 || window.event.keyCode == 190) {
+
+
+                const todayweight = document.querySelector("#todayweight");
+
+                let resultweight = Number(weightGoal) - Number(todayweight.value);
+
+                document.querySelector("#resultweight").value = resultweight.toFixed(2);
+            } else {
+                alert("숫자만 입력하세요")
+                document.querySelector("#todayweight").value = "";
+
+            }
+
+        }
+    </script>
+
+    <!-- summernote   -->
+    <!--    <script src="/assets/js/summernote/summernote-lite.js"></script>-->
+    <!--    <script src="/assets/js/summernote/lang/summernote-ko-KR.js"></script>-->
+    <!--    <link rel="stylesheet" href="/assets/css/summernote/summernote-lite.css">-->
+
+    <!--    모달 박스-->
+    <link rel="stylesheet" th:href="@{/assets/css/searchModal.css}"/>
+
+    <noscript>
+        <link rel="stylesheet" th:href="@{/assets/css/noscript.css}"/>
+    </noscript>
+</head>
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+
+    }
+
+
+    /* MAIN IMG 게시글 상단 고정 */
+    #top_main_img {
+        width: 100%;
+        height: 250px;
+        border: 1px solid red;
+    }
+
+    #container1 {
+        margin: 0 auto;
+        width: 1080px;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    /* #container1::after{
+        clear: both;
+    } */
+    #container1 #side_box {
+        /* float: left; */
+        width: 310px;
+        height: 100%;
+        border: 1px solid violet;
+        /* background-color: antiquewhite; */
+    }
+
+    #container1 #main_box {
+        /* float: left; */
+        height: 100%;
+        width: 770px;
+        /* border: 1px solid violet; */
+        /* background-color: yellowgreen; */
+    }
+
+    /* 사이드 카테고리  */
+    #container1 #side_box .cate_list {
+        list-style: none;
+    }
+
+    #container1 #side_box .cate_list li {
+        margin: 30px;
+
+    }
+
+    .diary_write {
+        margin: 20px;
+    }
+
+    .input_area {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .list_area {
+        height: 100px;
+        border: 1px solid green;
+        margin-top: 20px;
+        border-radius: 10px;
+    }
+
+
+    .total_area {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .diary_contents {
+        resize: none;
+    }
+
+    .box_flex {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    td div > input[type=text]:nth-child(2), td div > input[type=text]:nth-child(3) {
+        text-align: right;
+    }
+
+
+    td .input_area > input[type=button]:last-child {
+        width: 30px;
+        background: url(/images/addbutton.png) no-repeat;
+        background-size: 50% 50%;
+        background-position: center;
+        /* box-shadow: inset 0 0 0 2px #5a810086; */
+    }
+
+    .food_area div:last-child input[type=button] {
+        width: 100%;
+        margin-top: 10px;
+        border-radius: 5px;
+    }
+
+    .ex_area div:last-child input[type=button] {
+        width: 100%;
+        margin-top: 10px;
+        border-radius: 5px;
+    }
+
+    /* 추가한 css */
+    table tbody tr:nth-child(2n + 1) {
+        background-color: white;
+
+    }
+
+    td div > input[type=button] {
+        box-shadow: inset 0 0 0 2px #e6e6e6;
+    }
+
+    .food_area .list_area {
+        text-align: center;
+        padding: 10px;
+        display: block;
+        height: 100px;
+        width: 364.1px;
+        overflow-y: auto;
+
+    }
+
+    .excrcise_list.list_area {
+        text-align: center;
+        padding: 10px;
+        display: block;
+        height: 100px;
+        width: 750.20px;
+        overflow-y: auto;
+
+    }
+
+    .total_area input[type=text] {
+        text-align: center !important;
+    }
+
+    .total_area #carbo, .total_area #protein, .total_area #fat {
+        text-align: right !important;
+    }
+
+    .mychallBtn.viewchallBtn {
+        /*border: 1px solid #5a8100 !important;*/
+        color: #5a8100;
+        background-color: #ebede1;
+        box-shadow: inset 0 0 0 2px gray;
+
+    }
+
+    .challcheckList.hiddenList {
+        display: none;
+    }
+
+    .mychall_area {
+        text-align: center;
+    }
+
+    input[readonly] {
+        pointer-events: none;
+    }
+    .input_area input[type=text]:nth-child(1){
+        text-align: center;
+    }
+
+</style>
+<body class="is-preload">
+
+<!-- Header -->
+<!--<th:block th:replace="~{layout/headerNoneModal::header(${session.loginUser})}"></th:block>-->
+<th:block th:replace="~{layout/headerNoneModal::header(${session.loginUser},${session.user})}"></th:block>
+<th:block th:replace="~{layout/searchModal::searchModal()}"></th:block>
+
+<div id="top_main_img">
+    이미지 추가 예정
+</div>
+
+<div id="container1">
+    <div id="side_box">
+        <div>마이페이지</div>
+        <div>
+            <ul class="cate_list">
+                <li>프로필</li>
+                <li>나의 다이어리</li>
+                <li>나의 챌린지</li>
+                <li>나의 트레이너</li>
+                <li>북마크</li>
+                <li>내가 쓴 게시글</li>
+                <li>내 정보 수정</li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="main_box">
+<!--        <form id="diaryForm" action="/usermypage/diaryWrite" method="post">-->
+        <form id="diaryForm" th:action="@{/usermypage/diaryView}" method="post">
+
+            <table class="diary_write">
+                <tr>
+                    <td>
+                        <input type="hidden" name="choicedate" th:value="${regdate}">
+                        <input type="text" name="regdate" th:value="${regdate}" readonly>
+                    </td>
+                    <td>
+                        <input type="text" th:value="${user.userNickname}" readonly>
+                        <input type="hidden" id="userid" name="userId" th:value="${user.userId}">
+                    </td>
+                </tr>
+                <tr>
+                    <!-- <td></td> -->
+                    <td colspan="2"><input type="text" name="diaryTitle" placeholder="제목을 입력하세요"
+                                           onfocus="this.placeholder = '' "></td>
+                </tr>
+                <tr>
+                    <!-- <td></td> -->
+                    <td colspan="2">
+                        <div class="weight_area box_flex">
+                            <div><input type="text" value="목표 체중" readonly></div>
+
+                            <div><input type="text" id="weightGoal" th:value="${user.weightGoal}" readonly></div>
+
+                            <div><input type="text" value="현재 체중" readonly></div>
+
+                            <div><input type="text" name="todayWeight" id="todayweight"
+                                        placeholder="0" onfocus="this.placeholder = '' " onkeyup="weightsum()"></div>
+
+                            <div><input type="text" value="kg" readonly></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div class="weight_result box_flex">
+                            <div><input type="text" value="오늘의 비교" readonly onfocus="this.blur();"></div>
+                            <div><input type="text" id="resultweight" value="0" readonly></div>
+                            <div><input type="text" value="kg" readonly></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food_area">
+                        <div class="bf_input input_area">
+                            <input type="text" value="아침" readonly>
+                            <input type="hidden" name="todayBreakfast">
+                            <input type="text" id="bfCal" value="0" readonly>
+                            <input type="text" value="kcal" readonly>
+                            <input type="button" class="opensearch">
+                        </div>
+                        <div class="bf_list list_area" id="bf_result" readonly>
+                        </div>
+                        <div><input type="button" value="전체 삭제" onclick="removebf()"></div>
+                    </td>
+                    <td class="food_area">
+                        <div class="lunch_input input_area">
+                            <input type="text" value="점심" readonly>
+                            <input type="hidden" name="todayLunch">
+                            <input type="text" id="lunchCal" value="0" readonly>
+                            <input type="text" value="kcal" readonly>
+                            <input type="button" class="opensearch">
+                        </div>
+                        <div type="text" class="bf_list list_area" id="lunch_result"></div>
+                        <div><input type="button" value="전체 삭제" onclick="removelunch()"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="food_area">
+                        <div class="dinner_input input_area">
+                            <input type="text" value="저녁" readonly>
+                            <input type="hidden" name="todayDinner">
+                            <input type="text" id="dinnerCal" value="0" readonly>
+                            <input type="text" value="kcal" readonly>
+                            <input type="button" class="opensearch">
+                        </div>
+                        <div type="text" class="bf_list list_area" id="dinner_result"></div>
+
+                        <div><input type="button" value="전체 삭제" onclick="removedinner()"></div>
+                    </td>
+                    <td class="food_area">
+                        <div class="snack_input input_area">
+                            <input type="text" value="간식" readonly>
+                            <input type="hidden" name="todaySnack">
+                            <input type="text" id="snackCal" value="0" readonly>
+                            <input type="text" value="kcal" readonly>
+                            <input type="button" class="opensearch">
+                        </div>
+                        <div type="text" class="bf_list list_area" id="snack_result"></div>
+
+                        <div><input type="button" value="전체 삭제" onclick="removesnack()"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <!-- <td></td> -->
+                    <td colspan="2" class="ex_area">
+                        <div class="ex_input input_area">
+                            <input type="text" value="운동" readonly>
+                            <input type="hidden" name="todayExer">
+                            <input type="text" id="exerCal" value="0" readonly>
+                            <input type="text" value="kcal" readonly style="text-align: left;">
+                            <input type="button" class="opensearch">
+                        </div>
+                        <div type="text" class="excrcise_list list_area" id="exer_result"></div>
+
+                        <div><input type="button" value="전체 삭제" onclick="removeexer()"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div class="total_area" style="text-align: center">
+                            <input type="button" onclick="totalsum()" value="최종 칼로리" style="margin-right: 15px">
+                            <input type="text" id="totalFood" placeholder="총 음식칼로리" readonly>
+                            <input type="text" value="-" readonly>
+                            <input type="text" id="totalexer" placeholder="총 운동칼로리" readonly>
+                            <input type="text" value="=" readonly>
+                            <input type="text" id="totalResult" value="0kcal" readonly>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div class="total_area" style="text-align: center">
+                            <input type="text" value="목표 칼로리" readonly>
+                            <input type="text" th:value="${user.caloriesGoal}+kcal" id="caloriesGoal" readonly>
+                            <input type="text" value="-" readonly>
+                            <input type="text" id="totalCal" value="오늘 칼로리" readonly>
+                            <input type="text" value="=" readonly>
+                            <input type="text" id="todayCal" value="0kcal" readonly>
+
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="2">
+                        <div class="total_area" style="display: flex; justify-content: space-between">
+                            <input type="text" value="탄수화물" readonly>
+                            <input type="text" id="carbo" value="0g" readonly>
+
+                            <input type="text" value="단백질" readonly>
+                            <input type="text" id="protein" value="0g" readonly>
+
+                            <input type="text" value="지방" readonly>
+                            <input type="text" id="fat" value="0g" readonly>
+                            <!--     칼로리 hidden박스 구역                       -->
+                            <input type="hidden" name="foodCalories">
+                            <input type="hidden" name="exerCalories">
+                            <input type="hidden" name="carbo">
+                            <input type="hidden" name="protein">
+                            <input type="hidden" name="fat">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <textarea name="diaryContent" class="diary_contents" cols="30" rows="10" id="summernote"
+                                  placeholder="내용을 입력해 주세요."></textarea>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <!--폼으로 보낼때 체크 눌렀지는 확인하는 유효성 검사 필요 -->
+                        <input type="button" value="챌린지 도장 찍기" class="mychallBtn" id="mychallBtn"
+                               onclick="checkMychall()">
+                    </td>
+                    <td>
+                        <!--                        공백으로 비워두기-->
+                    </td>
+                </tr>
+                <tr class="challcheckList hiddenList" id="challList">
+                    <td colspan="2">
+                        <table id="mychallDataList">
+                            <tbody id="chall-table">
+
+                            </tbody>
+
+                        </table>
+
+                    </td>
+                </tr>
+
+                <tr style="text-align: right;">
+                    <td colspan="2">
+                        <div>
+                            <input type="button" value="취소" onclick="cancel()">
+                            <input type="submit" value="수정 완료">
+                        </div>
+
+                    </td>
+                </tr>
+
+
+            </table>
+
+        </form>
+
+    </div>
+</div>
+
+
+<!-- Footer -->
+<th:block th:replace="~{layout/footer::footer}"></th:block>
+
+<!-- Scripts -->
+
+<script th:src="@{/assets/js/browser.min.js}"></script>
+<script th:src="@{/assets/js/breakpoints.min.js}"></script>
+
+<script th:src="@{/assets/js/sidebar.js}"></script>
+<!--<script th:src="@{/assets/js/profile.js}"></script>-->
+<script th:src="@{/assets/js/searchModal.js}"></script>
+
+
+<script th:src="@{/assets/js/util_sub.js}"></script>
+<script th:src="@{/assets/js/main_sub.js}"></script>
+<script th:src="@{/assets/js/calender.js}"></script>
+<script>
+
+</script>
+<script>
+
+    function removebf() {
+        document.getElementById("bf_result").innerHTML = "";
+        document.getElementById("bfCal").value = 0;
+        document.getElementsByName("todayBreakfast")[0].value = "";
+
+    }
+
+    function removelunch() {
+        document.getElementById("lunch_result").innerHTML = "";
+        document.getElementById("lunchCal").value = 0;
+        document.getElementsByName("todayLunch")[0].value = "";
+
+    }
+
+    function removedinner() {
+        document.getElementById("dinner_result").innerHTML = "";
+        document.getElementById("dinnerCal").value = 0;
+        document.getElementsByName("todayDinner")[0].value = "";
+    }
+
+    function removesnack() {
+        document.getElementById("snack_result").innerHTML = "";
+        document.getElementById("snackCal").value = 0;
+        document.getElementsByName("todaySnack")[0].value = "";
+    }
+
+    function removeexer() {
+        document.getElementById("exer_result").innerHTML = "";
+        document.getElementById("exerCal").value = 0;
+        document.getElementsByName("todayExer")[0].value = "";
+    }
+
+    function totalsum() {
+        const totalexer = Number(document.getElementById("exerCal").value);
+        const bftotal = Number(document.getElementById("bfCal").value);
+        const lunchtotal = Number(document.getElementById("lunchCal").value);
+        const dinnertal = Number(document.getElementById("dinnerCal").value);
+        const snacktotal = Number(document.getElementById("snackCal").value);
+
+        const caloriesGoa = document.getElementById("caloriesGoal").value;
+        const goalNum = caloriesGoa.slice(0, -4);
+
+
+        const foodtotal = Number(bftotal + lunchtotal + dinnertal + snacktotal).toFixed(1);
+        var totalsum = Number(foodtotal - totalexer).toFixed(1);
+        var todaycal = Number(goalNum - totalsum).toFixed(1);
+
+        // console.log(totalsum);
+        document.getElementById("totalFood").value = foodtotal + "kcal";
+        document.getElementById("totalexer").value = totalexer + "kcal";
+        document.getElementById("totalCal").value = totalsum + "kcal";
+        document.getElementById("totalResult").value = totalsum + "kcal";
+        document.getElementById("todayCal").value = todaycal + "kcal";
+
+        // hidden박스
+        document.getElementsByName("foodCalories")[0].value = foodtotal;
+        document.getElementsByName("exerCalories")[0].value = totalexer;
+
+        const todaybfList = $("input[name=todayBreakfast]").val();
+        const todayLunchList = $("input[name=todayLunch]").val();
+        const todaydinnerList = $("input[name=todayDinner]").val();
+        const todaysnackList = $("input[name=todaySnack]").val();
+
+        // console.log("아침 :" + todaybfList);
+        // console.log("점심 :" + todayLunchList);
+        // console.log("저녁 :" + todaydinnerList);
+        // console.log("간식 : " + todaysnackList);
+
+        const allListarr = [todaybfList, todayLunchList, todaydinnerList, todaysnackList];
+        var todayAllList = "";
+
+        for (var i = 0; i < allListarr.length; i++) {
+
+            if (allListarr[i] != "") {
+                todayAllList += (allListarr[i] + ",");
+            } else {
+                todayAllList += allListarr[i];
+            }
+        }
+        todayAllList = todayAllList.replace(/,$/, '');
+
+        if (todayAllList) {
+            $.ajax({
+                url: '/calorie/getfoodInfo',
+                method: 'POST',
+                data: {
+                    todayAllList: todayAllList
+                },
+                dataType: 'json',
+                success: function (data) {
+                    displayData(data.todayfoodInfo);
+
+                },
+                error: function (error) {
+                    console.error('데이터를 가져오는 중 오류 발생' + error);
+                }
+
+            })
+        }
+
+    }
+
+    function displayData(todayfoodInfo) {
+        document.getElementById("carbo").value = todayfoodInfo[0] + "g";
+        document.getElementById("protein").value = todayfoodInfo[1] + "g";
+        document.getElementById("fat").value = todayfoodInfo[2] + "g";
+
+    //     hidden 박스 저장
+        document.getElementsByName("carbo")[0].value = todayfoodInfo[0];
+        document.getElementsByName("protein")[0].value = todayfoodInfo[1];
+        document.getElementsByName("fat")[0].value = todayfoodInfo[2];
+    }
+
+    function checkMychall() {
+
+        const mychallBtn = document.getElementById("mychallBtn");
+        mychallBtn.classList.add("viewchallBtn");
+
+        const mychallview = document.getElementById("challList");
+        mychallview.classList.remove("hiddenList")
+
+        const choicedate = document.getElementsByName("choicedate")[0].value;
+        const userid = document.getElementById("userid").value;
+
+        if (userid, choicedate) {
+            $.ajax({
+                url: '/challenge/myChallInfo',
+                method: 'POST',
+                data: {
+                    userid: userid,
+                    choicedate: choicedate
+                },
+                dataType: 'json',
+                success: function (data) {
+                    displayMyChallData(data.myChallDTOList);
+
+                },
+                error: function (error) {
+                    console.error('데이터를 가져오는 중 오류 발생' + error);
+                }
+
+            })
+        }
+    }
+
+    function displayMyChallData(myChallDTOList) {
+
+        var tableBody = $('#chall-table');
+
+        if (myChallDTOList != null && myChallDTOList.length > 0) {
+            for (var i = 0; i < myChallDTOList.length; i += 2) {
+                var row = $('<tr class="mychall_area">');
+
+                var myChallData1 = myChallDTOList[i];
+                var myChallData2 = i + 1 < myChallDTOList.length ? myChallDTOList[i + 1] : null;
+
+                row.append('<td><input type="checkbox" name="todayChallNum" id="' + myChallData1.challNum + '" value="' + myChallData1.challNum + '"/>\n' +
+                    '        <label for="' + myChallData1.challNum + '">' + myChallData1.challName + '</label></td>');
+
+                if (myChallData2) {
+                    row.append('<td><input type="checkbox" name="todayChallNum" id="' + myChallData2.challNum + '" value="' + myChallData2.challNum + '"/>\n' +
+                        '        <label for="' + myChallData2.challNum + '">' + myChallData2.challName + '</label></td>');
+                } else {
+                    row.append('<td></td>');
+                }
+
+                tableBody.append(row);
+            }
+        } else {
+            var row = $('<tr class="mychall_area">');
+            row.append('<td style="text-align: center;">진행 중인 챌린지가 없습니다.</td>');
+            row.append('<td><input type="hidden" name="todayChallNum" value="0"></td>');
+            tableBody.append(row);
+        }
+
+    }
+
+    function check() {
+        const mychallBtn = document.getElementById("mychallBtn");
+
+        if (mychallBtn.classList.contains("viewchallBtn")) {
+            alert("다이어리 작성 완료!")
+            return true;
+
+        } else {
+            alert("진행 중인 챌린지 현황을 확인해 주세요!")
+            mychallBtn.focus();
+            return false;
+        }
+    }
+
+    function cancel(){
+        const choicedate = document.getElementsByName("choicedate")[0].value;
+        location.href = "/usermypage/diaryView?choicedate="+choicedate;
+    }
+
+</script>
+</body>
+</html>

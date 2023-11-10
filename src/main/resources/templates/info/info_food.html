@@ -12,22 +12,82 @@
 	<link rel="stylesheet" href="/assets/css/infoBoard.css" />
 	<noscript><link rel="stylesheet" href="/assets/css/noscript.css" /></noscript>
 	<style>
-		.content > #list {
+		.content .button{
+			margin-bottom: 30px;
+			float: right;
+			height: 35px;
+			width: 80px;
+			border-radius: 10px;
+			line-height: 35px;
+			background-color: #5a8100;
+			box-shadow: none;
+			padding: 0;
+		}
+		.content .button a{
+			color: white;
+			font-size: 14.5px;
+		}
+		table {
+			background-color: transparent;
+		}
+		table tbody tr:nth-child(2n + 1) {
+			background-color: transparent;
+		}
+		table p{
+			margin-bottom: 0;
+		}
+		table td{
+			padding: 5px 10px;
+			vertical-align: middle;
+		}
+		#thumbnail{
+			width: 210px !important;
+			height: 190px !important;
+			background-color: #5a8100;
+			padding: 10px;
+		}
+		#thumbnail #img{
+			width: 190px !important;
+			height: 170px !important;
+			background-color: beige;
+		}
+		#boardtitle{
+			padding: 0;
+		}
+		#boardtitle b{
+			font-size: 15px !important;
+		}
+
+		#boardcontent{
+			height: 100px !important;
+			overflow: hidden;
 			text-overflow: ellipsis;
 			display: -webkit-box; /* display: -webkit-box => 해당 영역을 box 형태로 관리 */
 			-webkit-line-clamp: 3; /*-webkit-line-clamp => 해당 영역 내 텍스트의 최대 라인수 */
 			-webkit-box-orient: vertical; /* -webkit-box-orient: vertical => box의 흐름 방향을 수직으로 지정 */
 		}
-		.content .button{
-			margin-bottom: 30px;
-			float: right;
+		#boardcontent p, #boardcontent span, #boardcontent b{
+			display: inline;
+			font-size: 14px !important;
+			text-decoration: none !important;
+			font-weight: normal;
+		}
+		#boardcontent img{
+			display: none;
+		}
+		#cnt {
+			height: 30px;
+			font-size: 12px;
+			line-height: 12px;
+			padding: 5px 11px;
 		}
 	</style>
 </head>
 <body class="is-preload">
 
 <!-- Header -->
-<th:block th:replace="~{layout/header::header(${session.loginUser})}"></th:block>
+<!--<th:block th:replace="~{layout/header::header(${session.loginUser})}"></th:block>-->
+<th:block th:replace="~{layout/headerNoneModal::header(${session.loginUser},${session.user})}"></th:block>
 
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">
@@ -39,68 +99,87 @@
 		<!-- Content -->
 		<div class="content">
 			<div class="cotent_header"><h2>식단</h2></div>
-			<div class="button"><a th:href="${'/info/info_write'+pageMaker.cri.listLink}">글 작성</a></div>
-			<!-- 게시글 리스트 띄우는 테이블 -->
-			<table id="list" class="info_news_list" style="border-bottom: 1px #304400">
-				<!--						<tr  valign="middle">-->
-				<!--							<td colspan="3">썸네일</td>-->
-				<!--							<td>제목</td>-->
-				<!--						</tr>-->
-				<!--						<tr>-->
-				<!--							<td></td>-->
-				<!--							<td>내용</td>-->
-				<!--						</tr>-->
-				<!--						<tr>-->
-				<!--							<td></td>-->
-				<!--							<td>조회수, 댓글</td>-->
-				<!--						</tr>-->
-				<th:block th:if="${list != null and list.size()>0}" th:each="board : ${list}">
-					<tr valign="middle">
-						<td rowspan="3">
-							<!--								[[${board.썸네일}]]-->
-						</td>
-						<td>
-							<a class="get" th:href="${board.boardNum}">
-								[[${board.boardTitle}]]
-							</a>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<a class="get" th:href="${board.boardNum}">
-								[[${board.boardContent}]]
-							</a>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<span class="reply_cnt" th:text="${reply_cnt_list[boardStat.index]}">댓글수</span>
-							<span [[${board.viewCnt}]]>조회수</span>
-						</td>
-					</tr>
-				</th:block>
-				<th:block th:if="${list == null or list.size() == 0}">
-					<tr>
-						<td colspan="6" style="text-align: center; font-size: 20px;">등록된
-							게시글이 없습니다.</td>
-					</tr>
-				</th:block>
-			</table>
+			<div class="button"><a th:href="${'/info/info_write'+pageMaker.cri.listLink}">작성하기</a></div>
+			<div style="width: 100%">
+				<!-- 게시글 리스트 띄우는 테이블 -->
+				<table id="list" class="info_food_list" style="border-bottom: 1px #304400; width: 100%;">
+					<th:block th:if="${list != null and list.size()>0}" th:each="board : ${list}">
+						<tr valign="middle">
+							<td id="thumbnail" rowspan="3" style="width: 100%">
+								<div id="img">썸네일</div>
+								<!--/*								[[${board.썸네일}]]*/-->
+							</td>
+							<td style="height: 35px; padding: 5px 10px;">
+								<a class="get" id="boardtitle" th:href="${board.boardNum}">
+									<b>[[${board.boardTitle}]]</b>
+								</a>
+							</td>
+						</tr>
+						<tr>
+							<td style="height: 45px; font-size: 14px;" >
+								<a class="get" id="boardcontent" th:href="${board.boardNum}" th:utext="${board.boardContent}">
+								</a>
+							</td>
+						</tr>
+						<tr>
+							<td id="cnt" >
+								<span style="margin-right: 10px; margin-left: 5px;">댓글수 0</span>
+								<!--								<span class="reply_cnt" th:text="${reply_cnt_list[boardStat.index]}">댓글수</span>-->
+								<span [[${board.viewCnt}]]>조회수 0</span>
+							</td>
+						</tr>
+
+					</th:block>
+					<th:block th:if="${(list == null or list.size() == 0)}">
+						<tr>
+							<td colspan="2" style="text-align: center; font-size: 14px;">등록된
+								게시글이 없습니다.</td>
+						</tr>
+					</th:block>
+				</table>
+			</div>
 			<br>
 			<!-- 페이징 처리하는 테이블 -->
 			<table class="pagination">
 				<tr align="center" valign="middle">
 					<td>
+						<!--이전버튼-->
 						<a class="changePage" th:if="${pageMaker.prev}" th:href="${pageMaker.startPage-1}">&lt;</a>
+						<!--페이지 숫자-->
 						<th:block th:each="i : ${#numbers.sequence(pageMaker.startPage,pageMaker.endPage)}">
 							<span class="nowPage" th:text="${i}" th:if="${pageMaker.cri.pagenum == i}"></span>
 							<a class="changePage" th:href="${i}" th:text="${i}" th:unless="${pageMaker.cri.pagenum == i}"></a>
 						</th:block>
+						<!--다음버튼-->
 						<a class="changePage" th:if="${pageMaker.next}" th:href="${pageMaker.endPage+1}">&gt;</a>
 					</td>
 				</tr>
 			</table>
-
+			<!-- 검색 -->
+			<form id="searchForm" th:action="@{/info/info_food}">
+				<div class="search_area">
+					<select name="type">
+						<option value="" th:selected="${pageMaker.cri.type == null}">검색</option>
+						<option value="T" th:selected="${pageMaker.cri.type == 'T'}">제목</option>
+						<option value="C" th:selected="${pageMaker.cri.type == 'C'}">내용</option>
+						<option value="W" th:selected="${pageMaker.cri.type == 'W'}">작성자</option>
+						<option value="TC" th:selected="${pageMaker.cri.type == 'TC'}">제목 또는 내용</option>
+						<option value="TW" th:selected="${pageMaker.cri.type == 'TW'}">제목 또는 작성자</option>
+						<option value="TCW" th:selected="${pageMaker.cri.type == 'TCW'}">제목 또는 내용 또는 작성자</option>
+					</select>
+					<input type="text" name="keyword" id="keyword" th:value="${pageMaker.cri.keyword}">
+					<a href="#" class="button primary">검색</a>
+				</div>
+				<input type="hidden" value="1" name="pagenum">
+				<input type="hidden" value="10" name="amount">
+			</form>
+			<!--페이지폼-->
+			<form name="pageForm" id="pageForm" th:action="@{/info/info_food}">
+				<input type="hidden" name="pagenum" th:value="${pageMaker.cri.pagenum}">
+				<input type="hidden" name="amount" th:value="${pageMaker.cri.amount}">
+				<input type="hidden" name="type" th:value="${pageMaker.cri.type}">
+				<input type="hidden" name="keyword" th:value="${pageMaker.cri.keyword}">
+			</form>
 		</div>
 
 
@@ -144,4 +223,38 @@
 <script src="/assets/js/util_sub.js"></script>
 <script src="/assets/js/main_sub.js"></script>
 </body>
+<script th:inline="javascript">
+	const searchForm = $("#searchForm");
+	const pageForm = $("#pageForm");
+
+	$(".changePage").on("click",function(e){
+		//e(이벤트)의 기본 작동 막기
+		e.preventDefault();
+		let pagenum = $(this).attr("href");
+		pageForm.find("input[name='pagenum']").val(pagenum);
+		pageForm.submit();
+	});
+	$(".get").on("click",function(e){
+		e.preventDefault();
+		let boardNum = $(this).attr("href");
+		let url=/*[[@{/info/info_get}]]*/'';
+		pageForm.append("<input type='hidden' name='boardNum' value='"+boardNum+"'>")
+		pageForm.attr("action",url);
+		pageForm.attr("method","get");
+		pageForm.submit();
+	})
+
+	$("#searchForm a").on("click",sendit);
+	function sendit(){
+		if(!searchForm.find("option:selected").val()){
+			alert("검색 기준을 선택하세요!");
+			return false;
+		}
+		if(!$("input[name='keyword']").val()){
+			alert("키워드를 입력하세요!");
+			return false;
+		}
+		searchForm.submit();
+	}
+</script>
 </html>

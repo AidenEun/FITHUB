@@ -77,9 +77,10 @@
 .searchModalBox #modal_contents .choice_list{
     margin-top: 20px;
     margin-bottom: 20px;
-    height: 200px;
+    height: 250px;
     border: 1px solid black;
     border-radius: 10px;
+    overflow-y : auto;
 }
 .searchModalBox #modal_contents .top{
     display: flex;

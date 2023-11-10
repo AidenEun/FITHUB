@@ -101,8 +101,17 @@ border: 1px solid black;
 		text-align:left;
 
 	}
-
-
+#list_table{
+	display: flex;
+}
+#list_info{
+width: 540px;
+}
+.profile-file{
+border:1px solid black;
+width: 200px;
+height:152.469px;
+}
 
 
 
@@ -234,30 +243,38 @@ border: 1px solid black;
 			<div class="TrainerMatching_box">
 				<div class="matching_list">
 					<div>
-						<th:block  th:if="${list != null and list.size()>0}" th:each="board : ${list}">
-							<div >
-								<table>
+						<th:block th:if="${list != null and list.size() > 0}" th:each="board : ${list}">
+							<a class="get" th:href="${board.boardNum}">
+							<div id="list_table">
+
+								<table id="list_info">
 									<tr>
-										<td data-trainer-id="[[${board.trainer_id}]]"></td>
-										<th class="trainerNickname" colspan="2"></th>
-										<!--<span class="review_cnt" th:text="'['+${review_cnt_list[boardStat.index]}+']'"></span>-->
+										<th id="trainerNickname" colspan="3">
+											<span th:text="${board.trainerInfo.trainerNickname}"></span>
+										</th>
 									</tr>
 									<tr>
 										<td>[[${board.likeCnt}]]</td>
 										<td>[[${board.bookmarkCnt}]]</td>
-										<td class="trainerCareer"></td>
+										<td id="trainerCareer">
+											<span th:text="${board.trainerInfo.trainerCareer}"></span>
+										</td>
 									</tr>
 									<tr>
 										<td colspan="3">[[${board.boardTitle}]]</td>
 									</tr>
 								</table>
-								<div class="profile-pic">
-									프로필 사진 1
+								<div class="profile-file">
+									<th:block th:if="${board.profileInfo != null}">
+										<img style="width:100%; height:100%;" th:src="@{/matching/thumbnail (sysName=${board.profileInfo.sysName})}">
+									</th:block>
 								</div>
-							</div>
-						</th:block>
 
+							</div>
+							</a>
+						</th:block>
 					</div>
+
 
 				</div>
 			</div>
@@ -304,22 +321,6 @@ border: 1px solid black;
 <script th:src="@{/assets/js/sidebar.js}"></script>
 </body>
 <script>
-	$(document).ready(function() {
-    $('td[data-trainer-id]').each(function() {
-        var trainerId = $(this).data('trainer-id');
-        var nicknameCell = $(this).closest('tr').find('.trainerNickname'); // .trainerNickname 클래스를 가진 <th> 요소 선택
-        var careerCell = $(this).closest('tr').find('.trainerCareer'); // .trainerCareer 클래스를 가진 <td> 요소 선택
-
-        $.ajax({
-            url: '/matching/getTrainerInfo',
-            data: { trainerId: trainerId },
-            success: function(data) {
-                nicknameCell.text(data.nickname);
-                careerCell.text(data.career);
-            }
-        });
-    });
-});
 
 
 
@@ -333,15 +334,20 @@ border: 1px solid black;
 		pageForm.find("input[name='pagenum']").val(pagenum);
 		pageForm.submit();
 	});
-	$(".get").on("click",function(e){
-		e.preventDefault();
-		let boardnum = $(this).attr("href");
-		let url=/*[[@{/board/get}]]*/'';
-		pageForm.append("<input type='hidden' name='boardnum' value='"+boardnum+"'>")
-		pageForm.attr("action",url);
-		pageForm.attr("method","get");
-		pageForm.submit();
-	})
+
+
+ $('.get').click(function(event) {
+    event.preventDefault();
+      var boardNum = $(this).attr('href');
+      console.log(boardNum);
+      // 다음 페이지 URL 구성
+      var Url = '/matching/matching_view?boardNum=' + boardNum;
+		console.log(Url);
+      // 페이지 이동
+      window.location.href = Url;
+
+  });
+
 
 	$("#searchForm a").on("click",sendit);
 	function sendit(){

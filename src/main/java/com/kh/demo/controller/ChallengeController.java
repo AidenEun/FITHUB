@@ -33,10 +33,10 @@ public class ChallengeController {
 
     @PostMapping("myChallInfo")
     @ResponseBody
-    public String myChallInfo(@RequestParam("userid") String userid){
+    public String myChallInfo(@RequestParam("userid") String userid,@RequestParam("choicedate") String choicedate){
         ObjectNode json = JsonNodeFactory.instance.objectNode();
-        List<MyChallengeDTO> myChallDTOList =challService.findMychall(userid);
-        System.out.println(myChallDTOList);
+        List<MyChallengeDTO> myChallDTOList =challService.findMychall(userid,choicedate);
+//        System.out.println(myChallDTOList);
         json.putPOJO("myChallDTOList",myChallDTOList);
         return json.toString();
     }

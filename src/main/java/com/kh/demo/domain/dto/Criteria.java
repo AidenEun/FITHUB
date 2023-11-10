@@ -10,29 +10,30 @@ public class Criteria {
 	private String type;
 	private String keyword;
 	private int startrow;
-	
+	private String boardCategory;
+
 	public Criteria() {
 		this(1,10);
 	}
-	
+
 	public Criteria(int pagenum, int amount) {
 		this.pagenum = pagenum;
 		this.amount = amount;
 		this.startrow = (this.pagenum - 1) * this.amount;
 	}
-	
+
 	public void setPagenum(int pagenum) {
 		this.pagenum = pagenum;
 		this.startrow = (this.pagenum - 1) * this.amount;
 	}
-	
-//	MyBatis에서 #{typeArr} 로 사용 가능
+
+	//	MyBatis에서 #{typeArr} 로 사용 가능
 	public String[] getTypeArr() {
 		//type이 null이라면 return {}
 		//type이 "TC"라면 return {"T","C"}
 		return type == null ? new String[] {} : type.split("");
 	}
-	
+
 	public String getListLink() {
 		// /board/write?userid=apple
 		// fromPath("/board/write").queryParam("userid","apple")

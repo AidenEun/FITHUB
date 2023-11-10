@@ -14,4 +14,8 @@ public interface TrainerMatchingMapper {
 
 
     Long getLastNum(String trainerId);
+
+   void updateViewCount(Long boardNum);
+
+    List<TrainerMatchingBoardDTO> boardView(Long boardNum);
 }

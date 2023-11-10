@@ -1,7 +1,8 @@
 package com.kh.demo.service;
 
-import com.kh.demo.domain.dto.Criteria;
-import com.kh.demo.domain.dto.TrainerMatchingBoardDTO;
+import com.kh.demo.domain.dto.*;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
@@ -16,7 +17,15 @@ public interface TrainerMatchingService {
 
    /* ArrayList<Integer> getReviewCntList(List<TrainerMatchingBoardDTO> list);*/
 
-    String getNickname(String trainerId);
+    ResponseEntity<Resource> getThumbnailResource(String sysName) throws Exception;
 
-    String getCareer(String trainerId);
+    List<TrainerMatchingBoardDTO> boardView(Long boardNum);
+
+    void updateViewCount(Long boardNum);
+
+    ProfileDTO getProfileInfo(String trainerId);
+
+    ProfileDTO getCareerInfo(String trainerId);
+
+    TrainerDTO getTrainerInfo(String trainerId);
 }

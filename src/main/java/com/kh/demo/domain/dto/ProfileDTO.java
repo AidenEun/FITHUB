@@ -8,4 +8,5 @@ public class ProfileDTO {
     private String sysName;
     private String orgName;
     private String profileCategory;
+
 }

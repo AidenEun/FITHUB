@@ -71,59 +71,43 @@
       background-color: white !important;
       height: 30px;
   }
- .write_table:hover {
-  transform: scale(1.3);
-  transition: transform 0.2s;
-  box-shadow: 8px 8px 11px rgba(0, 0, 0, 0.3); /* 그림자 효과 추가 */
+.write_table:hover {
+    transform: scale(1.04);
+    transition: transform 0.2s;
+    box-shadow: 8px 8px 11px rgba(0, 0, 0, 0.3); /* 그림자 효과 추가 */
 
 }
 
 .write_table:active {
-  transform: scale(1.3);
+    transform: scale(1.04);
 }
-
   .write_table tr:hover{
       background-color: #ebede1 !important;
        transition: transform 0.2s;
   }
-  .write_table tr td input{
-      border: none;
-      border-bottom: 1px solid gray !important;
-  }
-  .write_table tr td input::placeholder{
-      color: gray !important;
-  }
 
-  .write_table tr td select{
-      border-bottom: 1px solid gray !important;
-  }
-#content_title{
-border-bottom:none;
+.cotent_header{
+  font-size: 30px;
+  font-weight:bold;
+  margin-bottom: 50px;
 }
-.font-size{
-  width: 140px;
+#profileInfo{
+width: 350px;
 }
-.font-size2{
-  width: 220px;
-  border: none;
-  border-bottom: 1px solid gray !important;
+#profileInfo img{
+max-width: 100%;
+    height: auto;
+    display: block; /* 이미지 사이에 생기는 여백을 제거하기 위해 추가 */
+    margin: auto; /* 이미지를 가운데 정렬하기 위해 추가 */
 }
-.font-size2 option{
-  color: gray !important;
+#careerInfo{
+width: 700px;
+ height: 270px;
 }
-.adrr_text input{
-   border: none;
-  border-bottom: 1px solid gray !important;
-}
-.adrr_text input::placeholder{
-   color: gray !important;
-}
-#summernote{
-  border-bottom: 1px solid gray;
-   color: gray !important;
-}
-#summernote::placeholder{
-   color: gray !important;
+#careerInfo img{
+  margin: auto;
+  width: 200px;
+ height: 250px;
 }
 #content_title th{
  padding-top: 20px;
@@ -152,33 +136,6 @@ border-bottom:none;
 }
 
 
-
-
-
-
-
-<!-- datepicker -->
-#expiration_time {
-          display: inline-block;
-          z-index: 500;
-      }
-#expiration_time input{
-          width: 190px;
-          height: 50px;
-          color: #74b49b;
-          font-size:25px;
-          font-weight: bold;
-          border-radius: 10px;
-      }
-#expiration_time input::placeholder{
-       font-weight:bold;
-       font-size: 15px !important;
-      }
-
-      .datepicker {
-          display: inline-block;
-
-      }
 
 
 <!-- sidebar -->
@@ -215,103 +172,156 @@ border-bottom:none;
 
     <header class="major">
       <h2>트레이너 매칭</h2>
-      <p>매칭 페이지</p>
+      <p>매칭 글 페이지</p>
     </header>
 
     <!-- Content -->
     <div class="content">
-      <div class="cotent_header"><h2>매칭 글 작성하기</h2></div>
+      <th:block th:if="${list != null and list.size() > 0}" th:each="board : ${list}">
+      <div class="cotent_header"><span>[[${trainerInfo.trainerNickname}]]님의 글입니다</div>
 
-      <form id="boardForm" method="post" name="boardForm" th:action="@{/matching/matching_write}">
+        <form>
 
-        <input type="hidden" th:value="${cri.pagenum}" name="pagenum">
+       <!-- <input type="hidden" th:value="${cri.pagenum}" name="pagenum">
         <input type="hidden" th:value="${cri.amount}" name="amount">
         <input type="hidden" th:value="${cri.type}" name="type">
         <input type="hidden" th:value="${cri.keyword}" name="keyword">
         <input type="hidden" name="boardCategory">
-
+-->
 
         <!-- 글작성 테이블 -->
-        <table class="write_table" style="border-collapse: collapse;" border="2">
-          <tr>
-            <th>제목</th>
-            <td colspan="3">
-              <input type="text" name="boardTitle" size="50" maxlength="50" placeholder="제목을 입력하세요.">
-            </td>
-          </tr>
-          <tr>
-            <th>작성자</th>
-            <td>
-              <input type="text" name="trainerId" th:value="${session.loginUser}" readonly>
-            </td>
-            <th>만료 일시</th>
-            <td class="datepicker">
+        <div>
 
-              <label for="expiration_time"><b style="color: gray"></b></label>
-              <input type="text" id="expiration_time" name="expirationTime" placeholder="마감 일을 지정해주세요">
-            </td>
-          </tr>
-          <tr>
-            <th class="font-size">상담 가능 요일</th>
-            <td>
-              <select id="avail_consult_weeks" name="availConsultWeeks" class="font-size2">
-                <option>전체 요일 가능</option>
-                <option>월요일</option>
-                <option>화요일</option>
-                <option>수요일</option>
-                <option>목요일</option>
-                <option>금요일</option>
-                <option>토요일</option>
-                <option>일요일</option>
-              </select>
-            </td>
-            <th class="font-size">상담 가능 시간</th>
-            <td>
-              <select id="avail_consult_time" name="availConsultTime" class="font-size2">
-                <option>편한 시간 가능</option>
-                <option>09:00 ~ 12:00</option>
-                <option>12:00 ~ 15:00</option>
-                <option>15:00 ~ 18:00</option>
-                <option>18:00 ~ 21:00</option>
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <th colspan="2" class="adrr_text"><input type="text" id="sample4_postcode" name="trainerZipcode" placeholder="우편번호"></th>
-            <td colspan="2"><input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br></td>
-          </tr>
-          <tr>
-            <th colspan="2" class="adrr_text"><input type="text" name="trainerAddr" id="sample4_roadAddress" placeholder="도로명주소"></th>
-            <span id="guide" style="color:#999;display:none"></span>
-            <td colspan="2" class="adrr_text">
-              <input type="text" name="trainerAddrdetail" id="sample4_detailAddress" placeholder="상세주소">
-              <input type="hidden" id="sample4_extraAddress" name="trainerAddretc" placeholder="참고항목">
-            </td>
-          </tr>
-          <tr id="content_title">
-            <th colspan="4">트레이닝 매칭 글 작성해주세요.</th>
-          </tr>
-          <tr style="height:380px;" id="content_tr">
-            <td colspan="4">
-              <textarea id="summernote" name="boardContent" style="width:100%;height:350px;resize:none;" placeholder="내용을 입력해주세요"></textarea>
-            </td>
-          </tr>
-        </table>
+          <table class="write_table" style="border-collapse: collapse;" border="2">
+            <tr>
+              <th>제목</th>
+              <th>만료일시 : </th>
+              <th>[[${board.expirationTime}]]</th>
+            </tr>
+            <tr>
+              <td colspan="3">
+                <input type="text" name="boardTitle" size="50" maxlength="50" th:value="${board.boardTitle}" readonly>
+              </td>
+            </tr>
+            <tr>
+              <th rowspan="6" id="profileInfo">
+                <th:block th:if="${profileInfo != null}">
+                <img style="width:100%; height:100%;" th:src="@{/matching/thumbnail (sysName=${profileInfo.sysName})}">
+              </th:block></th>
+              <th>트레이너</th>
+              <th>상담가능시간</th>
+            </tr>
+            <tr>
+              <td>
+                [[${trainerInfo.trainerNickname}]]
+              </td>
+              <td>
+                [[${board.availConsultWeeks}]]
+                [[${board.availConsultTime}]]
+              </td>
+            </tr>
+            <tr>
+              <th>파트</th>
+              <th>경력</th>
+            </tr>
+            <tr>
+              <th>[[${trainerInfo.trainerPart}]]</th>
+              <th>[[${trainerInfo.trainerCareer}]]</th>
+            </tr>
+            <tr>
+              <th colspan="2" >트레이너 소개</th>
+            </tr>
+            <tr>
+              <th colspan="2" >[[${trainerInfo.trainerIntro}]]</th>
+            </tr>
+            <tr>
+              <th colspan="3">트레이너의 위치</th>
+            </tr>
+            <tr>
+              <th colspan="3">[[${board.trainerAddr}]]</th>
+            </tr>
+            <tr>
+              <th colspan="3">
+              <div id="map" style="width:100%;height:350px;"></div>
+              <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9d457fe0b04b983671f48d03d84f2fdb&libraries=services"></script>
+              <script>
+                var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+                    mapOption = {
+                        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                        level: 3 // 지도의 확대 레벨
+                    };
+
+                // 지도를 생성합니다
+                var map = new kakao.maps.Map(mapContainer, mapOption);
+
+                // 주소-좌표 변환 객체를 생성합니다
+                var geocoder = new kakao.maps.services.Geocoder();
+
+                var address = '[[${board.trainerAddr}]]';
+
+
+                // 주소로 좌표를 검색합니다
+                geocoder.addressSearch(address, function(result, status) {
+
+                    // 정상적으로 검색이 완료됐으면
+                     if (status === kakao.maps.services.Status.OK) {
+
+                        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+                        // 결과값으로 받은 위치를 마커로 표시합니다
+                        var marker = new kakao.maps.Marker({
+                            map: map,
+                            position: coords
+                        });
+
+                        // 인포윈도우로 장소에 대한 설명을 표시합니다
+                        var infowindow = new kakao.maps.InfoWindow({
+                            content: '<div style="width:150px;text-align:center;padding:6px 0;">[[${trainerInfo.trainerNickname}]]</div>'
+                        });
+                        infowindow.open(map, marker);
+
+                        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+                        map.setCenter(coords);
+                    }
+                });
+              </script>
+              </th>
+            </tr>
+            <tr>
+              <th colspan="3">내용</th>
+            </tr>
+            <tr style="height:380px;" id="content_tr">
+              <td colspan="3">
+                <textarea name="boardContent" style="width:100%;height:350px;resize:none;" readonly>[[${board.boardContent}]]</textarea>
+              </td>
+            </tr>
+            <tr>
+              <th>경력 및 자격 사진</th>
+            </tr>
+          </table>
+          <div>
+            <div id="careerInfo">
+              <th:block th:if="${careerInfo != null}">
+                <img th:src="@{/matching/thumbnail (sysName=${careerInfo.sysName})}">
+              </th:block>
+            </div>
+          </div>
+        </div>
       </form>
+
       <!-- 등록, 목록 버튼 테이블 -->
       <table class="button_table">
         <tr align="center" valign="middle">
           <td>
-            <a href="javascript:sendit()">등록</a> <!-- javascript의 sendit 함수 호출 -->
+            <a>신청하기</a>
           </td>
           <td>
-
-            <a th:href="${'/matching/matching_list'+cri.listLink}">취소</a> <!-- cri.listLink를 붙여 목록으로 돌아가기 -->
+            <a th:href="${'/matching/matching_list'}">취소</a>
           </td>
         </tr>
       </table>
     </div>
-
+    </th:block>
 
     <!-- Sidebar -->
     <div class="sidebar">
@@ -366,6 +376,7 @@ myElement.addEventListener("mouseleave", () => {
 myElement.addEventListener("click", () => {
   // 클릭 시 다른 동작 수행
 });
+
 
 </script>
 </html>

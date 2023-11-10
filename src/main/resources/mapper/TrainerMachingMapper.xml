@@ -37,4 +37,15 @@
     <select id="getLastNum">
         select max(board_num) from trainer_matching_board where trainer_id=#{trainerId}
     </select>
+
+    <select id="boardView">
+        select * from trainer_matching_board where board_num=#{boardNum}
+    </select>
+
+    <update id="updateViewCount">
+        update trainer_matching_board set view_cnt = view_cnt + 1 where board_num=#{boardNum}
+    </update>
+
+
+
 </mapper>
