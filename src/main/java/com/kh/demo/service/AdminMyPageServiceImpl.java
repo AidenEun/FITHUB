@@ -14,7 +14,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Qualifier("AdminMyPageServiceImpl")
@@ -356,11 +358,21 @@ public class AdminMyPageServiceImpl implements AdminMyPageService {
 
     @Override
     public void signUpConfirm(TrainerSignUpDTO signUpDTO, UserDTO userDTO) {
-        System.out.println(userDTO);
-//        adminMyPageMapper.updateUserCategory(userDTO.getUserId());
-//        adminMyPageMapper.insertTrainer(signUpDTO, userDTO);
-//        adminMyPageMapper.insertMessageConfirmSignUp(userDTO.getUserId());
-//        adminMyPageMapper.deleteSignUp(signUpDTO.getSignupNum());
+        adminMyPageMapper.updateUserCategory(userDTO.getUserId());
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("signUpDTO", signUpDTO);
+        map.put("userDTO", userDTO);
+
+        adminMyPageMapper.insertTrainer(map);
+        adminMyPageMapper.insertMessageConfirmSignUp(userDTO.getUserId());
+        adminMyPageMapper.deleteSignUp(signUpDTO.getSignupNum());
+    }
+
+    @Override
+    public void signUpCancel(Long signupNum, String userId) {
+        adminMyPageMapper.insertMessageCancelSignUp(userId);
+        adminMyPageMapper.deleteSignUp(signupNum);
     }
 
 }

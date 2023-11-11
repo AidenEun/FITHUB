@@ -4,6 +4,7 @@ import com.kh.demo.domain.dto.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface AdminMyPageMapper {
@@ -119,9 +120,11 @@ public interface AdminMyPageMapper {
 
     void updateUserCategory(String userId);
 
-    void insertTrainer(TrainerSignUpDTO signUpDTO, UserDTO userDTO);
+    void insertTrainer(Map<String, Object> map);
 
     void insertMessageConfirmSignUp(String userId);
+
+    void insertMessageCancelSignUp(String userId);
 
     void deleteSignUp(Long signupNum);
 
