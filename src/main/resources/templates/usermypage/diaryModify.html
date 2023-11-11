@@ -221,7 +221,8 @@
     input[readonly] {
         pointer-events: none;
     }
-    .input_area input[type=text]:nth-child(1){
+
+    .input_area input[type=text]:nth-child(1) {
         text-align: center;
     }
 
@@ -254,14 +255,15 @@
     </div>
 
     <div id="main_box">
-<!--        <form id="diaryForm" action="/usermypage/diaryWrite" method="post">-->
-        <form id="diaryForm" th:action="@{/usermypage/diaryView}" method="post">
+        <!--        <form id="diaryForm" action="/usermypage/diaryWrite" method="post">-->
+        <form id="diaryForm" th:action="@{/usermypage/diaryModify}" method="post">
 
             <table class="diary_write">
                 <tr>
                     <td>
-                        <input type="hidden" name="choicedate" th:value="${regdate}">
-                        <input type="text" name="regdate" th:value="${regdate}" readonly>
+                        <input type="hidden" name="choicedate" th:value="${diary.regdate}">
+                        <input type="text" name="regdate" th:value="${diary.regdate}" readonly>
+                        <input type="hidden" name="diaryNum" th:value="${diary.diaryNum}">
                     </td>
                     <td>
                         <input type="text" th:value="${user.userNickname}" readonly>
@@ -269,9 +271,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <!-- <td></td> -->
-                    <td colspan="2"><input type="text" name="diaryTitle" placeholder="제목을 입력하세요"
-                                           onfocus="this.placeholder = '' "></td>
+                    <td colspan="2"><input type="text" name="diaryTitle" th:value="${diary.diaryTitle}"></td>
                 </tr>
                 <tr>
                     <!-- <td></td> -->
@@ -279,12 +279,13 @@
                         <div class="weight_area box_flex">
                             <div><input type="text" value="목표 체중" readonly></div>
 
-                            <div><input type="text" id="weightGoal" th:value="${user.weightGoal}" readonly></div>
+                            <div><input type="text" id="weightGoal" th:value="${user.weightGoal}+kg" readonly></div>
 
                             <div><input type="text" value="현재 체중" readonly></div>
 
                             <div><input type="text" name="todayWeight" id="todayweight"
-                                        placeholder="0" onfocus="this.placeholder = '' " onkeyup="weightsum()"></div>
+                                        th:value="${diary.todayWeight}"
+                                        onkeyup="weightsum()"></div>
 
                             <div><input type="text" value="kg" readonly></div>
                         </div>
@@ -294,7 +295,7 @@
                     <td colspan="2">
                         <div class="weight_result box_flex">
                             <div><input type="text" value="오늘의 비교" readonly onfocus="this.blur();"></div>
-                            <div><input type="text" id="resultweight" value="0" readonly></div>
+                            <div><input type="text" id="resultweight" th:value="${resultweight}" readonly></div>
                             <div><input type="text" value="kg" readonly></div>
                         </div>
                     </td>
@@ -303,24 +304,23 @@
                     <td class="food_area">
                         <div class="bf_input input_area">
                             <input type="text" value="아침" readonly>
-                            <input type="hidden" name="todayBreakfast">
-                            <input type="text" id="bfCal" value="0" readonly>
+                            <input type="hidden" name="todayBreakfast" th:value="${diary.todayBreakfast}">
+                            <input type="text" id="bfCal" th:value="${foodCalArr[0]}" readonly>
                             <input type="text" value="kcal" readonly>
                             <input type="button" class="opensearch">
                         </div>
-                        <div class="bf_list list_area" id="bf_result" readonly>
-                        </div>
+                        <div class="list_area" id="bf_result" th:text="${listNameArr[0]}" readonly></div>
                         <div><input type="button" value="전체 삭제" onclick="removebf()"></div>
                     </td>
                     <td class="food_area">
                         <div class="lunch_input input_area">
                             <input type="text" value="점심" readonly>
-                            <input type="hidden" name="todayLunch">
-                            <input type="text" id="lunchCal" value="0" readonly>
+                            <input type="hidden" name="todayLunch" th:value="${diary.todayLunch}">
+                            <input type="text" id="lunchCal" th:value="${foodCalArr[1]}" readonly>
                             <input type="text" value="kcal" readonly>
                             <input type="button" class="opensearch">
                         </div>
-                        <div type="text" class="bf_list list_area" id="lunch_result"></div>
+                        <div type="text" class="list_area" id="lunch_result" th:text="${listNameArr[1]}" readonly></div>
                         <div><input type="button" value="전체 삭제" onclick="removelunch()"></div>
                     </td>
                 </tr>
@@ -328,25 +328,23 @@
                     <td class="food_area">
                         <div class="dinner_input input_area">
                             <input type="text" value="저녁" readonly>
-                            <input type="hidden" name="todayDinner">
-                            <input type="text" id="dinnerCal" value="0" readonly>
+                            <input type="hidden" name="todayDinner" th:value="${diary.todayDinner}">
+                            <input type="text" id="dinnerCal" th:value="${foodCalArr[2]}" readonly>
                             <input type="text" value="kcal" readonly>
                             <input type="button" class="opensearch">
                         </div>
-                        <div type="text" class="bf_list list_area" id="dinner_result"></div>
-
+                        <div type="text" class="list_area" id="dinner_result" th:text="${listNameArr[2]}" readonly></div>
                         <div><input type="button" value="전체 삭제" onclick="removedinner()"></div>
                     </td>
                     <td class="food_area">
                         <div class="snack_input input_area">
                             <input type="text" value="간식" readonly>
-                            <input type="hidden" name="todaySnack">
-                            <input type="text" id="snackCal" value="0" readonly>
+                            <input type="hidden" name="todaySnack" th:value="${diary.todaySnack}">
+                            <input type="text" id="snackCal" th:value="${foodCalArr[3]}" readonly>
                             <input type="text" value="kcal" readonly>
                             <input type="button" class="opensearch">
                         </div>
-                        <div type="text" class="bf_list list_area" id="snack_result"></div>
-
+                        <div type="text" class="list_area" id="snack_result" th:text="${listNameArr[3]}" readonly></div>
                         <div><input type="button" value="전체 삭제" onclick="removesnack()"></div>
                     </td>
                 </tr>
@@ -355,13 +353,14 @@
                     <td colspan="2" class="ex_area">
                         <div class="ex_input input_area">
                             <input type="text" value="운동" readonly>
-                            <input type="hidden" name="todayExer">
-                            <input type="text" id="exerCal" value="0" readonly>
+                            <input type="hidden" name="todayExer" th:value="${diary.todayExer}">
+                            <input type="text" id="exerCal"
+                                   th:value="${diary.exerCalories}" readonly>
                             <input type="text" value="kcal" readonly style="text-align: left;">
                             <input type="button" class="opensearch">
                         </div>
-                        <div type="text" class="excrcise_list list_area" id="exer_result"></div>
-
+                        <div type="text" class="excrcise_list list_area" id="exer_result" th:text="${listNameArr[4]}"
+                             readonly></div>
                         <div><input type="button" value="전체 삭제" onclick="removeexer()"></div>
                     </td>
                 </tr>
@@ -369,11 +368,16 @@
                     <td colspan="2">
                         <div class="total_area" style="text-align: center">
                             <input type="button" onclick="totalsum()" value="최종 칼로리" style="margin-right: 15px">
-                            <input type="text" id="totalFood" placeholder="총 음식칼로리" readonly>
+                            <input type="text" id="totalFood"
+                                   th:value="${diary.foodCalories != null ? diary.foodCalories+'kcal' : '0kcal'}"
+                                   readonly>
                             <input type="text" value="-" readonly>
-                            <input type="text" id="totalexer" placeholder="총 운동칼로리" readonly>
+                            <input type="text" id="totalexer"
+                                   th:value="${diary.exerCalories != null ? diary.exerCalories+'kcal' : '0kcal'}"
+                                   readonly>
                             <input type="text" value="=" readonly>
-                            <input type="text" id="totalResult" value="0kcal" readonly>
+                            <input type="text" id="totalResult"
+                                   th:value="${totalResult != null ? totalResult+'kcal' : '0kcal'}" readonly>
                         </div>
                     </td>
                 </tr>
@@ -383,10 +387,9 @@
                             <input type="text" value="목표 칼로리" readonly>
                             <input type="text" th:value="${user.caloriesGoal}+kcal" id="caloriesGoal" readonly>
                             <input type="text" value="-" readonly>
-                            <input type="text" id="totalCal" value="오늘 칼로리" readonly>
+                            <input type="text" id="totalCal" th:value="${totalResult != null ? totalResult+'kcal' : '0kcal'}" readonly>
                             <input type="text" value="=" readonly>
-                            <input type="text" id="todayCal" value="0kcal" readonly>
-
+                            <input type="text" id="todayCal" th:value="${user.caloriesGoal}-${totalResult}+'kcal'" readonly>
                         </div>
                     </td>
                 </tr>
@@ -395,46 +398,48 @@
                     <td colspan="2">
                         <div class="total_area" style="display: flex; justify-content: space-between">
                             <input type="text" value="탄수화물" readonly>
-                            <input type="text" id="carbo" value="0g" readonly>
+                            <input type="text" id="carbo" th:value="${diary.carbo != null ? diary.carbo+'g' : '0g'}" readonly>
 
                             <input type="text" value="단백질" readonly>
-                            <input type="text" id="protein" value="0g" readonly>
+                            <input type="text" id="protein" th:value="${diary.protein != null ? diary.protein+'g' : '0g'}" readonly>
 
                             <input type="text" value="지방" readonly>
-                            <input type="text" id="fat" value="0g" readonly>
+                            <input type="text" id="fat" th:value="${diary.fat != null ? diary.fat+'g' : '0g'}" readonly>
                             <!--     칼로리 hidden박스 구역                       -->
-                            <input type="hidden" name="foodCalories">
-                            <input type="hidden" name="exerCalories">
-                            <input type="hidden" name="carbo">
-                            <input type="hidden" name="protein">
-                            <input type="hidden" name="fat">
+                            <input type="hidden" name="foodCalories" th:value="${diary.foodCalories}">
+                            <input type="hidden" name="exerCalories" th:value="${diary.exerCalories}">
+                            <input type="hidden" name="carbo" th:value="${diary.carbo}">
+                            <input type="hidden" name="protein" th:value="${diary.protein}">
+                            <input type="hidden" name="fat" th:value="${diary.fat}">
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2">
                         <textarea name="diaryContent" class="diary_contents" cols="30" rows="10" id="summernote"
-                                  placeholder="내용을 입력해 주세요."></textarea>
+                                  th:text="${diary.diaryContent}"></textarea>
                     </td>
                 </tr>
 
                 <tr>
                     <td>
                         <!--폼으로 보낼때 체크 눌렀지는 확인하는 유효성 검사 필요 -->
-                        <input type="button" value="챌린지 도장 찍기" class="mychallBtn" id="mychallBtn"
+                        <input type="button" value="챌린지 도장 찍기" class="mychallBtn viewchallBtn" id="mychallBtn"
                                onclick="checkMychall()">
                     </td>
                     <td>
                         <!--                        공백으로 비워두기-->
                     </td>
                 </tr>
-                <tr class="challcheckList hiddenList" id="challList">
+                <tr class="challcheckList" id="challList">
                     <td colspan="2">
+                        <input type="hidden" id="myINGChallNum" name="myINGChallNum">
                         <table id="mychallDataList">
-                            <tbody id="chall-table">
-
-                            </tbody>
-
+                            <th:block th:if="${diary.todayChallNum == null or diary.todayChallNum == 0 }">
+                                <tbody id="chall-table">
+                                <td style="text-align: center;">진행 중인 챌린지가 없습니다.</td>
+                                </tbody>
+                            </th:block>
                         </table>
 
                     </td>
@@ -444,7 +449,7 @@
                     <td colspan="2">
                         <div>
                             <input type="button" value="취소" onclick="cancel()">
-                            <input type="submit" value="수정 완료">
+                            <input type="button" value="수정 완료" onclick="sendit()">
                         </div>
 
                     </td>
@@ -587,7 +592,7 @@
         document.getElementById("protein").value = todayfoodInfo[1] + "g";
         document.getElementById("fat").value = todayfoodInfo[2] + "g";
 
-    //     hidden 박스 저장
+        //     hidden 박스 저장
         document.getElementsByName("carbo")[0].value = todayfoodInfo[0];
         document.getElementsByName("protein")[0].value = todayfoodInfo[1];
         document.getElementsByName("fat")[0].value = todayfoodInfo[2];
@@ -596,32 +601,36 @@
     function checkMychall() {
 
         const mychallBtn = document.getElementById("mychallBtn");
-        mychallBtn.classList.add("viewchallBtn");
-
         const mychallview = document.getElementById("challList");
-        mychallview.classList.remove("hiddenList")
-
         const choicedate = document.getElementsByName("choicedate")[0].value;
         const userid = document.getElementById("userid").value;
 
-        if (userid, choicedate) {
-            $.ajax({
-                url: '/challenge/myChallInfo',
-                method: 'POST',
-                data: {
-                    userid: userid,
-                    choicedate: choicedate
-                },
-                dataType: 'json',
-                success: function (data) {
-                    displayMyChallData(data.myChallDTOList);
+        if (mychallBtn.classList.contains("viewchallBtn")) {
+            alert("이미 진행중인 챌린지를 확인했습니다")
+            return false;
+        } else {
+            mychallBtn.classList.add("viewchallBtn");
+            mychallview.classList.remove("hiddenList")
 
-                },
-                error: function (error) {
-                    console.error('데이터를 가져오는 중 오류 발생' + error);
-                }
+            if (userid, choicedate) {
+                $.ajax({
+                    url: '/challenge/myChallInfo',
+                    method: 'POST',
+                    data: {
+                        userid: userid,
+                        choicedate: choicedate
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        displayMyChallData(data.myChallDTOList);
 
-            })
+                    },
+                    error: function (error) {
+                        console.error('데이터를 가져오는 중 오류 발생' + error);
+                    }
+
+                })
+            }
         }
     }
 
@@ -657,23 +666,44 @@
 
     }
 
-    function check() {
+    function sendit() {
         const mychallBtn = document.getElementById("mychallBtn");
+        const diaryTitle = document.getElementsByName("diaryTitle")[0];
+        const todayweight = document.getElementById("todayweight");
+        const diaryContent = document.getElementsByName("diaryContent")[0];
 
-        if (mychallBtn.classList.contains("viewchallBtn")) {
-            alert("다이어리 작성 완료!")
-            return true;
-
-        } else {
+        if (diaryTitle.value === "") {
+            alert("제목을 입력 해주세요!")
+            diaryTitle.focus();
+            return false;
+        }
+        if (todayweight.value === "") {
+            alert("오늘의 체중을 입력 해주세요!")
+            todayweight.focus();
+            return false;
+        }
+        if (diaryContent.value === "") {
+            alert("내용을 입력해 해주세요!")
+            diaryContent.focus();
+            return false;
+        }
+        if (mychallBtn.classList.contains("viewchallBtn") === false) {
             alert("진행 중인 챌린지 현황을 확인해 주세요!")
             mychallBtn.focus();
             return false;
         }
+        if (confirm("최종 칼로리가 정말 맞습니까?") == true) {
+            document.getElementById("diaryForm").submit();
+        }
+        return false;
+
+
     }
 
-    function cancel(){
+
+    function cancel() {
         const choicedate = document.getElementsByName("choicedate")[0].value;
-        location.href = "/usermypage/diaryView?choicedate="+choicedate;
+        location.href = "/usermypage/diaryView?choicedate=" + choicedate;
     }
 
 </script>

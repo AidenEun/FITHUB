@@ -253,7 +253,7 @@
                             <div><input type="text" value="현재 체중" readonly></div>
 
                             <div><input type="text" name="todayWeight" id="todayweight"
-                                        th:value="${diary.todayWeight}+kg">
+                                        th:value="${diary.todayWeight}+kg" readonly>
                             </div>
                         </div>
                     </td>
@@ -272,18 +272,18 @@
                             <input type="text" value="아침" readonly>
                             <input type="hidden" name="todayBreakfast" th:value="${diary.todayBreakfast}">
                             <input type="text" id="bfCal" value="총" readonly>
-                            <input type="text" value="kcal" readonly>
+                            <input type="text" th:value="${foodCalArr[0]}+kcal" readonly>
                         </div>
-                        <div class="bf_list list_area" id="bf_result" th:text="${breakfast}" readonly></div>
+                        <div class="list_area" id="bf_result" th:text="${listNameArr[0]}" readonly></div>
                     </td>
                     <td class="food_area">
                         <div class="lunch_input input_area">
                             <input type="text" value="점심" readonly>
                             <input type="hidden" name="todayLunch" th:value="${diary.todayLunch}">
                             <input type="text" id="lunchCal" value="총" readonly>
-                            <input type="text" value="kcal" readonly>
+                            <input type="text" th:value="${foodCalArr[1]}+kcal" readonly>
                         </div>
-                        <div type="text" class="bf_list list_area" id="lunch_result" th:text="${lunch}" readonly >
+                        <div type="text" class="list_area" id="lunch_result" th:text="${listNameArr[1]}" readonly >
                         </div>
                     </td>
                 </tr>
@@ -293,9 +293,9 @@
                             <input type="text" value="저녁" readonly>
                             <input type="hidden" name="todayDinner" th:value="${diary.todayDinner}">
                             <input type="text" id="dinnerCal" value="총" readonly>
-                            <input type="text" value="kcal" readonly>
+                            <input type="text" th:value="${foodCalArr[2]}+kcal" readonly>
                         </div>
-                        <div type="text" class="bf_list list_area" id="dinner_result" th:text="${dinner}" readonly></div>
+                        <div type="text" class="list_area" id="dinner_result" th:text="${listNameArr[2]}" readonly></div>
 
                     </td>
                     <td class="food_area">
@@ -303,9 +303,9 @@
                             <input type="text" value="간식" readonly>
                             <input type="hidden" name="todaySnack" th:value="${diary.todaySnack}">
                             <input type="text" id="snackCal" value="총" readonly>
-                            <input type="text" value="kcal" readonly>
+                            <input type="text" th:value="${foodCalArr[3]}+kcal" readonly>
                         </div>
-                        <div type="text" class="bf_list list_area" id="snack_result" th:text="${snack}" readonly></div>
+                        <div type="text" class="list_area" id="snack_result" th:text="${listNameArr[3]}" readonly></div>
 
                     </td>
                 </tr>
@@ -315,17 +315,17 @@
                         <div class="ex_input input_area">
                             <input type="text" value="운동" readonly>
                             <input type="hidden" name="todayExer" th:value="${diary.todayExer}">
-                            <input type="text" id="exerCal" value="총" readonly>
-                            <input type="text" th:value="${diary.exerCalories != null ? diary.exerCalories+'kcal' : '0kcal'}" readonly style="text-align: left;">
+                            <input type="text" value="총" readonly>
+                            <input type="text" id="exerCal" th:value="${diary.exerCalories != null ? diary.exerCalories +'kcal' : '0kcal'}" readonly style="text-align: left;">
                         </div>
-                        <div type="text" class="excrcise_list list_area" id="exer_result" th:text="${exer}" readonly>
+                        <div type="text" class="excrcise_list list_area" id="exer_result" th:text="${listNameArr[4]}" readonly>
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2">
                         <div class="total_area" style="text-align: center">
-                            <input type="button" onclick="totalsum()" value="최종 칼로리" style="margin-right: 15px">
+                            <input type="button" value="최종 칼로리" style="margin-right: 15px">
                             <input type="text" id="totalFood"
                                    th:value="${diary.foodCalories != null ? diary.foodCalories+'kcal' : '0kcal'}"
                                    readonly>
@@ -350,7 +350,7 @@
                                    readonly>
                             <input type="text" value="=" readonly>
                             <input type="text" id="todayCal"
-                                   th:value="${totalResult != null ? totalResult+'kcal' : '0kcal'}" readonly>
+                                   th:value="${user.caloriesGoal}-${totalResult}+'kcal'" readonly>
                         </div>
                     </td>
                 </tr>
@@ -372,7 +372,7 @@
                 <tr>
                     <td colspan="2">
                         <textarea name="diaryContent" class="diary_contents" cols="30" rows="10" id="summernote"
-                                  th:value="${diary.diaryContent}" readonly onfocus="this.blur()"></textarea>
+                                  th:text="${diary.diaryContent}" readonly onfocus="this.blur()"></textarea>
                     </td>
                 </tr>
 
@@ -388,8 +388,9 @@
                 <tr class="challcheckList" id="challList">
 
                     <td colspan="2">
+                        <input type="hidden" id="myINGChallNum" name="myINGChallNum">
                         <table id="mychallDataList">
-                            <th:block th:if="${scctodaychall == null or scctodaychall == 0 }">
+                            <th:block th:if="${diary.todayChallNum == null or diary.todayChallNum == 0 }">
                                 <tbody id="chall-table">
                                 <td style="text-align: center;">진행 중인 챌린지가 없습니다.</td>
                                 </tbody>

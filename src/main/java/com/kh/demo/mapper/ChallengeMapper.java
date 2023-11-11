@@ -31,4 +31,5 @@ public interface ChallengeMapper {
 
     List<MyChallengeDTO> getIngMychall(String userid, String choicedate);
 
+    List<MyChallengeDTO> getFindchall(String challNum);
 }
