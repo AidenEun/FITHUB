@@ -91,4 +91,6 @@ public interface AdminMyPageService {
 
     void signUpConfirm(TrainerSignUpDTO signUpDTO, UserDTO userDTO);
 
+    void signUpCancel(Long signupNum, String userId);
+
 }

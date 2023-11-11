@@ -402,4 +402,15 @@ public class AdminMyPageController {
 
         return ResponseEntity.ok("트레이너 전환 승인이 완료 되었습니다.");
     }
+
+    @PostMapping("cancelSignUp")
+    public ResponseEntity<String> cancelSignUp(@RequestBody TrainerSignUpDTO signUpDATA){
+        Long signupNum = signUpDATA.getSignupNum();
+        TrainerSignUpDTO signUpDTO = adminMyPageService.getSignUpDTO(signupNum);
+        String userId = signUpDTO.getUserId();
+
+        adminMyPageService.signUpCancel(signupNum, userId);
+
+        return ResponseEntity.ok("트레이너 전환 거절이 완료 되었습니다.");
+    }
 }

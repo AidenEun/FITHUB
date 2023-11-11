@@ -85,7 +85,6 @@ function signUpModalDom(data) {
 }
 
 document.querySelector('.confirmSignUpButton').addEventListener('click', function() {
-    alert("승인");
     const signupNum = document.querySelector('#signupNumInput').value;
 
     const data = {
@@ -115,31 +114,30 @@ document.querySelector('.confirmSignUpButton').addEventListener('click', functio
 });
 
 document.querySelector('.cancelSignUpButton').addEventListener('click', function() {
-    alert("거절");
-//    const reportNum = document.querySelector('#reportNumInput').value;
-//
-//        const data = {
-//            reportNum: reportNum
-//        };
-//
-//        fetch('/adminmypage/reportCancel', {
-//            method: 'POST',
-//            headers: {
-//                'Content-Type': 'application/json'
-//            },
-//            body: JSON.stringify(data)
-//        })
-//        .then(response => {
-//            if (response.ok) {
-//                window.alert('신고 철회 완료!!');
-//                location.reload();
-//            } else {
-//                window.alert('신고 철회 실패. 다시 시도하세요.');
-//            }
-//        })
-//        .catch(error => {
-//            window.alert('오류 발생: ' + error.message);
-//        });
-//
-//        signUpModalBox.classList.remove("active");
+    const signupNum = document.querySelector('#signupNumInput').value;
+
+        const data = {
+            signupNum: signupNum
+        };
+
+        fetch('/adminmypage/cancelSignUp', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => {
+            if (response.ok) {
+                window.alert('트레이너 거절 완료!!');
+                location.reload();
+            } else {
+                window.alert('트레이너 거절 실패. 다시 시도하세요.');
+            }
+        })
+        .catch(error => {
+            window.alert('오류 발생: ' + error.message);
+        });
+
+        signUpModalBox.classList.remove("active");
 });

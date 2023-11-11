@@ -361,13 +361,26 @@
     </update>
 
     <insert id="insertTrainer">
-        INSERT INTO trainer (trainer_id, trainer_name, trainer_nickname, trainer_pw, trainer_tel, trainer_mail, trainer_zipcode, trainer_addr, trainer_addrdetail, trainer_addretc, trainer_height, trainer_weight, trainer_gender, trainer_birth, trainer_part, trainer_career, trainer_intro, trainer_joindate, trainer_reportedcnt)
-        VALUES (#{userId}, #{userName}, #{userNickname}, #{userPw}, #{userTel}, #{userMail}, #{trainerZipcode}, #{trainerAddr}, #{trainerAddrdetail}, #{trainerAddretc}, #{userHeight}, #{userWeight}, #{userGender}, #{userBirth}, #{trainerPart}, #{trainerCareer}, #{trainerContent}, #{userJoindate}, #{userReportedcnt})
+        INSERT INTO trainer (
+            trainer_id, trainer_name, trainer_nickname, trainer_pw, trainer_tel
+          , trainer_mail, trainer_zipcode, trainer_addr, trainer_addrdetail, trainer_addretc
+          , trainer_height, trainer_weight, trainer_gender, trainer_birth, trainer_part
+          , trainer_career, trainer_intro, trainer_joindate, trainer_reportedcnt)
+        VALUES (
+            #{userDTO.userId}, #{userDTO.userName}, #{userDTO.userNickname}, #{userDTO.userPw}, #{userDTO.userTel}
+          , #{userDTO.userMail}, #{signUpDTO.trainerZipcode}, #{signUpDTO.trainerAddr}, #{signUpDTO.trainerAddrdetail}, #{signUpDTO.trainerAddretc}
+          , #{userDTO.userHeight}, #{userDTO.userWeight}, #{userDTO.userGender}, #{userDTO.userBirth}, #{signUpDTO.trainerPart}
+          , #{signUpDTO.trainerCareer}, #{signUpDTO.trainerContent}, #{userDTO.userJoindate}, #{userDTO.userReportedcnt})
     </insert>
 
     <insert id="insertMessageConfirmSignUp">
         INSERT INTO message (category, message_content, send_id, receive_id)
         VALUES ('meGeneral', '트레이너 신청이 승인되었습니다.', 'admin', #{userId})
+    </insert>
+
+    <insert id="insertMessageCancelSignUp">
+        INSERT INTO message (category, message_content, send_id, receive_id)
+        VALUES ('meGeneral', '트레이너 신청이 거절되었습니다.', 'admin', #{userId})
     </insert>
 
     <delete id="deleteSignUp">
