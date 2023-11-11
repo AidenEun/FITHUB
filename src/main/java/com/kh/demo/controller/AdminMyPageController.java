@@ -413,4 +413,15 @@ public class AdminMyPageController {
 
         return ResponseEntity.ok("트레이너 전환 거절이 완료 되었습니다.");
     }
+
+    @PostMapping("messageModal")
+    @ResponseBody
+    public String messageModal(@RequestParam("messageNum") Long messageNum) throws Exception{
+        ObjectNode json = JsonNodeFactory.instance.objectNode();
+
+        MessageDTO messageDTO = adminMyPageService.getMessage(messageNum);
+
+        json.putPOJO("messageDTO", messageDTO);
+        return json.toString();
+    }
 }

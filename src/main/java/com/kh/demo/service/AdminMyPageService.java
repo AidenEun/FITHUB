@@ -93,4 +93,6 @@ public interface AdminMyPageService {
 
     void signUpCancel(Long signupNum, String userId);
 
+    MessageDTO getMessage(Long messageNum);
+
 }
