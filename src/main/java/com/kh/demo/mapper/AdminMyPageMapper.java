@@ -128,4 +128,6 @@ public interface AdminMyPageMapper {
 
     void deleteSignUp(Long signupNum);
 
+    MessageDTO getMessage(Long messageNum);
+
 }
