@@ -47,13 +47,14 @@ function modal(data) {
     try {
         data = JSON.parse(data);
         var userId = data.userId;
+        var trainerId = data.trainerMatchingBoardDTO.trainerId
 
         if (!data.hasOwnProperty("trainerMatchingBoardDTO")) {
             console.error("TrainerMatchingBoardDTO is undefined.");
             return; // TrainerMatchingBoardDTO가 없으면 종료
         }
 
-        if (userId === data.trainerMatchingBoardDTO.trainerId) {
+        if (userId === trainerId) {
             var modalBox = $('.modal_box');
             // 사용자 ID와 트레이너 닉네임이 같을 경우 신청 주의사항 표시
             modalBox.find('.name a').text(trainerId + '(' + userId + ')');
@@ -61,7 +62,7 @@ function modal(data) {
             modalBox.find('.application_buttons').html('<button class="close">돌아가기</button>');
         } else {
             // 신청서가 이미 있는지 확인
-                if (data.hasOwnProperty("utMatchingDTO") && data.utMatchingDTO.userId === userId && data.utMatchingDTO.trainerId === data.TrainerMatchingBoardDTO.trainerId) {
+                if (data.hasOwnProperty("utMatchingDTO") && data.utMatchingDTO.userId === userId && data.utMatchingDTO.trainerId === trainerId) {
                      var modalBox = $('.modal_box');
                     modalBox.find('.application_notice a').text('이미 신청한 신청서입니다.');
                     modalBox.find('.application_buttons').html('<button class="close">돌아가기</button>');
@@ -89,7 +90,9 @@ function modal(data) {
 
                                         // "신청하기" 버튼에 이벤트 핸들러 등록
                                         modalBox.find('.apply_now').on('click', function () {
-                                            sendApplication(userId, data.TrainerMatchingBoardDTO.trainerId);
+                                            sendApplication(userId, trainerId);
+                                            console.log(userId)
+                                            console.log(trainerId)
                                         });
 
                 }
