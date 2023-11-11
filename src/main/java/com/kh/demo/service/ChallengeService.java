@@ -43,4 +43,5 @@ public interface ChallengeService {
 
     List<MyChallengeDTO> findMychall(String userid,String choicedate);
 
+    List<MyChallengeDTO> findchall(String challNum);
 }

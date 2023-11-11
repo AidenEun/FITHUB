@@ -4,7 +4,6 @@ import com.kh.demo.domain.dto.BoardDTO;
 import com.kh.demo.domain.dto.Criteria;
 import com.kh.demo.domain.dto.FileDTO;
 import com.kh.demo.domain.dto.MyChallengeDTO;
-import com.kh.demo.mapper.BoardMapper;
 import com.kh.demo.mapper.ChallengeMapper;
 import com.kh.demo.mapper.FileMapper;
 import com.kh.demo.mapper.ReplyMapper;
@@ -55,9 +54,14 @@ public class ChallengeServiceImpl implements ChallengeService{
         return challMapper.getIngMychall(userid,choicedate);
     }
 
+    @Override
+    public List<MyChallengeDTO> findchall(String challNum) {
+        return challMapper.getFindchall(challNum);
+    }
 
 
-/*재우*/
+
+    /*재우*/
 
 
     @Override
