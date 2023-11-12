@@ -424,4 +424,15 @@ public class AdminMyPageController {
         json.putPOJO("messageDTO", messageDTO);
         return json.toString();
     }
+
+    @PostMapping("messageReturn")
+    public ResponseEntity<String> messageReturn(@RequestBody MessageDTO messageDATA){
+        String messageContent = messageDATA.getMessageContent();
+        String receiveId = messageDATA.getReceiveId();
+        Long messageNum = messageDATA.getMessageNum();
+
+        adminMyPageService.returnMessage(messageContent, receiveId, messageNum);
+
+        return ResponseEntity.ok("문의 답변이 완료 되었습니다.");
+    }
 }

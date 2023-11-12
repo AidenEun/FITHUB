@@ -4,14 +4,8 @@ import com.kh.demo.domain.dto.*;
 import com.kh.demo.mapper.AdminMyPageMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.Resource;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.HashMap;
@@ -380,6 +374,12 @@ public class AdminMyPageServiceImpl implements AdminMyPageService {
     @Override
     public MessageDTO getMessage(Long messageNum) {
         return adminMyPageMapper.getMessage(messageNum);
+    }
+
+    @Override
+    public void returnMessage(String messageContent, String receiveId, Long messageNum) {
+        adminMyPageMapper.returnMessage(messageContent, receiveId);
+        adminMyPageMapper.updateMessageCategory(messageNum);
     }
 
 }

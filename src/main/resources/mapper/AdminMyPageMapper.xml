@@ -400,4 +400,15 @@
         SELECT * FROM message
         WHERE message_num = #{messageNum}
     </select>
+
+    <insert id="returnMessage">
+        INSERT INTO message (category, message_content, send_id, receive_id)
+        VALUES ('meGeneral', #{messageContent}, 'admin', #{receiveId})
+    </insert>
+
+    <update id="updateMessageCategory">
+        UPDATE message
+        SET category = 'Done'
+        WHERE message_num = #{messageNum}
+    </update>
 </mapper>

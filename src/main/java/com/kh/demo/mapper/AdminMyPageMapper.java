@@ -130,4 +130,8 @@ public interface AdminMyPageMapper {
 
     MessageDTO getMessage(Long messageNum);
 
+    void returnMessage(String messageContent, String receiveId);
+
+    void updateMessageCategory(Long messageNum);
+
 }
