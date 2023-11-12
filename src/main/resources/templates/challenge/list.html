@@ -9,8 +9,9 @@
 	<title>Untitled</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<link rel="stylesheet" th:href="@{/assets/css/index.css}" />
 	<noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
+	<link rel="stylesheet" th:href="@{/assets/css/index.css}">
+	<link rel="stylesheet" th:href="@{/assets/css/challengeModal.css}">
 </head>
 <style>
 	#side-wrap {
@@ -163,7 +164,8 @@
 
 <!-- Header -->
 <th:block th:replace="~{layout/header::header(${session.loginUser},${session.user})}"></th:block>
-
+<!--Modal-->
+<th:block th:replace="~{layout/challengeModal::challengeModal()}"></th:block>
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">
 	<div class="inner">
@@ -236,7 +238,7 @@
 			<table>
 				<tr align="right" valign="middle">
 					<td>
-						<a class="write" th:href="${'/challenge/write'+pageMaker.cri.listLink}">글쓰기</a>
+						<input type="button" class="challengeOpen" value="글쓰기">
 					</td>
 				</tr>
 			</table>
@@ -266,6 +268,10 @@
 			<input type="hidden" name="keyword" th:value="${pageMaker.cri.keyword}">
 		</form>
 
+		<form name="writeForm" id="writeForm" th:action="@{/challenge/write}">
+
+		</form>
+
 		<!-- Sidebar -->
 		<th:block th:replace="~{layout/rank_sidebar::sidebar}"></th:block>
 
@@ -285,6 +291,8 @@
 <script th:src="@{/assets/js/main_sub.js}"></script>
 
 <script th:src="@{/assets/js/sidebar.js}"></script>
+
+<script th:src="@{/assets/js/challengeModal.js}"></script>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script th:inline="javascript">
@@ -320,6 +328,10 @@
 		}
 		searchForm.submit();
 	}
+
+
+
+
 
 </script>
 </body>

@@ -1,0 +1,62 @@
+.challenge_modal_box{
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0,0,0,0.6) ;
+    display: none;
+    /* display: flex; */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.challenge_modal_box.active{
+    display: flex;
+}
+
+.challenge_modal_contents{
+    background-color: #fff;
+    width: 900px;
+    padding: 20px;
+    border-radius: 5px;
+    position: relative;
+}
+
+.challenge_modal_contents h1{
+    text-align: center;
+}
+
+.challenge_modal_contents button{
+    background-color: #fff;
+    color: #ccc;
+    font-size: 20px;
+    border: none;
+
+}
+
+.challengeClose{
+    cursor: pointer;
+}
+
+.title {
+    margin-top: 30px;
+    margin-bottom: 0px;
+    font-size: 20px;
+}
+
+.title:after {
+    border-bottom: none;
+}
+
+
+.title-container {
+    display: flex;
+    align-items: center; /* 수직 정렬 */
+}
+
+.title-container .challengeClose {
+    margin-right: 300px; /* 버튼과 제목 사이의 간격 설정 */
+}
+
