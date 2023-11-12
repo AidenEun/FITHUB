@@ -95,4 +95,6 @@ public interface AdminMyPageService {
 
     MessageDTO getMessage(Long messageNum);
 
+    void returnMessage(String messageContent, String receiveId, Long messageNum);
+
 }

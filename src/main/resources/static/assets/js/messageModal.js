@@ -32,8 +32,10 @@ function messageModal(e){
     var messageNum = $(this).closest('tr').find('.messageNum').text();
     var messageUserId = $(this).closest('tr').find('.messageUserId').text();
 
-    messageModalBox.classList.add("active");
+    document.querySelector('#messageNum').value = messageNum;
     document.querySelector('#messageUserId').value = messageUserId;
+    messageModalBox.classList.add("active");
+
     sendMessageNumToModal(messageNum);
 }
 
@@ -73,63 +75,44 @@ function messageModalDom(data) {
 }
 
 document.querySelector('.confirmMessageButton').addEventListener('click', function() {
-    alert("확인")
-//    const signupNum = document.querySelector('#signupNumInput').value;
-//
-//    const data = {
-//        signupNum: signupNum
-//    };
-//
-//    fetch('/adminmypage/signUpConfirm', {
-//        method: 'POST',
-//        headers: {
-//            'Content-Type': 'application/json'
-//        },
-//        body: JSON.stringify(data)
-//    })
-//    .then(response => {
-//        if (response.ok) {
-//            window.alert('트레이너 전환 승인 완료!!');
-//            location.reload();
-//        } else {
-//            window.alert('트레이너 전환 승인 실패. 다시 시도하세요.');
-//        }
-//    })
-//    .catch(error => {
-//        window.alert('오류 발생: ' + error.message);
-//    });
-//
-//    messageModalBox.classList.remove("active");
+    const messageContent = document.querySelector('#messageContent').value;
+    const receiveId = document.querySelector('#messageUserId').value;
+    const messageNum = document.querySelector('#messageNum').value;
+
+    const data = {
+        messageContent: messageContent,
+        receiveId: receiveId,
+        messageNum: messageNum
+    };
+
+    fetch('/adminmypage/messageReturn', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        if (response.ok) {
+            window.alert('문의 답변 완료!!');
+            location.reload();
+        } else {
+            window.alert('문의 답변 실패. 다시 시도하세요.');
+        }
+    })
+    .catch(error => {
+        window.alert('오류 발생: ' + error.message);
+    });
+
+    messageContent.value = '';
+    messageAdminFormBox.style.display = "none";
+    messageModalBox.classList.remove("active");
 });
 
 document.querySelector('.cancelMessageButton').addEventListener('click', function() {
-    alert("취소");
-//    const signupNum = document.querySelector('#signupNumInput').value;
-//
-//        const data = {
-//            signupNum: signupNum
-//        };
-//
-//        fetch('/adminmypage/cancelSignUp', {
-//            method: 'POST',
-//            headers: {
-//                'Content-Type': 'application/json'
-//            },
-//            body: JSON.stringify(data)
-//        })
-//        .then(response => {
-//            if (response.ok) {
-//                window.alert('트레이너 거절 완료!!');
-//                location.reload();
-//            } else {
-//                window.alert('트레이너 거절 실패. 다시 시도하세요.');
-//            }
-//        })
-//        .catch(error => {
-//            window.alert('오류 발생: ' + error.message);
-//        });
-//
-//        messageModalBox.classList.remove("active");
+    messageModalBox.classList.remove("active");
+    messageContent.value = '';
+    messageAdminFormBox.style.display = "none";
 });
 
 function messageFormOpen(e){
