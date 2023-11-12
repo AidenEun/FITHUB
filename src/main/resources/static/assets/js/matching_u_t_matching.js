@@ -59,13 +59,11 @@ function modal(data) {
             // 사용자 ID와 트레이너 닉네임이 같을 경우 신청 주의사항 표시
             modalBox.find('.name a').text(trainerId + '(' + userId + ')');
             modalBox.find('.application_notice a').text('자신에게 신청할 수 없습니다.');
-            modalBox.find('.application_buttons').html('<button class="close">돌아가기</button>');
         } else {
             // 신청서가 이미 있는지 확인
                 if (data.hasOwnProperty("utMatchingDTO") && data.utMatchingDTO.userId === userId && data.utMatchingDTO.trainerId === trainerId) {
                      var modalBox = $('.modal_box');
                     modalBox.find('.application_notice a').text('이미 신청한 신청서입니다.');
-                    modalBox.find('.application_buttons').html('<button class="close">돌아가기</button>');
                 } else if (data.hasOwnProperty("noData")){
                      console.log("다시 로그인 해주세요. 지금 같은 상황이 반복될시 문의사항에 문의 주세요!");
                 }
