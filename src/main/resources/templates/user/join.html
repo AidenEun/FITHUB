@@ -64,11 +64,11 @@
 			<li id="login">
 
 				<th:block th:if="${loginUser == null}">
-					<a class="login" href="/user/login" style="color: #fff;">Login</a>
+					<a class="login" th:href="@{/user/login}" style="color: #fff;">Login</a>
 				</th:block>
-				<!-- <th:block th:if="${loginUser != null}">
+				 <th:block th:if="${loginUser != null}">
                     <a class="login" th:href="@{/user/logout}">logout</a>
-                </th:block> -->
+                </th:block>
 
 				<a class="login" href="/usermypage/user_modify">유저</a>
 				<a class="login" href="/trainermypage/trainer_modify">트레</a>
@@ -95,7 +95,7 @@
 			<div>
 				<a href="#">내 정보</a>
 				<th:block th:if="${loginUser == null}">
-					<a class="login" href="/user/login">로그인</a>
+					<a class="login" th:href="@{/user/login}">로그인</a>
 				</th:block>
 				<th:block th:if="${loginUser != null}">
 					<a class="login" th:href="@{/user/logout}">로그아웃</a>
@@ -223,13 +223,9 @@
 			<tr id="page1">
 				<th><label for="userid">아이디</label></th>
 				<td>
-					<input type="text" name="userid" id="userid">
+					<input type="text" name="userid" id="userId">
 					<input type="button" value="중복검사" onclick="checkId()">
 				</td>
-			</tr>
-			<tr id="page1">
-				<th><label for="userNickname">닉네임</label></th>
-				<td><input type="text" name="userNickname" id="userNickname"></td>
 			</tr>
 			<tr id="page1">
 				<th><label for="userpw">비밀번호</label></th>
@@ -246,12 +242,17 @@
 						<span>최소 8자 이상의 비밀번호가 보안에 안전해요 😄</span>
 						<span>같은 문자가 연속해서 사용되지 않았어요 😆</span>
 						<span>사용할 수 없는 문자가 포함되지 않았어요 🙂</span>
+						<span>비밀번호 확인이 완료되었어요! 😊</span>
 					</div>
 				</th>
 			</tr>
 			<tr id="page1">
+				<th><label for="userNickname">닉네임</label></th>
+				<td><input type="text" name="userNickname" id="userNickname"></td>
+			</tr>
+			<tr id="page1">
 				<th><label for="userName">이름</label></th>
-				<td><input type="text" name="userName" id="userName"></td>
+				<td><input type="text" name="userName" id="username"></td>
 			</tr>
 			<tr class="gender_area" id="page1">
 				<th>성별</th>
@@ -259,10 +260,10 @@
 					<div>
 						<ul>
 							<li class="radio_item">
-								<input type="radio" id="userGender1" name="userGender" value="M"><label for="userGender1">남자</label>
+								<input type="radio" id="usergender1" name="userGender" value="M"><label for="usergender1">남자</label>
 							</li>
 							<li class="radio_item">
-								<input type="radio" id="userGender2" name="userGender" value="W"><label for="userGender2">여자</label>
+								<input type="radio" id="usergender2" name="userGender" value="W"><label for="usergender2">여자</label>
 							</li>
 						</ul>
 					</div>
@@ -312,7 +313,6 @@
 		</table>
 	</form>
 </div>
-
 <!-- Footer -->
 <footer id="footer">
 	<div class="inner">
