@@ -4,14 +4,8 @@ import com.kh.demo.domain.dto.*;
 import com.kh.demo.mapper.AdminMyPageMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.Resource;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.HashMap;
@@ -148,24 +142,26 @@ public class AdminMyPageServiceImpl implements AdminMyPageService {
     public UserDTO getUser(String keyword) {
         UserDTO userDTO = adminMyPageMapper.getUser(keyword);
 
-        String birthDateWithHyphen = userDTO.getUserBirth();
-        String[] parts = birthDateWithHyphen.split("-");
-        String birthDateWithoutHyphen = String.join("", parts);
+        if(userDTO != null) {
+            String birthDateWithHyphen = userDTO.getUserBirth();
+            String[] parts = birthDateWithHyphen.split("-");
+            String birthDateWithoutHyphen = String.join("", parts);
 
-        if (birthDateWithoutHyphen != null && birthDateWithoutHyphen.length() == 8) {
-            // 현재 날짜 가져오기
-            LocalDate currentDate = LocalDate.now();
-            int birthYear = Integer.parseInt(birthDateWithoutHyphen.substring(0, 4));
-            int birthMonth = Integer.parseInt(birthDateWithoutHyphen.substring(4, 6));
-            int birthDay = Integer.parseInt(birthDateWithoutHyphen.substring(6, 8));
-            LocalDate birthLocalDate = LocalDate.of(birthYear, birthMonth, birthDay);
+            if (birthDateWithoutHyphen != null && birthDateWithoutHyphen.length() == 8) {
+                // 현재 날짜 가져오기
+                LocalDate currentDate = LocalDate.now();
+                int birthYear = Integer.parseInt(birthDateWithoutHyphen.substring(0, 4));
+                int birthMonth = Integer.parseInt(birthDateWithoutHyphen.substring(4, 6));
+                int birthDay = Integer.parseInt(birthDateWithoutHyphen.substring(6, 8));
+                LocalDate birthLocalDate = LocalDate.of(birthYear, birthMonth, birthDay);
 
-            // 나이 계산
-            Period period = Period.between(birthLocalDate, currentDate);
-            userDTO.setUserAge(period.getYears());
-        }
-        else {
-            userDTO.setUserAge(-1); // 또는 다른 값을 사용하여 오류를 표시
+                // 나이 계산
+                Period period = Period.between(birthLocalDate, currentDate);
+                userDTO.setUserAge(period.getYears());
+            }
+            else {
+                userDTO.setUserAge(-1); // 또는 다른 값을 사용하여 오류를 표시
+            }
         }
         return userDTO;
     }
@@ -373,6 +369,17 @@ public class AdminMyPageServiceImpl implements AdminMyPageService {
     public void signUpCancel(Long signupNum, String userId) {
         adminMyPageMapper.insertMessageCancelSignUp(userId);
         adminMyPageMapper.deleteSignUp(signupNum);
+    }
+
+    @Override
+    public MessageDTO getMessage(Long messageNum) {
+        return adminMyPageMapper.getMessage(messageNum);
+    }
+
+    @Override
+    public void returnMessage(String messageContent, String receiveId, Long messageNum) {
+        adminMyPageMapper.returnMessage(messageContent, receiveId);
+        adminMyPageMapper.updateMessageCategory(messageNum);
     }
 
 }

@@ -10,9 +10,11 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<link rel="stylesheet" th:href="@{/assets/css/index.css}" />
-	<link rel="stylesheet" th:href="@{/assets/css/profileModal.css}" />
 	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
 	<noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
+
+	<link rel="stylesheet" th:href="@{/assets/css/profileModal.css}" />
+	<link rel="stylesheet" th:href="@{/assets/css/messageModal.css}" />
 </head>
 <style>
 	.top_img_box{
@@ -97,6 +99,7 @@
 
 	<!-- Modal -->
 	<th:block th:replace="~{layout/profileModal::profileModal()}"></th:block>
+	<th:block th:replace="~{layout/messageModal::messageModal()}"></th:block>
 
 	<!-- Main -->
 	<section id="main" class="wrapper sidebar left">
@@ -124,8 +127,9 @@
 					<tr style="font-weight: bold;">
 						<td class="long_text" style="width:10%;">문의 번호</td>
 						<td class="long_text">문의 유저</td>
-						<td class="long_text" style="width:40%;">문의 내용</td>
+						<td class="long_text">문의 내용</td>
 						<td class="long_text">문의 일자</td>
+						<td class="long_text">문의 처리</td>
 					</tr>
 					</thead>
 					<tbody id="data-table">
@@ -148,9 +152,12 @@
 									[[${messageBoard.sendDate}]]
 								</a>
 							</td>
+							<td class="long_text">
+								<a href="#" class="button messageOpen">처리하기</a>
+							</td>
 						</tr>
 						<tr th:if="${messageList == null or messageList.size() == 0}">
-							<td colspan="4">
+							<td colspan="5">
 								접수된 문의가 없습니다!
 							</td>
 						</tr>
@@ -208,6 +215,7 @@
 
 <script th:src="@{/assets/js/sidebar.js}"></script>
 <script th:src="@{/assets/js/profile.js}"></script>
+<script th:src="@{/assets/js/messageModal.js}"></script>
 <script>
 	const cate = document.querySelectorAll('.cate');
 	let nowCate = document.querySelector('.now_cate');
@@ -306,15 +314,16 @@
 			if (data.messageList != null && data.messageList.length > 0) {
 				data.messageList.forEach(function (messageData) {
 					var row = $('<tr>');
-					row.append('<td class="long_text"><a href="#">' + messageData.messageNum + '</a></td>');
-					row.append('<td class="long_text"><a href="#" class="open">' + messageData.sendId + '</a></td>');
+					row.append('<td class="long_text"><a href="#" class="messageNum">' + messageData.messageNum + '</a></td>');
+					row.append('<td class="long_text"><a href="#" class="open messageUserId">' + messageData.sendId + '</a></td>');
 					row.append('<td class="long_text"><a href="#">' + messageData.messageContent + '</a></td>');
 					row.append('<td class="long_text"><a href="#">' + messageData.sendDate + '</a></td>');
+					row.append('<td class="long_text"><a href="#" class="messageOpen button">처리하기</a></td>');
 					tableBody.append(row);
 				});
 			}
 			else {
-				tableBody.append('<tr><td colspan="4">접수된 문의가 없습니다!</td></tr>');
+				tableBody.append('<tr><td colspan="5">접수된 문의가 없습니다!</td></tr>');
 			}
             $(".open").on("click", function (e) {
                 e.preventDefault();
@@ -323,6 +332,8 @@
 				sendUserIdToModal(userId);
                 modalBox.classList.add("active");
 			});
+
+			$('.messageOpen').on('click', messageModal);
 		}
 	});
 </script>

@@ -259,8 +259,13 @@ height:152.469px;
 								<table id="list_info">
 									<tr>
 										<th id="trainerNickname" colspan="3">
-											<a href="#" class="open"><span th:text="${board.trainerInfo.trainerNickname}"></span></a>
+											<a href="#" class="open">
+												<span th:text="${board.trainerInfo.trainerNickname}"></span>
+											</a>
 										</th>
+										<td>
+											<span style="font-size: smaller;">조회수: <span th:text="${board.viewCnt}"></span></span>
+										</td>
 									</tr>
 									<tr>
 										<td>[[${board.likeCnt}]]</td>

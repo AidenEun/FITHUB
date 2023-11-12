@@ -368,5 +368,10 @@ public class UserMyPageServiceImpl implements UserMyPageService{
 
     }
 
+    @Override
+    public boolean modifyDiary(DiaryDTO diary) {
+        return umpmapper.updateDiary(diary)==1;
+    }
+
 
 }

@@ -27,7 +27,12 @@ public class AdminMyPageController {
     private TrainerMyPageService trainerMyPageService;
 
     @GetMapping("adminmypage_list")
-    public void replaceList(){}
+    public void replaceList(Criteria cri, Model model){
+        List<ReportDTO> reportList = adminMyPageService.getReportList(cri);
+
+        model.addAttribute("reportList" , reportList);
+        model.addAttribute("pageMaker",new PageDTO(adminMyPageService.getReportTotal(cri), cri));
+    }
 
 //    Report
     @GetMapping("adminmypage_report")
@@ -412,5 +417,27 @@ public class AdminMyPageController {
         adminMyPageService.signUpCancel(signupNum, userId);
 
         return ResponseEntity.ok("트레이너 전환 거절이 완료 되었습니다.");
+    }
+
+    @PostMapping("messageModal")
+    @ResponseBody
+    public String messageModal(@RequestParam("messageNum") Long messageNum) throws Exception{
+        ObjectNode json = JsonNodeFactory.instance.objectNode();
+
+        MessageDTO messageDTO = adminMyPageService.getMessage(messageNum);
+
+        json.putPOJO("messageDTO", messageDTO);
+        return json.toString();
+    }
+
+    @PostMapping("messageReturn")
+    public ResponseEntity<String> messageReturn(@RequestBody MessageDTO messageDATA){
+        String messageContent = messageDATA.getMessageContent();
+        String receiveId = messageDATA.getReceiveId();
+        Long messageNum = messageDATA.getMessageNum();
+
+        adminMyPageService.returnMessage(messageContent, receiveId, messageNum);
+
+        return ResponseEntity.ok("문의 답변이 완료 되었습니다.");
     }
 }

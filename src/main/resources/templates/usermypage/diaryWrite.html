@@ -21,7 +21,7 @@
     <script th:src="@{/assets/js/jquery.scrollex.min.js}"></script>
 
     <script>
-        function weighsum(e) {
+        function weightsum(e) {
 
             const weightGoalNum = document.querySelector("#weightGoal").value;
             const weightGoal = weightGoalNum.slice(0, -2);
@@ -309,8 +309,7 @@
                             <input type="text" value="kcal" readonly>
                             <input type="button" class="opensearch">
                         </div>
-                        <div class="bf_list list_area" id="bf_result" readonly>
-                        </div>
+                        <div class="list_area" id="bf_result" readonly></div>
                         <div><input type="button" value="전체 삭제" onclick="removebf()"></div>
                     </td>
                     <td class="food_area">
@@ -321,7 +320,7 @@
                             <input type="text" value="kcal" readonly>
                             <input type="button" class="opensearch">
                         </div>
-                        <div type="text" class="bf_list list_area" id="lunch_result"></div>
+                        <div type="text" class="list_area" id="lunch_result"></div>
                         <div><input type="button" value="전체 삭제" onclick="removelunch()"></div>
                     </td>
                 </tr>
@@ -334,7 +333,7 @@
                             <input type="text" value="kcal" readonly>
                             <input type="button" class="opensearch">
                         </div>
-                        <div type="text" class="bf_list list_area" id="dinner_result"></div>
+                        <div type="text" class="list_area" id="dinner_result"></div>
 
                         <div><input type="button" value="전체 삭제" onclick="removedinner()"></div>
                     </td>
@@ -346,7 +345,7 @@
                             <input type="text" value="kcal" readonly>
                             <input type="button" class="opensearch">
                         </div>
-                        <div type="text" class="bf_list list_area" id="snack_result"></div>
+                        <div type="text" class="list_area" id="snack_result"></div>
 
                         <div><input type="button" value="전체 삭제" onclick="removesnack()"></div>
                     </td>
@@ -387,7 +386,6 @@
                             <input type="text" id="totalCal" value="오늘 칼로리" readonly>
                             <input type="text" value="=" readonly>
                             <input type="text" id="todayCal" value="0kcal" readonly>
-
                         </div>
                     </td>
                 </tr>
@@ -597,32 +595,36 @@
     function checkMychall() {
 
         const mychallBtn = document.getElementById("mychallBtn");
-        mychallBtn.classList.add("viewchallBtn");
-
         const mychallview = document.getElementById("challList");
-        mychallview.classList.remove("hiddenList")
-
         const choicedate = document.getElementsByName("choicedate")[0].value;
         const userid = document.getElementById("userid").value;
 
-        if (userid, choicedate) {
-            $.ajax({
-                url: '/challenge/myChallInfo',
-                method: 'POST',
-                data: {
-                    userid: userid,
-                    choicedate: choicedate
-                },
-                dataType: 'json',
-                success: function (data) {
-                    displayMyChallData(data.myChallDTOList);
+        if (mychallBtn.classList.contains("viewchallBtn")) {
+            alert("이미 진행중인 챌린지를 확인했습니다")
+            return false;
+        } else {
+            mychallBtn.classList.add("viewchallBtn");
+            mychallview.classList.remove("hiddenList")
 
-                },
-                error: function (error) {
-                    console.error('데이터를 가져오는 중 오류 발생' + error);
-                }
+            if (userid, choicedate) {
+                $.ajax({
+                    url: '/challenge/myChallInfo',
+                    method: 'POST',
+                    data: {
+                        userid: userid,
+                        choicedate: choicedate
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        displayMyChallData(data.myChallDTOList);
 
-            })
+                    },
+                    error: function (error) {
+                        console.error('데이터를 가져오는 중 오류 발생' + error);
+                    }
+
+                })
+            }
         }
     }
 
@@ -669,12 +671,12 @@
             diaryTitle.focus();
             return false;
         }
-        if(todayweight.value ===""){
+        if (todayweight.value === "") {
             alert("오늘의 체중을 입력 해주세요!")
             todayweight.focus();
             return false;
         }
-        if(diaryContent.value === ""){
+        if (diaryContent.value === "") {
             alert("내용을 입력해 해주세요!")
             diaryContent.focus();
             return false;
@@ -684,7 +686,7 @@
             mychallBtn.focus();
             return false;
         }
-        if(confirm("최종 칼로리가 정말 맞습니까?") == true){
+        if (confirm("최종 칼로리가 정말 맞습니까?") == true) {
             document.getElementById("diaryForm").submit();
         }
         return false;
