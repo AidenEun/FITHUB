@@ -31,4 +31,5 @@ public interface ChallengeMapper {
 
     ChallNoticeBoardDTO getChallenge(String userId, String mychallNum);
     List<MyChallengeDTO> getFindchall(String challNum);
+
 }
