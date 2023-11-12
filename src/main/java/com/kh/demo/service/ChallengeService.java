@@ -43,4 +43,6 @@ public interface ChallengeService {
 
     /*나의 챌린지 번호로 검색*/
     ChallNoticeBoardDTO getChallenge(String userId, String mychallNum);
+
+    List<MyChallengeDTO> findchall(String challNum);
 }
