@@ -27,7 +27,12 @@ public class AdminMyPageController {
     private TrainerMyPageService trainerMyPageService;
 
     @GetMapping("adminmypage_list")
-    public void replaceList(){}
+    public void replaceList(Criteria cri, Model model){
+        List<ReportDTO> reportList = adminMyPageService.getReportList(cri);
+
+        model.addAttribute("reportList" , reportList);
+        model.addAttribute("pageMaker",new PageDTO(adminMyPageService.getReportTotal(cri), cri));
+    }
 
 //    Report
     @GetMapping("adminmypage_report")
