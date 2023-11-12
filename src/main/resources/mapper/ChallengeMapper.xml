@@ -76,6 +76,13 @@
         select * from chall_cert_board where board_num=#{boardNum}
     </select>
 
+    <select id="getChallenge">
+        select *,date_add(date(my_challenge.sub_regdate), interval chall_notice_board.chall_term day)  as finishDate from chall_notice_board
+        join my_challenge on my_challenge.chall_num = chall_notice_board.chall_num
+        where my_challenge.user_id = #{userId} and my_challenge.mychall_num = #{mychallNum};
+    </select>
+
+
 
 </mapper>
 

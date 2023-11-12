@@ -1,0 +1,55 @@
+<th:block th:fragment="challengeModal()" xmlns:th="http://www.thymeleaf.org">
+    <div class="challenge_modal_box">
+        <div class="challenge_modal_contents">
+
+            <div class="title-container">
+                <button class="challengeClose button">&times;</button>
+                <h1 class="title">나의 챌린지 목록</h1>
+            </div>
+            <div class="content">
+                <div id="successChall" class="button cate now_cate" style="margin-right: 10px;">완료한 챌린지</div>
+                <div id="allChall" class="button cate not_cate" style="margin-right: 10px;">전체 챌린지</div>
+                <!-- 게시글 리스트 띄우는 테이블 -->
+                <table class="list">
+                    <thead id="data-table-head">
+
+                    </thead>
+                    <tr align="center" valign="middle">
+                        <th class="long_text">No.</th>
+                        <th class="long_text">아이디</th>
+                        <th class="long_text">카테고리</th>
+                        <th class="long_text">챌린지번호</th>
+                        <th class="long_text">챌린지이름</th>
+                        <th class="long_text">시작날짜</th>
+                        <th colspan="2" class="long_text">챌린지기간</th>
+                    </tr>
+                    <tbody id="data-table">
+
+                    </tbody>
+                </table><!-- 페이징 처리하는 테이블 -->
+                <table class="pagination">
+                    <tr align="center" valign="middle">
+                        <td>
+                            <a class="changePage" th:if="${pageMaker.prev}" th:href="${pageMaker.startPage-1}">&lt;</a>
+                            <th:block th:each="i : ${#numbers.sequence(pageMaker.startPage,pageMaker.endPage)}">
+                                <span class="nowPage" th:text="${i}" th:if="${pageMaker.cri.pagenum == i}"></span>
+                                <a class="changePage" th:href="${i}" th:text="${i}" th:unless="${pageMaker.cri.pagenum == i}"></a>
+                            </th:block>
+                            <a class="changePage" th:if="${pageMaker.next}" th:href="${pageMaker.endPage+1}">&gt;</a>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+
+            <form name="pageForm" id="pageForm" th:action="@{/challenge/list}">
+                <input type="hidden" name="pagenum" th:value="${pageMaker.cri.pagenum}">
+                <input type="hidden" name="amount" th:value="${pageMaker.cri.amount}">
+                <input type="hidden" name="type" th:value="${pageMaker.cri.type}">
+                <input type="hidden" name="keyword" th:value="${pageMaker.cri.keyword}">
+            </form>
+
+        </div>
+    </div>
+</th:block>
+
