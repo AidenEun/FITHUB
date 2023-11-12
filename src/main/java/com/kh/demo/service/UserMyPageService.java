@@ -31,6 +31,10 @@ public interface UserMyPageService {
     //일정 여부 확인
     public DiaryDTO checkList(String choicedate,String loginUser);
 
+    boolean addStemp(int sccChallNum, HashMap<String, String> diaryInfo);
+
+    boolean modifyDiary(DiaryDTO diary);
+
 
 
     /*재우*/
@@ -80,7 +84,5 @@ public interface UserMyPageService {
 
     //트레이너 전환 신청
     boolean insertApplytrainer(TrainerSignUpDTO user,MultipartFile[] files) throws Exception;
-
-    boolean addStemp(int sccChallNum, HashMap<String, String> diaryInfo);
 
 }

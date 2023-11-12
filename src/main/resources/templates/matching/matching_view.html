@@ -151,6 +151,33 @@ border-top: none;
 
 
 
+<!-- star rating -->
+.rating {
+  unicode-bidi: bidi-override;
+  direction: rtl;
+  text-align: center;
+}
+
+.star {
+  display: inline-block;
+  margin: 0 5px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #ccc;
+}
+
+.star.active,
+.star:hover {
+  color: #ffcc00;
+}
+
+
+
+
+
+
+
+
 
 <!-- sidebar -->
 .DietRanking{
@@ -195,17 +222,9 @@ border-top: none;
     <!-- Content -->
     <div class="content">
       <th:block th:if="${list != null and list.size() > 0}" th:each="board : ${list}">
-      <div class="cotent_header"><span>[[${trainerInfo.trainerNickname}]]님의 글입니다</div>
+        <div class="cotent_header"><span>[[${trainerInfo.trainerNickname}]]님의 글입니다</span></div>
 
         <form>
-
-       <!-- <input type="hidden" th:value="${cri.pagenum}" name="pagenum">
-        <input type="hidden" th:value="${cri.amount}" name="amount">
-        <input type="hidden" th:value="${cri.type}" name="type">
-        <input type="hidden" th:value="${cri.keyword}" name="keyword">
-        <input type="hidden" name="boardCategory">
--->
-
         <!-- 글작성 테이블 -->
         <div>
 
@@ -329,6 +348,69 @@ border-top: none;
       </form>
 
       <!-- 등록, 목록 버튼 테이블 -->
+        <table class="button_table">
+          <tr align="right" valign="middle">
+            <td>
+              <th:block th:if="${board.trainerId == session.loginUser}">
+                <form name="boardForm" method="post" th:action="@{/board/remove}">
+                <!--  <input name="boardnum" th:value="${board.boardnum}" type="hidden">
+                  <input name="pagenum" th:value="${cri.pagenum}" type="hidden">
+                  <input name="amount" th:value="${cri.amount}" type="hidden">
+                  <input name="type" th:value="${cri.type}" type="hidden">
+                  <input name="keyword" th:value="${cri.keyword}" type="hidden">-->
+                  <a href="javascript:modify()">수정</a>
+                  <a href="javascript:document.boardForm.submit()">삭제</a>
+                </form>
+              </th:block>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a href="#" class="open" data-trainer-id="${trainerInfo.trainerId}">신청하기</a>
+            </td>
+            <td>
+              <a th:href="${'/matching/matching_list'}">목록</a>
+            </td>
+          </tr>
+
+
+        </table>
+        <!-- review -->
+        <div class="reply_line">
+          <a href="#" class="regist">댓글 등록</a>
+          <div class="replyForm row">
+            <div style="width:15%">
+              <h4>작성자</h4>
+              <input type="text" name="userid" th:value="${session.loginUser}" readonly style="text-align: center;">
+            </div>
+            <div style="width:70%">
+              <h4>
+                내 용
+              </h4>
+              <div>
+              <div class="rating" data-star-rating="0">
+                <span class="star" data-rating="1">&#9733;</span>
+                <span class="star" data-rating="2">&#9733;</span>
+                <span class="star" data-rating="3">&#9733;</span>
+                <span class="star" data-rating="4">&#9733;</span>
+                <span class="star" data-rating="5">&#9733;</span>
+              </div>
+              <div id="result" name="starRating" style="display: none;">별점: 0</div>
+              <textarea name="replycontents" placeholder="Contents" style="resize:none;"></textarea>
+              </div>
+            </div>
+
+
+            <div style="width:15%">
+              <a href="#" class="button finish" style="margin-bottom:1rem;">등록</a>
+              <a href="#" class="button cancel">취소</a>
+            </div>
+          </div>
+          <ul class="replies"></ul>
+          <div class="page"></div>
+        </div>
+
+
       <table class="button_table">
         <tr align="center" valign="middle">
           <td>
@@ -339,8 +421,9 @@ border-top: none;
           </td>
         </tr>
       </table>
+      </th:block>
     </div>
-    </th:block>
+
 
     <!-- Sidebar -->
     <div class="sidebar">
@@ -382,18 +465,56 @@ border-top: none;
 <script th:src="@{/assets/js/sidebar.js}"></script>
 <script th:src="@{/assets/js/matching_u_t_matching.js}"></script>
 <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const stars = document.querySelectorAll(".rating .star");
+    const resultDiv = document.getElementById("result");
+    let selectedRating = 0;
+
+    stars.forEach(function (star, index) {
+      star.addEventListener("click", function () {
+        selectedRating = parseInt(this.getAttribute("data-rating"));
+        resultDiv.textContent = `별점: ${selectedRating}`;
+        this.parentNode.setAttribute("data-star-rating", selectedRating);
+        resetStars();
+        highlightStars(index);
+      });
+
+      star.addEventListener("mouseover", function () {
+        const rating = parseInt(this.getAttribute("data-rating"));
+        highlightStars(rating - 1);
+      });
+
+      star.addEventListener("mouseout", function () {
+        resetStars();
+        highlightStars(selectedRating - 1);
+      });
+    });
+  });
+
+  function resetStars() {
+    const stars = document.querySelectorAll(".rating .star");
+    stars.forEach(function (star) {
+      star.classList.remove("active");
+    });
+  }
+
+  function highlightStars(index) {
+    const stars = document.querySelectorAll(".rating .star");
+    for (let i = 0; i <= index; i++) {
+      stars[i].classList.add("active");
+    }
+  }
 
 
-
-  $(document).ready(function () {
-     $(".open").on("click", function (e) {
-         e.preventDefault();
-         var trainerId = '[[${trainerInfo.trainerId}]]';
-         console.log("Trainer ID:", trainerId);
-         sendTrainerIdToModal(trainerId);
-         modalBox.classList.add("active");
-     });
- });
+    $(document).ready(function () {
+       $(".open").on("click", function (e) {
+           e.preventDefault();
+           var trainerId = '[[${trainerInfo.trainerId}]]';
+           console.log("Trainer ID:", trainerId);
+           sendTrainerIdToModal(trainerId);
+           modalBox.classList.add("active");
+       });
+   });
 
 </script>
 </html>

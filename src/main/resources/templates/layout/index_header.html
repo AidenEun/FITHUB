@@ -18,7 +18,7 @@
                 <li id="login">
 
                     <th:block th:if="${loginUser == null}">
-                        <a class="login" href="/user/login" style="color: #fff;">Login</a>
+                        <a class="login" th:href="@{/user/login}" style="color: #fff;">Login</a>
                     </th:block>
                     <th:block th:if="${loginUser != null}">
                         <a class="login" th:href="@{/user/logout}" style="color: #fff;">logout</a>
@@ -89,8 +89,8 @@
                     <th:block th:if="${user !=null && loginUser != null}">
                         <p>목표체중 : <span th:text="${user.weightGoal}"></span></p>
                         <p>목표칼로리 : <span th:text="${user.caloriesGoal}"></span></p>
-                    <strong>잔여칼로리: 현재칼로리/목표칼로리</strong>
-                    <hr>
+                        <strong>잔여칼로리: 현재칼로리/목표칼로리</strong>
+                        <hr>
                     </th:block>
                     <p>섭취량</p>
                     <p>소비량</p>

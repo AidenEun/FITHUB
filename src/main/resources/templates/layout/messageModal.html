@@ -1,0 +1,41 @@
+<th:block th:fragment="messageModal()" xmlns:th="http://www.thymeleaf.org">
+    <div class="message_modal_box">
+        <div class="message_modal_contents">
+
+            <div class="title-container">
+                <button class="messageClose">&times;</button>
+                <h1 class="title">문의 처리</h1>
+            </div>
+
+            <table id="messageTable">
+                <thead>
+                <tr style="font-weight: bold; text-align: center;">
+                    <td class="long_text">문의 번호</td>
+                    <td class="long_text">아이디</td>
+                    <td class="long_text">문의 일자</td>
+                    <td class="long_text">문의 답변</td>
+                </tr>
+                </thead>
+                <tbody id="message-table">
+
+                </tbody>
+                <div id="messageAdminFormBox">
+                    <h3>문의에 관한 답변을 입력하세요</h3>
+                    <label>
+                        <textarea id="messageContent" name="messageContent"></textarea>
+                        <input type="hidden" id="messageUserId" name="messageUserId" value="">
+                        <input type="hidden" id="messageNum" name="messageNum" value="">
+                    </label>
+                    <div class="button-container" style="margin-top: 10px; margin-bottom: 10px;">
+                        <div class="button resetMessageButton">리셋</div>
+                        <div class="button confirmMessageButton">확인</div>
+                    </div>
+                </div>
+            </table>
+            <div class="button-container">
+                <div class="button cancelMessageButton">취소</div>
+            </div>
+        </div>
+    </div>
+</th:block>
+

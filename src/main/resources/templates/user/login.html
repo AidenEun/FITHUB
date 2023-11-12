@@ -148,9 +148,9 @@ input[type=submit]{
 				<th:block th:if="${loginUser == null}">
 					<a class="login" href="/user/login" style="color: #fff;">Login</a>
 				</th:block>
-				 <th:block th:if="${loginUser != null}">
-                    <a class="login" th:href="@{/user/logout}">logout</a>
-                </th:block>
+				<th:block th:if="${loginUser != null}">
+					<a class="login" th:href="@{/user/logout}">logout</a>
+				</th:block>
 
 				<a class="login" href="/usermypage/user_modify">유저</a>
 				<a class="login" href="/trainermypage/trainer_modify">트레</a>
@@ -295,6 +295,15 @@ input[type=submit]{
 	</div>
 </section>
 
+<th:block th:if="${joinid != null and joinid != ''}">
+	<script th:inline="javascript">
+		window.onload = function(){
+            alert("가입을 축하합니다!");
+            document.getElementById("userId").value = /*[[${joinid}]]*/'';
+            document.getElementById("userpw").focus();
+        }
+	</script>
+</th:block>
 <div id="login-wrap">
 	<form name="loginForm" action="/user/login" method="post" onsubmit="return sendit()">
 		<h2 class="login">로그인</h2>
@@ -309,7 +318,7 @@ input[type=submit]{
 				</tr>
 				<tr>
 					<td>
-						<input type="text" id="userid" name="userid" value="" placeholder="아이디 입력">
+						<input type="text" id="userid" name="userid" th:value="${joinid}" placeholder="아이디 입력">
 					</td>
 				</tr>
 				<tr>
@@ -321,7 +330,7 @@ input[type=submit]{
 					<td colspan="2">
 						<div class="btn_area">
 							<input type="submit" value="로그인" class="login-btn">
-							<a href="/user/agree" class="join-btn">회원가입</a>
+							<a href="/user/join" class="join-btn">회원가입</a>
 						</div>
 					</td>
 				</tr>
@@ -356,7 +365,23 @@ input[type=submit]{
 <script src="assets/js/main_sub.js"></script>
 
 <script src="assets/js/sidebar.js"></script>
+<script>
+	function sendit(){
+		const loginForm = document.loginForm;
+		const userid = loginForm.userid;
+		const userpw = loginForm.userpw;
 
+		if(userid.value == ""){
+			alert("아이디를 입력하세요!");
+			return false;
+		}
+		if(userpw.value == ""){
+			alert("비밀번호를 입력하세요!");
+			return false;
+		}
+		return true;
+	}
+</script>
 
 
 

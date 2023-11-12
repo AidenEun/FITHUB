@@ -169,6 +169,7 @@
 
     <select id="getUserList">
         SELECT * FROM user
+        WHERE user_category = 'U'
         limit #{startrow},#{amount}
     </select>
 
@@ -179,6 +180,7 @@
 
     <select id="getUserTotal">
         SELECT COUNT(*) FROM user
+        WHERE user_category = 'U'
     </select>
 
     <select id="getTrainerTotal">
@@ -189,26 +191,30 @@
     <select id="getMessageList">
         SELECT * FROM message
         WHERE receive_id LIKE '%admin%'
+        AND category = 'meGeneral'
         limit #{startrow},#{amount}
     </select>
 
     <select id="getMessageTotal">
         SELECT COUNT(*) FROM message
         WHERE receive_id LIKE '%admin%'
+        AND category = 'meGeneral'
     </select>
 
     <select id="getMessageByUser">
         SELECT * FROM message
-        WHERE send_id IN (SELECT user_id FROM user)
+        WHERE send_id IN (SELECT user_id FROM user WHERE user_category = 'U')
         AND receive_id LIKE '%admin%'
-        ORDER BY message_num desc
-        limit #{startrow},#{amount}
+        AND category = 'meGeneral'
+        ORDER BY message_num DESC
+        LIMIT #{startrow}, #{amount}
     </select>
 
     <select id="getMessageByTrainer">
         SELECT * FROM message
         WHERE send_id IN (SELECT trainer_id FROM trainer)
         AND receive_id LIKE '%admin%'
+        AND category = 'meGeneral'
         ORDER BY message_num desc
         limit #{startrow},#{amount}
     </select>
@@ -218,7 +224,8 @@
         FROM message
         INNER JOIN user ON message.send_id = user.user_id
         WHERE message.message_num > 0
-        AND message.receive_id LIKE '%admin';
+        AND message.receive_id LIKE '%admin'
+        AND category = 'meGeneral'
     </select>
 
     <select id="getMessageTotalByTrainer">
@@ -226,7 +233,8 @@
         FROM message
         INNER JOIN trainer ON message.send_id = trainer.trainer_id
         WHERE message.message_num > 0
-        AND message.receive_id LIKE '%admin';
+        AND message.receive_id LIKE '%admin'
+        AND category = 'meGeneral'
     </select>
 
 <!--Modal-->
@@ -387,4 +395,20 @@
         DELETE FROM trainer_signup
         WHERE signup_num = #{signupNum}
     </delete>
+
+    <select id="getMessage">
+        SELECT * FROM message
+        WHERE message_num = #{messageNum}
+    </select>
+
+    <insert id="returnMessage">
+        INSERT INTO message (category, message_content, send_id, receive_id)
+        VALUES ('meGeneral', #{messageContent}, 'admin', #{receiveId})
+    </insert>
+
+    <update id="updateMessageCategory">
+        UPDATE message
+        SET category = 'Done'
+        WHERE message_num = #{messageNum}
+    </update>
 </mapper>

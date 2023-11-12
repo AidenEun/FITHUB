@@ -173,115 +173,37 @@
 				<div class="adminmypage_box">
 					<h2>신고 접수</h2>
 					<div class="adminmypadge_content_box">
-						<table style="text-align: center;">
-							<tr>
-								<td class="long_text">
-									<a href="#">
-										report.report_num
-									</a>
-								</td>
-								<td class="long_text">
-									<a href="#">
-										report.user_id
-									</a>
-								</td>
-								<td class="long_text">
-									<a href="#">
-										report.board_category
-									</a>
-								</td>
-								<td class="long_text">
-									<a href="#">
-										report.report_date
-									</a>
-								</td>
-							</tr>
-							<tr>
-								<td class="long_text">
-									<a href="#">
-										report.report_num
-									</a>
-								</td>
-								<td class="long_text">
-									<a href="#">
-										report.user_id
-									</a>
-								</td>
-								<td class="long_text">
-									<a href="#">
-										report.board_category
-									</a>
-								</td>
-								<td class="long_text">
-									<a href="#">
-										report.report_date
-									</a>
-								</td>
-							</tr>
-							<tr>
-								<td class="long_text">
-									<a href="#">
-										report.report_num
-									</a>
-								</td>
-								<td class="long_text">
-									<a href="#">
-										report.user_id
-									</a>
-								</td>
-								<td class="long_text">
-									<a href="#">
-										report.board_category
-									</a>
-								</td>
-								<td class="long_text">
-									<a href="#">
-										report.report_date
-									</a>
-								</td>
-							</tr>
-							<tr>
-								<td class="long_text">
-									<a href="#">
-										report.report_num
-									</a>
-								</td>
-								<td class="long_text">
-									<a href="#">
-										report.user_id
-									</a>
-								</td>
-								<td class="long_text">
-									<a href="#">
-										report.board_category
-									</a>
-								</td>
-								<td class="long_text">
-									<a href="#">
-										report.report_date
-									</a>
-								</td>
-							</tr>
-							<tr>
-								<td class="long_text">
-									<a href="#">
-										report.report_num
-									</a>
-								</td>
-								<td class="long_text">
-									<a href="#">
-										report.user_id
-									</a>
-								</td>
-								<td class="long_text">
-									<a href="#">
-										report.board_category
-									</a>
-								</td>
-								<td class="long_text">
-									<a href="#">
-										report.report_date
-									</a>
+						<table style="text-align: center; margin-top: 20px;">
+							<tbody id="data-table">
+								<tr th:if="${reportList != null and reportList.size() > 0}" th:each="reportBoard : ${reportList}">
+									<td class="long_text">
+										<a href="#">
+											[[${reportBoard.reportNum}]]
+										</a>
+									</td>
+									<td class="long_text">
+										<a href="#" class="open">[[${reportBoard.userId}]]</a>
+									</td>
+									<td class="long_text">
+										<a href="#">
+											[[${reportBoard.reportBoardnum}]]
+										</a>
+									</td>
+									<td class="long_text">
+										<a href="#">
+											[[${reportBoard.boardCategory}]]
+										</a>
+									</td>
+									<td class="long_text">
+										<a href="#">
+											[[${reportBoard.reportDate}]]
+										</a>
+									</td>
+								</tr>
+							</tbody>
+							<tr th:if="${reportList == null or reportList.size() == 0}">
+								<td colspan="5">
+									접수된 신고가 없습니다!
 								</td>
 							</tr>
 						</table>
