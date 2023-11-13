@@ -38,7 +38,8 @@
 		<form>
 			<table style="border-collapse: collapse;" border="1" class="board_area">
 				<tr style="height:30px;">
-					<th style="text-align:center; width:150px;">제목</th>
+					<th colspan="2" style="text-align:center; width:150px;">제목</th>
+					<td colspan="2">
 					<td>
 						<input type="text" name="boardTitle" size="50" maxlength="50" th:value="${board.boardTitle}" readonly>
 					</td>
@@ -48,29 +49,39 @@
 					<td>
 						<input type="text" name="userId" size="50" maxlength="50" th:value="${board.userId}" readonly>
 					</td>
+					<td>챌린지번호</td>
+					<td><input type="text" name="challNum" size="50" maxlength="50" th:value="${board.challNum}" readonly></td>
 				</tr>
 				<tr>
-					<th>조회수</th>
-					<td>[[${board.viewCnt}]]</td>
+					<td>챌린지시작</td>
+					<td><input type="text" name="startDate" size="50" maxlength="50" th:value="${board.startDate}" readonly></td>
+
+					<td>챌린지종료</td>
+					<td><input type="text" name="finishDate" size="50" maxlength="50" th:value="${board.finishDate}" readonly></td>
+
+				</tr>
+				<tr>
+					<th colspan="2">조회수</th>
+					<td colspan="2">[[${board.viewCnt}]]</td>
 				</tr>
 				<tr style="height:300px;">
-					<th style="text-align:center; width:150px;">내 용</th>
-					<td>
+					<th colspan="2" style="text-align:center; width:150px;">내 용</th>
+					<td colspan="2">
 						<textarea name="boardContent" style="width:700px;height:290px;resize:none;" readonly>[[${board.boardContent}]]</textarea>
 					</td>
 				</tr>
 				<th:block th:if="${files != null and files.size() > 0}" th:each="file : ${files}">
 					<th:block th:with="sar=${file.orgName.split('[.]')}">
 						<tr>
-							<th>첨부파일[[${fileStat.index+1}]]</th>
-							<td>
+							<th colspan="2">첨부파일[[${fileStat.index+1}]]</th>
+							<td colspan="2">
 								<a th:href="@{/challenge/file (sys_name=${file.sysName},org_name=${file.orgName})}">[[${file.orgName}]]</a>
 							</td>
 						</tr>
 						<th:block th:with="ext=${sar[sar.length-1]}">
 							<tr th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}">
-								<td></td>
-								<td>
+								<td colspan="2"></td>
+								<td colspan="2">
 									<img style="width:100%;" th:src="@{/challenge/thumbnail (sys_name=${file.sysName})}">
 								</td>
 							</tr>
@@ -79,7 +90,7 @@
 				</th:block>
 				<th:block th:unless="${files != null and files.size() > 0}">
 					<tr>
-						<td colspan="2" style="text-align: center; font-size: 20px;">첨부 파일이 없습니다.</td>
+						<td colspan="4" style="text-align: center; font-size: 20px;">첨부 파일이 없습니다.</td>
 					</tr>
 				</th:block>
 			</table>
