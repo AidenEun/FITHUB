@@ -127,12 +127,12 @@ public class ChallengeServiceImpl implements ChallengeService{
     }
 
     @Override
-    public boolean modify(ChallCertBoardDTO chall, MultipartFile[] files, String updateCnt, String category) throws Exception {
+    public boolean modify(ChallCertBoardDTO chall, MultipartFile[] files, String updateCnt, String boardCategory) throws Exception {
         int row = challMapper.updateBoard(chall);
         if(row != 1) {
             return false;
         }
-        List<FileDTO> org_file_list = fmapper.getFiles(chall.getBoardNum(), category);
+        List<FileDTO> org_file_list = fmapper.getFiles(chall.getBoardNum(), boardCategory);
         if(org_file_list.size()==0 && (files == null || files.length == 0)) {
             return true;
         }
@@ -207,10 +207,10 @@ public class ChallengeServiceImpl implements ChallengeService{
     }
 
     @Override
-    public boolean remove(String loginUser, Long boardnum, String category) {
+    public boolean remove(String loginUser, Long boardnum, String boardCategory) {
         ChallCertBoardDTO board = challMapper.findByNum(boardnum);
         if(board.getUserId().equals(loginUser)) {
-            List<FileDTO> files = fmapper.getFiles(boardnum, category);
+            List<FileDTO> files = fmapper.getFiles(boardnum, boardCategory);
             for(FileDTO fdto : files) {
                 File file = new File(saveFolder,fdto.getSysName());
                 if(file.exists()) {
@@ -284,8 +284,8 @@ public class ChallengeServiceImpl implements ChallengeService{
     }
 
     @Override
-    public List<FileDTO> getFileList(Long boardnum, String category) {
-        return fmapper.getFiles(boardnum,category);
+    public List<FileDTO> getFileList(Long boardnum, String boardCategory) {
+        return fmapper.getFiles(boardnum,boardCategory);
     }
 
     @Override
