@@ -110,12 +110,12 @@ public class InfoBoardController {
     }
 
     @GetMapping(value = {"info_get","info_modify"})
-    public String get(Criteria cri, Long boardNum, HttpServletRequest req, HttpServletResponse resp, Model model) {
+    public String get(String category,Criteria cri, Long boardNum, HttpServletRequest req, HttpServletResponse resp, Model model) {
         model.addAttribute("cri",cri);
         HttpSession session = req.getSession();
         BoardDTO board = service.getDetail(boardNum);
         model.addAttribute("board",board);
-        model.addAttribute("files",service.getFileList(boardNum));
+        model.addAttribute("files",service.getFileList(boardNum, category));
         String loginUser = (String)session.getAttribute("loginUser");
         String requestURI = req.getRequestURI();
         if(requestURI.contains("/info_get")) {

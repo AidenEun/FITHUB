@@ -17,11 +17,11 @@ public interface ChallengeService {
     boolean regist(ChallCertBoardDTO chall, MultipartFile[] files) throws Exception;
 
     //update
-    public boolean modify(ChallCertBoardDTO chall, MultipartFile[] files, String updateCnt) throws Exception;
+    public boolean modify(ChallCertBoardDTO chall, MultipartFile[] files, String updateCnt, String category) throws Exception;
     public void updateReadCount(Long boardnum);
 
     //delete
-    public boolean remove(String loginUser, Long boardnum);
+    public boolean remove(String loginUser, Long boardnum, String category);
 
     //select
     Long getTotal(Criteria cri);
@@ -31,7 +31,7 @@ public interface ChallengeService {
     ArrayList<String> getNewlyBoardList(List<ChallCertBoardDTO> list) throws Exception;
     ArrayList<Integer> getReplyCntList(List<ChallCertBoardDTO> list);
     ArrayList<String> getRecentReplyList(List<ChallCertBoardDTO> list);
-    List<FileDTO> getFileList(Long boardnum);
+    List<FileDTO> getFileList(Long boardnum, String category);
 
     ResponseEntity<Resource> getThumbnailResource(String systemname) throws Exception;
 
