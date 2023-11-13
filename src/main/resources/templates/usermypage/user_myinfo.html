@@ -6,7 +6,7 @@
 -->
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>Untitled</title>
+	<title>Fit Hub</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<link rel="stylesheet" th:href="@{/assets/css/index.css}" />
@@ -252,8 +252,7 @@
 <body class="is-preload">
 
 <!-- Header -->
-<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user})}"></th:block>
-
+<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin})}"></th:block>
 
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">

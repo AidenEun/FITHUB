@@ -26,7 +26,10 @@ public class TrainerServiceImpl implements TrainerService{
         return tmapper.findById(userid);
     }
 
-
+    @Override
+    public List<TrainerDTO> getTrainerTopList() {
+        return tmapper.getTrainerTop1();
+    }
 
 
 }

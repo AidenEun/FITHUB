@@ -252,7 +252,7 @@
 <body class="is-preload">
 
 <!-- Header -->
-<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user})}"></th:block>
+<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin})}"></th:block>
 
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">
@@ -503,7 +503,7 @@
 								<div class="uInput">
 									<label for="inputTrainerPart">파트</label>
 									<div class="inputBox">
-										<input readonly name="trainerPart" type="text" id="inputTrainerPart" class="inputText" placeholder="성별" th:value="urainerPart" >
+										<input readonly name="trainerPart" type="text" id="inputTrainerPart" class="inputText" placeholder="성별" th:value="trainerPart" >
 									</div>
 								</div>
 							</div>

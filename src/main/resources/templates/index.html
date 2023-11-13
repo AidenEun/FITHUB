@@ -17,7 +17,7 @@
 <body class="is-preload">
 
 <!-- Header -->
-<th:block th:replace="~{layout/index_header::header(${session.loginUser},${session.user})}"></th:block>
+<th:block th:replace="~{layout/index_header::header(${session.loginUser},${session.user},${session.trainer},${session.admin})}"></th:block>
 <!-- Main -->
 <!-- Banner -->
 <section id="banner">
@@ -144,20 +144,20 @@
 		<h2>트레이너 랭킹</h2>
 		<div class="posts">
 			<section class="post">
-				<span class="image"><img src="images/pic01.jpg" alt="" /></span>
+				<span class="image"><img src="images/trainer_img1.png" alt="" /></span>
 				<div class="content">
 					<h3>트레이너 1등</h3>
-					<p>Aenean ultricies magna non sapien rhoncus, ac ullamcorper lorem convallis. Quisque at venenatis nisi, amet finibus mauris. Sed sodales ultricies eros, sit amet sodales sapien.</p>
+					<p>[[${trainerTopList[0].trainerNickname}]]<span>([[${trainerTopList[2].trainerId}]])</span></p>
 					<ul class="actions">
 						<li><a href="#" class="button">More</a></li>
 					</ul>
 				</div>
 			</section>
 			<section class="post">
-				<span class="image"><img src="images/pic02.jpg" alt="" /></span>
+				<span class="image"><img src="images/trainer_img2.png" alt="" /></span>
 				<div class="content">
 					<h3>트레이너 2등</h3>
-					<p>Ultrices nec metus. Aenean ultricies magna et sapien rhoncus ac ullamcorper lorem convallis. Quisque at venenatis nisi amet finibus mauris. Sed sodales ultricies magna etiam.</p>
+					<p>[[${trainerTopList[1].trainerNickname}]]<span>([[${trainerTopList[2].trainerId}]])</span></p>
 					<ul class="actions">
 						<li><a href="#" class="button">More</a></li>
 					</ul>
@@ -167,7 +167,7 @@
 				<span class="image"><img src="images/pic03.jpg" alt="" /></span>
 				<div class="content">
 					<h3>트레이너 3등</h3>
-					<p>Quis interdum. Lorem quis lacus justo. Sed libero condimentum vehicula sem vel, mattis amet mauris. Nullam lacinia sit amet felis vel vestibulum. Morbi aliquam aenean.</p>
+					<p>[[${trainerTopList[2].trainerNickname}]]<span>([[${trainerTopList[2].trainerId}]])</span></p>
 					<ul class="actions">
 						<li><a href="#" class="button">More</a></li>
 					</ul>
