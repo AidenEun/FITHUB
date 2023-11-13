@@ -123,11 +123,15 @@
 
 	<update id="updateDiary">
 		update diary set today_weight=#{todayWeight},exer_calories=#{exerCalories},food_calories=#{foodCalories},today_exer=#{todayExer},today_breakfast=#{todayBreakfast},today_lunch=#{todayLunch},today_dinner=#{todayDinner},
-						 today_snack=#{todaySnack},carbo=#{carbo},protein=#{protein},fat=#{fat},diary_title=#{diaryTitle},diary_content=#{diaryContent},mychall_num=#{myChallNum} where diary_num=#{diaryNum}
+						 today_snack=#{todaySnack},carbo=#{carbo},protein=#{protein},fat=#{fat},diary_title=#{diaryTitle},diary_content=#{diaryContent} where diary_num=#{diaryNum}
 	</update>
 
 	<delete id="deleteDiary">
 		delete from diary where diary_num=#{diaryNum}
+	</delete>
+
+	<delete id="removeStamp">
+		delete from stamp where user_id=#{userId} and regdate=#{regdate}
 	</delete>
 
 	<select id="getDiaryDetail">
@@ -136,6 +140,10 @@
 
 	<select id="checkList">
 		select * from diary where user_id = #{loginUser} and regdate=#{choicedate}
+	</select>
+
+	<select id="getDiaryByNum">
+		select * from diary where diary_num =#{diaryNum}
 	</select>
 
 

@@ -2,8 +2,6 @@ package com.kh.demo.service;
 
 import com.kh.demo.domain.dto.*;
 
-import com.kh.demo.mapper.BoardMapper;
-import com.kh.demo.domain.dto.BoardDTO;
 import com.kh.demo.domain.dto.Criteria;
 import com.kh.demo.domain.dto.FileDTO;
 import com.kh.demo.domain.dto.MyChallengeDTO;
@@ -63,7 +61,7 @@ public class ChallengeServiceImpl implements ChallengeService{
     }
 
 
-    public List<MyChallengeDTO> findchall(String challNum) {
+    public ChallNoticeBoardDTO findchall(String challNum) {
         return challMapper.getFindchall(challNum);
     }
 
@@ -71,6 +69,7 @@ public class ChallengeServiceImpl implements ChallengeService{
     public List<ChallNoticeBoardDTO> getChallSearchList(String keyword) {
         return challMapper.getChallSearchList(keyword);
     }
+
 
 
 

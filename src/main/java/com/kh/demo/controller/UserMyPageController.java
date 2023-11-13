@@ -228,10 +228,7 @@ public class UserMyPageController {
         String loginUser = (String) session.getAttribute("loginUser");
         UserDTO user = serviceUser.getDetail(loginUser);
         DiaryDTO diary = service.getDiaryDetail(choicedate, loginUser);
-        System.out.println(diary);
-
-        System.out.println("성공한 챌린지 번호 : "+diary.getMyChallNum());
-        System.out.println("아침식사 번호 : "+diary.getTodayBreakfast());
+//        System.out.println(diary);
 
         //오늘의 비교 계산
         double resultweight = Math.round((user.getWeightGoal() - diary.getTodayWeight()) * 100.0) / 100.0;
@@ -378,15 +375,19 @@ public class UserMyPageController {
         //진행중인 챌린지 내역
         List<MyChallengeDTO> myChallDTOList = challService.findMychall(diary.getUserId(), diary.getRegdate());
         //성공한 챌린지 내역
-        List<MyChallengeDTO> sccChallDTOList = new ArrayList<>();
-        System.out.println("성공한 챌린지 번호 : "+diary.getMyChallNum());
+        List<ChallNoticeBoardDTO> sccChallDTOList = new ArrayList<ChallNoticeBoardDTO>();
+//        System.out.println("성공한 챌린지 번호 : "+diary.getMyChallNum());
         if (diary.getMyChallNum() != null) {
             String[] sccChallNumArr = (diary.getMyChallNum()).split(",");
-            for (String data : sccChallNumArr) {
-                sccChallDTOList = challService.findchall(data);
-            }
-        }
 
+            for (String data : sccChallNumArr) {
+                ChallNoticeBoardDTO sccChallDTO = challService.findchall(data);
+                sccChallDTOList.add(sccChallDTO);
+                System.out.println("성공챌린지 공지글 데이터"+sccChallDTO);
+
+            }
+
+        }
 
         model.addAttribute("user", user);
         model.addAttribute("diary", diary);
@@ -395,13 +396,11 @@ public class UserMyPageController {
         model.addAttribute("foodCalArr", foodCalArr);
         model.addAttribute("totalResult", totalResult);
         model.addAttribute("myINGChallNum", myChallDTOList);
-        model.addAttribute("sccChallDTOList",sccChallDTOList);
+        model.addAttribute("sccChallDTOList", sccChallDTOList);
 
-//        System.out.println(diary);
-        System.out.println(myChallDTOList);
-        System.out.println(sccChallDTOList);
-//        System.out.println(diary.getMyINGChallNum());
-        System.out.println(diary.getMyChallNum());
+
+        System.out.println("성공데이터"+sccChallDTOList);
+        System.out.println("진행데이터"+myChallDTOList);
 
     }
 
@@ -426,7 +425,7 @@ public class UserMyPageController {
                     }
                 }
             }
-            System.out.println("다이어리 저장 :"+diary);
+            System.out.println("다이어리 저장 :" + diary);
             return "redirect:/usermypage/diaryView?choicedate=" + choicedate;
         }
         //실패시 다시 캘린더로
@@ -445,10 +444,24 @@ public class UserMyPageController {
 
     @PostMapping("diaryRemove")
     public String diaryRemove(Long diaryNum, String choicedate) {
-        if (service.removeDiary(diaryNum)) {
-            return "/usermypage/user_diary";
+        DiaryDTO diary = service.getDiaryByNum(diaryNum);
+        System.out.println("removediary :" + diary.getMyChallNum());
+
+        if (diary.getMyChallNum() != null) {
+            if (service.removeStamp(diary.getUserId(), diary.getRegdate())) {
+                if (service.removeDiary(diaryNum)) {
+                    return "/usermypage/user_diary";
+                }
+                return "redirect:/usermypage/diaryView?choicedate=" + choicedate;
+
+            }
+        } else {
+            if (service.removeDiary(diaryNum)) {
+                return "/usermypage/user_diary";
+            }
         }
         return "redirect:/usermypage/diaryView?choicedate=" + choicedate;
+
     }
 }
 

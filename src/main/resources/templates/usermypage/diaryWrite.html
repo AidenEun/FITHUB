@@ -418,14 +418,16 @@
                 </tr>
 
                 <tr>
-                    <td>
+                    <td colspan="2" >
                         <!--폼으로 보낼때 체크 눌렀지는 확인하는 유효성 검사 필요 -->
+
                         <input type="button" value="챌린지 도장 찍기" class="mychallBtn" id="mychallBtn"
                                onclick="checkMychall()">
+                        <span style="margin-left: 110px;">성공한 챌린지는 저장 후 수정할 수 없습니다. 정확히 선택해 주세요!</span>
                     </td>
-                    <td>
-                        <!--                        공백으로 비워두기-->
-                    </td>
+<!--                    <td style="text-align: center">-->
+<!--                        성공한 챌린지는 저장 후 수정할 수 없습니다. 정확히 선택해 주세요!-->
+<!--                    </td>-->
                 </tr>
                 <tr class="challcheckList hiddenList" id="challList">
                     <td colspan="2">
@@ -687,7 +689,9 @@
             return false;
         }
         if (confirm("최종 칼로리가 정말 맞습니까?") == true) {
-            document.getElementById("diaryForm").submit();
+            if(confirm("성공한 챌린지는 저장 후 수정할 수 없습니다. 이대로 저장하시겠습니까?") == true){
+                document.getElementById("diaryForm").submit();
+            }
         }
         return false;
     }

@@ -85,4 +85,7 @@ public interface UserMyPageService {
     //트레이너 전환 신청
     boolean insertApplytrainer(TrainerSignUpDTO user,MultipartFile[] files) throws Exception;
 
+    DiaryDTO getDiaryByNum(Long diaryNum);
+
+    boolean removeStamp(String userId, String regdate);
 }
