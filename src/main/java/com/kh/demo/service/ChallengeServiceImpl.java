@@ -165,6 +165,8 @@ public class ChallengeServiceImpl implements ChallengeService{
                     fdto.setBoardNum(chall.getBoardNum());
                     fdto.setOrgName(orgname);
                     fdto.setSysName(systemname);
+                    fdto.setBoardCategory(boardCategory);
+
 
                     file.transferTo(new File(path));
 
@@ -289,9 +291,9 @@ public class ChallengeServiceImpl implements ChallengeService{
     }
 
     @Override
-    public ResponseEntity<Resource> getThumbnailResource(String systemname) throws Exception{
+    public ResponseEntity<Resource> getThumbnailResource(String sysName) throws Exception{
         //경로에 관련된 객체(자원으로 가지고 와야 하는 파일에 대한 경로)
-        Path path = Paths.get(saveFolder+systemname);
+        Path path = Paths.get(saveFolder+sysName);
         //경로에 있는 파일의 MIME타입을 조사해서 그대로 담기
         String contentType = Files.probeContentType(path);
         //응답 헤더 생성
@@ -304,19 +306,19 @@ public class ChallengeServiceImpl implements ChallengeService{
     }
 
     @Override
-    public ResponseEntity<Object> downloadFile(String systemname, String orgname) throws Exception{
+    public ResponseEntity<Object> downloadFile(String sysName, String orgName) throws Exception{
         //경로에 관련된 객체(자원으로 가지고 와야 하는 파일에 대한 경로)
-        Path path = Paths.get(saveFolder+systemname);
+        Path path = Paths.get(saveFolder+sysName);
         //해당 경로(path)에 있는 파일에서부터 뻗어나오는 InputStream(Files.newInputStream)을 통해 자원화(InputStreamResource)
         Resource resource = new InputStreamResource(Files.newInputStream(path));
 
-        File file = new File(saveFolder,systemname);
+        File file = new File(saveFolder,sysName);
 
         HttpHeaders headers = new HttpHeaders();
         String dwName = "";
 
         try {
-            dwName = URLEncoder.encode(orgname,"UTF-8").replaceAll("\\+","%20");
+            dwName = URLEncoder.encode(orgName,"UTF-8").replaceAll("\\+","%20");
         } catch (UnsupportedEncodingException e) {
             dwName = URLEncoder.encode(file.getName(),"UTF-8").replaceAll("\\+","%20");
         }
