@@ -38,7 +38,11 @@
 	}
 
 	#header {
-		background-color: #5a8100;
+		background-color: #8FA746;
+	}
+
+	#footer {
+		background-color: #606C3A;
 	}
 
 	#header nav > ul > li a {
@@ -51,10 +55,6 @@
 
 	#header .main ul li > a {
 		color: white;
-	}
-
-	#footer {
-		background-color: #304400;
 	}
 
 	.adminmypadge_content_box {
@@ -133,6 +133,26 @@
 		float: right;
 	}
 
+	.button {
+		border-radius: 10px;
+	}
+
+	.button:hover {
+		background-color: #8FA746 !important;
+	}
+
+	#result_execlist:hover{
+		transform: scaleX(1.05);
+		background-color: #5a8100;
+	}
+
+	#result_execlist:hover td{
+		color:white !important;
+	}
+
+	#result_execlist:hover a{
+		color:white !important;
+	}
 </style>
 <body class="is-preload">
 
@@ -174,8 +194,17 @@
 					<h2>신고 접수</h2>
 					<div class="adminmypadge_content_box">
 						<table style="text-align: center; margin-top: 20px;">
+							<thead>
+								<tr style="font-weight: bold;">
+									<td class="long_text">신고 번호</td>
+									<td class="long_text">신고 유저</td>
+									<td class="long_text">게시글 번호</td>
+									<td class="long_text">카테고리</td>
+									<td class="long_text">신고 일자</td>
+								</tr>
+							</thead>
 							<tbody id="data-table">
-								<tr th:if="${reportList != null and reportList.size() > 0}" th:each="reportBoard : ${reportList}">
+								<tr th:if="${reportList != null and reportList.size() > 0}" th:each="reportBoard : ${reportList}" id="result_execlist">
 									<td class="long_text">
 										<a href="#">
 											[[${reportBoard.reportNum}]]
@@ -214,115 +243,38 @@
 				<div class="adminmypage_box">
 					<h2>트레이너 신청 내역</h2>
 					<div class="adminmypadge_content_box">
-						<table style="text-align: center;">
-							<tr>
+						<table style="text-align: center; margin-top: 20px;">
+							<thead>
+								<tr style="font-weight: bold;">
+									<td class="long_text">신청 번호</td>
+									<td class="long_text">신청 유저</td>
+									<td class="long_text">파트</td>
+									<td class="long_text">경력</td>
+								</tr>
+							</thead>
+							<tbody id="data-table">
+							<tr th:if="${signUpList != null and signUpList.size() > 0}" th:each="signUpBoard : ${signUpList}" id="result_execlist">
+								<td class="long_text">
+									<a href="#" class="signupNum">[[${signUpBoard.signupNum}]]</a>
+								</td>
+								<td class="long_text">
+									<a href="#" class="open">[[${signUpBoard.userId}]]</a>
+								</td>
 								<td class="long_text">
 									<a href="#">
-										signup.signup_num
+										[[${signUpBoard.trainerPart}]]
 									</a>
 								</td>
 								<td class="long_text">
 									<a href="#">
-										signup.user_id
-									</a>
-								</td>
-								<td class="long_text">
-									<a href="#">
-										signup.trainer_part
-									</a>
-								</td>
-								<td class="long_text">
-									<a href="#">
-										signup.trainer_career
-									</a>
-								</td>
-							</tr>
-							<tr>
-								<td class="long_text">
-									<a href="#">
-										signup.signup_num
-									</a>
-								</td>
-								<td class="long_text">
-									<a href="#">
-										signup.user_id
-									</a>
-								</td>
-								<td class="long_text">
-									<a href="#">
-										signup.trainer_part
-									</a>
-								</td>
-								<td class="long_text">
-									<a href="#">
-										signup.trainer_career
+										[[${signUpBoard.trainerCareer}]]
 									</a>
 								</td>
 							</tr>
-							<tr>
-								<td class="long_text">
-									<a href="#">
-										signup.signup_num
-									</a>
-								</td>
-								<td class="long_text">
-									<a href="#">
-										signup.user_id
-									</a>
-								</td>
-								<td class="long_text">
-									<a href="#">
-										signup.trainer_part
-									</a>
-								</td>
-								<td class="long_text">
-									<a href="#">
-										signup.trainer_career
-									</a>
-								</td>
-							</tr>
-							<tr>
-								<td class="long_text">
-									<a href="#">
-										signup.signup_num
-									</a>
-								</td>
-								<td class="long_text">
-									<a href="#">
-										signup.user_id
-									</a>
-								</td>
-								<td class="long_text">
-									<a href="#">
-										signup.trainer_part
-									</a>
-								</td>
-								<td class="long_text">
-									<a href="#">
-										signup.trainer_career
-									</a>
-								</td>
-							</tr>
-							<tr>
-								<td class="long_text">
-									<a href="#">
-										signup.signup_num
-									</a>
-								</td>
-								<td class="long_text">
-									<a href="#">
-										signup.user_id
-									</a>
-								</td>
-								<td class="long_text">
-									<a href="#">
-										signup.trainer_part
-									</a>
-								</td>
-								<td class="long_text">
-									<a href="#">
-										signup.trainer_career
-									</a>
+							</tbody>
+							<tr th:if="${signUpList == null or signUpList.size() == 0}">
+								<td colspan="4">
+									현재 신청이 없습니다!!
 								</td>
 							</tr>
 						</table>
@@ -333,68 +285,51 @@
 				<div class="adminmypage_box">
 					<h2>관리자 게시물</h2>
 					<div class="adminmypadge_content_box">
-						<div class="button category_button">
-							<a href="#">뉴스</a>
-						</div>
-						<div class="button category_button">
-							<a href="#">운동 정보</a>
-						</div>
-						<div class="button category_button">
-							<a href="#">식단 레시피</a>
-						</div>
-						<div class="button category_button">
-							<a href="#">꿀팁</a>
-						</div>
 						<div class="admin_board_list_box">
 							<div>
-								<div class="admin_board_list">
-									<div style="font-weight: bold;">board.board_title</div>
-									<div>board.board_contentboard_contentboard_contentboard_contentboard_content</div>
-									<div>board.view_cnt</div>
-									<div>board.like_cnt</div>
-								</div>
-							</div>
-							<div>
-								<div class="admin_board_list">
-									<div style="font-weight: bold;">board.board_title</div>
-									<div>board.board_contentboard_contentboard_contentboard_contentboard_content</div>
-									<div>board.view_cnt</div>
-									<div>board.like_cnt</div>
-								</div>
-							</div>
-							<div>
-								<div class="admin_board_list">
-									<div style="font-weight: bold;">board.board_title</div>
-									<div>board.board_contentboard_contentboard_contentboard_contentboard_content</div>
-									<div>board.view_cnt</div>
-									<div>board.like_cnt</div>
-								</div>
-							</div>
-						</div>
-						<div class="admin_board_list_box" style="margin-bottom: 25px;">
-							<div>
-								<div class="admin_board_list">
-									<div style="font-weight: bold;">board.board_title</div>
-									<div>board.board_contentboard_contentboard_contentboard_contentboard_content</div>
-									<div>board.view_cnt</div>
-									<div>board.like_cnt</div>
-								</div>
-							</div>
-							<div>
-								<div class="admin_board_list">
-									<div style="font-weight: bold;">board.board_title</div>
-									<div>board.board_contentboard_contentboard_contentboard_contentboard_content</div>
-									<div>board.view_cnt</div>
-									<div>board.like_cnt</div>
-								</div>
-							</div>
-							<div>
-								<div class="admin_board_list">
-									<div style="font-weight: bold;">board.board_title</div>
-									<div>board.board_contentboard_contentboard_contentboard_contentboard_content</div>
-									<div>board.view_cnt</div>
-									<div>board.like_cnt</div>
-								</div>
+								<table style="text-align: center; margin-top: 20px;">
+									<thead>
+										<tr style="font-weight: bold;">
+											<td class="long_text">게시글 번호</td>
+											<td class="long_text">제목</td>
+											<td class="long_text">작성자</td>
+											<td class="long_text">조회수</td>
+											<td class="long_text">좋아요</td>
+										</tr>
+									</thead>
+									<tbody id="data-table">
+									<tr th:if="${boardList != null and boardList.size() > 0}" th:each="adminBoard : ${boardList}" id="result_execlist">
+										<td class="long_text">
+											<a href="#">
+												[[${adminBoard.boardNum}]]
+											</a>
+										</td>
+										<td class="long_text">
+											<a href="#">
+												[[${adminBoard.boardTitle}]]
+											</a>
+										</td>
+										<td class="long_text">
+											<a href="#" class="open">[[${adminBoard.userId}]]</a>
+										</td>
+										<td class="long_text">
+											<a href="#">
+												[[${adminBoard.viewCnt}]]
+											</a>
+										</td>
+										<td class="long_text">
+											<a href="#">
+												[[${adminBoard.likeCnt}]]
+											</a>
+										</td>
+									</tr>
+									<tr th:if="${boardList == null or boardList.size() == 0}">
+										<td colspan="5">
+											등록된 게시글이 없습니다!
+										</td>
+									</tr>
+									</tbody>
+								</table>
 							</div>
 						</div>
 					<a href="/adminmypage/adminmypage_board" class="button more_view">더보기</a>
@@ -435,5 +370,14 @@
 
 	<script th:src="@{/assets/js/sidebar.js}"></script>
 	<script th:src="@{/assets/js/profile.js}"></script>
+<script>
+	$(".open").on("click", function (e) {
+		e.preventDefault();
+		var userId = $(this).text();
+
+		sendUserIdToModal(userId);
+		modalBox.classList.add("active");
+	});
+</script>
 </body>
 </html>

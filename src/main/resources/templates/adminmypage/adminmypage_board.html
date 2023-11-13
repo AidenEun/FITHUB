@@ -38,7 +38,11 @@
 	}
 
 	#header {
-		background-color: #5a8100;
+		background-color: #8FA746;
+	}
+
+	#footer {
+		background-color: #606C3A;
 	}
 
 	#header nav > ul > li a {
@@ -52,10 +56,6 @@
 	#header .main ul li > a {
 		color: white;
 
-	}
-
-	#footer {
-		background-color: #304400;
 	}
 
 	a {
@@ -88,7 +88,28 @@
 	}
 
 	.now_cate {
-		background-color: red !important;
+		background-color: #ebede1 !important;
+	}
+
+	.button {
+		border-radius: 10px;
+	}
+
+	.button:hover {
+		background-color: #8FA746 !important;
+	}
+
+	#result_execlist:hover{
+		transform: scaleX(1.05);
+		background-color: #5a8100;
+	}
+
+	#result_execlist:hover td{
+		color:white !important;
+	}
+
+	#result_execlist:hover a{
+		color:white !important;
 	}
 </style>
 <body class="is-preload">
@@ -133,7 +154,7 @@
 						</tr>
 					</thead>
 					<tbody id="data-table">
-						<tr th:if="${boardList != null and boardList.size() > 0}" th:each="adminBoard : ${boardList}">
+						<tr th:if="${boardList != null and boardList.size() > 0}" th:each="adminBoard : ${boardList}" id="result_execlist">
 							<td class="long_text">
 								<a href="#">
 									[[${adminBoard.boardNum}]]
@@ -333,7 +354,7 @@
 
             if (data.boardList != null && data.boardList.length > 0) {
                 data.boardList.forEach(function (boardData) {
-                    var row = $('<tr>');
+                    var row = $('<tr id="result_execlist">');
                     row.append('<td class="long_text"><a href="#">' + boardData.boardNum + '</a></td>');
                     row.append('<td class="long_text"><a href="#">' + boardData.boardTitle + '</a></td>');
                     row.append('<td class="long_text"><a href="#" class="open">' + boardData.userId + '</a></td>');

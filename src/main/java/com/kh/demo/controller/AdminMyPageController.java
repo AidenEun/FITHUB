@@ -27,11 +27,17 @@ public class AdminMyPageController {
     private TrainerMyPageService trainerMyPageService;
 
     @GetMapping("adminmypage_list")
-    public void replaceList(Criteria cri, Model model){
+    public void replaceList(Model model){
+        Criteria cri = new Criteria(1, 5);
+        Criteria cri2 = new Criteria(1, 3);
+
         List<ReportDTO> reportList = adminMyPageService.getReportList(cri);
+        List<TrainerSignUpDTO> trainerSingupDTOList = adminMyPageService.getSignUpList(cri);
+        List<BoardDTO> boardList = adminMyPageService.getBoardList(cri2);
 
         model.addAttribute("reportList" , reportList);
-        model.addAttribute("pageMaker",new PageDTO(adminMyPageService.getReportTotal(cri), cri));
+        model.addAttribute("signUpList", trainerSingupDTOList);
+        model.addAttribute("boardList" , boardList);
     }
 
 //    Report

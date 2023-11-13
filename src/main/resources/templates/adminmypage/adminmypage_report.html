@@ -40,7 +40,11 @@
 	}
 
 	#header {
-		background-color: #5a8100;
+		background-color: #8FA746;
+	}
+
+	#footer {
+		background-color: #606C3A;
 	}
 
 	#header nav > ul > li a {
@@ -54,10 +58,6 @@
 	#header .main ul li > a {
 		color: white;
 
-	}
-
-	#footer {
-		background-color: #304400;
 	}
 
 	a {
@@ -93,8 +93,25 @@
 		background-color: #ebede1 !important;
 	}
 
+	.button {
+		border-radius: 10px;
+	}
+
 	.button:hover {
-		background-color: #ebede1 !important;
+		background-color: #8FA746 !important;
+	}
+
+	#result_execlist:hover{
+		transform: scaleX(1.05);
+		background-color: #5a8100;
+	}
+
+	#result_execlist:hover td{
+		color:white !important;
+	}
+
+	#result_execlist:hover a{
+		color:white !important;
 	}
 </style>
 <body class="is-preload">
@@ -141,7 +158,7 @@
 						</tr>
 					</thead>
 					<tbody id="data-table">
-						<tr th:if="${reportList != null and reportList.size() > 0}" th:each="reportBoard : ${reportList}">
+						<tr th:if="${reportList != null and reportList.size() > 0}" th:each="reportBoard : ${reportList}" id="result_execlist">
 							<td class="long_text">
 								<a href="#">
 									[[${reportBoard.reportNum}]]
@@ -333,7 +350,7 @@
 			if (data.reportList != null && data.reportList.length > 0) {
 				data.reportList.forEach(function (reportData) {
 					if (reportData.reportYn === 'n') {
-						var row = $('<tr>');
+						var row = $('<tr id="result_execlist">');
 						row.append('<td class="long_text"><a href="#" class="reportNum">' + reportData.reportNum + '</a></td>');
 						row.append('<td class="long_text"><a href="#" class="open">' + reportData.userId + '</a></td>');
 						row.append('<td class="long_text"><a href="#">' + reportData.reportBoardnum + '</a></td>');
@@ -343,7 +360,7 @@
 						tableBody.append(row);
 					}
 					else if (reportData.reportYn === 'y') {
-						var row = $('<tr>');
+						var row = $('<tr id="result_execlist">');
 						row.append('<td class="long_text"><a href="#" class="reportNum">' + reportData.reportNum + '</a></td>');
 						row.append('<td class="long_text"><a href="#" class="open">' + reportData.userId + '</a></td>');
 						row.append('<td class="long_text"><a href="#">' + reportData.reportBoardnum + '</a></td>');
