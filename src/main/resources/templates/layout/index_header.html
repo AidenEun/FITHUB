@@ -16,11 +16,10 @@
         <nav class="main">
             <ul>
                 <li id="login">
-
-                    <th:block th:if="${loginUser == null}">
+                    <th:block th:if="${session.loginUser == null}">
                         <a class="login" th:href="@{/user/login}" style="color: #fff;">Login</a>
                     </th:block>
-                    <th:block th:if="${loginUser != null}">
+                    <th:block th:if="${session.loginUser != null}">
                         <a class="login" th:href="@{/user/logout}" style="color: #fff;">logout</a>
                     </th:block>
 
@@ -44,116 +43,117 @@
     <!-- Menu -->
     <section id="menu">
         <div class="side-not-login">
-            <p>로그인하세요</p>
-            <a href="/user/login">로그인</a>
+            <th:blcok th:if="${session.loginUser == null}">
+                <p>로그인하세요</p>
+                <a th:href="@{/user/login}">로그인</a>
+            </th:blcok>
         </div>
-        <div class="side_info">
-            <a href="/usermypage/user_myinfo">
-                <img src="images/profile_img.png" class="prof_img" width="102px" height="102px">
-            </a>
-            <div id="my_info">
-                <div>
-                    <a href="/usermypage/user_myinfo">내 정보</a>
-                    <th:block th:if="${loginUser == null}">
-                        <a class="login" href="/user/login">로그인</a>
-                    </th:block>
-                    <th:block th:if="${loginUser != null}">
-                        <a class="login" th:href="@{/user/logout}">로그아웃</a>
-                    </th:block>
-                </div>
-                <a href="/usermypage/user_myinfo"><span>등급 / 닉네임(ID)</span></a>
-            </div>
-            <div class="bar-container">
-                <progress class="progress-bar" value="0" max="7"></progress>
-                <input type="button" value="출석" class="att-btn">
-            </div>
-            <div class="point-container">
-                <div>나의 포인트</div>
-                <span>0p</span>
-            </div>
-            <hr>
-            <div id="tab-menu">
-                <div class="tab today-tab">오늘</div>
-                <div class="tab chall-tab">도전</div>
-                <div class="tab sub-tab">구독</div>
-                <div class="page-tab diary-tab">
-                    <a href="#">일기</a>
-                </div>
-                <div class="page-tab shop-tab">
-                    <a href="#">쇼핑</a>
-                </div>
-            </div>
-            <div id="tab-menu-container">
-                <div class="tab-view today-view">
-                    <strong>나의 목표</strong>
-                    <th:block th:if="${user !=null && loginUser != null}">
-                        <p>목표체중 : <span th:text="${user.weightGoal}"></span></p>
-                        <p>목표칼로리 : <span th:text="${user.caloriesGoal}"></span></p>
-                        <strong>잔여칼로리: 현재칼로리/목표칼로리</strong>
-                        <hr>
-                    </th:block>
-                    <p>섭취량</p>
-                    <p>소비량</p>
-                    <div id="meal-options">
-                        <div class="brack-fst">아침</div>
-                        <div class="lunch">점심</div>
-                        <div class="dinner">저녁</div>
-                        <div class="snack">간식</div>
+        <th:block th:if="${session.loginUser != null}">
+            <div class="side_info">
+                <a href="/usermypage/user_myinfo">
+                    <img src="images/profile_img.png" class="prof_img" width="102px" height="102px">
+                </a>
+                <div id="my_info">
+                    <div>
+                        <a href="/usermypage/user_myinfo">내 정보</a>
+                        <th:block th:if="${session.loginUser != null}">
+                            <a class="login" th:href="@{/user/logout}">로그아웃</a>
+                        </th:block>
                     </div>
-                    <div id="tan-dan-ji-box">
-                        <div class="today-breakfast">
-                            <p>칼로리:아침 칼로리</p>
-                            <p>탄수화물</p>
-                            <p>단백질</p>
-                            <p>지방</p>
-                        </div>
-                        <div class="today-lunch">
-                            <p>칼로리:점심 칼로리</p>
-                            <p>탄수화물</p>
-                            <p>단백질</p>
-                            <p>지방</p>
-                        </div>
-                        <div class="today-dinner">
-                            <p>칼로리:저녁 칼로리</p>
-                            <p>탄수화물</p>
-                            <p>단백질</p>
-                            <p>지방</p>
-                        </div>
-                        <div class="today-snack">
-                            <p>칼로리:간식 칼로리</p>
-                            <p>탄수화물</p>
-                            <p>단백질</p>
-                            <p>지방</p>
-                        </div>
+                    <a href="/usermypage/user_myinfo"><span>등급 / 닉네임(ID)</span></a>
+                </div>
+                <div class="bar-container">
+                    <progress class="progress-bar" value="0" max="7"></progress>
+                    <input type="button" value="출석" class="att-btn">
+                </div>
+                <div class="point-container">
+                    <div>나의 포인트</div>
+                    <span>0p</span>
+                </div>
+                <hr>
+                <div id="tab-menu">
+                    <div class="tab today-tab">오늘</div>
+                    <div class="tab chall-tab">도전</div>
+                    <div class="tab sub-tab">구독</div>
+                    <div class="page-tab diary-tab">
+                        <a href="#">일기</a>
+                    </div>
+                    <div class="page-tab shop-tab">
+                        <a href="#">쇼핑</a>
                     </div>
                 </div>
-                <div class="tab-view chall-view">
-                    <div class="my-chall">
-                        <strong>나의 챌린지</strong><br>
-                        <span class="active-tab">진행중</span>
-                        <span class="finish-tab">종료</span>
-                        <div id="chall-list">
-                            <div class="active-chall-listView">
-                                <p>진행중인 챌린지 list</p>
+                <div id="tab-menu-container">
+                    <div class="tab-view today-view">
+                        <strong>나의 목표</strong>
+                        <th:block th:if="${user !=null && loginUser != null}">
+                            <p>목표체중 : <span th:text="${user.weightGoal}"></span></p>
+                            <p>목표칼로리 : <span th:text="${user.caloriesGoal}"></span></p>
+                            <strong>잔여칼로리: 현재칼로리/목표칼로리</strong>
+                            <hr>
+                        </th:block>
+                        <p>섭취량</p>
+                        <p>소비량</p>
+                        <div id="meal-options">
+                            <div class="brack-fst">아침</div>
+                            <div class="lunch">점심</div>
+                            <div class="dinner">저녁</div>
+                            <div class="snack">간식</div>
+                        </div>
+                        <div id="tan-dan-ji-box">
+                            <div class="today-breakfast">
+                                <p>칼로리:아침 칼로리</p>
+                                <p>탄수화물</p>
+                                <p>단백질</p>
+                                <p>지방</p>
                             </div>
-                            <div class="finish-chall-listView">
-                                <p>종료된 챌린지 list</p>
+                            <div class="today-lunch">
+                                <p>칼로리:점심 칼로리</p>
+                                <p>탄수화물</p>
+                                <p>단백질</p>
+                                <p>지방</p>
+                            </div>
+                            <div class="today-dinner">
+                                <p>칼로리:저녁 칼로리</p>
+                                <p>탄수화물</p>
+                                <p>단백질</p>
+                                <p>지방</p>
+                            </div>
+                            <div class="today-snack">
+                                <p>칼로리:간식 칼로리</p>
+                                <p>탄수화물</p>
+                                <p>단백질</p>
+                                <p>지방</p>
                             </div>
                         </div>
                     </div>
+                    <div class="tab-view chall-view">
+                        <div class="my-chall">
+                            <strong>나의 챌린지</strong><br>
+                            <span class="active-tab">진행중</span>
+                            <span class="finish-tab">종료</span>
+                            <div id="chall-list">
+                                <div class="active-chall-listView">
+                                    <p>진행중인 챌린지 list</p>
+                                </div>
+                                <div class="finish-chall-listView">
+                                    <p>종료된 챌린지 list</p>
+                                </div>
+                            </div>
+                        </div>
 
 
-                </div>
-                <div class="tab-view sub-view">
-                    <div class="sub-view-container">
-                        <strong>나의 트레이너</strong>
-                        <div class="my-sub">
-                            <p>구독한 트레이너 list</p>
+                    </div>
+                    <div class="tab-view sub-view">
+                        <div class="sub-view-container">
+                            <strong>나의 트레이너</strong>
+                            <div class="my-sub">
+                                <p>구독한 트레이너 list</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </th:block>
         <div id="another-page">
             <div class="bmi">
                 <a href="/sidebar/bmi">BMI</a>
