@@ -48,6 +48,13 @@ public class HomeController {
         TrainerDTO trainer = serviceTrainer.getDetail(loginUser);
         AdminDTO admin = serviceAdmin.getDetail(loginUser);
 
+        BoardDTO newsBoard = boardservice.getNewsTop1();
+        BoardDTO exerBoard = boardservice.getExerTop1();
+        BoardDTO foodBoard = boardservice.getFoodTop1();
+
+        model.addAttribute("newsTop1", newsBoard);
+        model.addAttribute("exerTop1", exerBoard);
+        model.addAttribute("foodTop1", foodBoard);
 
         if(admin != null){
             req.getSession().setAttribute("admin",admin);

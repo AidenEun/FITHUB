@@ -47,6 +47,12 @@ public interface BoardMapper {
 	List<BoardDTO> getTipSearchList(String keyword);
 
 	List<BoardDTO> getCommuSearchList(String keyword);
+
+    BoardDTO getNewsTop1();
+
+	BoardDTO getExerTop1();
+
+	BoardDTO getFoodTop1();
 }
 
 
