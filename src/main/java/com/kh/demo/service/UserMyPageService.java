@@ -85,4 +85,12 @@ public interface UserMyPageService {
     //트레이너 전환 신청
     boolean insertApplytrainer(TrainerSignUpDTO user,MultipartFile[] files) throws Exception;
 
+    //나의 매칭리스트
+    List<UTMatchingDTO> getMyMatchinglist(Criteria cri, String userId);
+
+    ArrayList<String> getMatchingNewlyList(List<UTMatchingDTO> list) throws Exception;
+
+    Long getMatchingTotal(Criteria cri, String userId);
+
+    boolean updateMatching(UTMatchingDTO utMatching);
 }

@@ -176,7 +176,8 @@
 		<div class="content">
 			<div id="messageAll" class="button cate now_cate message" style="margin-right: 10px;">전체보기</div>
 			<div id="messageSend" class="button cate not_cate message" style="margin-right: 10px;">보낸쪽지함</div>
-			<div id="messageReceive" class="button cate now_cate message" style="margin-right: 10px;">받은쪽지함</div>
+			<div id="messageReceive" class="button cate not_cate message" style="margin-right: 10px;">받은쪽지함</div>
+			<div id="u_t_matching" class="button cate not_cate message" style="margin-right: 10px;">매칭쪽지함</div>
 			<!-- 게시글 리스트 띄우는 테이블 -->
 			<table class="list">
 				<tr align="right" valign="middle">
@@ -259,7 +260,7 @@
 			<input type="hidden" name="message" th:value="${param.message}">
 		</form>
 
-		<form name="messageForm" id="messageForm" th:action="@{/usermypage/user_messagelist}"></form>
+		<form name="messageForm" id="messageForm" th:action="@{/trainermypage/trainer_messagelist}"></form>
 
 
 		<!-- Sidebar -->
@@ -346,11 +347,15 @@
 	$(".message").on("click",function(e){
 		e.preventDefault();
 		let category = $(this).attr("id");
+		if(category == "u_t_matching"){
+			let url=/*[[@{/trainermypage/u_t_matching}]]*/'';
+			messageForm.attr("action",url);
+		}
+
 		messageForm.append("<input type='hidden' name='message' value='"+category+"'>");
 		messageForm.attr("method","get");
 		messageForm.submit();
 	});
-
 </script>
 
 </html>

@@ -79,4 +79,14 @@ public interface TrainerMyPageService {
     ResponseEntity<Resource> getThumbnailResource(String sysName) throws Exception;
 
     boolean trainer_modify(TrainerDTO trainer, MultipartFile[] files, String updateCnt) throws IOException;
+
+
+    //나의 매칭리스트
+    List<UTMatchingDTO> getMyMatchinglist(Criteria cri, String trainerId);
+
+    Long getMatchingTotal(Criteria cri, String trainerId);
+
+    ArrayList<String> getMatchingNewlyList(List<UTMatchingDTO> list) throws Exception;
+
+    boolean updateMatching(UTMatchingDTO utMatching, String trainerCheck);
 }

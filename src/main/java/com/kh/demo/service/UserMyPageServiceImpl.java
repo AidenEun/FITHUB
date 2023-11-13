@@ -105,6 +105,35 @@ public class UserMyPageServiceImpl implements UserMyPageService{
         }
     }
 
+    //나의매칭리스트
+    @Override
+    public List<UTMatchingDTO> getMyMatchinglist(Criteria cri, String userId) {
+            return umpmapper.getMyMatchinglist(cri,userId);
+    }
+
+    @Override
+    public Long getMatchingTotal(Criteria cri, String userId) {
+            return umpmapper.getMatchingTotal(cri, userId);
+    }
+
+    @Override
+    public ArrayList<String> getMatchingNewlyList(List<UTMatchingDTO> list) throws Exception {
+        ArrayList<String> newly_Message = new ArrayList<>();
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date now = new Date();
+        for(UTMatchingDTO matching : list) {
+            Date regdate = df.parse(matching.getMatchingDate());
+            if(now.getTime() - regdate.getTime() < 1000*60*60*2) {
+                newly_Message.add("O");
+            }
+            else {
+                newly_Message.add("X");
+            }
+        }
+        return newly_Message;
+    }
+
+
 
     @Override
     public Long getMessageLastNum(String userid) {
@@ -128,7 +157,14 @@ public class UserMyPageServiceImpl implements UserMyPageService{
         return newly_Message;
     }
 
-
+    @Override
+    public boolean updateMatching(UTMatchingDTO utMatching) {
+        int row = umpmapper.updateMatching(utMatching);
+        if (row != 1) {
+            return false;
+        }
+        return true;
+    }
 
 
 
