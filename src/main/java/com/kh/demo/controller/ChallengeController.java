@@ -119,14 +119,14 @@ public class ChallengeController {
     }
 
     @GetMapping(value = {"get","modify"})
-    public String get(String category, Criteria cri, Long boardNum, HttpServletRequest req, HttpServletResponse resp, Model model) {
+    public String get( Criteria cri, Long boardNum, HttpServletRequest req, HttpServletResponse resp, Model model) {
         model.addAttribute("cri",cri);
+        String boardCategory = "challCert";
         HttpSession session = req.getSession();
         ChallCertBoardDTO board = challService.getDetail(boardNum);
         model.addAttribute("board",board);
-        System.out.printf("board1 :"+board);
-        model.addAttribute("files",challService.getFileList(boardNum,category));
-        System.out.printf("files :"+challService.getFileList(boardNum, category));
+        model.addAttribute("files",challService.getFileList(boardNum,boardCategory));
+        System.out.printf("files :"+challService.getFileList(boardNum, boardCategory));
         String loginUser = (String)session.getAttribute("loginUser");
         String requestURI = req.getRequestURI();
         if(requestURI.contains("/get")) {
@@ -160,14 +160,14 @@ public class ChallengeController {
         return requestURI;
     }
     @PostMapping("modify")
-    public String modify(ChallCertBoardDTO board, MultipartFile[] files, String updateCnt, Criteria cri, Model model, String category) throws Exception {
+    public String modify(ChallCertBoardDTO board, MultipartFile[] files, String updateCnt, Criteria cri, Model model, String boardCategory) throws Exception {
         if(files != null){
             for (int i = 0; i < files.length; i++) {
                 System.out.println("controller : "+files[i].getOriginalFilename());
             }
         }
         System.out.println("controller : "+updateCnt);
-        if(challService.modify(board, files, updateCnt, category)) {
+        if(challService.modify(board, files, updateCnt, boardCategory)) {
             return "redirect:/board/get"+cri.getListLink()+"&boardnum="+board.getBoardNum();
         }
         else {
@@ -175,10 +175,10 @@ public class ChallengeController {
         }
     }
     @PostMapping("remove")
-    public String remove(Long boardnum, Criteria cri, HttpServletRequest req, String category) {
+    public String remove(Long boardnum, Criteria cri, HttpServletRequest req, String boardCategory) {
         HttpSession session = req.getSession();
         String loginUser = (String)session.getAttribute("loginUser");
-        if(challService.remove(loginUser, boardnum, category)) {
+        if(challService.remove(loginUser, boardnum, boardCategory)) {
             return "redirect:/board/list"+cri.getListLink();
         }
         else {

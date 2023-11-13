@@ -97,12 +97,12 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public boolean modify(BoardDTO board, MultipartFile[] files, String updateCnt, String category) throws Exception {
+	public boolean modify(BoardDTO board, MultipartFile[] files, String updateCnt, String boardCategory) throws Exception {
 		int row = bmapper.updateBoard(board);
 		if(row != 1) {
 			return false;
 		}
-		List<FileDTO> org_file_list = fmapper.getFiles(board.getBoardNum(), category);
+		List<FileDTO> org_file_list = fmapper.getFiles(board.getBoardNum(), boardCategory);
 		if(org_file_list.size()==0 && (files == null || files.length == 0)) {
 			return true;
 		}
@@ -177,10 +177,10 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public boolean remove(String loginUser, Long boardnum, String category) {
+	public boolean remove(String loginUser, Long boardnum, String boardCategory) {
 		BoardDTO board = bmapper.findByNum(boardnum);
 		if(board.getUserId().equals(loginUser)) {
-			List<FileDTO> files = fmapper.getFiles(boardnum, category);
+			List<FileDTO> files = fmapper.getFiles(boardnum, boardCategory);
 			for(FileDTO fdto : files) {
 				File file = new File(saveFolder,fdto.getSysName());
 				if(file.exists()) {
@@ -274,8 +274,8 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public List<FileDTO> getFileList(Long boardnum, String category) {
-		return fmapper.getFiles(boardnum, category);
+	public List<FileDTO> getFileList(Long boardnum, String boardCategory) {
+		return fmapper.getFiles(boardnum, boardCategory);
 	}
 
 	@Override
