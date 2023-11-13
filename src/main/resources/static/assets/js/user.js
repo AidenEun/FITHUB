@@ -48,11 +48,17 @@ function sendit(){
         username.focus();
         return false;
     }
-    const usergender = joinForm.usergender;
+    const usergender = joinForm.userGender;
     if(!usergender[0].checked && !usergender[1].checked){
     	alert("성별을 선택하세요!");
     	return false;
     }
+    const useremail = joinForm.useremail;
+        if (!isValidEmail(useremail.value)) {
+            alert("올바른 이메일 주소를 입력하세요!");
+            useremail.focus();
+            return false;
+        }
 
     joinForm.submit();
     return true;
@@ -163,6 +169,12 @@ function checkId(){
 	}
 	xhr.open("GET","/user/checkid?userid="+userid.value);
 	xhr.send();
+}
+
+function isValidEmail(email) {
+    // 간단한 형식의 이메일 주소 유효성 검사
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
 }
 
 function goToNextPage() {

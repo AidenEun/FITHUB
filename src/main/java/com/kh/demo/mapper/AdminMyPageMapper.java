@@ -128,4 +128,10 @@ public interface AdminMyPageMapper {
 
     void deleteSignUp(Long signupNum);
 
+    MessageDTO getMessage(Long messageNum);
+
+    void returnMessage(String messageContent, String receiveId);
+
+    void updateMessageCategory(Long messageNum);
+
 }

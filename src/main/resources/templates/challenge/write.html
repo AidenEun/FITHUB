@@ -194,13 +194,15 @@
 						<input type="text" name="userId" size="50" maxlength="50" th:value="${session.loginUser}" readonly>
 					</td>
 					<td>챌린지번호</td>
-					<td>[[${board.challNum}]]</td>
+					<td><input type="text" name="challNum" size="50" maxlength="50" th:value="${list.challNum}" readonly></td>
 				</tr>
 				<tr>
 					<td>챌린지시작</td>
-					<td>[[${board.startDate}]]</td>
+					<td><input type="text" name="startDate" size="50" maxlength="50" th:value="${list.subRegdate}" readonly></td>
+
 					<td>챌린지종료</td>
-					<td>[[${board.finishDate}]]</td>
+					<td><input type="text" name="finishDate" size="50" maxlength="50" th:value="${list.finishDate}" readonly></td>
+
 				</tr>
 
 				<tr style="height:300px;">

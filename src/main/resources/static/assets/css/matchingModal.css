@@ -32,6 +32,7 @@
 .application_notice a{
     font-size : 20px;
     font-weight: bold;
+    margin: 20px;
 }
 
 .application_buttons{

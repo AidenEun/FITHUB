@@ -1,6 +1,12 @@
 package com.kh.demo.service;
 
 import com.kh.demo.domain.dto.*;
+
+import com.kh.demo.mapper.BoardMapper;
+import com.kh.demo.domain.dto.BoardDTO;
+import com.kh.demo.domain.dto.Criteria;
+import com.kh.demo.domain.dto.FileDTO;
+import com.kh.demo.domain.dto.MyChallengeDTO;
 import com.kh.demo.mapper.ChallengeMapper;
 import com.kh.demo.mapper.FileMapper;
 import com.kh.demo.mapper.ReplyMapper;
@@ -52,6 +58,11 @@ public class ChallengeServiceImpl implements ChallengeService{
     }
 
     @Override
+    public ChallNoticeBoardDTO getChallenge(String userId, String mychallNum) {
+        return challMapper.getChallenge(userId,mychallNum);
+    }
+
+
     public List<MyChallengeDTO> findchall(String challNum) {
         return challMapper.getFindchall(challNum);
     }
@@ -67,8 +78,8 @@ public class ChallengeServiceImpl implements ChallengeService{
 
 
     @Override
-    public boolean regist(BoardDTO board, MultipartFile[] files) throws Exception {
-        int row = challMapper.insertBoard(board);
+    public boolean regist(ChallCertBoardDTO chall, MultipartFile[] files) throws Exception {
+        int row = challMapper.insertBoard(chall);
         if(row != 1) {
             return false;
         }
@@ -77,7 +88,7 @@ public class ChallengeServiceImpl implements ChallengeService{
         }
         else {
             //방금 등록한 게시글 번호
-            Long boardnum = challMapper.getLastNum(board.getUserId());
+            Long boardnum = challMapper.getLastNum(chall.getUserId());
             boolean flag = false;
             for(int i=0;i<files.length-1;i++) {
                 MultipartFile file = files[i];
@@ -102,7 +113,7 @@ public class ChallengeServiceImpl implements ChallengeService{
                 fdto.setBoardNum(boardnum);
                 fdto.setSysName(systemname);
                 fdto.setOrgName(orgname);
-
+                fdto.setBoardCategory("challCert");
                 //실제 파일 업로드
                 file.transferTo(new File(path));
 
@@ -118,12 +129,12 @@ public class ChallengeServiceImpl implements ChallengeService{
     }
 
     @Override
-    public boolean modify(BoardDTO board, MultipartFile[] files, String updateCnt) throws Exception {
-        int row = challMapper.updateBoard(board);
+    public boolean modify(ChallCertBoardDTO chall, MultipartFile[] files, String updateCnt) throws Exception {
+        int row = challMapper.updateBoard(chall);
         if(row != 1) {
             return false;
         }
-        List<FileDTO> org_file_list = fmapper.getFiles(board.getBoardNum());
+        List<FileDTO> org_file_list = fmapper.getFiles(chall.getBoardNum());
         if(org_file_list.size()==0 && (files == null || files.length == 0)) {
             return true;
         }
@@ -153,7 +164,7 @@ public class ChallengeServiceImpl implements ChallengeService{
                     String path = saveFolder+systemname;
 
                     FileDTO fdto = new FileDTO();
-                    fdto.setBoardNum(board.getBoardNum());
+                    fdto.setBoardNum(chall.getBoardNum());
                     fdto.setOrgName(orgname);
                     fdto.setSysName(systemname);
 
@@ -199,7 +210,7 @@ public class ChallengeServiceImpl implements ChallengeService{
 
     @Override
     public boolean remove(String loginUser, Long boardnum) {
-        BoardDTO board = challMapper.findByNum(boardnum);
+        ChallCertBoardDTO board = challMapper.findByNum(boardnum);
         if(board.getUserId().equals(loginUser)) {
             List<FileDTO> files = fmapper.getFiles(boardnum);
             for(FileDTO fdto : files) {
@@ -220,12 +231,12 @@ public class ChallengeServiceImpl implements ChallengeService{
     }
 
     @Override
-    public List<BoardDTO> getBoardList(Criteria cri) {
+    public List<ChallCertBoardDTO> getChallList(Criteria cri) {
         return challMapper.getList(cri);
     }
 
     @Override
-    public BoardDTO getDetail(Long boardnum) {
+    public ChallCertBoardDTO getDetail(Long boardnum) {
         return challMapper.findByNum(boardnum);
     }
 
@@ -235,11 +246,11 @@ public class ChallengeServiceImpl implements ChallengeService{
     }
 
     @Override
-    public ArrayList<String> getNewlyBoardList(List<BoardDTO> list) throws Exception {
+    public ArrayList<String> getNewlyBoardList(List<ChallCertBoardDTO> list) throws Exception {
         ArrayList<String> newly_board = new ArrayList<>();
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date now = new Date();
-        for(BoardDTO board : list) {
+        for(ChallCertBoardDTO board : list) {
             Date regdate = df.parse(board.getRegdate());
             if(now.getTime() - regdate.getTime() < 1000*60*60*2) {
                 newly_board.add("O");
@@ -252,18 +263,18 @@ public class ChallengeServiceImpl implements ChallengeService{
     }
 
     @Override
-    public ArrayList<Integer> getReplyCntList(List<BoardDTO> list) {
+    public ArrayList<Integer> getReplyCntList(List<ChallCertBoardDTO> list) {
         ArrayList<Integer> reply_cnt_list = new ArrayList<>();
-        for(BoardDTO board : list) {
+        for(ChallCertBoardDTO board : list) {
             reply_cnt_list.add(rmapper.getTotal(board.getBoardNum()));
         }
         return reply_cnt_list;
     }
 
     @Override
-    public ArrayList<String> getRecentReplyList(List<BoardDTO> list) {
+    public ArrayList<String> getRecentReplyList(List<ChallCertBoardDTO> list) {
         ArrayList<String> recent_reply = new ArrayList<>();
-        for(BoardDTO board : list) {
+        for(ChallCertBoardDTO board : list) {
             if(rmapper.getRecentReply(board.getBoardNum()) >= 5) {
                 recent_reply.add("O");
             }

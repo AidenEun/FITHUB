@@ -14,4 +14,7 @@ public class ChallNoticeBoardDTO {
     //재우
     private String subRegdate;
     private int succCnt;
+    private String mychallNum;
+    private String userId;
+    private String finishDate;
 }
