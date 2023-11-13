@@ -99,6 +99,39 @@
 		order by board_num desc limit #{cri.startrow},#{cri.amount}
 	</select>
 
+<!--	통합검색 -->
+
+	<select id="getAllList">
+		select * from board where (board_title like('%${keyword}%')) or (board_content like('%${keyword}%')) or (user_id like('%${keyword}%'))
+		order by board_num desc
+	</select>
+
+	<select id="getAllSearchCnt">
+		select count(*) from board where (board_title like('%${keyword}%')) or (board_content like('%${keyword}%')) or (user_id like('%${keyword}%'))
+	</select>
+
+	<select id="getNewsSearchList">
+		select * from board where board_category = 'infoNews' and ((board_title like('%${keyword}%')) or (board_content like('%${keyword}%')) or (user_id like('%${keyword}%')))
+		order by board_num asc;
+	</select>
+
+	<select id="getExerSearchList">
+		select * from board where board_category = 'infoExer' and ((board_title like('%${keyword}%')) or (board_content like('%${keyword}%')) or (user_id like('%${keyword}%')))
+		order by board_num asc limit 5;
+	</select>
+	<select id="getFoodSearchList">
+		select * from board where board_category = 'infoFood' and ((board_title like('%${keyword}%')) or (board_content like('%${keyword}%')) or (user_id like('%${keyword}%')))
+		order by board_num asc limit 5;
+	</select>
+	<select id="getTipSearchList">
+		select * from board where board_category = 'infoTip' and ((board_title like('%${keyword}%')) or (board_content like('%${keyword}%')) or (user_id like('%${keyword}%')))
+		order by board_num asc limit 5;
+	</select>
+	<select id="getCommuSearchList">
+		select * from board where board_category like ('%com%') and ((board_title like('%${keyword}%')) or (board_content like('%${keyword}%')) or (user_id like('%${keyword}%')))
+		order by board_num asc limit 5;
+	</select>
+
 
 </mapper>
 

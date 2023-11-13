@@ -154,4 +154,9 @@ public class TrainerMatchingServiceImpl implements TrainerMatchingService {
             return null;
         }
     }
+
+    @Override
+    public List<BoardDTO> getMachingSearchList(String keyword) {
+        return tmmapper.getMachingSearchList(keyword);
+    }
 }

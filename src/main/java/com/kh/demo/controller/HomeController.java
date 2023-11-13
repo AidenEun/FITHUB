@@ -1,9 +1,7 @@
 package com.kh.demo.controller;
 
 import com.kh.demo.domain.dto.*;
-import com.kh.demo.service.AdminService;
-import com.kh.demo.service.TrainerService;
-import com.kh.demo.service.UserService;
+import com.kh.demo.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 @Controller
 public class HomeController {
@@ -29,6 +29,16 @@ public class HomeController {
     @Qualifier("AdminServiceImpl")
     private AdminService serviceAdmin;
 
+    @Autowired @Qualifier("BoardServiceImpl")
+    private BoardService boardservice;
+
+    @Autowired
+    @Qualifier("TrainerMatchingServiceImpl")
+    private TrainerMatchingService MatchingService;
+
+    @Autowired
+    private ChallengeService challService;
+
     @RequestMapping("/")
     public String home(HttpServletRequest req, Model model){
         HttpSession session = req.getSession();
@@ -42,7 +52,7 @@ public class HomeController {
         if(admin != null){
             req.getSession().setAttribute("admin",admin);
             return "index";
-          
+
         } else if (trainer != null) {
             req.getSession().setAttribute("trainer",trainer);
             return "index";
@@ -62,5 +72,40 @@ public class HomeController {
 
     @GetMapping("/user/joinTest")
     public void joinTest(){}
+
+    @GetMapping("/totalSearch")
+    public void search(String keyword,Model model){
+        System.out.println(keyword);
+//        전체 보드게시글 찾기
+//        List<BoardDTO> boardList = boardservice.getAllBoardList(keyword);
+//        for (int i = 0; i<boardList.size(); i++){
+//            System.out.println(boardList.get(i));
+//        }
+        //전체 보드 게시글 수 찾기
+        Long boardAllCnt = boardservice.getAllsearchCnt(keyword);
+        System.out.println(boardAllCnt);
+
+//        String[] boardCategory = {"infoNews","infoExer","infoFood","infoTip"};
+//        List<BoardDTO> InfoSearchList = boardservice.getSearch5List(keyword);
+
+        //각 게시판에서 5개씩 가져오기
+        List<BoardDTO> newsSearchList = boardservice.getNewsSearchList(keyword);
+        List<BoardDTO> exerSearchList = boardservice.getExerSearchList(keyword);
+        List<BoardDTO> foodSearchList = boardservice.getFoodSearchList(keyword);
+        List<BoardDTO> tipSearchList = boardservice.getTipSearchList(keyword);
+        List<BoardDTO> CommuSearchList = boardservice.getCommuSearchList(keyword);
+
+        List<BoardDTO> matchingSearchList = MatchingService.getMachingSearchList(keyword);
+        List<ChallNoticeBoardDTO> challSearchList = challService.getChallSearchList(keyword);
+
+        model.addAttribute("newsSearchList",newsSearchList);
+        model.addAttribute("exerSearchList",exerSearchList);
+        model.addAttribute("foodSearchList",foodSearchList);
+        model.addAttribute("tipSearchList",tipSearchList);
+        model.addAttribute("commuSearchList",CommuSearchList);
+        model.addAttribute("matchingSearchList",matchingSearchList);
+        model.addAttribute("challSearchList",challSearchList);
+
+    }
 
 }

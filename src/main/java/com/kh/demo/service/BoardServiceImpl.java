@@ -316,6 +316,41 @@ public class BoardServiceImpl implements BoardService{
 		return new ResponseEntity<Object>(resource,headers,HttpStatus.OK);
 	}
 
+	@Override
+	public List<BoardDTO> getAllBoardList(String keyword) {
+		return bmapper.getAllList(keyword);
+	}
+
+	@Override
+	public Long getAllsearchCnt(String keyword) {
+		return bmapper.getAllSearchCnt(keyword);
+	}
+
+	@Override
+	public List<BoardDTO> getNewsSearchList(String keyword) {
+		return bmapper.getNewsSearchList(keyword);
+	}
+
+	@Override
+	public List<BoardDTO> getExerSearchList(String keyword) {
+		return bmapper.getExerSearchList(keyword);
+	}
+
+	@Override
+	public List<BoardDTO> getFoodSearchList(String keyword) {
+		return bmapper.getFoodSearchList(keyword);
+	}
+
+	@Override
+	public List<BoardDTO> getTipSearchList(String keyword) {
+		return bmapper.getTipSearchList(keyword);
+	}
+
+	@Override
+	public List<BoardDTO> getCommuSearchList(String keyword) {
+		return bmapper.getCommuSearchList(keyword);
+	}
+
 
 }
 

@@ -57,7 +57,9 @@ public class UserMyPageServiceImpl implements UserMyPageService{
 
     @Override
     public DiaryDTO getDiaryDetail(String choicedate, String loginUser) {
-        return umpmapper.getDiaryDetail(choicedate,loginUser);
+        DiaryDTO result = umpmapper.getDiaryDetail(choicedate,loginUser);
+        System.out.println("서비스 IMP 디테일 데이터"+result);
+        return result;
     }
 
 

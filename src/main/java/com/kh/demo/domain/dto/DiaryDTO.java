@@ -20,7 +20,7 @@ public class DiaryDTO {
     private String regdate;
     private String diaryTitle;
     private String diaryContent;
-    private String todayChallNum;
-    private String myINGChallNum;
+    private String myChallNum;
+//    private String myINGChallNum;
 
 }

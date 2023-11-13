@@ -283,7 +283,7 @@
                             <input type="text" id="lunchCal" value="총" readonly>
                             <input type="text" th:value="${foodCalArr[1]}+kcal" readonly>
                         </div>
-                        <div type="text" class="list_area" id="lunch_result" th:text="${listNameArr[1]}" readonly >
+                        <div type="text" class="list_area" id="lunch_result" th:text="${listNameArr[1]}" readonly>
                         </div>
                     </td>
                 </tr>
@@ -295,7 +295,8 @@
                             <input type="text" id="dinnerCal" value="총" readonly>
                             <input type="text" th:value="${foodCalArr[2]}+kcal" readonly>
                         </div>
-                        <div type="text" class="list_area" id="dinner_result" th:text="${listNameArr[2]}" readonly></div>
+                        <div type="text" class="list_area" id="dinner_result" th:text="${listNameArr[2]}"
+                             readonly></div>
 
                     </td>
                     <td class="food_area">
@@ -316,9 +317,12 @@
                             <input type="text" value="운동" readonly>
                             <input type="hidden" name="todayExer" th:value="${diary.todayExer}">
                             <input type="text" value="총" readonly>
-                            <input type="text" id="exerCal" th:value="${diary.exerCalories != null ? diary.exerCalories +'kcal' : '0kcal'}" readonly style="text-align: left;">
+                            <input type="text" id="exerCal"
+                                   th:value="${diary.exerCalories != null ? diary.exerCalories +'kcal' : '0kcal'}"
+                                   readonly style="text-align: left;">
                         </div>
-                        <div type="text" class="excrcise_list list_area" id="exer_result" th:text="${listNameArr[4]}" readonly>
+                        <div type="text" class="excrcise_list list_area" id="exer_result" th:text="${listNameArr[4]}"
+                             readonly>
                         </div>
                     </td>
                 </tr>
@@ -390,15 +394,30 @@
                     <td colspan="2">
                         <input type="hidden" id="myINGChallNum" name="myINGChallNum">
                         <table id="mychallDataList">
-                            <th:block th:if="${diary.todayChallNum == null or diary.todayChallNum == 0 }">
-                                <tbody id="chall-table">
+                            <tbody id="chall-table">
+                            <th:block th:if="${#strings.isEmpty(diary.myChallNum)}">
+                                <!-- 챌린지가 없을 때의 블록 -->
                                 <td style="text-align: center;">진행 중인 챌린지가 없습니다.</td>
-                                </tbody>
                             </th:block>
-                        </table>
+                            <th:block th:if="${not #strings.isEmpty(diary.myChallNum)}">
+<!--                                <td style="text-align: center;">챌린지있음!!</td>-->
+                                <!-- 챌린지가 있을 때의 블록 -->
+                                <tr class="mychall_area" th:each="myINGChallNum : ${myINGChallNum}">
 
+                                    <td>
+                                        <input type="checkbox" name="todayChallNum" onClick="return false;"
+                                               th:id="'challNum_' + ${myINGChallNum.challNum}"
+                                               th:value="${myINGChallNum.challNum}">
+                                        <label th:for="'challNum_' + ${myINGChallNum.challNum}">
+                                            [[${myINGChallNum.challName}]]</label>
+                                    </td>
+                                </tr>
+                            </th:block>
+                            </tbody>
+                        </table>
                     </td>
                 </tr>
+
                 <tr>
                     <td>
                         <div>
