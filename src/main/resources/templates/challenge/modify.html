@@ -41,28 +41,43 @@
 			<input type="hidden" th:value="${cri.type}" name="type">
 			<input type="hidden" th:value="${cri.keyword}" name="keyword">
 			<input type="hidden" th:value="${board.boardNum}" name="boardNum">
-			<table style="border-collapse: collapse;" border="1">
+			<table style="border-collapse: collapse;" border="1" class="board_area">
 				<tr style="height:30px;">
-					<th style="text-align:center; width:150px;">제목</th>
+					<th colspan="1" style="text-align:center; width:150px;">제목</th>
+					<td colspan="2">
 					<td>
-						<input type="text" name="boardTitle" size="50" maxlength="50" th:value="${board.boardTitle}">
+						<input type="text" name="boardTitle" size="50" maxlength="50" th:value="${board.boardTitle}" >
 					</td>
 				</tr>
 				<tr style="height:30px;">
 					<th style="text-align:center; width:150px;">작성자</th>
 					<td>
-						<input type="text" name="userId" size="50" maxlength="50" th:value="${session.loginUser}" readonly>
+						<input type="text" name="userId" size="50" maxlength="50" th:value="${board.userId}" readonly>
 					</td>
+					<td>챌린지번호</td>
+					<td><input type="text" name="challNum" size="50" maxlength="50" th:value="${board.challNum}" readonly></td>
+				</tr>
+				<tr>
+					<td>챌린지시작</td>
+					<td><input type="text" name="startDate" size="50" maxlength="50" th:value="${board.startDate}" readonly></td>
+
+					<td>챌린지종료</td>
+					<td><input type="text" name="finishDate" size="50" maxlength="50" th:value="${board.finishDate}" readonly></td>
+
+				</tr>
+				<tr>
+					<th colspan="2">조회수</th>
+					<td colspan="2">[[${board.viewCnt}]]</td>
 				</tr>
 				<tr style="height:300px;">
-					<th style="text-align:center; width:150px;">내 용</th>
-					<td>
-						<textarea name="boardContent" style="width:700px;height:290px;resize:none;">[[${board.boardContent}]]</textarea>
+					<th colspan="2" style="text-align:center; width:150px;">내 용</th>
+					<td colspan="2">
+						<textarea name="boardContent" style="width:700px;height:290px;resize:none;" >[[${board.boardContent}]]</textarea>
 					</td>
 				</tr>
 				<tr th:class="${'r'+fileStat.index}" th:if="${files != null and files.size() > 0}" th:each="file : ${files}">
 					<th>파일 첨부[[${fileStat.index+1}]]</th>
-					<td th:class="${'file'+fileStat.index+'_cont'}">
+					<td colspan="3" th:class="${'file'+fileStat.index+'_cont'}">
 						<div style="float:left;">
 							<input type="file" name="files" th:id="${'file'+fileStat.index}" style="display:none">
 							<span th:id="${'file'+fileStat.index+'name'}" th:text="${file.orgName}"></span>
@@ -75,14 +90,14 @@
 						<input type="hidden" name="orgName" th:value="${file.orgName}">
 						<th:block th:with="sar=${file.orgName.split('[.]')}">
 							<th:block th:with="ext=${sar[sar.length-1]}">
-								<img th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}" th:src="@{/challenge/thumbnail (sys_name=${file.sysName})}" class="thumbnail">
+								<img th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}" th:src="@{/challenge/thumbnail (sysName=${file.sysName})}" class="thumbnail">
 							</th:block>
 						</th:block>
 					</td>
 				</tr>
 				<tr th:class="${'r'+files.size()}">
 					<th>파일 첨부[[${files.size()+1}]]</th>
-					<td th:class="${'file'+files.size()+'_cont'}">
+					<td colspan="3" th:class="${'file'+files.size()+'_cont'}">
 						<div style="float:left;">
 							<input type="file" name="files" th:id="${'file'+files.size()}" style="display:none">
 							<span th:id="${'file'+files.size()+'name'}">선택된 파일 없음</span>

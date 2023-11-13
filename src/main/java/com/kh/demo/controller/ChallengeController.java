@@ -160,7 +160,8 @@ public class ChallengeController {
         return requestURI;
     }
     @PostMapping("modify")
-    public String modify(ChallCertBoardDTO board, MultipartFile[] files, String updateCnt, Criteria cri, Model model, String boardCategory) throws Exception {
+    public String modify(ChallCertBoardDTO board, MultipartFile[] files, String updateCnt, Criteria cri, Model model) throws Exception {
+        String boardCategory = "challCert";
         if(files != null){
             for (int i = 0; i < files.length; i++) {
                 System.out.println("controller : "+files[i].getOriginalFilename());
@@ -168,27 +169,27 @@ public class ChallengeController {
         }
         System.out.println("controller : "+updateCnt);
         if(challService.modify(board, files, updateCnt, boardCategory)) {
-            return "redirect:/board/get"+cri.getListLink()+"&boardnum="+board.getBoardNum();
+            return "redirect:/challenge/get"+cri.getListLink()+"&boardNum="+board.getBoardNum();
         }
         else {
-            return "redirect:/board/list"+cri.getListLink();
+            return "redirect:/challenge/list"+cri.getListLink();
         }
     }
     @PostMapping("remove")
-    public String remove(Long boardnum, Criteria cri, HttpServletRequest req, String boardCategory) {
+    public String remove(Long boardNum, Criteria cri, HttpServletRequest req, String boardCategory) {
         HttpSession session = req.getSession();
         String loginUser = (String)session.getAttribute("loginUser");
-        if(challService.remove(loginUser, boardnum, boardCategory)) {
-            return "redirect:/board/list"+cri.getListLink();
+        if(challService.remove(loginUser, boardNum, boardCategory)) {
+            return "redirect:/challenge/list"+cri.getListLink();
         }
         else {
-            return "redirect:/board/get"+cri.getListLink()+"&boardnum="+boardnum;
+            return "redirect:/challenge/get"+cri.getListLink()+"&boardNum="+boardNum;
         }
     }
 
     @GetMapping("thumbnail")
-    public ResponseEntity<Resource> thumbnail(String systemname) throws Exception{
-        return challService.getThumbnailResource(systemname);
+    public ResponseEntity<Resource> thumbnail(String sysName) throws Exception{
+        return challService.getThumbnailResource(sysName);
     }
 
     @GetMapping("file")

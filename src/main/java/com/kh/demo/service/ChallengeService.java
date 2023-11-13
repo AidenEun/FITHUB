@@ -33,9 +33,9 @@ public interface ChallengeService {
     ArrayList<String> getRecentReplyList(List<ChallCertBoardDTO> list);
     List<FileDTO> getFileList(Long boardnum, String boardCategory);
 
-    ResponseEntity<Resource> getThumbnailResource(String systemname) throws Exception;
+    ResponseEntity<Resource> getThumbnailResource(String sysName) throws Exception;
 
-    ResponseEntity<Object> downloadFile(String systemname, String orgname) throws Exception;
+    ResponseEntity<Object> downloadFile(String sysName, String orgName) throws Exception;
 
 
     List<MyChallengeDTO> findMychall(String userid,String choicedate);

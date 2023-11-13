@@ -75,14 +75,14 @@
 						<tr>
 							<th colspan="2">첨부파일[[${fileStat.index+1}]]</th>
 							<td colspan="2">
-								<a th:href="@{/challenge/file (sys_name=${file.sysName},org_name=${file.orgName})}">[[${file.orgName}]]</a>
+								<a th:href="@{/challenge/file (sysName=${file.sysName},orgName=${file.orgName})}">[[${file.orgName}]]</a>
 							</td>
 						</tr>
 						<th:block th:with="ext=${sar[sar.length-1]}">
 							<tr th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}">
 								<td colspan="2"></td>
 								<td colspan="2">
-									<img style="width:100%;" th:src="@{/challenge/thumbnail (sys_name=${file.sysName})}">
+									<img style="width:100%;" th:src="@{/challenge/thumbnail (sysName=${file.sysName})}">
 								</td>
 							</tr>
 						</th:block>
