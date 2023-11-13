@@ -132,7 +132,27 @@
 		order by board_num asc limit 5;
 	</select>
 
+<!-- Main_index -->
+	<select id="getNewsTop1">
+		SELECT * FROM board
+		WHERE board_category = 'infoNews'
+		ORDER BY view_cnt DESC
+		LIMIT 1;
+	</select>
 
+	<select id="getExerTop1">
+		SELECT * FROM board
+		WHERE board_category = 'infoExer'
+		ORDER BY view_cnt DESC
+		LIMIT 1;
+	</select>
+
+	<select id="getFoodTop1">
+		SELECT * FROM board
+		WHERE board_category = 'infoFood'
+		ORDER BY view_cnt DESC
+		LIMIT 1;
+	</select>
 </mapper>
 
 

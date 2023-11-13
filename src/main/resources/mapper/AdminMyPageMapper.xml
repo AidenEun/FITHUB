@@ -93,6 +93,7 @@
     <select id="getBoardList">
         SELECT * FROM board
         WHERE board_category IN ('infoNews', 'infoExer', 'infoFood', 'tip')
+        AND user_id IN (SELECT admin_id FROM admin)
         ORDER BY board_num DESC
         LIMIT #{startrow}, #{amount}
     </select>
@@ -100,6 +101,7 @@
     <select id="getAdminExerBoardList">
         SELECT * FROM board
         WHERE board_category = 'infoExer'
+        AND user_id IN (SELECT admin_id FROM admin)
         ORDER BY board_num DESC
         LIMIT #{startrow}, #{amount}
     </select>
@@ -107,6 +109,7 @@
     <select id="getAdminNewsBoardList">
         SELECT * FROM board
         WHERE board_category = 'infoNews'
+        AND user_id IN (SELECT admin_id FROM admin)
         ORDER BY board_num DESC
         LIMIT #{startrow}, #{amount}
     </select>
@@ -114,6 +117,7 @@
     <select id="getAdminTipBoardList">
         SELECT * FROM board
         WHERE board_category = 'tip'
+        AND user_id IN (SELECT admin_id FROM admin)
         ORDER BY board_num DESC
         LIMIT #{startrow}, #{amount}
     </select>
@@ -121,6 +125,7 @@
     <select id="getAdminRecipeBoardList">
         SELECT * FROM board
         WHERE board_category = 'infoFood'
+        AND user_id IN (SELECT admin_id FROM admin)
         ORDER BY board_num DESC
         LIMIT #{startrow}, #{amount}
     </select>
@@ -129,30 +134,35 @@
         SELECT COUNT(*) FROM board
         WHERE board_num > 0
         AND board_category IN ('infoNews', 'infoExer', 'infoFood', 'tip')
+        AND user_id IN (SELECT admin_id FROM admin)
     </select>
 
     <select id="getExerBoardTotal">
         SELECT COUNT(*) FROM board
         WHERE board_num > 0
         AND board_category = 'infoExer'
+        AND user_id IN (SELECT admin_id FROM admin)
     </select>
 
     <select id="getNewsBoardTotal">
         SELECT COUNT(*) FROM board
         WHERE board_num > 0
         AND board_category = 'infoNews'
+        AND user_id IN (SELECT admin_id FROM admin)
     </select>
 
     <select id="getTipBoardTotal">
         SELECT COUNT(*) FROM board
         WHERE board_num > 0
         AND board_category = 'tip'
+        AND user_id IN (SELECT admin_id FROM admin)
     </select>
 
     <select id="getRecipeBoardTotal">
         SELECT COUNT(*) FROM board
         WHERE board_num > 0
         AND board_category = 'infoFood'
+        AND user_id IN (SELECT admin_id FROM admin)
     </select>
 
 <!--UserSearch-->

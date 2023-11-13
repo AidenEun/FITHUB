@@ -74,6 +74,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
+/*
 document.addEventListener("DOMContentLoaded", function() {
     // 로그인 여부를 확인하는 조건
     const isLoggedIn = checkLoginStatus(); // 로그인 상태를 확인하는 함수로 실제 구현 필요
@@ -106,4 +107,4 @@ function checkLoginStatus() {
     // 로그인 상태 확인 로직을 구현하고 true 또는 false 반환
     // 여기에서는 간단히 false를 반환하도록 설정되어 있습니다.
     return false; // 실제로는 로그인 상태를 확인하는 코드로 대체해야 합니다.
-}
+}*/

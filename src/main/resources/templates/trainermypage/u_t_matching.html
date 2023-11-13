@@ -1,0 +1,253 @@
+<!DOCTYPE HTML>
+<!--
+	Slate by Pixelarity
+	pixelarity.com | hello@pixelarity.com
+	License: pixelarity.com/license
+-->
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Untitled</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
+	<link rel="stylesheet" th:href="@{/assets/css/index.css}" />
+	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
+
+</head>
+<style>
+
+</style>
+<body class="is-preload">
+
+<!-- Header -->
+<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user})}"></th:block>
+
+<!-- Main -->
+<section id="main" class="wrapper sidebar left">
+	<div class="inner">
+
+		<header class="major">
+			<h2>마이페이지</h2>
+			<p>내 쪽지함</p>
+		</header>
+
+		<!-- Content -->
+		<div class="content">
+			<div id="messageAll" class="button cate not_cate message" style="margin-right: 10px;">전체보기</div>
+			<div id="messageSend" class="button cate not_cate message" style="margin-right: 10px;">보낸쪽지함</div>
+			<div id="messageReceive" class="button cate not_cate message" style="margin-right: 10px;">받은쪽지함</div>
+			<div id="u_t_matching" class="button cate now_cate message" style="margin-right: 10px;">매칭쪽지함</div>
+			<!-- 게시글 리스트 띄우는 테이블 -->
+			<form name="mainForm" id="mainForm" method="post" th:action="@{/trainermypage/u_t_matching}">
+				<table class="list">
+						<tr align="right" valign="middle">
+							<td colspan="6">글 개수 : [[${pageMaker.total}]]</td>
+						</tr>
+						<tr align="center" valign="middle">
+							<th width="8%">번호</th>
+							<th width="2%"></th>
+							<th width="15%">보낸사람</th>
+							<th width="15%">받는사람</th>
+							<th width="30%">수락여부</th>
+							<th >날짜</th>
+						</tr>
+						<tr th:if="${list != null and list.size()>0}" th:each="message : ${list}">
+							<td>
+								<input type="text" name="matchingNum" th:value="${message.matchingNum}" readonly>
+							</td>
+							<td>
+								<sup class="new" th:if="${newly_Message[messageStat.index] == 'O'}">New</sup>
+							</td>
+							<td>
+								<input type="text" name="userId" th:value="${message.userId}" readonly>
+							</td>
+							<td>
+								<input type="text" name="trainerId" th:value="${message.trainerId}" readonly>
+							</td>
+							<td>
+								<div class="SC_box">
+									<th:block th:if="${message.userCheck} == 'O' and ${message.trainerCheck} == '확인중'">
+										<div>
+											<a href="#" class="success">수락</a>
+										</div>
+										<div>
+											<a href="#" class="cancel">취소</a>
+										</div>
+									</th:block>
+									<th:block th:if="${message.userCheck} == 'O' and ${message.trainerCheck} == 'O'">
+										<div>
+											매칭되었습니다.
+										</div>
+									</th:block>
+									<th:block th:if="${message.userCheck} == 'X'">
+										<div>
+											취소되었습니다.
+										</div>
+									</th:block>
+									<th:block th:if="${message.trainerCheck} == 'X'">
+										<div>
+											거절하였습니다.
+										</div>
+									</th:block>
+								</div>
+							</td>
+							<td>
+								<input type="text" name="matchingDate" th:value="${message.matchingDate}" readonly>
+							</td>
+
+						</tr>
+						<th:block th:if="${list == null or list.size() == 0}">
+							<tr>
+								<td colspan="6" style="text-align: center; font-size: 20px;">등록된
+									게시글이 없습니다.</td>
+							</tr>
+						</th:block>
+				</table>
+			</form>
+
+			<br>	<!-- 페이징 처리하는 테이블 -->
+			<table class="pagination">
+				<tr align="center" valign="middle">
+					<td>
+						<a class="changePage" th:if="${pageMaker.prev}" th:href="${pageMaker.startPage-1}">&lt;</a>
+						<th:block th:each="i : ${#numbers.sequence(pageMaker.startPage,pageMaker.endPage)}">
+							<span class="nowPage" th:text="${i}" th:if="${pageMaker.cri.pagenum == i}"></span>
+							<a class="changePage" th:href="${i}" th:text="${i}" th:unless="${pageMaker.cri.pagenum == i}"></a>
+						</th:block>
+						<a class="changePage" th:if="${pageMaker.next}" th:href="${pageMaker.endPage+1}">&gt;</a>
+					</td>
+				</tr>
+			</table>
+			<!-- 글쓰기 버튼 배치하는 테이블 -->
+			<table>
+				<tr align="right" valign="middle">
+					<td>
+						<a class="write" th:href="${'/board/write'+pageMaker.cri.listLink}">글쓰기</a>
+					</td>
+				</tr>
+			</table>
+			<form id="searchForm" th:action="@{/trainermypage/trainer_messagelist}">
+				<div class="search_area">
+					<label>
+						<select name="type">
+							<option value="" th:selected="${pageMaker.cri.type == null}">검색</option>
+							<option value="T" th:selected="${pageMaker.cri.type == 'T'}">제목</option>
+							<option value="C" th:selected="${pageMaker.cri.type == 'C'}">내용</option>
+							<option value="W" th:selected="${pageMaker.cri.type == 'W'}">작성자</option>
+							<option value="TC" th:selected="${pageMaker.cri.type == 'TC'}">제목 또는 내용</option>
+							<option value="TW" th:selected="${pageMaker.cri.type == 'TW'}">제목 또는 작성자</option>
+							<option value="TCW" th:selected="${pageMaker.cri.type == 'TCW'}">제목 또는 내용 또는 작성자</option>
+						</select>
+					</label>
+					<label for="keyword"></label><input type="text" name="keyword" id="keyword" th:value="${pageMaker.cri.keyword}">
+					<a href="#" class="button primary">검색</a>
+				</div>
+				<input type="hidden" value="1" name="pagenum">
+				<input type="hidden" value="10" name="amount">
+			</form>
+		</div>
+
+		<form name="pageForm" id="pageForm" th:action="@{/trainermypage/u_t_matching}">
+			<input type="hidden" name="pagenum" th:value="${pageMaker.cri.pagenum}">
+			<input type="hidden" name="amount" th:value="${pageMaker.cri.amount}">
+			<input type="hidden" name="type" th:value="${pageMaker.cri.type}">
+			<input type="hidden" name="keyword" th:value="${pageMaker.cri.keyword}">
+			<input type="hidden" name="message" th:value="${param.message}">
+		</form>
+
+		<form name="messageForm" id="messageForm" th:action="@{/trainermypage/trainer_messagelist}">
+
+		</form>
+
+
+		<!-- Sidebar -->
+		<th:block th:replace="~{layout/trainermypage_sidebar::sidebar(${session.loginUser})}"></th:block>
+
+	</div>
+
+</section>
+
+<!-- Footer -->
+<th:block th:replace="~{layout/footer::footer}"></th:block>
+
+<!-- Scripts -->
+<script th:src="@{/assets/js/jquery.min.js}"></script>
+<script th:src="@{/assets/js/jquery.dropotron.min.js}"></script>
+<script th:src="@{/assets/js/jquery.scrollex.min.js}"></script>
+<script th:src="@{/assets/js/browser.min.js}"></script>
+<script th:src="@{/assets/js/breakpoints.min.js}"></script>
+<script th:src="@{/assets/js/util_sub.js}"></script>
+<script th:src="@{/assets/js/main_sub.js}"></script>
+
+<script th:src="@{/assets/js/sidebar.js}"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script th:inline="javascript">
+	const searchForm = $("#searchForm");
+	const pageForm = $("#pageForm");
+
+	$(".changePage").on("click",function(e){
+		//e(이벤트)의 기본 작동 막기
+		e.preventDefault();
+		if(pageForm.find("input[name='message']").val() == "" || pageForm.find("input[name='message']").val() == null){
+			pageForm.find("input[name='message']").val("messageAll");
+		}
+		let pagenum = $(this).attr("href");
+		pageForm.find("input[name='pagenum']").val(pagenum);
+		pageForm.submit();
+	});
+	$(".get").on("click",function(e){
+		e.preventDefault();
+		let boardnum = $(this).attr("href");
+		let url=/*[[@{/board/get}]]*/'';
+		pageForm.append("<input type='hidden' name='boardnum' value='"+boardnum+"'>")
+		pageForm.attr("action",url);
+		pageForm.attr("method","get");
+		pageForm.submit();
+	})
+
+	$("#searchForm a").on("click",sendit);
+	function sendit(){
+		if(!searchForm.find("option:selected").val()){
+			alert("검색 기준을 선택하세요!");
+			return false;
+		}
+		if(!$("input[name='keyword']").val()){
+			alert("키워드를 입력하세요!");
+			return false;
+		}
+		searchForm.submit();
+	}
+
+	const cate = document.querySelectorAll('.cate');
+	let nowCate = document.querySelector('.now_cate');
+
+	const messageForm = $("#messageForm");
+	$(".message").on("click",function(e){
+		e.preventDefault();
+		let category = $(this).attr("id");
+		if(category == "u_t_matching"){
+			let url=/*[[@{/trainermypage/u_t_matching}]]*/'';
+			messageForm.attr("action",url);
+		}
+		messageForm.append("<input type='hidden' name='message' value='"+category+"'>");
+		messageForm.attr("method","get");
+		messageForm.submit();
+	});
+
+	const mainForm = $("#mainForm");
+	const success = document.querySelector('.success');
+	const cancel = document.querySelector('.cancel');
+
+	$("#mainForm a").on("click",function(e){
+		e.preventDefault();
+
+		let SC =$(this).attr("class");
+		mainForm.append("<input type='hidden' name='SC' value='"+SC+"'>");
+		mainForm.submit();
+	});
+</script>
+</body>
+</html>

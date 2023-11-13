@@ -191,6 +191,23 @@
 		select max(message_num) from message where user_id=#{userId}
 	</select>
 
+	<!--나의 매칭리스트-->
+	<select id="getMyMatchinglist">
+		select * from u_t_matching where user_id=#{userId} and
+		<![CDATA[
+			0 < matching_num order by matching_num desc limit #{cri.startrow},#{cri.amount}
+		]]>
+	</select>
+
+	<select id="getMatchingTotal">
+		select count(*) from u_t_matching where  user_id=#{userId} and
+		matching_num > 0
+	</select>
+
+	<update id="updateMatching">
+		update u_t_matching set user_check=#{userCheck} where matching_num=#{utMatching.matchingNum}
+	</update>
+
 	<!--보드-->
 	<select id="getBoardTotal">
 		select count(*) from board where user_id=#{userId} and

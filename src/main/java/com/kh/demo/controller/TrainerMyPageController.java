@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -226,6 +225,40 @@ public class TrainerMyPageController {
         model.addAttribute("pageMaker",new PageDTO(service.getMessageTotal(cri,id.getTrainerId(),message), cri));
         model.addAttribute("newly_Message",service.getMessageNewlyList(list));
     }
+
+    @GetMapping("u_t_matching")
+    public void u_t_matching( Criteria cri, Model model, HttpServletRequest req) throws Exception {
+        HttpSession session = req.getSession();
+        String TrainerId = (String) session.getAttribute("loginUser");
+
+        TrainerDTO id = service.getUserDetail(TrainerId);
+
+        List<UTMatchingDTO> list = service.getMyMatchinglist(cri, id.getTrainerId());
+
+        System.out.println(cri);
+        System.out.println("list:" + list);
+        model.addAttribute("list", list);
+        model.addAttribute("pageMaker", new PageDTO(service.getMatchingTotal(cri, id.getTrainerId()), cri));
+        model.addAttribute("newly_Message", service.getMatchingNewlyList(list));
+    }
+
+    @PostMapping("u_t_matching")
+    public String u_t_matching(UTMatchingDTO utMatching, String SC){
+        String trainer_check = null;
+        if(SC.equals("success")){
+             trainer_check = "O";
+        } else{
+             trainer_check = "X";
+        }
+        System.out.println("trainer_check: " + trainer_check);
+
+        if(service.updateMatching(utMatching, trainer_check)){
+            return "redirect:/trainermypage/u_t_matching";
+        }
+        return "redirect:/";
+    }
+
+
 
     @GetMapping("trainer_modify")
     public void trainer_modify(HttpServletRequest req, Model model) {

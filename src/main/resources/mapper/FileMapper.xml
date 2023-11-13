@@ -6,7 +6,7 @@
 	</insert>
 	
 	<select id="getFiles">
-		select * from file where board_num=#{boardNum}
+		select * from file where board_num=#{boardNum} and board_category=#{boardCategory}
 	</select>
 	
 	<delete id="deleteBySystemname">

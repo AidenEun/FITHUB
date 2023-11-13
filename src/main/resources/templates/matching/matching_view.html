@@ -70,7 +70,7 @@
       border-top: none;
       border-bottom: 1px solid gray;
       background-color: white !important;
-      height: 30px;
+      height: 50px;
   }
 .write_table:hover {
     transform: scale(1.04);
@@ -94,6 +94,7 @@
 }
 #profileInfo{
 width: 350px;
+vertical-align: top;
 }
 #profileInfo img{
 max-width: 100%;
@@ -148,6 +149,25 @@ border-top: none;
        transition: transform 0.4s;
        font-weight:bold;
 }
+#review_userid{
+  border:none;
+  font-weight: bold;
+}
+#review_textarea{
+margin-top: 20px;
+}
+.review_result a{
+border-radius: 15px;
+}
+.review_result h4:after{
+  border-bottom: none;
+}
+#finish_button{
+  margin-top: 40px;
+}
+
+
+
 
 
 
@@ -170,6 +190,7 @@ border-top: none;
 .star:hover {
   color: #ffcc00;
 }
+
 
 
 
@@ -242,7 +263,9 @@ border-top: none;
             <tr>
               <th rowspan="6" id="profileInfo">
                 <th:block th:if="${profileInfo != null}">
-                <img style="width:100%; height:100%;" th:src="@{/matching/thumbnail (sysName=${profileInfo.sysName})}">
+                  <div style="display:flex; justify-content:center;">
+                    <img style="width:100%; height:100%;" th:src="@{/matching/thumbnail (sysName=${profileInfo.sysName})}">
+                  </div>
               </th:block></th>
               <th>트레이너</th>
               <th>상담가능시간</th>
@@ -375,52 +398,46 @@ border-top: none;
 
 
         </table>
-        <!-- review -->
-        <div class="reply_line">
-          <a href="#" class="regist">댓글 등록</a>
-          <div class="replyForm row">
-            <div style="width:15%">
-              <h4>작성자</h4>
-              <input type="text" name="userid" th:value="${session.loginUser}" readonly style="text-align: center;">
-            </div>
-            <div style="width:70%">
-              <h4>
-                내 용
-              </h4>
-              <div>
-              <div class="rating" data-star-rating="0">
-                <span class="star" data-rating="1">&#9733;</span>
-                <span class="star" data-rating="2">&#9733;</span>
-                <span class="star" data-rating="3">&#9733;</span>
-                <span class="star" data-rating="4">&#9733;</span>
-                <span class="star" data-rating="5">&#9733;</span>
+          <!-- review -->
+          <div class="review_line">
+            <div id="board" data-board-num="${board.boardNum}"></div>
+            <a href="#" class="regist">리뷰 등록</a>
+            <div class="reviewForm row">
+              <div style="width:25%">
+                <h4>작성자</h4>
+                <input type="text" id="review_userid" name="userid" th:value="${session.loginUser}" readonly style="text-align: left;">
               </div>
-              <div id="result" name="starRating" style="display: none;">별점: 0</div>
-              <textarea name="replycontents" placeholder="Contents" style="resize:none;"></textarea>
+              <div style="width:70%">
+                <h4>
+                  내 용
+                </h4>
+                <div>
+                  <div class="rating" data-star-rating="0">
+                    <span class="star" data-rating="1">&#9733;</span>
+                    <span class="star" data-rating="2">&#9733;</span>
+                    <span class="star" data-rating="3">&#9733;</span>
+                    <span class="star" data-rating="4">&#9733;</span>
+                    <span class="star" data-rating="5">&#9733;</span>
+                  </div>
+                  <textarea id="review_textarea" name="reviewContent" placeholder="리뷰를 작성해주세요" style="resize:none;"></textarea>
+                </div>
+              </div>
+              <div class="review_result" style="width:5%">
+                <h4 id="hiddenHSR">
+                  <div id="result" name="starRating" style="display: none;">별점: 0</div>
+                  <div id="matchingNum" name="matchingNum" style="display: none;"></div>
+                </h4>
+                <a href="#" id="finish_button" class="button finish" style="margin-bottom:1rem;">등록</a>
+                <a href="#" class="button cancel">취소</a>
               </div>
             </div>
-
-
-            <div style="width:15%">
-              <a href="#" class="button finish" style="margin-bottom:1rem;">등록</a>
-              <a href="#" class="button cancel">취소</a>
-            </div>
+            <ul class="reviews"></ul>
+            <div class="page"></div>
           </div>
-          <ul class="replies"></ul>
-          <div class="page"></div>
-        </div>
 
 
-      <table class="button_table">
-        <tr align="center" valign="middle">
-          <td>
-            <a href="#" class="open" data-trainer-id="${trainerInfo.trainerId}">신청하기</a>
-          </td>
-          <td>
-            <a th:href="${'/matching/matching_list'}">취소</a>
-          </td>
-        </tr>
-      </table>
+
+
       </th:block>
     </div>
 
@@ -464,6 +481,229 @@ border-top: none;
 
 <script th:src="@{/assets/js/sidebar.js}"></script>
 <script th:src="@{/assets/js/matching_u_t_matching.js}"></script>
+
+<script th:src="@{/assets/js/review.js}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script th:inline="javascript">
+  const userId = /*[[${session.loginUser}]]*/'';
+  const boardNum = document.getElementById('board').getAttribute('data-board-num');
+  const starRating = document.getElementById('result').getAttribute('starRating')
+  const reviews = $(".reviews")
+  const page = $(".page")
+  let nowpage = 0;
+
+
+ $(document).ready(function () {
+    // 서버에 특정 boardNum에 대한 utmatching 데이터 확인
+    $.get(`/review/checkUtmatching/boardNum`, function (result) {
+        if (result === 'exists') {
+            // utmatching 데이터가 있으면 리뷰 작성 가능
+            $('.regist').on('click', function (e) {
+                e.preventDefault();
+
+                // utmatching 데이터를 가져와서 div에 채워주기
+                $.get(`/review/getUtmatchingNum/boardNum`, function (utmatchingNum) {
+                    if (utmatchingNum !== 'not exists') {
+                        // utmatching 데이터에서 userId 가져오기
+                        $.get(`/review/getUtmatchingUserId/${utmatchingNum}`, function (utmatchingUserId) {
+                            if (utmatchingUserId === userId) {
+                                // userId가 일치하면 리뷰 작성 폼 보이기
+                                $('.reviewForm').show();
+                                $('.regist').hide();
+                                $('#matchingNum').text(utmatchingNum).show();
+                            } else {
+                                // userId가 일치하지 않으면 알림 띄우기
+                                alert('리뷰는 트레이너의 확인이 필요합니다. 매칭 진행 후 이용해주세요.');
+                            }
+                        });
+                    } else {
+                        // trainer_check가 'O'가 아니면 리뷰 작성 불가능
+                        alert('리뷰는 트레이너의 확인이 필요합니다. 매칭 진행 후 이용해주세요.');
+                        // 여기에서 다른 동작을 추가할 수 있습니다.
+                    }
+                });
+            });
+        } else {
+            // utmatching 데이터가 없으면 리뷰 작성 불가능
+            $('.regist').hide();
+            // 알림 띄우기
+            alert('리뷰는 트레이너의 확인이 필요합니다. 매칭 진행 후 이용해주세요.');
+        }
+    });
+
+    // 기존 코드 - 리뷰 폼을 숨기고 리스트를 보여줌
+    $(".reviewForm").hide();
+    let nowpage = 1;
+    showList(nowpage);
+
+    // 리뷰 작성 버튼을 눌렀을 때 리뷰 폼을 보이게 함
+    $(".regist").on("click", function (e) {
+        e.preventDefault();
+        $(".reviewForm").show();
+        $(this).hide();
+    });
+
+    // 등록 버튼을 눌렀을 때 서버에 리뷰 등록 요청
+    $(".finish").on("click", function (e) {
+        e.preventDefault();
+        let reviewContent = $("[name='reviewContent']").val();
+
+        reviewService.add(
+            {"matchingBoardNum": boardNum, "userId": loginUser, "reviewContent": reviewContent, "starRating": starRating, "matchingNum": matchingNum},
+            function (result) {
+                alert("등록!");
+                showList(1);
+            }
+        );
+    });
+});
+
+  function showList(pageNum){
+      reviewService.getList(
+          {boardNum:boardNum, pageNum:pageNum||1},
+          function(reviewCnt, list){
+              let str = "";
+              if(list == null || list.length == 0){
+                  str += '<li class="noreview" style="clear:both;">등록된 댓글이 없습니다.</li>';
+                  reviews.html(str);
+                  return;
+              }
+
+              for(let i=0;i<list.length;i++){
+                  //<li style="clear:both;" class="li3">
+                  str += '<li style="clear:both;" class="li'+list[i].reviewNum+'">';
+                  str += '<div style="display:inline; float:left; width:80%;">';
+                  //<strong class="userId3">apple</strong>
+                  str += '<strong class="userId'+list[i].reviewNum+'">'+list[i].userId+'</strong>';
+                  //<p class="reply3">댓글내용</p>
+                  str += '<p class="reply'+list[i].reviewNum+'">'+list[i].reviewContent+'</p>';
+                  str += '</div><div style="text-align:right;">'
+                  str += '<strong>'+reviewService.displayTime(list[i])+'</strong>'
+                  if(list[i].userId == loginUser){
+                      //<a href="3" class="modify">수정</a>
+                      str += '<a href="'+list[i].reviewNum+'" class="modify">수정</a>';
+                      str += '<a href="'+list[i].reviewNum+'" class="mfinish" style="display:none;">수정 완료</a>';
+                      str += '<a href="'+list[i].reviewNum+'" class="remove">삭제</a>';
+                  }
+                  str += '</div></li>';
+              }
+              reviews.html(str);
+
+              $(".remove").on("click",deleteReply);
+              $(".modify").on("click",modifyReply);
+              $(".mfinish").on("click",modifyReplyOk);
+
+              showReviewPage(reviewCnt, pageNum);
+          }
+      )
+  }
+
+  function showReviewPage(reviewCnt, pageNum){
+      let endPage = Math.ceil(pageNum/5)*5;
+      let startPage = endPage - 4;
+
+      let prev = startPage != 1;
+      endPage = (endPage-1)*5 >= reviewCnt ? Math.ceil(reviewCnt/5) : endPage;
+      let next = endPage*5 < reviewCnt ? true : false;
+
+      let str = "";
+      if(prev){
+          //<a class="changePage" href="5"><code>&lt;</code></a>
+          str += '<a class="changePage" href="'+(startPage-1)+'"><code>&lt;</code></a>';
+      }
+      for(let i=startPage;i<=endPage;i++){
+          if(i == pageNum){
+              //<code class="nowPage">7</code>
+              str += '<code class="nowPage">'+i+'</code>';
+          }
+          else{
+              //<a class="changePage" href="9"><code>9</code></a>
+              str += '<a class="changePage" href="'+i+'"><code>'+i+'</code></a>';
+          }
+      }
+      if(next){
+          str += '<a class="changePage" href="'+(endPage+1)+'"><code>&gt;</code></a>';
+      }
+
+      page.html(str);
+
+      $(".changePage").on("click",function(e){
+          e.preventDefault();
+          let target = $(this).attr("href");
+          nowpage = parseInt(target);
+          showList(nowpage);
+          window.setTimeout(function(){
+              window.scrollTo(0,document.body.scrollHeight)
+          },10)
+      })
+  }
+
+  function deleteReply(e){
+      e.preventDefault();
+      let reviewNum = $(this).attr("href");
+      replyService.remove(
+          reviewNum,
+          function(result){
+              if(result == "success"){
+                  alert(reviewNum+"번 댓글 삭제 완료!");
+                  showList(nowpage);
+              }
+          }
+      )
+  }
+  let reviewFlag = false;
+  function modifyReview(e){
+      e.preventDefault();
+      if(!reviewFlag){
+          reviewFlag = true;
+          let reviewNum = $(this).attr("href");
+          const reviewTag = $(".review"+reviewNum);
+          //<textarea class="3 mdf">댓글내용</textarea>
+          reviewTag.html('<textarea class="'+reviewNum+' mdf">'+reviewTag.text()+'</textarea>')
+          $(this).hide();
+          $(this).next().show();
+      }
+      else{
+          alert("수정중인 댓글이 있습니다!");
+      }
+  }
+  function modifyReviewOk(e){
+      e.preventDefault();
+      reviewFlag = false;
+
+      let reviewNum = $(this).attr("href");
+      let reviewContent = $("."+reviewNum).val();
+
+      if(reviewContent == ""){
+          alert("수정할 댓글 내용을 입력하세요!");
+          return;
+      }
+      replyService.modify(
+          {reviewNum:reviewNum, reviewContent:reviewContent, boardNum:boardNum, userid:loginUser},
+          function(result){
+              if(result == "success"){
+                  alert(replynum+"번 댓글 수정 완료!");
+                  showList(nowpage);
+              }
+          }
+      )
+  }
+
+
+  function modify(){
+      const boardForm = document.boardForm;
+      boardForm.setAttribute("action",/*[[@{/matching/matchinf)modify}]]*/'');
+      boardForm.setAttribute("method","get");
+      boardForm.submit();
+  }
+
+  $(".cancel").on("click",function(e){
+      e.preventDefault();
+      $(".reviewForm").hide();
+      $(".regist").show();
+      $("[name='reviewContent']").val("");
+  })
+</script>
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     const stars = document.querySelectorAll(".rating .star");

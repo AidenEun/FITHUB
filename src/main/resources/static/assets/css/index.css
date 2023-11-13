@@ -3903,7 +3903,7 @@ input, select, textarea {
 			-webkit-transition: opacity 1.5s ease, visibility 1.5s;
 			-ms-transition: opacity 1.5s ease, visibility 1.5s;
 			transition: opacity 1.5s ease, visibility 1.5s;
-			background-attachment: fixed;
+			/*background-attachment: fixed;*/
 			background-position: center;
 			background-repeat: no-repeat;
 			background-size: cover;

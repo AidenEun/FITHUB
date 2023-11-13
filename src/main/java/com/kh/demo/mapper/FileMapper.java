@@ -9,7 +9,7 @@ import java.util.List;
 public interface FileMapper {
 	int insertFile(FileDTO file);
 	
-	List<FileDTO> getFiles(Long boardNum);
+	List<FileDTO> getFiles(Long boardNum, String boardCategory);
 
 	int deleteBySystemname(String sysName);
 	

@@ -105,11 +105,11 @@ public class TrainerMyPageServiceImpl implements TrainerMyPageService {
     @Override
     public List<MessageDTO> getMessageMyList(Criteria cri, String trainerId, String message) {
         if (message.equals("messageAll")) {
-            return tmpmapper.getMyMessageAll(cri, trainerId, message);
+            return tmpmapper.getMyMessageAll(cri, trainerId);
         } else if (message.equals("messageSend")) {
-            return tmpmapper.getMyMessageSend(cri, trainerId, message);
+            return tmpmapper.getMyMessageSend(cri, trainerId);
         } else {
-            return tmpmapper.getMyMessageReceive(cri, trainerId, message);
+            return tmpmapper.getMyMessageReceive(cri, trainerId);
         }
     }
 
@@ -135,6 +135,14 @@ public class TrainerMyPageServiceImpl implements TrainerMyPageService {
         return newly_Message;
     }
 
+    @Override
+    public boolean updateMatching(UTMatchingDTO utMatching, String trainerCheck) {
+        int row = tmpmapper.updateMatching(utMatching,trainerCheck);
+        if (row != 1) {
+            return false;
+        }
+        return true;
+    }
 
     //보드
 
@@ -410,5 +418,36 @@ public class TrainerMyPageServiceImpl implements TrainerMyPageService {
             return true;
         }
     }
+
+
+
+    @Override
+    public List<UTMatchingDTO> getMyMatchinglist(Criteria cri, String trainerId) {
+        return tmpmapper.getMyMatchinglist(cri,trainerId);
+    }
+
+    @Override
+    public Long getMatchingTotal(Criteria cri, String trainerId) {
+        return tmpmapper.getMatchingTotal(cri, trainerId);
+    }
+
+    @Override
+    public ArrayList<String> getMatchingNewlyList(List<UTMatchingDTO> list) throws Exception {
+        ArrayList<String> newly_Message = new ArrayList<>();
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date now = new Date();
+        for(UTMatchingDTO matching : list) {
+            Date regdate = df.parse(matching.getMatchingDate());
+            if(now.getTime() - regdate.getTime() < 1000*60*60*2) {
+                newly_Message.add("O");
+            }
+            else {
+                newly_Message.add("X");
+            }
+        }
+        return newly_Message;
+    }
+
+
 }
 

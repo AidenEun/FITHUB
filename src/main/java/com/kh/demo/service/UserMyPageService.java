@@ -88,4 +88,13 @@ public interface UserMyPageService {
     DiaryDTO getDiaryByNum(Long diaryNum);
 
     boolean removeStamp(String userId, String regdate);
+  
+    //나의 매칭리스트
+    List<UTMatchingDTO> getMyMatchinglist(Criteria cri, String userId);
+
+    ArrayList<String> getMatchingNewlyList(List<UTMatchingDTO> list) throws Exception;
+
+    Long getMatchingTotal(Criteria cri, String userId);
+
+    boolean updateMatching(UTMatchingDTO utMatching);
 }

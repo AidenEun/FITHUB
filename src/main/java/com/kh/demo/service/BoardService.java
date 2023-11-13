@@ -16,12 +16,12 @@ public interface BoardService {
 	boolean regist(BoardDTO board, MultipartFile[] files) throws Exception;
 
 	//update
-	public boolean modify(BoardDTO board, MultipartFile[] files, String updateCnt) throws Exception;
+	public boolean modify(BoardDTO board, MultipartFile[] files, String updateCnt, String boardCategory) throws Exception;
 
 	public void updateReadCount(Long boardnum);
 
 	//delete
-	public boolean remove(String loginUser, Long boardnum);
+	public boolean remove(String loginUser, Long boardnum, String boardCategory);
 
 	//select
 	Long getTotal(Criteria cri);
@@ -46,7 +46,7 @@ public interface BoardService {
 
 	ArrayList<String> getRecentReplyList(List<BoardDTO> list);
 
-	List<FileDTO> getFileList(Long boardnum);
+	List<FileDTO> getFileList(Long boardnum, String boardCategory);
 
 	ResponseEntity<Resource> getThumbnailResource(String systemname) throws Exception;
 
@@ -67,6 +67,12 @@ public interface BoardService {
 
 	List<BoardDTO> getCommuSearchList(String keyword);
 
+
+	BoardDTO getNewsTop1();
+
+	BoardDTO getExerTop1();
+
+	BoardDTO getFoodTop1();
 
 }
 
