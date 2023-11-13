@@ -4,7 +4,7 @@
 	pixelarity.com | hello@pixelarity.com
 	License: pixelarity.com/license
 -->
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<title>Untitled</title>
 	<meta charset="utf-8" />
@@ -87,7 +87,8 @@
 
 <!-- Header -->
 <!--<th:block th:replace="~{layout/header::header(${session.loginUser})}"></th:block>-->
-<th:block th:replace="~{layout/headerNoneModal::header(${session.loginUser},${session.user})}"></th:block>
+<!--<th:block th:replace="~{layout/headerNoneModal::header(${session.loginUser},${session.user})}"></th:block>-->
+<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin})}"></th:block>
 
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">

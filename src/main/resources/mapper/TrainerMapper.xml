@@ -19,5 +19,13 @@
         select * from trainer where trainer_id=#{trainerId};
     </select>
 
+    <select id="getTrainerTop1">
+        SELECT trainer.*, COUNT(subscribe.trainer_id) AS subscription_count
+        FROM trainer
+        LEFT JOIN subscribe ON trainer.trainer_id = subscribe.trainer_id
+        GROUP BY trainer.trainer_id
+        ORDER BY subscription_count DESC
+        LIMIT 3
+    </select>
 </mapper>
 

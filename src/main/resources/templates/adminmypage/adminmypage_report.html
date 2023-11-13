@@ -116,8 +116,13 @@
 </style>
 <body class="is-preload">
 
+	<script th:if="${session.loginUser != null}" th:unless="${#strings.contains(session.loginUser, 'admin')}">
+		alert("관리자만 접근 가능합니다!!!");
+		location.replace("/");
+	</script>
+
 	<!-- Header -->
-	<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user})}"></th:block>
+	<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin})}"></th:block>
 
 	<!-- Modal -->
 	<th:block th:replace="~{layout/profileModal::profileModal()}"></th:block>
