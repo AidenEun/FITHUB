@@ -6,11 +6,12 @@
 -->
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>Untitled</title>
+	<title>Fit Hub</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<link rel="stylesheet" th:href="@{/assets/css/index.css}" />
 	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}"/>
+	<link rel="stylesheet" th:href="@{/assets/css/main_index.css}"/>
 	<noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
 </head>
 <body class="is-preload">
@@ -59,20 +60,20 @@
 <section id="two" class="wrapper content-pad">
 	<div class="inner">
 		<div class="features">
-			<section class="content">
+			<section class="content cursor_box" id="infoController">
 				<span class="icon-wrapper major"><span class="icon solid fa-pencil-alt"></span></span>
-				<h3>꿀팁 베스트1등</h3>
-				<p>꿀팁 베스트1등</p>
+				<h3>정보 게시판</h3>
+				<p>여러가지 꿀팁을 얻어가세요!</p>
 			</section>
-			<section class="content">
+			<section class="content cursor_box" id="matchingController">
 				<span class="icon-wrapper major"><span class="icon solid fa-paper-plane"></span></span>
-				<h3>음식 검색 1등</h3>
-				<p>음식 검색 1등</p>
+				<h3>트레이너 매칭</h3>
+				<p>조건에 맞는 트레이너를 매칭해보세요!</p>
 			</section>
-			<section class="content">
+			<section class="content cursor_box" id="challengeController">
 				<span class="icon-wrapper major"><span class="icon solid fa-cloud"></span></span>
-				<h3>운동 검색 1등</h3>
-				<p>운동 검색 1등</p>
+				<h3>챌린지 게시판</h3>
+				<p>목표를 설정하고 도전해보세요!</p>
 			</section>
 		</div>
 	</div>
@@ -81,41 +82,63 @@
 <!-- Three -->
 <section id="three" class="wrapper style2">
 	<div class="inner">
-		<h2>게시글 베스트</h2>
+		<h2>정보 게시판 베스트</h2>
 		<div class="posts">
 			<section class="post">
-				<span class="image"><img src="images/pic01.jpg" alt="" /></span>
-				<div class="content">
-					<h3>게시글 1등</h3>
-					<p>Aenean ultricies magna non sapien rhoncus, ac ullamcorper lorem convallis. Quisque at venenatis nisi, amet finibus mauris. Sed sodales ultricies eros, sit amet sodales sapien.</p>
-					<ul class="actions">
-						<li><a href="#" class="button">More</a></li>
-					</ul>
-				</div>
+				<span class="image"><img src="images/new_img.png" alt="" /></span>
+				<th:block th:if="${newsTop1 != null}">
+					<div class="content">
+						<h3>[[${newsTop1.boardTitle}]]</h3>
+						<p>[[${newsTop1.boardContent}]]</p>
+						<ul class="actions">
+							<li><a href="/info/info_news" class="button">More</a></li>
+						</ul>
+					</div>
+				</th:block>
+				<th:block th:if="${newsTop1 == null}">
+					<div class="content">
+						<h3>현재 등록된 뉴스 게시글이 없습니다!</h3>
+					</div>
+				</th:block>
 			</section>
 			<section class="post">
-				<span class="image"><img src="images/pic02.jpg" alt="" /></span>
-				<div class="content">
-					<h3>게시글 2등</h3>
-					<p>Ultrices nec metus. Aenean ultricies magna et sapien rhoncus ac ullamcorper lorem convallis. Quisque at venenatis nisi amet finibus mauris. Sed sodales ultricies magna etiam.</p>
-					<ul class="actions">
-						<li><a href="#" class="button">More</a></li>
-					</ul>
-				</div>
+				<span class="image"><img src="images/exer_img.png" alt="" /></span>
+				<th:block th:if="${exerTop1 != null}">
+					<div class="content">
+						<h3>[[${exerTop1.boardTitle}]]</h3>
+						<p>[[${exerTop1.boardContent}]]</p>
+						<ul class="actions">
+							<li><a href="/info/info_exercise" class="button">More</a></li>
+						</ul>
+					</div>
+				</th:block>
+				<th:block th:if="${exerTop1 == null}">
+					<div class="content">
+						<h3>현재 등록된 운동 게시글이 없습니다!</h3>
+					</div>
+				</th:block>
 			</section>
 			<section class="post">
-				<span class="image"><img src="images/pic03.jpg" alt="" /></span>
-				<div class="content">
-					<h3>게시글 3등</h3>
-					<p>Quis interdum. Lorem quis lacus justo. Sed libero condimentum vehicula sem vel, mattis amet mauris. Nullam lacinia sit amet felis vel vestibulum. Morbi aliquam aenean.</p>
-					<ul class="actions">
-						<li><a href="#" class="button">More</a></li>
-					</ul>
-				</div>
+				<span class="image"><img src="images/food_img.png" alt="" /></span>
+				<th:block th:if="${foodTop1 != null}">
+					<div class="content">
+						<h3>[[${foodTop1.boardTitle}]]</h3>
+						<p>[[${foodTop1.boardContent}]]</p>
+						<ul class="actions">
+							<li><a href="/info/info_food" class="button">More</a></li>
+						</ul>
+					</div>
+				</th:block>
+				<th:block th:if="${foodTop1 == null}">
+					<div class="content">
+						<h3>현재 등록된 식단 게시글이 없습니다!</h3>
+					</div>
+				</th:block>
 			</section>
 		</div>
 	</div>
 </section>
+
 <section id="three" class="wrapper style3">
 	<div class="inner">
 		<h2>트레이너 랭킹</h2>
@@ -190,33 +213,6 @@
 		</div>
 	</div>
 </section>
-<section id="three" class="wrapper style5">
-	<div class="inner">
-		<h2>오늘 정보</h2>
-		<div class="posts">
-			<section class="post">
-				<span class="image"><img src="images/pic01.jpg" alt="" /></span>
-				<div class="content">
-					<h3>꿀팁</h3>
-					<p>Aenean ultricies magna non sapien rhoncus, ac ullamcorper lorem convallis. Quisque at venenatis nisi, amet finibus mauris. Sed sodales ultricies eros, sit amet sodales sapien.</p>
-					<ul class="actions">
-						<li><a href="#" class="button">More</a></li>
-					</ul>
-				</div>
-			</section>
-			<section class="post">
-				<span class="image"><img src="images/pic02.jpg" alt="" /></span>
-				<div class="content">
-					<h3>뉴스</h3>
-					<p>Ultrices nec metus. Aenean ultricies magna et sapien rhoncus ac ullamcorper lorem convallis. Quisque at venenatis nisi amet finibus mauris. Sed sodales ultricies magna etiam.</p>
-					<ul class="actions">
-						<li><a href="#" class="button">More</a></li>
-					</ul>
-				</div>
-			</section>
-		</div>
-	</div>
-</section>
 
 <!-- Footer -->
 <th:block th:replace="~{layout/footer::footer}"></th:block>
@@ -237,13 +233,18 @@
 <script th:src="@{/assets/js/sidebar.js}"></script>
 
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js">
+<script>
+	$("#infoController").click(function(){
+		location.href = '/info/info_list';
+	});
 
+	$("#matchingController").click(function(){
+		location.href = '/matching/matching_list';
+	});
+
+	$("#challengeController").click(function(){
+		location.href = '/challenge/list';
+	});
 </script>
-
-
-
-
-
 </body>
 </html>

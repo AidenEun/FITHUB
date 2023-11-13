@@ -351,6 +351,21 @@ public class BoardServiceImpl implements BoardService{
 		return bmapper.getCommuSearchList(keyword);
 	}
 
+	@Override
+	public BoardDTO getNewsTop1() {
+		return bmapper.getNewsTop1();
+	}
+
+	@Override
+	public BoardDTO getExerTop1() {
+		return bmapper.getExerTop1();
+	}
+
+	@Override
+	public BoardDTO getFoodTop1() {
+		return bmapper.getFoodTop1();
+	}
+
 
 }
 
