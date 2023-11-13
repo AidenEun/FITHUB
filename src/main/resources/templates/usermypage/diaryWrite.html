@@ -639,11 +639,11 @@
                 var myChallData1 = myChallDTOList[i];
                 var myChallData2 = i + 1 < myChallDTOList.length ? myChallDTOList[i + 1] : null;
 
-                row.append('<td><input type="checkbox" name="todayChallNum" id="' + myChallData1.challNum + '" value="' + myChallData1.challNum + '"/>\n' +
+                row.append('<td><input type="checkbox" name="myChallNum" id="' + myChallData1.challNum + '" value="' + myChallData1.challNum + '"/>\n' +
                     '        <label for="' + myChallData1.challNum + '">' + myChallData1.challName + '</label></td>');
 
                 if (myChallData2) {
-                    row.append('<td><input type="checkbox" name="todayChallNum" id="' + myChallData2.challNum + '" value="' + myChallData2.challNum + '"/>\n' +
+                    row.append('<td><input type="checkbox" name="myChallNum" id="' + myChallData2.challNum + '" value="' + myChallData2.challNum + '"/>\n' +
                         '        <label for="' + myChallData2.challNum + '">' + myChallData2.challName + '</label></td>');
                 } else {
                     row.append('<td></td>');
@@ -654,7 +654,7 @@
         } else {
             var row = $('<tr class="mychall_area">');
             row.append('<td style="text-align: center;">진행 중인 챌린지가 없습니다.</td>');
-            row.append('<td><input type="hidden" name="todayChallNum" value="0"></td>');
+            row.append('<td><input type="hidden" name="myChallNum" value="0"></td>');
             tableBody.append(row);
         }
 

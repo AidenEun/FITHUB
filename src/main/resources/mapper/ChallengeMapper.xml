@@ -76,6 +76,11 @@
         select * from chall_cert_board where board_num=#{boardNum}
     </select>
 
+<!--    통합검색-->
+    <select id="getChallSearchList">
+    SELECT * FROM chall_notice_board where chall_name like('%${keyword}%') or chall_content like('%${keyword}%')
+    order by chall_num asc;
+    </select>
 
 </mapper>
 

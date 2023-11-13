@@ -228,6 +228,10 @@ public class UserMyPageController {
         String loginUser = (String) session.getAttribute("loginUser");
         UserDTO user = serviceUser.getDetail(loginUser);
         DiaryDTO diary = service.getDiaryDetail(choicedate, loginUser);
+        System.out.println(diary);
+
+        System.out.println("성공한 챌린지 번호 : "+diary.getMyChallNum());
+        System.out.println("아침식사 번호 : "+diary.getTodayBreakfast());
 
         //오늘의 비교 계산
         double resultweight = Math.round((user.getWeightGoal() - diary.getTodayWeight()) * 100.0) / 100.0;
@@ -268,7 +272,7 @@ public class UserMyPageController {
 
                         }
                     }
-                    bfCal= Math.round(bfCal * 100.0) / 100.0;
+                    bfCal = Math.round(bfCal * 100.0) / 100.0;
                     for (int j = 0; j < bfnameList.size(); j++) {
                         String breakfast1 = "";
                         if (j == bfnameList.size() - 1) {
@@ -290,7 +294,7 @@ public class UserMyPageController {
                             lunchCal += Double.parseDouble(dtoData.getFoodCalories());
                         }
                     }
-                    lunchCal= Math.round(lunchCal * 100.0) / 100.0;
+                    lunchCal = Math.round(lunchCal * 100.0) / 100.0;
                     for (int j = 0; j < lunchnameList.size(); j++) {
                         String lunch1 = "";
                         if (j == lunchnameList.size() - 1) {
@@ -311,7 +315,7 @@ public class UserMyPageController {
                             dinnerCal += Double.parseDouble(dtoData.getFoodCalories());
                         }
                     }
-                    dinnerCal= Math.round(dinnerCal * 100.0) / 100.0;
+                    dinnerCal = Math.round(dinnerCal * 100.0) / 100.0;
                     for (int j = 0; j < dinnernameList.size(); j++) {
                         String dinner1 = "";
                         if (j == dinnernameList.size() - 1) {
@@ -332,7 +336,7 @@ public class UserMyPageController {
                             snackCal += Double.parseDouble(dtoData.getFoodCalories());
                         }
                     }
-                    snackCal= Math.round(snackCal * 100.0) / 100.0;
+                    snackCal = Math.round(snackCal * 100.0) / 100.0;
                     for (int j = 0; j < snacknameList.size(); j++) {
                         String snack1 = "";
                         if (j == snacknameList.size() - 1) {
@@ -372,15 +376,16 @@ public class UserMyPageController {
         String[] listNameArr = {breakfast, lunch, dinner, snack, exer};
         String[] sccChall;
         //진행중인 챌린지 내역
-        List<MyChallengeDTO> myChallDTOList =challService.findMychall(diary.getUserId(), diary.getRegdate());
+        List<MyChallengeDTO> myChallDTOList = challService.findMychall(diary.getUserId(), diary.getRegdate());
         //성공한 챌린지 내역
-        if(diary.getTodayChallNum() != null){
-            String[] sccChallNumArr = (diary.getTodayChallNum()).split(",");
+        List<MyChallengeDTO> sccChallDTOList = new ArrayList<>();
+        System.out.println("성공한 챌린지 번호 : "+diary.getMyChallNum());
+        if (diary.getMyChallNum() != null) {
+            String[] sccChallNumArr = (diary.getMyChallNum()).split(",");
             for (String data : sccChallNumArr) {
-                List<MyChallengeDTO> sccChallDTOList = challService.findchall(data);
-
-        }
+                sccChallDTOList = challService.findchall(data);
             }
+        }
 
 
         model.addAttribute("user", user);
@@ -389,8 +394,14 @@ public class UserMyPageController {
         model.addAttribute("listNameArr", listNameArr);
         model.addAttribute("foodCalArr", foodCalArr);
         model.addAttribute("totalResult", totalResult);
+        model.addAttribute("myINGChallNum", myChallDTOList);
+        model.addAttribute("sccChallDTOList",sccChallDTOList);
 
 //        System.out.println(diary);
+        System.out.println(myChallDTOList);
+        System.out.println(sccChallDTOList);
+//        System.out.println(diary.getMyINGChallNum());
+        System.out.println(diary.getMyChallNum());
 
     }
 
@@ -398,10 +409,10 @@ public class UserMyPageController {
     public String diaryWrite(String choicedate, DiaryDTO diary) {
         int result = service.registDiary(diary);
         if (result == 1) {
-            if (diary.getTodayChallNum() == null) {
+            if (diary.getMyChallNum() == null) {
                 return "redirect:/usermypage/diaryView?choicedate=" + choicedate;
             } else {
-                String[] sccChallNumArr = (diary.getTodayChallNum()).split(",");
+                String[] sccChallNumArr = (diary.getMyChallNum()).split(",");
                 int sccChallNum = 0;
                 HashMap<String, String> diaryInfo = new HashMap<String, String>();
                 diaryInfo.put("diarydate", diary.getRegdate());
@@ -415,6 +426,7 @@ public class UserMyPageController {
                     }
                 }
             }
+            System.out.println("다이어리 저장 :"+diary);
             return "redirect:/usermypage/diaryView?choicedate=" + choicedate;
         }
         //실패시 다시 캘린더로
@@ -424,7 +436,7 @@ public class UserMyPageController {
 
     @PostMapping("diaryModify")
     public String diaryModify(DiaryDTO diary, String choicedate) {
-        if(service.modifyDiary(diary)){
+        if (service.modifyDiary(diary)) {
             return "redirect:/usermypage/diaryView?choicedate=" + choicedate;
         }
 

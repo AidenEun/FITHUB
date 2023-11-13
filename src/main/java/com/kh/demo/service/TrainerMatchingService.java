@@ -36,4 +36,6 @@ public interface TrainerMatchingService {
     void saveMatching(UTMatchingDTO newMatching);
 
     UTMatchingDTO getutBytrainerId(String trainerId);
+
+    List<BoardDTO> getMachingSearchList(String keyword);
 }

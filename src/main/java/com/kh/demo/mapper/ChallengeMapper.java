@@ -1,6 +1,7 @@
 package com.kh.demo.mapper;
 
 import com.kh.demo.domain.dto.BoardDTO;
+import com.kh.demo.domain.dto.ChallNoticeBoardDTO;
 import com.kh.demo.domain.dto.Criteria;
 import com.kh.demo.domain.dto.MyChallengeDTO;
 import org.apache.ibatis.annotations.Mapper;
@@ -32,4 +33,6 @@ public interface ChallengeMapper {
     List<MyChallengeDTO> getIngMychall(String userid, String choicedate);
 
     List<MyChallengeDTO> getFindchall(String challNum);
+
+    List<ChallNoticeBoardDTO> getChallSearchList(String keyword);
 }
