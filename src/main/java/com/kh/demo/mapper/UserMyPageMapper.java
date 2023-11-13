@@ -42,6 +42,11 @@ public interface UserMyPageMapper {
 
     List<MessageDTO> getMyMessageReceive(Criteria cri, String userId);
 
+    //나의 매칭리스트
+    List<UTMatchingDTO> getMyMatchinglist(Criteria cri, String userId);
+
+    int updateMatching(UTMatchingDTO utMatching);
+
     //보드
     Long getBoardTotal(Criteria cri, String userId);
 
@@ -95,5 +100,7 @@ public interface UserMyPageMapper {
     Long getSignUpLastNum(String userId);
 
     int insertStamp(int sccChallNum, String userId, String diarydate);
+
+    Long getMatchingTotal(Criteria cri, String userId);
 
 }

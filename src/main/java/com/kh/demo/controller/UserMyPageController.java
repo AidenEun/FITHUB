@@ -173,6 +173,29 @@ public class UserMyPageController {
         model.addAttribute("newly_Message", service.getMessageNewlyList(list));
     }
 
+    @GetMapping("u_t_matching")
+    public void u_t_matching( Criteria cri, Model model, HttpServletRequest req) throws Exception {
+        HttpSession session = req.getSession();
+        String userId = (String) session.getAttribute("loginUser");
+
+        List<UTMatchingDTO> list = service.getMyMatchinglist(cri, userId);
+
+        System.out.println(cri);
+        System.out.println("list:" + list);
+        model.addAttribute("list", list);
+        model.addAttribute("pageMaker", new PageDTO(service.getMatchingTotal(cri, userId), cri));
+        model.addAttribute("newly_Message", service.getMatchingNewlyList(list));
+    }
+
+    @PostMapping("u_t_matching")
+    public String u_t_matching(UTMatchingDTO utMatching){
+
+        if(service.updateMatching(utMatching)){
+            return "redirect:/usermypage/u_t_matching";
+        }
+        return "redirect:/";
+    }
+
     @GetMapping("user_applytrainer")
     public void user_applytrainer(HttpServletRequest req, Model model) {
         HttpSession session = req.getSession();

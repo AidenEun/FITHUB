@@ -27,16 +27,23 @@ public interface TrainerMyPageMapper {
     //재우
     //메세지
     Long getMessageTotal(Criteria cri, String trainerId);
-    Long getMessageTotalSend(Criteria cri, String trainer);
-    Long getMessageTotalReceive(Criteria cri, String trainer);
+    Long getMessageTotalSend(Criteria cri, String trainerId);
+    Long getMessageTotalReceive(Criteria cri, String trainerId);
 
-    List<MessageDTO> getMyMessageAll(Criteria cri, String trainerId, String message);
-    List<MessageDTO> getMyMessageSend(Criteria cri, String trainerId, String message);
-    List<MessageDTO> getMyMessageReceive(Criteria cri, String trainerId, String message);
+    List<MessageDTO> getMyMessageAll(Criteria cri, String trainerId);
+    List<MessageDTO> getMyMessageSend(Criteria cri, String trainerId);
+    List<MessageDTO> getMyMessageReceive(Criteria cri, String trainerId);
 
     Long getMessageLastNum(String trainerId);
 
     List<MessageDTO> getMyMessage(Criteria cri, String trainerId);
+
+    //나의 매칭리스트
+    List<UTMatchingDTO> getMyMatchinglist(Criteria cri, String trainerId);
+
+    Long getMatchingTotal(Criteria cri, String trainerId);
+
+    int updateMatching(UTMatchingDTO utMatching, String trainerCheck);
 
 
 
@@ -80,4 +87,5 @@ public interface TrainerMyPageMapper {
 
     //내 프로필
     int updateTrainer(TrainerDTO trainer);
+
 }

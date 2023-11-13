@@ -174,36 +174,68 @@
 
 		<!-- Content -->
 		<div class="content">
-			<div id="messageAll" class="button cate now_cate message" style="margin-right: 10px;">전체보기</div>
+			<div id="messageAll" class="button cate not_cate message" style="margin-right: 10px;">전체보기</div>
 			<div id="messageSend" class="button cate not_cate message" style="margin-right: 10px;">보낸쪽지함</div>
 			<div id="messageReceive" class="button cate not_cate message" style="margin-right: 10px;">받은쪽지함</div>
-			<div id="u_t_matching" class="button cate not_cate message" style="margin-right: 10px;">매칭쪽지함</div>
+			<div id="u_t_matching" class="button cate now_cate message" style="margin-right: 10px;">매칭쪽지함</div>
 			<!-- 게시글 리스트 띄우는 테이블 -->
-			<table class="list">
+			<form name="mainForm" id="mainForm" method="post" th:action="@{/usermypage/u_t_matching}">
+				<table class="list">
 					<tr align="right" valign="middle">
 						<td colspan="6">글 개수 : [[${pageMaker.total}]]</td>
 					</tr>
 					<tr align="center" valign="middle">
 						<th width="8%">번호</th>
-						<th></th>
+						<th width="2%"></th>
 						<th width="15%">보낸사람</th>
 						<th width="15%">받는사람</th>
-						<th width="30%">내용</th>
-						<th width="10%">날짜</th>
+						<th width="30%">수락여부</th>
+						<th >날짜</th>
 					</tr>
 					<tr th:if="${list != null and list.size()>0}" th:each="message : ${list}">
-						<td>[[${message.messageNum}]]</td>
+						<td>
+							<input type="text" name="matchingNum" th:value="${message.matchingNum}" readonly>
+						</td>
 						<td>
 							<sup class="new" th:if="${newly_Message[messageStat.index] == 'O'}">New</sup>
 						</td>
-						<td>[[${message.sendId}]]</td>
-						<td>[[${message.receiveId}]]</td>
 						<td>
-							[[${message.messageContent}]]
+							<input type="text" name="userId" th:value="${message.userId}" readonly>
 						</td>
 						<td>
-							[[${message.sendDate}]]
+							<input type="text" name="trainerId" th:value="${message.trainerId}" readonly>
 						</td>
+						<td>
+							<div class="SC_box">
+								<th:block th:if="${message.userCheck} == 'O' and ${message.trainerCheck} == '확인중'">
+									<div>
+										확인중입니다.
+									</div>
+									<div>
+										<a href="#" class="cancel">취소</a>
+									</div>
+								</th:block>
+								<th:block th:if="${message.userCheck} == 'O' and ${message.trainerCheck} == 'O'">
+									<div>
+										매칭되었습니다.
+									</div>
+								</th:block>
+								<th:block th:if="${message.userCheck} == 'X'">
+									<div>
+										취소하였습니다.
+									</div>
+								</th:block>
+								<th:block th:if="${message.trainerCheck} == 'X'">
+									<div>
+										거절되었습니다
+									</div>
+								</th:block>
+							</div>
+						</td>
+						<td>
+							<input type="text" name="matchingDate" th:value="${message.matchingDate}" readonly>
+						</td>
+
 					</tr>
 					<th:block th:if="${list == null or list.size() == 0}">
 						<tr>
@@ -211,8 +243,8 @@
 								게시글이 없습니다.</td>
 						</tr>
 					</th:block>
-
-			</table>
+				</table>
+			</form>
 			<br>	<!-- 페이징 처리하는 테이블 -->
 			<table class="pagination">
 				<tr align="center" valign="middle">
@@ -255,7 +287,7 @@
 			</form>
 		</div>
 
-		<form name="pageForm" id="pageForm" th:action="@{/usermypage/user_messagelist}">
+		<form name="pageForm" id="pageForm" th:action="@{/usermypage/u_t_matching}">
 			<input type="hidden" name="pagenum" th:value="${pageMaker.cri.pagenum}">
 			<input type="hidden" name="amount" th:value="${pageMaker.cri.amount}">
 			<input type="hidden" name="type" th:value="${pageMaker.cri.type}">
@@ -361,6 +393,17 @@
 	});
 
 
+	const mainForm = $("#mainForm");
+	const success = document.querySelector('.success');
+	const cancel = document.querySelector('.cancel');
+
+	$("#mainForm a").on("click",function(e){
+		e.preventDefault();
+
+		let userCheck =$(this).attr("class");
+		mainForm.append("<input type='hidden' name='user_check' value='X'>");
+		mainForm.submit();
+	});
 </script>
 </body>
 </html>
