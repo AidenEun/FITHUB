@@ -102,7 +102,7 @@
     }
 
     td div > input[type=text]:nth-child(2), td div > input[type=text]:nth-child(3) {
-        text-align: right;
+        text-align: center;
     }
 
 
@@ -395,19 +395,21 @@
                         <input type="hidden" id="myINGChallNum" name="myINGChallNum">
                         <table id="mychallDataList">
                             <tbody id="chall-table">
-                            <th:block th:if="${#strings.isEmpty(diary.myChallNum)}">
-                                <!-- 챌린지가 없을 때의 블록 -->
-                                <td style="text-align: center;">진행 중인 챌린지가 없습니다.</td>
+                            <!-- <th:block th:if="${#strings.isEmpty(diary.myChallNum)}">-->
+                            <th:block th:if="${ myINGChallNum == null or myINGChallNum.size() == 0}">
+                                <tr>
+                                    <!-- 챌린지가 없을 때의 블록 -->
+                                    <td style="text-align: center;">진행 중인 챌린지가 없습니다.</td>
+                                </tr>
                             </th:block>
-                            <th:block th:if="${not #strings.isEmpty(diary.myChallNum)}">
-<!--                                <td style="text-align: center;">챌린지있음!!</td>-->
-                                <!-- 챌린지가 있을 때의 블록 -->
+                            <th:block th:if="${ myINGChallNum != null or myINGChallNum.size() > 0}">
                                 <tr class="mychall_area" th:each="myINGChallNum : ${myINGChallNum}">
-
                                     <td>
-                                        <input type="checkbox" name="todayChallNum" onClick="return false;"
+                                        <input type="checkbox" name="myChallNum" onClick="return false;"
+                                               th:each="sccChallDTOList : ${sccChallDTOList}"
                                                th:id="'challNum_' + ${myINGChallNum.challNum}"
-                                               th:value="${myINGChallNum.challNum}">
+                                               th:value="${myINGChallNum.challNum}"
+                                               th:checked="${myINGChallNum.challNum == sccChallDTOList.challNum}">
                                         <label th:for="'challNum_' + ${myINGChallNum.challNum}">
                                             [[${myINGChallNum.challName}]]</label>
                                     </td>
@@ -458,9 +460,8 @@
 
 <script th:src="@{https://code.jquery.com/jquery-3.6.0.min.js}"></script>
 <script>
-    // function backcalender() {
-    //     location.href = "/usermypage/user_diary";
-    // }
+
+
     function diaryremove() {
         if (confirm("정말 삭제하시겠습니까?") == true) {
             document.getElementById("diaryForm").submit();

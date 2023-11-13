@@ -58,7 +58,6 @@ public class UserMyPageServiceImpl implements UserMyPageService{
     @Override
     public DiaryDTO getDiaryDetail(String choicedate, String loginUser) {
         DiaryDTO result = umpmapper.getDiaryDetail(choicedate,loginUser);
-        System.out.println("서비스 IMP 디테일 데이터"+result);
         return result;
     }
 
@@ -396,6 +395,21 @@ public class UserMyPageServiceImpl implements UserMyPageService{
         }
         return true;
     }
+
+    @Override
+    public DiaryDTO getDiaryByNum(Long diaryNum) {
+        return umpmapper.getDiaryByNum(diaryNum);
+    }
+
+    @Override
+    public boolean removeStamp(String userId, String regdate) {
+        int removeStamp = umpmapper.removeStamp(userId, regdate);
+        System.out.println("삭제된 스템프"+removeStamp);
+        boolean result = removeStamp > 0;
+
+        return result;
+    }
+
 
     @Override
     public boolean addStemp(int sccChallNum, HashMap<String, String> diaryInfo) {

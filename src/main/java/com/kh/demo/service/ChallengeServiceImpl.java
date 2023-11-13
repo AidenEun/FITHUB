@@ -61,7 +61,7 @@ public class ChallengeServiceImpl implements ChallengeService{
     }
 
 
-    public List<MyChallengeDTO> findchall(String challNum) {
+    public ChallNoticeBoardDTO findchall(String challNum) {
         return challMapper.getFindchall(challNum);
     }
 
@@ -69,6 +69,7 @@ public class ChallengeServiceImpl implements ChallengeService{
     public List<ChallNoticeBoardDTO> getChallSearchList(String keyword) {
         return challMapper.getChallSearchList(keyword);
     }
+
 
 
 

@@ -95,7 +95,7 @@ public class HomeController {
 //        String[] boardCategory = {"infoNews","infoExer","infoFood","infoTip"};
 //        List<BoardDTO> InfoSearchList = boardservice.getSearch5List(keyword);
 
-        //각 게시판에서 5개씩 가져오기
+        //각 게시판에서 글 가져오기
         List<BoardDTO> newsSearchList = boardservice.getNewsSearchList(keyword);
         List<BoardDTO> exerSearchList = boardservice.getExerSearchList(keyword);
         List<BoardDTO> foodSearchList = boardservice.getFoodSearchList(keyword);
@@ -112,6 +112,7 @@ public class HomeController {
         model.addAttribute("commuSearchList",CommuSearchList);
         model.addAttribute("matchingSearchList",matchingSearchList);
         model.addAttribute("challSearchList",challSearchList);
+        model.addAttribute("boardAllCnt",boardAllCnt);
 
     }
 

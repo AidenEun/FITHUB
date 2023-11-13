@@ -101,6 +101,10 @@ public interface UserMyPageMapper {
 
     int insertStamp(int sccChallNum, String userId, String diarydate);
 
+    DiaryDTO getDiaryByNum(Long diaryNum);
+
+    int removeStamp(String userId, String regdate);
+  
     Long getMatchingTotal(Criteria cri, String userId);
 
 }
