@@ -33,6 +33,20 @@ public interface BoardMapper {
 	Long getLastNum(String userId);
 	BoardDTO findByNum(Long boardNum);
 
+	List<BoardDTO> getAllList(String keyword);
+
+	Long getAllSearchCnt(String keyword);
+
+
+	List<BoardDTO> getNewsSearchList(String keyword);
+
+	List<BoardDTO> getExerSearchList(String keyword);
+
+	List<BoardDTO> getFoodSearchList(String keyword);
+
+	List<BoardDTO> getTipSearchList(String keyword);
+
+	List<BoardDTO> getCommuSearchList(String keyword);
 }
 
 

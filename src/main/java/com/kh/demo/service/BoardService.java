@@ -17,6 +17,7 @@ public interface BoardService {
 
 	//update
 	public boolean modify(BoardDTO board, MultipartFile[] files, String updateCnt) throws Exception;
+
 	public void updateReadCount(Long boardnum);
 
 	//delete
@@ -24,17 +25,27 @@ public interface BoardService {
 
 	//select
 	Long getTotal(Criteria cri);
+
 	List<BoardDTO> getBoardList(Criteria cri);
+
 	List<BoardDTO> getNewsList(Criteria cri);
+
 	List<BoardDTO> getExerList(Criteria cri);
+
 	List<BoardDTO> getFoodList(Criteria cri);
+
 	List<BoardDTO> getTipList(Criteria cri);
 
 	BoardDTO getDetail(Long boardnum);
+
 	Long getLastNum(String userid);
+
 	ArrayList<String> getNewlyBoardList(List<BoardDTO> list) throws Exception;
+
 	ArrayList<Integer> getReplyCntList(List<BoardDTO> list);
+
 	ArrayList<String> getRecentReplyList(List<BoardDTO> list);
+
 	List<FileDTO> getFileList(Long boardnum);
 
 	ResponseEntity<Resource> getThumbnailResource(String systemname) throws Exception;
@@ -42,13 +53,21 @@ public interface BoardService {
 	ResponseEntity<Object> downloadFile(String systemname, String orgname) throws Exception;
 
 
+	List<BoardDTO> getAllBoardList(String keyword);
+
+	Long getAllsearchCnt(String keyword);
+
+	List<BoardDTO> getNewsSearchList(String keyword);
+
+	List<BoardDTO> getExerSearchList(String keyword);
+
+	List<BoardDTO> getFoodSearchList(String keyword);
+
+	List<BoardDTO> getTipSearchList(String keyword);
+
+	List<BoardDTO> getCommuSearchList(String keyword);
+
 
 }
-
-
-
-
-
-
 
 

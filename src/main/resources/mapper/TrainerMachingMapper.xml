@@ -84,4 +84,10 @@
         FROM u_t_matching
         WHERE trainer_id = #{trainerId}
     </select>
+
+<!--    통합검색-->
+    <select id="getMachingSearchList">
+        SELECT * FROM trainer_matching_board where ((board_title like('%${keyword}%')) or (board_content like('%${keyword}%')) or (trainer_id like('%${keyword}%')))
+        order by board_num asc;
+    </select>
 </mapper>

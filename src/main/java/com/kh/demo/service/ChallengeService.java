@@ -44,4 +44,6 @@ public interface ChallengeService {
     ChallNoticeBoardDTO getChallenge(String userId, String mychallNum);
 
     List<MyChallengeDTO> findchall(String challNum);
+
+    List<ChallNoticeBoardDTO> getChallSearchList(String keyword);
 }
