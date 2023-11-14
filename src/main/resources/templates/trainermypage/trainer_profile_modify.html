@@ -25,7 +25,7 @@
     float: left;
     border-radius: 5px;
 }
-.thumbnail_img .thumbnail_img_top{
+.thumbnail_img .profile_cont{
 	height: 260px;
 }
 .thumbnail_img .thumbnail_img_bottom{
@@ -77,26 +77,45 @@
 			<form id="profileForm" name="profileForm" method="post" th:action="@{/trainermypage/trainer_myprofile_modify}" enctype="multipart/form-data">
 			<div class="thumbnail_box">
 				<div class="thumbnail_img">
-					<div class="thumbnail_img_top">
-						<th:block th:if="${profiles != null and profiles.size() > 0}" th:each="file : ${profiles}">
-							<input type="hidden" name="orgName" th:value="${file.orgName}">
-							<th:block th:with="sar=${file.orgName.split('[.]')}">
+
+					<div class="profile_cont">
+					<th:block th:if="${profile != null}">
+						<div class="imgBox">
+							<th:block th:with="sar=${profile.orgName.split('[.]')}">
 								<th:block th:with="ext=${sar[sar.length-1]}">
-										<input type="file" name="files" id="profileimg" style="display:none">
-										<img style="width:100%;" th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}" th:src="@{/trainermypage/thumbnail (sysName=${file.sysName})}" class="thumbnail">
+									<th:block th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}">
+										<img style="width:100%;" th:src="@{/trainermypage/thumbnail (sysName=${profile.sysName})}" class="thumbnail">
+									</th:block>
+									<th:block th:unless="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}">
+										<img style="width:100%;" th:src="@{/trainermypage/thumbnail (sysName='profile_img.png')}" class="thumbnail">
+									</th:block>
 								</th:block>
 							</th:block>
-						</th:block>
-						<th:block th:unless="${profiles != null and profiles.size() > 0}">
-							<img style="width:100%;" th:src="@{/trainermypage/thumbnail (sysName='profile_img.png')}">
-						</th:block>
-					</div>
-					<div class="thumbnail_img_bottom">
-						<!--<th:block th:each="file : ${profiles}">-->
-							<!--<a th:href="'javascript:profileUpload('profileimg',\''+${profiles[0].sysName}+'\')'">사진변경</a>
-							<a th:href="'javascript:cancelProfile('profileimg',\''+${profiles[0].sysName}+'\')'">사진삭제</a>-->
 
-						<!--</th:block>-->
+						</div>
+						<div style="display:none">
+							<input type="file" name="profile" id="profile" style="display:none">
+							<span id="profilename" th:text="${profile.orgName}"></span>
+						</div>
+						<div class="thumbnail_img_bottom" style="float:right; margin-right: 100px;">
+							<a th:href="'javascript:profileupload(\'profile\',\''+${profile.sysName}+'\')'">사진변경</a>
+							<input type="hidden" name="profileOrgname" th:value="${profile.orgName}">
+						</div>
+					</th:block>
+					<th:block th:unless="${profile != null}">
+						<div class="imgBox">
+							<img style="width:100%;" th:src="@{/trainermypage/thumbnail (sysName='profile_img.png')}" class="thumbnail">
+						</div>
+						<div style="float:left;">
+							<input type="file" name="profile" id="profile_no" style="display:none">
+							<span id="profilename_no" style="display:none">선택된 파일 없음</span>
+						</div>
+						<div class="thumbnail_img_bottom">
+							<a th:href="'javascript:profileupload(\'profile\',\'\')'">사진변경</a>
+
+						</div>
+					</th:block>
+
 					</div>
 				</div>
 					<div class="thumbnail_div">
@@ -356,6 +375,7 @@ function cancelFile(name,systemname){
         i--;
     }
 }
+
 function upload(name,systemname){
     let temp = $("#"+name+"name").text();
     num = Number(name.split("e")[1]);
@@ -368,7 +388,8 @@ function upload(name,systemname){
         $("#"+name).click();
     }
 }
-$("[type='file']").change(function(e){
+const careerTable = document.querySelector(".careerTable");
+$(".careerTable [type='file']").change(function(e){
     const file = e.target.files[0];
     const fileTag = e.target;
 
@@ -459,90 +480,85 @@ $(".changePage").on("click",function(e){
 
 
 
-	function profileUpload(name,systemname){
-		let temp = $("#"+name).text();
-			updateCnt.val(updateCnt.val()+"\\"+systemname)
-			sysname = systemname;
-			$("#"+name).click();
-	}
-	$(".thumbnail_img_top [type='file']").change(function(e){
-		const file = e.target.files[0];
-		const fileTag = e.target;
-		if(file == undefined){
-			if(!$(".thumbnail_img_top" [name='orgName']").val()){
-				//비어있던 곳에 파일이 업로드 되었다가 취소한 경우
-				cancelProfile(fileTag.id);
-			}
-			else{
-				let ext = n.split(".").pop();
-				updateCnt.val(updateCnt.val().replaceAll("\\"+sysname,""));
-				if(ext == 'jpeg' || ext == 'jpg' || ext == 'png' || ext == 'gif' || ext == 'webp'){
-					$("."+fileTag.id+"_cont .thumbnail").remove();
-					document.querySelector("."+fileTag.id+"_cont").appendChild(org_thumbnail[n]);
-				}
-				else{
-					if(document.querySelector("."+fileTag.id+"_cont .thumbnail")){
-						$("."+fileTag.id+"_cont .thumbnail").remove();
-					}
-				}
-				sysname = "";
-			}
-		}
-		else{
-			uploadCheck = true;
-			//파일이 없었다가 업로드 한 경우
-			//#file0name
-			$("#"+fileTag.id+"name").text(file.name);
-			//업로드 된 파일의 확장자명
-			let ext = file.name.split(".").pop();
-			if(ext == 'jpeg' || ext == 'jpg' || ext == 'png' || ext == 'gif' || ext == 'webp'){
-				$("."+fileTag.id+"_cont .thumbnail").remove();
-				const reader = new FileReader();
-
-				reader.onload = function(ie){
-					const img = document.createElement("img");
-					img.setAttribute("src",ie.target.result)
-					img.setAttribute("class","thumbnail");
-					document.querySelector("."+fileTag.id+"_cont").appendChild(img);
-				}
-				reader.readAsDataURL(file);
-			}
-			else{
-				const temp = $("."+fileTag.id+"_cont .thumbnail");
-				if(temp != null){
-					temp.remove();
-				}
-			}
-			//가장 마지막 파일 선택 버튼을 눌렀을 때
-			if(num == i){
-				const cloneElement = $(".r"+i).clone(true);
-				i++;
-				cloneElement.appendTo("#boardForm tbody")
-				const lastElement = $("#boardForm tbody").children().last();
-
-				lastElement.attr("class","r"+i+" at");
-				lastElement.children("th").text("파일 첨부"+(i+1));
-				lastElement.children("td").attr("class","file"+i+"_cont");
-
-				lastElement.find("input[type='file']").attr("name","files");
-				lastElement.find("input[type='file']").attr("id","file"+i);
-				lastElement.find("input[type='file']").val("");
-
-				lastElement.find("span").attr("id","file"+i+"name");
-				lastElement.find("span").text("선택된 파일 없음");
-
-				lastElement.find("a")[0].href = "javascript:upload('file"+i+"','')";
-				lastElement.find("a")[1].href = "javascript:cancelFile('file"+i+"','선택된 파일 없음')"
-			}
-
-		}
-	})
 
 
-	function cancelProfile(){
-		const fileTag = $(".thumbnail_img_top").find("input[type='file'] img");
-		fileTag.attr("src","@{/trainermypage/thumbnail (sysName='profile_img.png')}");
-	}
+function cancelProfile(name,systemname){
+    updateCnt.val(updateCnt.val()+"\\"+systemname)
+	return;
+}
+
+function profileupload(name,systemname){
+   let temp_no = $("#"+name+"name_no").text();
+    if(temp_no == '선택된 파일 없음'){
+        $("#"+name+"_no").click();
+    }
+    else{
+        updateCnt.val(updateCnt.val()+"\\"+systemname)
+        sysname = systemname;
+        $("#"+name).click();
+    }
+}
+const profile_cont = document.querySelector(".profile_cont");
+$(".profile_cont [type='file']").change(function(e){
+
+    const file = e.target.files[0];
+    const fileTag = e.target;
+alert("file: "+file);
+alert("fileTag.id: "+fileTag.id);
+    if(file == undefined){
+        if(!$(".profile_cont [name='profileOrgname']").val()){
+            //비어있던 곳에 파일이 업로드 되었다가 취소한 경우
+            cancelProfile(fileTag.id);
+
+        }
+        else{
+            let n = profileOrgname.value;
+            let ext = n.split(".").pop();
+            updateCnt.val(updateCnt.val().replaceAll("\\"+sysname,""));
+            $("#"+name+"name").text(n);
+
+            if(ext == 'jpeg' || ext == 'jpg' || ext == 'png' || ext == 'gif' || ext == 'webp'){
+                $(".profile_cont .thumbnail").remove();
+                document.querySelector(".imgBox").appendChild(org_thumbnail[n]);
+
+            }
+            else{
+                if(document.querySelector(".profile_cont .thumbnail")){
+                    $(".profile_cont .thumbnail").remove();
+
+                }
+            }
+            sysname = "";
+        }
+    }
+    else{
+        uploadCheck = true;
+        //파일이 없었다가 업로드 한 경우
+        //#file0name
+        $("#"+fileTag.id+"name_no").text(file.name);
+        //업로드 된 파일의 확장자명
+        let ext = file.name.split(".").pop();
+        if(ext == 'jpeg' || ext == 'jpg' || ext == 'png' || ext == 'gif' || ext == 'webp'){
+
+            const reader = new FileReader();
+            reader.onload = function(ie){
+                const img =  document.querySelector(".profile_cont .thumbnail");
+                img.setAttribute("src",ie.target.result)
+            }
+            reader.readAsDataURL(file);
+        }
+        else{
+            const temp = $(".profile_cont .thumbnail");
+            if(temp != null){
+                temp.remove();
+
+            }
+        }
+
+    }
+})
+
+
 
 </script>
 </body>

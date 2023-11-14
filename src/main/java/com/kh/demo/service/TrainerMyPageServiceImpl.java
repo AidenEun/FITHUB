@@ -320,12 +320,12 @@ public class TrainerMyPageServiceImpl implements TrainerMyPageService {
 
     //내 프로필
     @Override
-    public List<ProfileDTO> getProFileList(String trainerId) {
-        return pfmapper.getProFiles(trainerId);
+    public ProfileDTO getProFileList(String trainerId) {
+        return pfmapper.getProfiles(trainerId,"P");
     }
     @Override
     public List<ProfileDTO> getFileList(String trainerId) {
-        return pfmapper.getFiles(trainerId);
+        return pfmapper.getFiles(trainerId, "C");
     }
 
     @Override
@@ -344,13 +344,17 @@ public class TrainerMyPageServiceImpl implements TrainerMyPageService {
     }
 
     @Override
-    public boolean trainer_modify(TrainerDTO trainer, MultipartFile[] files, String updateCnt) throws IOException {
+    public boolean trainer_modify(TrainerDTO trainer, MultipartFile[] files, MultipartFile profile, String updateCnt) throws IOException {
         int row = tmpmapper.updateTrainer(trainer);
         if (row != 1) {
             return false;
         }
-        List<ProfileDTO> org_file_list = pfmapper.getFiles(trainer.getTrainerId());
-        if(org_file_list.size()==0 && (files == null || files.length == 0)) {
+
+
+
+        List<ProfileDTO> org_file_list = pfmapper.getFiles(trainer.getTrainerId(),"C");
+        List<ProfileDTO> org_profile_list = pfmapper.getFiles(trainer.getTrainerId(),"P");
+        if((org_file_list.size()==0 && (files == null || files.length == 0)) && (org_profile_list.size()==0 && profile == null )) {
             return true;
         }
         else {
@@ -382,6 +386,7 @@ public class TrainerMyPageServiceImpl implements TrainerMyPageService {
                     profdto.setUserId(trainer.getTrainerId());
                     profdto.setSysName(systemname);
                     profdto.setOrgName(orgname);
+                    profdto.setProfileCategory("C");
 
                     //실제 파일 업로드
                     file.transferTo(new File(path));
@@ -402,6 +407,46 @@ public class TrainerMyPageServiceImpl implements TrainerMyPageService {
                         }
                         pfmapper.deleteBySystemname(systemname);
                     }
+                }
+            }
+            if(profile != null) {
+                boolean flag = false;
+                //후에 비즈니스 로직 실패 시 원래대로 복구하기 위해 업로드 성공했던 파일들도 삭제해주어야 한다.
+                //업로드 성공한 파일들의 이름을 해당 리스트에 추가하면서 로직을 진행한다.
+                    String orgname = profile.getOriginalFilename();
+                    //수정의 경우 중간에 있는 파일은 수정이 되지 않은 경우도 있다.
+                    //그런 경우의 file의 orgname은 null 이거나 "" 이다.
+                    //따라서 업로드가 될 필요가 없으므로 continue로 다음 파일로 넘어간다.
+                    int lastIdx = orgname.lastIndexOf(".");
+                    String extension = orgname.substring(lastIdx);
+                    LocalDateTime now = LocalDateTime.now();
+                    String time = now.format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"));
+                    String systemname = time+ UUID.randomUUID().toString()+extension;
+
+                    String path = saveProfileFolder+systemname;
+                    System.out.println("systemname:"+systemname);
+                    System.out.println("orgname:"+orgname);
+
+                    ProfileDTO profdto = new ProfileDTO();
+                    profdto.setUserId(trainer.getTrainerId());
+                    profdto.setSysName(systemname);
+                    profdto.setOrgName(orgname);
+                    profdto.setProfileCategory("P");
+
+                    //실제 파일 업로드
+                    profile.transferTo(new File(path));
+
+                    flag = pfmapper.insertFile(profdto) == 1;
+
+                //강제탈출(실패)
+                if(!flag) {
+                    //아까 추가했던 systemname들(업로드 성공한 파일의 systemname)을 꺼내오면서
+                    //실제 파일이 존재한다면 삭제 진행
+                    File file = new File(saveProfileFolder,systemname);
+                    if(file.exists()) {
+                        file.delete();
+                    }
+                    pfmapper.deleteBySystemname(systemname);
                 }
             }
             //지워져야 할 파일(기존에 있었던 파일들 중 수정된 파일)들의 이름 추출

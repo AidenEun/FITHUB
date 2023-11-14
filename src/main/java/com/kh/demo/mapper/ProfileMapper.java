@@ -1,6 +1,5 @@
 package com.kh.demo.mapper;
 
-import com.kh.demo.domain.dto.FileDTO;
 import com.kh.demo.domain.dto.ProfileDTO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -10,10 +9,10 @@ import java.util.List;
 public interface ProfileMapper {
 	int insertFile(ProfileDTO profile);
 	
-	List<ProfileDTO> getProFiles(String trainerId);
 
+	List<ProfileDTO> getFiles(String trainerId, String profileCategory);
 
-	List<ProfileDTO> getFiles(String trainerId);
+	ProfileDTO getProfiles(String trainerId, String profileCategory);
 
 
 	
@@ -25,4 +24,5 @@ public interface ProfileMapper {
 	ProfileDTO getProfileInfo(String trainerId);
 
     ProfileDTO getCareerInfo(String trainerId);
+
 }
