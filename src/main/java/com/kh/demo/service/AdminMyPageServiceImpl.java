@@ -254,32 +254,32 @@ public class AdminMyPageServiceImpl implements AdminMyPageService {
             }
         }
         switch (reportDTO.getBoardCategory()) {
-            case "tip" -> {
+            case "infoTip" -> {
                 String newBoardCategory = "꿀팁";
 
                 reportDTO.setBoardCategory(newBoardCategory);
             }
-            case "comFree" -> {
+            case "commuFree" -> {
                 String newBoardCategory = "커뮤니티-자유";
 
                 reportDTO.setBoardCategory(newBoardCategory);
             }
-            case "comExer" -> {
+            case "commuExer" -> {
                 String newBoardCategory = "커뮤니티-운동";
 
                 reportDTO.setBoardCategory(newBoardCategory);
             }
-            case "comFood" -> {
+            case "commuFood" -> {
                 String newBoardCategory = "커뮤니티-식단";
 
                 reportDTO.setBoardCategory(newBoardCategory);
             }
-            case "comPhoto" -> {
+            case "commuGallery" -> {
                 String newBoardCategory = "커뮤니티-갤러리";
 
                 reportDTO.setBoardCategory(newBoardCategory);
             }
-            case "comQna" -> {
+            case "commuQna" -> {
                 String newBoardCategory = "커뮤니티-고민QnA";
 
                 reportDTO.setBoardCategory(newBoardCategory);

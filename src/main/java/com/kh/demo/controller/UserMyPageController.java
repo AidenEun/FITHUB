@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.kh.demo.domain.dto.*;
 import com.kh.demo.service.*;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -13,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,11 +39,30 @@ public class UserMyPageController {
 
 
     @GetMapping("user_myinfo")
-    public void user_myinfo(HttpServletRequest req, Model model) {
+    public String user_myinfo(HttpServletRequest req, HttpServletResponse response, Model model) throws IOException {
         HttpSession session = req.getSession();
         String loginUser = (String) session.getAttribute("loginUser");
-        UserDTO user = service.getUserDetail(loginUser);
-        model.addAttribute("user", user);
+
+        String alertScript = "<script>alert('유저만 접근 가능한 페이지입니다!!!');window.location.replace(\"/\");</script>";
+        String alertScript2 = "<script>alert('로그인 후 이용 가능합니다!!');window.location.replace(\"/user/login\");</script>";
+
+        if(loginUser != null){
+            UserDTO user = service.getUserDetail(loginUser);
+            if (user == null) {
+                response.setCharacterEncoding("UTF-8");
+                response.setContentType("text/html; charset=UTF-8");
+                response.getWriter().write(alertScript);
+                response.getWriter().flush();
+            }
+            model.addAttribute("user", user);
+            return "/usermypage/user_myinfo";
+        }
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html; charset=UTF-8");
+        response.getWriter().write(alertScript2);
+        response.getWriter().flush();
+
+        return null;
     }
 
 

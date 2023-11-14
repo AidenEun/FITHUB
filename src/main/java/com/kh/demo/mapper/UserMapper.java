@@ -1,6 +1,7 @@
 package com.kh.demo.mapper;
 
 
+import com.kh.demo.domain.dto.AdminDTO;
 import com.kh.demo.domain.dto.Criteria;
 import com.kh.demo.domain.dto.BoardDTO;
 import com.kh.demo.domain.dto.UserDTO;
@@ -17,4 +18,7 @@ public interface UserMapper {
 	List<UserDTO> getSignUpListInUser(Criteria cri);
 
 	int updateUser(UserDTO user);
+
+	AdminDTO findAdminById(String userId);
+
 }

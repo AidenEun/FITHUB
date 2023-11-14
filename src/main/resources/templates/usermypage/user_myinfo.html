@@ -4,7 +4,7 @@
 	pixelarity.com | hello@pixelarity.com
 	License: pixelarity.com/license
 -->
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<title>Fit Hub</title>
 	<meta charset="utf-8" />
@@ -12,7 +12,6 @@
 	<noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
 	<link rel="stylesheet" th:href="@{/assets/css/index.css}" />
 	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
-
 </head>
 <style>
 
@@ -107,6 +106,11 @@
 
 <!-- Header -->
 <th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin})}"></th:block>
+
+<script th:if="${#strings.isEmpty(session.user)}">
+	alert("유저만 접근 가능합니다!!!");
+    location.replace("/");
+</script>
 
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">

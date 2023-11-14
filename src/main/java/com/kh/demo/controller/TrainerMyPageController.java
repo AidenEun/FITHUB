@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.kh.demo.domain.dto.*;
 import com.kh.demo.service.TrainerMyPageService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -261,11 +262,30 @@ public class TrainerMyPageController {
 
 
     @GetMapping("trainer_modify")
-    public void trainer_modify(HttpServletRequest req, Model model) {
+    public String trainer_modify(HttpServletRequest req, HttpServletResponse response, Model model) throws IOException {
         HttpSession session = req.getSession();
         String loginUser = (String) session.getAttribute("loginUser");
-        TrainerDTO user = service.getUserDetail(loginUser);
-        model.addAttribute("user", user);
+
+        String alertScript = "<script>alert('트레이너만 접근 가능한 페이지입니다!!!');window.location.replace(\"/\");</script>";
+        String alertScript2 = "<script>alert('로그인 후 이용 가능합니다!!');window.location.replace(\"/user/login\");</script>";
+
+        if(loginUser != null){
+            TrainerDTO user = service.getUserDetail(loginUser);
+            if (user == null) {
+                response.setCharacterEncoding("UTF-8");
+                response.setContentType("text/html; charset=UTF-8");
+                response.getWriter().write(alertScript);
+                response.getWriter().flush();
+            }
+            model.addAttribute("user", user);
+            return "/trainermypage/trainer_modify";
+        }
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html; charset=UTF-8");
+        response.getWriter().write(alertScript2);
+        response.getWriter().flush();
+
+        return null;
     }
 
     @GetMapping("trainer_myinfo_modify")
