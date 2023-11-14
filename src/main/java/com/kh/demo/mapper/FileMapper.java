@@ -8,10 +8,10 @@ import java.util.List;
 @Mapper
 public interface FileMapper {
 	int insertFile(FileDTO file);
-	
+
 	List<FileDTO> getFiles(Long boardNum, String boardCategory);
 
 	int deleteBySystemname(String sysName);
-	
+
 	int deleteByBoardnum(Long boardNum);
 }

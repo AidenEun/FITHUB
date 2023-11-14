@@ -6,7 +6,7 @@
 -->
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>Untitled</title>
+	<title>Fit Hub</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<link rel="stylesheet" href="/assets/css/infoBoard.css" />
@@ -32,26 +32,24 @@
 			border-radius: 10px;
 			background-color: transparent;
 		}
-		.board_area > th {
+		.board_area th {
 			text-align: center;
 			vertical-align: middle;
-			width: 30% !important;
+			width: 90px !important;
 
 		}
-		.board_area tr > td{
-			width: 70% !important;
+		.board_area tr td{
+			width: 100% !important;
+			border-color: transparent;
+		}
+		.board_area tr > td > input, textarea{
 			border-color: transparent;
 		}
 
 		table tbody tr:nth-child(2n + 1) {
 			background-color: transparent;
 		}
-		.button_table {
-			vertical-align: middle;
-			border: none;
-			height: 2em;
-			line-height: 2em;
-		}
+
 		.button_table tr > td{
 			border: none;
 		}
@@ -63,14 +61,70 @@
 			padding: 0;
 			border-radius: 10px;
 			height: 30px;
-			width: 85px;
+			width: 60px;
 			vertical-align: middle;
+			background-color: #5a8100;
+			color: white !important;
+			line-height: 30px;
+			box-shadow: none;
 		}
 		.button > a{
 			display: block;
 			width: 100%;
-			line-height: 100%;
+			line-height: 30px;
 			text-align: center;
+			color: white;
+		}
+		.button:hover {
+			background-color: rgb(203,211,177);
+		}
+		.replyForm input{
+			border: none;
+			background-color: #5a8100;
+			color: white;
+			border-radius: 20px;
+			height: 35px;
+			width: 100%;
+		}
+		.replyForm textarea{
+			background-color: rgb(240,229,215);
+			border-radius: 15px;
+		}
+
+		.replies ul{
+			padding: 0px;
+		}
+		.replies li{
+			padding: 10px 15px;
+			background-color: rgb(203,211,177);
+			border-radius: 10px;
+			margin-top: 20px;
+		}
+		.replies li a{
+			margin-left: 9px;
+			font-size: 14px;
+		}
+		.nowPage {
+			background: #5a8100;
+			border-color: #5a8100 !important;
+			border-radius: 100%;
+			border: solid 1.5px;
+			margin: 0 0.25em;
+			padding: 0.25em 0.55em;
+			color: white;
+			font-size: 13px;
+			font-weight: 700 !important;
+		}
+		.changePage code {
+			background: rgb(203,211,177);
+			border-color: rgb(203,211,177) !important;
+			border-radius: 100%;
+			border: solid 1.5px;
+			margin: 0 0.25em;
+			padding: 0.25em 0.55em;
+			color: white;
+			font-size: 13px;
+			font-weight: 700 !important;
 		}
 	</style>
 </head>
@@ -78,8 +132,7 @@
 
 <!-- Header -->
 <!--	<th:block th:replace="~{layout/header::header(${session.loginUser})}"></th:block>-->
-<!--<th:block th:replace="~{layout/headerNoneModal::header(${session.loginUser},${session.user})}"></th:block>-->
-<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin})}"></th:block>
+<th:block th:replace="~{layout/headerNoneModal::header(${session.loginUser},${session.user},${session.trainer},${session.admin})}"></th:block>
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">
 	<div class="inner">
@@ -91,8 +144,7 @@
 		<!-- Content -->
 		<div class="content">
 			<div class="cotent_header">
-				<!--					<h2>[[${board.boardCategory}]]</h2>-->
-				<span th:switch="${board.boardCategory}">
+					<span th:switch="${board.boardCategory}">
 						<span th:case="'infoNews'"><h2>뉴스</h2></span>
 						<span th:case="'infoFood'"><h2>식단</h2></span>
 						<span th:case="'infoExer'"><h2>운동</h2></span>
@@ -129,7 +181,7 @@
 									</textarea>
 							</td>
 						</tr>
-						<th:block th:if="${files != null and files.size() > 0}" th:each="file : ${files}">
+						<th:block th:if="${files2 != null and files2.size() > 0}" th:each="file : ${files2}">
 							<th:block th:with="sar=${file.orgName.split('[.]')}">
 								<tr>
 									<th>첨부파일[[${fileStat.index+1}]]</th>
@@ -147,25 +199,25 @@
 								</th:block>
 							</th:block>
 						</th:block>
-						<th:block th:unless="${files != null and files.size() > 0}">
+						<th:block th:unless="${files2 != null and files2.size() > 0}">
 							<tr>
 								<td colspan="2" style="text-align: center; font-size: 14px;">첨부 파일이 없습니다.</td>
 							</tr>
 						</th:block>
 					</table>
 				</form>
-				<table class="btn_area">
+				<table class="btn_area" style="width: 100%">
 					<tr align="right" valign="middle">
 						<td>
 							<th:block th:if="${board.userId == session.loginUser}">
 								<form name="boardForm" method="post" th:action="@{/info/remove}">
-									<input name="boardnum" th:value="${board.boardNum}" type="hidden">
+									<input name="boardNum" th:value="${board.boardNum}" type="hidden">
 									<input name="pagenum" th:value="${cri.pagenum}" type="hidden">
 									<input name="amount" th:value="${cri.amount}" type="hidden">
 									<input name="type" th:value="${cri.type}" type="hidden">
 									<input name="keyword" th:value="${cri.keyword}" type="hidden">
-									<a href="javascript:modify()">수정</a>
-									<a href="javascript:document.boardForm.submit()">삭제</a>
+									<a class="button" href="javascript:modify()">수정</a>
+									<a class="button" href="javascript:document.boardForm.submit()">삭제</a>
 								</form>
 							</th:block>
 							<div class="button"><a th:href="${'/info/info_list'+cri.listLink}">목록</a></div>
@@ -180,19 +232,19 @@
 					<div class="replyForm row" style="font-size: 14px;">
 						<div style="width:20%">
 							<b>작성자</b>
-							<input type="text" name="userId" th:value="${session.loginUser}" readonly style="text-align: center;">
+							<input type="text" name="userId" th:value="${session.loginUser}" readonly style="text-align: center; margin-top: 10px;">
 						</div>
 						<div style="width:65%">
 							<b>내 용</b>
-							<textarea name="replycontents" placeholder="Contents" style="resize:none;"></textarea>
+							<textarea name="replyContent" placeholder="댓글을 입력해주세요." style="resize:none; margin-top: 10px;"></textarea>
 						</div>
-						<div style="width:15%">
-							<a href="#" class="button finish" style="margin-bottom:1rem;">등록</a>
+						<div style="width:15%; margin-top: 10px;">
+							<a href="#" class="button finish" style="margin-top:25px; margin-bottom:1rem;">등록</a>
 							<a href="#" class="button cancel">취소</a>
 						</div>
 					</div>
 					<ul class="replies"></ul>
-					<div class="page"></div>
+					<div class="page" style="margin: 0 auto; text-align: center; clear: both;"></div>
 				</div>
 			</div>
 		</div>
@@ -238,7 +290,8 @@
 <script th:src="@{/assets/js/reply.js}"></script>
 <script th:inline="javascript">
 	const loginUser = /*[[${session.loginUser}]]*/'';
-	const boardnum = /*[[${board.boardNum}]]*/'';
+	const boardNum = /*[[${board.boardNum}]]*/'';
+	const boardCategory = /*[[${board.boardCategory}]]*/'';
 	const replies = $(".replies")
 	const page = $(".page")
 	let nowpage = 0;
@@ -256,10 +309,10 @@
 	})
 	$(".finish").on("click",function(e){
 		e.preventDefault();
-		let replycontents = $("[name='replycontents']").val();
+		let replyContent = $("[name='replyContent']").val();
 
 		replyService.add(
-				{"boardnum":boardnum,"userid":loginUser, "replycontents":replycontents},
+				{"boardNum":boardNum,"boardCategory":boardCategory,"userId":loginUser, "replyContent":replyContent},
 				function(result){
 					alert("등록!");
 					showList(1);
@@ -271,7 +324,7 @@
 
 	function showList(pagenum){
 		replyService.getList(
-				{boardnum:boardnum, pagenum:pagenum||1},
+				{boardNum:boardNum, pagenum:pagenum||1},
 				function(replyCnt, list){
 					let str = "";
 					if(list == null || list.length == 0){
@@ -282,21 +335,21 @@
 
 					for(let i=0;i<list.length;i++){
 						//<li style="clear:both;" class="li3">
-						str += '<li style="clear:both;" class="li'+list[i].replynum+'">';
-						str += '<div style="display:inline; float:left; width:80%;">';
+						str += '<li style="clear:both;" class="li'+list[i].replyNum+'"><div>';
+						str += '<div style="display:inline; float:left; width:75%;">';
 						//<strong class="userid3">apple</strong>
-						str += '<strong class="userid'+list[i].replynum+'">'+list[i].userid+'</strong>';
+						str += '<strong class="userId'+list[i].replyNum+'">'+list[i].userId+'</strong>';
 						//<p class="reply3">댓글내용</p>
-						str += '<p class="reply'+list[i].replynum+'">'+list[i].replycontents+'</p>';
+						str += '<p class="reply'+list[i].replyNum+'">'+list[i].replyContent+'</p>';
 						str += '</div><div style="text-align:right;">'
 						str += '<strong>'+replyService.displayTime(list[i])+'</strong>'
-						if(list[i].userid == loginUser){
+						if(list[i].userId == loginUser){
 							//<a href="3" class="modify">수정</a>
-							str += '<a href="'+list[i].replynum+'" class="modify">수정</a>';
-							str += '<a href="'+list[i].replynum+'" class="mfinish" style="display:none;">수정 완료</a>';
-							str += '<a href="'+list[i].replynum+'" class="remove">삭제</a>';
+							str += '<a href="'+list[i].replyNum+'" class="modify">수정</a>';
+							str += '<a href="'+list[i].replyNum+'" class="mfinish" style="display:none;">수정하기</a>';
+							str += '<a href="'+list[i].replyNum+'" class="remove">삭제</a>';
 						}
-						str += '</div></li>';
+						str += '</div></div></li>';
 					}
 					replies.html(str);
 
@@ -351,12 +404,12 @@
 
 	function deleteReply(e){
 		e.preventDefault();
-		let replynum = $(this).attr("href");
+		let replyNum = $(this).attr("href");
 		replyService.remove(
-				replynum,
+				replyNum,
 				function(result){
 					if(result == "success"){
-						alert(replynum+"번 댓글 삭제 완료!");
+						alert("댓글 삭제 완료!");
 						showList(nowpage);
 					}
 				}
@@ -367,33 +420,33 @@
 		e.preventDefault();
 		if(!replyFlag){
 			replyFlag = true;
-			let replynum = $(this).attr("href");
-			const replyTag = $(".reply"+replynum);
+			let replyNum = $(this).attr("href");
+			const replyTag = $(".reply"+replyNum);
 			//<textarea class="3 mdf">댓글내용</textarea>
-			replyTag.html('<textarea class="'+replynum+' mdf">'+replyTag.text()+'</textarea>')
+			replyTag.html('<textarea class="'+replyNum+' mdf">'+replyTag.text()+'</textarea>')
 			$(this).hide();
 			$(this).next().show();
 		}
 		else{
-			alert("수정중인 댓글이 있습니다!");
+			alert("수정중인 댓글이 있습니다.");
 		}
 	}
 	function modifyReplyOk(e){
 		e.preventDefault();
 		replyFlag = false;
 
-		let replynum = $(this).attr("href");
-		let replycontents = $("."+replynum).val();
+		let replyNum = $(this).attr("href");
+		let replyContent = $("."+replyNum).val();
 
-		if(replycontents == ""){
-			alert("수정할 댓글 내용을 입력하세요!");
+		if(replyContent == ""){
+			alert("수정할 댓글 내용을 입력하세요");
 			return;
 		}
 		replyService.modify(
-				{replynum:replynum, replycontents:replycontents, boardnum:boardnum, userid:loginUser},
+				{replyNum:replyNum, replyContent:replyContent, boardNum:boardNum, userId:loginUser},
 				function(result){
 					if(result == "success"){
-						alert(replynum+"번 댓글 수정 완료!");
+						alert("댓글 수정 완료!");
 						showList(nowpage);
 					}
 				}
@@ -412,7 +465,7 @@
 		e.preventDefault();
 		$(".replyForm").hide();
 		$(".regist").show();
-		$("[name='replycontents']").val("");
+		$("[name='replyContent']").val("");
 	})
 </script>
 </html>

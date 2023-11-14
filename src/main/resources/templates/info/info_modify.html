@@ -4,7 +4,7 @@
 	pixelarity.com | hello@pixelarity.com
 	License: pixelarity.com/license
 -->
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko"  xmlns:th="http://www.thymeleaf.org">
 <head>
 	<title>Fit Hub</title>
 	<meta charset="utf-8" />
@@ -30,20 +30,17 @@
 		}
 		.info_category > .button{
 			border-radius: 10px;
-			height: 33px;
-			line-height: 33px;
-			background-color: rgb(203,211,177);
-			color: #5a8100 !important;
-			box-shadow: inset 0 0 0 1.5px #5a8100;
+			height: 2.5em;
+			line-height: 2.5em;
 		}
 		.info_category .active {
 			background-color: #5a8100; /* 변경할 배경색 */
 			color: white !important; /* 변경할 텍스트색 */
 		}
-		.write_table th {
+		.write_table > th {
 			text-align: center;
 			vertical-align: middle;
-			width: 90px;
+			width: 60px;
 		}
 		a {
 			border-bottom:none;
@@ -54,7 +51,7 @@
 		}
 
 		table {
-			border: 1.5px solid #5a8100;
+			border: 1.5px solid black;
 			border-radius: 10px;
 			background-color: transparent;
 		}
@@ -70,31 +67,18 @@
 		.button_table tr > td{
 			border: none;
 		}
-		.button_table tr > td > .button{
-			border: 1.5px solid #5a8100;
+		.button_table tr > td > button{
+			border: 0.8px solid black;
 			border-radius: 10px;
-			height: 35px;
-			line-height: 35px;
-			background-color: rgb(203,211,177);
-			color: #5a8100 !important;
-			box-shadow: none;
 		}
-		.button_table tr > td > .button:hover{
-			background-color: #5a8100;
-			color: white !important;
-		}
-		.at .button{
+		.file0_cont button{
 			padding: 0;
 			border-radius: 10px;
 			height: 30px;
 			width: 85px;
 			vertical-align: middle;
-			line-height: 30px;
-			background-color: rgb(203,211,177);
-			color: #5a8100 !important;
-			box-shadow: none;
 		}
-		.at > a{
+		.file0_cont button > a{
 			display: block;
 			width: 100%;
 			line-height: 100%;
@@ -123,7 +107,7 @@
 		<div class="content">
 			<div class="cotent_header"><h2>작성하기</h2></div>
 
-			<form id="boardForm" method="post" name="boardForm" th:action="@{/info/info_write}" enctype="multipart/form-data">
+			<form id="boardForm" method="post" name="boardForm" th:action="@{/info/info_modify}" enctype="multipart/form-data">
 				<!-- 날아온 네개의 파라미터를 받아 놓음 -->
 				<input type="hidden" th:value="${cri.pagenum}" name="pagenum">
 				<input type="hidden" th:value="${cri.amount}" name="amount">
@@ -161,29 +145,68 @@
 							<textarea id="summernote" name="boardContent" style="width:100%;height:350px;resize:none;" ></textarea>
 						</td>
 					</tr>
+					<tr th:class="${'r'+fileStat.index}" th:if="${files != null and files.size() > 0}" th:each="file : ${files}">
+						<th>파일 첨부[[${fileStat.index+1}]]</th>
+						<td th:class="${'file'+fileStat.index+'_cont'}">
+							<div style="float:left;">
+								<input type="file" name="files" th:id="${'file'+fileStat.index}" style="display:none">
+								<span th:id="${'file'+fileStat.index+'name'}" th:text="${file.orgname}"></span>
+							</div>
+							<div style="float:right; margin-right: 100px;">
+								<!-- <a href="javascript:upload('file5','DateTIMEUUID.png')"> -->
+								<a th:href="'javascript:upload(\'file'+${fileStat.index}+'\',\''+${file.systemname}+'\')'">파일 선택</a>
+								<a th:href="'javascript:cancelFile(\'file'+${fileStat.index}+'\',\''+${file.systemname}+'\')'">첨부 삭제</a>
+							</div>
+							<input type="hidden" name="orgname" th:value="${file.orgname}">
+							<th:block th:with="sar=${file.orgname.split('[.]')}">
+								<th:block th:with="ext=${sar[sar.length-1]}">
+									<img th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}" th:src="@{/board/thumbnail (systemname=${file.systemname})}" class="thumbnail">
+								</th:block>
+							</th:block>
+						</td>
+					</tr>
+					<tr th:class="${'r'+files.size()}">
+						<th>파일 첨부[[${files.size()+1}]]</th>
+						<td th:class="${'file'+files.size()+'_cont'}">
+							<div style="float:left;">
+								<input type="file" name="files" th:id="${'file'+files.size()}" style="display:none">
+								<span th:id="${'file'+files.size()+'name'}">선택된 파일 없음</span>
+							</div>
+							<div style="float:right; margin-right: 100px;">
+								<!-- <a href="javascript:upload('file9','')"> -->
+								<a th:href="'javascript:upload(\'file'+${files.size()}+'\',\'\')'">파일 선택</a>
+								<!-- <a href="javascript:cancelFile('file9','')"> -->
+								<a th:href="'javascript:cancelFile(\'file'+${files.size()}+'\',\'\')'">첨부 삭제</a>
+							</div>
+						</td>
+					</tr>
+					<input type="hidden" value="" name="updateCnt" id="updateCnt">
+
+
+					<!--
 					<tr class="r0 at">
 						<th style="vertical-align: middle">파일 첨부1</th>
 						<td class="file0_cont">
 							<div style="float:left;">
-								<input type="file" name="files2" id="file0" style="display:none">
+								<input type="file" name="files" id="file0" style="display:none">
 								<span id="file0name">선택된 파일 없음</span>
 							</div>
 							<div style="float:right;">
-								<a class="button" href="javascript:upload('file0')">파일 선택</a>
-								<a class="button" href="javascript:cancelFile('file0')">첨부 삭제</a>
+								<button><a href="javascript:upload('file0')">파일 선택</a></button>
+								<button><a href="javascript:cancelFile('file0')">첨부 삭제</a></button>
 							</div>
 						</td>
-					</tr>
+					</tr> -->
 				</table>
 			</form>
 			<!-- 등록, 목록 버튼 테이블 -->
 			<table class="button_table">
-				<tr align="center" valign="middle">
+				<tr align="right" valign="middle">
 					<td>
-						<a class="button" href="javascript:sendit()">등록</a> <!-- javascript의 sendit 함수 호출 -->
+						<button><a href="javascript:document.boardForm.submit()">수정</a></button> <!-- javascript의 sendit 함수 호출 -->
 					</td>
 					<td>
-						<a class="button" th:href="${'/info/info_list'+cri.listLink}">취소</a> <!-- cri.listLink를 붙여 목록으로 돌아가기 -->
+						<button><a th:href="${'/info/info_list'+cri.listLink}">목록</a></button> <!-- cri.listLink를 붙여 목록으로 돌아가기 -->
 					</td>
 				</tr>
 			</table>
@@ -259,23 +282,98 @@
 	});
 </script>
 <script>
-	let i = 0;
-	function upload(name){
-		$("#"+name).click();
+	let i = /*[[${files.size()}]]*/'';
+	let orgSize = i;
+
+	let updateCheck = false;
+	let uploadCheck = false;
+	const updateCnt = $("#updateCnt");
+
+	let num = 0;
+
+	const orgname = document.getElementsByName("orgname");
+	const org_thumbnail = {};
+	for(let j=0;j<orgname.length;j++){
+		org_thumbnail[orgname[j].value] = document.querySelector(".file"+j+"_cont .thumbnail")
 	}
-	//$(선택자).change(함수) : 해당 선택자의 요소에 변화가 일어난다면 넘겨주는 함수 호출
+	let sysname = "";
+	console.log(orgname);
+	console.log(org_thumbnail);
+	function cancelFile(name,systemname){
+		updateCnt.val(updateCnt.val()+"\\"+systemname)
+		let num = name.split("e")[1];
+		if(num == i){
+			return;
+		}
+		if(i != 0){
+			//tr지우기
+			let temp = Number(name.split("e")[1]);
+			//해당 행 지우기
+			$(".r"+temp).remove();
+			//지워진 다음 행 부터 숫자 바꿔주기
+			for(let j=temp+1;j<=i;j++){
+				const el = $("#boardForm tbody").find(".r"+j);
+				el.attr("class","r"+(j-1)+" at");
+
+				el.children('th').text("파일 첨부"+j);
+
+				el.children('td').attr("class","file"+(j-1)+"_cont");
+
+				const fileTag = el.find("input[type='file']");
+				fileTag.attr("name","files");
+				fileTag.attr("id","file"+(j-1));
+
+				el.find("span").attr("id","file"+(j-1)+"name");
+
+				el.find("a")[0].href = "javascript:upload('file"+(j-1)+"')"
+				//el.find("a")[1].href = "javascript:cancelFile('file"+(j-1)+"','"+el.find("span").text()+"')"
+				el.find("a")[1].href = decodeURI(el.find("a")[1].href.replace("'file"+j+"'","'file"+(j-1)+"'"));
+
+			}
+			i--;
+		}
+	}
+	function upload(name,systemname){
+		let temp = $("#"+name+"name").text();
+		num = Number(name.split("e")[1]);
+		if(temp == '선택된 파일 없음'){
+			$("#"+name).click();
+		}
+		else{
+			updateCnt.val(updateCnt.val()+"\\"+systemname)
+			sysname = systemname;
+			$("#"+name).click();
+		}
+	}
 	$("[type='file']").change(function(e){
-		//e : 파일이 업로드된 상황 자체를 담고있는 객체
-		//e.target : 파일이 업로드가 된 input[type=file] 객체(태그객체)
-		//e.target.files : 파일태그에 업로드를 한 파일 객체들의 배열
 		const file = e.target.files[0];
 		const fileTag = e.target;
 
 		if(file == undefined){
-			//파일이 업로드 되었다가 없어진 경우
-			cancelFile(fileTag.id);
+			if(!$("."+fileTag.id+"_cont [name='orgname']").val()){
+				//비어있던 곳에 파일이 업로드 되었다가 취소한 경우
+				cancelFile(fileTag.id);
+			}
+			else{
+				let n = orgname[num].value;
+				let ext = n.split(".").pop();
+				updateCnt.val(updateCnt.val().replaceAll("\\"+sysname,""));
+				console.log(num);
+				$("#file"+num+"name").text(n);
+				if(ext == 'jpeg' || ext == 'jpg' || ext == 'png' || ext == 'gif' || ext == 'webp'){
+					$("."+fileTag.id+"_cont .thumbnail").remove();
+					document.querySelector("."+fileTag.id+"_cont").appendChild(org_thumbnail[n]);
+				}
+				else{
+					if(document.querySelector("."+fileTag.id+"_cont .thumbnail")){
+						$("."+fileTag.id+"_cont .thumbnail").remove();
+					}
+				}
+				sysname = "";
+			}
 		}
 		else{
+			uploadCheck = true;
 			//파일이 없었다가 업로드 한 경우
 			//#file0name
 			$("#"+fileTag.id+"name").text(file.name);
@@ -300,7 +398,7 @@
 				}
 			}
 			//가장 마지막 파일 선택 버튼을 눌렀을 때
-			if(fileTag.id.split("e")[1] == i){
+			if(num == i){
 				const cloneElement = $(".r"+i).clone(true);
 				i++;
 				cloneElement.appendTo("#boardForm tbody")
@@ -310,52 +408,19 @@
 				lastElement.children("th").text("파일 첨부"+(i+1));
 				lastElement.children("td").attr("class","file"+i+"_cont");
 
-				lastElement.find("input[type='file']").attr("name","files2");
+				lastElement.find("input[type='file']").attr("name","files");
 				lastElement.find("input[type='file']").attr("id","file"+i);
 				lastElement.find("input[type='file']").val("");
 
 				lastElement.find("span").attr("id","file"+i+"name");
 				lastElement.find("span").text("선택된 파일 없음");
 
-				lastElement.find("a")[0].href = "javascript:upload('file"+i+"')";
-				lastElement.find("a")[1].href = "javascript:cancelFile('file"+i+"')"
+				lastElement.find("a")[0].href = "javascript:upload('file"+i+"','')";
+				lastElement.find("a")[1].href = "javascript:cancelFile('file"+i+"','선택된 파일 없음')"
 			}
 
 		}
 	})
-
-	function cancelFile(name){
-		//가장 마지막 첨부 삭제 버튼을 누른 경우
-		if(name.split("e")[1] == i){ return; }
-		//현재 업로드된 파일이 여러개일 때
-		if(i != 0){
-			//tr지우기
-			let temp = Number(name.split("e")[1]);
-			//해당 행 지우기
-			$(".r"+temp).remove();
-			//지워진 다음 행 부터 숫자 바꿔주기
-			for(let j=temp+1;j<=i;j++){
-				const el = $("#boardForm tbody").find(".r"+j);
-				el.attr("class","r"+(j-1)+" at");
-
-				el.children('th').text("파일 첨부"+j);
-
-				el.children('td').attr("class","file"+(j-1)+"_cont");
-
-				const fileTag = el.find("input[type='file']");
-				fileTag.attr("name","file"+(j-1));
-				fileTag.attr("id","file"+(j-1));
-
-				el.find("span").attr("id","file"+(j-1)+"name");
-
-				el.find("a")[0].href = "javascript:upload('file"+(j-1)+"')"
-				el.find("a")[1].href = "javascript:cancelFile('file"+(j-1)+"')"
-
-			}
-			i--;
-		}
-	}
-
 	function selectCategory(boardCategory) {
 		var selectedButton = document.querySelector('.button.active');
 
@@ -376,30 +441,5 @@
 		document.boardForm.boardCategory.value = boardCategory;
 	}
 
-	function sendit(){
-		const boardForm = document.boardForm;
-		const boardCategory = boardForm.boardCategory;
-		if(boardCategory.value === ""){
-			alert("카테고리를 선택하세요!");
-			boardCategory.focus();
-			return false;
-		}
-
-		const boardTitle = boardForm.boardTitle;
-		if(boardTitle.value === ""){
-			alert("제목을 입력하세요!");
-			boardTitle.focus();
-			return false;
-		}
-
-		const boardContent = boardForm.boardContent;
-		if(boardContent.value === ""){
-			alert("내용을 입력하세요!");
-			boardContent.focus();
-			return false;
-		}
-
-		boardForm.submit();
-	}
-</script>
+	</script>
 </html>

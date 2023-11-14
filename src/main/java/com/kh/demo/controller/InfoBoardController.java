@@ -98,11 +98,12 @@ public class InfoBoardController {
     }
 
     @PostMapping("info_write")
-    public String info_write(BoardDTO board, MultipartFile[] files, Criteria cri) throws Exception{
-        Long boardnum = 0l;	//long 타입의 0(0+l)
-        if(service.regist(board, files)) {
-            boardnum = service.getLastNum(board.getUserId());
-            return "redirect:/info/info_get"+cri.getListLink()+"&boardnum="+boardnum;
+    public String info_write(BoardDTO board, MultipartFile[] files, MultipartFile[] files2, Criteria cri) throws Exception{
+
+        Long boardNum = 0l;	//long 타입의 0(0+l)
+        if(service.regist(board, files, files2)) {
+            boardNum = service.getLastNum(board.getUserId());
+            return "redirect:/info/info_get"+cri.getListLink()+"&boardNum="+boardNum;
         } //성공시 게시글 보는 페이지로 이동(info_get.html)
         else {
             return "redirect:/info/info_list"+cri.getListLink();
@@ -110,12 +111,12 @@ public class InfoBoardController {
     }
 
     @GetMapping(value = {"info_get","info_modify"})
-    public String get(String boardCategory,Criteria cri, Long boardNum, HttpServletRequest req, HttpServletResponse resp, Model model) {
+    public String get(String boardCategory, Criteria cri, Long boardNum, HttpServletRequest req, HttpServletResponse resp, Model model) {
         model.addAttribute("cri",cri);
         HttpSession session = req.getSession();
         BoardDTO board = service.getDetail(boardNum);
         model.addAttribute("board",board);
-        model.addAttribute("files",service.getFileList(boardNum, boardCategory));
+        model.addAttribute("files2",service.getFileList(boardNum, boardCategory));
         String loginUser = (String)session.getAttribute("loginUser");
         String requestURI = req.getRequestURI();
         if(requestURI.contains("/info_get")) {
@@ -146,6 +147,33 @@ public class InfoBoardController {
             }
         }
         return requestURI;
+    }
+
+    @PostMapping("info_modify")
+    public String info_modify(String boardCategory, BoardDTO board, MultipartFile[] files, MultipartFile[] files2, String updateCnt, Criteria cri, Model model) throws Exception {
+        if(files != null){
+            for (int i = 0; i < files.length; i++) {
+                System.out.println("controller : "+files[i].getOriginalFilename());
+            }
+        }
+        System.out.println("controller : "+updateCnt);
+        if(service.modify(board, files, files2, updateCnt, boardCategory)) {
+            return "redirect:/info/info_get"+cri.getListLink()+"&boardNum="+board.getBoardNum();
+        }
+        else {
+            return "redirect:/info/info_list"+cri.getListLink();
+        }
+    }
+    @PostMapping("remove")
+    public String remove(String boardCategory, Long boardnum, Criteria cri, HttpServletRequest req) {
+        HttpSession session = req.getSession();
+        String loginUser = (String)session.getAttribute("loginUser");
+        if(service.remove(loginUser, boardnum, boardCategory)) {
+            return "redirect:/info/info_list"+cri.getListLink();
+        }
+        else {
+            return "redirect:/info/info_get"+cri.getListLink()+"&boardNum="+boardnum;
+        }
     }
 
     @GetMapping("thumbnail")

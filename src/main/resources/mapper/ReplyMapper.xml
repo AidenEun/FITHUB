@@ -1,37 +1,37 @@
 <!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kh.demo.mapper.ReplyMapper">
 	<insert id="insertReply">
-		insert into reply(reply_content, user_id, board_num)
-		values(#{replyContent},#{userId},#{boardNum})
+		insert into reply(board_category, reply_content, user_id, board_num)
+		values(#{boardCategory},#{replyContent},#{userId},#{boardNum})
 	</insert>
-	
+
 	<update id="updateReply">
 		update reply set reply_content=#{replyContent}, update_date=now()
 		where reply_num=#{replyNum}
 	</update>
-	
+
 	<delete id="deleteReply">
 		delete from reply where reply_num=#{replyNum}
 	</delete>
 	<delete id="deleteByBoardnum">
 		delete from reply where board_num=#{boardNum}
 	</delete>
-	
+
 	<select id="getTotal">
 		select count(*) from reply where board_num=#{boardNum}
 	</select>
 	<select id="getRecentReply">
 		<![CDATA[
-			select count(*) from reply where board_num=#{boardNum} and timestampdiff(HOUR,regdate,now())<1
+		select count(*) from reply where board_num=#{boardNum} and timestampdiff(HOUR,regdate,now())<1
 		]]>
 	</select>
 	<select id="getLastNum">
-		select max(replyNum) from reply where user_id=#{userId}
+		select max(reply_num) from reply where user_id=#{userId}
 	</select>
 	<select id="getList">
 		select * from reply where board_num=#{boardNum}
-		limit #{cri.startrow},#{cri.amount}
+			limit #{cri.startrow},#{cri.amount}
 	</select>
 </mapper>
 
