@@ -1,14 +1,16 @@
 <!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kh.demo.mapper.UserMapper">
 
-	<insert id="insertUser">
-		insert into user (user_id,user_name,user_nickname,user_pw,weight_goal,calories_goal,user_tel,user_mail,user_height,user_gender,user_birth,user_joindate,user_point,user_reportedcnt)
-		values(#{userId},#{userName},#{userNickname},#{userPw},#{weightGoal},#{caloriesGoal},#{userTel},#{userMail},#{userHeight},#{userGender},#{userBirth},#{userJoindate},#{userPoint},#{userReportedcnt})
+	<insert id="insertUser" parameterType="com.kh.demo.domain.dto.UserDTO">
+		INSERT INTO user (user_id, user_name, user_nickname, user_pw, weight_goal, calories_goal, user_tel, user_mail, user_height, user_weight, user_gender, user_birth, user_joindate, user_point, user_reportedcnt, user_category)
+		VALUES (#{userId}, #{userName}, #{userNickname}, #{userPw}, #{weightGoal}, #{caloriesGoal}, #{userTel}, #{userMail}, #{userHeight}, #{userWeight}, #{userGender}, #{userBirth}, #{userJoindate}, #{userPoint}, #{userReportedcnt}, #{userCategory})
 	</insert>
 
-	<select id="findById">
-		select * from user where user_id=#{userId}
+	<select id="findById" resultType="com.kh.demo.domain.dto.UserDTO">
+		SELECT *
+		FROM user
+		WHERE user_id = #{userId}
 	</select>
 
 	<select id="findAdminById">
@@ -23,9 +25,10 @@
 	</select>
 
 	<update id="updateUser">
-		update user set user_nickname=#{userNickname},user_pw=#{userPw}, weight_goal=#{weightGoal}, calories_goal=#{caloriesGoal},
+		UPDATE user
+		SET user_nickname=#{userNickname}, user_pw=#{userPw}, weight_goal=#{weightGoal}, calories_goal=#{caloriesGoal},
 		user_tel=#{userTel}, user_mail=#{userMail}, user_height=#{userHeight}, user_weight=#{userWeight}
-		where user_id=#{userId}
+		WHERE user_id=#{userId}
 	</update>
 
 </mapper>

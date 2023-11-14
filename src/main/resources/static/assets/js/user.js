@@ -3,80 +3,113 @@ let pwTest = [false,false,false,false,false]
 function sendit(){
     const joinForm = document.joinForm;
 
-    const userid = joinForm.userId;
-    if(userid.value == ""){
+    const userId = joinForm.userId;
+    if(userId.value == ""){
         alert("아이디를 입력하세요!")
-        userid.focus();
+        userId.focus();
         return false;
     }
-    if(userid.value.length < 5 || userid.value.length > 12){
+    if(userId.value.length < 5 || userId.value.length > 12){
         alert("아이디는 5자 이상 12자 이하로 입력하세요!");
-        userid.focus();
+        userId.focus();
         return false;
     }
 
     const result = document.getElementById("result");
     if(result.innerHTML == "&nbsp;"){
     	alert("아이디 중복검사를 진행해주세요!");
-    	userid.focus();
+    	userId.focus();
     	return false;
     }
     if(result.innerHTML == "중복된 아이디가 있습니다!"){
     	alert("중복체크 통과 후 가입이 가능합니다!");
-    	userid.focus();
+    	userId.focus();
     	return false;
     }
 
-    const userpw = joinForm.userpw;
+    const userPw = joinForm.userPw;
 
     for(let i=0;i<5;i++){
     	if(!pwTest[i]){
     		alert("비밀번호 확인을 다시하세요!");
-    		userpw.focus();
+    		userPw.focus();
     		return false;
     	}
     }
-    const username = joinForm.username;
-    if(username.value == ""){
+    const userName = joinForm.userName;
+    if(userName.value == ""){
         alert("이름을 입력하세요!");
-        username.focus();
+        userName.focus();
         return false;
     }
     const exp_name = /[가-힣]+$/;
-    if(!exp_name.test(username.value)){
+    if(!exp_name.test(userName.value)){
         alert("이름에는 한글만 입력하세요!");
-        username.focus();
+        userName.focus();
         return false;
     }
-    const usergender = joinForm.userGender;
-    if(!usergender[0].checked && !usergender[1].checked){
+    const userGender = joinForm.userGender;
+    if(!userGender[0].checked && !userGender[1].checked){
     	alert("성별을 선택하세요!");
     	return false;
     }
-    const useremail = joinForm.useremail;
-        if (!isValidEmail(useremail.value)) {
-            alert("올바른 이메일 주소를 입력하세요!");
-            useremail.focus();
-            return false;
-        }
+    const userMail = joinForm.userMail;
+    if (!isValidEmail(userMail.value)) {
+        alert("이메일 주소를 확인하세요!");
+        userMail.focus();
+        return false;
+    }
+
+    fetch("/user/join", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                userId: userId.value,
+                userPw: userPw.value,
+                userName: userName.value,
+                userGender: userGender[0].checked ? "M" : "F",
+                userMail: userMail.value,
+                userNickname: userNickname.value,
+                userTel: userTel.value,
+                userBirth: userBirth.value,
+                userWeight: userWeight.value,
+                userHeight: userHeight.value,
+                weightGoal: weightGoal.value,
+                caloriesGoal: caloriesGoal.value
+            }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                // 서버에서의 응답에 따른 처리
+                if (data.success) {
+                    alert("가입이 완료되었습니다!");
+                } else {
+                    alert("가입에 실패했습니다. 다시 시도해주세요.");
+                }
+            })
+            .catch(error => {
+                console.error("가입 요청 중 에러 발생:", error);
+            });
 
     joinForm.submit();
     return true;
 }
 function pwcheck(){
-    const userpw = document.joinForm.userpw;
-    const userpw_re = document.joinForm.userpw_re;
-    const pw_check = document.getElementById("pw_check");
+    const userPw = document.joinForm.userPw;
+    const userPwRe = document.joinForm.userPwRe;
+    const pwCheck = document.getElementById("pwCheck");
     const reg = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[~?!@-]).{4,}$/;
-    const c = document.querySelectorAll(".pw_check span");
-    if(userpw.value == 0){
+    const c = document.querySelectorAll(".pwCheck span");
+    if(userPw.value == 0){
     	for(let i=0;i<5;i++){
     		pwTest[i] = false;
     		c[i].classList = "";
     	}
     	return;
     }
-    if(!reg.test(userpw.value)){
+    if(!reg.test(userPw.value)){
     	c[0].classList = "pcf";
     	pwTest[0] = false;
     }
@@ -84,7 +117,7 @@ function pwcheck(){
     	c[0].classList = "pct";
     	pwTest[0] = true;
     }
-    if(userpw.value.length < 8){
+    if(userPw.value.length < 8){
     	c[1].classList = "pcf";
     	pwTest[1] = false;
     }
@@ -92,7 +125,7 @@ function pwcheck(){
     	c[1].classList = "pct";
     	pwTest[1] = true;
     }
-    if(/(\w)\1\1\1/.test(userpw.value)){
+    if(/(\w)\1\1\1/.test(userPw.value)){
     	c[2].classList = "pcf";
     	pwTest[2] = false;
     }
@@ -100,7 +133,7 @@ function pwcheck(){
     	c[2].classList = "pct";
     	pwTest[2] = true;
     }
-    if(!/^[a-zA-Z0-9~?!@-]*$/.test(userpw.value)){
+    if(!/^[a-zA-Z0-9~?!@-]*$/.test(userPw.value)){
     	c[3].classList = "pcf";
     	pwTest[3] = false;
     }
@@ -108,7 +141,7 @@ function pwcheck(){
     	c[3].classList = "pct";
     	pwTest[3] = true;
     }
-    if(userpw.value != userpw_re.value){
+    if(userPw.value != userPwRe.value){
     	c[4].classList = "pcf";
     	pwTest[4] = false;
     }
@@ -119,10 +152,10 @@ function pwcheck(){
 }
 
 // 비밀번호 입력란
-const passwordInput = document.getElementById('userpw');
+const passwordInput = document.getElementById('userPw');
 
 // 비밀번호 체크 요소
-const pwCheck = document.querySelector('#page1 .pw_check');
+const pwCheck = document.querySelector('#page1 .pwCheck');
 
 // 확인: passwordInput이 존재하면 이벤트 리스너 추가
 if (passwordInput) {
@@ -161,25 +194,25 @@ function isInvalidAdminId(id) {
 function checkId(){
 	const xhr = new XMLHttpRequest();
 	const result = document.getElementById("result");
-	const userid = document.joinForm.userid;
-	if(userid.value == ""){
+	const userId = document.joinForm.userId;
+	if(userId.value == ""){
 		alert("아이디를 입력하세요!")
-		userid.focus();
+		userId.focus();
 		return false;
 	}
 
 	const koreanRegex = /[ㄱ-ㅎㅏ-ㅣ가-힣]/;
-    if (koreanRegex.test(userid.value)) {
+    if (koreanRegex.test(userId.value)) {
         result.innerHTML = "아이디에 한글을 포함할 수 없습니다!";
-        userid.value = '';
-        userid.focus();
+        userId.value = '';
+        userId.focus();
         return false;
     }
 
-	if(isInvalidAdminId(userid.value)) {
+	if(isInvalidAdminId(userId.value)) {
 	    result.innerHTML = "사용할 수 없는 아이디입니다!";
-	    userid.value = '';
-	    userid.focus();
+	    userId.value = '';
+	    userId.focus();
 	    return false;
 	}
 
@@ -190,25 +223,25 @@ function checkId(){
 				txt = txt.trim();
 				if(txt == 'O'){
 					result.innerHTML = "사용할 수 있는 아이디입니다!";
-					document.joinForm.userpw.focus();
+					document.joinForm.userPw.focus();
 				}
 				else{
 					result.innerHTML = "중복된 아이디가 있습니다!";
-					userid.value = '';
-					userid.focus();
+					userId.value = '';
+					userId.focus();
 				}
 			}
 		}
 	};
-	xhr.open("GET","/user/checkid?userid="+userid.value);
+	xhr.open("GET","/user/checkid?userid="+userId.value);
 	xhr.send();
 
     return false;
 }
 
 function isValidEmail(email) {
-    // 간단한 형식의 이메일 주소 유효성 검사
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // 수정된 간단한 형식의 이메일 주소 유효성 검사
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     return emailRegex.test(email);
 }
 

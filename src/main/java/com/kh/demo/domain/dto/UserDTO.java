@@ -2,6 +2,9 @@ package com.kh.demo.domain.dto;
 
 import lombok.Data;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+
 @Data
 public class UserDTO {
     private String userId;
@@ -16,8 +19,8 @@ public class UserDTO {
     private int userWeight;
     private String userGender;
     private String userBirth;
-    private String userJoindate;
-    private Long userPoint;
+    private LocalDateTime userJoindate;
+    private Long userPoint = 0L;
     private int userReportedcnt;
     private String userCategory;
     private int userAge;
