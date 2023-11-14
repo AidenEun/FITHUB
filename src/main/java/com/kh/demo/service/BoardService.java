@@ -1,7 +1,6 @@
 package com.kh.demo.service;
 
 import com.kh.demo.domain.dto.BoardDTO;
-import com.kh.demo.domain.dto.BookMarkDTO;
 import com.kh.demo.domain.dto.Criteria;
 import com.kh.demo.domain.dto.FileDTO;
 import org.springframework.core.io.Resource;
@@ -13,10 +12,10 @@ import java.util.List;
 
 public interface BoardService {
 	//insert
-	boolean regist(BoardDTO board, MultipartFile[] files) throws Exception;
+	boolean regist(BoardDTO board, MultipartFile[] files, MultipartFile[] files2) throws Exception;
 
 	//update
-	public boolean modify(BoardDTO board, MultipartFile[] files, String updateCnt, String boardCategory) throws Exception;
+	public boolean modify(BoardDTO board, MultipartFile[] files, MultipartFile[] files2, String updateCnt, String boardCategory) throws Exception;
 
 	public void updateReadCount(Long boardnum);
 
@@ -48,7 +47,7 @@ public interface BoardService {
 
 	List<FileDTO> getFileList(Long boardnum, String boardCategory);
 
-	ResponseEntity<Resource> getThumbnailResource(String systemname) throws Exception;
+	ResponseEntity<Resource> getThumbnailResource(String sysName) throws Exception;
 
 	ResponseEntity<Object> downloadFile(String systemname, String orgname) throws Exception;
 
@@ -75,5 +74,11 @@ public interface BoardService {
 	BoardDTO getFoodTop1();
 
 }
+
+
+
+
+
+
 
 
