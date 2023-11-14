@@ -142,7 +142,7 @@
 <section id="three" class="wrapper style3">
 	<div class="inner">
 		<h2>트레이너 랭킹</h2>
-		<th:block th:if="${trainerTopList != null}">
+		<th:block th:if="${trainerTopList != null AND trainerTopList.size() > 0}">
 			<div class="posts">
 				<section class="post">
 					<span class="image"><img src="images/trainer_img1.png" alt="" /></span>
@@ -176,7 +176,7 @@
 				</section>
 			</div>
 		</th:block>
-		<th:block th:if="${trainerTopList == null}">
+		<th:block th:if="${trainerTopList == null OR trainerTopList.size() == 0}">
 			<div class="content">
 				<h3>현재 등록된 트레이너가 없습니다!</h3>
 			</div>
