@@ -93,6 +93,7 @@ public class HomeController {
 //        System.out.println(keyword);
 
         //인기게시글 띄우기
+        List<BoardDTO> boardTop5List = boardservice.getBoardTop5List();
 
         // 트레이너 랭킹
         List<TrainerDTO> trainerTop5List= tservice.getTrainerTop5List();
@@ -100,28 +101,32 @@ public class HomeController {
         Long boardAllCnt = boardservice.getAllsearchCnt(keyword);
         System.out.println(boardAllCnt);
 
-//        String[] boardCategory = {"infoNews","infoExer","infoFood","infoTip"};
-//        List<BoardDTO> InfoSearchList = boardservice.getSearch5List(keyword);
-
         //각 게시판에서 글 가져오기
-        List<BoardDTO> newsSearchList = boardservice.getNewsSearchList(keyword);
-        List<BoardDTO> exerSearchList = boardservice.getExerSearchList(keyword);
-        List<BoardDTO> foodSearchList = boardservice.getFoodSearchList(keyword);
+
+        List<BoardDTO> infoSearchList = boardservice.getinfoSearchList(keyword);
+
         List<BoardDTO> tipSearchList = boardservice.getTipSearchList(keyword);
-        List<BoardDTO> CommuSearchList = boardservice.getCommuSearchList(keyword);
+        List<BoardDTO> commuSearchList = boardservice.getCommuSearchList(keyword);
 
         List<BoardDTO> matchingSearchList = MatchingService.getMachingSearchList(keyword);
         List<ChallNoticeBoardDTO> challSearchList = challService.getChallSearchList(keyword);
 
-        model.addAttribute("newsSearchList",newsSearchList);
-        model.addAttribute("exerSearchList",exerSearchList);
-        model.addAttribute("foodSearchList",foodSearchList);
+        int[] boardCntArr ={infoSearchList.size(),
+                tipSearchList.size(),commuSearchList.size(),matchingSearchList.size(),challSearchList.size()};
+
+//        model.addAttribute("newsSearchList",newsSearchList);
+//        model.addAttribute("exerSearchList",exerSearchList);
+//        model.addAttribute("foodSearchList",foodSearchList);
+        model.addAttribute("infoSearchList",infoSearchList);
         model.addAttribute("tipSearchList",tipSearchList);
-        model.addAttribute("commuSearchList",CommuSearchList);
+        model.addAttribute("commuSearchList",commuSearchList);
         model.addAttribute("matchingSearchList",matchingSearchList);
         model.addAttribute("challSearchList",challSearchList);
         model.addAttribute("boardAllCnt",boardAllCnt);
         model.addAttribute("trainerTop5List",trainerTop5List);
+        model.addAttribute("boardTop5List",boardTop5List);
+        model.addAttribute("boardCntArr",boardCntArr);
+
 
     }
 

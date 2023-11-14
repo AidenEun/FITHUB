@@ -365,6 +365,21 @@ public class BoardServiceImpl implements BoardService{
 		return bmapper.getFoodTop1();
 	}
 
+	@Override
+	public List<BoardDTO> getBoardTop5List() {
+		return bmapper.getBoardTop5List();
+	}
+
+	@Override
+	public List<BoardDTO> getinfoSearchList(String keyword) {
+		return bmapper.getinfoSearchList(keyword);
+	}
+
+//	@Override
+//	public int getNewsSearchCnt(String keyword) {
+//		return bmapper.getNewsSearchCnt(keyword);
+//	}
+
 
 }
 
