@@ -10,19 +10,19 @@ import java.util.List;
 public interface ReplyMapper {
 	//insert
 	int insertReply(ReplyDTO reply);
-	
+
 	//update
 	int updateReply(ReplyDTO reply);
-	
+
 	//delete
-	int deleteReply(Long replynum);
-	int deleteByBoardnum(Long boardnum);
-	
+	int deleteReply(Long replyNum);
+	int deleteByBoardnum(Long boardNum);
+
 	//select
-	Long getLastNum(String userid);
-	int getTotal(Long board_num);
-	List<ReplyDTO> getList(Criteria cri, Long board_num);
-	int getRecentReply(Long board_num);
+	Long getLastNum(String userId);
+	int getTotal(Long boardNum);
+	List<ReplyDTO> getList(Criteria cri, Long boardNum);
+	int getRecentReply(Long boardNum);
 }
 
 

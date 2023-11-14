@@ -1,6 +1,7 @@
 package com.kh.demo.service;
 
 import com.kh.demo.domain.dto.BoardDTO;
+import com.kh.demo.domain.dto.BookMarkDTO;
 import com.kh.demo.domain.dto.Criteria;
 import com.kh.demo.domain.dto.FileDTO;
 import com.kh.demo.mapper.BoardMapper;
@@ -46,20 +47,21 @@ public class BoardServiceImpl implements BoardService{
 	private String saveFolder;
 
 	@Override
-	public boolean regist(BoardDTO board, MultipartFile[] files) throws Exception {
+	public boolean regist(BoardDTO board, MultipartFile[] files, MultipartFile[] files2) throws Exception {
 		int row = bmapper.insertBoard(board);
 		if(row != 1) {
 			return false;
 		}
-		if(files == null || files.length == 0) {
+		if(files2 == null || files2.length == 0) {
 			return true;
 		}
 		else {
 			//방금 등록한 게시글 번호
 			Long boardnum = bmapper.getLastNum(board.getUserId());
+			String boardCategory = board.getBoardCategory();
 			boolean flag = false;
-			for(int i=0;i<files.length-1;i++) {
-				MultipartFile file = files[i];
+			for(int i=0;i<files2.length-1;i++) {
+				MultipartFile file = files2[i];
 				//apple.png
 				String orgname = file.getOriginalFilename();
 				//5
@@ -81,6 +83,7 @@ public class BoardServiceImpl implements BoardService{
 				fdto.setBoardNum(boardnum);
 				fdto.setSysName(systemname);
 				fdto.setOrgName(orgname);
+				fdto.setBoardCategory(boardCategory);
 
 				//실제 파일 업로드
 				file.transferTo(new File(path));
@@ -97,24 +100,24 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public boolean modify(BoardDTO board, MultipartFile[] files, String updateCnt, String boardCategory) throws Exception {
+	public boolean modify(BoardDTO board, MultipartFile[] files, MultipartFile[] files2, String updateCnt, String boardCategory) throws Exception {
 		int row = bmapper.updateBoard(board);
 		if(row != 1) {
 			return false;
 		}
 		List<FileDTO> org_file_list = fmapper.getFiles(board.getBoardNum(), boardCategory);
-		if(org_file_list.size()==0 && (files == null || files.length == 0)) {
+		if(org_file_list.size()==0 && (files2 == null || files2.length == 0)) {
 			return true;
 		}
 		else {
-			if(files != null) {
+			if(files2 != null) {
 				boolean flag = false;
 				//후에 비즈니스 로직 실패 시 원래대로 복구하기 위해 업로드 성공했던 파일들도 삭제해주어야 한다.
 				//업로드 성공한 파일들의 이름을 해당 리스트에 추가하면서 로직을 진행한다.
 				ArrayList<String> sysnames = new ArrayList<>();
-				System.out.println("service : "+files.length);
-				for(int i=0;i<files.length-1;i++) {
-					MultipartFile file = files[i];
+				System.out.println("service : "+files2.length);
+				for(int i=0;i<files2.length-1;i++) {
+					MultipartFile file = files2[i];
 					String orgname = file.getOriginalFilename();
 					//수정의 경우 중간에 있는 파일은 수정이 되지 않은 경우도 있다.
 					//그런 경우의 file의 orgname은 null 이거나 "" 이다.
@@ -180,8 +183,8 @@ public class BoardServiceImpl implements BoardService{
 	public boolean remove(String loginUser, Long boardnum, String boardCategory) {
 		BoardDTO board = bmapper.findByNum(boardnum);
 		if(board.getUserId().equals(loginUser)) {
-			List<FileDTO> files = fmapper.getFiles(boardnum, boardCategory);
-			for(FileDTO fdto : files) {
+			List<FileDTO> files2 = fmapper.getFiles(boardnum, boardCategory);
+			for(FileDTO fdto : files2) {
 				File file = new File(saveFolder,fdto.getSysName());
 				if(file.exists()) {
 					file.delete();
@@ -279,9 +282,9 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public ResponseEntity<Resource> getThumbnailResource(String systemname) throws Exception{
+	public ResponseEntity<Resource> getThumbnailResource(String sysName) throws Exception{
 		//경로에 관련된 객체(자원으로 가지고 와야 하는 파일에 대한 경로)
-		Path path = Paths.get(saveFolder+systemname);
+		Path path = Paths.get(saveFolder+sysName);
 		//경로에 있는 파일의 MIME타입을 조사해서 그대로 담기
 		String contentType = Files.probeContentType(path);
 		//응답 헤더 생성
@@ -379,6 +382,7 @@ public class BoardServiceImpl implements BoardService{
 //	public int getNewsSearchCnt(String keyword) {
 //		return bmapper.getNewsSearchCnt(keyword);
 //	}
+
 
 
 }
