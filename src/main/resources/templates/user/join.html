@@ -94,10 +94,7 @@
 		<div id="my_info">
 			<div>
 				<a href="#">내 정보</a>
-				<th:block th:if="${loginUser == null}">
-					<a class="login" th:href="@{/user/login}">로그인</a>
-				</th:block>
-				<th:block th:if="${loginUser != null}">
+				<th:block th:if="${session.loginUser != null}">
 					<a class="login" th:href="@{/user/logout}">로그아웃</a>
 				</th:block>
 			</div>
@@ -308,7 +305,7 @@
 				<td><input type="text" name="caloriesGoal" id="goalCalories"></td>
 			</tr>
 			<tr id="page2">
-				<th colspan="2"><input class="submit" type="button" value="가입 완료" onclick="sendit();"></th>
+				<th colspan="2"><input class="submit" type="submit" value="가입 완료" onclick="sendit();"></th>
 			</tr>
 		</table>
 	</form>

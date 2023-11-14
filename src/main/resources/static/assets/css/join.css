@@ -201,19 +201,6 @@ td  input[type=text] + input[type=button] {
     color: rgb(0, 200, 80);
 }
 
-.zipcode_area > td > input[type=text] {
-    width: 200px;
-}
-
-.zipcode_area > td > input[type=button] {
-    width: 130px !important;
-}
-
-.addr_area > td > input[type=text],
-.addr_area + tr > td > input[type=text],
-.addr_area + tr + tr > td > input[type=text] {
-    width: 340px;
-}
 
 .xBox {
     border: 1px solid #ccc;
