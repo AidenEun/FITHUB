@@ -49,7 +49,7 @@
 
 	</select>
 
-	<select id="getNewsList">
+	<select id="getInfoNewsList">
 		select * from board where
 		<include refid="cri"/>
 		<![CDATA[
@@ -57,7 +57,7 @@
 		]]>
 	</select>
 
-	<select id="getExerList">
+	<select id="getInfoExerList">
 		select * from board where
 		<include refid="cri"/>
 		<![CDATA[
@@ -65,7 +65,7 @@
 		]]>
 	</select>
 
-	<select id="getFoodList">
+	<select id="getInfoFoodList">
 		select * from board where
 		<include refid="cri"/>
 		<![CDATA[
@@ -73,13 +73,54 @@
 		]]>
 	</select>
 
-	<select id="getTipList">
+	<select id="getInfoTipList">
 		select * from board where
 		<include refid="cri"/>
 		<![CDATA[
 			0 < board_num and board_category='infoTip' order by board_num desc limit #{startrow},#{amount}
 		]]>
 	</select>
+
+	<select id="getCommuFreeList">
+		select * from board where
+		<include refid="cri"/>
+		<![CDATA[
+			0 < board_num and board_category='commuFree' order by board_num desc limit #{startrow},#{amount}
+		]]>
+	</select>
+
+	<select id="getCommuExerList">
+		select * from board where
+		<include refid="cri"/>
+		<![CDATA[
+			0 < board_num and board_category='commuExer' order by board_num desc limit #{startrow},#{amount}
+		]]>
+	</select>
+
+	<select id="getCommuFoodList">
+		select * from board where
+		<include refid="cri"/>
+		<![CDATA[
+			0 < board_num and board_category='commuFood' order by board_num desc limit #{startrow},#{amount}
+		]]>
+	</select>
+
+	<select id="getCommuGalleryList">
+		select * from board where
+		<include refid="cri"/>
+		<![CDATA[
+			0 < board_num and board_category='commuGallery' order by board_num desc limit #{startrow},#{amount}
+		]]>
+	</select>
+
+	<select id="getCommuQnaList">
+		select * from board where
+		<include refid="cri"/>
+		<![CDATA[
+			0 < board_num and board_category='commuQna' order by board_num desc limit #{startrow},#{amount}
+		]]>
+	</select>
+
 
 	<select id="getTotal">
 		select count(*) from board where
@@ -109,6 +150,7 @@
 	<select id="getAllSearchCnt">
 		select count(*) from board where (board_title like('%${keyword}%')) or (board_content like('%${keyword}%')) or (user_id like('%${keyword}%'))
 	</select>
+
 
 	<select id="getinfoSearchList">
         select *
@@ -143,24 +185,25 @@
 
 		</select>
 
+
 	<!-- Main_index -->
 	<select id="getNewsTop1">
 		SELECT * FROM board
 		WHERE board_category = 'infoNews'
 		ORDER BY view_cnt DESC
-		LIMIT 1;
+			LIMIT 1;
 	</select>
 	<select id="getExerTop1">
 		SELECT * FROM board
 		WHERE board_category = 'infoExer'
 		ORDER BY view_cnt DESC
-		LIMIT 1;
+			LIMIT 1;
 	</select>
 	<select id="getFoodTop1">
 		SELECT * FROM board
 		WHERE board_category = 'infoFood'
 		ORDER BY view_cnt DESC
-		LIMIT 1;
+			LIMIT 1;
 	</select>
 
 
