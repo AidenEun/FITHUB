@@ -133,17 +133,18 @@
 	<div class="inner">
 
 		<header class="major">
-			<h2>정보</h2>
+			<h2>커뮤니티</h2>
 		</header>
 
 		<!-- Content -->
 		<div class="content">
 			<div class="cotent_header">
 					<span th:switch="${board.boardCategory}">
-						<span th:case="'infoNews'"><h2>뉴스</h2></span>
-						<span th:case="'infoFood'"><h2>식단</h2></span>
-						<span th:case="'infoExer'"><h2>운동</h2></span>
-						<span th:case="'infoTip'"><h2>꿀팁</h2></span>
+						<span th:case="'commuFree'"><h2>자유게시판</h2></span>
+						<span th:case="'commuFood'"><h2>식단</h2></span>
+						<span th:case="'commuExer'"><h2>운동</h2></span>
+						<span th:case="'commuGallery'"><h2>갤러리</h2></span>
+						<span th:case="'commuQna'"><h2>고민 Q&A</h2></span>
 					</span>
 			</div>
 
@@ -181,14 +182,14 @@
 								<tr>
 									<th>첨부파일[[${fileStat.index+1}]]</th>
 									<td>
-										<a th:href="@{/info/file (systemname=${file.sysName},orgname=${file.orgName})}">[[${file.orgName}]]</a>
+										<a th:href="@{/community/file (systemname=${file.sysName},orgname=${file.orgName})}">[[${file.orgName}]]</a>
 									</td>
 								</tr>
 								<th:block th:with="ext=${sar[sar.length-1]}">
 									<tr th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}">
 										<td></td>
 										<td>
-											<img style="width:100%;" th:src="@{/info/thumbnail (systemname=${file.sysName})}">
+											<img style="width:100%;" th:src="@{/community/thumbnail (systemname=${file.sysName})}">
 										</td>
 									</tr>
 								</th:block>
@@ -205,7 +206,7 @@
 					<tr align="right" valign="middle">
 						<td>
 							<th:block th:if="${board.userId == session.loginUser}">
-								<form name="boardForm" method="post" th:action="@{/info/remove}">
+								<form name="boardForm" method="post" th:action="@{/community/remove}">
 									<input name="boardNum" th:value="${board.boardNum}" type="hidden">
 									<input name="pagenum" th:value="${cri.pagenum}" type="hidden">
 									<input name="amount" th:value="${cri.amount}" type="hidden">
@@ -215,7 +216,7 @@
 									<a class="button" href="javascript:document.boardForm.submit()">삭제</a>
 								</form>
 							</th:block>
-							<div class="button"><a th:href="${'/info/info_list'+cri.listLink}">목록</a></div>
+							<div class="button"><a th:href="${'/community/commu_list'+cri.listLink}">목록</a></div>
 						</td>
 					</tr>
 				</table>
@@ -247,11 +248,12 @@
 		<!-- Sidebar -->
 		<div class="sidebar">
 			<section>
-				<h3><a href="/info/info_list">전체</a></h3>
-				<h3><a href="/info/info_news">뉴스</a></h3>
-				<h3><a href="/info/info_food">식단</a></h3>
-				<h3><a href="/info/info_exercise">운동</a></h3>
-				<h3><a href="/info/info_tip">꿀팁</a></h3>
+				<h3><a href="/community/commu_list">전체</a></h3>
+				<h3><a href="/community/commu_free">자유게시판</a></h3>
+				<h3><a href="/community/commu_exercise">운동</a></h3>
+				<h3><a href="/community/commu_food">식단</a></h3>
+				<h3><a href="/community/commu_gallery">갤러리</a></h3>
+				<h3><a href="/community/commu_qna">고민Q&A</a></h3>
 			</section>
 		</div>
 
@@ -446,7 +448,7 @@
 
 	function modify(){
 		const boardForm = document.boardForm;
-		boardForm.setAttribute("action",/*[[@{/info/info_modify}]]*/'');
+		boardForm.setAttribute("action",/*[[@{/community/commu_modify}]]*/'');
 		boardForm.setAttribute("method","get");
 		boardForm.submit();
 	}

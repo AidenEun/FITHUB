@@ -27,13 +27,22 @@ public interface BoardService {
 
 	List<BoardDTO> getBoardList(Criteria cri);
 
-	List<BoardDTO> getNewsList(Criteria cri);
+	List<BoardDTO> getInfoNewsList(Criteria cri);
 
-	List<BoardDTO> getExerList(Criteria cri);
+	List<BoardDTO> getInfoExerList(Criteria cri);
 
-	List<BoardDTO> getFoodList(Criteria cri);
+	List<BoardDTO> getInfoFoodList(Criteria cri);
 
-	List<BoardDTO> getTipList(Criteria cri);
+	List<BoardDTO> getInfoTipList(Criteria cri);
+
+	List<BoardDTO> getCommuFreeList(Criteria cri);
+	List<BoardDTO> getCommuExerList(Criteria cri);
+
+	List<BoardDTO> getCommuFoodList(Criteria cri);
+
+	List<BoardDTO> getCommuGalleryList(Criteria cri);
+
+	List<BoardDTO> getCommuQnaList(Criteria cri);
 
 	BoardDTO getDetail(Long boardnum);
 
@@ -72,6 +81,7 @@ public interface BoardService {
 	BoardDTO getExerTop1();
 
 	BoardDTO getFoodTop1();
+
 
 }
 
