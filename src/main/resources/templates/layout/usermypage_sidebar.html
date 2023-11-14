@@ -1,4 +1,4 @@
-<th:block th:fragment="sidebar">
+<th:block th:fragment="sidebar" xmlns:th="http://www.thymeleaf.org">
     <div class="sidebar">
 <!--        <section>-->
 <!--            <h3><a href="/usermypage/user_myinfo">내 정보 수정</a></h3>-->
@@ -11,29 +11,32 @@
 <!--            <h3><a href="/usermypage/user_applytrainer">트레이너 전환 신청</a></h3>-->
 <!--        </section>-->
         <section>
-            <h3 class="side_ranking">인기 게시글 순위</h3>
             <div class="boardRanking">
                 <div class="boardRanking_ranking">
                     <table style="width: 90%;">
                         <tr>
-                            <td>1</td>
-                            <td>게시글 제목</td>
+                            <td><a href="/usermypage/user_myinfo">내 정보 수정</a></td>
                         </tr>
                         <tr>
-                            <td>2</td>
-                            <td>게시글 제목</td>
+                            <td><a href="#">나의 다이어리</a></td>
                         </tr>
                         <tr>
-                            <td>3</td>
-                            <td>게시글 제목</td>
+                            <td><a href="/usermypage/user_challenge">나의 챌린지</a></td>
                         </tr>
                         <tr>
-                            <td>4</td>
-                            <td>게시글 제목</td>
+                            <td><a href="/usermypage/user_subtrainer">구독한 트레이너</a></td>
                         </tr>
                         <tr>
-                            <td>5</td>
-                            <td>게시글 제목</td>
+                            <td><a href="/usermypage/user_subbookmark">북마크</a></td>
+                        </tr>
+                        <tr>
+                            <td><a href="/usermypage/user_boardlist">내 게시물</a></td>
+                        </tr>
+                        <tr>
+                            <td><a href="/usermypage/user_messagelist">쪽지함</a></td>
+                        </tr>
+                        <tr>
+                            <td><a href="/usermypage/user_applytrainer">트레이너 전환 신청</a></td>
                         </tr>
                     </table>
                 </div>
