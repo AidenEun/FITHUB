@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.Comparator;
 import java.util.List;
@@ -23,7 +24,13 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public boolean join(UserDTO user) {
-        return false;
+        user.setUserId(generateUserId());
+        user.setUserJoindate(LocalDateTime.now());
+        return umapper.insertUser(user) == 1;
+    }
+
+    private String generateUserId() {
+        return "USER_" + System.currentTimeMillis();
     }
 
     @Override
