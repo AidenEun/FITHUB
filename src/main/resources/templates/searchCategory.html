@@ -81,7 +81,6 @@
 
     .search_box {
         width: 100%;
-        margin-bottom: 50px;
     }
 
     .content {
@@ -165,9 +164,9 @@
     }
 
     #gnb {
-        display: flex;
-        justify-content: center;
-        /*width: 70%;*/
+        /*display: flex;*/
+        /*justify-content: center;*/
+        width: 70%;
         margin-top: 80px;
     }
 
@@ -237,23 +236,25 @@
             </div>
             <div id="gnb">
                 <div class="btn_area" style="margin-bottom: 20px;">
-                    <input class="viewNow" type="button" th:value="'전체&nbsp;'+'('+${boardAllCnt}+')'" >
-<!--                </div>-->
-<!--                <div class="btn_area btn_category">-->
-                    <input type="button" th:value="'정보&nbsp;('+${boardCntArr[0]}+')'" onclick="newsView();">
-                    <input type="button" th:value="'꿀팁&nbsp;('+${boardCntArr[1]}+')'" onclick="tipView();">
-                    <input type="button" th:value="'커뮤니티&nbsp;('+${boardCntArr[2]}+')'" onclick="commuView();">
-                    <input type="button" th:value="'트레이너 매칭&nbsp;('+${boardCntArr[3]}+')'" onclick="matchingView();">
-                    <input type="button" th:value="'챌린지&nbsp;('+${boardCntArr[4]}+')'" onclick="challView();">
+                    <input class="viewNow" type="button" th:value="'전체&nbsp;('+${boardAllCnt}+')'">
+                </div>
+                <div class="btn_area btn_category">
+                    <input type="button" th:value="'뉴스&nbsp;('+${boardCntArr}+')'">
+                    <input type="button" value="'식단&nbsp;(0)">
+                    <input type="button" value="운동&nbsp;(0)">
+                    <input type="button" value="꿀팁&nbsp;(0)">
+                    <input type="button" value="커뮤니티&nbsp;(0)">
+                    <input type="button" value="트레이너 매칭&nbsp;(0)">
+                    <input type="button" value="챌린지&nbsp;(0)">
                 </div>
             </div>
         </header>
 
 
         <!-- Content -->
-        <div class="content" id="search_content">
+        <div class="content">
             <div class="search_box">
-                <h2 th:text="'정보&nbsp;('+${boardCntArr[0]}+')'"></h2>
+                <h2 th:text="'뉴스&nbsp;('+${boardCntArr[0]}+')'">뉴스</h2>
                 <div class="search_content_box">
                     <table style="text-align: center;">
                         <thead>
@@ -267,7 +268,7 @@
                         </tr>
                         </thead>
                         <!--                        <tr th:if="${newsSearchList != null and newsSearchList.size() >0}" th:each="board : ${newsSearchList}" th:limit="5">-->
-                        <tr th:each="board, boardStat : ${infoSearchList}" th:if="${boardStat.index < 5}">
+                        <tr th:each="board, boardStat : ${newsSearchList}" th:if="${boardStat.index < 5}">
                             <td class="long_text">
                                 <a href="#">
                                     [[${board.boardNum}]]
@@ -299,14 +300,14 @@
                                 </a>
                             </td>
                         </tr>
-                        <th:block th:if="${infoSearchList == null or infoSearchList.size() == 0}">
+                        <th:block th:if="${newsSearchList == null or newsSearchList.size() == 0}">
                             <tr>
                                 <td colspan="6" style="text-align: center;">등록된
                                     게시글이 없습니다.
                                 </td>
                             </tr>
                         </th:block>
-                        <th:block th:if="${infoSearchList != null and infoSearchList.size() > 5}">
+                        <th:block th:if="${newsSearchList != null and newsSearchList.size() > 5}">
                             <tr>
                                 <td colspan="5" style="text-align: center;">
                                 </td>
@@ -323,7 +324,138 @@
             </div>
 
             <div class="search_box">
-                <h2 th:text="'꿀팁&nbsp;('+${boardCntArr[1]}+')'"></h2>
+                <h2>식단</h2>
+                <div class="search_content_box">
+                    <table style="text-align: center;">
+                        <thead>
+                        <tr style="font-weight: bold;">
+                            <td class="long_text">게시글 번호</td>
+                            <td class="long_text">제목</td>
+                            <td class="long_text">작성자</td>
+                            <td class="long_text">조회수</td>
+                            <td class="long_text">좋아요</td>
+                            <td class="long_text">등록일자</td>
+                        </tr>
+                        </thead>
+
+                        <tr th:each="board, boardStat : ${foodSearchList}" th:if="${boardStat.index < 5}">
+                            <td class="long_text">
+                                <a href="#">
+                                    [[${board.boardNum}]]
+                                </a>
+                            </td>
+                            <td class="long_text">
+                                <a href="#">
+                                    [[${board.boardTitle}]]
+                                </a>
+                            </td>
+                            <td class="long_text">
+                                <a href="#">
+                                    [[${board.userId}]]
+                                </a>
+                            </td>
+                            <td class="long_text">
+                                <a href="#">
+                                    [[${board.viewCnt}]]
+                                </a>
+                            </td>
+                            <td class="long_text">
+                                <a href="#">
+                                    [[${board.likeCnt}]]
+                                </a>
+                            </td>
+                            <td class="long_text">
+                                <a href="#">
+                                    [[${board.regdate}]]
+                                </a>
+                            </td>
+                        </tr>
+                        <th:block th:if="${foodSearchList == null or foodSearchList.size() == 0}">
+                            <tr>
+                                <td colspan="6" style="text-align: center;">등록된
+                                    게시글이 없습니다.
+                                </td>
+                            </tr>
+                        </th:block>
+                        <th:block th:if="${foodSearchList != null and foodSearchList.size() > 5}">
+                            <tr>
+                                <td colspan="5" style="text-align: center;">
+                                </td>
+                                <td>
+                                    <a href="#" class="button more_view">더보기</a>
+                                </td>
+                            </tr>
+                        </th:block>
+                    </table>
+                </div>
+            </div>
+            <div class="search_box">
+                <h2>운동</h2>
+                <div class="search_content_box">
+                    <table style="text-align: center;">
+                        <thead>
+                        <tr style="font-weight: bold;">
+                            <td class="long_text">게시글 번호</td>
+                            <td class="long_text">제목</td>
+                            <td class="long_text">작성자</td>
+                            <td class="long_text">조회수</td>
+                            <td class="long_text">좋아요</td>
+                            <td class="long_text">등록일자</td>
+                        </tr>
+                        </thead>
+                        <tr th:each="board, boardStat : ${exerSearchList}" th:if="${boardStat.index < 5}">
+                            <td class="long_text">
+                                <a href="#">
+                                    [[${board.boardNum}]]
+                                </a>
+                            </td>
+                            <td class="long_text">
+                                <a href="#">
+                                    [[${board.boardTitle}]]
+                                </a>
+                            </td>
+                            <td class="long_text">
+                                <a href="#">
+                                    [[${board.userId}]]
+                                </a>
+                            </td>
+                            <td class="long_text">
+                                <a href="#">
+                                    [[${board.viewCnt}]]
+                                </a>
+                            </td>
+                            <td class="long_text">
+                                <a href="#">
+                                    [[${board.likeCnt}]]
+                                </a>
+                            </td>
+                            <td class="long_text">
+                                <a href="#">
+                                    [[${board.regdate}]]
+                                </a>
+                            </td>
+                        </tr>
+                        <th:block th:if="${exerSearchList == null or exerSearchList.size() == 0}">
+                            <tr>
+                                <td colspan="6" style="text-align: center;">등록된
+                                    게시글이 없습니다.
+                                </td>
+                            </tr>
+                        </th:block>
+                        <th:block th:if="${exerSearchList != null and exerSearchList.size() > 5}">
+                            <tr>
+                                <td colspan="5" style="text-align: center;">
+                                </td>
+                                <td>
+                                    <a href="#" class="button more_view">더보기</a>
+                                </td>
+                            </tr>
+                        </th:block>
+                    </table>
+                </div>
+            </div>
+            <div class="search_box">
+                <h2>꿀팁</h2>
                 <div class="search_content_box">
                     <table style="text-align: center;">
                         <thead>
@@ -388,7 +520,7 @@
                 </div>
             </div>
             <div class="search_box">
-                <h2  th:text="'커뮤니티&nbsp;('+${boardCntArr[2]}+')'" ></h2>
+                <h2>커뮤니티</h2>
                 <div class="search_content_box">
                     <table style="text-align: center;">
                         <thead>
@@ -453,7 +585,7 @@
                 </div>
             </div>
             <div class="search_box">
-                <h2 th:text="'트레이너 매칭&nbsp;('+${boardCntArr[3]}+')'" ></h2>
+                <h2>트레이너 매칭</h2>
                 <div class="search_content_box">
                     <table style="text-align: center;">
                         <thead>
@@ -518,7 +650,7 @@
                 </div>
             </div>
             <div class="search_box">
-                <h2 th:text="'챌린지&nbsp;('+${boardCntArr[4]}+')'" ></h2>
+                <h2>챌린지 공지 / 챌린지 인증</h2>
                 <div class="search_content_box">
                     <table style="text-align: center;">
                         <thead>
@@ -622,10 +754,5 @@
 
 <script th:src="@{/assets/js/sidebar.js}"></script>
 <script th:src="@{/assets/js/profile.js}"></script>
-<script>
-    function newsView(){
-
-    }
-</script>
 </body>
 </html>
