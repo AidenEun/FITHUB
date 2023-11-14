@@ -142,38 +142,45 @@
 <section id="three" class="wrapper style3">
 	<div class="inner">
 		<h2>트레이너 랭킹</h2>
-		<div class="posts">
-			<section class="post">
-				<span class="image"><img src="images/trainer_img1.png" alt="" /></span>
-				<div class="content">
-					<h3>트레이너 1등</h3>
-					<p>[[${trainerTopList[0].trainerNickname}]]<span>([[${trainerTopList[2].trainerId}]])</span></p>
-					<ul class="actions">
-						<li><a href="#" class="button">More</a></li>
-					</ul>
-				</div>
-			</section>
-			<section class="post">
-				<span class="image"><img src="images/trainer_img2.png" alt="" /></span>
-				<div class="content">
-					<h3>트레이너 2등</h3>
-					<p>[[${trainerTopList[1].trainerNickname}]]<span>([[${trainerTopList[2].trainerId}]])</span></p>
-					<ul class="actions">
-						<li><a href="#" class="button">More</a></li>
-					</ul>
-				</div>
-			</section>
-			<section class="post">
-				<span class="image"><img src="images/pic03.jpg" alt="" /></span>
-				<div class="content">
-					<h3>트레이너 3등</h3>
-					<p>[[${trainerTopList[2].trainerNickname}]]<span>([[${trainerTopList[2].trainerId}]])</span></p>
-					<ul class="actions">
-						<li><a href="#" class="button">More</a></li>
-					</ul>
-				</div>
-			</section>
-		</div>
+		<th:block th:if="${trainerTopList != null}">
+			<div class="posts">
+				<section class="post">
+					<span class="image"><img src="images/trainer_img1.png" alt="" /></span>
+					<div class="content">
+						<h3>트레이너 1등</h3>
+						<p>[[${trainerTopList[0].trainerNickname}]]<span>([[${trainerTopList[2].trainerId}]])</span></p>
+						<ul class="actions">
+							<li><a href="#" class="button">More</a></li>
+						</ul>
+					</div>
+				</section>
+				<section class="post">
+					<span class="image"><img src="images/trainer_img2.png" alt="" /></span>
+					<div class="content">
+						<h3>트레이너 2등</h3>
+						<p>[[${trainerTopList[1].trainerNickname}]]<span>([[${trainerTopList[2].trainerId}]])</span></p>
+						<ul class="actions">
+							<li><a href="#" class="button">More</a></li>
+						</ul>
+					</div>
+				</section>
+				<section class="post">
+					<span class="image"><img src="images/pic03.jpg" alt="" /></span>
+					<div class="content">
+						<h3>트레이너 3등</h3>
+						<p>[[${trainerTopList[2].trainerNickname}]]<span>([[${trainerTopList[2].trainerId}]])</span></p>
+						<ul class="actions">
+							<li><a href="#" class="button">More</a></li>
+						</ul>
+					</div>
+				</section>
+			</div>
+		</th:block>
+		<th:block th:if="${trainerTopList == null}">
+			<div class="content">
+				<h3>현재 등록된 트레이너가 없습니다!</h3>
+			</div>
+		</th:block>
 	</div>
 </section>
 <section id="three" class="wrapper style4">
