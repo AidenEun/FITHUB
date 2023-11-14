@@ -141,6 +141,23 @@ if (passwordInput) {
     console.error('passwordInput이 존재하지 않습니다.');
 }
 
+function isInvalidAdminId(id) {
+    // 대소문자 무작위 조합으로 막기
+        const mixedCaseAdminRegex = /a.*d.*m.*i.*n/i;
+
+        // 대문자, 소문자 모두 막기
+        const caseSensitiveAdminRegex = /admin/i;
+
+        // 대소문자 무작위로 섞인 경우 막기
+        const randomCaseAdminRegex = /a(?:(?![aA]).)*d(?:(?![dD]).)*m(?:(?![mM]).)*i(?:(?![iI]).)*n/i;
+
+        // 특수문자 막기
+        const specialCharRegex = /^[a-zA-Z0-9]*$/;
+
+        // 특수문자 포함 또는 특수문자로만 구성된 경우 막기
+        return mixedCaseAdminRegex.test(id) || caseSensitiveAdminRegex.test(id) || randomCaseAdminRegex.test(id) || !specialCharRegex.test(id) || /^[!@#$%^&*(),.?":{}|<>]*$/.test(id);
+}
+
 function checkId(){
 	const xhr = new XMLHttpRequest();
 	const result = document.getElementById("result");
@@ -150,6 +167,22 @@ function checkId(){
 		userid.focus();
 		return false;
 	}
+
+	const koreanRegex = /[ㄱ-ㅎㅏ-ㅣ가-힣]/;
+    if (koreanRegex.test(userid.value)) {
+        result.innerHTML = "아이디에 한글을 포함할 수 없습니다!";
+        userid.value = '';
+        userid.focus();
+        return false;
+    }
+
+	if(isInvalidAdminId(userid.value)) {
+	    result.innerHTML = "사용할 수 없는 아이디입니다!";
+	    userid.value = '';
+	    userid.focus();
+	    return false;
+	}
+
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState == 4){
 			if(xhr.status == 200){
@@ -166,9 +199,11 @@ function checkId(){
 				}
 			}
 		}
-	}
+	};
 	xhr.open("GET","/user/checkid?userid="+userid.value);
 	xhr.send();
+
+    return false;
 }
 
 function isValidEmail(email) {
