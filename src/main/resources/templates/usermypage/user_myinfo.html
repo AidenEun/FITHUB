@@ -12,6 +12,7 @@
 	<noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
 	<link rel="stylesheet" th:href="@{/assets/css/index.css}" />
 	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
+	<link rel="stylesheet" th:href="@{/assets/css/common.css}" />
 </head>
 <style>
 
@@ -107,13 +108,13 @@
 <!-- Header -->
 <th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin})}"></th:block>
 
-<script th:if="${#strings.isEmpty(session.user)}">
-	alert("유저만 접근 가능합니다!!!");
-    location.replace("/");
-</script>
-
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">
+
+	<div class="top_img_box">
+		<img src="/images/admintop2.png" alt="">
+	</div>
+
 	<div class="inner">
 
 		<header class="major">
