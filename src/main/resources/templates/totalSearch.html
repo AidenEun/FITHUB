@@ -691,27 +691,27 @@
                 <h3 class="side_ranking">트레이너 구독 순위</h3>
                 <div class="boardRanking">
                     <div class="boardRanking_ranking">
-                        <table style="width: 90%;">
-                            <tr>
-                                <td>1</td>
-                                <td>트레이너 id</td>
+                        <table style="width: 90%;" th:each="trainerTop5List: ${trainerTop5List}">
+                            <tr th:each="number : ${#numbers.sequence(1, 5)}">
+                                <td>[[${number}]]</td>
+                                <td>[[${trainerTop5List.trainerId}]]</td>
                             </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>트레이너 id</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>트레이너 id</td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>트레이너 id</td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>트레이너 id</td>
-                            </tr>
+<!--                            <tr>-->
+<!--                                <td>2</td>-->
+<!--                                <td>트레이너 id</td>-->
+<!--                            </tr>-->
+<!--                            <tr>-->
+<!--                                <td>3</td>-->
+<!--                                <td>트레이너 id</td>-->
+<!--                            </tr>-->
+<!--                            <tr>-->
+<!--                                <td>4</td>-->
+<!--                                <td>트레이너 id</td>-->
+<!--                            </tr>-->
+<!--                            <tr>-->
+<!--                                <td>5</td>-->
+<!--                                <td>트레이너 id</td>-->
+<!--                            </tr>-->
                         </table>
 
                     </div>

@@ -17,4 +17,6 @@ public interface TrainerMapper {
     TrainerDTO getTrainerInfo(String trainerId);
 
     List<TrainerDTO> getTrainerTop1();
+
+    List<TrainerDTO> getTrainerTop5();
 }

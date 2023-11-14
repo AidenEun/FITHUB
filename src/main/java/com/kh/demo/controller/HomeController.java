@@ -1,6 +1,7 @@
 package com.kh.demo.controller;
 
 import com.kh.demo.domain.dto.*;
+import com.kh.demo.mapper.TrainerMapper;
 import com.kh.demo.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -37,6 +38,10 @@ public class HomeController {
 
     @Autowired
     private ChallengeService challService;
+
+    @Autowired
+    @Qualifier("TrainerServiceImpl")
+    private TrainerService tservice;
 
     @RequestMapping("/")
     public String home(HttpServletRequest req, Model model){
@@ -85,12 +90,12 @@ public class HomeController {
 
     @GetMapping("/totalSearch")
     public void search(String keyword,Model model){
-        System.out.println(keyword);
-//        전체 보드게시글 찾기
-//        List<BoardDTO> boardList = boardservice.getAllBoardList(keyword);
-//        for (int i = 0; i<boardList.size(); i++){
-//            System.out.println(boardList.get(i));
-//        }
+//        System.out.println(keyword);
+
+        //인기게시글 띄우기
+
+        // 트레이너 랭킹
+        List<TrainerDTO> trainerTop5List= tservice.getTrainerTop5List();
         //전체 보드 게시글 수 찾기
         Long boardAllCnt = boardservice.getAllsearchCnt(keyword);
         System.out.println(boardAllCnt);
@@ -116,6 +121,7 @@ public class HomeController {
         model.addAttribute("matchingSearchList",matchingSearchList);
         model.addAttribute("challSearchList",challSearchList);
         model.addAttribute("boardAllCnt",boardAllCnt);
+        model.addAttribute("trainerTop5List",trainerTop5List);
 
     }
 

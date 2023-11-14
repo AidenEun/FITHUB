@@ -396,7 +396,7 @@
                         <table id="mychallDataList">
                             <tbody id="chall-table">
                             <!-- <th:block th:if="${#strings.isEmpty(diary.myChallNum)}">-->
-                            <th:block th:if="${ myINGChallNum == null or myINGChallNum.size() == 0}">
+                            <th:block th:if="${ myINGChallNum == null and myINGChallNum.size() == 0}">
                                 <tr>
                                     <!-- 챌린지가 없을 때의 블록 -->
                                     <td style="text-align: center;">진행 중인 챌린지가 없습니다.</td>
