@@ -60,6 +60,12 @@ public interface BoardMapper {
 	BoardDTO getExerTop1();
 
 	BoardDTO getFoodTop1();
+
+    List<BoardDTO> getBoardTop5List();
+
+	List<BoardDTO> getinfoSearchList(String keyword);
+
+//    int getNewsSearchCnt(String keyword);
 }
 
 
