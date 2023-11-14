@@ -6,6 +6,7 @@ import com.kh.demo.domain.dto.*;
 import com.kh.demo.service.AdminMyPageService;
 import com.kh.demo.service.TrainerMyPageService;
 import com.kh.demo.service.UserServiceImpl;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -324,22 +325,41 @@ public class AdminMyPageController {
 //  Modal
     @PostMapping("profileModal")
     @ResponseBody
-    public String reportModal(@RequestParam("userId") String userId) throws Exception {
+    public String reportModal(@RequestParam("userId") String userId, HttpServletRequest req) throws Exception {
         ObjectNode json = JsonNodeFactory.instance.objectNode();
         Object userInfo = adminMyPageService.getUserById(userId);
+
+        HttpSession session = req.getSession();
+        String loginUser_userId = (String) session.getAttribute("loginUser");
 
         if (userInfo instanceof UserDTO) {
             UserDTO userDTO = (UserDTO) userInfo;
             json.putPOJO("userDTO", userDTO);
+            json.putPOJO("loginUser_userId", loginUser_userId);
         }
         else if (userInfo instanceof TrainerDTO) {
             TrainerDTO trainerDTO = (TrainerDTO) userInfo;
             json.putPOJO("trainerDTO", trainerDTO);
+            json.putPOJO("loginUser_userId", loginUser_userId);
         }
         else {
             json.put("noData", "noData");
         }
         return json.toString();
+    }
+
+    @PostMapping("send_message")
+    @ResponseBody
+    public String send_message(@RequestParam("reciveId") String reciveId, @RequestParam("sendId") String sendId, @RequestParam("contents") String messageContent) throws Exception {
+        MessageDTO newMessage = new MessageDTO();
+        newMessage.setReceiveId(reciveId);
+        newMessage.setSendId(sendId);
+        newMessage.setMessageContent(messageContent);
+
+
+        adminMyPageService.saveMessage(newMessage);
+
+        return "success";
     }
 
     @PostMapping("reportAdminModal")

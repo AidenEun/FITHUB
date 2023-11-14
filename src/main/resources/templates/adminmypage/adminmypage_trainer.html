@@ -14,6 +14,7 @@
 	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
 
 	<link rel="stylesheet" th:href="@{/assets/css/profileModal.css}">
+	<link rel="stylesheet" th:href="@{/assets/css/userMassage.css}">
 	<link rel="stylesheet" th:href="@{/assets/css/signUpModal.css}">
 </head>
 <style>
@@ -120,6 +121,7 @@
 
 	<!-- Modal -->
 	<th:block th:replace="~{layout/profileModal::profileModal()}"></th:block>
+	<th:block th:replace="~{layout/userMessage::userMessage()}"></th:block>
 	<th:block th:replace="~{layout/signUpModal::signUpModal()}"></th:block>
 
 	<!-- Main -->
@@ -235,6 +237,7 @@
 <script th:src="@{/assets/js/sidebar.js}"></script>
 
 <script th:src="@{/assets/js/profile.js}"></script>
+<script th:src="@{/assets/js/userMessage.js}"></script>
 <script th:src="@{/assets/js/signUpModal.js}"></script>
 <script>
 	const pageForm = $("#pageForm");

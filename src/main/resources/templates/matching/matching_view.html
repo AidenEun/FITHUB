@@ -559,6 +559,7 @@ border-radius: 15px;
 });
 
   function showList(pageNum){
+      const boardNum = document.getElementById('board').getAttribute('data-board-num');
       reviewService.getList(
           {boardNum:boardNum, pageNum:pageNum||1},
           function(reviewCnt, list){
@@ -575,8 +576,8 @@ border-radius: 15px;
                   str += '<div style="display:inline; float:left; width:80%;">';
                   //<strong class="userId3">apple</strong>
                   str += '<strong class="userId'+list[i].reviewNum+'">'+list[i].userId+'</strong>';
-                  //<p class="reply3">댓글내용</p>
-                  str += '<p class="reply'+list[i].reviewNum+'">'+list[i].reviewContent+'</p>';
+                  //<p class="review3">댓글내용</p>
+                  str += '<p class="review'+list[i].reviewNum+'">'+list[i].reviewContent+'</p>';
                   str += '</div><div style="text-align:right;">'
                   str += '<strong>'+reviewService.displayTime(list[i])+'</strong>'
                   if(list[i].userId == loginUser){
@@ -589,14 +590,15 @@ border-radius: 15px;
               }
               reviews.html(str);
 
-              $(".remove").on("click",deleteReply);
-              $(".modify").on("click",modifyReply);
-              $(".mfinish").on("click",modifyReplyOk);
+              $(".remove").on("click",deleteReview);
+              $(".modify").on("click",modifyReview);
+              $(".mfinish").on("click",modifyReviewOk);
 
               showReviewPage(reviewCnt, pageNum);
           }
       )
   }
+
 
   function showReviewPage(reviewCnt, pageNum){
       let endPage = Math.ceil(pageNum/5)*5;

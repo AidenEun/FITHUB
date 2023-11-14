@@ -382,4 +382,9 @@ public class AdminMyPageServiceImpl implements AdminMyPageService {
         adminMyPageMapper.updateMessageCategory(messageNum);
     }
 
+
+    @Override
+    public void saveMessage(MessageDTO newMessage){
+        adminMyPageMapper.saveMatching(newMessage);
+    };
 }

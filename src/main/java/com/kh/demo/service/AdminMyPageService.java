@@ -97,4 +97,5 @@ public interface AdminMyPageService {
 
     void returnMessage(String messageContent, String receiveId, Long messageNum);
 
+    void saveMessage(MessageDTO newMessage);
 }

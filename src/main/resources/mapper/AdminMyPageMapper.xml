@@ -421,4 +421,9 @@
         SET category = 'Done'
         WHERE message_num = #{messageNum}
     </update>
+
+    <insert id="saveMessage">
+        insert into message (receive_id, send_id, message_content)
+        values (#{receiveId}, #{sendId}, #{messageContent})
+    </insert>
 </mapper>
