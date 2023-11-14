@@ -97,17 +97,18 @@
 	<div class="inner">
 
 		<header class="major">
+			<h2>커뮤니티</h2>
 		</header>
 
 		<!-- Content -->
 		<div class="content">
 			<div class="cotent_header"> </div>
 
-			<div class="info_news">
-				<h2>뉴스</h2>
+			<div class="commu_free">
+				<h2>자유게시판</h2>
 				<div style="display: flex; width: 100%; height: 300px;">
-					<th:block th:if="${newsList != null and newsList.size()>0}">
-						<th:block th:each="board, iterStat : ${newsList}" th:if="${iterStat.index < 4}">
+					<th:block th:if="${freeList != null and freeList.size()>0}">
+						<th:block th:each="board, iterStat : ${freeList}" th:if="${iterStat.index < 4}">
 							<table style="border : 1px solid lightgrey; margin: 3px;">
 								<tr>
 									<td class="thumbnail">썸네일</td>
@@ -129,10 +130,10 @@
 						</th:block>
 					</th:block>
 				</div>
-				<div class="button"><a th:href="${'/info/info_news'}">더보기</a></div>
+				<div class="button"><a th:href="${'/community/commu_free'}">더보기</a></div>
 			</div>
 			<hr>
-			<div class="info_food">
+			<div class="commu_food">
 				<h2>식단</h2>
 				<div style="display: flex; width: 100%; height: 300px;">
 					<th:block th:if="${foodList != null and foodList.size()>0}">
@@ -158,10 +159,10 @@
 						</th:block>
 					</th:block>
 				</div>
-				<div class="button"><a th:href="${'/info/info_food'}">더보기</a></div>
+				<div class="button"><a th:href="${'/community/commu_food'}">더보기</a></div>
 			</div>
 			<hr>
-			<div class="info_exer">
+			<div class="commu_exercise">
 				<h2>운동</h2>
 				<div style="display: flex; width: 100%; height: 300px;">
 					<th:block th:if="${exerList != null and exerList.size()>0}">
@@ -187,14 +188,14 @@
 						</th:block>
 					</th:block>
 				</div>
-				<div class="button"><a th:href="${'/info/info_exercise'}">더보기</a></div>
+				<div class="button"><a th:href="${'/community/commu_exercise'}">더보기</a></div>
 			</div>
 			<hr>
-			<div class="info_tip">
-				<h2>꿀팁</h2>
+			<div class="commu_gallery">
+				<h2>갤러리</h2>
 				<div style="display: flex; width: 100%; height: 300px;">
-					<th:block th:if="${tipList != null and tipList.size()>0}">
-						<th:block th:each="board, iterStat : ${tipList}" th:if="${iterStat.index < 4}">
+					<th:block th:if="${galleryList != null and galleryList.size()>0}">
+						<th:block th:each="board, iterStat : ${galleryList}" th:if="${iterStat.index < 4}">
 							<table style="border : 1px solid lightgrey; margin: 3px;">
 								<tr>
 									<td class="thumbnail">썸네일</td>
@@ -216,10 +217,39 @@
 						</th:block>
 					</th:block>
 				</div>
-				<div class="button"><a th:href="${'/info/info_tip'}">더보기</a></div>
+				<div class="button"><a th:href="${'/community/commu_gallery'}">더보기</a></div>
 			</div>
 			<hr>
-			<form name="pageForm" id="pageForm" th:action="@{/info/info_list}">
+			<div class="commu_qna">
+				<h2>고민 Q&A</h2>
+				<div style="display: flex; width: 100%; height: 300px;">
+					<th:block th:if="${qnaList != null and qnaList.size()>0}">
+						<th:block th:each="board, iterStat : ${qnaList}" th:if="${iterStat.index < 4}">
+							<table style="border : 1px solid lightgrey; margin: 3px;">
+								<tr>
+									<td class="thumbnail">썸네일</td>
+								</tr>
+								<tr>
+									<td class="boardTitle" style="height: 30px; ">
+										<a class="get" th:href="${board.boardNum}">
+											<b>[[${board.boardTitle}]]</b></a>
+									</td>
+								</tr>
+								<tr>
+									<td class="boardContent">
+										<a class="get" th:href="${board.boardNum}">
+											<span th:utext="${board.boardContent}"></span>
+										</a>
+									</td>
+								</tr>
+							</table>
+						</th:block>
+					</th:block>
+				</div>
+				<div class="button"><a th:href="${'/community/commu_qna'}">더보기</a></div>
+			</div>
+			<hr>
+			<form name="pageForm" id="pageForm" th:action="@{/community/commu_list}">
 				<input type="hidden" name="pagenum" th:value="${pageMaker.cri.pagenum}">
 				<input type="hidden" name="amount" th:value="${pageMaker.cri.amount}">
 				<input type="hidden" name="type" th:value="${pageMaker.cri.type}">
@@ -232,11 +262,12 @@
 		<div class="sidebar">
 
 			<section>
-				<h3><a href="/info/info_list" style="color: #5a8100;">전체</a></h3>
-				<h3><a href="/info/info_news">뉴스</a></h3>
-				<h3><a href="/info/info_food">식단</a></h3>
-				<h3><a href="/info/info_exercise">운동</a></h3>
-				<h3><a href="/info/info_tip">꿀팁</a></h3>
+				<h3><a href="/community/commu_list" style="color: #5a8100;">전체</a></h3>
+				<h3><a href="/community/commu_free">자유게시판</a></h3>
+				<h3><a href="/community/commu_exercise">운동</a></h3>
+				<h3><a href="/community/commu_food">식단</a></h3>
+				<h3><a href="/community/commu_gallery">갤러리</a></h3>
+				<h3><a href="/community/commu_qna">고민 Q&A</a></h3>
 			</section>
 
 		</div>
@@ -269,7 +300,7 @@
 	$(".get").on("click",function(e){
 		e.preventDefault();
 		let boardNum = $(this).attr("href");
-		let url=/*[[@{/info/info_get}]]*/'';
+		let url=/*[[@{/community/commu_get}]]*/'';
 		pageForm.append("<input type='hidden' name='boardNum' value='"+boardNum+"'>")
 		pageForm.attr("action",url);
 		pageForm.attr("method","get");

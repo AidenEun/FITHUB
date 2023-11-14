@@ -93,18 +93,17 @@
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">
 	<div class="inner">
-
 		<header class="major">
-			<h2>정보</h2>
+			<h2>커뮤니티</h2>
 		</header>
 
 		<!-- Content -->
 		<div class="content">
-			<div class="cotent_header"><h2>뉴스</h2></div>
-			<div class="button"><a th:href="${'/info/info_write'+pageMaker.cri.listLink}">작성하기</a></div>
-			<div style="width: 100%">
+			<div class="cotent_header"><h2>자유게시판</h2></div>
+			<div class="button"><a th:href="${'/community/commu_write'+pageMaker.cri.listLink}">작성하기</a></div>
+			<div style="width: 100%;">
 				<!-- 게시글 리스트 띄우는 테이블 -->
-				<table id="list" class="info_news_list" style="border-bottom: 1px #304400">
+				<table id="list" class="commu_free_list" style="border-bottom: 1px #304400; width: 100%;">
 					<th:block th:if="${list != null and list.size()>0}" th:each="board : ${list}">
 						<tr valign="middle">
 							<td id="thumbnail" rowspan="3" style="width: 100%">
@@ -133,7 +132,7 @@
 					</th:block>
 					<th:block th:if="${list == null or list.size() == 0}">
 						<tr>
-							<td colspan="2" style="text-align: center; font-size: 14px;">등록된
+							<td colspan="2" style="text-align: center; font-size: 14px; width: 100%;">등록된
 								게시글이 없습니다.</td>
 						</tr>
 					</th:block>
@@ -157,7 +156,7 @@
 				</tr>
 			</table>
 			<!-- 검색 -->
-			<form id="searchForm" th:action="@{/info/info_news}">
+			<form id="searchForm" th:action="@{/community/commu_free}">
 				<div class="search_area">
 					<select name="type">
 						<option value="" th:selected="${pageMaker.cri.type == null}">검색</option>
@@ -175,7 +174,7 @@
 				<input type="hidden" value="10" name="amount">
 			</form>
 			<!--페이지폼-->
-			<form name="pageForm" id="pageForm" th:action="@{/info/info_news}">
+			<form name="pageForm" id="pageForm" th:action="@{/community/commu_free}">
 				<input type="hidden" name="pagenum" th:value="${pageMaker.cri.pagenum}">
 				<input type="hidden" name="amount" th:value="${pageMaker.cri.amount}">
 				<input type="hidden" name="type" th:value="${pageMaker.cri.type}">
@@ -186,13 +185,16 @@
 
 		<!-- Sidebar -->
 		<div class="sidebar">
+
 			<section>
-				<h3><a href="/info/info_list">전체</a></h3>
-				<h3><a href="/info/info_news" style="color: #5a8100;">뉴스</a></h3>
-				<h3><a href="/info/info_food">식단</a></h3>
-				<h3><a href="/info/info_exercise">운동</a></h3>
-				<h3><a href="/info/info_tip">꿀팁</a></h3>
+				<h3><a href="/community/commu_list">전체</a></h3>
+				<h3><a href="/community/commu_free" style="color: #5a8100;">자유게시판</a></h3>
+				<h3><a href="/community/commu_exercise">운동</a></h3>
+				<h3><a href="/community/commu_food">식단</a></h3>
+				<h3><a href="/community/commu_gallery">갤러리</a></h3>
+				<h3><a href="/community/commu_qna">고민 Q&A</a></h3>
 			</section>
+
 		</div>
 
 	</div>
@@ -216,7 +218,6 @@
 <script th:src="@{/assets/js/sidebar.js}"></script>
 <script th:src="@{/assets/js/profile.js}"></script>
 </body>
-
 <script th:inline="javascript">
 	const searchForm = $("#searchForm");
 	const pageForm = $("#pageForm");
@@ -231,7 +232,7 @@
 	$(".get").on("click",function(e){
 		e.preventDefault();
 		let boardNum = $(this).attr("href");
-		let url=/*[[@{/info/info_get}]]*/'';
+		let url=/*[[@{/community/commu_get}]]*/'';
 		pageForm.append("<input type='hidden' name='boardNum' value='"+boardNum+"'>")
 		pageForm.attr("action",url);
 		pageForm.attr("method","get");
