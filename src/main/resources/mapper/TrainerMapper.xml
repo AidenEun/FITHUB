@@ -27,5 +27,14 @@
         ORDER BY subscription_count DESC
         LIMIT 3
     </select>
+
+    <select id="getTrainerTop5">
+        SELECT trainer.*, COUNT(subscribe.trainer_id) AS subscription_count
+        FROM trainer
+                 LEFT JOIN subscribe ON trainer.trainer_id = subscribe.trainer_id
+        GROUP BY trainer.trainer_id
+        ORDER BY subscription_count DESC
+            LIMIT 5
+    </select>
 </mapper>
 

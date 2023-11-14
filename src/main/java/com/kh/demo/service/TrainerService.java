@@ -9,4 +9,6 @@ public interface TrainerService {
 
     List<TrainerDTO> getTrainerTopList();
 
+    List<TrainerDTO> getTrainerTop5List();
+
 }
