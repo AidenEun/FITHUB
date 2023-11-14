@@ -1,7 +1,10 @@
 <th:block th:fragment="profileModal()" xmlns:th="http://www.thymeleaf.org">
     <div class="modal_box">
         <div class="modal_contents">
-            <button class="close">&times;</button>
+            <div class="upper_area">
+                <a href="#" class="close"><img src="/images/xbox.png" alt="close"></a>
+                <a href="#" class="message"><img src="/images/messageMap.png" alt="userid"></a>
+            </div>
             <h1 class="title">프로필</h1>
             <div class="profile">
                 <div class="img_area">
@@ -10,7 +13,6 @@
                 <div class="desc">
                     <p class="name"><a></a></p>
                     <p><a href="#">프로필 자세히 보기</a></p>
-                    <p><a href="#">쪽지 보내기</a></p>
                 </div>
             </div>
         </div>

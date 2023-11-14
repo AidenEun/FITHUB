@@ -173,7 +173,6 @@ public class MatchingController {
         newMatching.setUserId(userId);
         newMatching.setTrainerId(trainerId);
 
-        // 기타 필요한 데이터 설정
 
         MatchingService.saveMatching(newMatching); // 여기서 적절한 서비스 메서드를 호출하여 데이터베이스에 insert
 

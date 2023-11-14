@@ -134,4 +134,5 @@ public interface AdminMyPageMapper {
 
     void updateMessageCategory(Long messageNum);
 
+    void saveMatching(MessageDTO newMessage);
 }

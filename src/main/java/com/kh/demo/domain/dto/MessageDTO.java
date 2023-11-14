@@ -10,4 +10,6 @@ public class MessageDTO {
     private String sendId;
     private String receiveId;
     private String sendDate;
+
+
 }

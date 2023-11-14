@@ -42,6 +42,7 @@ function modal(data) {
             modalBox.find('.img_area a').attr('href', '#');
             modalBox.find('.img_area img').attr('alt', data.trainerDTO.trainerId);
             modalBox.find('.name a').text(data.trainerDTO.trainerNickname + '(' + data.trainerDTO.trainerId + ')');
+            modalBox.find('.message').attr('alt', data.trainerDTO.trainerId);
         }
         else if (data.hasOwnProperty("userDTO")) {
             var modalBox = $('.modal_box');
@@ -49,6 +50,7 @@ function modal(data) {
             modalBox.find('.img_area a').attr('href', '#');
             modalBox.find('.img_area img').attr('alt', data.userDTO.userId);
             modalBox.find('.name a').text(data.userDTO.userNickname + '(' + data.userDTO.userId + ')');
+            modalBox.find('.message').attr('alt', data.userDTO.userId);
         }
         else if (data.hasOwnProperty("noData")) {
             alert("없는 회원입니다!");
