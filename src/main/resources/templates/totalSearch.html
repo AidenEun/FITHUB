@@ -154,8 +154,11 @@
         overflow: hidden;
         text-overflow: ellipsis
     }
-    .ranking table tr td{
-        text-overflow: ellipsis; white-space: nowrap; max-width: 160px;
+
+    .ranking table tr td {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 160px;
     }
 
 
@@ -220,7 +223,7 @@
         th:replace="~{layout/index_header::header(${session.loginUser},${session.user},${session.trainer},${session.admin})}"></th:block>
 
 <!-- Modal -->
-<th:block th:replace="~{layout/profileModal::profileModal()}"></th:block>
+<th:block th:replace="~{layout/profileModal::profileModal}"></th:block>
 
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">
@@ -237,9 +240,9 @@
             </div>
             <div id="gnb">
                 <div class="btn_area" style="margin-bottom: 20px;">
-                    <input class="viewNow" type="button" th:value="'전체&nbsp;'+'('+${boardAllCnt}+')'" >
-<!--                </div>-->
-<!--                <div class="btn_area btn_category">-->
+                    <input class="viewNow" type="button" th:value="'전체&nbsp;'+'('+${boardAllCnt}+')'">
+                    <!--                </div>-->
+                    <!--                <div class="btn_area btn_category">-->
                     <input type="button" th:value="'정보&nbsp;('+${boardCntArr[0]}+')'" onclick="newsView();">
                     <input type="button" th:value="'꿀팁&nbsp;('+${boardCntArr[1]}+')'" onclick="tipView();">
                     <input type="button" th:value="'커뮤니티&nbsp;('+${boardCntArr[2]}+')'" onclick="commuView();">
@@ -388,7 +391,7 @@
                 </div>
             </div>
             <div class="search_box">
-                <h2  th:text="'커뮤니티&nbsp;('+${boardCntArr[2]}+')'" ></h2>
+                <h2 th:text="'커뮤니티&nbsp;('+${boardCntArr[2]}+')'"></h2>
                 <div class="search_content_box">
                     <table style="text-align: center;">
                         <thead>
@@ -453,7 +456,7 @@
                 </div>
             </div>
             <div class="search_box">
-                <h2 th:text="'트레이너 매칭&nbsp;('+${boardCntArr[3]}+')'" ></h2>
+                <h2 th:text="'트레이너 매칭&nbsp;('+${boardCntArr[3]}+')'"></h2>
                 <div class="search_content_box">
                     <table style="text-align: center;">
                         <thead>
@@ -518,7 +521,7 @@
                 </div>
             </div>
             <div class="search_box">
-                <h2 th:text="'챌린지&nbsp;('+${boardCntArr[4]}+')'" ></h2>
+                <h2 th:text="'챌린지&nbsp;('+${boardCntArr[4]}+')'"></h2>
                 <div class="search_content_box">
                     <table style="text-align: center;">
                         <thead>
@@ -623,7 +626,7 @@
 <script th:src="@{/assets/js/sidebar.js}"></script>
 <script th:src="@{/assets/js/profile.js}"></script>
 <script>
-    function newsView(){
+    function newsView() {
 
     }
 </script>
