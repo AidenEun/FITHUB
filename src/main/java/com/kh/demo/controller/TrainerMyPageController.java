@@ -46,15 +46,14 @@ public class TrainerMyPageController {
         List<BoardDTO>  list = service.getBoardMyList(cri, trainerId);
         model.addAttribute("list", list);
         model.addAttribute("trainer", id);
-        System.out.println("trainerid"+id);
+
         model.addAttribute("subPageMaker", new PageDTO(service.getScribeTotal(cri, trainerId), cri));
 
-
-        model.addAttribute("Profiles",service.getProFileList(trainerId));
+        model.addAttribute("profile",service.getProFileList(trainerId));
 
         model.addAttribute("files",service.getFileList(trainerId));
-        System.out.println("Profiles"+service.getProFileList(trainerId));
         System.out.println("files"+service.getFileList(trainerId));
+        System.out.println("Profile:: "+service.getProFileList(trainerId));
 
         model.addAttribute("pageMaker", new PageDTO(service.getBoardTotal(cri, trainerId), cri));
         model.addAttribute("newly_board", service.getBoardNewlyList(list));
@@ -70,14 +69,17 @@ public class TrainerMyPageController {
 
 
     @PostMapping("trainer_myprofile_modify")
-    public String trainer_myprofile_modify(TrainerDTO trainerdto,String updateCnt , Model model , MultipartFile[] files) throws IOException {
+    public String trainer_myprofile_modify(TrainerDTO trainerdto,String updateCnt , Model model , MultipartFile[] files,MultipartFile profile) throws IOException {
         System.out.println(trainerdto);
+        System.out.println("files: "+files);
+        System.out.println("profile: "+profile);
+
         if(files != null){
             for (int i = 0; i < files.length; i++) {
                 System.out.println("controller : "+files[i].getOriginalFilename());
             }
         }
-        if (service.trainer_modify(trainerdto,files,updateCnt)){
+        if (service.trainer_modify(trainerdto,files,profile,updateCnt)){
             return "redirect:/trainermypage/trainer_myprofile";
         }
         else {

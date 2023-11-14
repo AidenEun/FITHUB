@@ -73,12 +73,12 @@ public interface TrainerMyPageService {
 
     List<ChallNoticeBoardDTO> getMyChallenge(Criteria cri, String trainerId, String challCategory, String challTerm);
     //트레이너 프로필
-    List<ProfileDTO> getProFileList(String trainerId);
+    ProfileDTO getProFileList(String trainerId);
     List<ProfileDTO> getFileList(String trainerId);
 
     ResponseEntity<Resource> getThumbnailResource(String sysName) throws Exception;
 
-    boolean trainer_modify(TrainerDTO trainer, MultipartFile[] files, String updateCnt) throws IOException;
+    boolean trainer_modify(TrainerDTO trainer, MultipartFile[] files, MultipartFile profile, String updateCnt) throws IOException;
 
 
     //나의 매칭리스트
