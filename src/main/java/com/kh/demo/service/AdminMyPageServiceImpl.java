@@ -61,11 +61,11 @@ public class AdminMyPageServiceImpl implements AdminMyPageService {
 
     @Override
     public Object getUserById(String userId) {
-        if (adminMyPageMapper.getUserByIdBoolean(userId)){
-            return adminMyPageMapper.getUserById(userId);
-        }
-        else if (adminMyPageMapper.getTrainerByIdBoolean(userId)) {
+        if (adminMyPageMapper.getTrainerByIdBoolean(userId)) {
             return adminMyPageMapper.getTrainerById(userId);
+        }
+        else if (adminMyPageMapper.getUserByIdBoolean(userId)) {
+            return adminMyPageMapper.getUserById(userId);
         }
         return null;
     }

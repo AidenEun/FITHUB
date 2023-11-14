@@ -1,0 +1,41 @@
+.top_img_box{
+    width: 100%;
+    height: 310px;
+    overflow: hidden;
+    margin-bottom: 50px;
+}
+
+.top_img_box > img {
+    width: 100%;
+    height: auto;
+    transform: translateY(-10%);
+}
+
+#main {
+    padding: 0;
+}
+
+.wrapper {
+    padding: 0;
+    margin-bottom: 100px;
+}
+
+#header {
+    background-color: #8FA746;
+}
+
+#footer {
+    background-color: #606C3A;
+}
+
+#header nav > ul > li a {
+    color: white;
+}
+
+#header h1 a {
+    color: white;
+}
+
+#header .main ul li > a {
+    color: white;
+}
