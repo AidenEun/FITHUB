@@ -207,23 +207,48 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public List<BoardDTO> getNewsList(Criteria cri) {
-		return bmapper.getNewsList(cri);
+	public List<BoardDTO> getInfoNewsList(Criteria cri) {
+		return bmapper.getInfoNewsList(cri);
 	}
 
 	@Override
-	public List<BoardDTO> getExerList(Criteria cri) {
-		return bmapper.getExerList(cri);
+	public List<BoardDTO> getInfoExerList(Criteria cri) {
+		return bmapper.getInfoExerList(cri);
 	}
 
 	@Override
-	public List<BoardDTO> getFoodList(Criteria cri) {
-		return bmapper.getFoodList(cri);
+	public List<BoardDTO> getInfoFoodList(Criteria cri) {
+		return bmapper.getInfoFoodList(cri);
 	}
 
 	@Override
-	public List<BoardDTO> getTipList(Criteria cri) {
-		return bmapper.getTipList(cri);
+	public List<BoardDTO> getInfoTipList(Criteria cri) {
+		return bmapper.getInfoTipList(cri);
+	}
+
+	@Override
+	public List<BoardDTO> getCommuFreeList(Criteria cri) {
+		return bmapper.getCommuFreeList(cri);
+	}
+
+	@Override
+	public List<BoardDTO> getCommuExerList(Criteria cri) {
+		return bmapper.getCommuExerList(cri);
+	}
+
+	@Override
+	public List<BoardDTO> getCommuFoodList(Criteria cri) {
+		return bmapper.getCommuFoodList(cri);
+	}
+
+	@Override
+	public List<BoardDTO> getCommuGalleryList(Criteria cri) {
+		return bmapper.getCommuGalleryList(cri);
+	}
+
+	@Override
+	public List<BoardDTO> getCommuQnaList(Criteria cri) {
+		return bmapper.getCommuQnaList(cri);
 	}
 
 	@Override
@@ -367,6 +392,22 @@ public class BoardServiceImpl implements BoardService{
 	public BoardDTO getFoodTop1() {
 		return bmapper.getFoodTop1();
 	}
+
+	@Override
+	public List<BoardDTO> getBoardTop5List() {
+		return bmapper.getBoardTop5List();
+	}
+
+	@Override
+	public List<BoardDTO> getinfoSearchList(String keyword) {
+		return bmapper.getinfoSearchList(keyword);
+	}
+
+//	@Override
+//	public int getNewsSearchCnt(String keyword) {
+//		return bmapper.getNewsSearchCnt(keyword);
+//	}
+
 
 
 

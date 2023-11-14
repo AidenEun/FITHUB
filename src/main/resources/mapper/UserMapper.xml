@@ -13,7 +13,11 @@
 		WHERE user_id = #{userId}
 	</select>
 
-	<select id="getSignUpListInUser" resultType="com.kh.demo.domain.dto.UserDTO">
+	<select id="findAdminById">
+		select * from admin where admin_id=#{userId}
+	</select>
+
+	<select id="getSignUpListInUser">
 		SELECT *
 		FROM user
 		WHERE user_id IN (SELECT user_id FROM trainer_signup)

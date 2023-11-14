@@ -29,8 +29,6 @@ public class InfoBoardController {
     @Autowired @Qualifier("BoardServiceImpl")
     private BoardService service;
 
-
-
     @GetMapping("info_news")
     public void info_news_list(Criteria cri, Model model) throws Exception{
         cri.setBoardCategory("infoNews");
@@ -81,10 +79,10 @@ public class InfoBoardController {
     @GetMapping("info_list")
     public void info_list(Criteria cri, Model model) throws Exception{
 
-        List<BoardDTO> newsList = service.getNewsList(cri);
-        List<BoardDTO> exerList = service.getExerList(cri);
-        List<BoardDTO> foodList = service.getFoodList(cri);
-        List<BoardDTO> tipList = service.getTipList(cri);
+        List<BoardDTO> newsList = service.getInfoNewsList(cri);
+        List<BoardDTO> exerList = service.getInfoExerList(cri);
+        List<BoardDTO> foodList = service.getInfoFoodList(cri);
+        List<BoardDTO> tipList = service.getInfoTipList(cri);
         model.addAttribute("newsList",newsList);
         model.addAttribute("exerList",exerList);
         model.addAttribute("foodList",foodList);

@@ -1,5 +1,7 @@
 package com.kh.demo.controller;
 
+import com.kh.demo.domain.dto.AdminDTO;
+import com.kh.demo.domain.dto.TrainerDTO;
 import com.kh.demo.domain.dto.UserDTO;
 import com.kh.demo.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -33,16 +35,29 @@ public class UserController {
 
     @PostMapping("login")
     public String login(String userid, String userpw, HttpServletRequest req) {
-        UserDTO loginUser = service.login(userid, userpw);
-        if(loginUser != null) {
-            req.getSession().setAttribute("loginUser", loginUser.getUserId());
-            UserDTO user = service.getDetail(loginUser.getUserId());
-            req.getSession().setAttribute("user", user);
+        Object loginUser = service.login(userid, userpw);
+
+        if (loginUser instanceof AdminDTO) {
+            req.getSession().setAttribute("loginUser",((AdminDTO) loginUser).getAdminId());
+            return "redirect:/";
+        }
+        else if (loginUser instanceof UserDTO) {
+            req.getSession().setAttribute("loginUser",((UserDTO) loginUser).getUserId());
             return "redirect:/";
         }
         else {
             return "redirect:/";
         }
+//        UserDTO loginUser = service.login(userid, userpw);
+//        if(loginUser != null) {
+//            req.getSession().setAttribute("loginUser", loginUser.getUserId());
+//            UserDTO user = service.getDetail(loginUser.getUserId());
+//            req.getSession().setAttribute("user", user);
+//            return "redirect:/";
+//        }
+//        else {
+//            return "redirect:/";
+//        }
     }
 
     @GetMapping("logout")

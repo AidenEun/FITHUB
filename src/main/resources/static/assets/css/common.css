@@ -1,0 +1,71 @@
+#main {
+    padding: 0;
+}
+
+.wrapper {
+    padding: 0;
+    margin-bottom: 100px;
+}
+
+#header {
+    background-color: #8FA746;
+}
+
+.test12 {
+    width: 100%;
+    height: 250px;
+    margin: 4em 0;
+    background:
+            linear-gradient(to right, rgba(143, 167, 70, 0.65), rgba(143, 167, 70, 0.2)),
+            url('/images/admintop2.png');
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    display: flex; /* 세로 가운데 정렬을 위해 Flexbox 사용 */
+    flex-direction: column; /* 세로 방향으로 정렬 */
+    justify-content: center; /* 세로 가운데 정렬 */
+}
+
+header.test12 p {
+    margin: 0; /* 기본 마진 제거 */
+}
+
+#mainText {
+    margin: 0px;
+    font-size:18px;
+    font-weight: 400;
+    margin-bottom: 25px;
+    margin-left: 20px;
+}
+
+#subText {
+    margin: 0px;
+    font-size:45px;
+    font-weight: 400;
+    margin-left: 20px;
+}
+
+#footer {
+    background-color: #606C3A;
+}
+
+#header nav > ul > li a {
+    color: white;
+}
+
+#header h1 a {
+    color: white;
+}
+
+#header .main ul li > a {
+    color: white;
+}
+
+.boardRanking table tr td {
+    text-align: center;
+    background: #FFFFFF;
+}
+
+table{
+    border-collapse: separate;
+}

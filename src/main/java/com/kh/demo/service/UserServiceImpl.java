@@ -1,6 +1,7 @@
 package com.kh.demo.service;
 
 
+import com.kh.demo.domain.dto.AdminDTO;
 import com.kh.demo.domain.dto.Criteria;
 import com.kh.demo.domain.dto.UserDTO;
 import com.kh.demo.mapper.UserMapper;
@@ -41,10 +42,17 @@ public class UserServiceImpl implements UserService{
 
 
     @Override
-    public UserDTO login(String userId, String userPw) {
+    public Object login(String userId, String userPw) {
+        AdminDTO admin = umapper.findAdminById(userId);
         UserDTO user = umapper.findById(userId);
-        if(user != null) {
-            if(user.getUserPw().equals(userPw)) {
+
+        if(admin != null) {
+            if(admin.getAdminPw().equals(userPw)) {
+                return admin;
+            }
+        }
+        else if(user != null){
+            if(user.getUserPw().equals(userPw)){
                 return user;
             }
         }
