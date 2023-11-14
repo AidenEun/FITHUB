@@ -174,7 +174,7 @@ public class UserMyPageController {
     }
 
     @GetMapping("u_t_matching")
-    public void u_t_matching( Criteria cri, Model model, HttpServletRequest req) throws Exception {
+    public void u_t_matching(Criteria cri, Model model, HttpServletRequest req) throws Exception {
         HttpSession session = req.getSession();
         String userId = (String) session.getAttribute("loginUser");
 
@@ -188,9 +188,9 @@ public class UserMyPageController {
     }
 
     @PostMapping("u_t_matching")
-    public String u_t_matching(UTMatchingDTO utMatching){
+    public String u_t_matching(UTMatchingDTO utMatching) {
 
-        if(service.updateMatching(utMatching)){
+        if (service.updateMatching(utMatching)) {
             return "redirect:/usermypage/u_t_matching";
         }
         return "redirect:/";
@@ -396,21 +396,9 @@ public class UserMyPageController {
         String[] listNameArr = {breakfast, lunch, dinner, snack, exer};
         String[] sccChall;
         //진행중인 챌린지 내역
-        List<MyChallengeDTO> myChallDTOList = challService.findMychall(diary.getUserId(), diary.getRegdate());
+        List<MyChallengeDTO> myChallINGDTOList = challService.findMychall(diary.getUserId(), diary.getRegdate());
         //성공한 챌린지 내역
-        List<ChallNoticeBoardDTO> sccChallDTOList = new ArrayList<ChallNoticeBoardDTO>();
 //        System.out.println("성공한 챌린지 번호 : "+diary.getMyChallNum());
-        if (diary.getMyChallNum() != null) {
-            String[] sccChallNumArr = (diary.getMyChallNum()).split(",");
-
-            for (String data : sccChallNumArr) {
-                ChallNoticeBoardDTO sccChallDTO = challService.findchall(data);
-                sccChallDTOList.add(sccChallDTO);
-                System.out.println("성공챌린지 공지글 데이터"+sccChallDTO);
-
-            }
-
-        }
 
         model.addAttribute("user", user);
         model.addAttribute("diary", diary);
@@ -418,12 +406,8 @@ public class UserMyPageController {
         model.addAttribute("listNameArr", listNameArr);
         model.addAttribute("foodCalArr", foodCalArr);
         model.addAttribute("totalResult", totalResult);
-        model.addAttribute("myINGChallNum", myChallDTOList);
-        model.addAttribute("sccChallDTOList", sccChallDTOList);
-
-
-        System.out.println("성공데이터"+sccChallDTOList);
-        System.out.println("진행데이터"+myChallDTOList);
+        model.addAttribute("myChallINGDTOList", myChallINGDTOList);
+        model.addAttribute("sccChallNum", diary.getMyChallNum());
 
     }
 

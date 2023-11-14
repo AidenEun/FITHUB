@@ -232,7 +232,8 @@
 <!-- Header -->
 <!--<th:block th:replace="~{layout/headerNoneModal::header(${session.loginUser})}"></th:block>-->
 <!--<th:block th:replace="~{layout/headerNoneModal::header(${session.loginUser},${session.user})}"></th:block>-->
-<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin})}"></th:block>
+<th:block
+        th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin})}"></th:block>
 <th:block th:replace="~{layout/searchModal::searchModal()}"></th:block>
 
 <div id="top_main_img">
@@ -334,7 +335,8 @@
                             <input type="text" value="kcal" readonly>
                             <input type="button" class="opensearch">
                         </div>
-                        <div type="text" class="list_area" id="dinner_result" th:text="${listNameArr[2]}" readonly></div>
+                        <div type="text" class="list_area" id="dinner_result" th:text="${listNameArr[2]}"
+                             readonly></div>
                         <div><input type="button" value="전체 삭제" onclick="removedinner()"></div>
                     </td>
                     <td class="food_area">
@@ -388,9 +390,11 @@
                             <input type="text" value="목표 칼로리" readonly>
                             <input type="text" th:value="${user.caloriesGoal}+kcal" id="caloriesGoal" readonly>
                             <input type="text" value="-" readonly>
-                            <input type="text" id="totalCal" th:value="${totalResult != null ? totalResult+'kcal' : '0kcal'}" readonly>
+                            <input type="text" id="totalCal"
+                                   th:value="${totalResult != null ? totalResult+'kcal' : '0kcal'}" readonly>
                             <input type="text" value="=" readonly>
-                            <input type="text" id="todayCal" th:value="${user.caloriesGoal}-${totalResult}+'kcal'" readonly>
+                            <input type="text" id="todayCal" th:value="${user.caloriesGoal}-${totalResult}+'kcal'"
+                                   readonly>
                         </div>
                     </td>
                 </tr>
@@ -399,10 +403,12 @@
                     <td colspan="2">
                         <div class="total_area" style="display: flex; justify-content: space-between">
                             <input type="text" value="탄수화물" readonly>
-                            <input type="text" id="carbo" th:value="${diary.carbo != null ? diary.carbo+'g' : '0g'}" readonly>
+                            <input type="text" id="carbo" th:value="${diary.carbo != null ? diary.carbo+'g' : '0g'}"
+                                   readonly>
 
                             <input type="text" value="단백질" readonly>
-                            <input type="text" id="protein" th:value="${diary.protein != null ? diary.protein+'g' : '0g'}" readonly>
+                            <input type="text" id="protein"
+                                   th:value="${diary.protein != null ? diary.protein+'g' : '0g'}" readonly>
 
                             <input type="text" value="지방" readonly>
                             <input type="text" id="fat" th:value="${diary.fat != null ? diary.fat+'g' : '0g'}" readonly>
@@ -436,13 +442,28 @@
                     <td colspan="2">
                         <input type="hidden" id="myINGChallNum" name="myINGChallNum">
                         <table id="mychallDataList">
-                            <th:block th:if="${diary.myChallNum == null or diary.myChallNum == 0 }">
-                                <tbody id="chall-table">
-                                <td style="text-align: center;">진행 중인 챌린지가 없습니다.</td>
-                                </tbody>
+                            <tbody id="chall-table">
+                            <!-- <th:block th:if="${#strings.isEmpty(diary.myChallNum)}">-->
+                            <th:block th:if="${ myChallINGDTOList == null and myChallINGDTOList.size() == 0}">
+                                <tr>
+                                    <!-- 챌린지가 없을 때의 블록 -->
+                                    <td style="text-align: center;">진행 중인 챌린지가 없습니다.</td>
+                                </tr>
                             </th:block>
+                            <th:block th:if="${ myChallINGDTOList != null or myChallINGDTOList.size() > 0}">
+                                <tr class="mychall_area">
+                                    <td th:each="myINGChallDTO, dataStat : ${myChallINGDTOList}">
+                                        <input type="checkbox" name="myChallNum" onClick="return false;"
+                                               th:id="'challNum_' + ${myINGChallDTO.challNum}"
+                                               th:value="${myINGChallDTO.challNum}"
+                                               th:checked="${#strings.contains(sccChallNum,myINGChallDTO.challNum)}">
+                                        <label th:for="'challNum_' + ${myINGChallDTO.challNum}">
+                                            [[${myINGChallDTO.challName}]]</label>
+                                    </td>
+                                </tr>
+                            </th:block>
+                            </tbody>
                         </table>
-
                     </td>
                 </tr>
 
@@ -599,73 +620,6 @@
         document.getElementsByName("fat")[0].value = todayfoodInfo[2];
     }
 
-    function checkMychall() {
-
-        const mychallBtn = document.getElementById("mychallBtn");
-        const mychallview = document.getElementById("challList");
-        const choicedate = document.getElementsByName("choicedate")[0].value;
-        const userid = document.getElementById("userid").value;
-
-        if (mychallBtn.classList.contains("viewchallBtn")) {
-            alert("이미 진행중인 챌린지를 확인했습니다")
-            return false;
-        } else {
-            mychallBtn.classList.add("viewchallBtn");
-            mychallview.classList.remove("hiddenList")
-
-            if (userid, choicedate) {
-                $.ajax({
-                    url: '/challenge/myChallInfo',
-                    method: 'POST',
-                    data: {
-                        userid: userid,
-                        choicedate: choicedate
-                    },
-                    dataType: 'json',
-                    success: function (data) {
-                        displayMyChallData(data.myChallDTOList);
-
-                    },
-                    error: function (error) {
-                        console.error('데이터를 가져오는 중 오류 발생' + error);
-                    }
-
-                })
-            }
-        }
-    }
-
-    function displayMyChallData(myChallDTOList) {
-
-        var tableBody = $('#chall-table');
-
-        if (myChallDTOList != null && myChallDTOList.length > 0) {
-            for (var i = 0; i < myChallDTOList.length; i += 2) {
-                var row = $('<tr class="mychall_area">');
-
-                var myChallData1 = myChallDTOList[i];
-                var myChallData2 = i + 1 < myChallDTOList.length ? myChallDTOList[i + 1] : null;
-
-                row.append('<td><input type="checkbox" name="myChallNum" id="' + myChallData1.challNum + '" value="' + myChallData1.challNum + '"/>\n' +
-                    '        <label for="' + myChallData1.challNum + '">' + myChallData1.challName + '</label></td>');
-
-                if (myChallData2) {
-                    row.append('<td><input type="checkbox" name="myChallNum" id="' + myChallData2.challNum + '" value="' + myChallData2.challNum + '"/>\n' +
-                        '        <label for="' + myChallData2.challNum + '">' + myChallData2.challName + '</label></td>');
-                } else {
-                    row.append('<td></td>');
-                }
-
-                tableBody.append(row);
-            }
-        } else {
-            var row = $('<tr class="mychall_area">');
-            row.append('<td style="text-align: center;">진행 중인 챌린지가 없습니다.</td>');
-            row.append('<td><input type="hidden" name="myChallNum" value="0"></td>');
-            tableBody.append(row);
-        }
-
-    }
 
     function sendit() {
         const mychallBtn = document.getElementById("mychallBtn");

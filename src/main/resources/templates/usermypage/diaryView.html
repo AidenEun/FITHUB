@@ -201,7 +201,8 @@
 <body class="is-preload">
 
 <!-- Header -->
-<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin})}"></th:block>
+<th:block
+        th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin})}"></th:block>
 
 
 <div id="top_main_img">
@@ -390,28 +391,26 @@
                     </td>
                 </tr>
                 <tr class="challcheckList" id="challList">
-
                     <td colspan="2">
                         <input type="hidden" id="myINGChallNum" name="myINGChallNum">
                         <table id="mychallDataList">
                             <tbody id="chall-table">
                             <!-- <th:block th:if="${#strings.isEmpty(diary.myChallNum)}">-->
-                            <th:block th:if="${ myINGChallNum == null and myINGChallNum.size() == 0}">
+                            <th:block th:if="${ myChallINGDTOList == null and myChallINGDTOList.size() == 0}">
                                 <tr>
                                     <!-- 챌린지가 없을 때의 블록 -->
                                     <td style="text-align: center;">진행 중인 챌린지가 없습니다.</td>
                                 </tr>
                             </th:block>
-                            <th:block th:if="${ myINGChallNum != null or myINGChallNum.size() > 0}">
-                                <tr class="mychall_area" th:each="myINGChallNum : ${myINGChallNum}">
-                                    <td>
+                            <th:block th:if="${ myChallINGDTOList != null or myChallINGDTOList.size() > 0}">
+                                <tr class="mychall_area">
+                                    <td th:each="myINGChallDTO, dataStat : ${myChallINGDTOList}">
                                         <input type="checkbox" name="myChallNum" onClick="return false;"
-                                               th:each="sccChallDTOList : ${sccChallDTOList}"
-                                               th:id="'challNum_' + ${myINGChallNum.challNum}"
-                                               th:value="${myINGChallNum.challNum}"
-                                               th:checked="${myINGChallNum.challNum == sccChallDTOList.challNum}">
-                                        <label th:for="'challNum_' + ${myINGChallNum.challNum}">
-                                            [[${myINGChallNum.challName}]]</label>
+                                               th:id="'challNum_' + ${myINGChallDTO.challNum}"
+                                               th:value="${myINGChallDTO.challNum}"
+                                               th:checked="${#strings.contains(sccChallNum,myINGChallDTO.challNum)}">
+                                        <label th:for="'challNum_' + ${myINGChallDTO.challNum}">
+                                            [[${myINGChallDTO.challName}]]</label>
                                     </td>
                                 </tr>
                             </th:block>
