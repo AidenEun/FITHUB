@@ -253,7 +253,8 @@ public class AdminMyPageController {
 
         json.putPOJO("userList", userList);
         json.putPOJO("pageDTO", pageDTO);
-        return json.toString();
+        String result = json.toString();
+        return result;
     }
 
     @GetMapping("searchTrainer")
