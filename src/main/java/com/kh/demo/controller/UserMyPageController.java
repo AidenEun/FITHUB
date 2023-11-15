@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -53,15 +54,17 @@ public class UserMyPageController {
                 response.setContentType("text/html; charset=UTF-8");
                 response.getWriter().write(alertScript);
                 response.getWriter().flush();
+                return null;
             }
-            model.addAttribute("user", user);
-            return "/usermypage/user_myinfo";
+            else{
+                model.addAttribute("user", user);
+                return "/usermypage/user_myinfo";
+            }
         }
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/html; charset=UTF-8");
         response.getWriter().write(alertScript2);
         response.getWriter().flush();
-
         return null;
     }
 
