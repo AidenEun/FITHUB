@@ -25,10 +25,17 @@ public interface BoardMapper {
 	List<BoardDTO> getList(Criteria cri);
 	Long getTotal(Criteria cri);
 
-	List<BoardDTO> getNewsList(Criteria cri);
-	List<BoardDTO> getExerList(Criteria cri);
-	List<BoardDTO> getFoodList(Criteria cri);
-	List<BoardDTO> getTipList(Criteria cri);
+	List<BoardDTO> getInfoNewsList(Criteria cri);
+	List<BoardDTO> getInfoExerList(Criteria cri);
+	List<BoardDTO> getInfoFoodList(Criteria cri);
+	List<BoardDTO> getInfoTipList(Criteria cri);
+
+	List<BoardDTO> getCommuFreeList(Criteria cri);
+	List<BoardDTO> getCommuExerList(Criteria cri);
+	List<BoardDTO> getCommuFoodList(Criteria cri);
+	List<BoardDTO> getCommuGalleryList(Criteria cri);
+	List<BoardDTO> getCommuQnaList(Criteria cri);
+
 
 	Long getLastNum(String userId);
 	BoardDTO findByNum(Long boardNum);
@@ -48,11 +55,17 @@ public interface BoardMapper {
 
 	List<BoardDTO> getCommuSearchList(String keyword);
 
-    BoardDTO getNewsTop1();
+	BoardDTO getNewsTop1();
 
 	BoardDTO getExerTop1();
 
 	BoardDTO getFoodTop1();
+
+    List<BoardDTO> getBoardTop5List();
+
+	List<BoardDTO> getinfoSearchList(String keyword);
+
+//    int getNewsSearchCnt(String keyword);
 }
 
 

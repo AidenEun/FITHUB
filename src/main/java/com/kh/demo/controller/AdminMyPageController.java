@@ -325,7 +325,7 @@ public class AdminMyPageController {
 //  Modal
     @PostMapping("profileModal")
     @ResponseBody
-    public String reportModal(@RequestParam("userId") String userId, HttpServletRequest req) throws Exception {
+    public String reportModal(@RequestParam("userId") String userId, HttpServletRequest req)throws Exception {
         ObjectNode json = JsonNodeFactory.instance.objectNode();
         Object userInfo = adminMyPageService.getUserById(userId);
 
@@ -350,9 +350,9 @@ public class AdminMyPageController {
 
     @PostMapping("send_message")
     @ResponseBody
-    public String send_message(@RequestParam("reciveId") String reciveId, @RequestParam("sendId") String sendId, @RequestParam("contents") String messageContent) throws Exception {
+    public String send_message(@RequestParam("receiveId") String receiveId, @RequestParam("sendId") String sendId, @RequestParam("contents") String messageContent) throws Exception {
         MessageDTO newMessage = new MessageDTO();
-        newMessage.setReceiveId(reciveId);
+        newMessage.setReceiveId(receiveId);
         newMessage.setSendId(sendId);
         newMessage.setMessageContent(messageContent);
 

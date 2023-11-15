@@ -86,7 +86,7 @@ td  input[type=text] + input[type=button] {
     font-weight: bold;
 }
 
-.pw_check {
+.pwCheck {
     padding: 10px 15px;
     margin: 10px 0 0 0;
     border: 1px solid rgb(240, 229, 215);
@@ -97,30 +97,30 @@ td  input[type=text] + input[type=button] {
     width: 530px;
 }
 
-#page1 .pw_check {
+#page1 .pwCheck {
     display: none;
 }
 
-.pw_check span {
+.pwCheck span {
     display: block;
     margin-left: 10.45px;
 }
 
-.pw_check span::before {
+.pwCheck span::before {
     content: '';
 }
 
-.pw_check .pct, .pw_check .pcf {
+.pwCheck .pct, .pwCheck .pcf {
     margin-left: 0px;
 }
 
-.pw_check .pct::before {
+.pwCheck .pct::before {
     content: '✔';
     position: relative;
     left: -5px;
 }
 
-.pw_check .pcf::before {
+.pwCheck .pcf::before {
     content: '✖';
     position: relative;
     left: -5px;
@@ -201,19 +201,6 @@ td  input[type=text] + input[type=button] {
     color: rgb(0, 200, 80);
 }
 
-.zipcode_area > td > input[type=text] {
-    width: 200px;
-}
-
-.zipcode_area > td > input[type=button] {
-    width: 130px !important;
-}
-
-.addr_area > td > input[type=text],
-.addr_area + tr > td > input[type=text],
-.addr_area + tr + tr > td > input[type=text] {
-    width: 340px;
-}
 
 .xBox {
     border: 1px solid #ccc;

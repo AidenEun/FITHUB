@@ -1,6 +1,7 @@
 package com.kh.demo.service;
 
 
+import com.kh.demo.domain.dto.AdminDTO;
 import com.kh.demo.domain.dto.Criteria;
 import com.kh.demo.domain.dto.UserDTO;
 import com.kh.demo.mapper.UserMapper;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.Comparator;
 import java.util.List;
@@ -23,7 +25,13 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public boolean join(UserDTO user) {
-        return false;
+        user.setUserId(generateUserId());
+        user.setUserJoindate(LocalDateTime.now());
+        return umapper.insertUser(user) == 1;
+    }
+
+    private String generateUserId() {
+        return "USER_" + System.currentTimeMillis();
     }
 
     @Override
@@ -34,10 +42,17 @@ public class UserServiceImpl implements UserService{
 
 
     @Override
-    public UserDTO login(String userId, String userPw) {
+    public Object login(String userId, String userPw) {
+        AdminDTO admin = umapper.findAdminById(userId);
         UserDTO user = umapper.findById(userId);
-        if(user != null) {
-            if(user.getUserPw().equals(userPw)) {
+
+        if(admin != null) {
+            if(admin.getAdminPw().equals(userPw)) {
+                return admin;
+            }
+        }
+        else if(user != null){
+            if(user.getUserPw().equals(userPw)){
                 return user;
             }
         }
