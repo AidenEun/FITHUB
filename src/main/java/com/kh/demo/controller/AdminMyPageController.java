@@ -1,5 +1,7 @@
 package com.kh.demo.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.kh.demo.domain.dto.*;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -241,7 +244,7 @@ public class AdminMyPageController {
 
     @GetMapping("searchUser")
     @ResponseBody
-    public String searchUser(@RequestParam("pageNum") int pageNum){
+    public String searchUser(@RequestParam("pageNum") int pageNum) throws JsonProcessingException {
         ObjectNode json = JsonNodeFactory.instance.objectNode();
         Criteria cri = new Criteria(pageNum, 10);
 
@@ -250,9 +253,9 @@ public class AdminMyPageController {
 
         json.putPOJO("userList", userList);
         json.putPOJO("pageDTO", pageDTO);
-
         return json.toString();
     }
+
     @GetMapping("searchTrainer")
     @ResponseBody
     public String searchTrainer(@RequestParam("pageNum") int pageNum){
@@ -264,7 +267,6 @@ public class AdminMyPageController {
 
         json.putPOJO("trainerList", trainerList);
         json.putPOJO("pageDTO", pageDTO);
-
         return json.toString();
     }
 
