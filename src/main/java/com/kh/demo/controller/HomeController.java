@@ -87,8 +87,6 @@ public class HomeController {
 
     @GetMapping("/totalSearch")
     public void search(String keyword,Model model){
-//        System.out.println(keyword);
-
         //인기게시글 띄우기
         List<BoardDTO> boardTop5List = boardservice.getBoardTop5List();
 
@@ -99,6 +97,8 @@ public class HomeController {
         System.out.println(boardAllCnt);
 
         //각 게시판에서 글 가져오기
+
+//        List<BoardDTO> infoSearchList1= boardservice.getcriinfoSearchList(crikey);
 
         List<BoardDTO> infoSearchList = boardservice.getinfoSearchList(keyword);
 
@@ -123,6 +123,7 @@ public class HomeController {
         model.addAttribute("trainerTop5List",trainerTop5List);
         model.addAttribute("boardTop5List",boardTop5List);
         model.addAttribute("boardCntArr",boardCntArr);
+        model.addAttribute("keyword",keyword);
 
 
     }
