@@ -1,57 +1,57 @@
 let flag = false;
 let pwTest = [false,false,false,false,false]
-function sendit(){
+function sendit() {
     const joinForm = document.joinForm;
 
     const userId = joinForm.userId;
-    if(userId.value == ""){
+    if (userId.value == "") {
         alert("아이디를 입력하세요!")
         userId.focus();
         return false;
     }
-    if(userId.value.length < 5 || userId.value.length > 12){
+    if (userId.value.length < 5 || userId.value.length > 12) {
         alert("아이디는 5자 이상 12자 이하로 입력하세요!");
         userId.focus();
         return false;
     }
 
     const result = document.getElementById("result");
-    if(result.innerHTML == "&nbsp;"){
-    	alert("아이디 중복검사를 진행해주세요!");
-    	userId.focus();
-    	return false;
+    if (result.innerHTML == "&nbsp;") {
+        alert("아이디 중복검사를 진행해주세요!");
+        userId.focus();
+        return false;
     }
-    if(result.innerHTML == "중복된 아이디가 있습니다!"){
-    	alert("중복체크 통과 후 가입이 가능합니다!");
-    	userId.focus();
-    	return false;
+    if (result.innerHTML == "중복된 아이디가 있습니다!") {
+        alert("중복체크 통과 후 가입이 가능합니다!");
+        userId.focus();
+        return false;
     }
 
     const userPw = joinForm.userPw;
 
-    for(let i=0;i<5;i++){
-    	if(!pwTest[i]){
-    		alert("비밀번호 확인을 다시하세요!");
-    		userPw.focus();
-    		return false;
-    	}
+    for (let i = 0; i < 5; i++) {
+        if (!pwTest[i]) {
+            alert("비밀번호 확인을 다시하세요!");
+            userPw.focus();
+            return false;
+        }
     }
     const userName = joinForm.userName;
-    if(userName.value == ""){
+    if (userName.value == "") {
         alert("이름을 입력하세요!");
         userName.focus();
         return false;
     }
     const exp_name = /[가-힣]+$/;
-    if(!exp_name.test(userName.value)){
+    if (!exp_name.test(userName.value)) {
         alert("이름에는 한글만 입력하세요!");
         userName.focus();
         return false;
     }
     const userGender = joinForm.userGender;
-    if(!userGender[0].checked && !userGender[1].checked){
-    	alert("성별을 선택하세요!");
-    	return false;
+    if (!userGender[0].checked && !userGender[1].checked) {
+        alert("성별을 선택하세요!");
+        return false;
     }
     const userMail = joinForm.userMail;
     if (!isValidEmail(userMail.value)) {
@@ -60,40 +60,49 @@ function sendit(){
         return false;
     }
 
-    fetch("/user/join", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                userId: userId.value,
-                userPw: userPw.value,
-                userName: userName.value,
-                userGender: userGender[0].checked ? "M" : "F",
-                userMail: userMail.value,
-                userNickname: userNickname.value,
-                userTel: userTel.value,
-                userBirth: userBirth.value,
-                userWeight: userWeight.value,
-                userHeight: userHeight.value,
-                weightGoal: weightGoal.value,
-                caloriesGoal: caloriesGoal.value
-            }),
-        })
-            .then(response => response.json())
-            .then(data => {
-                // 서버에서의 응답에 따른 처리
-                if (data.success) {
-                    alert("가입이 완료되었습니다!");
-                } else {
-                    alert("가입에 실패했습니다. 다시 시도해주세요.");
-                }
-            })
-            .catch(error => {
-                console.error("가입 요청 중 에러 발생:", error);
-            });
+    const userNickname = joinForm.userNickname;
+    if (userNickname.value == "") {
+        alert("닉네임을 입력하세요!");
+        userNickname.focus();
+        return false;
+    }
 
-    joinForm.submit();
+    fetch("/user/join", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            userId: userId.value,
+            userPw: userPw.value,
+            userName: userName.value,
+            userGender: userGender[0].checked ? "M" : "F",
+            userMail: userMail.value,
+            userNickname: userNickname.value,
+            userTel: userTel.value,
+            userBirth: userBirth.value,
+            userWeight: userWeight.value,
+            userHeight: userHeight.value,
+            weightGoal: weightGoal.value,
+            caloriesGoal: caloriesGoal.value
+        }),
+    })
+        .then(response => response.json())
+        .then(data => {
+            // 서버에서의 응답에 따른 처리
+            console.log(data);
+            if (data.success) {
+                alert("가입이 완료되었습니다!");
+                // 가입이 성공했을 때 추가적인 처리가 필요하다면 여기에 작성
+            } else {
+                alert("가입에 실패했습니다. 다시 시도해주세요.");
+            }
+        })
+        .catch(error => {
+            console.error("가입 요청 중 에러 발생:", error);
+        });
+
+//    joinForm.submit();
     return true;
 }
 function pwcheck(){
@@ -192,49 +201,51 @@ function isInvalidAdminId(id) {
 }
 
 function checkId(){
-	const xhr = new XMLHttpRequest();
-	const result = document.getElementById("result");
-	const userId = document.joinForm.userId;
-	if(userId.value == ""){
-		alert("아이디를 입력하세요!")
-		userId.focus();
-		return false;
-	}
+    const xhr = new XMLHttpRequest();
+    const result = document.getElementById("result");
+    const userId = document.joinForm.userId;
+    if(userId.value == ""){
+        alert("아이디를 입력하세요!")
+        userId.focus();
+        return false;
+    }
 
-	const koreanRegex = /[ㄱ-ㅎㅏ-ㅣ가-힣]/;
+    const koreanRegex = /[ㄱ-ㅎㅏ-ㅣ가-힣]/;
     if (koreanRegex.test(userId.value)) {
-        result.innerHTML = "아이디에 한글을 포함할 수 없습니다!";
+        alert("아이디에 한글을 포함할 수 없습니다!");
         userId.value = '';
         userId.focus();
         return false;
     }
 
-	if(isInvalidAdminId(userId.value)) {
-	    result.innerHTML = "사용할 수 없는 아이디입니다!";
-	    userId.value = '';
-	    userId.focus();
-	    return false;
-	}
+    if(isInvalidAdminId(userId.value)) {
+        alert("사용할 수 없는 아이디입니다!");
+        userId.value = '';
+        userId.focus();
+        return false;
+    }
 
-	xhr.onreadystatechange = function(){
-		if(xhr.readyState == 4){
-			if(xhr.status == 200){
-				let txt = xhr.responseText;
-				txt = txt.trim();
-				if(txt == 'O'){
-					result.innerHTML = "사용할 수 있는 아이디입니다!";
-					document.joinForm.userPw.focus();
-				}
-				else{
-					result.innerHTML = "중복된 아이디가 있습니다!";
-					userId.value = '';
-					userId.focus();
-				}
-			}
-		}
-	};
-	xhr.open("GET","/user/checkid?userid="+userId.value);
-	xhr.send();
+    xhr.onreadystatechange = function(){
+        if(xhr.readyState == 4){
+            if(xhr.status == 200){
+                let txt = xhr.responseText;
+                txt = txt.trim();
+                if(txt == 'O'){
+                    alert("사용할 수 있는 아이디입니다!");
+                    document.joinForm.userPw.focus();
+                    // 중복 체크 성공 시 메시지 삭제
+                    result.innerHTML = '';
+                }
+                else{
+                    alert("중복된 아이디가 있습니다!");
+                    userId.value = '';
+                    userId.focus();
+                }
+            }
+        }
+    };
+    xhr.open("GET","/user/checkid?userid="+userId.value);
+    xhr.send();
 
     return false;
 }
@@ -243,6 +254,49 @@ function isValidEmail(email) {
     // 수정된 간단한 형식의 이메일 주소 유효성 검사
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     return emailRegex.test(email);
+}
+
+function checkNickname() {
+    const xhr = new XMLHttpRequest();
+    const result = document.getElementById("result");
+    const userNickname = document.joinForm.userNickname;
+    if(userNickname.value == ""){
+        alert("닉네임을 입력하세요!")
+        userNickname.focus();
+        return false;
+    }
+
+    /*if(isInvalidAdminId(userId.value)) {
+        *//*result.innerHTML = "사용할 수 없는 아이디입니다!";*//*
+        alert("사용할 수 없는 아이디입니다!");
+        userId.value = '';
+        userId.focus();
+        return false;
+    }*/
+
+    xhr.onreadystatechange = function(){
+        if(xhr.readyState == 4){
+            if(xhr.status == 200){
+                let txt = xhr.responseText;
+                txt = txt.trim();
+                if(txt == 'O'){
+                    /*result.innerHTML = "사용할 수 있는 아이디입니다!";*/
+                    alert("사용할 수 있는 닉네임입니다!");
+                    document.joinForm.userName.focus();
+                }
+                else{
+                    /*result.innerHTML = "중복된 아이디가 있습니다!";*/
+                    alert("중복된 아이디가 있습니다!");
+                    userNickname.value = '';
+                    userNickname.focus();
+                }
+            }
+        }
+    };
+    xhr.open("GET", "/user/nickname?usernickname=" + userNickname.value);
+    xhr.send();
+
+    return true;
 }
 
 function goToNextPage() {

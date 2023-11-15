@@ -13,10 +13,17 @@
 		WHERE user_id = #{userId}
 	</select>
 
+
+	<select id="findByNickname">
+		SELECT *
+		FROM user user
+		WHERE user_nickname = #{userNickname}
+
 	<select id="findTrainerById">
 		SELECT *
 		FROM trainer
 		WHERE trainer_id = #{userId}
+
 	</select>
 
 	<select id="findAdminById">
