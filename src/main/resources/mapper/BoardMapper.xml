@@ -151,17 +151,26 @@
 		select count(*) from board where (board_title like('%${keyword}%')) or (board_content like('%${keyword}%')) or (user_id like('%${keyword}%'))
 	</select>
 
-
 	<select id="getinfoSearchList">
+		select *
+		from board
+		where (board_category in ('infoNews','infoExer','infoFood'))
+		  and ((board_title like ('%${keyword}%')) or (board_content like ('%${keyword}%')) or
+			   (user_id like ('%${keyword}%')))
+		order by like_cnt desc, board_num asc ;
+	</select>
+
+	<select id="getcriinfoList">
         select *
         from board
-        where (board_category in ('infoNews','infoExer','infoFood'))
-          and ((board_title like ('%${keyword}%')) or (board_content like ('%${keyword}%')) or
-               (user_id like ('%${keyword}%')))
+        where (board_category in ('infoNews','infoExer','infoFood')
+          and ((board_title like ('%${crikey.getKeyword()}%')) or (board_content like ('%${crikey.keyword}%')) or
+               (user_id like ('%${crikey.keyword}%')))
         order by like_cnt desc, board_num asc;
     </select>
 
-        <select id="getTipSearchList">
+
+	<select id="getTipSearchList">
 			select *
 			from board
 			where board_category = 'infoTip'

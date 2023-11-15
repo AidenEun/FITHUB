@@ -1,9 +1,6 @@
 package com.kh.demo.service;
 
-import com.kh.demo.domain.dto.BoardDTO;
-import com.kh.demo.domain.dto.BookMarkDTO;
-import com.kh.demo.domain.dto.Criteria;
-import com.kh.demo.domain.dto.FileDTO;
+import com.kh.demo.domain.dto.*;
 import com.kh.demo.mapper.BoardMapper;
 import com.kh.demo.mapper.FileMapper;
 import com.kh.demo.mapper.ReplyMapper;
@@ -402,6 +399,7 @@ public class BoardServiceImpl implements BoardService{
 	public List<BoardDTO> getinfoSearchList(String keyword) {
 		return bmapper.getinfoSearchList(keyword);
 	}
+
 
 //	@Override
 //	public int getNewsSearchCnt(String keyword) {

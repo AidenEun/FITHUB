@@ -87,7 +87,6 @@ public interface BoardService {
 
 	List<BoardDTO> getinfoSearchList(String keyword);
 
-//    int getNewsSearchCnt(String keyword);
 
 }
 

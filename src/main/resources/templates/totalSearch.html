@@ -25,6 +25,10 @@
         background-color: #F7FAF5 !important;
     }
 
+    .pagination tbody tr:nth-child(2n + 1) {
+        background: #FFFFFF !important;
+    }
+
     .top_img_box {
         width: 100%;
         height: 310px;
@@ -203,7 +207,7 @@
         /*margin-top: 100px;*/
     }
 
-    input[type=button].viewNow {
+    input[type=button].btn.viewNow {
         background: #ebede1;
     }
 
@@ -218,7 +222,8 @@
 <!--	</th:block>-->
 
 <!-- Header -->
-<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin})}"></th:block>
+<th:block
+        th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin})}"></th:block>
 
 <!-- Modal -->
 <th:block th:replace="~{layout/profileModal::profileModal}"></th:block>
@@ -234,25 +239,45 @@
         <header class="major">
             <div>
                 <h2>통합 검색 ([[${boardAllCnt}]])</h2>
-                <p>모든 게시글에서 검색된 결과</p>
+                <p th:text="'['+${keyword}+']로 검색된 결과'"></p>
             </div>
             <div id="gnb">
                 <div class="btn_area" style="margin-bottom: 20px;">
-                    <input class="viewNow" type="button" th:value="'전체&nbsp;'+'('+${boardAllCnt}+')'">
+                    <input type="hidden" name="keyword" th:value="${keyword}">
+                    <input class="btn viewNow" type="button" id="allBtn" th:value="'전체&nbsp;'+'('+${boardAllCnt}+')'">
                     <!--                </div>-->
                     <!--                <div class="btn_area btn_category">-->
-                    <input type="button" th:value="'정보&nbsp;('+${boardCntArr[0]}+')'" onclick="newsView();">
-                    <input type="button" th:value="'꿀팁&nbsp;('+${boardCntArr[1]}+')'" onclick="tipView();">
-                    <input type="button" th:value="'커뮤니티&nbsp;('+${boardCntArr[2]}+')'" onclick="commuView();">
-                    <input type="button" th:value="'트레이너 매칭&nbsp;('+${boardCntArr[3]}+')'" onclick="matchingView();">
-                    <input type="button" th:value="'챌린지&nbsp;('+${boardCntArr[4]}+')'" onclick="challView();">
+                    <input type="button" class="btn" id="infoBtn" th:value="'정보&nbsp;('+${boardCntArr[0]}+')'"
+                           onclick="newsView();">
+                    <input type="button" class="btn" id="tipBtn" th:value="'꿀팁&nbsp;('+${boardCntArr[1]}+')'"
+                           onclick="tipView();">
+                    <input type="button" class="btn" id="commuBtn" th:value="'커뮤니티&nbsp;('+${boardCntArr[2]}+')'"
+                           onclick="commuView();">
+                    <input type="button" class="btn" id="matchingBtn" th:value="'트레이너 매칭&nbsp;('+${boardCntArr[3]}+')'"
+                           onclick="matchingView();">
+                    <input type="button" class="btn" id="challBtn" th:value="'챌린지&nbsp;('+${boardCntArr[4]}+')'"
+                           onclick="challView();">
                 </div>
             </div>
         </header>
 
 
         <!-- Content -->
-        <div class="content" id="search_content">
+        <th:block th:if="${keyword == null or keyword == ''}">
+            <div>
+                <div class="search_box">
+                    <h2 th:text="검색어가 없습니다"></h2>
+                    <div class="search_content_box">
+                        <table>
+                            <tr>
+                                <td>검색어를 다시 입력하세요</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </th:block>
+        <div class="content" id="search_content" th:if="${keyword != null or keyword != ''}">
             <div class="search_box">
                 <h2 th:text="'정보&nbsp;('+${boardCntArr[0]}+')'"></h2>
                 <div class="search_content_box">
@@ -302,7 +327,7 @@
                         </tr>
                         <th:block th:if="${infoSearchList == null or infoSearchList.size() == 0}">
                             <tr>
-                                <td colspan="6" style="text-align: center;">등록된
+                                <td colspan="6" style="text-align: center;">검색된
                                     게시글이 없습니다.
                                 </td>
                             </tr>
@@ -371,7 +396,7 @@
                         </tr>
                         <th:block th:if="${tipSearchList == null or tipSearchList.size() == 0}">
                             <tr>
-                                <td colspan="6" style="text-align: center;">등록된
+                                <td colspan="6" style="text-align: center;">검색된
                                     게시글이 없습니다.
                                 </td>
                             </tr>
@@ -436,7 +461,7 @@
                         </tr>
                         <th:block th:if="${commuSearchList == null or commuSearchList.size() == 0}">
                             <tr>
-                                <td colspan="6" style="text-align: center;">등록된
+                                <td colspan="6" style="text-align: center;">검색된
                                     게시글이 없습니다.
                                 </td>
                             </tr>
@@ -501,7 +526,7 @@
                         </tr>
                         <th:block th:if="${matchingSearchList == null or matchingSearchList.size() == 0}">
                             <tr>
-                                <td colspan="6" style="text-align: center;">등록된
+                                <td colspan="6" style="text-align: center;">검색된
                                     게시글이 없습니다.
                                 </td>
                             </tr>
@@ -532,12 +557,12 @@
                         <tr th:each="board, boardStat : ${challSearchList}" th:if="${boardStat.index < 5}">
                             <td class="long_text">
                                 <a href="#">
-                                    [[${board.boardNum}]]
+                                    [[${board.challNum}]]
                                 </a>
                             </td>
                             <td class="long_text">
                                 <a href="#">
-                                    [[${board.boardTitle}]]
+                                    [[${board.challName}]]
                                 </a>
                             </td>
                             <td class="long_text">
@@ -548,7 +573,7 @@
                         </tr>
                         <th:block th:if="${challSearchList == null or challSearchList.size() == 0}">
                             <tr>
-                                <td colspan="4" style="text-align: center;">등록된
+                                <td colspan="4" style="text-align: center;">검색된
                                     게시글이 없습니다.
                                 </td>
                             </tr>
@@ -571,6 +596,20 @@
                     </table>
                 </div>
             </div>
+<!--             페이징 처리하는 테이블-->
+<!--                        <table class="pagination">-->
+<!--                            <tr align="center" valign="middle" class="pageTr">-->
+<!--                                <td>-->
+<!--                                    <a class="changePage" th:if="${pageMaker.prev}" th:href="${pageMaker.startPage-1}">&lt;</a>-->
+<!--                                    <th:block th:each="i : ${#numbers.sequence(pageMaker.startPage,pageMaker.endPage)}">-->
+<!--                                        <span class="nowPage" th:text="${i}" th:if="${pageMaker.cri.pagenum == i}"></span>-->
+<!--                                        <a class="changePage" th:href="${i}" th:text="${i}" th:unless="${pageMaker.cri.pagenum == i}"></a>-->
+<!--                                    </th:block>-->
+<!--                                    <a class="changePage" th:if="${pageMaker.next}" th:href="${pageMaker.endPage+1}">&gt;</a>-->
+<!--                                </td>-->
+<!--                            </tr>-->
+<!--                        </table>-->
+
         </div>
         <!-- Sidebar -->
         <div class="sidebar">
@@ -602,12 +641,6 @@
             </section>
 
         </div>
-        <!--        <form name="pageForm" id="pageForm" th:action="@{/totalSearch}">-->
-        <!--            <input type="hidden" name="pagenum" th:value="${pageMaker.cri.pagenum}">-->
-        <!--            <input type="hidden" name="amount" th:value="${pageMaker.cri.amount}">-->
-        <!--            <input type="hidden" name="type" th:value="${pageMaker.cri.type}">-->
-        <!--            <input type="hidden" name="keyword" th:value="${pageMaker.cri.keyword}">-->
-        <!--        </form>-->
     </div>
 </section>
 
@@ -630,6 +663,34 @@
 <script th:src="@{/assets/js/sidebar.js}"></script>
 <script th:src="@{/assets/js/profile.js}"></script>
 <script>
+
+    $(".btn").on('click', function (e) {
+        if ($(e.target).hasClass('viewNow')) {
+            // console.log("이미 선택된 버튼");
+            return;
+        } else {
+            $(".btn").removeClass("viewNow");
+            $(e.target).addClass('viewNow');
+            // console.log("새로 클릭한 버튼");
+            if (e.target.id === "allBtn") {
+                const keyword = document.getElementsByName("keyword")[0].value;
+                location.href = "/totalSearch?keyword=" + keyword;
+
+            } else if (e.target.id === "infoBtn") {
+                console.log("정보")
+            } else if (e.target.id === "tipBtn") {
+                console.log("꿀팁")
+            } else if (e.target.id === "commuBtn") {
+                console.log("커뮤")
+            } else if (e.target.id === "matchingBtn") {
+                console.log("매칭")
+            } else if (e.target.id === "challBtn") {
+                console.log("챌린지")
+            }
+        }
+    });
+
+
     function newsView() {
 
     }
