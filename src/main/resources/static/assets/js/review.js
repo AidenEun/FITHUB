@@ -22,7 +22,7 @@ const reviewService = (function(){
 		let pageNum = data.pageNum;
 		
 		$.getJSON(
-			"/reply/pages/"+boardNum+"/"+pageNum,
+			"/review/pages/"+boardNum+"/"+pageNum,
 			function(data){
 				//data : {replyCnt:댓글개수, list:[....]}
 				callback(data.reviewCnt, data.list);
