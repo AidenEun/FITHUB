@@ -194,10 +194,10 @@ height:152.469px;
 						<tr align="right" valign="middle">
 							<td><h2 class="ma_title">나에게 맞는 트레이너를 매칭해보세요</h2></td>
 							<td>
-								<th:block th:if="${trainerId eq session.loginUser}">
+								<th:block th:if="${session.trainer != null}">
 									<form name="boardForm" method="post" th:action="@{/matching/matching_write}">
-										<input name="boardnum" th:value="${board.boardnum}" type="hidden">
-										<input name="pagenum" th:value="${cri.pagenum}" type="hidden">
+										<input name="boardNum" th:value="${board.boardNum}" type="hidden">
+										<input name="pageNum" th:value="${cri.pageNum}" type="hidden">
 										<input name="amount" th:value="${cri.amount}" type="hidden">
 										<input name="type" th:value="${cri.type}" type="hidden">
 										<input name="keyword" th:value="${cri.keyword}" type="hidden">
