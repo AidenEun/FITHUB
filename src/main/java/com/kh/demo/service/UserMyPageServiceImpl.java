@@ -439,6 +439,19 @@ public class UserMyPageServiceImpl implements UserMyPageService{
         }
     }
 
+    @Override
+    public List<ChallNoticeBoardDTO> getSuccessMyChallenge(String userId) {
+        return umpmapper.getSuccessMyChallenge(userId);
+
+    }
+
+    @Override
+    public Long getSuccessMyChallengeTotal(Criteria cri, String userId) {
+        return umpmapper.getSuccessMyChallengeTotal(userId);
+
+
+    }
+
     //트레이너 전환 신청
 
     @Override

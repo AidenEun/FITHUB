@@ -1,0 +1,57 @@
+<th:block th:fragment="challNoticeBoardModal()" xmlns:th="http://www.thymeleaf.org">
+    <div class="noticeWrite_modal_box">
+        <div class="noticeWrite_modal_contents">
+
+            <div class="title-container">
+                <button class="writeClose button">&times;</button>
+                <h1 class="title">챌린지 목록 작성</h1>
+            </div>
+            <div class="content">
+                <!-- 게시글 리스트 띄우는 테이블 -->
+                <form id="boardForm" method="post" name="boardForm" th:action="@{/challenge/noticeWrite}">
+
+                    <table style="border-collapse: collapse;" border="1">
+                        <tr style="height:30px;">
+                            <th colspan="2" style="text-align:center; width:150px;">챌린지이름</th>
+                            <td colspan="2">
+                                <input type="text" id="challName" name="challName" size="50" maxlength="50" placeholder="챌린지 이름을 입력하세요">
+                            </td>
+                        </tr>
+                        <tr style="height:30px;">
+                            <th style="text-align:center; width:150px;">챌린지카테고리</th>
+                            <td>
+                                <select id="challCategory" name="challCategory">
+                                    <option value="challExer">운동</option>
+                                    <option value="challFood">음식</option>
+                                </select>
+                            </td>
+                            <td>챌린지기간</td>
+                            <td>
+                                <select id="challTerm" name="challTerm">
+                                    <option value="7">7일</option>
+                                    <option value="15">15일</option>
+                                    <option value="30">30일</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr style="height:300px;">
+                            <th colspan="2" style="text-align:center; width:150px;">내 용</th>
+                            <td colspan="2">
+                                <textarea id="challContent" name="challContent" style="width:700px;height:290px;resize:none;"></textarea>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+                <table class="btn_area">
+                    <tr align="right" valign="middle">
+                        <td>
+                            <a href="javascript:writeSendit()">등록</a>
+                            <a th:href="${'/challenge/list'}">목록</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</th:block>
+

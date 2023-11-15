@@ -372,6 +372,27 @@
 	</select>
 
 
+	<select id="getSuccessMyChallenge">
+		select * from chall_notice_board
+		join my_challenge on my_challenge.chall_num = chall_notice_board.chall_num
+		where my_challenge.user_id = #{userId} and
+		chall_notice_board.chall_term=
+		(select count(regdate) from stamp
+		where user_id=#{userId} and chall_notice_board.chall_num=stamp.chall_num and
+		(regdate between date(my_challenge.sub_regdate) and date_sub(date(date_add(my_challenge.sub_regdate,interval chall_notice_board.chall_term day)),interval 1 day)));
+	</select>
+
+	<select id="getSuccessMyChallengeTotal">
+		select count(*) from chall_notice_board
+		join my_challenge on my_challenge.chall_num = chall_notice_board.chall_num
+		where my_challenge.user_id = #{userId} and
+		chall_notice_board.chall_term=
+		(select count(regdate) from stamp
+		where user_id=#{userId} and chall_notice_board.chall_num=stamp.chall_num and
+		(regdate between date(my_challenge.sub_regdate) and date_sub(date(date_add(my_challenge.sub_regdate,interval chall_notice_board.chall_term day)),interval 1 day)));
+	</select>
+
+
 	<!--트레이너 신청-->
 	<insert id= "insertApplytrainer">
 		INSERT INTO trainer_signup (user_id, trainer_zipcode, trainer_addr, trainer_addrdetail, trainer_addretc, trainer_part, trainer_career, trainer_content)

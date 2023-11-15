@@ -93,6 +93,10 @@ public interface UserMyPageMapper {
 
     List<ChallNoticeBoardDTO> getMyChallengeCategoryTerm(Criteria cri, String userId, String challCategory, String challTerm);
 
+    List<ChallNoticeBoardDTO> getSuccessMyChallenge(String userId);
+
+    Long getSuccessMyChallengeTotal(String userId);
+
 
     //트레이너신청
     int insertApplytrainer(TrainerSignUpDTO user);

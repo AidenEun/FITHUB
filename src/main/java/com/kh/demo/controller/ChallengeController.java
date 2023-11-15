@@ -64,10 +64,8 @@ public class ChallengeController {
         ObjectNode json = JsonNodeFactory.instance.objectNode();
         Criteria cri = new Criteria(pageNum, 5);
 
-        String challCategory = "challAll";
-        String challTerm = "challengeAll";
-        List<ChallNoticeBoardDTO> list = umpService.getMyChallenge(cri, userId, challCategory,challTerm);
-        PageDTO pageDTO = new PageDTO(umpService.getChallengeTotal(cri, userId, challCategory, challTerm), cri);
+        List<ChallNoticeBoardDTO> list = umpService.getSuccessMyChallenge(userId);
+        PageDTO pageDTO = new PageDTO(umpService.getSuccessMyChallengeTotal(cri, userId), cri);
         json.putPOJO("list", list);
         json.putPOJO("pageDTO", pageDTO);
 
