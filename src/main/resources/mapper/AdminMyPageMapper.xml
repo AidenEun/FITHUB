@@ -178,9 +178,10 @@
     </select>
 
     <select id="getUserList">
-        SELECT * FROM user
+        SELECT *, DATE_FORMAT(user_joindate, '%Y%m%d %H:%i:%s') as formatted_joindate
+        FROM user
         WHERE user_category = 'U'
-        limit #{startrow},#{amount}
+        LIMIT #{startrow}, #{amount}
     </select>
 
     <select id="getTrainerList">
