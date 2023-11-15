@@ -3,6 +3,7 @@ package com.kh.demo.service;
 
 import com.kh.demo.domain.dto.AdminDTO;
 import com.kh.demo.domain.dto.Criteria;
+import com.kh.demo.domain.dto.TrainerDTO;
 import com.kh.demo.domain.dto.UserDTO;
 import com.kh.demo.mapper.UserMapper;
 import jakarta.jws.soap.SOAPBinding;
@@ -52,11 +53,17 @@ public class UserServiceImpl implements UserService{
     @Override
     public Object login(String userId, String userPw) {
         AdminDTO admin = umapper.findAdminById(userId);
+        TrainerDTO trainer = umapper.findTrainerById(userId);
         UserDTO user = umapper.findById(userId);
 
         if(admin != null) {
             if(admin.getAdminPw().equals(userPw)) {
                 return admin;
+            }
+        }
+        else if(trainer != null){
+            if(trainer.getTrainerPw().equals(userPw)){
+                return trainer;
             }
         }
         else if(user != null){

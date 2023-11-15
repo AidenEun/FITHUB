@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 @Controller
@@ -278,6 +279,7 @@ public class TrainerMyPageController {
                 response.setContentType("text/html; charset=UTF-8");
                 response.getWriter().write(alertScript);
                 response.getWriter().flush();
+                return null;
             }
             model.addAttribute("user", user);
             return "/trainermypage/trainer_modify";
@@ -286,7 +288,6 @@ public class TrainerMyPageController {
         response.setContentType("text/html; charset=UTF-8");
         response.getWriter().write(alertScript2);
         response.getWriter().flush();
-
         return null;
     }
 

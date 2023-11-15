@@ -68,11 +68,15 @@
 }
 #userMessageModal{
 height: 435px;
+background-color: #ebede1 !important;
 }
 .content textarea{
     width: 260px;
     height: 150px;
     margin-bottom: 15px;
+}
+.application_buttons{
+margin-bottom: 5px;
 }
 .send{
     display: flex;
@@ -110,125 +114,7 @@ width: 40px;
      width: 260px;
 }
 
-
-
-
-#modal-container.six {
-  transform: scale(1);
-}
-#modal-container.six .modal-background {
-  background: transparent;
-  animation: fadeIn 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
-}
-#modal-container.six .modal-background .modal {
-  /* 초기 모달 콘텐츠 크기 및 라운드 정의 */
-  width: 200px;
-  height: 200px;
-  border-radius: 100%;
-  overflow: hidden;
-  animation: JamesBond 1.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
-}
-#modal-container.six .modal-background .modal h2,
-#modal-container.six .modal-background .modal p {
-  /* 콘텐츠 내용 숨김 */
-  opacity: 0;
-  position: relative;
-  /* 원형 모달이 본래 모양을 완성된 후 1.4 지연후에 보여줌 */
-  animation: modalContentFadeIn .5s 1.4s linear forwards;
-}
-#modal-container.six.out {
-  animation: slowFade .5s 1.5s linear forwards;
-}
-#modal-container.six.out .modal-background {
-  background-color: rgba(0, 0, 0, 0.7);
-  animation: fadeToRed 2s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
-}
-#modal-container.six.out .modal-background .modal {
-  border-radius: 3px;
-  height: 162px;
-  width: 227px;
-  animation: killShot 1s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
-}
-#modal-container.six.out .modal-background .modal h2,
-#modal-container.six.out .modal-background .modal p {
-  animation: modalContentFadeOut 0.5s 0.5 cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
-}
-/* Show modal content : round shape */
-@keyframes JamesBond {
-  0% {
-    transform: translateX(1000px);
-  }
-  80% {
-    transform: translateX(0px);
-    width: 150px;
-    height: 150px;
-    border-radius: 100%;
-  }
-  90% {
-    border-radius: 3px;
-    width: 340px;
-    height: 240px;
-  }
-  100% {
-    border-radius: 3px;
-    width: 300px;
-    height: 200px;
-  }
-}
-/* 모달 콘텐츠 내의 요소 효과 처리 */
-@keyframes modalContentFadeIn {
-  0% {
-    opacity: 0;
-    top: -20px;
-  }
-  100% {
-    opacity: 1;
-    top: 0;
-  }
-}
-/* 전체 모달 컨테이너 숨김처리 */
-@keyframes slowFade {
-  0% {
-    opacity: 1;
-  }
-  99.9% {
-    opacity: 0;
-    transform: scale(1);
-  }
-  100% {
-    transform: scale(0);
-  }
-}
-/* 박스 그림자를 이용한 효과 */
-@keyframes fadeToRed {
-  0% {
-    box-shadow: inset 0 0 0 rgba(201, 24, 24, 0.8);
-  }
-  100% {
-    /* y 축 박스 그림자를 위에서부터 아래로 내리는 효과 */
-    box-shadow: inset 0 2000px 0 rgba(201, 24, 24, 0.8);
-  }
-}
-/* 모달 콘텐츠 비스듬히 하단으로 떨어뜨림 */
-@keyframes killShot {
-  0% {
-    transform: translateY(0) rotate(0deg);
-    opacity: 1;
-  }
-  100% {
-    /* 하단으로 회전시켜 떨어뜨림 */
-    transform: translateY(400px) rotate(45deg);
-    opacity: 0;
-  }
-}
-/* 모달 콘텐츠가 떨어질 때 효과처리 */
-@keyframes modalContentFadeOut {
-  0% {
-    opacity: 1;
-    top: 0;
-  }
-  100% {
-    opacity: 0;
-    top: -20px;
-  }
+.new img{
+    width: 5px;
+    height:5px;
 }

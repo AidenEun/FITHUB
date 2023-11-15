@@ -44,10 +44,11 @@
             <ul>
                 <li class="menu-item"><a href="/info/info_list" style="color: white;">정보</a>
                     <ul class="submenu">
-                        <li><a href="/info/submenu1">전체</a></li>
-                        <li><a href="/info/submenu2">음식</a></li>
-                        <li><a href="/info/submenu2">운동</a></li>
-                        <li><a href="/info/submenu2">꿀팁</a></li>
+                        <li><a href="/info/info_list">전체</a></li>
+                        <li><a href="/info/info_news">뉴스</a></li>
+                        <li><a href="/info/info_food">식단</a></li>
+                        <li><a href="/info/info_exercise">운동</a></li>
+                        <li><a href="/info/info_tip">꿀팁</a></li>
 
                     </ul>
                 </li>
@@ -57,13 +58,13 @@
                         <li><a href="/calorie/exercise_calorie_list">운동칼로리</a></li>
                     </ul>
                 </li>
-                <li class="menu-item"><a href="#" style="color: white;">커뮤니티</a>
+                <li class="menu-item"><a href="/community/commu_list" style="color: white;">커뮤니티</a>
                     <ul class="submenu">
-                        <li><a href="/info/submenu1">자유게시판</a></li>
-                        <li><a href="/info/submenu2">운동</a></li>
-                        <li><a href="/info/submenu1">식단</a></li>
-                        <li><a href="/info/submenu2">갤러리</a></li>
-                        <li><a href="/info/submenu1">QnA</a></li>
+                        <li><a href="/community/commu_free">자유게시판</a></li>
+                        <li><a href="/community/commu_food">식단</a></li>
+                        <li><a href="/community/commu_exercise">운동</a></li>
+                        <li><a href="/community/commu_gallery">갤러리</a></li>
+                        <li><a href="/community/commu_qna">고민 Q&A</a></li>
 
                     </ul>
                 </li>
@@ -135,7 +136,7 @@
         <th:block th:if="${loginUser != null}">
             <div class="side_info">
                 <a href="/usermypage/user_myinfo">
-                    <img src="images/profile_img.png" class="prof_img" width="102px" height="102px">
+                    <img src="/images/profile_img.png" class="prof_img" style="width=102px; height=102px;">
                 </a>
                 <div id="my_info">
                     <div>

@@ -9,12 +9,15 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -53,15 +56,17 @@ public class UserMyPageController {
                 response.setContentType("text/html; charset=UTF-8");
                 response.getWriter().write(alertScript);
                 response.getWriter().flush();
+                return null;
             }
-            model.addAttribute("user", user);
-            return "/usermypage/user_myinfo";
+            else{
+                model.addAttribute("user", user);
+                return "/usermypage/user_myinfo";
+            }
         }
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/html; charset=UTF-8");
         response.getWriter().write(alertScript2);
         response.getWriter().flush();
-
         return null;
     }
 
@@ -216,6 +221,46 @@ public class UserMyPageController {
         }
         return "redirect:/";
     }
+
+//프로필
+    @GetMapping(value = {"user_myprofile","user_profile","user_profile_modify"})
+    public String user_profile( String userId , Model model, HttpServletRequest req) throws Exception {
+        String requestURI = req.getRequestURI();
+        System.out.println("requestURI: "+requestURI);
+        if(!requestURI.equals("/trainermypage/trainer_profile")){
+            HttpSession session = req.getSession();
+            userId = (String) session.getAttribute("loginUser");
+        }
+
+        UserDTO id = service.getUserDetail(userId);
+
+        model.addAttribute("user", id);
+        model.addAttribute("profile",service.getProFileList(userId));
+        if (requestURI.equals("/usermypage/user_myprofile")){
+            return "/usermypage/user_profile";
+        }
+
+        return requestURI;
+    }
+
+        @PostMapping("user_profile_modify")
+    public String trainer_myprofile_modify(UserDTO user,String updateCnt, MultipartFile profile) throws IOException {
+        System.out.println(user);
+        System.out.println("profile: "+profile);
+
+        if (service.user_profile_modify(user,profile,updateCnt)){
+            return "redirect:/usermypage/user_myprofile";
+        }
+        else {
+            return "redirect:/";
+        }
+    }
+
+    @GetMapping("thumbnail")
+    public ResponseEntity<Resource> thumbnail(String sysName) throws Exception{
+        return service.getThumbnailResource(sysName);
+    }
+
 
     @GetMapping("user_applytrainer")
     public void user_applytrainer(HttpServletRequest req, Model model) {

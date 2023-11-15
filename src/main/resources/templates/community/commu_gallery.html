@@ -87,8 +87,7 @@
 <body class="is-preload">
 
 <!-- Header -->
-<!--<th:block th:replace="~{layout/header::header(${session.loginUser})}"></th:block>-->
-<th:block th:replace="~{layout/headerNoneModal::header(${session.loginUser},${session.user},${session.trainer},${session.admin})}"></th:block>
+<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin})}"></th:block>
 
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">
@@ -189,8 +188,8 @@
 			<section>
 				<h3><a href="/community/commu_list">전체</a></h3>
 				<h3><a href="/community/commu_free">자유게시판</a></h3>
-				<h3><a href="/community/commu_exercise">운동</a></h3>
 				<h3><a href="/community/commu_food">식단</a></h3>
+				<h3><a href="/community/commu_exercise">운동</a></h3>
 				<h3><a href="/community/commu_gallery" style="color: #5a8100;">갤러리</a></h3>
 				<h3><a href="/community/commu_qna">고민 Q&A</a></h3>
 			</section>

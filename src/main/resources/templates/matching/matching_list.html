@@ -12,6 +12,7 @@
 	<link rel="stylesheet" th:href="@{/assets/css/index.css}" />
 	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
 	<noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
+	<link rel="stylesheet" th:href="@{/assets/css/common.css}" />
 
 	<link rel="stylesheet" th:href="@{/assets/css/profileModal.css}">
 </head>
@@ -38,7 +39,7 @@
 	}
 
 	#header {
-		background-color: #5a8100;
+		<!--background-color: #5a8100;-->
 	}
 
 	#header nav > ul > li a {
@@ -65,6 +66,10 @@
 	height: 200px;
 	text-align: center;
 }
+#trainerRanking_ranking img{
+	width: 215px;
+	height: 200px;
+}
 #trainerRanking_ranking th{
 	border: 1px solid black;
 }
@@ -72,7 +77,7 @@
 
 #trainerRankling_name{
 border: 1px solid black;
-	height: 70px;
+	height: 50px;
 	text-align: center;
 	}
 	#trainerRankling_name td{
@@ -124,24 +129,27 @@ height:152.469px;
 
 
 
-	.DietRanking{
-		margin-bottom: 30px;
-	}
+	.sidebar .ranking {
+        margin-bottom: 69px;
+    }
 
-	.DietRanking_ranking{
-		border: 3px solid rgb(103, 145, 18);
-	box-sizing: border-box;
-	height: 300px;
-	}
+    .ranking table tr td {
+        text-align: center;
+        background: #FFFFFF;
+        overflow: hidden;
+        text-overflow: ellipsis
+    }
 
-	.subRanking_ranking{
-	border: 3px solid rgb(103, 145, 18);
-	box-sizing: border-box;
-	height: 300px;
-	}
-	.side_ranking{
-		font-weight: bold;
-	}
+    .ranking table tr td {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 160px;
+    }
+     .sidebar {
+        /*margin-top: 100px;*/
+    }
+
+
 	.customoverlay {position:relative;bottom:85px;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;float:left;}
 .customoverlay:nth-of-type(n) {border:0; box-shadow:0px 1px 2px #888;}
 .customoverlay a {display:block;text-decoration:none;color:#000;text-align:center;border-radius:6px;font-size:14px;font-weight:bold;overflow:hidden;background: #d95050;background: #d95050 url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png) no-repeat right 14px center;}
@@ -156,15 +164,12 @@ height:152.469px;
 <th:block th:replace="~{layout/profileModal::profileModal}"></th:block>
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">
-	<div class="top_img_box">
-		<img src="/images/pic01.jpg" alt="">
-	</div>
 
 	<div class="inner">
 
-		<header class="major">
-			<h2>트레이너 매칭</h2>
-			<p>매칭 페이지</p>
+		<header class="test12">
+			<p id="mainText">트레이너 매칭</p>
+			<p id="subText">매칭 페이지</p>
 		</header>
 
 		<!-- Content -->
@@ -173,30 +178,30 @@ height:152.469px;
 				<h2>트레이너 랭킹</h2>
 				<div>
 					<table class="trainerRanking">
+						<th:block th:if="${list != null and list.size() > 0}" th:each="board : ${list}">
 						<tr id="trainerRanking_ranking">
-							<th>프로필 사진 1</th>
-							<th>프로필 사진 2</th>
-							<th>프로필 사진 3</th>
-							<th>프로필 사진 4</th>
+							<th>
+								<th:block th:if="${board.profileInfo != null}">
+									<img style="width:100%; height:100%;" th:src="@{/matching/thumbnail (sysName=${board.profileInfo.sysName})}">
+								</th:block>
+							</th>
 						</tr>
 						<tr id="trainerRankling_name">
-							<td>프로필 닉네임</td>
-							<td>프로필 닉네임</td>
-							<td>프로필 닉네임</td>
-							<td>프로필 닉네임</td>
+							<td><span th:text="${board.trainerInfo.trainerNickname}"></span></td>
 						</tr>
+						</th:block>
 					</table>
 				</div>
 			</div>
 
 			<div class="trainer_box">
-
-
 					<table class="Ma_write">
 						<tr align="right" valign="middle">
 							<td><h2 class="ma_title">나에게 맞는 트레이너를 매칭해보세요</h2></td>
 							<td>
-								<a class="write" th:href="${'/matching/matching_write'}">매칭 글 작성</a>
+								<th:block th:if="${session.trainer != null}">
+									<a class="write" href="/matching/matching_write">글쓰기</a>
+								</th:block>
 							</td>
 						</tr>
 					</table>
@@ -284,6 +289,20 @@ height:152.469px;
 
 							</div>
 							</a>
+							<table class="pagination">
+								<tr align="center" valign="middle">
+									<td>
+										<th:block th:if="${pageMaker != null}">
+										<a class="changePage" th:if="${pageMaker.prev}" th:href="${pageMaker.startPage-1}">&lt;</a>
+										<th:block th:each="i : ${#numbers.sequence(pageMaker.startPage,pageMaker.endPage)}">
+											<span class="nowPage" th:text="${i}" th:if="${pageMaker.cri.pagenum == i}"></span>
+											<a class="changePage" th:href="${i}" th:text="${i}" th:unless="${pageMaker.cri.pagenum == i}"></a>
+										</th:block>
+										<a class="changePage" th:if="${pageMaker.next}" th:href="${pageMaker.endPage+1}">&gt;</a>
+										</th:block>
+									</td>
+								</tr>
+							</table>
 						</th:block>
 					</div>
 
@@ -291,28 +310,35 @@ height:152.469px;
 				</div>
 			</div>
 		</div>
-
-
-		<!-- Sidebar -->
-		<div class="sidebar">
-
-			<section>
-				<h3 class="side_ranking">포인트 순위</h3>
-				<div class="DietRanking">
-						<div class="DietRanking_ranking">
-
-						</div>
-				</div>
-				<h3 class="side_ranking">트레이너 구독 순위</h3>
-				<div class="subRanking">
-						<div class="subRanking_ranking">
-
-						</div>
-				</div>
-			</section>
-
-		</div>
 	</div>
+
+	<!-- Sidebar -->
+
+	<section>
+		<h3 class="side_ranking">인기 게시글 순위</h3>
+		<div class="ranking">
+			<div class="boardRanking_ranking">
+				<table style="width: 90%;">
+					<tr th:each="boardTop5List, dataStat :${boardTop5List}">
+						<td th:text="${dataStat.index+1}"></td>
+						<td>[[${boardTop5List.boardTitle}]]</td>
+					</tr>
+				</table>
+
+			</div>
+		</div>
+		<h3 class="side_ranking">트레이너 구독 순위</h3>
+		<div class="ranking">
+			<div class="boardRanking_ranking">
+				<table style="width: 90%;">
+					<tr th:each="trainerTop5List, dataStat: ${trainerTop5List}">
+						<td th:text="${dataStat.index + 1}">1</td>
+						<td>[[${trainerTop5List.trainerId}]]</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</section>
 </section>
 
 <!-- Footer -->
@@ -338,60 +364,59 @@ height:152.469px;
 <script>
 
 
+        const searchForm = $("#searchForm");
+        const pageForm = $("#pageForm");
 
-	const searchForm = $("#searchForm");
-	const pageForm = $("#pageForm");
-
-	$(".changePage").on("click",function(e){
-		//e(이벤트)의 기본 작동 막기
-		e.preventDefault();
-		let pagenum = $(this).attr("href");
-		pageForm.find("input[name='pagenum']").val(pagenum);
-		pageForm.submit();
-	});
-
-
- $('.get').click(function(event) {
-    event.preventDefault();
-      var boardNum = $(this).attr('href');
-      console.log(boardNum);
-      // 다음 페이지 URL 구성
-      var Url = '/matching/matching_view?boardNum=' + boardNum;
-		console.log(Url);
-      // 페이지 이동
-      window.location.href = Url;
-
-  });
-
-
-	$("#searchForm a").on("click",sendit);
-	function sendit(){
-		if(!searchForm.find("option:selected").val()){
-			alert("검색 기준을 선택하세요!");
-			return false;
-		}
-		if(!$("input[name='keyword']").val()){
-			alert("키워드를 입력하세요!");
-			return false;
-		}
-		searchForm.submit();
-	}
-
-$(document).ready(function () {
-        $(".open").click(function (e) {
-            e.stopPropagation();
-            e.preventDefault(); // 기본 동작 방지 (링크 이동 취소)
-            // 여기에 원하는 동작 추가
+        $(".changePage").on("click",function(e){
+            //e(이벤트)의 기본 작동 막기
+            e.preventDefault();
+            let pagenum = $(this).attr("href");
+            pageForm.find("input[name='pagenum']").val(pagenum);
+            pageForm.submit();
         });
-    });
 
-	$(".open").on("click", function (e) {
-                e.preventDefault();
-				var userId = $(this).text();
 
-				sendUserIdToModal(userId);
-                modalBox.classList.add("active");
+     $('.get').click(function(event) {
+        event.preventDefault();
+          var boardNum = $(this).attr('href');
+          console.log(boardNum);
+          // 다음 페이지 URL 구성
+          var Url = '/matching/matching_view?boardNum=' + boardNum;
+            console.log(Url);
+          // 페이지 이동
+          window.location.href = Url;
+
+      });
+
+
+        $("#searchForm a").on("click",sendit);
+        function sendit(){
+            if(!searchForm.find("option:selected").val()){
+                alert("검색 기준을 선택하세요!");
+                return false;
+            }
+            if(!$("input[name='keyword']").val()){
+                alert("키워드를 입력하세요!");
+                return false;
+            }
+            searchForm.submit();
+        }
+
+    $(document).ready(function () {
+            $(".open").click(function (e) {
+                e.stopPropagation();
+                e.preventDefault(); // 기본 동작 방지 (링크 이동 취소)
+                // 여기에 원하는 동작 추가
             });
+        });
+
+        $(".open").on("click", function (e) {
+                    e.preventDefault();
+                    var userId = $(this).text();
+
+                    sendUserIdToModal(userId);
+                    modalBox.classList.add("active");
+                });
 
 
 

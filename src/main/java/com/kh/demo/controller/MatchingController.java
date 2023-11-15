@@ -4,7 +4,10 @@ import com.fasterxml.jackson.databind.DatabindContext;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.kh.demo.domain.dto.*;
+import com.kh.demo.service.BoardService;
+import com.kh.demo.service.ChallengeService;
 import com.kh.demo.service.TrainerMatchingService;
+import com.kh.demo.service.TrainerService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -24,6 +27,16 @@ import java.util.Map;
 @Controller
 @RequestMapping("/matching/*")
 public class MatchingController {
+
+    @Autowired
+    private ChallengeService challService;
+
+    @Autowired
+    @Qualifier("TrainerServiceImpl")
+    private TrainerService tservice;
+
+    @Autowired @Qualifier("BoardServiceImpl")
+    private BoardService boardservice;
 
     @Autowired
     @Qualifier("TrainerMatchingServiceImpl")
@@ -113,24 +126,41 @@ public class MatchingController {
 
     @PostMapping("profileModal")
     @ResponseBody
-    public String reportModal(@RequestParam("trainerNickname") String trainerNickname) throws Exception {
+    public String reportModal(@RequestParam("trainerNickname") String trainerNickname, HttpServletRequest req) throws Exception {
         ObjectNode json = JsonNodeFactory.instance.objectNode();
         Object userInfo = MatchingService.getUserByNickname(trainerNickname);
 
-        if (userInfo instanceof UserDTO) {
-            UserDTO userDTO = (UserDTO) userInfo;
-            json.putPOJO("userDTO", userDTO);
-        }
-        else if (userInfo instanceof TrainerDTO) {
+        HttpSession session = req.getSession();
+        String loginUser_userId = (String) session.getAttribute("loginUser");
+
+        if (userInfo instanceof TrainerDTO) {
             TrainerDTO trainerDTO = (TrainerDTO) userInfo;
             json.putPOJO("trainerDTO", trainerDTO);
+            json.putPOJO("loginUser_userId", loginUser_userId);
+        }
+        else if (userInfo instanceof UserDTO) {
+            UserDTO userDTO = (UserDTO) userInfo;
+            json.putPOJO("userDTO", userDTO);
+            json.putPOJO("loginUser_userId", loginUser_userId);
         }
         else {
             json.put("noData", "noData");
         }
         return json.toString();
     }
+    @PostMapping("send_message")
+    @ResponseBody
+    public String u_t_matching(@RequestParam("receiveId") String receiveId, @RequestParam("sendId") String sendId, @RequestParam("contents") String contents) throws Exception {
+        MessageDTO newMessage = new MessageDTO();
+        newMessage.setReceiveId(receiveId);
+        newMessage.setSendId(sendId);
+        newMessage.setMessageContent(contents);
 
+
+        MatchingService.saveMessage(newMessage);
+
+        return "success"; // 적절한 응답 메시지
+    }
     @PostMapping("u_t_matchModal")
     @ResponseBody
     public String matchingModal(@RequestParam("trainerId") String trainerId, HttpServletRequest req) throws Exception {
@@ -174,10 +204,51 @@ public class MatchingController {
         newMatching.setTrainerId(trainerId);
 
 
-        MatchingService.saveMatching(newMatching); // 여기서 적절한 서비스 메서드를 호출하여 데이터베이스에 insert
+        MatchingService.saveMatching(newMatching);
 
-        return "success"; // 적절한 응답 메시지
+        return "success";
     }
 
+    @GetMapping("/totalSearch")
+    public void search(String keyword,Model model){
+//        System.out.println(keyword);
+
+        //인기게시글 띄우기
+        List<BoardDTO> boardTop5List = boardservice.getBoardTop5List();
+
+        // 트레이너 랭킹
+        List<TrainerDTO> trainerTop5List= tservice.getTrainerTop5List();
+        //전체 보드 게시글 수 찾기
+        Long boardAllCnt = boardservice.getAllsearchCnt(keyword);
+        System.out.println(boardAllCnt);
+
+        //각 게시판에서 글 가져오기
+
+        List<BoardDTO> infoSearchList = boardservice.getinfoSearchList(keyword);
+
+        List<BoardDTO> tipSearchList = boardservice.getTipSearchList(keyword);
+        List<BoardDTO> commuSearchList = boardservice.getCommuSearchList(keyword);
+
+        List<BoardDTO> matchingSearchList = MatchingService.getMachingSearchList(keyword);
+        List<ChallNoticeBoardDTO> challSearchList = challService.getChallSearchList(keyword);
+
+        int[] boardCntArr ={infoSearchList.size(),
+                tipSearchList.size(),commuSearchList.size(),matchingSearchList.size(),challSearchList.size()};
+
+//        model.addAttribute("newsSearchList",newsSearchList);
+//        model.addAttribute("exerSearchList",exerSearchList);
+//        model.addAttribute("foodSearchList",foodSearchList);
+        model.addAttribute("infoSearchList",infoSearchList);
+        model.addAttribute("tipSearchList",tipSearchList);
+        model.addAttribute("commuSearchList",commuSearchList);
+        model.addAttribute("matchingSearchList",matchingSearchList);
+        model.addAttribute("challSearchList",challSearchList);
+        model.addAttribute("boardAllCnt",boardAllCnt);
+        model.addAttribute("trainerTop5List",trainerTop5List);
+        model.addAttribute("boardTop5List",boardTop5List);
+        model.addAttribute("boardCntArr",boardCntArr);
+
+
+    }
 
 }

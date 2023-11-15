@@ -55,6 +55,7 @@ function modal(data) {
     try {
         data = JSON.parse(data);
         var sendId = data.loginUser_userId;
+
         if (data.hasOwnProperty("trainerDTO")) {
             var modalBox = $('.modal_box');
             var receiveId = data.trainerDTO.trainerId
@@ -63,13 +64,16 @@ function modal(data) {
             modalBox.find('.img_area img').attr('alt', receiveId);
             modalBox.find('.name a').text(data.trainerDTO.trainerNickname + '(' + receiveId + ')');
             modalBox.find('.message').attr('alt', receiveId);
+            modalBox.find('.application_buttons').html(
+                                                        '<p class="trainer_profile"><a>프로필 자세히 보기</a></p>'
+                                                    );
 
+            modalBox.find('.profile_userId a').text(receiveId);
 
-            MessageModalBox.find('.profile_userId a').attr('alt', receiveId);
-            MessageModalBox.find('.loginUser_userId a').attr('alt', sendId);
+            modalBox.find('.loginUser_userId a').text(sendId);
 
-            MessageModalBox.find('.send-message').on('click', function () {
-            var contents = MessageModalBox.find('.contents').val();
+            modalBox.find('.send-message').on('click', function () {
+            var contents = modalBox.find('.contents').val();
             sendApplication(receiveId,sendId,contents);
             });
 
@@ -83,13 +87,15 @@ function modal(data) {
             modalBox.find('.img_area img').attr('alt', receiveId);
             modalBox.find('.name a').text(data.userDTO.userNickname + '(' + receiveId + ')');
             modalBox.find('.message').attr('alt', receiveId);
+            modalBox.find('.application_buttons').html(
+                                                        '<p class="trainer_profile"><a>프로필 자세히 보기</a></p>'
+                                                    );
 
+            modalBox.find('.profile_userId a').text(receiveId);
+            modalBox.find('.loginUser_userId a').text(sendId);
 
-            MessageModalBox.find('.profile_userId').attr('alt', receiveId);
-            MessageModalBox.find('.loginUser_userId').attr('alt', sendId);
-
-            MessageModalBox.find('.send-message').on('click', function () {
-            var contents = MessageModalBox.find('.contents').val();
+            modalBox.find('.send-message').on('click', function () {
+            var contents = modalBox.find('.contents').val();
             sendApplication(receiveId,sendId,contents);
             });
 
@@ -105,7 +111,7 @@ function modal(data) {
 
 function sendApplication(receiveId, sendId, contents) {
     $.ajax({
-        url: '/adminmypage/send_message',
+        url: '/matching/send_message',
                method: 'POST',
         data: { receiveId: receiveId, sendId: sendId, contents: contents},
         success: function (response) {
@@ -121,11 +127,11 @@ function sendApplication(receiveId, sendId, contents) {
 function handleApplicationResponse(response) {
     if (response === "success") {
         // 성공적으로 신청된 경우
-        alert("신청이 성공적으로 완료되었습니다.");
+        alert("쪽지보내기 완료.");
         // 여기에 성공 처리에 대한 추가적인 동작을 추가할 수 있습니다.
     } else if (response === "already_matched") {
         // 이미 매칭된 경우
-        alert("이미 매칭된 상태입니다.");
+        alert("이미 보내진 상태입니다.");
         // 여기에 이미 매칭된 경우의 처리를 추가할 수 있습니다.
     } else {
         // 그 외의 경우

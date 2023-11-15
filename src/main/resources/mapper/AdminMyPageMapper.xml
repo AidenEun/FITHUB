@@ -201,21 +201,21 @@
     <select id="getMessageList">
         SELECT * FROM message
         WHERE receive_id LIKE '%admin%'
-        AND category = 'meGeneral'
+        AND category = 'X'
         limit #{startrow},#{amount}
     </select>
 
     <select id="getMessageTotal">
         SELECT COUNT(*) FROM message
         WHERE receive_id LIKE '%admin%'
-        AND category = 'meGeneral'
+        AND category = 'X'
     </select>
 
     <select id="getMessageByUser">
         SELECT * FROM message
         WHERE send_id IN (SELECT user_id FROM user WHERE user_category = 'U')
         AND receive_id LIKE '%admin%'
-        AND category = 'meGeneral'
+        AND category = 'X'
         ORDER BY message_num DESC
         LIMIT #{startrow}, #{amount}
     </select>
@@ -224,7 +224,7 @@
         SELECT * FROM message
         WHERE send_id IN (SELECT trainer_id FROM trainer)
         AND receive_id LIKE '%admin%'
-        AND category = 'meGeneral'
+        AND category = 'X'
         ORDER BY message_num desc
         limit #{startrow},#{amount}
     </select>
@@ -235,7 +235,7 @@
         INNER JOIN user ON message.send_id = user.user_id
         WHERE message.message_num > 0
         AND message.receive_id LIKE '%admin'
-        AND category = 'meGeneral'
+        AND category = 'X'
     </select>
 
     <select id="getMessageTotalByTrainer">
@@ -244,7 +244,7 @@
         INNER JOIN trainer ON message.send_id = trainer.trainer_id
         WHERE message.message_num > 0
         AND message.receive_id LIKE '%admin'
-        AND category = 'meGeneral'
+        AND category = 'X'
     </select>
 
 <!--Modal-->
@@ -298,7 +298,7 @@
 
     <insert id="insertMessageReportedUser">
         INSERT INTO message (category, message_content, send_id, receive_id)
-        VALUES ('meGeneral', '본인의 게시글이 신고를 받아 삭제 처리되었습니다. 서비스 이용에 주의 바랍니다.', 'admin', #{reportedUser})
+        VALUES ('X', '본인의 게시글이 신고를 받아 삭제 처리되었습니다. 서비스 이용에 주의 바랍니다.', 'admin', #{reportedUser})
     </insert>
 
     <select id="selectBoard">
@@ -318,7 +318,7 @@
         SELECT COUNT(*)
         FROM message
         WHERE message_num = #{boardNum}
-        AND category = 'meGeneral'
+        AND category = 'X'
     </select>
 
     <select id="selectChallCert">
@@ -350,13 +350,13 @@
     </delete>
 
     <insert id="insertMessageDoneReport">
-        INSERT INTO message (category, message_content, send_id, receive_id)
-        VALUES ('meGeneral', '접수하신 신고가 처리되었습니다.', 'admin', #{userId})
+        INSERT INTO message (message_content, send_id, receive_id)
+        VALUES (접수하신 신고가 처리되었습니다.', 'admin', #{userId})
     </insert>
 
     <insert id="insertMessageCancelReport">
-        INSERT INTO message (category, message_content, send_id, receive_id)
-        VALUES ('meGeneral', '접수하신 신고가 철회되었습니다.', 'admin', #{userId})
+        INSERT INTO message (message_content, send_id, receive_id)
+        VALUES ('접수하신 신고가 철회되었습니다.', 'admin', #{userId})
     </insert>
 
     <select id="getSignUpDTO">
@@ -392,13 +392,13 @@
     </insert>
 
     <insert id="insertMessageConfirmSignUp">
-        INSERT INTO message (category, message_content, send_id, receive_id)
-        VALUES ('meGeneral', '트레이너 신청이 승인되었습니다.', 'admin', #{userId})
+        INSERT INTO message (message_content, send_id, receive_id)
+        VALUES ('트레이너 신청이 승인되었습니다.', 'admin', #{userId})
     </insert>
 
     <insert id="insertMessageCancelSignUp">
-        INSERT INTO message (category, message_content, send_id, receive_id)
-        VALUES ('meGeneral', '트레이너 신청이 거절되었습니다.', 'admin', #{userId})
+        INSERT INTO message (message_content, send_id, receive_id)
+        VALUES (트레이너 신청이 거절되었습니다.', 'admin', #{userId})
     </insert>
 
     <delete id="deleteSignUp">
@@ -412,8 +412,8 @@
     </select>
 
     <insert id="returnMessage">
-        INSERT INTO message (category, message_content, send_id, receive_id)
-        VALUES ('meGeneral', #{messageContent}, 'admin', #{receiveId})
+        INSERT INTO message (message_content, send_id, receive_id)
+        VALUES (#{messageContent}, 'admin', #{receiveId})
     </insert>
 
     <update id="updateMessageCategory">

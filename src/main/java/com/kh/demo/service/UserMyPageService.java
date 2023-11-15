@@ -1,8 +1,11 @@
 package com.kh.demo.service;
 
 import com.kh.demo.domain.dto.*;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,6 +49,8 @@ public interface UserMyPageService {
     List<MessageDTO> getMessageMyList(Criteria cri, String userId, String message);
 
 
+
+
     //보드
     Long getBoardTotal(Criteria cri, String userId);
     BoardDTO getBoardDetail(Long boardnum);
@@ -70,6 +75,13 @@ public interface UserMyPageService {
     //내정보수정
     UserDTO getUserDetail(String userid);
     boolean user_modify(UserDTO user);
+
+    //나의 프로필
+    boolean user_profile_modify(UserDTO user, MultipartFile profile, String updateCnt) throws IOException;
+
+    ProfileDTO getProFileList(String Id);
+
+
 
     //내구독
     List<TrainerDTO> getMyScribe(Criteria cri, String userId);
@@ -97,4 +109,6 @@ public interface UserMyPageService {
     Long getMatchingTotal(Criteria cri, String userId);
 
     boolean updateMatching(UTMatchingDTO utMatching);
+
+    ResponseEntity<Resource> getThumbnailResource(String sysName) throws Exception;
 }

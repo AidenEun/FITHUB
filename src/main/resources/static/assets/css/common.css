@@ -62,7 +62,7 @@ header.test12 p {
 }
 
 .boardRanking table tr td {
-    text-align: center;
+    text-align: left;
     background: #FFFFFF;
 }
 

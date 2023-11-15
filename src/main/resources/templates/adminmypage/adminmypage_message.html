@@ -10,8 +10,9 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<link rel="stylesheet" th:href="@{/assets/css/index.css}" />
-	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
 	<noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
+	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
+	<link rel="stylesheet" th:href="@{/assets/css/common.css}" />
 
 	<link rel="stylesheet" th:href="@{/assets/css/profileModal.css}" />
 	<link rel="stylesheet" th:href="@{/assets/css/messageModal.css}" />
@@ -115,10 +116,10 @@
 </style>
 <body class="is-preload">
 
-	<script th:if="${session.loginUser != null}" th:unless="${#strings.contains(session.loginUser, 'admin')}">
-		alert("관리자만 접근 가능합니다!!!");
-		location.replace("/");
-	</script>
+<!--	<script th:if="${session.loginUser != null}" th:unless="${#strings.contains(session.loginUser, 'admin')}">-->
+<!--		alert("관리자만 접근 가능합니다!!!");-->
+<!--		location.replace("/");-->
+<!--	</script>-->
 
 	<!-- Header -->
 	<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin})}"></th:block>
@@ -129,15 +130,12 @@
 
 	<!-- Main -->
 	<section id="main" class="wrapper sidebar left">
-		<div class="top_img_box">
-			<img src="/images/pic01.jpg" alt="">
-		</div>
 
 		<div class="inner">
 
-			<header class="major">
-				<h2>문의함</h2>
-				<p>관리자 마이페이지</p>
+			<header class="test12">
+				<p id="mainText">관리자 마이페이지</p>
+				<p id="subText">문의함</p>
 			</header>
 
 
@@ -206,18 +204,23 @@
 			</div>
 
 
-		<!-- Sidebar -->
-		<div class="sidebar">
 
+			<!-- Sidebar -->
+			<div class="sidebar">
 				<section>
-					<h3><a href="/adminmypage/adminmypage_list">전체</a></h3>
-					<h3><a href="/adminmypage/adminmypage_report">신고 접수</a></h3>
-					<h3><a href="/adminmypage/adminmypage_trainer">트레이너 신청 내역</a></h3>
-					<h3><a href="/adminmypage/adminmypage_board">관리자 게시물</a></h3>
-					<h3><a href="/adminmypage/adminmypage_usersearch">유저 검색</a></h3>
-					<h3><a href="/adminmypage/adminmypage_message" style="color: #5a8100;">문의함</a></h3>
+					<div class="boardRanking">
+						<div class="boardRanking_ranking">
+							<table style="width: 90%;">
+								<tr><td><a href="/adminmypage/adminmypage_list">전체</a></td></tr>
+								<tr><td><a href="/adminmypage/adminmypage_report">신고 접수</a></td></tr>
+								<tr><td><a href="/adminmypage/adminmypage_trainer">트레이너 신청 내역</a></td></tr>
+								<tr><td><a href="/adminmypage/adminmypage_board">관리자 게시물</a></td></tr>
+								<tr><td><a href="/adminmypage/adminmypage_usersearch">유저 검색</a></td></tr>
+								<tr><td><a href="/adminmypage/adminmypage_message" style="color: #5a8100;">문의함</a></td></tr>
+							</table>
+						</div>
+					</div>
 				</section>
-
 			</div>
 		</div>
 	</section>

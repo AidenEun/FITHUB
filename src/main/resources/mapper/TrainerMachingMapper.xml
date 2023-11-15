@@ -90,4 +90,8 @@
         SELECT * FROM trainer_matching_board where ((board_title like('%${keyword}%')) or (board_content like('%${keyword}%')) or (trainer_id like('%${keyword}%')))
         order by board_num asc;
     </select>
+    <insert id="saveMessage">
+        insert into message (send_id, receive_id, message_content)
+        values (#{sendId}, #{receiveId}, #{messageContent})
+    </insert>
 </mapper>

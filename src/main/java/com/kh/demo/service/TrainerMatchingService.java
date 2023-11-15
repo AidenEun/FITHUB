@@ -38,4 +38,6 @@ public interface TrainerMatchingService {
     UTMatchingDTO getutBytrainerId(String trainerId);
 
     List<BoardDTO> getMachingSearchList(String keyword);
+
+    void saveMessage(MessageDTO newMessage);
 }
