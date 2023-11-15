@@ -190,13 +190,20 @@ height:152.469px;
 			</div>
 
 			<div class="trainer_box">
-
-
 					<table class="Ma_write">
 						<tr align="right" valign="middle">
 							<td><h2 class="ma_title">나에게 맞는 트레이너를 매칭해보세요</h2></td>
 							<td>
-								<a class="write" th:href="${'/matching/matching_write'}">매칭 글 작성</a>
+								<th:block th:if="${trainerId eq session.loginUser}">
+									<form name="boardForm" method="post" th:action="@{/matching/matching_write}">
+										<input name="boardnum" th:value="${board.boardnum}" type="hidden">
+										<input name="pagenum" th:value="${cri.pagenum}" type="hidden">
+										<input name="amount" th:value="${cri.amount}" type="hidden">
+										<input name="type" th:value="${cri.type}" type="hidden">
+										<input name="keyword" th:value="${cri.keyword}" type="hidden">
+										<a class="write" th:href="${'javascript:write()'}">매칭 글 작성</a>
+									</form>
+								</th:block>
 							</td>
 						</tr>
 					</table>
@@ -336,62 +343,67 @@ height:152.469px;
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </body>
 <script>
+	function write(){
+            const boardForm = document.boardForm;
+            boardForm.setAttribute("action",/*[[@{/matching/matching_write}]]*/'');
+            boardForm.setAttribute("method","matching_list");
+            boardForm.submit();
+        }
 
 
+        const searchForm = $("#searchForm");
+        const pageForm = $("#pageForm");
 
-	const searchForm = $("#searchForm");
-	const pageForm = $("#pageForm");
-
-	$(".changePage").on("click",function(e){
-		//e(이벤트)의 기본 작동 막기
-		e.preventDefault();
-		let pagenum = $(this).attr("href");
-		pageForm.find("input[name='pagenum']").val(pagenum);
-		pageForm.submit();
-	});
-
-
- $('.get').click(function(event) {
-    event.preventDefault();
-      var boardNum = $(this).attr('href');
-      console.log(boardNum);
-      // 다음 페이지 URL 구성
-      var Url = '/matching/matching_view?boardNum=' + boardNum;
-		console.log(Url);
-      // 페이지 이동
-      window.location.href = Url;
-
-  });
-
-
-	$("#searchForm a").on("click",sendit);
-	function sendit(){
-		if(!searchForm.find("option:selected").val()){
-			alert("검색 기준을 선택하세요!");
-			return false;
-		}
-		if(!$("input[name='keyword']").val()){
-			alert("키워드를 입력하세요!");
-			return false;
-		}
-		searchForm.submit();
-	}
-
-$(document).ready(function () {
-        $(".open").click(function (e) {
-            e.stopPropagation();
-            e.preventDefault(); // 기본 동작 방지 (링크 이동 취소)
-            // 여기에 원하는 동작 추가
+        $(".changePage").on("click",function(e){
+            //e(이벤트)의 기본 작동 막기
+            e.preventDefault();
+            let pagenum = $(this).attr("href");
+            pageForm.find("input[name='pagenum']").val(pagenum);
+            pageForm.submit();
         });
-    });
 
-	$(".open").on("click", function (e) {
-                e.preventDefault();
-				var userId = $(this).text();
 
-				sendUserIdToModal(userId);
-                modalBox.classList.add("active");
+     $('.get').click(function(event) {
+        event.preventDefault();
+          var boardNum = $(this).attr('href');
+          console.log(boardNum);
+          // 다음 페이지 URL 구성
+          var Url = '/matching/matching_view?boardNum=' + boardNum;
+            console.log(Url);
+          // 페이지 이동
+          window.location.href = Url;
+
+      });
+
+
+        $("#searchForm a").on("click",sendit);
+        function sendit(){
+            if(!searchForm.find("option:selected").val()){
+                alert("검색 기준을 선택하세요!");
+                return false;
+            }
+            if(!$("input[name='keyword']").val()){
+                alert("키워드를 입력하세요!");
+                return false;
+            }
+            searchForm.submit();
+        }
+
+    $(document).ready(function () {
+            $(".open").click(function (e) {
+                e.stopPropagation();
+                e.preventDefault(); // 기본 동작 방지 (링크 이동 취소)
+                // 여기에 원하는 동작 추가
             });
+        });
+
+        $(".open").on("click", function (e) {
+                    e.preventDefault();
+                    var userId = $(this).text();
+
+                    sendUserIdToModal(userId);
+                    modalBox.classList.add("active");
+                });
 
 
 
