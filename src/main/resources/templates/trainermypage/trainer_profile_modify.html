@@ -503,8 +503,6 @@ $(".profile_cont [type='file']").change(function(e){
 
     const file = e.target.files[0];
     const fileTag = e.target;
-alert("file: "+file);
-alert("fileTag.id: "+fileTag.id);
     if(file == undefined){
         if(!$(".profile_cont [name='profileOrgname']").val()){
             //비어있던 곳에 파일이 업로드 되었다가 취소한 경우

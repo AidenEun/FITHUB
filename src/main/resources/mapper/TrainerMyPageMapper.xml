@@ -13,9 +13,6 @@
 						<when test="type == 'C'.toString()">
 							(board_content like('%${cri.keyword}%'))
 						</when>
-						<when test="type == 'W'.toString()">
-							(user_id like('%${cri.keyword}%'))
-						</when>
 					</choose>
 				</foreach>
 			</trim>
@@ -28,9 +25,6 @@
 				<foreach collection="cri.typeArr" item="type">
 					or
 					<choose>
-						<when test="type == 'T'.toString()">
-							(category like('%${cri.keyword}%'))
-						</when>
 						<when test="type == 'C'.toString()">
 							(message_content like('%${cri.keyword}%'))
 						</when>
@@ -73,14 +67,11 @@
 				<foreach collection="cri.typeArr" item="type">
 					or
 					<choose>
-						<when test="type == 'T'.toString()">
-							(trainer.trainer_id like('%${cri.keyword}%'))
+						<when test="type == 'I'.toString()">
+							(user.user_id like('%${cri.keyword}%'))
 						</when>
-						<when test="type == 'C'.toString()">
-							(trainer.trainer_nickname like('%${cri.keyword}%'))
-						</when>
-						<when test="type == 'W'.toString()">
-							(trainer.trainer_part like('%${cri.keyword}%'))
+						<when test="type == 'N'.toString()">
+							(user.user_nickname like('%${cri.keyword}%'))
 						</when>
 					</choose>
 				</foreach>
@@ -100,8 +91,20 @@
 						<when test="type == 'C'.toString()">
 							(chall_notice_board.chall_content like('%${cri.keyword}%'))
 						</when>
-						<when test="type == 'W'.toString()">
-							(chall_notice_board.chall_term like('%${cri.keyword}%'))
+					</choose>
+				</foreach>
+			</trim>
+		</if>
+	</sql>
+
+	<sql id="criUTmatching">
+		<if test="cri.keyword != '' and cri.type != ''">
+			<trim prefixOverrides="or" prefix="(" suffix=") and">
+				<foreach collection="cri.typeArr" item="type">
+					or
+					<choose>
+						<when test="type == 'I'.toString()">
+							(user_id like('%${cri.keyword}%'))
 						</when>
 					</choose>
 				</foreach>
@@ -180,6 +183,8 @@
 	<!--나의 매칭리스트-->
 	<select id="getMyMatchinglist">
 		select * from u_t_matching where trainer_id=#{trainerId} and
+		<include refid="criUTmatching"></include>
+
 		<![CDATA[
 			0 < matching_num order by matching_num desc limit #{cri.startrow},#{cri.amount}
 		]]>
@@ -187,7 +192,7 @@
 
 	<select id="getMatchingTotal">
 		select count(*) from u_t_matching where  trainer_id=#{trainerId} and
-		matching_num > 0
+		<include refid="criUTmatching"></include>	matching_num > 0
 	</select>
 
 

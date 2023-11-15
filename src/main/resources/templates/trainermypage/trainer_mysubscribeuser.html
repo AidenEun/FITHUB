@@ -185,20 +185,15 @@
 					</td>
 				</tr>
 			</table>
-			<form id="searchForm" th:action="@{/board/list}">
+			<form id="searchForm" th:action="@{/trainermypage/trainer_mysubscribeuser}">
 				<div class="search_area">
-					<label>
-						<select name="type">
-							<option value="" th:selected="${pageMaker.cri.type == null}">검색</option>
-							<option value="T" th:selected="${pageMaker.cri.type == 'T'}">제목</option>
-							<option value="C" th:selected="${pageMaker.cri.type == 'C'}">내용</option>
-							<option value="W" th:selected="${pageMaker.cri.type == 'W'}">작성자</option>
-							<option value="TC" th:selected="${pageMaker.cri.type == 'TC'}">제목 또는 내용</option>
-							<option value="TW" th:selected="${pageMaker.cri.type == 'TW'}">제목 또는 작성자</option>
-							<option value="TCW" th:selected="${pageMaker.cri.type == 'TCW'}">제목 또는 내용 또는 작성자</option>
-						</select>
-					</label>
-					<label for="keyword"></label><input type="text" name="keyword" id="keyword" th:value="${pageMaker.cri.keyword}">
+					<select name="type">
+						<option value="" th:selected="${pageMaker.cri.type == null}">검색</option>
+						<option value="I" th:selected="${pageMaker.cri.type == 'I'}">아이디</option>
+						<option value="N" th:selected="${pageMaker.cri.type == 'N'}">닉네임</option>
+						<option value="IN" th:selected="${pageMaker.cri.type == 'IN'}">아이디 또는 닉네임</option>
+					</select>
+					<input type="text" name="keyword" id="keyword" th:value="${pageMaker.cri.keyword}">
 					<a href="#" class="button primary">검색</a>
 				</div>
 				<input type="hidden" value="1" name="pagenum">
