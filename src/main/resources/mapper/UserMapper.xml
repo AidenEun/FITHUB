@@ -37,5 +37,11 @@
 		WHERE user_id=#{userId}
 	</update>
 
+	<update id="profileUpdateUser">
+		UPDATE user
+		SET user_nickname=#{userNickname}, user_mail=#{userMail}
+		WHERE user_id=#{userId}
+	</update>
+
 </mapper>
 

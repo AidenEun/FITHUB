@@ -18,6 +18,8 @@ public interface UserMapper {
 
 	AdminDTO findAdminById(String userId);
 
-    TrainerDTO findTrainerById(String userId);
+  TrainerDTO findTrainerById(String userId);
+
+  int profileUpdateUser(UserDTO user);
 
 }
