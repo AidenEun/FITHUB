@@ -3,8 +3,8 @@
 <mapper namespace="com.kh.demo.mapper.UserMapper">
 
 	<insert id="insertUser" parameterType="com.kh.demo.domain.dto.UserDTO">
-		INSERT INTO user (user_id, user_name, user_nickname, user_pw, weight_goal, calories_goal, user_tel, user_mail, user_height, user_weight, user_gender, user_birth, user_joindate, user_point, user_reportedcnt, user_category)
-		VALUES (#{userId}, #{userName}, #{userNickname}, #{userPw}, #{weightGoal}, #{caloriesGoal}, #{userTel}, #{userMail}, #{userHeight}, #{userWeight}, #{userGender}, #{userBirth}, #{userJoindate}, #{userPoint}, #{userReportedcnt}, #{userCategory})
+		INSERT INTO user (user_id, user_name, user_nickname, user_pw, weight_goal, calories_goal, user_tel, user_mail, user_height, user_weight, user_gender, user_birth, user_joindate, user_point, user_reportedcnt)
+		VALUES (#{userId}, #{userName}, #{userNickname}, #{userPw}, #{weightGoal}, #{caloriesGoal}, #{userTel}, #{userMail}, #{userHeight}, #{userWeight}, #{userGender}, #{userBirth}, #{userJoindate}, #{userPoint}, #{userReportedcnt})
 	</insert>
 
 	<select id="findById">
