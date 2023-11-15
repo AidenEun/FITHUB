@@ -22,6 +22,48 @@
         </if>
     </sql>
 
+    <sql id="select_user_columns">
+        SELECT user_id
+            , user_name
+            , user_nickname
+            , user_pw
+            , weight_goal
+            , calories_goal
+            , user_tel
+            , user_mail
+            , user_height
+            , user_weight
+            , case when user_gender in ('M', 'Male') then '남자' when user_gender in ('F', 'Female') then '여자' else '기타' end user_gender
+            , user_birth
+            , user_point
+            , user_reportedcnt
+            , user_category
+            , DATE_FORMAT(user_joindate, '%Y-%m-%d %H:%i:%s') AS formatted_joindate
+    </sql>
+
+    <sql id="select_trainer_columns">
+        SELECT trainer_id
+            , trainer_name
+            , trainer_nickname
+            , trainer_pw
+            , trainer_tel
+            , trainer_mail
+            , trainer_zipcode
+            , trainer_addr
+            , trainer_addrdetail
+            , trainer_addretc
+            , trainer_height
+            , trainer_weight
+            , case when trainer_gender in ('M', 'Male') then '남자' when trainer_gender in ('F', 'Female') then '여자' else '기타' end trainer_gender
+            , trainer_birth
+            , trainer_part
+            , trainer_career
+            , trainer_intro
+            , trainer_joindate
+            , transferdate
+            , trainer_reportedcnt
+    </sql>
+
 <!--Report-->
     <select id="getReportList">
         SELECT * FROM report
@@ -167,25 +209,28 @@
 
 <!--UserSearch-->
     <select id="getTrainer">
-        SELECT * FROM trainer
+        <include refid="select_trainer_columns"></include>
+        FROM trainer
         WHERE trainer_id = #{keyword}
     </select>
 
     <select id="getUser">
-        SELECT * FROM user
+        <include refid="select_user_columns"></include>
+        FROM user
         WHERE user_id = #{keyword}
         AND user_category = 'U'
     </select>
 
     <select id="getUserList">
-        SELECT *, DATE_FORMAT(user_joindate, '%Y%m%d %H:%i:%s') as formatted_joindate
+        <include refid="select_user_columns"></include>
         FROM user
         WHERE user_category = 'U'
         LIMIT #{startrow}, #{amount}
     </select>
 
     <select id="getTrainerList">
-        SELECT * FROM trainer
+        <include refid="select_trainer_columns"></include>
+        FROM trainer
         limit #{startrow},#{amount}
     </select>
 
@@ -262,13 +307,13 @@
     </select>
 
     <select id="getUserById">
-        SELECT *
+        <include refid="select_user_columns"></include>
         FROM user
         WHERE user_id = #{userId}
     </select>
 
     <select id="getTrainerById">
-        SELECT *
+        <include refid="select_trainer_columns"></include>
         FROM trainer
         WHERE trainer_id = #{userId}
     </select>
@@ -389,7 +434,7 @@
             #{userDTO.userId}, #{userDTO.userName}, #{userDTO.userNickname}, #{userDTO.userPw}, #{userDTO.userTel}
           , #{userDTO.userMail}, #{signUpDTO.trainerZipcode}, #{signUpDTO.trainerAddr}, #{signUpDTO.trainerAddrdetail}, #{signUpDTO.trainerAddretc}
           , #{userDTO.userHeight}, #{userDTO.userWeight}, #{userDTO.userGender}, #{userDTO.userBirth}, #{signUpDTO.trainerPart}
-          , #{signUpDTO.trainerCareer}, #{signUpDTO.trainerContent}, #{userDTO.userJoindate}, #{userDTO.userReportedcnt})
+          , #{signUpDTO.trainerCareer}, #{signUpDTO.trainerContent}, #{userDTO.formattedJoindate}, #{userDTO.userReportedcnt})
     </insert>
 
     <insert id="insertMessageConfirmSignUp">
