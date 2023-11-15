@@ -32,55 +32,29 @@
 			background-color: transparent;
 		}
 		table tbody tr:nth-child(2n + 1) {
-			background-color: transparent;
+			background-color: #F7FAF5;
 		}
 		table p{
 			margin-bottom: 0;
 		}
+		table th{
+			font-size: 13px !important;
+		}
 		table td{
-			padding: 5px 10px;
+			padding: 5px;
+			vertical-align: middle;
+			text-align: center;
+			font-size: 14px !important;
+		}
+		td a{
 			vertical-align: middle;
 		}
-		#thumbnail{
-			width: 210px !important;
-			height: 190px !important;
-			background-color: #5a8100;
-			padding: 10px;
-		}
-		#thumbnail #img{
-			width: 190px !important;
-			height: 170px !important;
-			background-color: beige;
-		}
-		#boardtitle{
-			padding: 0;
-		}
-		#boardtitle b{
-			font-size: 15px !important;
-		}
-
-		#boardcontent{
-			height: 100px !important;
+		#boardtitle {
+			display: inline-block;
+			width: 300px;
 			overflow: hidden;
 			text-overflow: ellipsis;
-			display: -webkit-box; /* display: -webkit-box => 해당 영역을 box 형태로 관리 */
-			-webkit-line-clamp: 3; /*-webkit-line-clamp => 해당 영역 내 텍스트의 최대 라인수 */
-			-webkit-box-orient: vertical; /* -webkit-box-orient: vertical => box의 흐름 방향을 수직으로 지정 */
-		}
-		#boardcontent p, #boardcontent span, #boardcontent b{
-			display: inline;
-			font-size: 14px !important;
-			text-decoration: none !important;
-			font-weight: normal;
-		}
-		#boardcontent img{
-			display: none;
-		}
-		#cnt {
-			height: 30px;
-			font-size: 12px;
-			line-height: 12px;
-			padding: 5px 11px;
+			white-space: nowrap;
 		}
 	</style>
 </head>
@@ -103,35 +77,46 @@
 			<div style="width: 100%;">
 				<!-- 게시글 리스트 띄우는 테이블 -->
 				<table id="list" class="commu_qna_list" style="border-bottom: 1px #304400; width: 100%;">
+					<thead>
+					<tr>
+						<th width="8%">번호</th>
+						<th>제목</th>
+						<th width="15%">작성자</th>
+						<th width="10%">조회수</th>
+						<th width="10%">좋아요</th>
+						<th width="20%">등록일자</th>
+					</tr>
+					</thead>
 					<th:block th:if="${list != null and list.size()>0}" th:each="board : ${list}">
 						<tr valign="middle">
-							<td id="thumbnail" rowspan="3" style="width: 100%">
-								<div id="img">썸네일</div>
-								<!--/*								[[${board.썸네일}]]*/-->
+							<td id="boardnum">
+								[[${board.boardNum}]]
 							</td>
-							<td style="height: 35px; padding: 5px 10px;">
-								<a class="get" id="boardtitle" th:href="${board.boardNum}">
-									<b>[[${board.boardTitle}]]</b>
+							<td>
+								<a class="get long_text" id="boardtitle" th:href="${board.boardNum}">
+									[[${board.boardTitle}]]
+									<span class="reply_cnt" th:text="'['+${reply_cnt_list[boardStat.index]}+']'"></span>
 								</a>
 							</td>
-						</tr>
-						<tr>
-							<td style="height: 45px; font-size: 14px;" >
-								<a class="get" id="boardcontent" th:href="${board.boardNum}" th:utext="${board.boardContent}">
+							<td class="long_text">
+								<a href="#">
+									[[${board.userId}]]
 								</a>
 							</td>
-						</tr>
-						<tr>
-							<td id="cnt" >
-								<span style="margin-right: 10px; margin-left: 5px;">댓글수 0</span>
-								<!--								<span class="reply_cnt" th:text="${reply_cnt_list[boardStat.index]}">댓글수</span>-->
-								<span [[${board.viewCnt}]]>조회수 0</span>
+							<td class="long_text">
+								[[${board.viewCnt}]]
+							</td>
+							<td class="long_text">
+								[[${board.likeCnt}]]
+							</td>
+							<td class="long_text">
+								[[${board.regdate}]]
 							</td>
 						</tr>
 					</th:block>
 					<th:block th:if="${list == null or list.size() == 0}">
 						<tr>
-							<td colspan="2" style="text-align: center; font-size: 14px; width: 100%;">등록된
+							<td colspan="6" style="text-align: center; font-size: 14px; width: 100%;">등록된
 								게시글이 없습니다.</td>
 						</tr>
 					</th:block>

@@ -13,12 +13,6 @@
 	<link rel="stylesheet" th:href="@{/assets/css/infoBoard.css}">
 	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
 	<style>
-		/*.boardContent {*/
-		/*	text-overflow: ellipsis;*/
-		/*	display: -webkit-box; !* display: -webkit-box => 해당 영역을 box 형태로 관리 *!*/
-		/*	-webkit-line-clamp: 3; !*-webkit-line-clamp => 해당 영역 내 텍스트의 최대 라인수 *!*/
-		/*	-webkit-box-orient: vertical; !* -webkit-box-orient: vertical => box의 흐름 방향을 수직으로 지정 *!*/
-		/*}*/
 		.content .button{
 			float: right;
 			margin-top: 5px;
@@ -39,47 +33,33 @@
 			background-color: transparent;
 		}
 		table tbody tr:nth-child(2n + 1) {
-			background-color: transparent;
+			background-color: #F7FAF5;
 		}
 		table p{
 			margin-bottom: 0;
 		}
-		.content table tr .thumbnail{
-			height: 120px !important;
+		table th{
+			font-size: 13px !important;
+			padding:3px;
 		}
-		.content table tr .boardTitle{
-			line-height: 15px !important;
-			font-size: 12px !important;
-			overflow: hidden;
-			text-overflow: ellipsis;
+
+		table td{
+			padding: 5px;
+			vertical-align: middle;
+			text-align: center;
+			font-size: 14px !important;
+		}
+		td a{
 			vertical-align: middle;
 		}
-		.content table tr .boardTitle b{
-			line-height: 15px !important;
-			font-size: 12px !important;
-			overflow: hidden !important;
-			text-overflow: ellipsis !important;
-		}
-		.content table tr .boardContent{
-			height: 100px !important;
-			font-size: 10px !important;
+		.boardtitle {
+			display: inline-block;
+			width: 300px;
 			overflow: hidden;
 			text-overflow: ellipsis;
-			display: -webkit-box;
-			-webkit-line-clamp: 3;
-			-webkit-box-orient: vertical;
-			text-decoration: none !important;
+			white-space: nowrap;
 		}
-		.content table tr .boardContent p, .boardContent span, .boardContent b{
-			display: inline;
-			font-size: 10px !important;
-			text-decoration: none !important;
-			font-weight: normal;
 
-		}
-		.boardContent span img{
-			display: none;
-		}
 		hr{
 			margin-top: 50px;
 			margin-bottom: 30px;
@@ -104,145 +84,265 @@
 
 			<div class="commu_free">
 				<h2>자유게시판</h2>
-				<div style="display: flex; width: 100%; height: 300px;">
-					<th:block th:if="${freeList != null and freeList.size()>0}">
-						<th:block th:each="board, iterStat : ${freeList}" th:if="${iterStat.index < 4}">
-							<table style="border : 1px solid lightgrey; margin: 3px;">
-								<tr>
-									<td class="thumbnail">썸네일</td>
-								</tr>
-								<tr>
-									<td class="boardTitle" style="height: 30px; ">
-										<a class="get" th:href="${board.boardNum}">
-											<b>[[${board.boardTitle}]]</b></a>
+				<div style="display: flex; width: 100%;">
+					<table style="border-bottom: 1px #304400; width: 100%;">
+						<thead>
+						<tr>
+							<th width="8%">번호</th>
+							<th>제목</th>
+							<th width="15%">작성자</th>
+							<th width="10%">조회수</th>
+							<th width="10%">좋아요</th>
+							<th width="20%">등록일자</th>
+						</tr>
+						</thead>
+						<th:block th:if="${freeList != null and freeList.size()>0}">
+							<th:block th:each="board, iterStat : ${freeList}" th:if="${iterStat.index < 5}">
+								<tr valign="middle">
+									<td class="boardnum">
+										[[${board.boardNum}]]
 									</td>
-								</tr>
-								<tr>
-									<td class="boardContent">
-										<a class="get" th:href="${board.boardNum}">
-											<span th:utext="${board.boardContent}"></span>
+									<td>
+										<a class="get long_text boardtitle" th:href="${board.boardNum}">
+											[[${board.boardTitle}]]
 										</a>
 									</td>
+									<td class="long_text">
+										<a href="#">
+											[[${board.userId}]]
+										</a>
+									</td>
+									<td class="long_text">
+										[[${board.viewCnt}]]
+									</td>
+									<td class="long_text">
+										[[${board.likeCnt}]]
+									</td>
+									<td class="long_text">
+										[[${board.regdate}]]
+									</td>
 								</tr>
-							</table>
+							</th:block>
 						</th:block>
-					</th:block>
+						<th:block th:if="${freeList == null or freeList.size() == 0}">
+							<tr>
+								<td colspan="6" style="text-align: center; font-size: 14px; width: 100%;">등록된
+									게시글이 없습니다.</td>
+							</tr>
+						</th:block>
+					</table>
 				</div>
 				<div class="button"><a th:href="${'/community/commu_free'}">더보기</a></div>
 			</div>
 			<hr>
 			<div class="commu_food">
 				<h2>식단</h2>
-				<div style="display: flex; width: 100%; height: 300px;">
-					<th:block th:if="${foodList != null and foodList.size()>0}">
-						<th:block th:each="board, iterStat : ${foodList}" th:if="${iterStat.index < 4}">
-							<table style="border : 1px solid lightgrey; margin: 3px;">
-								<tr>
-									<td class="thumbnail">썸네일</td>
-								</tr>
-								<tr>
-									<td class="boardTitle" style="height: 30px; ">
-										<a class="get" th:href="${board.boardNum}">
-											<b>[[${board.boardTitle}]]</b></a>
+				<div style="display: flex; width: 100%;">
+					<table style="border-bottom: 1px #304400; width: 100%;">
+						<thead>
+						<tr>
+							<th width="8%">번호</th>
+							<th>제목</th>
+							<th width="15%">작성자</th>
+							<th width="10%">조회수</th>
+							<th width="10%">좋아요</th>
+							<th width="20%">등록일자</th>
+						</tr>
+						</thead>
+						<th:block th:if="${foodList != null and foodList.size()>0}">
+							<th:block th:each="board, iterStat : ${foodList}" th:if="${iterStat.index < 5}">
+								<tr valign="middle">
+									<td class="boardnum">
+										[[${board.boardNum}]]
 									</td>
-								</tr>
-								<tr>
-									<td class="boardContent">
-										<a class="get" th:href="${board.boardNum}">
-											<span th:utext="${board.boardContent}"></span>
+									<td>
+										<a class="get long_text boardtitle" th:href="${board.boardNum}">
+											[[${board.boardTitle}]]
 										</a>
 									</td>
+									<td class="long_text">
+										<a href="#">
+											[[${board.userId}]]
+										</a>
+									</td>
+									<td class="long_text">
+										[[${board.viewCnt}]]
+									</td>
+									<td class="long_text">
+										[[${board.likeCnt}]]
+									</td>
+									<td class="long_text">
+										[[${board.regdate}]]
+									</td>
 								</tr>
-							</table>
+							</th:block>
 						</th:block>
-					</th:block>
+						<th:block th:if="${foodList == null or foodList.size() == 0}">
+							<tr>
+								<td colspan="6" style="text-align: center; font-size: 14px; width: 100%;">등록된
+									게시글이 없습니다.</td>
+							</tr>
+						</th:block>
+					</table>
 				</div>
 				<div class="button"><a th:href="${'/community/commu_food'}">더보기</a></div>
 			</div>
 			<hr>
 			<div class="commu_exercise">
 				<h2>운동</h2>
-				<div style="display: flex; width: 100%; height: 300px;">
-					<th:block th:if="${exerList != null and exerList.size()>0}">
-						<th:block th:each="board, iterStat : ${exerList}" th:if="${iterStat.index < 4}">
-							<table style="border : 1px solid lightgrey; margin: 3px;">
-								<tr>
-									<td class="thumbnail">썸네일</td>
-								</tr>
-								<tr>
-									<td class="boardTitle" style="height: 30px; ">
-										<a class="get" th:href="${board.boardNum}">
-											<b>[[${board.boardTitle}]]</b></a>
+				<div style="display: flex; width: 100%;">
+					<table style="border-bottom: 1px #304400; width: 100%;">
+						<thead>
+						<tr>
+							<th width="8%">번호</th>
+							<th>제목</th>
+							<th width="15%">작성자</th>
+							<th width="10%">조회수</th>
+							<th width="10%">좋아요</th>
+							<th width="20%">등록일자</th>
+						</tr>
+						</thead>
+						<th:block th:if="${exerList != null and exerList.size()>0}">
+							<th:block th:each="board, iterStat : ${exerList}" th:if="${iterStat.index < 5}">
+								<tr valign="middle">
+									<td class="boardnum">
+										[[${board.boardNum}]]
 									</td>
-								</tr>
-								<tr>
-									<td class="boardContent">
-										<a class="get" th:href="${board.boardNum}">
-											<span th:utext="${board.boardContent}"></span>
+									<td>
+										<a class="get long_text boardtitle" th:href="${board.boardNum}">
+											[[${board.boardTitle}]]
 										</a>
 									</td>
+									<td class="long_text">
+										<a href="#">
+											[[${board.userId}]]
+										</a>
+									</td>
+									<td class="long_text">
+										[[${board.viewCnt}]]
+									</td>
+									<td class="long_text">
+										[[${board.likeCnt}]]
+									</td>
+									<td class="long_text">
+										[[${board.regdate}]]
+									</td>
 								</tr>
-							</table>
+							</th:block>
 						</th:block>
-					</th:block>
+						<th:block th:if="${exerList == null or exerList.size() == 0}">
+							<tr>
+								<td colspan="6" style="text-align: center; font-size: 14px; width: 100%;">등록된
+									게시글이 없습니다.</td>
+							</tr>
+						</th:block>
+					</table>
 				</div>
 				<div class="button"><a th:href="${'/community/commu_exercise'}">더보기</a></div>
 			</div>
 			<hr>
 			<div class="commu_gallery">
 				<h2>갤러리</h2>
-				<div style="display: flex; width: 100%; height: 300px;">
-					<th:block th:if="${galleryList != null and galleryList.size()>0}">
-						<th:block th:each="board, iterStat : ${galleryList}" th:if="${iterStat.index < 4}">
-							<table style="border : 1px solid lightgrey; margin: 3px;">
-								<tr>
-									<td class="thumbnail">썸네일</td>
-								</tr>
-								<tr>
-									<td class="boardTitle" style="height: 30px; ">
-										<a class="get" th:href="${board.boardNum}">
-											<b>[[${board.boardTitle}]]</b></a>
+				<div style="display: flex; width: 100%;">
+					<table style="border-bottom: 1px #304400; width: 100%;">
+						<thead>
+						<tr>
+							<th width="8%">번호</th>
+							<th>제목</th>
+							<th width="15%">작성자</th>
+							<th width="10%">조회수</th>
+							<th width="10%">좋아요</th>
+							<th width="20%">등록일자</th>
+						</tr>
+						</thead>
+						<th:block th:if="${galleryList != null and galleryList.size()>0}">
+							<th:block th:each="board, iterStat : ${galleryList}" th:if="${iterStat.index < 5}">
+								<tr valign="middle">
+									<td class="boardnum">
+										[[${board.boardNum}]]
 									</td>
-								</tr>
-								<tr>
-									<td class="boardContent">
-										<a class="get" th:href="${board.boardNum}">
-											<span th:utext="${board.boardContent}"></span>
+									<td>
+										<a class="get long_text boardtitle" th:href="${board.boardNum}">
+											[[${board.boardTitle}]]
 										</a>
 									</td>
+									<td class="long_text">
+										<a href="#">
+											[[${board.userId}]]
+										</a>
+									</td>
+									<td class="long_text">
+										[[${board.viewCnt}]]
+									</td>
+									<td class="long_text">
+										[[${board.likeCnt}]]
+									</td>
+									<td class="long_text">
+										[[${board.regdate}]]
+									</td>
 								</tr>
-							</table>
+							</th:block>
 						</th:block>
-					</th:block>
+						<th:block th:if="${galleryList == null or galleryList.size() == 0}">
+							<tr>
+								<td colspan="6" style="text-align: center; font-size: 14px; width: 100%;">등록된
+									게시글이 없습니다.</td>
+							</tr>
+						</th:block>
+					</table>
 				</div>
 				<div class="button"><a th:href="${'/community/commu_gallery'}">더보기</a></div>
 			</div>
 			<hr>
 			<div class="commu_qna">
 				<h2>고민 Q&A</h2>
-				<div style="display: flex; width: 100%; height: 300px;">
-					<th:block th:if="${qnaList != null and qnaList.size()>0}">
-						<th:block th:each="board, iterStat : ${qnaList}" th:if="${iterStat.index < 4}">
-							<table style="border : 1px solid lightgrey; margin: 3px;">
-								<tr>
-									<td class="thumbnail">썸네일</td>
-								</tr>
-								<tr>
-									<td class="boardTitle" style="height: 30px; ">
-										<a class="get" th:href="${board.boardNum}">
-											<b>[[${board.boardTitle}]]</b></a>
+				<div style="display: flex; width: 100%;">
+					<table style="border-bottom: 1px #304400; width: 100%;">
+						<thead>
+						<tr>
+							<th width="8%">번호</th>
+							<th>제목</th>
+							<th width="15%">작성자</th>
+							<th width="10%">조회수</th>
+							<th width="10%">좋아요</th>
+							<th width="20%">등록일자</th>
+						</tr>
+						</thead>
+						<th:block th:if="${qnaList != null and qnaList.size()>0}">
+							<th:block th:each="board, iterStat : ${qnaList}" th:if="${iterStat.index < 5}">
+								<tr valign="middle">
+									<td class="boardnum">
+										[[${board.boardNum}]]
 									</td>
-								</tr>
-								<tr>
-									<td class="boardContent">
-										<a class="get" th:href="${board.boardNum}">
-											<span th:utext="${board.boardContent}"></span>
+									<td>
+										<a class="get long_text boardtitle" th:href="${board.boardNum}">
+											[[${board.boardTitle}]]
 										</a>
 									</td>
+									<td class="long_text">
+										<a href="#">
+											[[${board.userId}]]
+										</a>
+									</td>
+									<td class="long_text">
+										[[${board.viewCnt}]]
+									</td>
+									<td class="long_text">
+										[[${board.likeCnt}]]
+									</td>
+									<td class="long_text">
+										[[${board.regdate}]]
+									</td>
 								</tr>
-							</table>
+							</th:block>
 						</th:block>
-					</th:block>
+						<th:block th:if="${qnaList == null or qnaList.size() == 0}">
+							<tr>
+								<td colspan="6" style="text-align: center; font-size: 14px; width: 100%;">등록된
+									게시글이 없습니다.</td>
+							</tr>
+						</th:block>
+					</table>
 				</div>
 				<div class="button"><a th:href="${'/community/commu_qna'}">더보기</a></div>
 			</div>
