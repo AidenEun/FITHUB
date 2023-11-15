@@ -4,7 +4,10 @@ import com.fasterxml.jackson.databind.DatabindContext;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.kh.demo.domain.dto.*;
+import com.kh.demo.service.BoardService;
+import com.kh.demo.service.ChallengeService;
 import com.kh.demo.service.TrainerMatchingService;
+import com.kh.demo.service.TrainerService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -24,6 +27,16 @@ import java.util.Map;
 @Controller
 @RequestMapping("/matching/*")
 public class MatchingController {
+
+    @Autowired
+    private ChallengeService challService;
+
+    @Autowired
+    @Qualifier("TrainerServiceImpl")
+    private TrainerService tservice;
+
+    @Autowired @Qualifier("BoardServiceImpl")
+    private BoardService boardservice;
 
     @Autowired
     @Qualifier("TrainerMatchingServiceImpl")
@@ -196,5 +209,46 @@ public class MatchingController {
         return "success";
     }
 
+    @GetMapping("/totalSearch")
+    public void search(String keyword,Model model){
+//        System.out.println(keyword);
+
+        //인기게시글 띄우기
+        List<BoardDTO> boardTop5List = boardservice.getBoardTop5List();
+
+        // 트레이너 랭킹
+        List<TrainerDTO> trainerTop5List= tservice.getTrainerTop5List();
+        //전체 보드 게시글 수 찾기
+        Long boardAllCnt = boardservice.getAllsearchCnt(keyword);
+        System.out.println(boardAllCnt);
+
+        //각 게시판에서 글 가져오기
+
+        List<BoardDTO> infoSearchList = boardservice.getinfoSearchList(keyword);
+
+        List<BoardDTO> tipSearchList = boardservice.getTipSearchList(keyword);
+        List<BoardDTO> commuSearchList = boardservice.getCommuSearchList(keyword);
+
+        List<BoardDTO> matchingSearchList = MatchingService.getMachingSearchList(keyword);
+        List<ChallNoticeBoardDTO> challSearchList = challService.getChallSearchList(keyword);
+
+        int[] boardCntArr ={infoSearchList.size(),
+                tipSearchList.size(),commuSearchList.size(),matchingSearchList.size(),challSearchList.size()};
+
+//        model.addAttribute("newsSearchList",newsSearchList);
+//        model.addAttribute("exerSearchList",exerSearchList);
+//        model.addAttribute("foodSearchList",foodSearchList);
+        model.addAttribute("infoSearchList",infoSearchList);
+        model.addAttribute("tipSearchList",tipSearchList);
+        model.addAttribute("commuSearchList",commuSearchList);
+        model.addAttribute("matchingSearchList",matchingSearchList);
+        model.addAttribute("challSearchList",challSearchList);
+        model.addAttribute("boardAllCnt",boardAllCnt);
+        model.addAttribute("trainerTop5List",trainerTop5List);
+        model.addAttribute("boardTop5List",boardTop5List);
+        model.addAttribute("boardCntArr",boardCntArr);
+
+
+    }
 
 }

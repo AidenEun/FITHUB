@@ -435,28 +435,35 @@ border-radius: 15px;
 
       </th:block>
     </div>
-
+  </div>
 
     <!-- Sidebar -->
-    <div class="sidebar">
 
-      <section>
-        <h3 class="side_ranking">포인트 순위</h3>
-        <div class="DietRanking">
-          <div class="DietRanking_ranking">
+  <section>
+    <h3 class="side_ranking">인기 게시글 순위</h3>
+    <div class="ranking">
+      <div class="boardRanking_ranking">
+        <table style="width: 90%;">
+          <tr th:each="boardTop5List, dataStat :${boardTop5List}">
+            <td th:text="${dataStat.index+1}"></td>
+            <td>[[${boardTop5List.boardTitle}]]</td>
+          </tr>
+        </table>
 
-          </div>
-        </div>
-        <h3 class="side_ranking">트레이너 구독 순위</h3>
-        <div class="subRanking">
-          <div class="subRanking_ranking">
-
-          </div>
-        </div>
-      </section>
-
+      </div>
     </div>
-  </div>
+    <h3 class="side_ranking">트레이너 구독 순위</h3>
+    <div class="ranking">
+      <div class="boardRanking_ranking">
+        <table style="width: 90%;">
+          <tr th:each="trainerTop5List, dataStat: ${trainerTop5List}">
+            <td th:text="${dataStat.index + 1}">1</td>
+            <td>[[${trainerTop5List.trainerId}]]</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </section>
 </section>
 
 <!-- Footer -->
