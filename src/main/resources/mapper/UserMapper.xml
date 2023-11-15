@@ -18,6 +18,7 @@
 		SELECT *
 		FROM user user
 		WHERE user_nickname = #{userNickname}
+	</select>
 
 	<select id="findTrainerById">
 		SELECT *
