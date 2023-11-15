@@ -11,6 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
     <link rel="stylesheet" th:href="@{/assets/css/index.css}"/>
     <link rel="stylesheet" th:href="@{/assets/css/sidebar.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/common.css}" />
     <noscript>
         <link rel="stylesheet" th:href="@{/assets/css/noscript.css}"/>
     </noscript>
@@ -86,7 +87,7 @@
         /* float: left; */
         width: 310px;
         height: 100%;
-        border: 1px solid violet;
+        <!--border: 1px solid violet;-->
         /* background-color: antiquewhite; */
     }
 
@@ -109,7 +110,7 @@
     }
 
     .diary_write {
-        margin: 20px;
+        margin: 0 10px;
     }
 
     .input_area {
@@ -236,24 +237,33 @@
         th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin})}"></th:block>
 <th:block th:replace="~{layout/searchModal::searchModal()}"></th:block>
 
-<div id="top_main_img">
+<!--<div id="top_main_img">
     이미지 추가 예정
-</div>
+</div>-->
+
+<header class="test12" style="width:1080px; margin:4em auto;">
+    <p id="mainText">마이페이지</p>
+    <p id="subText">다이어리</p>
+</header>
 
 <div id="container1">
     <div id="side_box">
-        <div>마이페이지</div>
-        <div>
-            <ul class="cate_list">
-                <li>프로필</li>
-                <li>나의 다이어리</li>
-                <li>나의 챌린지</li>
-                <li>나의 트레이너</li>
-                <li>북마크</li>
-                <li>내가 쓴 게시글</li>
-                <li>내 정보 수정</li>
-            </ul>
-        </div>
+        <section>
+            <div class="boardRanking">
+                <div class="boardRanking_ranking">
+                    <table style="width: 90%;">
+                        <tr><td><a href="/usermypage/user_myinfo">내 정보 수정</a></td></tr>
+                        <tr><td><a href="/usermypage/user_diary" style="color: #5a8100;">나의 다이어리</a></td></tr>
+                        <tr><td><a href="/usermypage/user_challenge">나의 챌린지</a></td></tr>
+                        <tr><td><a href="/usermypage/user_subtrainer">구독한 트레이너</a></td></tr>
+                        <tr><td><a href="/usermypage/user_subbookmark">북마크</a></td></tr>
+                        <tr><td><a href="/usermypage/user_boardlist">내 게시물</a></td></tr>
+                        <tr><td><a href="/usermypage/user_messagelist">쪽지함</a></td></tr>
+                        <tr><td><a href="/usermypage/user_applytrainer">트레이너 전환 신청</a></td></tr>
+                    </table>
+                </div>
+            </div>
+        </section>
     </div>
 
     <div id="main_box">

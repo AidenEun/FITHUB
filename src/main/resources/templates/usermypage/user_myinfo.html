@@ -16,91 +16,91 @@
 </head>
 <style>
 
-	.uInputArea {
-    display: table;
-    width: 100%;
-    height: 30px;
-    padding: 10px 0;
-    border-bottom: 1px solid black;
-	}
-	.uInputArea .uInput label {
-    font-size: 15px;
-    line-height: 30px;
-    color: black;
-    float: left;
-    font-weight: bold;
-	}
-	.uInputArea .uInput .inputBox {
-    overflow: hidden;
-    position: relative;
-	}
-	.uInputArea .uInput:after {
-    content: "";
-    display: block;
-    clear: both;
-	}
+        .uInputArea {
+        display: table;
+        width: 100%;
+        height: 30px;
+        padding: 10px 0;
+        border-bottom: 1px solid black;
+        }
+        .uInputArea .uInput label {
+        font-size: 15px;
+        line-height: 30px;
+        color: black;
+        float: left;
+        font-weight: bold;
+        }
+        .uInputArea .uInput .inputBox {
+        overflow: hidden;
+        position: relative;
+        }
+        .uInputArea .uInput:after {
+        content: "";
+        display: block;
+        clear: both;
+        }
 
-	.uInputArea .col:last-child {
-    padding-right: 5px;
-	}
-	.uInputArea .col:first-child {
-		width: 100%;
-		padding-left: 5px;
-	}
-	.uInputArea .col {
-		display: table-cell;
-		vertical-align: top;
-	}
-	.uInputArea .uInput .inputBox .inputText {
-    font-size: 15px;
-    line-height: 30px;
-    color: black;
-    display: block;
-    width: 100%;
-    height: 30px;
-    padding: 0 25px 0 10px;
-    box-sizing: border-box;
-    border: 0;
-    outline: 0;
-    background: none;
-	}
-		.uInputArea .col:last-child {
-		padding-right: 5px;
-	}
+        .uInputArea .col:last-child {
+        padding-right: 5px;
+        }
+        .uInputArea .col:first-child {
+            width: 100%;
+            padding-left: 5px;
+        }
+        .uInputArea .col {
+            display: table-cell;
+            vertical-align: top;
+        }
+        .uInputArea .uInput .inputBox .inputText {
+        font-size: 15px;
+        line-height: 30px;
+        color: black;
+        display: block;
+        width: 100%;
+        height: 30px;
+        padding: 0 25px 0 10px;
+        box-sizing: border-box;
+        border: 0;
+        outline: 0;
+        background: none;
+        }
+            .uInputArea .col:last-child {
+            padding-right: 5px;
+        }
 
-	.uInputArea .col {
-		display: table-cell;
-		vertical-align: top;
-	}
-	.uInputArea .uInput .inputBox .btnDel {
-    display: none;
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 25px;
-    height: 30px;
-	}
-	.uErrorText {
-    font-size: 13px;
-    line-height: 20px;
-    color: #dc941b;
-    margin-top: 5px;
-    padding: 0 5px;
-	}
-	.uInputArea .uBtnArea {
-    white-space: nowrap;
-    font-size: 0;
-	}
-	.uInputArea .uBtnArea .uBtn {
-    display: inline-block;
-    width: auto;
-    font-size: 13px;
-    height: 30px;
-    margin-left: 5px;
-    color: #666 !important;;
-    border: 0;
-    box-shadow: inset 0 0 0 0;
-	}
+        .uInputArea .col {
+            display: table-cell;
+            vertical-align: top;
+        }
+        .uInputArea .uInput .inputBox .btnDel {
+        display: none;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 25px;
+        height: 30px;
+        }
+        .uErrorText {
+        font-size: 13px;
+        line-height: 20px;
+        color: #dc941b;
+        margin-top: 5px;
+        padding: 0 5px;
+        }
+        .uInputArea .uBtnArea {
+        white-space: nowrap;
+        font-size: 0;
+        }
+        .uInputArea .uBtnArea .uBtn {
+        display: inline-block;
+        width: auto;
+        font-size: 13px;
+        height: 30px;
+        margin-left: 5px;
+        color: #666 !important;;
+        border: 0;
+        box-shadow: inset 0 0 0 0;
+        }
 
 </style>
 <body class="is-preload">
@@ -110,10 +110,6 @@
 
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">
-
-<!--	<div class="top_img_box">-->
-<!--		<img src="/images/admintop2.png" alt="">-->
-<!--	</div>-->
 
 	<div class="inner">
 
@@ -354,7 +350,24 @@
 
 
 		<!-- Sidebar -->
-		<th:block th:replace="~{layout/usermypage_sidebar::sidebar}"></th:block>
+		<div class="sidebar">
+			<section>
+				<div class="boardRanking">
+					<div class="boardRanking_ranking">
+						<table style="width: 90%;">
+							<tr><td><a href="/usermypage/user_myinfo" style="color: #5a8100;">내 정보 수정</a></td></tr>
+							<tr><td><a href="/usermypage/user_diary">나의 다이어리</a></td></tr>
+							<tr><td><a href="/usermypage/user_challenge">나의 챌린지</a></td></tr>
+							<tr><td><a href="/usermypage/user_subtrainer">구독한 트레이너</a></td></tr>
+							<tr><td><a href="/usermypage/user_subbookmark">북마크</a></td></tr>
+							<tr><td><a href="/usermypage/user_boardlist">내 게시물</a></td></tr>
+							<tr><td><a href="/usermypage/user_messagelist">쪽지함</a></td></tr>
+							<tr><td><a href="/usermypage/user_applytrainer">트레이너 전환 신청</a></td></tr>
+						</table>
+					</div>
+				</div>
+			</section>
+		</div>
 
 	</div>
 </section>

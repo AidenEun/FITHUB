@@ -12,6 +12,7 @@
 	<link rel="stylesheet" th:href="@{/assets/css/index.css}" />
 	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
 	<noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
+	<link rel="stylesheet" th:href="@{/assets/css/common.css}" />
 
 	<link rel="stylesheet" th:href="@{/assets/css/profileModal.css}">
 </head>
@@ -38,7 +39,7 @@
 	}
 
 	#header {
-		background-color: #5a8100;
+		<!--background-color: #5a8100;-->
 	}
 
 	#header nav > ul > li a {
@@ -156,15 +157,12 @@ height:152.469px;
 <th:block th:replace="~{layout/profileModal::profileModal}"></th:block>
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">
-	<div class="top_img_box">
-		<img src="/images/pic01.jpg" alt="">
-	</div>
 
 	<div class="inner">
 
-		<header class="major">
-			<h2>트레이너 매칭</h2>
-			<p>매칭 페이지</p>
+		<header class="test12">
+			<p id="mainText">트레이너 매칭</p>
+			<p id="subText">매칭 페이지</p>
 		</header>
 
 		<!-- Content -->
