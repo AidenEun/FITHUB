@@ -58,20 +58,29 @@
 	#footer {
 		background-color: #304400;
 	}
-   	.trainerRanking{
-   		border: 1px solid black;
-   	}
-#trainerRanking_ranking{
-	border: 1px solid black;
-	height: 200px;
-	text-align: center;
+
+.trainerRanking {
+    border-collapse: collapse;
 }
-#trainerRanking_ranking img{
-	width: 215px;
-	height: 200px;
+
+.trainerRanking img {
+    width: 100%;
+    height: auto; /* 이미지 비율 유지 */
 }
-#trainerRanking_ranking th{
-	border: 1px solid black;
+
+.ranking_box_view {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 245px;
+}
+
+/* 닉네임 스타일링 */
+.ranking_box_view span {
+    display: block;
+    margin-top: 5px; /* 닉네임과 이미지 사이의 간격 조절 */
 }
 
 
@@ -178,17 +187,46 @@ height:152.469px;
 				<h2>트레이너 랭킹</h2>
 				<div>
 					<table class="trainerRanking">
-						<th:block th:if="${list != null and list.size() > 0}" th:each="board : ${list}">
-						<tr id="trainerRanking_ranking">
-							<th>
-								<th:block th:if="${board.profileInfo != null}">
-									<img style="width:100%; height:100%;" th:src="@{/matching/thumbnail (sysName=${board.profileInfo.sysName})}">
-								</th:block>
-							</th>
-						</tr>
-						<tr id="trainerRankling_name">
-							<td><span th:text="${board.trainerInfo.trainerNickname}"></span></td>
-						</tr>
+						<th:block th:if="${list != null and list.size() > 0}" th:each="board, iterStat : ${list}">
+							<div class="ranking_box_view">
+							<tr>
+								<!-- 첫 번째 이미지와 닉네임을 세로로 표시 -->
+								<td th:if="${iterStat.index == 0}">
+									<div class="ranking_box_view">
+										<th:block th:if="${board.profileInfo != null}">
+											<img style="width:245px; height:200;" th:src="@{/matching/thumbnail (sysName=${board.profileInfo.sysName})}">
+										</th:block>
+										<span th:text="${board.trainerInfo.trainerNickname}"></span>
+									</div>
+								</td>
+								<!-- 두 번째 이미지와 닉네임을 가로로 표시 -->
+								<td th:if="${iterStat.index == 1}">
+									<div class="ranking_box_view">
+										<th:block th:if="${board.profileInfo != null}">
+											<img style="width:245px; height:200;" th:src="@{/matching/thumbnail (sysName=${board.profileInfo.sysName})}">
+										</th:block>
+										<span th:text="${board.trainerInfo.trainerNickname}"></span>
+									</div>
+								</td>
+								<!-- 세 번째 이미지와 닉네임을 가로로 표시 -->
+								<td th:if="${iterStat.index == 2}">
+									<div class="ranking_box_view">
+										<th:block th:if="${board.profileInfo != null}">
+											<img style="width:245px; height:200;" th:src="@{/matching/thumbnail (sysName=${board.profileInfo.sysName})}">
+										</th:block>
+										<span th:text="${board.trainerInfo.trainerNickname}"></span>
+									</div>
+								</td>
+								<!-- 네 번째 이미지와 닉네임을 가로로 표시 -->
+								<td th:if="${iterStat.index == 3}">
+									<div class="ranking_box_view">
+										<th:block th:if="${board.profileInfo != null}">
+											<img style="width:245px; height:200;" th:src="@{/matching/thumbnail (sysName=${board.profileInfo.sysName})}">
+										</th:block>
+										<span th:text="${board.trainerInfo.trainerNickname}"></span>
+									</div>
+								</td>
+							</div>
 						</th:block>
 					</table>
 				</div>
