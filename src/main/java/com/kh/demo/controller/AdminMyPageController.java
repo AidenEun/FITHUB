@@ -332,14 +332,14 @@ public class AdminMyPageController {
         HttpSession session = req.getSession();
         String loginUser_userId = (String) session.getAttribute("loginUser");
 
-        if (userInfo instanceof UserDTO) {
-            UserDTO userDTO = (UserDTO) userInfo;
-            json.putPOJO("userDTO", userDTO);
-            json.putPOJO("loginUser_userId", loginUser_userId);
-        }
-        else if (userInfo instanceof TrainerDTO) {
+        if  (userInfo instanceof TrainerDTO) {
             TrainerDTO trainerDTO = (TrainerDTO) userInfo;
             json.putPOJO("trainerDTO", trainerDTO);
+            json.putPOJO("loginUser_userId", loginUser_userId);
+        }
+        else if (userInfo instanceof UserDTO) {
+            UserDTO userDTO = (UserDTO) userInfo;
+            json.putPOJO("userDTO", userDTO);
             json.putPOJO("loginUser_userId", loginUser_userId);
         }
         else {

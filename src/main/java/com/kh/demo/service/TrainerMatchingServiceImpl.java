@@ -155,6 +155,9 @@ public class TrainerMatchingServiceImpl implements TrainerMatchingService {
         }
     }
 
+    public void saveMessage(MessageDTO newMessage){
+        tmmapper.saveMessage(newMessage);
+    };
     @Override
     public List<BoardDTO> getMachingSearchList(String keyword) {
         return tmmapper.getMachingSearchList(keyword);

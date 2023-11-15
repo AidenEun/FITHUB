@@ -15,6 +15,7 @@
 
   <!-- Modal -->
   <link rel="stylesheet" th:href="@{/assets/css/matchingModal.css}">
+  <link rel="stylesheet" th:href="@{/assets/css/profileModal.css}">
 
 </head>
 <style>
@@ -165,7 +166,10 @@ border-radius: 15px;
 #finish_button{
   margin-top: 40px;
 }
-
+.open:hover{
+	color: red;
+	font-weight:bold;
+}
 
 
 
@@ -226,6 +230,7 @@ border-radius: 15px;
 
 <!-- Modal -->
 <th:block th:replace="~{layout/matchingModal::matchingModal()}"></th:block>
+<th:block th:replace="~{layout/profileModal::profileModal}"></th:block>
 
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">
@@ -268,12 +273,12 @@ border-radius: 15px;
                   </div>
               </th:block></th>
               <th>트레이너</th>
-              <th>상담가능시간</th>
+              <td><a href="#" class="open">[[${trainerInfo.trainerNickname}]]</a></td>
             </tr>
             <tr>
-              <td>
-                [[${trainerInfo.trainerNickname}]]
-              </td>
+              <th>
+                상담가능시간
+              </th>
               <td>
                 [[${board.availConsultWeeks}]]
                 [[${board.availConsultTime}]]
@@ -481,6 +486,8 @@ border-radius: 15px;
 
 <script th:src="@{/assets/js/sidebar.js}"></script>
 <script th:src="@{/assets/js/matching_u_t_matching.js}"></script>
+<script th:src="@{/assets/js/matching_profile.js}"></script>
+
 
 <script th:src="@{/assets/js/review.js}"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -748,15 +755,21 @@ border-radius: 15px;
   }
 
 
-    $(document).ready(function () {
-       $(".open").on("click", function (e) {
-           e.preventDefault();
-           var trainerId = '[[${trainerInfo.trainerId}]]';
-           console.log("Trainer ID:", trainerId);
-           sendTrainerIdToModal(trainerId);
-           modalBox.classList.add("active");
-       });
-   });
+   $(document).ready(function () {
+        $(".open").click(function (e) {
+            e.stopPropagation();
+            e.preventDefault(); // 기본 동작 방지 (링크 이동 취소)
+            // 여기에 원하는 동작 추가
+        });
+    });
+
+	$(".open").on("click", function (e) {
+                e.preventDefault();
+				var userId = $(this).text();
+
+				sendUserIdToModal(userId);
+                modalBox.classList.add("active");
+            });
 
 </script>
 </html>
