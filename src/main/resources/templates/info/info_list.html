@@ -131,6 +131,11 @@
 							</table>
 						</th:block>
 					</th:block>
+					<th:block th:if="${(newsList == null or newsList.size() == 0)}">
+						<tr>
+							<td style="text-align: center; font-size: 14px;">등록된 게시글이 없습니다.</td>
+						</tr>
+					</th:block>
 				</div>
 				<div class="button"><a th:href="${'/info/info_news'}">더보기</a></div>
 			</div>
@@ -159,6 +164,11 @@
 								</tr>
 							</table>
 						</th:block>
+					</th:block>
+					<th:block th:if="${(foodList == null or foodList.size() == 0)}">
+						<tr>
+							<td style="text-align: center; font-size: 14px;">등록된 게시글이 없습니다.</td>
+						</tr>
 					</th:block>
 				</div>
 				<div class="button"><a th:href="${'/info/info_food'}">더보기</a></div>
@@ -189,6 +199,11 @@
 							</table>
 						</th:block>
 					</th:block>
+					<th:block th:if="${(exerList == null or exerList.size() == 0)}">
+						<tr>
+							<td style="text-align: center; font-size: 14px;">등록된 게시글이 없습니다.</td>
+						</tr>
+					</th:block>
 				</div>
 				<div class="button"><a th:href="${'/info/info_exercise'}">더보기</a></div>
 			</div>
@@ -217,6 +232,11 @@
 								</tr>
 							</table>
 						</th:block>
+					</th:block>
+					<th:block th:if="${(tipList == null or tipList.size() == 0)}">
+						<tr>
+							<td style="text-align: center; font-size: 14px;">등록된 게시글이 없습니다.</td>
+						</tr>
 					</th:block>
 				</div>
 				<div class="button"><a th:href="${'/info/info_tip'}">더보기</a></div>
