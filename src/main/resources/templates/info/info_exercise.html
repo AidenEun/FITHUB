@@ -88,8 +88,7 @@
 <body class="is-preload">
 
 <!-- Header -->
-<!--<th:block th:replace="~{layout/header::header(${session.loginUser})}"></th:block>-->
-<th:block th:replace="~{layout/headerNoneModal::header(${session.loginUser},${session.user},${session.trainer},${session.admin})}"></th:block>
+<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin})}"></th:block>
 
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">
