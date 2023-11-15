@@ -1,10 +1,7 @@
 package com.kh.demo.mapper;
 
 
-import com.kh.demo.domain.dto.AdminDTO;
-import com.kh.demo.domain.dto.Criteria;
-import com.kh.demo.domain.dto.BoardDTO;
-import com.kh.demo.domain.dto.UserDTO;
+import com.kh.demo.domain.dto.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -20,5 +17,7 @@ public interface UserMapper {
 	int updateUser(UserDTO user);
 
 	AdminDTO findAdminById(String userId);
+
+    TrainerDTO findTrainerById(String userId);
 
 }

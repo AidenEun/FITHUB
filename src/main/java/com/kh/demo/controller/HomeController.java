@@ -45,13 +45,6 @@ public class HomeController {
 
     @RequestMapping("/")
     public String home(HttpServletRequest req, Model model){
-        HttpSession session = req.getSession();
-        String loginUser= (String)session.getAttribute("loginUser");
-        session.setAttribute("loginUser",loginUser);
-
-        UserDTO user = service.getDetail(loginUser);
-        TrainerDTO trainer = serviceTrainer.getDetail(loginUser);
-        AdminDTO admin = serviceAdmin.getDetail(loginUser);
 
         BoardDTO newsBoard = boardservice.getNewsTop1();
         BoardDTO exerBoard = boardservice.getExerTop1();
@@ -62,17 +55,6 @@ public class HomeController {
 
         List<TrainerDTO> trainerTopList = serviceTrainer.getTrainerTopList();
         model.addAttribute("trainerTopList", trainerTopList);
-
-        if(admin != null){
-            req.getSession().setAttribute("admin",admin);
-            return "index";
-        } else if (trainer != null) {
-            req.getSession().setAttribute("trainer",trainer);
-            return "index";
-        } else if(user!=null){
-            req.getSession().setAttribute("user",user);
-            return "index";
-        }
         return "index";
     }
 

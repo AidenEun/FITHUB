@@ -7,10 +7,16 @@
 		VALUES (#{userId}, #{userName}, #{userNickname}, #{userPw}, #{weightGoal}, #{caloriesGoal}, #{userTel}, #{userMail}, #{userHeight}, #{userWeight}, #{userGender}, #{userBirth}, #{userJoindate}, #{userPoint}, #{userReportedcnt}, #{userCategory})
 	</insert>
 
-	<select id="findById" resultType="com.kh.demo.domain.dto.UserDTO">
+	<select id="findById">
 		SELECT *
 		FROM user
 		WHERE user_id = #{userId}
+	</select>
+
+	<select id="findTrainerById">
+		SELECT *
+		FROM trainer
+		WHERE trainer_id = #{userId}
 	</select>
 
 	<select id="findAdminById">
