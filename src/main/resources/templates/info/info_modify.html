@@ -12,6 +12,7 @@
 	<noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
 	<link rel="stylesheet" th:href="@{/assets/css/infoBoard.css}">
 	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
+	<link rel="stylesheet" th:href="@{/assets/css/common.css}" />
 	<script th:src="@{/assets/js/jquery.min.js}"></script>
 	<script th:src="@{/assets/js/jquery.dropotron.min.js}"></script>
 	<script th:src="@{/assets/js/jquery.scrollex.min.js}"></script>
@@ -97,15 +98,16 @@
 
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">
+
 	<div class="inner">
 
-		<header class="major">
-			<h2>정보</h2>
+		<header class="test12">
+			<p id="mainText">정보</p>
+			<p id="subText">게시글 수정</p>
 		</header>
 
 		<!-- Content -->
 		<div class="content">
-			<div class="cotent_header"><h2>작성하기</h2></div>
 
 			<form id="boardForm" method="post" name="boardForm" th:action="@{/info/info_modify}" enctype="multipart/form-data">
 				<!-- 날아온 네개의 파라미터를 받아 놓음 -->
@@ -215,11 +217,17 @@
 		<!-- Sidebar -->
 		<div class="sidebar">
 			<section>
-				<h3><a href="/info/info_list">전체</a></h3>
-				<h3><a href="/info/info_news">뉴스</a></h3>
-				<h3><a href="/info/info_food">식단</a></h3>
-				<h3><a href="/info/info_exercise">운동</a></h3>
-				<h3><a href="/info/info_tip">꿀팁</a></h3>
+				<div class="boardRanking">
+					<div class="boardRanking_ranking">
+						<table style="width: 90%;">
+							<tr><td><a href="/info/info_list">전체</a></td></tr>
+							<tr><td><a href="/info/info_news">뉴스</a></td></tr>
+							<tr><td><a href="/info/info_food">식단</a></td></tr>
+							<tr><td><a href="/info/info_exercise">운동</a></td></tr>
+							<tr><td><a href="/info/info_tip">꿀팁</a></td></tr>
+						</table>
+					</div>
+				</div>
 			</section>
 		</div>
 

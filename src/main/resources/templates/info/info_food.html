@@ -12,6 +12,7 @@
 	<noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
 	<link rel="stylesheet" th:href="@{/assets/css/infoBoard.css}">
 	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
+	<link rel="stylesheet" th:href="@{/assets/css/common.css}" />
 	<style>
 		.content .button{
 			margin-bottom: 30px;
@@ -91,9 +92,12 @@
 
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">
+
 	<div class="inner">
-		<header class="major">
-			<h2>정보</h2>
+
+		<header class="test12">
+			<p id="mainText">정보</p>
+			<p id="subText">식단</p>
 		</header>
 
 		<!-- Content -->
@@ -185,15 +189,19 @@
 
 		<!-- Sidebar -->
 		<div class="sidebar">
-
 			<section>
-				<h3><a href="/info/info_list">전체</a></h3>
-				<h3><a href="/info/info_news">뉴스</a></h3>
-				<h3><a href="/info/info_food" style="color: #5a8100;">식단</a></h3>
-				<h3><a href="/info/info_exercise">운동</a></h3>
-				<h3><a href="/info/info_tip">꿀팁</a></h3>
+				<div class="boardRanking">
+					<div class="boardRanking_ranking">
+						<table style="width: 90%;">
+							<tr><td><a href="/info/info_list">전체</a></td></tr>
+							<tr><td><a href="/info/info_news">뉴스</a></td></tr>
+							<tr><td><a href="/info/info_food" style="color: #5a8100; font-size: 20px;">식단</a></td></tr>
+							<tr><td><a href="/info/info_exercise">운동</a></td></tr>
+							<tr><td><a href="/info/info_tip">꿀팁</a></td></tr>
+						</table>
+					</div>
+				</div>
 			</section>
-
 		</div>
 
 	</div>

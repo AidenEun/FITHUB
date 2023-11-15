@@ -1,5 +1,16 @@
 @import url(fontawesome-all.min.css);
-@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Raleway:400,800,900");
+/*@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Raleway:400,800,900");*/
+
+@font-face {
+    font-family: 'EASTARJET-Medium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_231029@1.1/EASTARJET-Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+}
+
+* {
+    font-family: 'EASTARJET-Medium', sans-serif !important;
+}
 
 /*
 	Future Imperfect by Pixelarity
@@ -3632,12 +3643,12 @@ table.alt tbody tr td {
 }
 
 .wrapper.sidebar > .inner > .content {
-	width: 75%;
-	padding: 0 4em 0 0;
+	width: 80%;
+	/*padding: 0 4em 0 0;*/
 }
 
 .wrapper.sidebar > .inner > .sidebar {
-	width: 25%;
+	width: 20%;
 }
 
 .wrapper.sidebar.left > .inner {
@@ -3648,7 +3659,7 @@ table.alt tbody tr td {
 }
 /*info 게시판 content*/
 .wrapper.sidebar.left > .inner > .content {
-	padding: 0 1em;
+	/*padding: 0 1em;*/
 }
 
 
