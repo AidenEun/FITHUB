@@ -1,0 +1,284 @@
+<!DOCTYPE HTML>
+<!--
+	Slate by Pixelarity
+	pixelarity.com | hello@pixelarity.com
+	License: pixelarity.com/license
+-->
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Untitled</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
+	<link rel="stylesheet" th:href="@{/assets/css/index.css}" />
+	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
+
+</head>
+<style>
+
+
+/* 프로필 */
+
+.thumbnail_box .thumbnail_img{
+	width: 25%;
+    height: 310px;
+    float: left;
+    border-radius: 5px;
+}
+.thumbnail_img .profile_cont{
+	height: 260px;
+}
+.thumbnail_img .thumbnail_img_bottom{
+    text-align: center;
+    padding: 11px;
+	height: 50px;
+}
+
+.thumbnail_box .thumbnail_div{
+    width: 75%;
+    height: 310px;
+    float: left;
+    margin-bottom: 30px;
+	font-size : 11px;
+
+}
+
+	img.thumbnail{
+		display:block;
+		clear:both;
+		width:100px;
+	}
+	table.careerTable tr th{
+		width: 15%;
+	}
+
+
+</style>
+<body class="is-preload">
+
+
+<!-- Header -->
+<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin})}"></th:block>
+
+<!-- Main -->
+<section id="main" class="wrapper sidebar left">
+	<div class="inner">
+
+		<header class="major">
+			<h2>마이페이지</h2>
+			<p>유저 프로필</p>
+		</header>
+
+
+		<!-- Content -->
+		<div class="content">
+
+			<!-- 게시글 리스트 띄우는 테이블 -->
+			<form id="profileForm" name="profileForm" method="post" th:action="@{/usermypage/user_profile_modify}" enctype="multipart/form-data">
+			<div class="thumbnail_box">
+				<div class="thumbnail_img">
+
+					<div class="profile_cont">
+					<th:block th:if="${profile != null}">
+						<div class="imgBox">
+							<th:block th:with="sar=${profile.orgName.split('[.]')}">
+								<th:block th:with="ext=${sar[sar.length-1]}">
+									<th:block th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}">
+										<img style="width:100%;" th:src="@{/usermypage/thumbnail (sysName=${profile.sysName})}" class="thumbnail">
+									</th:block>
+									<th:block th:unless="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}">
+										<img style="width:100%;" th:src="@{/usermypage/thumbnail (sysName='profile_img.png')}" class="thumbnail">
+									</th:block>
+								</th:block>
+							</th:block>
+
+						</div>
+						<div style="display:none">
+							<input type="file" name="profile" id="profile" style="display:none">
+							<span id="profilename" th:text="${profile.orgName}"></span>
+						</div>
+						<div class="thumbnail_img_bottom" style="float:right; margin-right: 100px;">
+							<a th:href="'javascript:profileupload(\'profile\',\''+${profile.sysName}+'\')'">사진변경</a>
+							<input type="hidden" name="profileOrgname" th:value="${profile.orgName}">
+						</div>
+					</th:block>
+					<th:block th:unless="${profile != null}">
+						<div class="imgBox">
+							<img style="width:100%;" th:src="@{/usermypage/thumbnail (sysName='profile_img.png')}" class="thumbnail">
+						</div>
+						<div style="float:left;">
+							<input type="file" name="profile" id="profile_no" style="display:none">
+							<span id="profilename_no" style="display:none">선택된 파일 없음</span>
+						</div>
+						<div class="thumbnail_img_bottom">
+							<a th:href="'javascript:profileupload(\'profile\',\'\')'">사진변경</a>
+
+						</div>
+					</th:block>
+					<input type="hidden" value="" name="updateCnt" id="updateCnt">
+
+					</div>
+				</div>
+					<div class="thumbnail_div">
+						<table>
+							<tr>
+								<td>닉네임(아이디) : </td>
+								<td>
+									<div class="inputBox">
+										<input  name="userNickname" type="text" id="userNickname" class="inputText" placeholder="닉네임" th:value="${user.userNickname}" >
+									</div>
+								</td>
+								<td>
+									<div class="inputBox">
+										<input readonly name="userId" type="text" id="userId" class="inputText" placeholder="아이디" th:value="${user.userId}" >
+									</div>
+								</td>
+
+							</tr>
+							<tr>
+								<td>성별</td>
+								<td colspan="2">
+									<div class="inputBox">
+										<input readonly name="userGender" type="text" id="userGender" class="inputText" placeholder="성별" th:value="${user.userGender}" >
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>이메일</td>
+								<td colspan="2">
+									<div class="inputBox">
+										<input name="userMail" type="text" id="userMail" class="inputText" placeholder="이메일" th:value="${user.userMail}" >
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>가입일자</td>
+								<td colspan="2">
+									<div class="inputBox">
+										<input readonly name="userJoindate" type="text" id="userJoindate" class="inputText" placeholder="가입일자" th:value="${user.userJoindate}" >
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td colspan="2">
+									<a href="javascript:document.profileForm.submit()" class="button primary small" >수정완료</a>
+									<a th:href="@{/usermypage/user_profile}" class="button small">취소</a>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</form>
+		</div>
+		<!-- Sidebar -->
+		<th:block th:replace="~{layout/usermypage_sidebar::sidebar}"></th:block>
+
+
+	</div>
+</section>
+
+<!-- Footer -->
+<th:block th:replace="~{layout/footer::footer}"></th:block>
+
+<!-- Scripts -->
+<script th:src="@{/assets/js/jquery.min.js}"></script>
+<script th:src="@{/assets/js/jquery.dropotron.min.js}"></script>
+<script th:src="@{/assets/js/jquery.scrollex.min.js}"></script>
+<script th:src="@{/assets/js/browser.min.js}"></script>
+<script th:src="@{/assets/js/breakpoints.min.js}"></script>
+<script th:src="@{/assets/js/util_sub.js}"></script>
+<script th:src="@{/assets/js/main_sub.js}"></script>
+
+<script th:src="@{/assets/js/sidebar.js}"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script th:inline="javascript">
+let updateCheck = false;
+let uploadCheck = false;
+const updateCnt = $("#updateCnt");
+
+const profileOrgname = document.getElementsByName("profileOrgname");
+const org_thumbnail = {};
+org_thumbnail[profileOrgname.value] = document.querySelector(".profile_cont .thumbnail")
+let sysname = "";
+
+function cancelProfile(name,systemname){
+    updateCnt.val(updateCnt.val()+"\\"+systemname)
+	return;
+}
+
+function profileupload(name,systemname){
+   let temp_no = $("#"+name+"name_no").text();
+    if(temp_no == '선택된 파일 없음'){
+        $("#"+name+"_no").click();
+    }
+    else{
+        updateCnt.val(updateCnt.val()+"\\"+systemname)
+        sysname = systemname;
+        $("#"+name).click();
+    }
+}
+const profile_cont = document.querySelector(".profile_cont");
+$(".profile_cont [type='file']").change(function(e){
+
+    const file = e.target.files[0];
+    const fileTag = e.target;
+    if(file == undefined){
+        if(!$(".profile_cont [name='profileOrgname']").val()){
+            //비어있던 곳에 파일이 업로드 되었다가 취소한 경우
+            cancelProfile(fileTag.id);
+
+        }
+        else{
+            let n = profileOrgname.value;
+            let ext = n.split(".").pop();
+            updateCnt.val(updateCnt.val().replaceAll("\\"+sysname,""));
+            $("#"+name+"name").text(n);
+
+            if(ext == 'jpeg' || ext == 'jpg' || ext == 'png' || ext == 'gif' || ext == 'webp'){
+                $(".profile_cont .thumbnail").remove();
+                document.querySelector(".imgBox").appendChild(org_thumbnail[n]);
+
+            }
+            else{
+                if(document.querySelector(".profile_cont .thumbnail")){
+                    $(".profile_cont .thumbnail").remove();
+
+                }
+            }
+            sysname = "";
+        }
+    }
+    else{
+        uploadCheck = true;
+        //파일이 없었다가 업로드 한 경우
+        //#file0name
+        $("#"+fileTag.id+"name_no").text(file.name);
+        //업로드 된 파일의 확장자명
+        let ext = file.name.split(".").pop();
+        if(ext == 'jpeg' || ext == 'jpg' || ext == 'png' || ext == 'gif' || ext == 'webp'){
+
+            const reader = new FileReader();
+            reader.onload = function(ie){
+                const img =  document.querySelector(".profile_cont .thumbnail");
+                img.setAttribute("src",ie.target.result)
+            }
+            reader.readAsDataURL(file);
+        }
+        else{
+            const temp = $(".profile_cont .thumbnail");
+            if(temp != null){
+                temp.remove();
+
+            }
+        }
+
+    }
+})
+
+
+
+</script>
+</body>
+</html>

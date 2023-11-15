@@ -12,7 +12,7 @@ public interface ProfileMapper {
 
 	List<ProfileDTO> getFiles(String trainerId, String profileCategory);
 
-	ProfileDTO getProfiles(String trainerId, String profileCategory);
+	ProfileDTO getProfiles(String Id, String profileCategory);
 
 
 	

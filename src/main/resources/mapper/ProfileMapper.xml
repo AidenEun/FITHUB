@@ -9,7 +9,7 @@
 		select * from profile where user_id=#{trainerId} and profile_category=#{profileCategory}
 	</select>
 	<select id="getProfiles">
-		select * from profile where user_id=#{trainerId} and profile_category=#{profileCategory}
+		select * from profile where user_id=#{Id} and profile_category=#{profileCategory}
 	</select>
 
 

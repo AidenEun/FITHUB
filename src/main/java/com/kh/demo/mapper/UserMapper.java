@@ -21,4 +21,5 @@ public interface UserMapper {
 
 	AdminDTO findAdminById(String userId);
 
+	int profileUpdateUser(UserDTO user);
 }

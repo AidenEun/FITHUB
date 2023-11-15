@@ -1,0 +1,183 @@
+<!DOCTYPE HTML>
+<!--
+	Slate by Pixelarity
+	pixelarity.com | hello@pixelarity.com
+	License: pixelarity.com/license
+-->
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Untitled</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
+	<link rel="stylesheet" th:href="@{/assets/css/index.css}" />
+	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
+
+</head>
+<style>
+
+
+/* 프로필 */
+
+.thumbnail_box .thumbnail_img{
+	width: 25%;
+    height: 310px;
+    float: left;
+    border-radius: 5px;
+}
+.thumbnail_img .thumbnail_img_top{
+	height: 260px;
+}
+.thumbnail_img .thumbnail_img_bottom{
+    text-align: center;
+    padding: 11px;
+	height: 50px;
+}
+
+.thumbnail_box .thumbnail_div{
+    width: 75%;
+    height: 310px;
+    float: left;
+    margin-bottom: 30px;
+	font-size : 11px;
+
+}
+
+	img.thumbnail{
+		display:block;
+		clear:both;
+		width:100px;
+	}
+	table.careerTable tr th{
+		width: 15%;
+	}
+</style>
+<body class="is-preload">
+
+
+<!-- Header -->
+<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin})}"></th:block>
+
+<!-- Main -->
+<section id="main" class="wrapper sidebar left">
+	<div class="inner">
+
+		<header class="major">
+			<h2>마이페이지</h2>
+			<p>유저 프로필</p>
+		</header>
+
+
+		<!-- Content -->
+		<div class="content">
+
+			<!-- 게시글 리스트 띄우는 테이블 -->
+			<form id="profileForm" name="profileForm" method="post" th:action="@{/usermypage/user_profile}" enctype="multipart/form-data">
+
+			<div class="thumbnail_box">
+				<div class="thumbnail_img">
+					<div class="thumbnail_img_top">
+						<div class="imgBox">
+						<th:block th:if="${profile != null}">
+							<th:block th:with="sar=${profile.orgName.split('[.]')}">
+								<th:block th:with="ext=${sar[sar.length-1]}">
+									<th:block th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}">
+											<img style="width:100%;" th:src="@{/usermypage/thumbnail (sysName=${profile.sysName})}">
+									</th:block>
+								</th:block>
+							</th:block>
+						</th:block>
+						<th:block th:unless="${profile != null}">
+								<img style="width:100%;" th:src="@{/usermypage/thumbnail (sysName='profile_img.png')}">
+						</th:block>
+						</div>
+					</div>
+					<div class="thumbnail_img_bottom">
+					</div>
+				</div>
+
+						<div class="thumbnail_div">
+						<table style="margin: auto 0;">
+							<tr>
+								<td width="20%">닉네임(아이디)</td>
+								<td>
+									<div class="inputBox">
+										<input readonly  name="userNickname" type="text" id="userNickname" class="inputText" placeholder="닉네임" th:value="${user.userNickname}" >
+									</div>
+								</td>
+								<td>
+									<div class="inputBox">
+										<input readonly name="userId" type="text" id="userId" class="inputText" placeholder="아이디" th:value="${user.userId}" >
+									</div>
+								</td>
+
+							</tr>
+							<tr>
+								<td>성별</td>
+								<td colspan="2">
+									<div class="inputBox">
+										<input readonly name="userGender" type="text" id="userGender" class="inputText" placeholder="성별" th:value="${user.userGender}" >
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>이메일</td>
+								<td colspan="2">
+									<div class="inputBox">
+										<input readonly name="userMail" type="text" id="userMail" class="inputText" placeholder="이메일" th:value="${user.userMail}" >
+									</div>
+								</td>
+
+							</tr>
+							<tr>
+								<td>가입일자</td>
+								<td colspan="2">
+									<div class="inputBox">
+										<input readonly name="userJoindate" type="text" id="userJoindate" class="inputText" placeholder="가입일자" th:value="${user.userJoindate}" >
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td colspan="2">
+									<th:block th:if="${session.loginUser} == ${user.userId}">
+										<a href="/usermypage/user_profile_modify">수정하기</a>
+									</th:block>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</form>
+		</div>
+
+		<!-- Sidebar -->
+		<th:block th:replace="~{layout/usermypage_sidebar::sidebar}"></th:block>
+
+
+	</div>
+</section>
+
+<!-- Footer -->
+<th:block th:replace="~{layout/footer::footer}"></th:block>
+
+<!-- Scripts -->
+<script th:src="@{/assets/js/jquery.min.js}"></script>
+<script th:src="@{/assets/js/jquery.dropotron.min.js}"></script>
+<script th:src="@{/assets/js/jquery.scrollex.min.js}"></script>
+<script th:src="@{/assets/js/browser.min.js}"></script>
+<script th:src="@{/assets/js/breakpoints.min.js}"></script>
+<script th:src="@{/assets/js/util_sub.js}"></script>
+<script th:src="@{/assets/js/main_sub.js}"></script>
+
+<script th:src="@{/assets/js/sidebar.js}"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script th:inline="javascript">
+
+
+
+
+</script>
+</body>
+</html>

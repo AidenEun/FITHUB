@@ -5,10 +5,19 @@ import com.kh.demo.mapper.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -32,6 +41,8 @@ public class UserMyPageServiceImpl implements UserMyPageService{
     private ProfileMapper pfmapper;
     @Value("${profile.dir}")
     private String saveFolder;
+
+
 
 
     @Override
@@ -284,10 +295,94 @@ public class UserMyPageServiceImpl implements UserMyPageService{
     @Override
     public boolean user_modify(UserDTO user) {
         int row = umapper.updateUser(user);
+        return row == 1;
+    }
+
+    @Override
+    public ProfileDTO getProFileList(String Id) {
+        return pfmapper.getProfiles(Id,"P");
+    }
+
+    @Override
+    public ResponseEntity<Resource> getThumbnailResource(String sysName) throws Exception {
+        //경로에 관련된 객체(자원으로 가지고 와야 하는 파일에 대한 경로)
+        Path path = Paths.get(saveFolder + sysName);
+        //경로에 있는 파일의 MIME타입을 조사해서 그대로 담기
+        String contentType = Files.probeContentType(path);
+        //응답 헤더 생성
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_TYPE, contentType);
+
+        //해당 경로(path)에 있는 파일에서부터 뻗어나오는 InputStream(Files.newInputStream)을 통해 자원화(InputStreamResource)
+        Resource resource = new InputStreamResource(Files.newInputStream(path));
+        return new ResponseEntity<>(resource, headers, HttpStatus.OK);
+    }
+
+    @Override
+    public boolean user_profile_modify(UserDTO user, MultipartFile profile, String updateCnt) throws IOException {
+        int row = umapper.profileUpdateUser(user);
         if (row != 1) {
             return false;
         }
-        return true;
+
+        List<ProfileDTO> org_profile_list = pfmapper.getFiles(user.getUserId(),"P");
+        if(org_profile_list.size()==0 && profile == null ) {
+            return true;
+        }
+        else {
+            if(profile != null) {
+                boolean flag = false;
+                //후에 비즈니스 로직 실패 시 원래대로 복구하기 위해 업로드 성공했던 파일들도 삭제해주어야 한다.
+                //업로드 성공한 파일들의 이름을 해당 리스트에 추가하면서 로직을 진행한다.
+                String orgname = profile.getOriginalFilename();
+                //수정의 경우 중간에 있는 파일은 수정이 되지 않은 경우도 있다.
+                //그런 경우의 file의 orgname은 null 이거나 "" 이다.
+                //따라서 업로드가 될 필요가 없으므로 continue로 다음 파일로 넘어간다.
+                int lastIdx = orgname.lastIndexOf(".");
+                String extension = orgname.substring(lastIdx);
+                LocalDateTime now = LocalDateTime.now();
+                String time = now.format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"));
+                String systemname = time+ UUID.randomUUID().toString()+extension;
+
+                String path = saveFolder+systemname;
+                System.out.println("systemname:"+systemname);
+                System.out.println("orgname:"+orgname);
+
+                ProfileDTO profdto = new ProfileDTO();
+                profdto.setUserId(user.getUserId());
+                profdto.setSysName(systemname);
+                profdto.setOrgName(orgname);
+                profdto.setProfileCategory("P");
+
+                //실제 파일 업로드
+                profile.transferTo(new File(path));
+
+                flag = pfmapper.insertFile(profdto) == 1;
+
+                //강제탈출(실패)
+                if(!flag) {
+                    //아까 추가했던 systemname들(업로드 성공한 파일의 systemname)을 꺼내오면서
+                    //실제 파일이 존재한다면 삭제 진행
+                    File file = new File(saveFolder,systemname);
+                    if(file.exists()) {
+                        file.delete();
+                    }
+                    pfmapper.deleteBySystemname(systemname);
+                }
+            }
+            //지워져야 할 파일(기존에 있었던 파일들 중 수정된 파일)들의 이름 추출
+            String[] deleteNames = updateCnt.split("\\\\");
+            for(int i=1;i<deleteNames.length;i++) {
+                File file = new File(saveFolder,deleteNames[i]);
+                //해당 파일 삭제
+                if(file.exists()) {
+                    file.delete();
+                    //DB상에서도 삭제
+                    pfmapper.deleteBySystemname(deleteNames[i]);
+                }
+            }
+            return true;
+        }
     }
 
     //내구독
