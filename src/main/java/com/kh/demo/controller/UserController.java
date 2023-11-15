@@ -24,7 +24,7 @@ public class UserController {
     public void replace() {}
 
     @PostMapping("join")
-    public String join(@ModelAttribute("user") UserDTO user, RedirectAttributes ra) {
+    public String join(UserDTO user, RedirectAttributes ra) {
         if(service.join(user)) {
             ra.addAttribute("joinid",user.getUserId());
         }
@@ -73,5 +73,15 @@ public class UserController {
             return "O";
         }
         return "X";
+    }
+
+    @GetMapping("nickname")
+    @ResponseBody
+    public String checkNickname (String usernickname) {
+        if(service.checkNickname(usernickname)) {
+            return "X";
+        } else {
+            return "O";
+        }
     }
 }

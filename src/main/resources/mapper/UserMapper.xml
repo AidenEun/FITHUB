@@ -13,6 +13,12 @@
 		WHERE user_id = #{userId}
 	</select>
 
+	<select id="findByNickname">
+		SELECT *
+		FROM user user
+		WHERE user_nickname = #{userNickname}
+	</select>
+
 	<select id="findAdminById">
 		select * from admin where admin_id=#{userId}
 	</select>

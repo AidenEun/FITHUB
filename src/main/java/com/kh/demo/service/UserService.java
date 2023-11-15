@@ -10,6 +10,8 @@ public interface UserService {
 
     boolean checkId(String userid);
 
+    boolean checkNickname(String usernickname);
+
     Object login(String userid, String userpw);
 
     UserDTO getDetail(String userid);

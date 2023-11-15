@@ -25,21 +25,29 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public boolean join(UserDTO user) {
-        user.setUserId(generateUserId());
+        String userGeneratedId = user.getUserId();
+        String userNickname = user.getUserNickname();
+
+        if(umapper.findByNickname(userNickname) != null) {
+            return false;
+        }
+
         user.setUserJoindate(LocalDateTime.now());
         return umapper.insertUser(user) == 1;
     }
 
-    private String generateUserId() {
-        return "USER_" + System.currentTimeMillis();
-    }
 
     @Override
-    public boolean checkId(String userId) {
-        UserDTO user = umapper.findById(userId);
+    public boolean checkId(String userid) {
+        UserDTO user = umapper.findById(userid);
         return user == null;
     }
 
+    @Override
+    public boolean checkNickname(String usernickname) {
+        UserDTO user = umapper.findByNickname(usernickname);
+        return user != null;
+    }
 
     @Override
     public Object login(String userId, String userPw) {
