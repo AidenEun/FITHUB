@@ -113,24 +113,41 @@ public class MatchingController {
 
     @PostMapping("profileModal")
     @ResponseBody
-    public String reportModal(@RequestParam("trainerNickname") String trainerNickname) throws Exception {
+    public String reportModal(@RequestParam("trainerNickname") String trainerNickname, HttpServletRequest req) throws Exception {
         ObjectNode json = JsonNodeFactory.instance.objectNode();
         Object userInfo = MatchingService.getUserByNickname(trainerNickname);
 
-        if (userInfo instanceof UserDTO) {
-            UserDTO userDTO = (UserDTO) userInfo;
-            json.putPOJO("userDTO", userDTO);
-        }
-        else if (userInfo instanceof TrainerDTO) {
+        HttpSession session = req.getSession();
+        String loginUser_userId = (String) session.getAttribute("loginUser");
+
+        if (userInfo instanceof TrainerDTO) {
             TrainerDTO trainerDTO = (TrainerDTO) userInfo;
             json.putPOJO("trainerDTO", trainerDTO);
+            json.putPOJO("loginUser_userId", loginUser_userId);
+        }
+        else if (userInfo instanceof UserDTO) {
+            UserDTO userDTO = (UserDTO) userInfo;
+            json.putPOJO("userDTO", userDTO);
+            json.putPOJO("loginUser_userId", loginUser_userId);
         }
         else {
             json.put("noData", "noData");
         }
         return json.toString();
     }
+    @PostMapping("send_message")
+    @ResponseBody
+    public String u_t_matching(@RequestParam("receiveId") String receiveId, @RequestParam("sendId") String sendId, @RequestParam("contents") String contents) throws Exception {
+        MessageDTO newMessage = new MessageDTO();
+        newMessage.setReceiveId(receiveId);
+        newMessage.setSendId(sendId);
+        newMessage.setMessageContent(contents);
 
+
+        MatchingService.saveMessage(newMessage);
+
+        return "success"; // 적절한 응답 메시지
+    }
     @PostMapping("u_t_matchModal")
     @ResponseBody
     public String matchingModal(@RequestParam("trainerId") String trainerId, HttpServletRequest req) throws Exception {
@@ -174,9 +191,9 @@ public class MatchingController {
         newMatching.setTrainerId(trainerId);
 
 
-        MatchingService.saveMatching(newMatching); // 여기서 적절한 서비스 메서드를 호출하여 데이터베이스에 insert
+        MatchingService.saveMatching(newMatching);
 
-        return "success"; // 적절한 응답 메시지
+        return "success";
     }
 
 

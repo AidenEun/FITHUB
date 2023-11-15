@@ -7,12 +7,11 @@
             </div>
             <h1 class="title">프로필</h1>
             <div class="profile">
-                <div class="img_area">
-                    <a href="#"><img src="/images/profile_img.png" alt="userid"></a>
-                </div>
+                <div class="img_area"><a href="#"><img src="/images/profile_img.png" alt="userid"></a></div>
                 <div class="desc">
                     <p class="name"><a></a></p>
-
+                    <div class="application_buttons">
+                    </div>
                 </div>
             </div>
         </div>
@@ -21,8 +20,8 @@
                 <a href="#" class="back"><img src="/images/back.png" alt="close"></a>
             </div>
             <div class="message_user">
-                <p class="profile_userId"><a>receiveId</a></p>
-                <p class="loginUser_userId"><a>sendId</a></p>
+                <p class="profile_userId">받는 사람 :<a th:text="${receiveId}">받는 사람 ID</a></p>
+                <p class="loginUser_userId">보내는 사람 :<a th:text="${sendId}">보내는 사람 ID</a></p>
             </div>
             <div class="content">
                 <textarea placeholder="쪽지 내용을 입력하세요" class="contents" alt="contents"></textarea>
