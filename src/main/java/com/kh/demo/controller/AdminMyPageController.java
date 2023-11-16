@@ -371,8 +371,6 @@ public class AdminMyPageController {
         ObjectNode json = JsonNodeFactory.instance.objectNode();
         ReportDTO reportDTO = adminMyPageService.getReportDTO(reportNum);
 
-        System.out.println(reportDTO);
-
         json.putPOJO("reportDTO", reportDTO);
 
         return json.toString();

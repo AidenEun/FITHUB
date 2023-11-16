@@ -12,4 +12,6 @@ public class ReportDTO {
     private String reportDate;
     private String reportYn;
     private String reportedUser;
+    private String boardCategoryName;
+    private String reportContentName;
 }
