@@ -70,6 +70,12 @@ public class ChallengeServiceImpl implements ChallengeService{
         return challMapper.getChallSearchList(keyword);
     }
 
+    @Override
+    public boolean insertChallNotice(ChallNoticeBoardDTO chall) {
+        int row = challMapper.insertChallNotice(chall);
+        return row == 1;
+    }
+
 
 
 

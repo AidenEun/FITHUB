@@ -47,6 +47,11 @@
         values(#{boardTitle},#{boardContent},#{challNum},#{startDate},#{finishDate},#{userId})
     </insert>
 
+    <insert id="insertChallNotice">
+        insert into chall_notice_board (chall_category,chall_name,chall_content,chall_term)
+        values(#{challCategory},#{challName},#{challContent},#{challTerm})
+    </insert>
+
     <update id="updateReadCount">
         update chall_cert_board set view_cnt = view_cnt+1 where board_num = #{boardNum}
     </update>

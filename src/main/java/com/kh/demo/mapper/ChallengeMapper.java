@@ -37,4 +37,5 @@ public interface ChallengeMapper {
 
     List<ChallNoticeBoardDTO> getChallSearchList(String keyword);
 
+    int insertChallNotice(ChallNoticeBoardDTO chall);
 }

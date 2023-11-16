@@ -47,4 +47,5 @@ public interface ChallengeService {
 
     List<ChallNoticeBoardDTO> getChallSearchList(String keyword);
 
+    boolean insertChallNotice(ChallNoticeBoardDTO chall);
 }
