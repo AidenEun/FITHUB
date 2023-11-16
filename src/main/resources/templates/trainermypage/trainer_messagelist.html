@@ -46,9 +46,9 @@
 					<th width="8%">번호</th>
 					<th></th>
 					<th width="15%">보낸사람</th>
-					<th>받는사람</th>
-					<th width="17%">날짜</th>
-					<th width="10%">조회수</th>
+					<th width="15%">받는사람</th>
+					<th width="30%">내용</th>
+					<th width="10%">날짜</th>
 				</tr>
 				<tr th:if="${list != null and list.size()>0}" th:each="message : ${list}">
 					<td>[[${message.messageNum}]]</td>
@@ -58,9 +58,11 @@
 					<td>[[${message.sendId}]]</td>
 					<td>[[${message.receiveId}]]</td>
 					<td>
+						[[${message.messageContent}]]
+					</td>
+					<td>
 						[[${message.sendDate}]]
 					</td>
-					<td>x</td>
 				</tr>
 				<th:block th:if="${list == null or list.size() == 0}">
 					<tr>
@@ -128,7 +130,7 @@
 <th:block th:replace="~{layout/footer::footer}"></th:block>
 
 <!-- Scripts -->
-<script th:src="@{/assets/js/jquery.min.js}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script th:src="@{/assets/js/jquery.dropotron.min.js}"></script>
 <script th:src="@{/assets/js/jquery.scrollex.min.js}"></script>
 <script th:src="@{/assets/js/browser.min.js}"></script>
@@ -138,10 +140,7 @@
 
 <script th:src="@{/assets/js/sidebar.js}"></script>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-</body>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script th:inline="javascript">
 	const searchForm = $("#searchForm");
 	const pageForm = $("#pageForm");
@@ -172,7 +171,7 @@
 			alert("검색 기준을 선택하세요!");
 			return false;
 		}
-		if(!$("input[name='keyword']").val()){
+		if(!document.getElementById("keyword").value){
 			alert("키워드를 입력하세요!");
 			return false;
 		}
@@ -212,5 +211,5 @@
 		messageForm.submit();
 	});
 </script>
-
+</body>
 </html>

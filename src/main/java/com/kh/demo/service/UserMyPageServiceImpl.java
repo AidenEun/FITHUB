@@ -388,6 +388,8 @@ public class UserMyPageServiceImpl implements UserMyPageService{
     //내구독
     @Override
     public List<TrainerDTO> getMyScribe(Criteria cri, String userId) {
+        System.out.println("cri111:"+cri);
+
         return umpmapper.getMyScribe(cri, userId);
     }
     @Override

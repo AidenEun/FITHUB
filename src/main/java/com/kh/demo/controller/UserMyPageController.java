@@ -109,13 +109,15 @@ public class UserMyPageController {
         List<ChallNoticeBoardDTO> list = service.getMyChallenge(cri, userId, challCategory, challTerm);
         System.out.println("list:" + list);
         model.addAttribute("list", list);
+        model.addAttribute("challCategory",challCategory);
+        model.addAttribute("challTerm",challTerm);
         model.addAttribute("pageMaker", new PageDTO(service.getChallengeTotal(cri, userId, challCategory, challTerm), cri));
     }
 
 
     @GetMapping("user_subtrainer")
     public void replaceSubTrainer(Criteria cri, Model model, HttpServletRequest req) {
-        cri = new Criteria(cri.getPagenum(), 12);
+        cri.setAmount(12);
         HttpSession session = req.getSession();
         String userId = (String) session.getAttribute("loginUser");
         List<TrainerDTO> list = service.getMyScribe(cri, userId);
