@@ -12,7 +12,7 @@
 	<noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
 	<link rel="stylesheet" th:href="@{/assets/css/infoBoard.css}">
 	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
-
+	<link rel="stylesheet" th:href="@{/assets/css/common.css}" />
 	<style>
 
 		a {
@@ -34,7 +34,6 @@
 
 		}
 		.board_area tr td{
-			width: 100% !important;
 			border-color: transparent;
 		}
 		.board_area tr > td > input, textarea{
@@ -43,6 +42,11 @@
 
 		table tbody tr:nth-child(2n + 1) {
 			background-color: transparent;
+		}
+
+		.content table tr .boardContent p, .boardContent span, .boardContent b{
+			margin-bottom:0;
+
 		}
 
 		.button_table tr > td{
@@ -131,8 +135,9 @@
 <section id="main" class="wrapper sidebar left">
 	<div class="inner">
 
-		<header class="major">
-			<h2>커뮤니티</h2>
+		<header class="test12">
+			<p id="mainText">커뮤니티</p>
+			<p id="subText">게시글 보기</p>
 		</header>
 
 		<!-- Content -->
@@ -151,30 +156,37 @@
 				<form>
 
 					<!--게시글 테이블-->
-					<table class="board_area" style="border-collapse: collapse;" border="1" >
+					<table class="board_area">
 						<tr style="height:30px;">
 							<th>제목</th>
-							<td>
+							<td colspan="5">
 								<input type="text" name="boardTitle" size="50" maxlength="50" th:value="${board.boardTitle}" readonly>
 							</td>
 						</tr>
 						<tr style="height:30px;">
 							<th>작성자</th>
-							<td>
+							<td colspan="5">
 								<input type="text" name="userId" size="50" maxlength="50" th:value="${board.userId}" readonly>
 							</td>
 						</tr>
 						<tr>
 							<th>조회수</th>
 							<td>[[${board.viewCnt}]]</td>
+							<th>좋아요</th>
+							<td width="50px" style="padding:5px;">[[${board.likeCnt}]]</td>
+							<th>북마크</th>
+							<td width="50px" style="padding:5px;">[[${board.bookmarkCnt}]]</td>
 						</tr>
 						<tr style="height:300px;">
 							<th>내 용</th>
-							<td>
-									<textarea name="boardContent" style="width:700px;height:290px;resize:none;" readonly th:utext="${board.boardContent}">
-											<!--[[${board.boardContent}]]-->
+							<td class="boardContent" colspan="5">
+								<th:block th:utext="${board.boardContent}">
+									<textarea name="boardContent" style="width:700px;height:290px;resize:none;" readonly>
+
 									</textarea>
+								</th:block>
 							</td>
+
 						</tr>
 						<th:block th:if="${files2 != null and files2.size() > 0}" th:each="file : ${files2}">
 							<th:block th:with="sar=${file.orgName.split('[.]')}">
@@ -215,7 +227,10 @@
 									<a class="button" href="javascript:document.boardForm.submit()">삭제</a>
 								</form>
 							</th:block>
-							<div class="button"><a th:href="${'/community/commu_list'+cri.listLink}">목록</a></div>
+							<div class="btn_area">
+								<a class="button" style="float:left;">글 신고</a>
+								<a class="button" th:href="${'/community/commu_list'+cri.listLink}">목록</a>
+							</div>
 						</td>
 					</tr>
 				</table>
@@ -247,12 +262,18 @@
 		<!-- Sidebar -->
 		<div class="sidebar">
 			<section>
-				<h3><a href="/community/commu_list">전체</a></h3>
-				<h3><a href="/community/commu_free">자유게시판</a></h3>
-				<h3><a href="/community/commu_food">식단</a></h3>
-				<h3><a href="/community/commu_exercise">운동</a></h3>
-				<h3><a href="/community/commu_gallery">갤러리</a></h3>
-				<h3><a href="/community/commu_qna">고민Q&A</a></h3>
+				<div class="boardRanking">
+					<div class="boardRanking_ranking">
+						<table style="width: 90%;">
+							<tr><td><a href="/community/commu_list">전체</a></td></tr>
+							<tr><td><a href="/community/commu_free">자유게시판</a></td></tr>
+							<tr><td><a href="/community/commu_food">식단</a></td></tr>
+							<tr><td><a href="/community/commu_exercise">운동</a></td></tr>
+							<tr><td><a href="/community/commu_gallery">갤러리</a></td></tr>
+							<tr><td><a href="/community/commu_qna">고민Q&A</a></td></tr>
+						</table>
+					</div>
+				</div>
 			</section>
 		</div>
 
