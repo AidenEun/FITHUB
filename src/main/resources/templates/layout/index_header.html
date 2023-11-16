@@ -26,7 +26,7 @@
 
     </style>
 
-    <style>
+    <!--<style>
         #header {
       background-color: #5a8100 !important;
     }
@@ -46,8 +46,8 @@
 
     #footer {
       background-color: #304400;
-    }
-    </style>
+    }-->
+    <!--</style>-->
 
     <!--<th:block th:if="${session.loginUser == null}">
         <script>
@@ -171,7 +171,12 @@
                             <a class="login" th:href="@{/user/logout}">로그아웃</a>
                         </th:block>
                     </div>
-                    <a href="/usermypage/user_myinfo"><span>등급 / 닉네임(ID)</span></a>
+                    <a href="/usermypage/user_myinfo">
+                        <!--<span>등급 / 닉네임(ID)</span>-->
+                        <th:block th:if="${user !=null && loginUser != null}">
+                            <span>등급</span>/<span th:text="${user.userNickname}"></span>(<span th:text="${user.userId}"></span>)
+                        </th:block>
+                    </a>
                 </div>
                 <div class="bar-container">
                     <progress class="progress-bar" value="0" max="7"></progress>
@@ -199,7 +204,7 @@
                         <th:block th:if="${user !=null && loginUser != null}">
                             <p>목표체중 : <span th:text="${user.weightGoal}"></span></p>
                             <p>목표칼로리 : <span th:text="${user.caloriesGoal}"></span></p>
-                            <strong>잔여칼로리: 현재칼로리/목표칼로리</strong>
+                            <strong>잔여칼로리: 현재칼로리/<span th:text="${user.caloriesGoal}"></span></strong>
                             <hr>
                         </th:block>
                         <p>섭취량</p>
@@ -212,28 +217,28 @@
                         </div>
                         <div id="tan-dan-ji-box">
                             <div class="today-breakfast">
-                                <p>칼로리:아침 칼로리</p>
-                                <p>탄수화물</p>
-                                <p>단백질</p>
-                                <p>지방</p>
+                                <p>아침</p>
+                                <p></p>
+                                <p></p>
+                                <p></p>
                             </div>
                             <div class="today-lunch">
-                                <p>칼로리:점심 칼로리</p>
-                                <p>탄수화물</p>
-                                <p>단백질</p>
-                                <p>지방</p>
+                                <p>점심</p>
+                                <p></p>
+                                <p></p>
+                                <p></p>
                             </div>
                             <div class="today-dinner">
-                                <p>칼로리:저녁 칼로리</p>
-                                <p>탄수화물</p>
-                                <p>단백질</p>
-                                <p>지방</p>
+                                <p>저녁</p>
+                                <p></p>
+                                <p></p>
+                                <p></p>
                             </div>
                             <div class="today-snack">
-                                <p>칼로리:간식 칼로리</p>
-                                <p>탄수화물</p>
-                                <p>단백질</p>
-                                <p>지방</p>
+                                <p>간식</p>
+                                <p></p>
+                                <p></p>
+                                <p></p>
                             </div>
                         </div>
                     </div>
@@ -274,7 +279,7 @@
             </div>
             <th:block  th:if="${session.user != null}">
                 <div class="trainer-apply">
-                    <a href="#">트레이너 신청</a>
+                    <a href="/usermypage/user_applytrainer">트레이너 신청</a>
                 </div>
             </th:block>
         </div>
