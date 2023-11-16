@@ -316,3 +316,10 @@ function goToPrevPage() {
         el.style.display = 'block';
     });
 }
+
+function chkAll(source) {
+     const checkboxes = document.querySelectorAll('input[name="cc"]');
+     checkboxes.forEach(checkbox => {
+         checkbox.checked = source.checked;
+     });
+ }
