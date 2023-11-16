@@ -221,85 +221,6 @@ public class AdminMyPageServiceImpl implements AdminMyPageService {
     @Override
     public ReportDTO getReportDTO(Long reportNum) {
         ReportDTO reportDTO =  adminMyPageMapper.getReportDTO(reportNum);
-        switch (reportDTO.getReportContent()) {
-            case "o1" -> {
-                String newReportContent = "욕설, 비방, 차별, 혐오";
-
-                reportDTO.setReportContent(newReportContent);
-            }
-            case "o2" -> {
-                String newReportContent = "홍보, 영리 목적";
-
-                reportDTO.setReportContent(newReportContent);
-            }
-            case "o3" -> {
-                String newReportContent = "불법 정보";
-
-                reportDTO.setReportContent(newReportContent);
-            }
-            case "o4" -> {
-                String newReportContent = "음란, 청소년 유해";
-
-                reportDTO.setReportContent(newReportContent);
-            }
-            case "o5" -> {
-                String newReportContent = "개인 정보 노출, 유포, 거래";
-
-                reportDTO.setReportContent(newReportContent);
-            }
-            case "o6" -> {
-                String newReportContent = "도배, 스팸";
-
-                reportDTO.setReportContent(newReportContent);
-            }
-        }
-        switch (reportDTO.getBoardCategory()) {
-            case "infoTip" -> {
-                String newBoardCategory = "꿀팁";
-
-                reportDTO.setBoardCategory(newBoardCategory);
-            }
-            case "commuFree" -> {
-                String newBoardCategory = "커뮤니티-자유";
-
-                reportDTO.setBoardCategory(newBoardCategory);
-            }
-            case "commuExer" -> {
-                String newBoardCategory = "커뮤니티-운동";
-
-                reportDTO.setBoardCategory(newBoardCategory);
-            }
-            case "commuFood" -> {
-                String newBoardCategory = "커뮤니티-식단";
-
-                reportDTO.setBoardCategory(newBoardCategory);
-            }
-            case "commuGallery" -> {
-                String newBoardCategory = "커뮤니티-갤러리";
-
-                reportDTO.setBoardCategory(newBoardCategory);
-            }
-            case "commuQna" -> {
-                String newBoardCategory = "커뮤니티-고민QnA";
-
-                reportDTO.setBoardCategory(newBoardCategory);
-            }
-            case "review" -> {
-                String newBoardCategory = "리뷰";
-
-                reportDTO.setBoardCategory(newBoardCategory);
-            }
-            case "meGeneral" -> {
-                String newBoardCategory = "일반 쪽지";
-
-                reportDTO.setBoardCategory(newBoardCategory);
-            }
-            case "challCert" -> {
-                String newBoardCategory = "챌린지 인증";
-
-                reportDTO.setBoardCategory(newBoardCategory);
-            }
-        }
         return reportDTO;
     }
 
@@ -310,6 +231,7 @@ public class AdminMyPageServiceImpl implements AdminMyPageService {
 
     @Override
     public void updateReportedUser(String reportedUser, Long boardNum, String boardCategory) {
+//        신고 당한 횟수 업데이트
         if (adminMyPageMapper.getTrainerByIdBoolean(reportedUser)) {
             adminMyPageMapper.updateReportedTrainer(reportedUser);
         }
@@ -318,6 +240,7 @@ public class AdminMyPageServiceImpl implements AdminMyPageService {
         }
         adminMyPageMapper.insertMessageReportedUser(reportedUser);
 
+//        게시글 삭제
         if(adminMyPageMapper.selectBoard(boardNum)){
             adminMyPageMapper.deleteReportedBoard(boardNum, boardCategory);
         }

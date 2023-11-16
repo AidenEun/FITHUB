@@ -7,6 +7,14 @@ const radioOptions = document.querySelectorAll('input[type="radio"]');
 openReportButtons.forEach(openReportButton => {
     openReportButton.addEventListener("click", () => {
         reportModalBox.classList.add("active");
+
+        var reportedUserId = $('.writer').text();
+        var boardNum = $('.boardNum').text();
+        var boardCategory = $('.boardCategory').text();
+
+        document.querySelector('#reportedUserId').value = reportedUserId;
+        document.querySelector('#boardNum').value = boardNum;
+        document.querySelector('#boardCategory').value = boardCategory;
     });
 });
 
@@ -49,6 +57,7 @@ document.getElementById("otherDescription").addEventListener("click", function (
     this.value = ""; // 내용을 비움
 });
 
+/*
 function reportModal(e){
     e.preventDefault();
     var reportedUserId = $(this).closest('tr').find('.writer').text();
@@ -61,6 +70,7 @@ function reportModal(e){
 
     reportModalBox.classList.add("active");
 }
+*/
 
 function resetModalContent() {
     // 모달 창 내용 초기화
@@ -91,7 +101,7 @@ confirmButton.addEventListener("click", () => {
     } else {
         reportContent = reportContentRadio.value;
     }
-    const reportedUser = document.querySelector('#reportedUser').value;
+    const reportedUser = document.querySelector('#reportedUserId').value;
     const reportBoardnum = document.querySelector('#boardNum').value;
     const boardCategory = document.querySelector('#boardCategory').value;
 
