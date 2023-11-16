@@ -143,7 +143,11 @@
 <!--	통합검색 -->
 
 	<select id="getAllSearchCnt">
-		select count(*) from board where (board_title like('%${keyword}%')) or (board_content like('%${keyword}%')) or (user_id like('%${keyword}%'))
+		select count(*)
+		from board
+		where (board_title like ('%${keyword}%'))
+		   or (board_content like ('%${keyword}%'))
+		   or (user_id like ('%${keyword}%'))
 	</select>
 
 	<select id="getinfoSearchList">
