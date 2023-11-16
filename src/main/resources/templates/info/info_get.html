@@ -180,7 +180,6 @@
 						</tr>
 						<tr style="height:300px;">
 							<th>내 용</th>
-
 							<td class="boardContent" colspan="5">
 								<th:block th:utext="${board.boardContent}">
 									<textarea name="boardContent" style="width:700px;height:290px;resize:none;" readonly>
@@ -188,7 +187,6 @@
 									</textarea>
 								</th:block>
 							</td>
-
 						</tr>
 						<th:block th:if="${files2 != null and files2.size() > 0}" th:each="file : ${files2}">
 							<th:block th:with="sar=${file.orgName.split('[.]')}">

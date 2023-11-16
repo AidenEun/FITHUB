@@ -12,6 +12,7 @@
 	<noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
 	<link rel="stylesheet" th:href="@{/assets/css/infoBoard.css}">
 	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
+	<link rel="stylesheet" th:href="@{/assets/css/common.css}" />
 	<style>
 		.content .button{
 			margin-bottom: 30px;
@@ -66,8 +67,9 @@
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">
 	<div class="inner">
-		<header class="major">
-			<h2>커뮤니티</h2>
+		<header class="test12">
+			<p id="mainText">게시판</p>
+			<p id="subText">커뮤니티</p>
 		</header>
 
 		<!-- Content -->
@@ -169,16 +171,20 @@
 
 		<!-- Sidebar -->
 		<div class="sidebar">
-
 			<section>
-				<h3><a href="/community/commu_list">전체</a></h3>
-				<h3><a href="/community/commu_free">자유게시판</a></h3>
-				<h3><a href="/community/commu_food">식단</a></h3>
-				<h3><a href="/community/commu_exercise">운동</a></h3>
-				<h3><a href="/community/commu_gallery" style="color: #5a8100;">갤러리</a></h3>
-				<h3><a href="/community/commu_qna">고민 Q&A</a></h3>
+				<div class="boardRanking">
+					<div class="boardRanking_ranking">
+						<table style="width: 90%;">
+							<tr><td><a href="/community/commu_list" style="color: #5a8100; font-size: 20px;">전체</a></td></tr>
+							<tr><td><a href="/community/commu_free">자유게시판</a></td></tr>
+							<tr><td><a href="/community/commu_food">식단</a></td></tr>
+							<tr><td><a href="/community/commu_exercise">운동</a></td></tr>
+							<tr><td><a href="/community/commu_gallery"style="color: #5a8100; font-size: 20px;">갤러리</a></td></tr>
+							<tr><td><a href="/community/commu_qna">고민Q&A</a></td></tr>
+						</table>
+					</div>
+				</div>
 			</section>
-
 		</div>
 
 	</div>
