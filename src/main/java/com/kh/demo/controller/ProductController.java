@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/product/*")
 public class ProductController {
 
-    @GetMapping("#")
+    @GetMapping("product_list")
     public void replace(){}
 
 }

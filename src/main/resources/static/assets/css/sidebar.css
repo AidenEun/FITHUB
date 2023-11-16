@@ -222,11 +222,60 @@
             margin-bottom: 10px;
         }
 
-        .today-breakfast p:first-child::before,
-        .today-lunch p:first-child::before,
-        .today-dinner p:first-child::before,
+        /* 아침 탭 */
+        .today-breakfast p:first-child::before {
+            content: "칼로리: ";
+        }
+        .today-breakfast p:nth-child(2)::before {
+            content: "탄수화물: ";
+        }
+        .today-breakfast p:nth-child(3)::before {
+            content: "단백질: ";
+        }
+        .today-breakfast p:nth-child(4)::before {
+            content: "지방: ";
+        }
+
+        /* 점심 탭 */
+        .today-lunch p:first-child::before {
+            content: "칼로리: ";
+        }
+        .today-lunch p:nth-child(2)::before {
+            content: "탄수화물: ";
+        }
+        .today-lunch p:nth-child(3)::before {
+            content: "단백질: ";
+        }
+        .today-lunch p:nth-child(4)::before {
+            content: "지방: ";
+        }
+
+        /* 저녁 탭 */
+        .today-dinner p:first-child::before {
+            content: "칼로리: ";
+        }
+        .today-dinner p:nth-child(2)::before {
+            content: "탄수화물: ";
+        }
+        .today-dinner p:nth-child(3)::before {
+            content: "단백질: ";
+        }
+        .today-dinner p:nth-child(4)::before {
+            content: "지방: ";
+        }
+
+        /* 간식 탭 */
         .today-snack p:first-child::before {
             content: "칼로리: ";
+        }
+        .today-snack p:nth-child(2)::before {
+            content: "탄수화물: ";
+        }
+        .today-snack p:nth-child(3)::before {
+            content: "단백질: ";
+        }
+        .today-snack p:nth-child(4)::before {
+            content: "지방: ";
         }
 
         .today-tab .chall-tab .sub-tab .shop-tab{

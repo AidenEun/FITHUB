@@ -29,7 +29,7 @@ challTabs.forEach((challTab, index) => {
     });
 });
 
-const progressBar = document.querySelector('.progress-bar');
+/*const progressBar = document.querySelector('.progress-bar');
 const attBtn = document.querySelector('.att-btn');
 let filledGauges = 0;
 
@@ -44,6 +44,34 @@ attBtn.addEventListener('click', () => {
                 filledGauges = 0;
             }, 1000); // 1000ms(1초) 후 초기화
         }
+    }
+});*/
+
+const progressBar = document.querySelector('.progress-bar');
+const attBtn = document.querySelector('.att-btn');
+let isAttended = false;
+
+attBtn.addEventListener('click', () => {
+    if (!isAttended) {
+        progressBar.value += 1;
+        isAttended = true;
+
+        if (progressBar.value === 7) {
+            // 출석을 7회 완료하면 버튼 비활성화
+            attBtn.disabled = true;
+
+            setTimeout(() => {
+                // 1초 후에 게이지와 출석 여부 초기화
+                progressBar.value = 0;
+                isAttended = false;
+
+                // 버튼 다시 활성화
+                attBtn.disabled = false;
+            }, 1000);
+        }
+    } else {
+        // 이미 출석했음을 알리는 경고 표시
+        alert('오늘은 이미 출석 하셨습니다.');
     }
 });
 
