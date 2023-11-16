@@ -50,15 +50,16 @@
 		a {
 			border-bottom:none;
 		}
-		.file0_cont{
+		.at{
 			text-align: center;
 			vertical-align: middle;
 		}
 
-		table {
+		.write_table {
 			border: 1.5px solid #5a8100;
-			border-radius: 10px;
+			border-radius: 10px !important;
 			background-color: transparent;
+			padding: 15px 15px 10px 5px;
 		}
 		table tbody tr:nth-child(2n + 1) {
 			background-color: transparent;
@@ -143,7 +144,7 @@
 				</div>
 
 				<!-- 글작성 테이블 -->
-				<table class="write_table" style="border-collapse: collapse;" border="2">
+				<table class="write_table">
 					<tr style="height:30px;">
 						<th>제목</th>
 						<td>
@@ -196,7 +197,7 @@
 			<section>
 				<div class="boardRanking">
 					<div class="boardRanking_ranking">
-						<table style="width: 90%; border: none;">
+						<table style="width: 90%;">
 							<tr><td><a href="/info/info_list">전체</a></td></tr>
 							<tr><td><a href="/info/info_news">뉴스</a></td></tr>
 							<tr><td><a href="/info/info_food">식단</a></td></tr>
