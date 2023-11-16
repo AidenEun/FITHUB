@@ -76,7 +76,15 @@ public class ChallengeServiceImpl implements ChallengeService{
         return row == 1;
     }
 
+    @Override
+    public List<ChallNoticeBoardDTO> get12challSearchList(Criteria cri) {
+        return challMapper.get12challSearchList(cri);
+    }
 
+    @Override
+    public Long getchallTotal(Criteria cri) {
+        return challMapper.getchallTotal(cri);
+    }
 
 
     /*재우*/
