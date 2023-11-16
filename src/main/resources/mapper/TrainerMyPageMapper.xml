@@ -32,7 +32,7 @@
 							(send_id like('%${cri.keyword}%'))
 						</when>
 						<when test="type == 'R'.toString()">
-							(recevie_id like('%${cri.keyword}%'))
+							(receive_id like('%${cri.keyword}%'))
 						</when>
 					</choose>
 				</foreach>
@@ -140,7 +140,7 @@
 	<!--메세지-->
 
 	<select id="getMyMessageAll">
-		select * from message where send_id=#{trainerId} or receive_id=#{trainerId} and
+		select * from message where (send_id=#{trainerId} or receive_id=#{trainerId}) and
 		<include refid="criMessage"></include>
 		<![CDATA[
 			0 < message_num order by message_num desc limit #{cri.startrow},#{cri.amount}
@@ -164,7 +164,7 @@
 	</select>
 
 	<select id="getMessageTotal">
-		select count(*) from message where  send_id=#{trainerId} or receive_id=#{trainerId} and
+		select count(*) from message where  (send_id=#{trainerId} or receive_id=#{trainerId}) and
 		<include refid="criMessage"></include>	message_num > 0
 	</select>
 	<select id="getMessageTotalSend">
@@ -263,7 +263,8 @@
 
 	<!--내구독-->
 	<select id="getMyScribe">
-		select * from user join subscribe on subscribe.user_id = user.user_id
+		select * from user
+		join subscribe on subscribe.user_id = user.user_id
 		where subscribe.trainer_id = #{trainerId} and
 		<include refid="criMyScribe"></include>
 		<![CDATA[
@@ -272,8 +273,10 @@
 	</select>
 
 	<select id="getScribeTotal">
-		select count(*) from subscribe where trainer_id=#{trainerId} and
-		<include refid="criMyScribe"></include> sub_num > 0
+		select count(*) from user
+		join subscribe on subscribe.user_id = user.user_id
+		where subscribe.trainer_id = #{trainerId} and
+		<include refid="criMyScribe"></include> subscribe.sub_num > 0
 	</select>
 
 
@@ -319,7 +322,7 @@
 		where my_challenge.user_id = #{trainerId} and
 		<include refid="criMyChallenge"></include>
 		<![CDATA[
-			0 < my_challenge.sub_regdate order by my_challenge.sub_regdate desc limit #{cri.startrow},#{cri.amount}
+			0 < my_challenge.mychall_num order by my_challenge.sub_regdate desc limit #{cri.startrow},#{cri.amount}
 		]]>
 	</select>
 
@@ -329,7 +332,7 @@
 		where my_challenge.user_id = #{trainerId} and chall_notice_board.chall_term =#{challTerm} and
 		<include refid="criMyChallenge"></include>
 		<![CDATA[
-			0 < my_challenge.sub_regdate order by my_challenge.sub_regdate desc limit #{cri.startrow},#{cri.amount}
+			0 < my_challenge.mychall_num order by my_challenge.sub_regdate desc limit #{cri.startrow},#{cri.amount}
 		]]>
 	</select>
 
@@ -339,7 +342,7 @@
 		where my_challenge.user_id = #{trainerId} and chall_notice_board.chall_category = #{challCategory} and
 		<include refid="criMyChallenge"></include>
 		<![CDATA[
-			0 < my_challenge.sub_regdate order by my_challenge.sub_regdate desc limit #{cri.startrow},#{cri.amount}
+			0 < my_challenge.mychall_num order by my_challenge.sub_regdate desc limit #{cri.startrow},#{cri.amount}
 		]]>
 	</select>
 
@@ -349,7 +352,7 @@
 		where my_challenge.user_id = #{trainerId} and chall_notice_board.chall_term = #{challTerm} and chall_notice_board.chall_category = #{challCategory} and
 		<include refid="criMyChallenge"></include>
 		<![CDATA[
-			0 < my_challenge.sub_regdate order by my_challenge.sub_regdate desc limit #{cri.startrow},#{cri.amount}
+			0 < my_challenge.mychall_num order by my_challenge.sub_regdate desc limit #{cri.startrow},#{cri.amount}
 		]]>
 	</select>
 <!--내프로필-->
