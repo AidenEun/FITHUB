@@ -45,9 +45,6 @@ public class SearchController {
 
         // 트레이너 랭킹
         List<TrainerDTO> trainerTop5List= tservice.getTrainerTop5List();
-        //전체 보드 게시글 수 찾기
-        Long boardAllCnt = boardservice.getAllsearchCnt(keyword);
-        System.out.println(boardAllCnt);
 
         //각 게시판에서 글 가져오기
 
@@ -58,6 +55,14 @@ public class SearchController {
 
         List<BoardDTO> matchingSearchList = tmatchingService.getMachingSearchList(keyword);
         List<ChallNoticeBoardDTO> challSearchList = challService.getChallSearchList(keyword);
+
+        //전체 보드 테이블 게시글 수 찾기
+        Long boardAllCnt = boardservice.getAllsearchCnt(keyword) + matchingSearchList.size()+challSearchList.size();
+        System.out.println("총 게시글"+boardAllCnt);
+
+        System.out.println("보드테이블 전체:"+boardservice.getAllsearchCnt(keyword));
+        System.out.println("매칭테이블:"+matchingSearchList.size());
+        System.out.println("챌린지 :"+challSearchList.size());
 
         int[] boardCntArr ={infoSearchList.size(),
                 tipSearchList.size(),commuSearchList.size(),matchingSearchList.size(),challSearchList.size()};
