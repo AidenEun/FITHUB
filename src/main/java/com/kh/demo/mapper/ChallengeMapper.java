@@ -38,4 +38,8 @@ public interface ChallengeMapper {
     List<ChallNoticeBoardDTO> getChallSearchList(String keyword);
 
     int insertChallNotice(ChallNoticeBoardDTO chall);
+
+    List<ChallNoticeBoardDTO> get12challSearchList(Criteria cri);
+
+    Long getchallTotal(Criteria cri);
 }
