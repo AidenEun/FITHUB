@@ -116,6 +116,16 @@ public class ChallengeController {
         }
     }
 
+    @PostMapping("noticeWrite")
+    public String noticeWrite(ChallNoticeBoardDTO chall) throws Exception{
+        System.out.println("chall: "+chall);
+        if(challService.insertChallNotice(chall)) {
+            return "redirect:/challenge/list";
+        }
+        return "redirect:/";
+
+    }
+
     @GetMapping(value = {"get","modify"})
     public String get( Criteria cri, Long boardNum, HttpServletRequest req, HttpServletResponse resp, Model model) {
         model.addAttribute("cri",cri);

@@ -26,7 +26,6 @@ function challNoticeBoardModal(e){
 
 }
 
-
 // 모달 내용 초기화 함수
 function clearChallNoticeBoardModalContent() {
     const challName = document.querySelector("#challName");
@@ -50,6 +49,26 @@ function clearChallNoticeBoardModalContent() {
     }
 }
 
+
+function writeSendit(){
+const boardForm = document.boardForm;
+
+		const challName = boardForm.challName;
+		if(challName.value == ""){
+			alert("제목을 입력하세요!");
+			challName.focus();
+			return false;
+		}
+
+		const challContent = boardForm.challContent;
+		if(challContent.value == ""){
+			alert("내용을 입력하세요!");
+			challContent.focus();
+			return false;
+		}
+
+    boardForm.submit();
+}
 
 
 

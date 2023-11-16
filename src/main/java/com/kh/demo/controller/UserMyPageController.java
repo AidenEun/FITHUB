@@ -121,9 +121,12 @@ public class UserMyPageController {
         HttpSession session = req.getSession();
         String userId = (String) session.getAttribute("loginUser");
         List<TrainerDTO> list = service.getMyScribe(cri, userId);
+
         System.out.println("list:" + list);
+        System.out.println("cri11:" + new PageDTO(service.getScribeTotal(cri, userId), cri));
         model.addAttribute("list", list);
         model.addAttribute("pageMaker", new PageDTO(service.getScribeTotal(cri, userId), cri));
+
     }
 
 
