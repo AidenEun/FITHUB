@@ -35,8 +35,8 @@
 
 		<!-- Content -->
 		<div class="content">
-			<div id="boardInfo" class="button cate now_cate" style="margin-right: 10px;">정보게시판</div>
-			<div id="boardProduct" class="button cate not_cate" style="margin-right: 10px;">제품추천게시판</div>
+			<div id="board_info" class="button cate now_cate" style="margin-right: 10px;">정보게시판</div>
+			<div id="board_product" class="button cate not_cate" style="margin-right: 10px;">제품추천게시판</div>
 			<!-- 게시글 리스트 띄우는 테이블 -->
 			<table class="list">
 				<thead id="data-table-head">
@@ -146,6 +146,7 @@
 <script th:inline="javascript">
 	const cate = document.querySelectorAll('.cate');
 	let nowCate = document.querySelector('.now_cate');
+	const searchForm = $("#searchForm");
 
 	cate.forEach(function(btn) {
 		btn.addEventListener('click', function() {
@@ -164,25 +165,59 @@
 	});
 
 	$(document).ready(function() {
-        let category = 'board_info';
-        loadPage('/trainermypage/board_info', 1);
 
-        $('#boardInfo').click(function() {
+		$("#searchForm a").on("click",sendit);
+			function sendit(){
+				if(!searchForm.find("option:selected").val()){
+					alert("검색 기준을 선택하세요!");
+					return false;
+				}
+				if(!document.getElementById("keyword").value){
+					alert("키워드를 입력하세요!");
+					return false;
+				}
+				var category = nowCate.id;
+				let type = searchForm.find("option:selected").val();
+				let keyword = searchForm.find("input[name='keyword']").val();
+				loadPage('/trainermypage/' + category, 1, keyword, type);
+			}
+
+        let category = 'board_info';
+		let type = searchForm.find("option:selected").val();
+		let keyword = searchForm.find("input[name='keyword']").val();
+
+		alert("keyword: "+keyword);
+		alert("type: "+type);
+        loadPage('/trainermypage/board_info', 1, keyword, type);
+
+
+
+        $('#board_info').click(function() {
+			searchForm.find("input[name='keyword']").val("");
+			searchForm.find("option").eq(0).prop("selected", true);
             category = 'board_info';
-            loadPage('/trainermypage/board_info', 1);
+			let type = searchForm.find("option:selected").val();
+			let keyword = searchForm.find("input[name='keyword']").val();
+
+            loadPage('/trainermypage/board_info', 1, keyword, type);
         });
 
-        $('#boardProduct').click(function() {
+        $('#board_product').click(function() {
+			searchForm.find("input[name='keyword']").val("");
+			searchForm.find("option").eq(0).prop("selected", true);
             category = 'board_product';
-            loadPage('/trainermypage/board_product', 1);
+			let type = searchForm.find("option:selected").val();
+			let keyword = searchForm.find("input[name='keyword']").val();
+
+            loadPage('/trainermypage/board_product',1 , keyword, type);
         });
 
 
         // 페이지 데이터를 불러오는 함수
-        function loadPage(url, pageNum) {
+        function loadPage(url, pageNum, keyword, type) {
             $.ajax({
                 url: url,
-                data: { pageNum: pageNum, category: category },
+                data: { pageNum: pageNum, category: category , keyword: keyword, type: type },
                 type: 'GET',
                 dataType: 'json',
                 success: function (data) {
@@ -231,8 +266,10 @@
             $(".changePage").on("click", function (e) {
                 e.preventDefault(); // 기본 동작 중지
 
+				type = searchForm.find("option:selected").val();
+				keyword = searchForm.find("input[name='keyword']").val();
                 var pageNum = $(this).attr('href');
-                loadPage('/trainermypage/' + category, pageNum);
+                loadPage('/trainermypage/' + category, pageNum, keyword, type);
             });
         }
 

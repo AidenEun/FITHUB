@@ -62,6 +62,27 @@
 		</if>
 	</sql>
 
+	<sql id="criProductBookmark">
+		<if test="cri.keyword != '' and cri.type != ''">
+			<trim prefixOverrides="or" prefix="(" suffix=") and">
+				<foreach collection="cri.typeArr" item="type">
+					or
+					<choose>
+						<when test="type == 'T'.toString()">
+							(product_board.board_title like('%${cri.keyword}%'))
+						</when>
+						<when test="type == 'C'.toString()">
+							(product_board.board_content like('%${cri.keyword}%'))
+						</when>
+						<when test="type == 'W'.toString()">
+							(product_board.admin_id like('%${cri.keyword}%'))
+						</when>
+					</choose>
+				</foreach>
+			</trim>
+		</if>
+	</sql>
+
 	<sql id="criMyScribe">
 		<if test="cri.keyword != '' and cri.type != ''">
 			<trim prefixOverrides="or" prefix="(" suffix=") and">
@@ -235,20 +256,19 @@
 
 	<!--북마크-->
 	<select id="getBookmarkTotal">
-		select count(*) from bookmark where user_id=#{userId} and
-		(board_category='infoNew' or board_category='infoExer' or board_category ='infoFood' or board_category='tip'
-		or board_category='comFree' or board_category='comExer' or board_category='comFood' or board_category='comPhoto'
-		or board_category='comQna')
-		and <include refid="criBookmark"></include>	bookmark_idx > 0
+		select count(*) from board,bookmark where bookmark.user_id=#{userId}
+		and board.board_category =bookMark.board_category and board.board_num=bookMark.board_num and
+		<include refid="criBookmark"></include> bookmark_idx > 0
 	</select>
 
 	<select id="getBookmarkProductTotal">
-		select count(*) from bookmark where user_id=#{userId} and (board_category='prodExer' or board_category='prodFood')
-		and <include refid="criBookmark"></include> bookmark_idx > 0
+		select count(*) from product_board,bookmark where bookmark.user_id=#{userId}
+		and product_board.category =bookMark.board_category and product_board.board_num=bookMark.board_num and
+		<include refid="criProductBookmark"></include> bookmark_idx > 0
 	</select>
 
 	<select id="getBookmarkLastNum">
-		select max(bookmark_num) from bookmark where user_id=#{userId}
+		select max(bookmark_idx) from bookmark where user_id=#{userId}
 	</select>
 
 	<!--<select id="getMyBookmark">
@@ -267,7 +287,7 @@
 	<select id="getMyBookmarkProduct">
 		select * from product_board,bookmark where bookmark.user_id=#{userId}
 		and product_board.category =bookMark.board_category and product_board.board_num=bookMark.board_num and
-		<include refid="criBookmark"></include>
+		<include refid="criProductBookmark"></include>
 		<![CDATA[
 			0 < bookmark.bookmark_idx order by bookmark.bookmark_idx desc limit #{cri.startrow},#{cri.amount}
 		]]>
