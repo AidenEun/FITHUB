@@ -40,10 +40,11 @@
 		font-size: 9pt;
 		padding: 0.15em 1.5em;
 	}
+
 	.button{
-		font-size: 9pt;
-		padding: 1em 1.5em;
+		background-color: #8FA746 !important;
 	}
+
 	.search_area input[type="search"] {
 		width : 250px;
 		height: 33px;
@@ -89,9 +90,11 @@
  		margin-bottom: 0;
  		border-bottom: solid 1px #eee;;
     }
+<!--
     .pagination td a, .pagination td span{
 		padding : 6px;
 	}
+-->
 	.galleryAll a{
 		color: black;
 	}
@@ -197,7 +200,7 @@
 						<option value="IN" th:selected="${pageMaker.cri.type == 'IN'}">아이디 또는 닉네임</option>
 					</select>
 					<input type="text" name="keyword" id="keyword" th:value="${pageMaker.cri.keyword}" style="margin-right:10px;">
-					<a href="#" class="button primary">검색</a>
+					<a href="#" class="button">검색</a>
 				</div>
 				<input type="hidden" value="1" name="pagenum">
 				<input type="hidden" value="12" name="amount">

@@ -54,8 +54,8 @@
 
 
 			<!-- 게시글 리스트 띄우는 테이블 -->
-			<table class="list">
-				<tr>
+			<table class="list" style="text-align: center;">
+				<tr align="right" valign="middle">
 					<td colspan="2" style="padding-left:0;">
 						<div class="search_area">
 							<form id="challCategoryForm" th:action="@{/usermypage/user_challenge}" style="margin:0">
@@ -70,21 +70,19 @@
 									<option value="15" th:selected="${challTerm == '15'}">15일</option>
 									<option value="30" th:selected="${challTerm == '30'}">30일</option>
 								</select>
-								<a href="#" class="button primary">검색</a>
+								<a href="#" class="button">검색</a>
 							</form>
 						</div>
 					</td>
+					<td colspan="4">챌린지 개수 : [[${pageMaker.total}]]</td>
 				</tr>
-				<tr align="right" valign="middle">
-					<td colspan="6">글 개수 : [[${pageMaker.total}]]</td>
-				</tr>
-				<tr align="center" valign="middle">
-					<th width="8%">번호</th>
-					<th>카테고리</th>
-					<th>챌린지 이름</th>
-					<th width="15%">챌린지 기간</th>
-					<th width="17%">등록일자</th>
-					<th width="10%">달성일수</th>
+				<tr class="special-row">
+					<td width="8%">번호</td>
+					<td>카테고리</td>
+					<td>챌린지 이름</td>
+					<td width="15%">챌린지 기간</td>
+					<td width="17%">등록일자</td>
+					<td width="10%">달성일수</td>
 				</tr>
 				<tr th:if="${list != null and list.size()>0}" th:each="board : ${list}">
 					<td>[[${board.challNum}]]</td>
@@ -128,7 +126,7 @@
 						<option value="TC" th:selected="${pageMaker.cri.type == 'TC'}">제목 또는 내용</option>
 					</select>
 					<input type="text" name="keyword" id="keyword" th:value="${pageMaker.cri.keyword}" style="margin-right:10px;">
-					<a href="#" class="button primary">검색</a>
+					<a href="#" class="button">검색</a>
 				</div>
 				<input type="hidden" value="1" name="pagenum">
 				<input type="hidden" value="10" name="amount">
