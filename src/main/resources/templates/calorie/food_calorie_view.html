@@ -11,6 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" th:href="@{/assets/css/index.css}" />
     <link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
+    <link rel="stylesheet" th:href="@{/assets/css/common.css}" />
     <noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
@@ -242,15 +243,14 @@ left: 29px;
 
     <!-- Main -->
     <section id="main" class="wrapper left">
-        <div class="top_img_box">
-            <img src="/images/pic01.jpg" alt="">
+
+        <div class="header_box">
+            <header class="test12">
+                <p id="mainText">음식 칼로리</p>
+                <p id="subText">음식 칼로리 상세 조회</p>
+            </header>
         </div>
         <div class="inner">
-
-            <header class="major">
-                <h2>음식 칼로리</h2>
-                <p>음식 칼로리 상세 조회</p>
-            </header>
 
             <!-- Content -->
             <div class="content">
@@ -377,7 +377,9 @@ left: 29px;
                     </div>
                 </div>
             </div>
+        </div>
     </section>
+</head>
 
     <!-- Footer -->
     <th:block th:replace="~{layout/footer::footer}"></th:block>

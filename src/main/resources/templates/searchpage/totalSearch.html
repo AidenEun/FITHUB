@@ -12,6 +12,7 @@
     <link rel="stylesheet" th:href="@{/assets/css/index.css}"/>
     <link rel="stylesheet" th:href="@{/assets/css/sidebar.css}"/>
     <link rel="stylesheet" th:href="@{/assets/css/profileModal.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/common.css}"/>
     <noscript>
         <link rel="stylesheet" th:href="@{/assets/css/noscript.css}"/>
     </noscript>
@@ -240,13 +241,18 @@
 
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">
-    <div class="top_img_box">
-        <img src="/images/admintop2.png" alt="">
+
+    <div class="header_box">
+        <header class="test12">
+            <p id="mainText"></p>
+            <p id="subText">통합 검색</p>
+        </header>
     </div>
 
     <div class="inner">
 
-        <header class="major">
+
+    <header class="major">
             <div>
                 <h2>통합 검색 ([[${boardAllCnt}]])</h2>
                 <p th:text="'['+${keyword}+']로 검색된 결과'"></p>

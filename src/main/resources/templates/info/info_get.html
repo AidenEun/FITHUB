@@ -1,4 +1,4 @@
-<!DOCTYPE HTML>
+	<!DOCTYPE HTML>
 <!--
 	Slate by Pixelarity
 	pixelarity.com | hello@pixelarity.com
@@ -13,6 +13,7 @@
 	<link rel="stylesheet" th:href="@{/assets/css/infoBoard.css}">
 	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
 	<link rel="stylesheet" th:href="@{/assets/css/common.css}" />
+	<link rel="stylesheet" th:href="@{/assets/css/reportModal.css}" />
 
 	<style>
 
@@ -132,15 +133,21 @@
 
 <!-- Header -->
 <th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin})}"></th:block>
+
+<!-- Modal -->
+<th:block th:replace="~{layout/reportModal::reportModal()}"></th:block>
+
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">
 
-	<div class="inner">
-
+	<div class="header_box">
 		<header class="test12">
 			<p id="mainText">정보</p>
 			<p id="subText">게시글 보기</p>
 		</header>
+	</div>
+
+	<div class="inner">
 
 		<!-- Content -->
 		<div class="content">
@@ -227,8 +234,13 @@
 									<a class="button" href="javascript:document.boardForm.submit()">삭제</a>
 								</form>
 							</th:block>
+							<div class="displayNoneDiv writer">[[${board.userId}]]</div>
+							<div class="displayNoneDiv boardNum">[[${board.boardNum}]]</div>
+							<div class="displayNoneDiv boardCategory">[[${board.boardCategory}]]</div>
 							<div class="btn_area">
-								<a class="button" style="float:left;">글 신고</a>
+								<th:block th:if="${board.userId != session.loginUser}">
+									<a class="button reportOpen" style="float:left;">글 신고</a>
+								</th:block>
 								<a class="button" th:href="${'/info/info_list'+cri.listLink}">목록</a>
 							</div>
 						</td>
@@ -298,6 +310,7 @@
 <script th:src="@{/assets/js/profile.js}"></script>
 </body>
 
+<script th:src="@{/assets/js/reportModal.js}"></script>
 <script th:src="@{/assets/js/reply.js}"></script>
 <script th:inline="javascript">
 	const loginUser = /*[[${session.loginUser}]]*/'';
