@@ -1,0 +1,34 @@
+<th:block th:fragment="challNoticeGetModal()" xmlns:th="http://www.thymeleaf.org">
+    <div class="noticeGet_modal_box">
+        <div class="noticeGet_modal_contents">
+
+            <div class="title-container">
+                <button class="getClose button">&times;</button>
+                <h1 class="title">챌린지 목록 작성</h1>
+            </div>
+            <table id="reportAdminTable">
+                <thead>
+                <tr style="font-weight: bold; text-align: center;">
+                    <td class="long_text" style="width: 5%;">챌린지 번호</td>
+                    <td class="long_text">카테고리</td>
+                    <td class="long_text">챌린지 이름</td>
+                    <td class="long_text">내용</td>
+                    <td class="long_text">챌린지 기간</td>
+                    <td class="long_text">등록일자</td>
+                </tr>
+                </thead>
+                <tbody id="noticeGet-table">
+
+                </tbody>
+            </table>
+            <div class="report-button-container">
+                <div class="button noticeGetConfirmButton">등록</div>
+                <!--<th:block th:if="">-->
+                    <div class="button noticeGetDeleteButton">삭제</div>
+                <!--</th:block>-->
+            </div>
+            <input type="hidden" id="noticeNumInput" name="noticeNumInput" value="">
+        </div>
+    </div>
+</th:block>
+

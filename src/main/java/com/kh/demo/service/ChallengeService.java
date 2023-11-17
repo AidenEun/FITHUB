@@ -49,6 +49,16 @@ public interface ChallengeService {
 
     boolean insertChallNotice(ChallNoticeBoardDTO chall);
 
+    Long getNoticeTotal(Criteria noticeCri, String challCategory, String challTerm);
+
+    List<ChallNoticeBoardDTO> getChallNoticeList(Criteria noticeCri, String challCategory, String challTerm);
+
+    ChallNoticeBoardDTO getChallNoticeDetail(Long challNum);
+
+    void insertMyChall(long challNum, String id);
+
+    void deleteChallNotice(long challNum);
+
     List<ChallNoticeBoardDTO> get12challSearchList(Criteria cri);
 
     Long getchallTotal(Criteria cri);
