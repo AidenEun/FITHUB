@@ -40,4 +40,8 @@ public interface TrainerMatchingService {
     List<BoardDTO> getMachingSearchList(String keyword);
 
     void saveMessage(MessageDTO newMessage);
+
+    SubscribeDTO checkSubs(SubscribeDTO newSubscribe);
+
+    SubscribeDTO clickSubs(SubscribeDTO newSubscribe);
 }

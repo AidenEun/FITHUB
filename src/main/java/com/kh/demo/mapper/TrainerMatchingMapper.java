@@ -35,4 +35,10 @@ public interface TrainerMatchingMapper {
     List<BoardDTO> getMachingSearchList(String keyword);
 
     void saveMessage(MessageDTO newMessage);
+
+    SubscribeDTO getcheckSubs(SubscribeDTO newSubscribe);
+
+    SubscribeDTO getinsertSubs(SubscribeDTO newSubscribe);
+
+    SubscribeDTO getdeleteSubs(SubscribeDTO newSubscribe);
 }

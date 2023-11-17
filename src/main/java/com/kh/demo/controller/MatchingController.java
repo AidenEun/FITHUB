@@ -209,7 +209,7 @@ public class MatchingController {
         return "success";
     }
 
-    @GetMapping("/totalSearch")
+    @GetMapping("totalSearch")
     public void search(String keyword,Model model){
 //        System.out.println(keyword);
 
@@ -250,5 +250,36 @@ public class MatchingController {
 
 
     }
+
+    @PostMapping("subscribe_check")
+    public String checkSubscription(@RequestParam("sendId") String userId, @RequestParam("trainerId") String trainerId) {
+        SubscribeDTO newSubscribe = new SubscribeDTO();
+        newSubscribe.setUserId(userId);
+        newSubscribe.setTrainerId(trainerId);
+        System.out.println("checkSubs"+newSubscribe);
+        SubscribeDTO isSubscribed = MatchingService.checkSubs(newSubscribe);
+
+        if (isSubscribed != null) {
+            return "subscribed";
+        } else {
+            return "unsubscribed";
+        }
+    }
+    @PostMapping("subscribe_click")
+    public String clickSubscription(@RequestParam("sendId") String userId, @RequestParam("trainerId") String trainerId) {
+        SubscribeDTO newSubscribe = new SubscribeDTO();
+        newSubscribe.setUserId(userId);
+        newSubscribe.setTrainerId(trainerId);
+
+        System.out.println("clickSubs"+newSubscribe);
+        SubscribeDTO isSubscribed = MatchingService.clickSubs(newSubscribe);
+
+        if (isSubscribed != null) {
+            return "subscribed";
+        } else {
+            return "unsubscribed";
+        }
+    }
+
 
 }
