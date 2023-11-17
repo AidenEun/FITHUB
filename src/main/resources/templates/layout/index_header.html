@@ -48,12 +48,12 @@
 
     <!-- Menu -->
     <section id="menu">
-        <div class="side-not-login">
-            <th:blcok th:if="${session.loginUser == null}">
+        <th:block th:if="${session.loginUser == null}">
+            <div class="side-not-login">
                 <p>로그인하세요</p>
                 <a th:href="@{/user/login}">로그인</a>
-            </th:blcok>
-        </div>
+            </div>
+        </th:block>
         <th:block th:if="${session.loginUser != null}">
             <div class="side_info">
                 <a href="/usermypage/user_myinfo">

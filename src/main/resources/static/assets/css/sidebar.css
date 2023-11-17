@@ -26,52 +26,67 @@
         }
 
         .bar-container {
+                display: flex;
+                align-items: center;
+                justify-content:center ;
+            }
+
+            .progress-bar{
                 -webkit-appearance: none;
                 -moz-appearance: none;
                 appearance: none;
-                display: block;
                 width: 150px;
                 height: 20px;
                 border-radius: 7px;
                 color: #35495e;
-              }
-              progress::-webkit-progress-bar {
+                margin-right: 10px; /* 오른쪽 마진 추가 */
+            }
+
+            progress::-webkit-progress-bar {
                 background-color: #eee;
                 border-radius: 8px;
-              }
-              progress::-webkit-progress-value {
-                background-color: #5a8100;
-                border-radius: 8px;
-              }
-              progress::-moz-progress-bar {
-                background-color: #5a8100;
-                border-radius: 8px;
-              }
-              .progress-container {
-                display: flex; /* 요소들을 가로로 배치합니다. */
-                align-items: center; /* 수직 가운데 정렬합니다. */
             }
 
-            /* 프로그래스 바 스타일 (선택적으로 조정) */
-            .progress-bar {
-                width: 200px; /* 원하는 너비로 조정 */
-                height: 20px; /* 원하는 높이로 조정 */
-
+            progress::-webkit-progress-value {
+                background-color: #5a8100;
+                border-radius: 8px;
             }
 
-            /* 출석 버튼 스타일 (선택적으로 조정) */
-            .att-btn {
-                margin-left: 10px; /* 프로그래스 바와의 간격 조정 */
-                padding: 5px 10px; /* 원하는 패딩 조정 */
-                background-color: #007bff; /* 배경색 설정 */
-                color: white; /* 글자색 설정 */
-                border: none; /* 테두리 제거 */
-                cursor: pointer; /* 포인터 커서 설정 */
+            progress::-moz-progress-bar {
+                background-color: #5a8100;
+                border-radius: 8px;
+            }
+
+            .bar-container > .att-btn{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 5px 10px;
+                background-color: #8FA746;
+                border-radius: 10px;
+                color: white;
+                cursor: pointer;
+                height: 20px;
+                font-size: 12px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                line-height: normal;
+                vertical-align: middle;
+                box-sizing: border-box;
+
             }
 
         .point-container {
             display: flex;
-            justify-content: space-between;
+            align-items: center;
+        }
+
+        .point-container > div {
+            margin: auto; /* 원하는 여백 크기로 조절 */
+        }
+        .point-container > span {
+            margin-right: 110px;
         }
 
         #tab-menu {
