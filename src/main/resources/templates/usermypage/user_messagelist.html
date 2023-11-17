@@ -16,7 +16,17 @@
 
 </head>
 <style>
+	.button {
+		background-color: #8FA746 !important;
+	}
 
+	.long_text {
+		word-break: break-all;
+		white-space: normal;
+		width: 180px;
+		max-width: 180px;
+		overflow: hidden;
+	}
 </style>
 <body class="is-preload">
 
@@ -25,50 +35,60 @@
 
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">
-	<div class="inner">
 
+	<div class="header_box">
 		<header class="test12">
 			<p id="mainText">마이페이지</p>
 			<p id="subText">쪽지함</p>
 		</header>
+	</div>
+
+	<div class="inner">
 
 		<!-- Content -->
 		<div class="content">
-			<div id="messageAll" class="button cate now_cate message" style="margin-right: 10px;">전체보기</div>
-			<div id="messageSend" class="button cate not_cate message" style="margin-right: 10px;">보낸쪽지함</div>
-			<div id="messageReceive" class="button cate not_cate message" style="margin-right: 10px;">받은쪽지함</div>
-			<div id="u_t_matching" class="button cate not_cate message" style="margin-right: 10px;">매칭쪽지함</div>
+
 			<!-- 게시글 리스트 띄우는 테이블 -->
-			<table class="list">
-					<tr align="right" valign="middle">
-						<td colspan="6">글 개수 : [[${pageMaker.total}]]</td>
+			<table class="list" style="text-align: center;">
+					<tr>
+						<td colspan="6">
+							<div style="float: left;">
+								<div id="messageAll" class="button cate now_cate message" style="margin-right: 10px;">전체보기</div>
+								<div id="messageSend" class="button cate not_cate message" style="margin-right: 10px;">보낸쪽지함</div>
+								<div id="messageReceive" class="button cate not_cate message" style="margin-right: 10px;">받은쪽지함</div>
+								<div id="u_t_matching" class="button cate not_cate message" style="margin-right: 10px;">매칭쪽지함</div>
+							</div>
+							<div style="float: right;">
+								쪽지 개수 : [[${pageMaker.total}]]
+								<a style="margin-left: 10px;" class="write button" th:href="${'/board/write'+pageMaker.cri.listLink}">쪽지 보내기</a>
+							</div>
+						</td>
 					</tr>
-					<tr align="center" valign="middle">
-						<th width="8%">번호</th>
-						<th></th>
-						<th width="15%">보낸사람</th>
-						<th width="15%">받는사람</th>
-						<th width="30%">내용</th>
-						<th width="10%">날짜</th>
+					<tr class="special-row">
+						<td class="long_text" style="width: 8%;">번호</td>
+						<td class="long_text" style="width: 8%;"></td>
+						<td class="long_text" style="width: 15%;">보낸사람</td>
+						<td class="long_text" style="width: 15%;">받는사람</td>
+						<td class="long_text">내용</td>
+						<td class="long_text" style="width: 22%;">날짜</td>
 					</tr>
 					<tr th:if="${list != null and list.size()>0}" th:each="message : ${list}">
-						<td>[[${message.messageNum}]]</td>
-						<td>
+						<td class="long_text">[[${message.messageNum}]]</td>
+						<td class="long_text">
 							<sup class="new" th:if="${newly_Message[messageStat.index] == 'O'}">New</sup>
 						</td>
-						<td>[[${message.sendId}]]</td>
-						<td>[[${message.receiveId}]]</td>
-						<td>
+						<td class="long_text">[[${message.sendId}]]</td>
+						<td class="long_text">[[${message.receiveId}]]</td>
+						<td class="long_text">
 							[[${message.messageContent}]]
 						</td>
-						<td>
+						<td class="long_text">
 							[[${message.sendDate}]]
 						</td>
 					</tr>
 					<th:block th:if="${list == null or list.size() == 0}">
 						<tr>
-							<td colspan="6" style="text-align: center; font-size: 20px;">등록된
-								게시글이 없습니다.</td>
+							<td colspan="6" style="text-align: center; font-size: 20px;">쪽지가 없습니다.</td>
 						</tr>
 					</th:block>
 
@@ -87,24 +107,17 @@
 				</tr>
 			</table>
 			<!-- 글쓰기 버튼 배치하는 테이블 -->
-			<table>
-				<tr align="right" valign="middle">
-					<td>
-						<a class="write" th:href="${'/board/write'+pageMaker.cri.listLink}">글쓰기</a>
-					</td>
-				</tr>
-			</table>
 			<form id="searchForm" th:action="@{/usermypage/user_messagelist}">
-				<div class="search_area">
-					<select name="type">
+				<div class="search_area flex">
+					<select name="type" style="width: 20%; margin-right:10px;">
 						<option value="" th:selected="${pageMaker.cri.type == null}">검색</option>
 						<option value="C" th:selected="${pageMaker.cri.type == 'C'}">내용</option>
 						<option value="S" th:selected="${pageMaker.cri.type == 'S'}">보낸사람</option>
 						<option value="R" th:selected="${pageMaker.cri.type == 'R'}">받은사람</option>
 						<option value="SR" th:selected="${pageMaker.cri.type == 'SR'}">보낸사람 또는 받은사람</option>
 					</select>
-					<input type="text" name="keyword" id="keyword" th:value="${pageMaker.cri.keyword}">
-					<a href="#" class="button primary">검색</a>
+					<input type="text" name="keyword" id="keyword" th:value="${pageMaker.cri.keyword}" style="margin-right:10px;">
+					<a href="#" class="button">검색</a>
 				</div>
 				<input type="hidden" value="1" name="pagenum">
 				<input type="hidden" value="10" name="amount">
@@ -136,7 +149,8 @@
 							<tr><td><a href="/usermypage/user_subtrainer">구독한 트레이너</a></td></tr>
 							<tr><td><a href="/usermypage/user_subbookmark">북마크</a></td></tr>
 							<tr><td><a href="/usermypage/user_boardlist">내 게시물</a></td></tr>
-							<tr><td><a href="/usermypage/user_messagelist" style="color: #5a8100;">쪽지함</a></td></tr>
+							<tr><td><a href="/usermypage/user_messagelist" style="color: #5a8100; font-size: 20px;">쪽지함</a></td></tr>
+							<tr><td><a href="/usermypage/user_myprofile">나의 프로필</a></td></tr>
 							<tr><td><a href="/usermypage/user_applytrainer">트레이너 전환 신청</a></td></tr>
 						</table>
 					</div>
@@ -153,7 +167,7 @@
 <th:block th:replace="~{layout/footer::footer}"></th:block>
 
 <!-- Scripts -->
-<script th:src="@{/assets/js/jquery.min.js}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script th:src="@{/assets/js/jquery.dropotron.min.js}"></script>
 <script th:src="@{/assets/js/jquery.scrollex.min.js}"></script>
 <script th:src="@{/assets/js/browser.min.js}"></script>
@@ -163,9 +177,6 @@
 
 <script th:src="@{/assets/js/sidebar.js}"></script>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script th:inline="javascript">
 	const searchForm = $("#searchForm");
 	const pageForm = $("#pageForm");
@@ -196,7 +207,7 @@
 			alert("검색 기준을 선택하세요!");
 			return false;
 		}
-		if(!$("input[name='keyword']").val()){
+		if(!document.getElementById("keyword").value){
 			alert("키워드를 입력하세요!");
 			return false;
 		}

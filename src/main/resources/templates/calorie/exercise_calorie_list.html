@@ -11,6 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" th:href="@{/assets/css/index.css}" />
     <link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
+    <link rel="stylesheet" th:href="@{/assets/css/common.css}" />
     <noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
     <style>
 
@@ -171,15 +172,15 @@
 
 <!-- Main -->
 <section id="main" class="wrapper left">
-    <div class="top_img_box">
-        <img src="/images/pic01.jpg" alt="">
-    </div>
-    <div class="inner">
 
-        <header class="major">
-            <h2>운동 칼로리</h2>
-            <p>운동 칼로리 조회</p>
+    <div class="header_box">
+        <header class="test12">
+            <p id="mainText">운동 칼로리</p>
+            <p id="subText">운동 칼로리 조회</p>
         </header>
+    </div>
+
+    <div class="inner">
 
         <!-- Content -->
         <div class="content">
@@ -220,6 +221,7 @@
         </div>
     </div>
 </section>
+</head>
 
 <!-- Footer -->
 <th:block th:replace="~{layout/footer::footer}"></th:block>

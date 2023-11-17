@@ -1,9 +1,6 @@
 package com.kh.demo.service;
 
-import com.kh.demo.domain.dto.BoardDTO;
-import com.kh.demo.domain.dto.BookMarkDTO;
-import com.kh.demo.domain.dto.Criteria;
-import com.kh.demo.domain.dto.FileDTO;
+import com.kh.demo.domain.dto.*;
 import com.kh.demo.mapper.BoardMapper;
 import com.kh.demo.mapper.FileMapper;
 import com.kh.demo.mapper.ReplyMapper;
@@ -403,11 +400,35 @@ public class BoardServiceImpl implements BoardService{
 		return bmapper.getinfoSearchList(keyword);
 	}
 
-//	@Override
-//	public int getNewsSearchCnt(String keyword) {
-//		return bmapper.getNewsSearchCnt(keyword);
-//	}
+	@Override
+	public List<BoardDTO> get12infoSearchList(Criteria cri) {
+		return bmapper.get12infoSearchList(cri);
+	}
 
+	@Override
+	public Long getinfoSearchCnt(Criteria cri) {
+		return bmapper.getinfoSearchCnt(cri);
+	}
+
+	@Override
+	public List<BoardDTO> get12TipSearchList(Criteria cri) {
+		return bmapper.get12TipSearchList(cri);
+	}
+
+	@Override
+	public Long getTipSearchTotalCnt(Criteria cri) {
+		return bmapper.getTipSearchTotalCnt(cri);
+	}
+
+	@Override
+	public List<BoardDTO> get12CommuSearchList(Criteria cri) {
+		return bmapper.get12CommuSearchList(cri);
+	}
+
+	@Override
+	public Long getCommuTotalCnt(Criteria cri) {
+		return bmapper.getCommuTotalCnt(cri);
+	}
 
 
 

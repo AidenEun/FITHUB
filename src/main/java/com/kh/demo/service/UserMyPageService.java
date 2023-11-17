@@ -93,6 +93,10 @@ public interface UserMyPageService {
 
     Long getChallengeTotal(Criteria cri, String userId, String challCategory, String challTerm);
 
+    List<ChallNoticeBoardDTO> getSuccessMyChallenge(String userId);
+
+    Long getSuccessMyChallengeTotal(Criteria cri, String userId);
+
 
     //트레이너 전환 신청
     boolean insertApplytrainer(TrainerSignUpDTO user,MultipartFile[] files) throws Exception;
@@ -111,4 +115,6 @@ public interface UserMyPageService {
     boolean updateMatching(UTMatchingDTO utMatching);
 
     ResponseEntity<Resource> getThumbnailResource(String sysName) throws Exception;
+
+
 }

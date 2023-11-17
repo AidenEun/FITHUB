@@ -37,11 +37,17 @@ public interface TrainerMatchingService {
 
     UTMatchingDTO getutBytrainerId(String trainerId);
 
-    List<BoardDTO> getMachingSearchList(String keyword);
+    List<TrainerMatchingBoardDTO> getMachingSearchList(String keyword);
 
     void saveMessage(MessageDTO newMessage);
+
 
     SubscribeDTO checkSubs(SubscribeDTO newSubscribe);
 
     SubscribeDTO clickSubs(SubscribeDTO newSubscribe);
+
+    List<TrainerMatchingBoardDTO> get12matchingSearchList(Criteria cri);
+
+    Long getmatchingTotal(Criteria cri);
+
 }

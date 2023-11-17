@@ -17,6 +17,19 @@
 </head>
 <style>
 
+	.flex{
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.search_area > form {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.button {
+		background-color: #8FA746 !important;
+	}
 </style>
 <body class="is-preload">
 
@@ -26,49 +39,50 @@
 
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">
-	<div class="inner">
 
+	<div class="header_box">
 		<header class="test12">
 			<p id="mainText">마이페이지</p>
 			<p id="subText">나의 챌린지</p>
 		</header>
+	</div>
+
+	<div class="inner">
 
 		<!-- Content -->
 		<div class="content">
 
 
 			<!-- 게시글 리스트 띄우는 테이블 -->
-			<table class="list">
-				<tr>
-					<td>
+			<table class="list" style="text-align: center;">
+				<tr align="right" valign="middle">
+					<td colspan="2" style="padding-left:0;">
 						<div class="search_area">
-							<form id="challCategoryForm" th:action="@{/usermypage/user_challenge}">
-								<select name="challCategory" id="challCategory">
-									<option value="challAll" th:selected="${param.challCategory == 'challAll'|| param.challCategory == null}">전체</option>
-									<option value="challExer" th:selected="${param.challCategory == 'challExer'}">운동</option>
-									<option value="challFood" th:selected="${param.challCategory == 'challFood'}">식단</option>
+							<form id="challCategoryForm" th:action="@{/usermypage/user_challenge}" style="margin:0">
+								<select name="challCategory" id="challCategory" style="widht:35%; margin-right:10px;">
+									<option value="challAll" th:selected="${challCategory == 'challAll'|| challCategory == null}">전체</option>
+									<option value="challExer" th:selected="${challCategory == 'challExer'}">운동</option>
+									<option value="challFood" th:selected="${challCategory == 'challFood'}">식단</option>
 								</select>
-								<select name="challTerm" id="challTerm">
-									<option value="challengeAll" th:selected="${param.challTerm == 'challengeAll'||param.challTerm == null}">전체</option>
-									<option value="chall7" th:selected="${param.challTerm == 'chall7'}">7일</option>
-									<option value="chall15" th:selected="${param.challTerm == 'chall15'}">15일</option>
-									<option value="chall30" th:selected="${param.challTerm == 'chall30'}">30일</option>
+								<select name="challTerm" id="challTerm" style="widht:35%; margin-right:10px;">
+									<option value="challengeAll" th:selected="${challTerm == 'challengeAll'||challTerm == null}">전체</option>
+									<option value="7" th:selected="${challTerm == '7'}">7일</option>
+									<option value="15" th:selected="${challTerm == '15'}">15일</option>
+									<option value="30" th:selected="${challTerm == '30'}">30일</option>
 								</select>
-								<a href="#" class="button primary">검색</a>
+								<a href="#" class="button">검색</a>
 							</form>
 						</div>
 					</td>
+					<td colspan="4">챌린지 개수 : [[${pageMaker.total}]]</td>
 				</tr>
-				<tr align="right" valign="middle">
-					<td colspan="6">글 개수 : [[${pageMaker.total}]]</td>
-				</tr>
-				<tr align="center" valign="middle">
-					<th width="8%">번호</th>
-					<th>카테고리</th>
-					<th>챌린지 이름</th>
-					<th width="15%">챌린지 기간</th>
-					<th width="17%">등록일자</th>
-					<th width="10%">달성일수</th>
+				<tr class="special-row">
+					<td width="8%">번호</td>
+					<td>카테고리</td>
+					<td>챌린지 이름</td>
+					<td width="15%">챌린지 기간</td>
+					<td width="17%">등록일자</td>
+					<td width="10%">달성일수</td>
 				</tr>
 				<tr th:if="${list != null and list.size()>0}" th:each="board : ${list}">
 					<td>[[${board.challNum}]]</td>
@@ -84,8 +98,7 @@
 				</tr>
 				<th:block th:if="${list == null or list.size() == 0}">
 					<tr>
-						<td colspan="6" style="text-align: center; font-size: 20px;">등록된
-							게시글이 없습니다.</td>
+						<td colspan="6" style="text-align: center; font-size: 20px;">등록된 챌린지가 없습니다.</td>
 					</tr>
 				</th:block>
 			</table>
@@ -105,18 +118,20 @@
 			<!-- 글쓰기 버튼 배치하는 테이블 -->
 
 			<form id="searchForm" th:action="@{/usermypage/user_challenge}">
-				<div class="search_area">
-					<select name="type">
+				<div class="search_area flex">
+					<select name="type" style="width: 20%; margin-right:10px;">
 						<option value="" th:selected="${pageMaker.cri.type == null}">검색</option>
 						<option value="T" th:selected="${pageMaker.cri.type == 'T'}">제목</option>
 						<option value="C" th:selected="${pageMaker.cri.type == 'C'}">내용</option>
 						<option value="TC" th:selected="${pageMaker.cri.type == 'TC'}">제목 또는 내용</option>
 					</select>
-					<input type="text" name="keyword" id="keyword" th:value="${pageMaker.cri.keyword}">
-					<a href="#" class="button primary">검색</a>
+					<input type="text" name="keyword" id="keyword" th:value="${pageMaker.cri.keyword}" style="margin-right:10px;">
+					<a href="#" class="button">검색</a>
 				</div>
 				<input type="hidden" value="1" name="pagenum">
 				<input type="hidden" value="10" name="amount">
+				<input type='hidden' name='challCategory' th:value=${challCategory}>
+				<input type='hidden' name='challTerm' th:value=${challTerm}>
 			</form>
 		</div>
 
@@ -125,8 +140,8 @@
 			<input type="hidden" name="amount" th:value="${pageMaker.cri.amount}">
 			<input type="hidden" name="type" th:value="${pageMaker.cri.type}">
 			<input type="hidden" name="keyword" th:value="${pageMaker.cri.keyword}">
-			<input type="hidden" name="challCategory" th:value="${param.challCategory}">
-			<input type="hidden" name="challTerm" th:value="${param.challTerm}">
+			<input type="hidden" name="challCategory" th:value="${challCategory}">
+			<input type="hidden" name="challTerm" th:value="${challTerm}">
 		</form>
 
 
@@ -138,7 +153,7 @@
 						<table style="width: 90%;">
 							<tr><td><a href="/usermypage/user_myinfo">내 정보 수정</a></td></tr>
 							<tr><td><a href="/usermypage/user_diary">나의 다이어리</a></td></tr>
-							<tr><td><a href="/usermypage/user_challenge" style="color: #5a8100;">나의 챌린지</a></td></tr>
+							<tr><td><a href="/usermypage/user_challenge" style="color: #5a8100; font-size: 20px;">나의 챌린지</a></td></tr>
 							<tr><td><a href="/usermypage/user_subtrainer">구독한 트레이너</a></td></tr>
 							<tr><td><a href="/usermypage/user_subbookmark">북마크</a></td></tr>
 							<tr><td><a href="/usermypage/user_boardlist">내 게시물</a></td></tr>
@@ -157,7 +172,7 @@
 <th:block th:replace="~{layout/footer::footer}"></th:block>
 
 <!-- Scripts -->
-<script th:src="@{/assets/js/jquery.min.js}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script th:src="@{/assets/js/jquery.dropotron.min.js}"></script>
 <script th:src="@{/assets/js/jquery.scrollex.min.js}"></script>
 <script th:src="@{/assets/js/browser.min.js}"></script>
@@ -167,7 +182,6 @@
 
 <script th:src="@{/assets/js/sidebar.js}"></script>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script th:inline="javascript">
 
 const searchForm = $("#searchForm");
@@ -202,10 +216,12 @@ function sendit(){
         alert("검색 기준을 선택하세요!");
         return false;
     }
-    if(!$("input[name='keyword']").val()){
+    if(!document.getElementById("keyword").value){
         alert("키워드를 입력하세요!");
         return false;
     }
+
+
     searchForm.submit();
 }
 

@@ -47,6 +47,15 @@
         values(#{boardTitle},#{boardContent},#{challNum},#{startDate},#{finishDate},#{userId})
     </insert>
 
+    <insert id="insertChallNotice">
+        insert into chall_notice_board (chall_category,chall_name,chall_content,chall_term)
+        values(#{challCategory},#{challName},#{challContent},#{challTerm})
+    </insert>
+
+    <insert id="insertMyChall">
+        insert into my_challenge (user_id,chall_num) values(#{id},#{challNum})
+    </insert>
+
     <update id="updateReadCount">
         update chall_cert_board set view_cnt = view_cnt+1 where board_num = #{boardNum}
     </update>
@@ -59,6 +68,10 @@
         delete from chall_cert_board where board_num=#{boardNum}
     </delete>
 
+    <delete id="deleteChallNotice">
+        delete from chall_notice_board where chall_num=#{challNum}
+    </delete>
+
     <select id="getList">
         select * from chall_cert_board where
         <include refid="cri"></include>
@@ -66,9 +79,19 @@
 			0 < board_num order by board_num desc limit #{startrow},#{amount}
 		]]>
     </select>
+    <select id="getChallNoticeList">
+        select * from chall_notice_board where
+        <![CDATA[
+			0 < chall_num order by chall_num desc limit #{startrow},#{amount}
+		]]>
+    </select>
     <select id="getTotal">
         select count(*) from chall_cert_board where
         <include refid="cri"></include> board_num > 0
+    </select>
+    <select id="getNoticeTotal">
+        select count(*) from chall_notice_board where
+        <include refid="cri"></include> chall_num > 0
     </select>
     <select id="getLastNum">
         select max(board_num) from chall_cert_board where user_id=#{userId}
@@ -77,11 +100,6 @@
         select * from chall_cert_board where board_num=#{boardNum}
     </select>
 
-<!--    통합검색-->
-    <select id="getChallSearchList">
-    SELECT * FROM chall_notice_board where chall_name like('%${keyword}%') or chall_content like('%${keyword}%')
-    order by chall_num asc;
-    </select>
 
     <select id="getChallenge">
         select *,date_add(date(my_challenge.sub_regdate), interval chall_notice_board.chall_term day)  as finishDate from chall_notice_board
@@ -89,7 +107,86 @@
         where my_challenge.user_id = #{userId} and my_challenge.mychall_num = #{mychallNum};
     </select>
 
+    <!--챌린지 공지 게시판-->
+    <select id="getChallengeAllAllTotal">
+        select count(*) from chall_notice_board where
+        chall_num > 0
+    </select>
 
+    <select id="getChallengeAllTermTotal">
+        select count(*) from chall_notice_board
+        where chall_term = #{challTerm} and
+        chall_num > 0
+    </select>
+
+    <select id="getChallengeCategoryAllTotal">
+        select count(*) from chall_notice_board
+        where chall_category =#{challCategory} and
+        chall_num > 0
+    </select>
+
+    <select id="getChallengeCategoryTermTotal">
+        select count(*) from chall_notice_board
+        where chall_term = #{challTerm} and chall_category =#{challCategory} and
+        chall_num > 0
+    </select>
+
+    <select id="getChallengeAllAll">
+        select * from chall_notice_board where
+        <![CDATA[
+			0 < chall_num order by chall_num desc limit #{startrow},#{amount}
+		]]>
+    </select>
+
+    <select id="getChallengeAllTerm">
+        select * from chall_notice_board
+        where chall_term =#{challTerm} and
+        <![CDATA[
+			0 < chall_num order by chall_num desc limit #{noticeCri.startrow},#{noticeCri.amount}
+		]]>
+    </select>
+
+    <select id="getChallengeCategoryAll">
+        select * from chall_notice_board
+        where chall_category = #{challCategory} and
+        <![CDATA[
+			0 < chall_num order by chall_num desc limit #{noticeCri.startrow},#{noticeCri.amount}
+		]]>
+    </select>
+
+    <select id="getChallengeCategoryTerm">
+        select * from chall_notice_board
+        where chall_term = #{challTerm} and chall_category = #{challCategory} and
+        <![CDATA[
+			0 < chall_num order by chall_num desc limit #{noticeCri.startrow},#{noticeCri.amount}
+		]]>
+    </select>
+
+    <!--    통합검색-->
+    <select id="getChallSearchList">
+        SELECT * FROM chall_notice_board where chall_name like('%${keyword}%') or chall_content like('%${keyword}%')
+        order by chall_num desc ;
+    </select>
+
+    <select id="get12challSearchList">
+        select *
+        from chall_notice_board
+        where chall_name like CONCAT('%', #{keyword}, '%')
+           or chall_content like CONCAT('%', #{keyword}, '%')
+        order by chall_num desc limit #{startrow}, #{amount}
+    </select>
+
+
+    <select id="getchallTotal">
+        select count(*)
+        from chall_notice_board
+        where chall_name like CONCAT('%', #{keyword}, '%')
+           or chall_content like CONCAT('%', #{keyword}, '%')
+    </select>
+
+    <select id="getChallNoticeDetail">
+        select * from chall_notice_board where chall_num = #{challNum}
+    </select>
 
 </mapper>
 

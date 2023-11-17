@@ -87,8 +87,18 @@ public interface BoardService {
 
 	List<BoardDTO> getinfoSearchList(String keyword);
 
-//    int getNewsSearchCnt(String keyword);
 
+    List<BoardDTO> get12infoSearchList(Criteria cri);
+
+	Long getinfoSearchCnt(Criteria cri);
+
+	List<BoardDTO> get12TipSearchList(Criteria cri);
+
+	Long getTipSearchTotalCnt(Criteria cri);
+
+	List<BoardDTO> get12CommuSearchList(Criteria cri);
+
+	Long getCommuTotalCnt(Criteria cri);
 }
 
 

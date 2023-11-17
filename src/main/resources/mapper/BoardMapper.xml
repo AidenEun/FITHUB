@@ -142,48 +142,103 @@
 
 <!--	통합검색 -->
 
-<!--	<select id="getAllList">-->
-<!--		select * from board where (board_title like('%${keyword}%')) or (board_content like('%${keyword}%')) or (user_id like('%${keyword}%'))-->
-<!--		order by board_num desc-->
-<!--	</select>-->
-
 	<select id="getAllSearchCnt">
-		select count(*) from board where (board_title like('%${keyword}%')) or (board_content like('%${keyword}%')) or (user_id like('%${keyword}%'))
+		select count(*)
+		from board
+		where (board_title like ('%${keyword}%'))
+		   or (board_content like ('%${keyword}%'))
+		   or (user_id like ('%${keyword}%'))
 	</select>
 
-
 	<select id="getinfoSearchList">
-        select *
-        from board
-        where (board_category in ('infoNews','infoExer','infoFood'))
-          and ((board_title like ('%${keyword}%')) or (board_content like ('%${keyword}%')) or
-               (user_id like ('%${keyword}%')))
-        order by like_cnt desc, board_num asc;
-    </select>
+		select *
+		from board
+		where (board_category in ('infoNews','infoExer','infoFood'))
+		  and ((board_title like ('%${keyword}%')) or (board_content like ('%${keyword}%')) or
+			   (user_id like ('%${keyword}%')))
+		order by board_num desc
+	</select>
 
-        <select id="getTipSearchList">
+	<select id="getTipSearchList">
 			select *
 			from board
 			where board_category = 'infoTip'
 			  and ((board_title like ('%${keyword}%')) or (board_content like ('%${keyword}%')) or
 				   (user_id like ('%${keyword}%')))
-			order by like_cnt desc, board_num asc
+			order by board_num desc
 		</select>
-        <select id="getCommuSearchList">
-            select *
-            from board
-            where board_category like ('%commu%')
-              and ((board_title like ('%${keyword}%')) or (board_content like ('%${keyword}%')) or
-                   (user_id like ('%${keyword}%')))
-            order by like_cnt desc, board_num asc
-        </select>
+
+	<select id="getCommuSearchList">
+		select *
+		from board
+		where board_category like ('%commu%')
+		  and ((board_title like ('%${keyword}%')) or (board_content like ('%${keyword}%')) or
+			   (user_id like ('%${keyword}%')))
+		order by board_num desc
+	</select>
 
         <select id="getBoardTop5List">
-			select *
-			from board
-			order by like_cnt desc, view_cnt desc, update_date desc limit 5;
+            select *
+            from board
+            order by like_cnt desc, view_cnt desc, update_date desc limit 5
 
-		</select>
+        </select>
+
+<!--	통합검색 디테일-->
+
+	<select id="getinfoSearchCnt">
+		select count(*)
+		from board
+		where board_category in ('infoNews','infoExer','infoFood')
+		  and ((board_title like ('%${keyword}%')) or (board_content like ('%${keyword}%')) or
+			   (user_id like ('%${keyword}%')));
+	</select>
+
+	<select id="get12infoSearchList">
+		select *
+		from board
+		where board_category in ('infoNews', 'infoExer', 'infoFood')
+		  and (board_title like CONCAT('%', #{keyword}, '%')
+			or board_content like CONCAT('%', #{keyword}, '%')
+			or user_id like CONCAT('%', #{keyword}, '%'))
+		order by board_num desc limit #{startrow}, #{amount}
+	</select>
+
+	<select id="getTipSearchTotalCnt">
+		select count(*)
+		from board
+		where board_category = 'infoTip'
+		  and ((board_title like ('%${keyword}%')) or (board_content like ('%${keyword}%')) or
+			   (user_id like ('%${keyword}%')));
+	</select>
+
+	<select id="get12TipSearchList">
+		select *
+		from board
+		where board_category = 'infoTip'
+		  and (board_title like CONCAT('%', #{keyword}, '%')
+			or board_content like CONCAT('%', #{keyword}, '%')
+			or user_id like CONCAT('%', #{keyword}, '%'))
+		order by board_num desc limit #{startrow}, #{amount}
+	</select>
+
+	<select id="getCommuTotalCnt">
+		select count(*)
+		from board
+		where board_category like ('%commu%')
+		  and ((board_title like ('%${keyword}%')) or (board_content like ('%${keyword}%')) or
+			   (user_id like ('%${keyword}%')));
+	</select>
+
+	<select id="get12CommuSearchList">
+		select *
+		from board
+		where board_category like ('%commu%')
+		  and (board_title like CONCAT('%', #{keyword}, '%')
+			or board_content like CONCAT('%', #{keyword}, '%')
+			or user_id like CONCAT('%', #{keyword}, '%'))
+		order by board_num desc limit #{startrow}, #{amount}
+	</select>
 
 
 	<!-- Main_index -->

@@ -26,4 +26,6 @@ public class UserDTO {
     private int userAge;
     //재우
     private  String subDate;
+
+    private String formattedJoindate;
 }

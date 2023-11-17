@@ -35,7 +35,6 @@ public class TrainerMyPageController {
     public String trainer_profile(Criteria cri, String trainerId , Model model, HttpServletRequest req) throws Exception {
         cri = new Criteria(cri.getPagenum(), 4);
         String requestURI = req.getRequestURI();
-        System.out.println("requestURI : "+requestURI);
 
         if(!requestURI.equals("/trainermypage/trainer_profile")){
             HttpSession session = req.getSession();
@@ -53,8 +52,6 @@ public class TrainerMyPageController {
         model.addAttribute("profile",service.getProFileList(trainerId));
 
         model.addAttribute("files",service.getFileList(trainerId));
-        System.out.println("files"+service.getFileList(trainerId));
-        System.out.println("Profile:: "+service.getProFileList(trainerId));
 
         model.addAttribute("pageMaker", new PageDTO(service.getBoardTotal(cri, trainerId), cri));
         model.addAttribute("newly_board", service.getBoardNewlyList(list));
@@ -71,10 +68,6 @@ public class TrainerMyPageController {
 
     @PostMapping("trainer_myprofile_modify")
     public String trainer_myprofile_modify(TrainerDTO trainerdto,String updateCnt , Model model , MultipartFile[] files,MultipartFile profile) throws IOException {
-        System.out.println(trainerdto);
-        System.out.println("files: "+files);
-        System.out.println("profile: "+profile);
-
         if(files != null){
             for (int i = 0; i < files.length; i++) {
                 System.out.println("controller : "+files[i].getOriginalFilename());
@@ -101,9 +94,6 @@ public class TrainerMyPageController {
 
         TrainerDTO id = service.getUserDetail(TrainerId);
 
-        System.out.println("challCategory : "+challCategory);
-        System.out.println("challTerm : "+challTerm);
-
         if(challCategory == null){
             challCategory = "challAll";
         }
@@ -112,8 +102,8 @@ public class TrainerMyPageController {
         }
 
         List<ChallNoticeBoardDTO> list = service.getMyChallenge(cri, id.getTrainerId(),challCategory,challTerm);
-        System.out.println("list:"+list);
-
+        model.addAttribute("challCategory",challCategory);
+        model.addAttribute("challTerm",challTerm);
         model.addAttribute("list",list);
         model.addAttribute("pageMaker", new PageDTO(service.getChallengeTotal(cri,id.getTrainerId(),challCategory,challTerm), cri));
     }
@@ -121,14 +111,13 @@ public class TrainerMyPageController {
 
     @GetMapping("trainer_mysubscribeuser")
     public void trainer_mysubscribeuser(Criteria cri, Model model, HttpServletRequest req){
-        cri = new Criteria(cri.getPagenum(), 12);
+        cri.setAmount(12);
         HttpSession session = req.getSession();
         String TrainerId = (String) session.getAttribute("loginUser");
 
         TrainerDTO id = service.getUserDetail(TrainerId);
 
         List<UserDTO> list = service.getMyScribe(cri, id.getTrainerId());
-        System.out.println("list:"+list);
         model.addAttribute("list",list);
         model.addAttribute("pageMaker", new PageDTO(service.getScribeTotal(cri,id.getTrainerId()), cri));
     }
@@ -144,8 +133,6 @@ public class TrainerMyPageController {
 
         List<BoardDTO> list = service.getMyBookmark(cri,id.getTrainerId());
         List<ProductBoardDTO> listProduct = service.getMyBookmarkProduct(cri,id.getTrainerId());
-        System.out.println("list:"+list);
-        System.out.println("listProduct:"+listProduct);
         model.addAttribute("list",list);
         model.addAttribute("listProduct",listProduct);
         model.addAttribute("pageMaker", new PageDTO(service.getBookmarkTotal(cri,id.getTrainerId()), cri));
@@ -201,9 +188,6 @@ public class TrainerMyPageController {
 
         List<BoardDTO> list = service.getBoardMyList(cri,id.getTrainerId());
         /* List<BoardDTO> list = serviceBoard.getBoardList(cri);*/
-        System.out.println("cri : "+cri);
-        System.out.println("list : "+list);
-        System.out.println("PageDTO : "+new PageDTO(service.getBoardTotal(cri, id.getTrainerId()), cri));
         model.addAttribute("list",list);
         model.addAttribute("pageMaker",new PageDTO(service.getBoardTotal(cri, id.getTrainerId()), cri));
         model.addAttribute("newly_board",service.getBoardNewlyList(list));
@@ -223,8 +207,6 @@ public class TrainerMyPageController {
         }
 
         List<MessageDTO> list = service.getMessageMyList(cri,id.getTrainerId(),message);
-        System.out.println(cri);
-        System.out.println("list:"+list);
         model.addAttribute("list",list);
         model.addAttribute("pageMaker",new PageDTO(service.getMessageTotal(cri,id.getTrainerId(),message), cri));
         model.addAttribute("newly_Message",service.getMessageNewlyList(list));
@@ -239,8 +221,6 @@ public class TrainerMyPageController {
 
         List<UTMatchingDTO> list = service.getMyMatchinglist(cri, id.getTrainerId());
 
-        System.out.println(cri);
-        System.out.println("list:" + list);
         model.addAttribute("list", list);
         model.addAttribute("pageMaker", new PageDTO(service.getMatchingTotal(cri, id.getTrainerId()), cri));
         model.addAttribute("newly_Message", service.getMatchingNewlyList(list));
@@ -254,7 +234,6 @@ public class TrainerMyPageController {
         } else{
              trainer_check = "X";
         }
-        System.out.println("trainer_check: " + trainer_check);
 
         if(service.updateMatching(utMatching, trainer_check)){
             return "redirect:/trainermypage/u_t_matching";
@@ -302,7 +281,6 @@ public class TrainerMyPageController {
 
     @PostMapping("trainer_myinfo_modify")
     public String trainer_myinfo_modify(TrainerDTO trainerdto, Model model) {
-        System.out.println(trainerdto);
         if (service.user_modify(trainerdto)){
             TrainerDTO user = service.getUserDetail(trainerdto.getTrainerId());
             model.addAttribute("user", user);

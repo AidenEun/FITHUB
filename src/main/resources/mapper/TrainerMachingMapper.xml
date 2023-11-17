@@ -93,6 +93,7 @@
         insert into message (send_id, receive_id, message_content)
         values (#{sendId}, #{receiveId}, #{messageContent})
     </insert>
+
     <select id="getcheckSubs">
         SELECT * FROM subscribe WHERE (user_id, trainer_id)
         value (#{sendId}, #{receiveId})
@@ -105,5 +106,24 @@
         insert into subscribe (user_id, trainer_id)
         values (#{sendId}, #{receiveId})
     </insert>
+
+
+
+<!--    통합검색 디테일-->
+    <select id="get12matchingSearchList">
+        select *
+        from trainer_matching_board
+        where (board_title like CONCAT('%', #{keyword}, '%')
+            or board_content like CONCAT('%', #{keyword}, '%')
+            or trainer_id like CONCAT('%', #{keyword}, '%'))
+        order by board_num desc limit #{startrow}, #{amount}
+    </select>
+
+    <select id="getmatchingTotal">
+        select count(*)
+        from trainer_matching_board
+        where (board_title like ('%${keyword}%') or board_content like ('%${keyword}%') or
+               trainer_id like ('%${keyword}%'));
+    </select>
 
 </mapper>

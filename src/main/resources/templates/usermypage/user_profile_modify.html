@@ -6,12 +6,13 @@
 -->
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>Untitled</title>
+	<title>Fit Hub</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
 	<link rel="stylesheet" th:href="@{/assets/css/index.css}" />
 	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
+	<link rel="stylesheet" th:href="@{/assets/css/common.css}" />
 
 </head>
 <style>
@@ -52,7 +53,9 @@
 		width: 15%;
 	}
 
-
+	.button {
+		background-color: #8FA746 !important;
+	}
 </style>
 <body class="is-preload">
 
@@ -62,12 +65,15 @@
 
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">
-	<div class="inner">
 
-		<header class="major">
-			<h2>마이페이지</h2>
-			<p>유저 프로필</p>
+	<div class="header_box">
+		<header class="test12">
+			<p id="mainText">마이페이지</p>
+			<p id="subText">나의 프로필</p>
 		</header>
+	</div>
+
+	<div class="inner">
 
 
 		<!-- Content -->
@@ -98,7 +104,7 @@
 							<span id="profilename" th:text="${profile.orgName}"></span>
 						</div>
 						<div class="thumbnail_img_bottom" style="float:right; margin-right: 100px;">
-							<a th:href="'javascript:profileupload(\'profile\',\''+${profile.sysName}+'\')'">사진변경</a>
+							<a th:href="'javascript:profileupload(\'profile\',\''+${profile.sysName}+'\')'" class="button">사진변경</a>
 							<input type="hidden" name="profileOrgname" th:value="${profile.orgName}">
 						</div>
 					</th:block>
@@ -111,7 +117,7 @@
 							<span id="profilename_no" style="display:none">선택된 파일 없음</span>
 						</div>
 						<div class="thumbnail_img_bottom">
-							<a th:href="'javascript:profileupload(\'profile\',\'\')'">사진변경</a>
+							<a th:href="'javascript:profileupload(\'profile\',\'\')'" class="button">사진변경</a>
 
 						</div>
 					</th:block>
@@ -120,9 +126,9 @@
 					</div>
 				</div>
 					<div class="thumbnail_div">
-						<table>
+						<table style="margin: auto 0; text-align: center;">
 							<tr>
-								<td>닉네임(아이디) : </td>
+								<td>닉네임(아이디)</td>
 								<td>
 									<div class="inputBox">
 										<input  name="userNickname" type="text" id="userNickname" class="inputText" placeholder="닉네임" th:value="${user.userNickname}" >
@@ -162,8 +168,8 @@
 							<tr>
 								<td></td>
 								<td colspan="2">
-									<a href="javascript:document.profileForm.submit()" class="button primary small" >수정완료</a>
-									<a th:href="@{/usermypage/user_profile}" class="button small">취소</a>
+									<a href="javascript:document.profileForm.submit()" class="button" >수정완료</a>
+									<a th:href="@{/usermypage/user_profile}" class="button">취소</a>
 								</td>
 							</tr>
 						</table>
@@ -171,8 +177,28 @@
 				</div>
 			</form>
 		</div>
+
 		<!-- Sidebar -->
-		<th:block th:replace="~{layout/usermypage_sidebar::sidebar}"></th:block>
+		<div class="sidebar">
+			<section>
+				<div class="boardRanking">
+					<div class="boardRanking_ranking">
+						<table style="width: 90%;">
+							<tr><td><a href="/usermypage/user_myinfo">내 정보 수정</a></td></tr>
+							<tr><td><a href="/usermypage/user_diary">나의 다이어리</a></td></tr>
+							<tr><td><a href="/usermypage/user_challenge">나의 챌린지</a></td></tr>
+							<tr><td><a href="/usermypage/user_subtrainer">구독한 트레이너</a></td></tr>
+							<tr><td><a href="/usermypage/user_subbookmark">북마크</a></td></tr>
+							<tr><td><a href="/usermypage/user_boardlist">내 게시물</a></td></tr>
+							<tr><td><a href="/usermypage/user_messagelist">쪽지함</a></td></tr>
+							<tr><td><a href="/usermypage/user_myprofile" style="color: #5a8100; font-size: 20px;">나의 프로필</a></td></tr>
+							<tr><td><a href="/usermypage/user_applytrainer">트레이너 전환 신청</a></td></tr>
+						</table>
+					</div>
+				</div>
+			</section>
+		</div>
+
 
 
 	</div>
@@ -182,7 +208,7 @@
 <th:block th:replace="~{layout/footer::footer}"></th:block>
 
 <!-- Scripts -->
-<script th:src="@{/assets/js/jquery.min.js}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script th:src="@{/assets/js/jquery.dropotron.min.js}"></script>
 <script th:src="@{/assets/js/jquery.scrollex.min.js}"></script>
 <script th:src="@{/assets/js/browser.min.js}"></script>
@@ -192,7 +218,6 @@
 
 <script th:src="@{/assets/js/sidebar.js}"></script>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script th:inline="javascript">
 let updateCheck = false;
 let uploadCheck = false;

@@ -22,27 +22,102 @@
         </if>
     </sql>
 
+    <sql id="select_user_columns">
+        SELECT user_id
+            , user_name
+            , user_nickname
+            , user_pw
+            , weight_goal
+            , calories_goal
+            , user_tel
+            , user_mail
+            , user_height
+            , user_weight
+            , case when user_gender in ('M', 'Male') then '남자' when user_gender in ('F', 'Female') then '여자' else '기타' end user_gender
+            , user_birth
+            , user_point
+            , user_reportedcnt
+            , user_category
+            , DATE_FORMAT(user_joindate, '%Y-%m-%d %H:%i:%s') AS formatted_joindate
+    </sql>
+
+    <sql id="select_trainer_columns">
+        SELECT trainer_id
+            , trainer_name
+            , trainer_nickname
+            , trainer_pw
+            , trainer_tel
+            , trainer_mail
+            , trainer_zipcode
+            , trainer_addr
+            , trainer_addrdetail
+            , trainer_addretc
+            , trainer_height
+            , trainer_weight
+            , case when trainer_gender in ('M', 'Male') then '남자' when trainer_gender in ('F', 'Female') then '여자' else '기타' end trainer_gender
+            , trainer_birth
+            , trainer_part
+            , trainer_career
+            , trainer_intro
+            , trainer_joindate
+            , transferdate
+            , trainer_reportedcnt
+    </sql>
+
 <!--Report-->
     <select id="getReportList">
-        SELECT * FROM report
+        <![CDATA[
+        SELECT r.*
+             , COALESCE(c1.code_value, r.board_category) AS board_category_name
+             , COALESCE(c2.code_value, r.report_content) AS report_content_name
+          FROM project.report r
+               LEFT OUTER JOIN project.common_code c1
+                            ON c1.code_type IN ('board_category', 'chall_category', 'message_category', 'review_category')
+                           AND c1.code = r.board_category
+               LEFT OUTER JOIN project.common_code c2
+                            ON c2.code_type = 'report_content'
+                           AND c2.code = r.report_content
         WHERE report_yn = 'n'
         ORDER BY report_num DESC
         LIMIT #{startrow}, #{amount}
+        ]]>
     </select>
 
     <select id="getReportListByUser">
-        SELECT * FROM report
+        <![CDATA[
+        SELECT r.*
+             , COALESCE(c1.code_value, r.board_category) AS board_category_name
+             , COALESCE(c2.code_value, r.report_content) AS report_content_name
+          FROM project.report r
+               LEFT OUTER JOIN project.common_code c1
+                            ON c1.code_type IN ('board_category', 'chall_category', 'message_category', 'review_category')
+                           AND c1.code = r.board_category
+               LEFT OUTER JOIN project.common_code c2
+                            ON c2.code_type = 'report_content'
+                           AND c2.code = r.report_content
         WHERE report_yn = 'n'
         AND user_id IN (SELECT user_id FROM user WHERE user_category = 'U')
         order by report_num desc limit #{startrow},#{amount}
+        ]]>
     </select>
 
     <select id="getReportListByTrainer">
-        SELECT * FROM report
-        WHERE report_yn = 'n'
-        AND user_id IN (SELECT trainer_id FROM trainer)
-        order by report_num desc
-        limit #{startrow},#{amount}
+        <![CDATA[
+        SELECT r.*
+             , COALESCE(c1.code_value, r.board_category) AS board_category_name
+             , COALESCE(c2.code_value, r.report_content) AS report_content_name
+          FROM project.report r
+               LEFT OUTER JOIN project.common_code c1
+                            ON c1.code_type IN ('board_category', 'chall_category', 'message_category', 'review_category')
+                           AND c1.code = r.board_category
+               LEFT OUTER JOIN project.common_code c2
+                            ON c2.code_type = 'report_content'
+                           AND c2.code = r.report_content
+         WHERE r.report_yn = 'n'
+           AND r.user_id IN (SELECT trainer_id FROM trainer)
+         ORDER BY r.report_num desc
+         LIMIT #{startrow},#{amount}
+        ]]>
     </select>
 
     <select id="getReportTotal">
@@ -68,10 +143,21 @@
     </select>
 
     <select id="getDoneReportList">
-        SELECT * FROM report
-        WHERE report_yn = 'y'
-        ORDER BY report_num DESC
-        LIMIT #{startrow}, #{amount}
+        <![CDATA[
+            SELECT r.*
+                , COALESCE(c1.code_value, r.board_category) AS board_category_name
+                , COALESCE(c2.code_value, r.report_content) AS report_content_name
+            FROM project.report r
+                LEFT OUTER JOIN project.common_code c1
+                    ON c1.code_type IN ('board_category', 'chall_category', 'message_category', 'review_category')
+                    AND c1.code = r.board_category
+                LEFT OUTER JOIN project.common_code c2
+                    ON c2.code_type = 'report_content'
+                    AND c2.code = r.report_content
+            WHERE r.report_yn = 'y'
+            ORDER BY r.report_num DESC
+            LIMIT #{startrow}, #{amount}
+        ]]>
     </select>
 
     <select id="getDoneReportTotal">
@@ -92,7 +178,7 @@
 <!--Board-->
     <select id="getBoardList">
         SELECT * FROM board
-        WHERE board_category IN ('infoNews', 'infoExer', 'infoFood', 'tip')
+        WHERE board_category IN ('infoNews', 'infoExer', 'infoFood', 'infoTip')
         AND user_id IN (SELECT admin_id FROM admin)
         ORDER BY board_num DESC
         LIMIT #{startrow}, #{amount}
@@ -116,7 +202,7 @@
 
     <select id="getAdminTipBoardList">
         SELECT * FROM board
-        WHERE board_category = 'tip'
+        WHERE board_category = 'infoTip'
         AND user_id IN (SELECT admin_id FROM admin)
         ORDER BY board_num DESC
         LIMIT #{startrow}, #{amount}
@@ -133,7 +219,7 @@
     <select id="getBoardTotal">
         SELECT COUNT(*) FROM board
         WHERE board_num > 0
-        AND board_category IN ('infoNews', 'infoExer', 'infoFood', 'tip')
+        AND board_category IN ('infoNews', 'infoExer', 'infoFood', 'infoTip')
         AND user_id IN (SELECT admin_id FROM admin)
     </select>
 
@@ -154,7 +240,7 @@
     <select id="getTipBoardTotal">
         SELECT COUNT(*) FROM board
         WHERE board_num > 0
-        AND board_category = 'tip'
+        AND board_category = 'infoTip'
         AND user_id IN (SELECT admin_id FROM admin)
     </select>
 
@@ -167,24 +253,28 @@
 
 <!--UserSearch-->
     <select id="getTrainer">
-        SELECT * FROM trainer
+        <include refid="select_trainer_columns"></include>
+        FROM trainer
         WHERE trainer_id = #{keyword}
     </select>
 
     <select id="getUser">
-        SELECT * FROM user
+        <include refid="select_user_columns"></include>
+        FROM user
         WHERE user_id = #{keyword}
         AND user_category = 'U'
     </select>
 
     <select id="getUserList">
-        SELECT * FROM user
+        <include refid="select_user_columns"></include>
+        FROM user
         WHERE user_category = 'U'
-        limit #{startrow},#{amount}
+        LIMIT #{startrow}, #{amount}
     </select>
 
     <select id="getTrainerList">
-        SELECT * FROM trainer
+        <include refid="select_trainer_columns"></include>
+        FROM trainer
         limit #{startrow},#{amount}
     </select>
 
@@ -261,21 +351,29 @@
     </select>
 
     <select id="getUserById">
-        SELECT *
+        <include refid="select_user_columns"></include>
         FROM user
         WHERE user_id = #{userId}
     </select>
 
     <select id="getTrainerById">
-        SELECT *
+        <include refid="select_trainer_columns"></include>
         FROM trainer
         WHERE trainer_id = #{userId}
     </select>
 
     <select id="getReportDTO">
-        SELECT *
-        FROM report
-        WHERE report_num = #{reportNum}
+        SELECT r.*
+             , COALESCE(c1.code_value, r.board_category) AS board_category_name
+             , COALESCE(c2.code_value, r.report_content) AS report_content_name
+          FROM project.report r
+               LEFT OUTER JOIN project.common_code c1
+                            ON c1.code_type IN ('board_category', 'chall_category', 'message_category', 'review_category')
+                           AND c1.code = r.board_category
+               LEFT OUTER JOIN project.common_code c2
+                            ON c2.code_type = 'report_content'
+                           AND c2.code = r.report_content
+         WHERE report_num = #{reportNum}
     </select>
 
     <update id="updateReportYn">
@@ -305,7 +403,7 @@
         SELECT COUNT(*)
         FROM board
         WHERE board_num = #{boardNum}
-        AND board_category IN ('tip', 'comFree', 'comExer', 'comFood', 'comPhoto', 'comQna')
+        AND board_category IN ('infoTip', 'commuFree', 'commuExer', 'commuFood', 'commuGallery', 'commuQna')
     </select>
 
     <select id="selectReview">
@@ -351,7 +449,7 @@
 
     <insert id="insertMessageDoneReport">
         INSERT INTO message (message_content, send_id, receive_id)
-        VALUES (접수하신 신고가 처리되었습니다.', 'admin', #{userId})
+        VALUES ('접수하신 신고가 처리되었습니다.', 'admin', #{userId})
     </insert>
 
     <insert id="insertMessageCancelReport">
@@ -388,7 +486,7 @@
             #{userDTO.userId}, #{userDTO.userName}, #{userDTO.userNickname}, #{userDTO.userPw}, #{userDTO.userTel}
           , #{userDTO.userMail}, #{signUpDTO.trainerZipcode}, #{signUpDTO.trainerAddr}, #{signUpDTO.trainerAddrdetail}, #{signUpDTO.trainerAddretc}
           , #{userDTO.userHeight}, #{userDTO.userWeight}, #{userDTO.userGender}, #{userDTO.userBirth}, #{signUpDTO.trainerPart}
-          , #{signUpDTO.trainerCareer}, #{signUpDTO.trainerContent}, #{userDTO.userJoindate}, #{userDTO.userReportedcnt})
+          , #{signUpDTO.trainerCareer}, #{signUpDTO.trainerContent}, #{userDTO.formattedJoindate}, #{userDTO.userReportedcnt})
     </insert>
 
     <insert id="insertMessageConfirmSignUp">

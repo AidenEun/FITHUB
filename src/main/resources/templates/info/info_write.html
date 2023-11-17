@@ -50,15 +50,16 @@
 		a {
 			border-bottom:none;
 		}
-		.file0_cont{
+		.at{
 			text-align: center;
 			vertical-align: middle;
 		}
 
-		table {
+		.write_table {
 			border: 1.5px solid #5a8100;
-			border-radius: 10px;
+			border-radius: 10px !important;
 			background-color: transparent;
+			padding: 15px 15px 10px 5px;
 		}
 		table tbody tr:nth-child(2n + 1) {
 			background-color: transparent;
@@ -115,12 +116,14 @@
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">
 
-	<div class="inner">
-
+	<div class="header_box">
 		<header class="test12">
 			<p id="mainText">정보</p>
 			<p id="subText">게시글 작성</p>
 		</header>
+	</div>
+
+	<div class="inner">
 
 		<!-- Content -->
 		<div class="content">
@@ -143,7 +146,7 @@
 				</div>
 
 				<!-- 글작성 테이블 -->
-				<table class="write_table" style="border-collapse: collapse;" border="2">
+				<table class="write_table">
 					<tr style="height:30px;">
 						<th>제목</th>
 						<td>

@@ -12,6 +12,7 @@
     <link rel="stylesheet" th:href="@{/assets/css/index.css}"/>
     <link rel="stylesheet" th:href="@{/assets/css/sidebar.css}"/>
     <link rel="stylesheet" th:href="@{/assets/css/profileModal.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/common.css}"/>
     <noscript>
         <link rel="stylesheet" th:href="@{/assets/css/noscript.css}"/>
     </noscript>
@@ -20,9 +21,16 @@
     table {
         border-collapse: separate;
     }
+    table tr td{
+        cursor: default;
+    }
 
     table tbody tr:nth-child(2n + 1) {
         background-color: #F7FAF5 !important;
+    }
+
+    .pagination tbody tr:nth-child(2n + 1) {
+        background: #FFFFFF !important;
     }
 
     .top_img_box {
@@ -81,11 +89,14 @@
 
     .search_box {
         width: 100%;
+        margin-bottom: 50px;
     }
 
     .content {
         width: 30%;
+        padding-left: 60px;
     }
+
 
     ol, ul {
         list-style: none;
@@ -143,6 +154,10 @@
         float: right;
     }
 
+    .sidebar {
+        padding-right: 10px;
+    }
+
     .sidebar .ranking {
         margin-bottom: 69px;
     }
@@ -153,8 +168,11 @@
         overflow: hidden;
         text-overflow: ellipsis
     }
-    .ranking table tr td{
-        text-overflow: ellipsis; white-space: nowrap; max-width: 160px;
+
+    .ranking table tr td {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 160px;
     }
 
 
@@ -164,9 +182,9 @@
     }
 
     #gnb {
-        /*display: flex;*/
-        /*justify-content: center;*/
-        width: 70%;
+        display: flex;
+        justify-content: center;
+        /*width: 70%;*/
         margin-top: 80px;
     }
 
@@ -199,8 +217,15 @@
         /*margin-top: 100px;*/
     }
 
-    input[type=button].viewNow {
+    input[type=button].btn.viewNow {
         background: #ebede1;
+    }
+
+    .pagination.hidden {
+        display: none;
+    }
+    .open{
+        cursor: pointer;
     }
 
 </style>
@@ -214,50 +239,72 @@
 <!--	</th:block>-->
 
 <!-- Header -->
-<!--<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user})}"></th:block>-->
 <th:block
-        th:replace="~{layout/index_header::header(${session.loginUser},${session.user},${session.trainer},${session.admin})}"></th:block>
+        th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin})}"></th:block>
 
 <!-- Modal -->
-<th:block th:replace="~{layout/profileModal::profileModal()}"></th:block>
+<th:block th:replace="~{layout/profileModal::profileModal}"></th:block>
 
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">
-    <div class="top_img_box">
-        <img src="/images/admintop2.png" alt="">
+
+    <div class="header_box">
+        <header class="test12">
+            <p id="mainText"></p>
+            <p id="subText">통합 검색</p>
+        </header>
     </div>
 
     <div class="inner">
 
-        <header class="major">
+
+    <header class="major">
             <div>
                 <h2>통합 검색 ([[${boardAllCnt}]])</h2>
-                <p>모든 게시글에서 검색된 결과</p>
+                <p th:text="'['+${keyword}+']로 검색된 결과'"></p>
             </div>
             <div id="gnb">
                 <div class="btn_area" style="margin-bottom: 20px;">
-                    <input class="viewNow" type="button" th:value="'전체&nbsp;('+${boardAllCnt}+')'">
-                </div>
-                <div class="btn_area btn_category">
-                    <input type="button" th:value="'뉴스&nbsp;('+${boardCntArr}+')'">
-                    <input type="button" value="'식단&nbsp;(0)">
-                    <input type="button" value="운동&nbsp;(0)">
-                    <input type="button" value="꿀팁&nbsp;(0)">
-                    <input type="button" value="커뮤니티&nbsp;(0)">
-                    <input type="button" value="트레이너 매칭&nbsp;(0)">
-                    <input type="button" value="챌린지&nbsp;(0)">
+                    <input type="hidden" name="keyword" id="keyword" th:value="${keyword}">
+                    <input class="btn viewNow" type="button" id="allBtn" th:value="'전체&nbsp;'+'('+${boardAllCnt}+')'">
+                    <!--                </div>-->
+                    <!--                <div class="btn_area btn_category">-->
+                    <input type="button" class="btn" id="infoBtn" th:value="'정보&nbsp;('+${boardCntArr[0]}+')'"
+                           onclick="infoView();">
+                    <input type="button" class="btn" id="tipBtn" th:value="'꿀팁&nbsp;('+${boardCntArr[1]}+')'"
+                           onclick="tipView();">
+                    <input type="button" class="btn" id="commuBtn" th:value="'커뮤니티&nbsp;('+${boardCntArr[2]}+')'"
+                           onclick="commuView();">
+                    <input type="button" class="btn" id="matchingBtn" th:value="'트레이너 매칭&nbsp;('+${boardCntArr[3]}+')'"
+                           onclick="matchingView();">
+                    <input type="button" class="btn" id="challBtn" th:value="'챌린지&nbsp;('+${boardCntArr[4]}+')'"
+                           onclick="challView();">
                 </div>
             </div>
         </header>
 
 
         <!-- Content -->
-        <div class="content">
+        <th:block th:if="${keyword == null or keyword == ''}">
+            <div>
+                <div class="search_box">
+                    <h2 th:text="검색어가 없습니다"></h2>
+                    <div class="search_content_box">
+                        <table>
+                            <tr>
+                                <td>검색어를 다시 입력하세요!</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </th:block>
+        <div class="content" id="search_content" th:if="${keyword != null or keyword != ''}">
             <div class="search_box">
-                <h2 th:text="'뉴스&nbsp;('+${boardCntArr[0]}+')'">뉴스</h2>
+                <h2 id="searchtitle" th:text="'정보&nbsp;('+${boardCntArr[0]}+')'"></h2>
                 <div class="search_content_box">
                     <table style="text-align: center;">
-                        <thead>
+                        <thead if="data-head">
                         <tr style="font-weight: bold;">
                             <td class="long_text">게시글 번호</td>
                             <td class="long_text">제목</td>
@@ -267,195 +314,54 @@
                             <td class="long_text">등록일자</td>
                         </tr>
                         </thead>
-                        <!--                        <tr th:if="${newsSearchList != null and newsSearchList.size() >0}" th:each="board : ${newsSearchList}" th:limit="5">-->
-                        <tr th:each="board, boardStat : ${newsSearchList}" th:if="${boardStat.index < 5}">
+                        <tbody id="data-table">
+                        <tr th:each="board, boardStat : ${infoSearchList}" th:if="${boardStat.index < 5}">
                             <td class="long_text">
-                                <a href="#">
                                     [[${board.boardNum}]]
-                                </a>
                             </td>
                             <td class="long_text">
-                                <a href="#">
+                                <a th:href="'/info/info_get?boardNum='+${board.boardNum}">
                                     [[${board.boardTitle}]]
                                 </a>
                             </td>
                             <td class="long_text">
-                                <a href="#">
+                                <a href="#" class="open">
                                     [[${board.userId}]]
                                 </a>
                             </td>
                             <td class="long_text">
-                                <a href="#">
                                     [[${board.viewCnt}]]
-                                </a>
                             </td>
                             <td class="long_text">
-                                <a href="#">
                                     [[${board.likeCnt}]]
-                                </a>
                             </td>
                             <td class="long_text">
-                                <a href="#">
                                     [[${board.regdate}]]
-                                </a>
                             </td>
                         </tr>
-                        <th:block th:if="${newsSearchList == null or newsSearchList.size() == 0}">
+                        <th:block th:if="${infoSearchList == null or infoSearchList.size() == 0}">
                             <tr>
-                                <td colspan="6" style="text-align: center;">등록된
-                                    게시글이 없습니다.
+                                <td colspan="6" style="text-align: center;">검색된
+                                    게시글이 없습니다!
                                 </td>
                             </tr>
                         </th:block>
-                        <th:block th:if="${newsSearchList != null and newsSearchList.size() > 5}">
+                        <th:block th:if="${infoSearchList != null and infoSearchList.size() > 5}">
                             <tr>
                                 <td colspan="5" style="text-align: center;">
                                 </td>
                                 <td>
-                                    <a href="#" class="button more_view">더보기</a>
+                                    <a href="#" onclick="infoView();" class="button more_view">더보기</a>
                                 </td>
                             </tr>
                         </th:block>
+                        </tbody>
                     </table>
-                    <!--                    <th:block th:if="${newsSearchList != null and newsSearchList.size() > 5}">-->
-                    <!--                        <a href="#" class="button more_view">더보기</a>-->
-                    <!--                    </th:block>-->
                 </div>
             </div>
 
-            <div class="search_box">
-                <h2>식단</h2>
-                <div class="search_content_box">
-                    <table style="text-align: center;">
-                        <thead>
-                        <tr style="font-weight: bold;">
-                            <td class="long_text">게시글 번호</td>
-                            <td class="long_text">제목</td>
-                            <td class="long_text">작성자</td>
-                            <td class="long_text">조회수</td>
-                            <td class="long_text">좋아요</td>
-                            <td class="long_text">등록일자</td>
-                        </tr>
-                        </thead>
-
-                        <tr th:each="board, boardStat : ${foodSearchList}" th:if="${boardStat.index < 5}">
-                            <td class="long_text">
-                                <a href="#">
-                                    [[${board.boardNum}]]
-                                </a>
-                            </td>
-                            <td class="long_text">
-                                <a href="#">
-                                    [[${board.boardTitle}]]
-                                </a>
-                            </td>
-                            <td class="long_text">
-                                <a href="#">
-                                    [[${board.userId}]]
-                                </a>
-                            </td>
-                            <td class="long_text">
-                                <a href="#">
-                                    [[${board.viewCnt}]]
-                                </a>
-                            </td>
-                            <td class="long_text">
-                                <a href="#">
-                                    [[${board.likeCnt}]]
-                                </a>
-                            </td>
-                            <td class="long_text">
-                                <a href="#">
-                                    [[${board.regdate}]]
-                                </a>
-                            </td>
-                        </tr>
-                        <th:block th:if="${foodSearchList == null or foodSearchList.size() == 0}">
-                            <tr>
-                                <td colspan="6" style="text-align: center;">등록된
-                                    게시글이 없습니다.
-                                </td>
-                            </tr>
-                        </th:block>
-                        <th:block th:if="${foodSearchList != null and foodSearchList.size() > 5}">
-                            <tr>
-                                <td colspan="5" style="text-align: center;">
-                                </td>
-                                <td>
-                                    <a href="#" class="button more_view">더보기</a>
-                                </td>
-                            </tr>
-                        </th:block>
-                    </table>
-                </div>
-            </div>
-            <div class="search_box">
-                <h2>운동</h2>
-                <div class="search_content_box">
-                    <table style="text-align: center;">
-                        <thead>
-                        <tr style="font-weight: bold;">
-                            <td class="long_text">게시글 번호</td>
-                            <td class="long_text">제목</td>
-                            <td class="long_text">작성자</td>
-                            <td class="long_text">조회수</td>
-                            <td class="long_text">좋아요</td>
-                            <td class="long_text">등록일자</td>
-                        </tr>
-                        </thead>
-                        <tr th:each="board, boardStat : ${exerSearchList}" th:if="${boardStat.index < 5}">
-                            <td class="long_text">
-                                <a href="#">
-                                    [[${board.boardNum}]]
-                                </a>
-                            </td>
-                            <td class="long_text">
-                                <a href="#">
-                                    [[${board.boardTitle}]]
-                                </a>
-                            </td>
-                            <td class="long_text">
-                                <a href="#">
-                                    [[${board.userId}]]
-                                </a>
-                            </td>
-                            <td class="long_text">
-                                <a href="#">
-                                    [[${board.viewCnt}]]
-                                </a>
-                            </td>
-                            <td class="long_text">
-                                <a href="#">
-                                    [[${board.likeCnt}]]
-                                </a>
-                            </td>
-                            <td class="long_text">
-                                <a href="#">
-                                    [[${board.regdate}]]
-                                </a>
-                            </td>
-                        </tr>
-                        <th:block th:if="${exerSearchList == null or exerSearchList.size() == 0}">
-                            <tr>
-                                <td colspan="6" style="text-align: center;">등록된
-                                    게시글이 없습니다.
-                                </td>
-                            </tr>
-                        </th:block>
-                        <th:block th:if="${exerSearchList != null and exerSearchList.size() > 5}">
-                            <tr>
-                                <td colspan="5" style="text-align: center;">
-                                </td>
-                                <td>
-                                    <a href="#" class="button more_view">더보기</a>
-                                </td>
-                            </tr>
-                        </th:block>
-                    </table>
-                </div>
-            </div>
-            <div class="search_box">
-                <h2>꿀팁</h2>
+            <div class="search_box main" id="data-table1">
+                <h2 th:text="'꿀팁&nbsp;('+${boardCntArr[1]}+')'"></h2>
                 <div class="search_content_box">
                     <table style="text-align: center;">
                         <thead>
@@ -470,40 +376,32 @@
                         </thead>
                         <tr th:each="board, boardStat : ${tipSearchList}" th:if="${boardStat.index < 5}">
                             <td class="long_text">
-                                <a href="#">
                                     [[${board.boardNum}]]
-                                </a>
                             </td>
                             <td class="long_text">
-                                <a href="#">
+                                <a th:href="'/info/info_get?boardNum='+${board.boardNum}">
                                     [[${board.boardTitle}]]
                                 </a>
                             </td>
                             <td class="long_text">
-                                <a href="#">
+                                <a href="#" class="open">
                                     [[${board.userId}]]
                                 </a>
                             </td>
                             <td class="long_text">
-                                <a href="#">
                                     [[${board.viewCnt}]]
-                                </a>
                             </td>
                             <td class="long_text">
-                                <a href="#">
                                     [[${board.likeCnt}]]
-                                </a>
                             </td>
                             <td class="long_text">
-                                <a href="#">
                                     [[${board.regdate}]]
-                                </a>
                             </td>
                         </tr>
                         <th:block th:if="${tipSearchList == null or tipSearchList.size() == 0}">
                             <tr>
-                                <td colspan="6" style="text-align: center;">등록된
-                                    게시글이 없습니다.
+                                <td colspan="6" style="text-align: center;">검색된
+                                    게시글이 없습니다!
                                 </td>
                             </tr>
                         </th:block>
@@ -512,15 +410,15 @@
                                 <td colspan="5" style="text-align: center;">
                                 </td>
                                 <td>
-                                    <a href="#" class="button more_view">더보기</a>
+                                    <a href="#"  onclick="tipView();" class="button more_view">더보기</a>
                                 </td>
                             </tr>
                         </th:block>
                     </table>
                 </div>
             </div>
-            <div class="search_box">
-                <h2>커뮤니티</h2>
+            <div class="search_box main" id="data-table2">
+                <h2 th:text="'커뮤니티&nbsp;('+${boardCntArr[2]}+')'"></h2>
                 <div class="search_content_box">
                     <table style="text-align: center;">
                         <thead>
@@ -535,40 +433,32 @@
                         </thead>
                         <tr th:each="board, boardStat : ${commuSearchList}" th:if="${boardStat.index < 5}">
                             <td class="long_text">
-                                <a href="#">
                                     [[${board.boardNum}]]
-                                </a>
                             </td>
                             <td class="long_text">
-                                <a href="#">
+                                <a th:href="'/community/commu_get?boardNum='+${board.boardNum}">
                                     [[${board.boardTitle}]]
                                 </a>
                             </td>
                             <td class="long_text">
-                                <a href="#">
+                                <a href="#" class="open">
                                     [[${board.userId}]]
                                 </a>
                             </td>
                             <td class="long_text">
-                                <a href="#">
                                     [[${board.viewCnt}]]
-                                </a>
                             </td>
                             <td class="long_text">
-                                <a href="#">
                                     [[${board.likeCnt}]]
-                                </a>
                             </td>
                             <td class="long_text">
-                                <a href="#">
                                     [[${board.regdate}]]
-                                </a>
                             </td>
                         </tr>
                         <th:block th:if="${commuSearchList == null or commuSearchList.size() == 0}">
                             <tr>
-                                <td colspan="6" style="text-align: center;">등록된
-                                    게시글이 없습니다.
+                                <td colspan="6" style="text-align: center;">검색된
+                                    게시글이 없습니다!
                                 </td>
                             </tr>
                         </th:block>
@@ -577,15 +467,15 @@
                                 <td colspan="5" style="text-align: center;">
                                 </td>
                                 <td>
-                                    <a href="#" class="button more_view">더보기</a>
+                                    <a href="#" onclick="commuView();" class="button more_view">더보기</a>
                                 </td>
                             </tr>
                         </th:block>
                     </table>
                 </div>
             </div>
-            <div class="search_box">
-                <h2>트레이너 매칭</h2>
+            <div class="search_box main" id="data-table3">
+                <h2 th:text="'트레이너 매칭&nbsp;('+${boardCntArr[3]}+')'"></h2>
                 <div class="search_content_box">
                     <table style="text-align: center;">
                         <thead>
@@ -600,40 +490,32 @@
                         </thead>
                         <tr th:each="board, boardStat : ${matchingSearchList}" th:if="${boardStat.index < 5}">
                             <td class="long_text">
-                                <a href="#">
                                     [[${board.boardNum}]]
-                                </a>
                             </td>
                             <td class="long_text">
-                                <a href="#">
+                                <a th:href="'/matching/matching_view?boardNum='+${board.boardNum}">
                                     [[${board.boardTitle}]]
                                 </a>
                             </td>
                             <td class="long_text">
-                                <a href="#">
-                                    [[${board.userId}]]
+                                <a href="#" class="open">
+                                    [[${board.trainerId}]]
                                 </a>
                             </td>
                             <td class="long_text">
-                                <a href="#">
                                     [[${board.viewCnt}]]
-                                </a>
                             </td>
                             <td class="long_text">
-                                <a href="#">
                                     [[${board.likeCnt}]]
-                                </a>
                             </td>
                             <td class="long_text">
-                                <a href="#">
                                     [[${board.regdate}]]
-                                </a>
                             </td>
                         </tr>
                         <th:block th:if="${matchingSearchList == null or matchingSearchList.size() == 0}">
                             <tr>
-                                <td colspan="6" style="text-align: center;">등록된
-                                    게시글이 없습니다.
+                                <td colspan="6" style="text-align: center;">검색된
+                                    게시글이 없습니다!
                                 </td>
                             </tr>
                         </th:block>
@@ -642,45 +524,41 @@
                                 <td colspan="5" style="text-align: center;">
                                 </td>
                                 <td>
-                                    <a href="#" class="button more_view">더보기</a>
+                                    <a href="#" onclick="matchingView();" class="button more_view">더보기</a>
                                 </td>
                             </tr>
                         </th:block>
                     </table>
                 </div>
             </div>
-            <div class="search_box">
-                <h2>챌린지 공지 / 챌린지 인증</h2>
+            <div class="search_box main" id="data-table4">
+                <h2 th:text="'챌린지&nbsp;('+${boardCntArr[4]}+')'"></h2>
                 <div class="search_content_box">
                     <table style="text-align: center;">
                         <thead>
                         <tr style="font-weight: bold;">
                             <td class="long_text">게시글 번호</td>
                             <td class="long_text">제목</td>
-                            <td class="long_text">카테고리</td>
+                            <td class="long_text">등록일자</td>
                         </tr>
                         </thead>
                         <tr th:each="board, boardStat : ${challSearchList}" th:if="${boardStat.index < 5}">
                             <td class="long_text">
-                                <a href="#">
-                                    [[${board.boardNum}]]
+                                    [[${board.challNum}]]
+                            </td>
+                            <td class="long_text">
+                                <a th:href="'/challenge/get?challNum='+${board.challNum}">
+                                    [[${board.challName}]]
                                 </a>
                             </td>
                             <td class="long_text">
-                                <a href="#">
-                                    [[${board.boardTitle}]]
-                                </a>
-                            </td>
-                            <td class="long_text">
-                                <a href="#">
-                                    [[${board.challCategory}]]
-                                </a>
+                                    [[${board.regdate}]]
                             </td>
                         </tr>
                         <th:block th:if="${challSearchList == null or challSearchList.size() == 0}">
                             <tr>
-                                <td colspan="4" style="text-align: center;">등록된
-                                    게시글이 없습니다.
+                                <td colspan="4" style="text-align: center;">검색된
+                                    게시글이 없습니다!
                                 </td>
                             </tr>
                         </th:block>
@@ -689,13 +567,19 @@
                                 <td colspan="5" style="text-align: center;">
                                 </td>
                                 <td>
-                                    <a href="#" class="button more_view">더보기</a>
+                                    <a href="#" onclick="challView();" class="button more_view">더보기</a>
                                 </td>
                             </tr>
                         </th:block>
                     </table>
                 </div>
             </div>
+            <table class="pagination hidden" id="pagenation">
+                <tr align="center" valign="middle" class="pageTr">
+                    <td>
+                    </td>
+                </tr>
+            </table>
         </div>
         <!-- Sidebar -->
         <div class="sidebar">
@@ -707,7 +591,7 @@
                         <table style="width: 90%;">
                             <tr th:each="boardTop5List, dataStat :${boardTop5List}">
                                 <td th:text="${dataStat.index+1}"></td>
-                                <td>[[${boardTop5List.boardTitle}]]</td>
+                                <td><a href="#">[[${boardTop5List.boardTitle}]]</a></td>
                             </tr>
                         </table>
 
@@ -719,7 +603,7 @@
                         <table style="width: 90%;">
                             <tr th:each="trainerTop5List, dataStat: ${trainerTop5List}">
                                 <td th:text="${dataStat.index + 1}">1</td>
-                                <td>[[${trainerTop5List.trainerId}]]</td>
+                                <td class="open">[[${trainerTop5List.trainerId}]]</a></td>
                             </tr>
                         </table>
                     </div>
@@ -727,12 +611,6 @@
             </section>
 
         </div>
-        <!--        <form name="pageForm" id="pageForm" th:action="@{/totalSearch}">-->
-        <!--            <input type="hidden" name="pagenum" th:value="${pageMaker.cri.pagenum}">-->
-        <!--            <input type="hidden" name="amount" th:value="${pageMaker.cri.amount}">-->
-        <!--            <input type="hidden" name="type" th:value="${pageMaker.cri.type}">-->
-        <!--            <input type="hidden" name="keyword" th:value="${pageMaker.cri.keyword}">-->
-        <!--        </form>-->
     </div>
 </section>
 
@@ -754,5 +632,287 @@
 
 <script th:src="@{/assets/js/sidebar.js}"></script>
 <script th:src="@{/assets/js/profile.js}"></script>
+<script>
+
+    $(".open").on("click", function (e) {
+        e.preventDefault();
+        var userId = $(this).text();
+
+        sendUserIdToModal(userId);
+        modalBox.classList.add("active");
+    });
+
+    $(document).on('click','a[href="#"]',function (e){
+        e.preventDefault();
+    });
+
+    document.querySelectorAll(".btn").forEach(function (btn) {
+        btn.addEventListener('click', function (e) {
+            if (e.target.classList.contains('viewNow')) {
+                // console.log("이미 선택된 버튼");
+                return;
+            } else {
+                document.querySelectorAll(".btn").forEach(function (btn) {
+                    btn.classList.remove("viewNow");
+                });
+                e.target.classList.add('viewNow');
+                // console.log("새로 클릭한 버튼");
+                if (e.target.id === "allBtn") {
+                    let keyword = document.getElementById("keyword").value;
+                    location.href = "/searchpage/totalSearch?keyword=" + keyword;
+
+                } else if (e.target.id === "infoBtn") {
+                    console.log("정보");
+                } else if (e.target.id === "tipBtn") {
+                    console.log("꿀팁");
+                } else if (e.target.id === "commuBtn") {
+                    console.log("커뮤");
+                } else if (e.target.id === "matchingBtn") {
+                    console.log("매칭");
+                } else if (e.target.id === "challBtn") {
+                    console.log("챌린지");
+                }
+            }
+        });
+    });
+
+
+    function infoView() {
+        document.querySelectorAll(".btn").forEach(function (btn) {
+            btn.classList.remove("viewNow");
+        });
+        let nowBtn = document.getElementById("infoBtn");
+        nowBtn.classList.add('viewNow');
+
+        let keyword = document.getElementById("keyword").value;
+        loadPage("/searchpage/searchinfo", 1, keyword, 'info');
+    }
+
+    function tipView() {
+        document.querySelectorAll(".btn").forEach(function (btn) {
+            btn.classList.remove("viewNow");
+        });
+        let nowBtn = document.getElementById("tipBtn");
+        nowBtn.classList.add('viewNow');
+
+        let keyword = document.getElementById("keyword").value;
+        loadPage("/searchpage/searchtip", 1, keyword, 'tip');
+
+    }
+
+    function commuView() {
+        document.querySelectorAll(".btn").forEach(function (btn) {
+            btn.classList.remove("viewNow");
+        });
+        let nowBtn = document.getElementById("commuBtn");
+        nowBtn.classList.add('viewNow');
+
+        let keyword = document.getElementById("keyword").value;
+        loadPage("/searchpage/searchcommu", 1, keyword, 'commu');
+
+    }
+
+    function matchingView() {
+        document.querySelectorAll(".btn").forEach(function (btn) {
+            btn.classList.remove("viewNow");
+        });
+        let nowBtn = document.getElementById("matchingBtn");
+        nowBtn.classList.add('viewNow');
+
+        let keyword = document.getElementById("keyword").value;
+        loadPage("/searchpage/searchmatching", 1, keyword, 'matching');
+
+    }
+
+    function challView() {
+        document.querySelectorAll(".btn").forEach(function (btn) {
+            btn.classList.remove("viewNow");
+        });
+        let nowBtn = document.getElementById("challBtn");
+        nowBtn.classList.add('viewNow');
+
+        let keyword = document.getElementById("keyword").value;
+        loadPageChall("/searchpage/searchchall", 1, keyword,'chall');
+    }
+
+    function loadPage(url, pageNum, keyword, currentCategory) {
+        $.ajax({
+            url: url,
+            data: {pageNum: pageNum, keyword: keyword, currentCategory: currentCategory},
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                // 게시글 목록 업데이트
+                displayData(data.boardDTO);
+                // 페이징 버튼 업데이트
+                displayPaging(data.pageDTO, currentCategory, keyword);
+            },
+            error: function (error) {
+                console.error('데이터를 가져오는 중 오류 발생: ' + error);
+            }
+        });
+    }
+
+    function loadPageChall(url, pageNum, keyword, currentCategory) {
+        $.ajax({
+            url: url,
+            data: {pageNum: pageNum, keyword: keyword, currentCategory: currentCategory},
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                // 게시글 목록 업데이트
+                displaychallData(data.boardDTO);
+                // 페이징 버튼 업데이트
+                displayPaging(data.pageDTO, currentCategory, keyword);
+            },
+            error: function (error) {
+                console.error('데이터를 가져오는 중 오류 발생: ' + error);
+            }
+        });
+    }
+    function displaychallData(boardDTO) {
+
+        var tableBody = $('#data-table');
+        var tableBody1 = $('#data-table1');
+        var tableBody2 = $('#data-table2');
+        var tableBody3 = $('#data-table3');
+        var tableBody4 = $('#data-table4');
+        tableBody.empty();
+        tableBody1.empty();
+        tableBody2.empty();
+        tableBody3.empty();
+        tableBody4.empty();
+
+        tableBody.prev('thead').remove();
+
+        const pagenation = document.getElementById("pagenation");
+        pagenation.classList.remove("hidden")
+
+
+        if (boardDTO != null && boardDTO.length > 0) {
+
+            var tableHead = $('<thead>');
+            var tableHeadRow = $('<tr style="font-weight: bold;">');
+            // tableHeadRow.append('<th>선택</th>');
+            tableHeadRow.append('<td>번호</td>');
+            tableHeadRow.append('<td>제목</td>');
+            tableHeadRow.append('<td>등록일자</td>');
+            tableHead.append(tableHeadRow);
+
+            boardDTO.forEach(function (boardData) {
+                var row = $('<tr>');
+                row.append('<td class="long_text"><a href="#">' + boardData.challNum + '</a></td>');
+                row.append('<td class="long_text"><a href="#">' + boardData.challName + '</a></td>');
+                row.append('<td class="long_text"><a href="#">' + boardData.regdate + '</a></td>');
+                tableBody.append(row);
+            });
+            tableBody.before(tableHead);
+        } else {
+            tableBody.append('<tr><td colspan="6">검색된 게시글이 없습니다!</td></tr>');
+        }
+    }
+
+    function displayData(boardDTO) {
+        var tableBody = $('#data-table');
+        var tableBody1 = $('#data-table1');
+        var tableBody2 = $('#data-table2');
+        var tableBody3 = $('#data-table3');
+        var tableBody4 = $('#data-table4');
+
+        tableBody.empty();
+        tableBody1.empty();
+        tableBody2.empty();
+        tableBody3.empty();
+        tableBody4.empty();
+
+        const pagenation = document.getElementById("pagenation");
+        pagenation.classList.remove("hidden")
+
+
+        if (boardDTO != null && boardDTO.length > 0) {
+            boardDTO.forEach(function (boardData) {
+                var row = $('<tr>');
+                row.append('<td class="long_text"><a href="#">' + boardData.boardNum + '</a></td>');
+                row.append('<td class="long_text"><a href="#">' + boardData.boardTitle + '</a></td>');
+                if (boardData.hasOwnProperty('trainerId')) {
+                    row.append('<td class="long_text"><a href="#" class="open">' + boardData.trainerId + '</a></td>');
+                } else {
+                    row.append('<td class="long_text"><a href="#" class="open">' + boardData.userId + '</a></td>');
+                }
+                row.append('<td class="long_text"><a href="#">' + boardData.viewCnt + '</a></td>');
+                row.append('<td class="long_text"><a href="#">' + boardData.likeCnt + '</a></td>');
+                if(boardData.hasOwnProperty('updateDate')) {
+                    row.append('<td class="long_text"><a href="#">' + boardData.updateDate + '</a></td>');
+                }else{
+                    row.append('<td class="long_text"><a href="#">' + boardData.regdate + '</a></td>');
+                }
+                tableBody.append(row);
+            });
+        } else {
+            tableBody.append('<tr><td colspan="6">검색된 게시글이 없습니다!</td></tr>');
+        }
+        $(".open").on("click", function (e) {
+            e.preventDefault();
+            var userId = $(this).text();
+
+            sendUserIdToModal(userId);
+            modalBox.classList.add("active");
+        });
+    }
+
+    function displayPaging(pageDTO, currentCategory, keyword) {
+        var startPage = pageDTO.startPage;
+        var endPage = pageDTO.endPage;
+        var prev = pageDTO.prev;
+        var next = pageDTO.next;
+
+        var searchtitle = $('#searchtitle');
+
+        searchtitle.empty();
+        if(currentCategory === 'info'){
+            searchtitle.append("정보("+pageDTO.total+")");
+        }else if(currentCategory === 'tip'){
+            searchtitle.append("꿀팁("+pageDTO.total+")");
+        }else if(currentCategory === 'commu'){
+            searchtitle.append("커뮤니티("+pageDTO.total+")");
+        }else if(currentCategory === 'matching'){
+            searchtitle.append("트레이너 매칭("+pageDTO.total+")");
+        }else if(currentCategory === 'chall'){
+            searchtitle.append("챌린지("+pageDTO.total+")")
+        }
+
+        var str = '';
+
+        if (prev) {
+            str += '<a class="changePage" href="' + (startPage - 1) + '"><code>&lt;</code></a>';
+        }
+
+        for (var i = startPage; i <= endPage; i++) {
+            if (i === pageDTO.cri.pagenum) {
+                str += '<span class="nowPage">' + i + '</span> ';
+            } else {
+                str += '<a class="changePage" href="' + i + '">' + i + '</a>';
+            }
+        }
+
+        if (next) {
+            str += '<a class="changePage" href="' + (endPage + 1) + '"><code>&gt;</code></a>';
+        }
+
+        var page = $('.pagination');
+        page.html('<tr align="center" valign="middle" class="pageTr"><td>' + str + '</td></tr>');
+
+        // 페이지 버튼 클릭 이벤트를 연결
+        $(".changePage").on("click", function (e) {
+            e.preventDefault(); // 기본 동작 중지
+
+            var pageNum = $(this).attr('href');
+            loadPage('/searchpage/search' + currentCategory, pageNum, keyword, currentCategory);
+        });
+
+
+    }
+
+</script>
 </body>
 </html>

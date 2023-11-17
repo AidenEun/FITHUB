@@ -6,17 +6,34 @@
 -->
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>Untitled</title>
+	<title>Fit Hub</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
 	<link rel="stylesheet" th:href="@{/assets/css/challengeModal.css}">
+	<link rel="stylesheet" th:href="@{/assets/css/challNoticeBoardModal.css}">
 	<link rel="stylesheet" th:href="@{/assets/css/index.css}">
+	<link rel="stylesheet" th:href="@{/assets/css/common.css}">
 	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
 
 </head>
 <style>
+	.noticeBox{
+            float: left;
+            width: 23%;
+            margin: 0 1% 3% 1%;
+            border: 1px solid #dadada;
+            box-shadow: 2px 2px 3px rgba(0,0,0,0.2);
+            border-radius: 10px;
+            position: relative;
+        }
 
+	.noticeBox table td {
+    	padding: 0.5px 0.5px;
+	}
+	.noticeBox table td:nth-child(1) {
+		width: 28%;
+	}
 </style>
 <body class="is-preload">
 
@@ -25,18 +42,128 @@
 <th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin})}"></th:block>
 <!--Modal-->
 <th:block th:replace="~{layout/challengeModal::challengeModal()}"></th:block>
+<th:block th:replace="~{challenge/challNoticeBoardModal::challNoticeBoardModal()}"></th:block>
+<th:block th:replace="~{challenge/challNoticeGetModal::challNoticeGetModal()}"></th:block>
+
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">
-	<div class="inner">
 
-		<header class="major">
-			<h2>마이페이지</h2>
-			<p>내 게시물</p>
+	<div class="header_box">
+		<header class="test12">
+			<p id="mainText">챌린지</p>
+			<p id="subText">챌린지</p>
 		</header>
+	</div>
+
+	<div class="inner">
 
 
 		<!-- Content -->
 		<div class="content">
+
+			<table class="list">
+				<tr align="right" valign="middle">
+					<td>
+						<div class="search_area">
+							<form id="challCategoryForm" th:action="@{/challenge/list}">
+								<select name="challCategory" id="challCategory">
+									<option value="challAll" th:selected="${challCategory == 'challAll'|| challCategory == null}">전체</option>
+									<option value="challExer" th:selected="${challCategory == 'challExer'}">운동</option>
+									<option value="challFood" th:selected="${challCategory == 'challFood'}">식단</option>
+								</select>
+								<select name="challTerm" id="challTerm">
+									<option value="challengeAll" th:selected="${challTerm == 'challengeAll'||challTerm == null}">전체</option>
+									<option value="7" th:selected="${challTerm == '7'}">7일</option>
+									<option value="15" th:selected="${challTerm == '15'}">15일</option>
+									<option value="30" th:selected="${challTerm == '30'}">30일</option>
+								</select>
+								<a href="#" class="button primary">검색</a>
+
+
+								<input type="hidden" name="noticePagenum" th:value="${noticePageMaker.cri.pagenum}">
+								<input type="hidden" name="noticeAmount" th:value="${noticePageMaker.cri.amount}">
+								<input type="hidden" name="pagenum" th:value="${pageMaker.cri.pagenum}">
+								<input type="hidden" name="amount" th:value="${pageMaker.cri.amount}">
+								<input type="hidden" name="type" th:value="${pageMaker.cri.type}">
+								<input type="hidden" name="keyword" th:value="${pageMaker.cri.keyword}">
+							</form>
+						</div>
+						<div>글 개수 :[[${noticePageMaker.total}]]</div>
+					</td>
+				</tr>
+
+				<tr >
+					<td>
+						<th:block th:if="${noticeList != null and noticeList.size()>0}" th:each="list : ${noticeList}">
+
+							<div class ="noticeBox">
+								<table style="margin:0;">
+									<tr>
+										<td>이름:</td>
+										<td><input readonly type="text" name="challName" class="" th:value="${list.challName}"></td>
+									</tr>
+									<tr>
+										<td colspan="2"><input readonly type="text" name="challCategory" class="" th:value="${list.challCategory}"></td>
+									</tr>
+									<tr>
+										<td>기간:</td>
+										<td><input readonly type="text" name="challTerm" class="" th:value="${list.challTerm}"></td>
+									</tr>
+									<tr>
+										<td colspan="2"><input type="button" class="getOpen" style="width:100%" value="선택"></td>
+										<input type="hidden" name="challNum" class="challNum" th:value="${list.challNum}">
+									</tr>
+								</table>
+							</div>
+						</th:block>
+						<th:block th:unless="${noticeList != null and noticeList.size()>0}">
+							<div>
+								<div style="text-align: center; font-size: 20px;">등록된
+									게시글이 없습니다.</div>
+							</div>
+						</th:block>
+					</td>
+				</tr>
+
+			</table>
+				<!-- 페이징 처리하는 테이블 -->
+			<table class="pagination">
+				<tr align="center" valign="middle">
+					<td>
+						<a class="noticeChangePage" th:if="${noticePageMaker.prev}" th:href="${noticePageMaker.startPage-1}">&lt;</a>
+						<th:block th:each="i : ${#numbers.sequence(noticePageMaker.startPage,noticePageMaker.endPage)}">
+							<span class="nowPage" th:text="${i}" th:if="${noticePageMaker.cri.pagenum == i}"></span>
+							<a class="noticeChangePage" th:href="${i}" th:text="${i}" th:unless="${noticePageMaker.cri.pagenum == i}"></a>
+						</th:block>
+						<a class="noticeChangePage" th:if="${noticePageMaker.next}" th:href="${noticePageMaker.endPage+1}">&gt;</a>
+					</td>
+				</tr>
+			</table>
+			<table>
+				<tr>
+					<td>
+						<div style="text-align: right;">
+							<!--<th:block th:if="">-->
+							<input type="button" class="writeOpen" value="글쓰기">
+							<!--</th:block>-->
+						</div>
+					</td>
+				</tr>
+			</table>
+			<form name="noticePageForm" id="noticePageForm" th:action="@{/challenge/list}">
+				<input type="hidden" name="noticePagenum" th:value="${noticePageMaker.cri.pagenum}">
+				<input type="hidden" name="noticeAmount" th:value="${noticePageMaker.cri.amount}">
+				<input type='hidden' name='challCategory' th:value=${challCategory}>
+				<input type='hidden' name='challTerm' th:value=${challTerm}>
+				<input type="hidden" name="pagenum" th:value="${pageMaker.cri.pagenum}">
+				<input type="hidden" name="amount" th:value="${pageMaker.cri.amount}">
+				<input type="hidden" name="type" th:value="${pageMaker.cri.type}">
+				<input type="hidden" name="keyword" th:value="${pageMaker.cri.keyword}">
+			</form>
+
+
+
+
 
 			<!-- 게시글 리스트 띄우는 테이블 -->
 			<table class="list">
@@ -117,10 +244,20 @@
 				</div>
 				<input type="hidden" value="1" name="pagenum">
 				<input type="hidden" value="10" name="amount">
+				<input type="hidden" name="noticePagenum" th:value="${noticePageMaker.cri.pagenum}">
+				<input type="hidden" name="noticeAmount" th:value="${noticePageMaker.cri.amount}">
+				<input type='hidden' name='challCategory' th:value=${challCategory}>
+				<input type='hidden' name='challTerm' th:value=${challTerm}>
+				<input type="hidden" name="type" th:value="${pageMaker.cri.type}">
+				<input type="hidden" name="keyword" th:value="${pageMaker.cri.keyword}">
 			</form>
 		</div>
 
 		<form name="pageForm" id="pageForm" th:action="@{/challenge/list}">
+			<input type="hidden" name="noticePagenum" th:value="${noticePageMaker.cri.pagenum}">
+			<input type="hidden" name="noticeAmount" th:value="${noticePageMaker.cri.amount}">
+			<input type='hidden' name='challCategory' th:value=${challCategory}>
+			<input type='hidden' name='challTerm' th:value=${challTerm}>
 			<input type="hidden" name="pagenum" th:value="${pageMaker.cri.pagenum}">
 			<input type="hidden" name="amount" th:value="${pageMaker.cri.amount}">
 			<input type="hidden" name="type" th:value="${pageMaker.cri.type}">
@@ -141,7 +278,7 @@
 <th:block th:replace="~{layout/footer::footer}"></th:block>
 
 <!-- Scripts -->
-<script th:src="@{/assets/js/jquery.min.js}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script th:src="@{/assets/js/jquery.dropotron.min.js}"></script>
 <script th:src="@{/assets/js/jquery.scrollex.min.js}"></script>
 <script th:src="@{/assets/js/browser.min.js}"></script>
@@ -152,11 +289,21 @@
 <script th:src="@{/assets/js/sidebar.js}"></script>
 
 <script th:src="@{/assets/js/challengeModal.js}"></script>
+<script th:src="@{/assets/js/challNoticeBoardModal.js}"></script>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script th:inline="javascript">
 	const searchForm = $("#searchForm");
 	const pageForm = $("#pageForm");
+	const noticePageForm = $("#noticePageForm");
+
+
+	$(".noticeChangePage").on("click",function(e){
+		//e(이벤트)의 기본 작동 막기
+		e.preventDefault();
+		let noticePagenum = $(this).attr("href");
+		noticePageForm.find("input[name='noticePagenum']").val(noticePagenum);
+		noticePageForm.submit();
+	});
 
 	$(".changePage").on("click",function(e){
 		//e(이벤트)의 기본 작동 막기
@@ -188,6 +335,13 @@
 		searchForm.submit();
 	}
 
+
+const challCategoryForm = $("#challCategoryForm");
+$("#challCategoryForm a").on("click",challCategory);
+function challCategory(){
+
+	challCategoryForm.submit();
+}
 
 
 

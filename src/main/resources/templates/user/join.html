@@ -16,7 +16,7 @@
 </head>
 <style>
 	#header {
-  background-color: #5a8100 !important;
+  background-color: #8FA746 !important;
 }
 
 #header nav > ul > li a {
@@ -42,7 +42,7 @@
 
 <!-- Header -->
 <header id="header" class="alt">
-	<h1>
+	<h1 style="color: #fff;">
 		<a href="/">
 			Fit
 			<span>Hub</span>
@@ -50,34 +50,70 @@
 	</h1>
 	<nav class="links">
 		<ul>
-			<li><a href="/info/info_list" style="color: #fff;">정보</a></li>
-			<li><a href="#"style="color: #fff;">칼로리</a></li>
-			<li><a href="#"style="color: #fff;">커뮤니티</a></li>
-			<li><a href="#"style="color: #fff;">트레이너 매칭</a></li>
-			<li><a href="#"style="color: #fff;">챌린지</a></li>
-			<li><a href="#"style="color: #fff;">제품</a></li>
-			<li><a href="/usermypage/user_diary"style="color: #fff;">다이어리(test)</a></li>
+			<li class="menu-item"><a href="/info/info_list" style="color: white;">정보</a>
+				<ul class="submenu">
+					<li><a href="/info/info_list">전체</a></li>
+					<li><a href="/info/info_news">뉴스</a></li>
+					<li><a href="/info/info_food">식단</a></li>
+					<li><a href="/info/info_exercise">운동</a></li>
+					<li><a href="/info/info_tip">꿀팁</a></li>
+
+				</ul>
+			</li>
+			<li class="menu-item"><a href="/calorie/food_calorie_list" style="color: white;">칼로리</a>
+				<ul class="submenu">
+					<li><a href="/calorie/food_calorie_list">음식칼로리</a></li>
+					<li><a href="/calorie/exercise_calorie_list">운동칼로리</a></li>
+				</ul>
+			</li>
+			<li class="menu-item"><a href="/community/commu_list" style="color: white;">커뮤니티</a>
+				<ul class="submenu">
+					<li><a href="/community/commu_free">자유게시판</a></li>
+					<li><a href="/community/commu_food">식단</a></li>
+					<li><a href="/community/commu_exercise">운동</a></li>
+					<li><a href="/community/commu_gallery">갤러리</a></li>
+					<li><a href="/community/commu_qna">고민 Q&A</a></li>
+
+				</ul>
+			</li>
+			<li class="menu-item"><a href="/matching/matching_list" style="color: white;">트레이너 매칭</a>
+				<ul class="submenu">
+					<li><a href="/matching/matching_list">트레이너매칭</a></li>
+				</ul>
+			</li>
+			<li class="menu-item"><a href="/challenge/list" style="color: white;">챌린지</a>
+				<ul class="submenu">
+					<li><a href="/info/submenu1">챌린지</a></li>
+				</ul>
+			</li>
+			<li class="menu-item"><a href="/product/product_list" style="color: white;">제품</a>
+				<ul class="submenu">
+					<li><a href="/info/submenu1">식품</a></li>
+					<li><a href="/info/submenu1">운동 도구</a></li>
+				</ul>
+			</li>
 		</ul>
 	</nav>
 	<nav class="main">
 		<ul>
 			<li id="login">
-
-				<th:block th:if="${loginUser == null}">
+				<th:block th:if="${session.loginUser == null}">
 					<a class="login" th:href="@{/user/login}" style="color: #fff;">Login</a>
 				</th:block>
-				 <th:block th:if="${loginUser != null}">
-                    <a class="login" th:href="@{/user/logout}">logout</a>
-                </th:block>
+				<th:block th:if="${session.loginUser != null}">
+					<a class="login" th:href="@{/user/logout}" style="color: #fff;">logout</a>
+				</th:block>
 
-				<a class="login" href="/usermypage/user_modify">유저</a>
-				<a class="login" href="/trainermypage/trainer_modify">트레</a>
-				<a class="login" href="/adminmypage/adminmypage_list">관리</a>
+				<a class="login" href="/usermypage/user_myinfo" style="color: #fff;">유저</a>
+				<a class="login" href="/trainermypage/trainer_modify" style="color: #fff;">트레</a>
+				<a class="login" href="/adminmypage/adminmypage_list" style="color: #fff;">관리</a>
 			</li>
 			<li class="search">
 				<a class="fa-search" href="#search" style="color: #fff;">Search</a>
-				<form id="search" method="get" action="#">
-					<input type="text" name="query" placeholder="Search" />
+				<form id="search" method="get" action="/totalSearch">
+					<input type="text" name="keyword" placeholder="Search" />
+					<input type="hidden" value="1" name="pagenum">
+					<!--                        <input type="hidden" value="12" name="amount">-->
 				</form>
 			</li>
 			<li class="menu">
@@ -89,130 +125,142 @@
 
 <!-- Menu -->
 <section id="menu">
-	<div class="side_info">
-		<img src="images/profile_img.png" class="prof_img" width="102px" height="102px">
-		<div id="my_info">
-			<div>
-				<a href="#">내 정보</a>
-				<th:block th:if="${session.loginUser != null}">
-					<a class="login" th:href="@{/user/logout}">로그아웃</a>
-				</th:block>
-			</div>
-			<span>등급 / 닉네임(ID)</span>
+	<th:block th:if="${session.loginUser == null}">
+		<div class="side-not-login">
+			<p>로그인하세요</p>
+			<a th:href="@{/user/login}">로그인</a>
 		</div>
-		<div class="goal-graph">
-			<div class="progress-bar">
-				<p class="number">
-					<span>1</span>
-					<span>2</span>
-					<span>3</span>
-					<span>4</span>
-					<span>5</span>
-					<span>6</span>
-					<span>7</span>
-				</p>
-			</div>
-		</div>
-		<div class="point-container">
-			<div>나의 포인트</div>
-			<span>0p</span>
-		</div>
-		<div id="tab-menu">
-			<div class="tab today-tab">오늘</div>
-			<div class="tab chall-tab">도전</div>
-			<div class="tab sub-tab">구독</div>
-			<div class="page-tab diary-tab">
-				<a href="#">일기</a>
-			</div>
-			<div class="page-tab shop-tab">
-				<a href="#">쇼핑</a>
-			</div>
-		</div>
-		<div id="tab-menu-container">
-			<div class="tab-view today-view">
-				<strong>나의 목표</strong>
-				<p>목표체중</p>
-				<p>목표칼로리</p>
-				<hr>
-				<strong>잔여칼로리: 현재칼로리/목표칼로리</strong>
-				<p>섭취량</p>
-				<p>소비량</p>
-				<div id="meal-options">
-					<div class="brack-fst">아침</div>
-					<div class="lunch">점심</div>
-					<div class="dinner">저녁</div>
-					<div class="snack">간식</div>
+	</th:block>
+	<th:block th:if="${session.loginUser != null}">
+		<div class="side_info">
+			<a href="/usermypage/user_myinfo">
+				<img src="images/profile_img.png" class="prof_img" width="102px" height="102px">
+			</a>
+			<div id="my_info">
+				<div>
+					<a href="/usermypage/user_myinfo">내 정보</a>
+					<th:block th:if="${session.loginUser != null}">
+						<a class="login" th:href="@{/user/logout}">로그아웃</a>
+					</th:block>
 				</div>
-				<div id="tan-dan-ji-box">
-					<div class="today-breakfast">
-						<p>칼로리:아침 칼로리</p>
-						<p>탄수화물</p>
-						<p>단백질</p>
-						<p>지방</p>
-					</div>
-					<div class="today-lunch">
-						<p>칼로리:점심 칼로리</p>
-						<p>탄수화물</p>
-						<p>단백질</p>
-						<p>지방</p>
-					</div>
-					<div class="today-dinner">
-						<p>칼로리:저녁 칼로리</p>
-						<p>탄수화물</p>
-						<p>단백질</p>
-						<p>지방</p>
-					</div>
-					<div class="today-snack">
-						<p>칼로리:간식 칼로리</p>
-						<p>탄수화물</p>
-						<p>단백질</p>
-						<p>지방</p>
-					</div>
+				<a href="/usermypage/user_myinfo">
+					<!--<span>등급 / 닉네임(ID)</span>-->
+					<th:block th:if="${user !=null && loginUser != null}">
+						<span>등급</span>/<span th:text="${user.userNickname}"></span>(<span th:text="${user.userId}"></span>)
+					</th:block>
+				</a>
+			</div>
+			<div class="bar-container">
+				<progress class="progress-bar" value="0" max="7"></progress>
+				<input type="button" value="출석" class="att-btn">
+			</div>
+			<div class="point-container">
+				<div>나의 포인트</div>
+				<span>0p</span>
+			</div>
+			<hr>
+			<div id="tab-menu">
+				<div class="tab today-tab">오늘</div>
+				<div class="tab chall-tab">도전</div>
+				<div class="tab sub-tab">구독</div>
+				<div class="page-tab diary-tab">
+					<a href="/usermypage/user_diary">일기</a>
+				</div>
+				<div class="page-tab shop-tab">
+					<a href="/product/product_list">쇼핑</a>
 				</div>
 			</div>
-			<div class="tab-view chall-view">
-				<div class="my-chall">
-					<strong>나의 챌린지</strong><br>
-					<span class="active-tab">진행중</span>
-					<span class="finish-tab">종료</span>
-					<div id="chall-list">
-						<div class="active-chall-listView">
-							<p>진행중인 챌린지 list</p>
+			<div id="tab-menu-container">
+				<div class="tab-view today-view">
+					<strong>나의 목표</strong>
+					<th:block th:if="${user !=null && loginUser != null}">
+						<p>목표체중 : <span th:text="${user.weightGoal}"></span></p>
+						<p>목표칼로리 : <span th:text="${user.caloriesGoal}"></span></p>
+						<strong>잔여칼로리: 현재칼로리/<span th:text="${user.caloriesGoal}"></span></strong>
+						<hr>
+					</th:block>
+					<p>섭취량</p>
+					<p>소비량</p>
+					<div id="meal-options">
+						<div class="brack-fst">아침</div>
+						<div class="lunch">점심</div>
+						<div class="dinner">저녁</div>
+						<div class="snack">간식</div>
+					</div>
+					<div id="tan-dan-ji-box">
+						<div class="today-breakfast">
+							<p>아침</p>
+							<p></p>
+							<p></p>
+							<p></p>
 						</div>
-						<div class="finish-chall-listView">
-							<p>종료된 챌린지 list</p>
+						<div class="today-lunch">
+							<p>점심</p>
+							<p></p>
+							<p></p>
+							<p></p>
+						</div>
+						<div class="today-dinner">
+							<p>저녁</p>
+							<p></p>
+							<p></p>
+							<p></p>
+						</div>
+						<div class="today-snack">
+							<p>간식</p>
+							<p></p>
+							<p></p>
+							<p></p>
 						</div>
 					</div>
 				</div>
+				<div class="tab-view chall-view">
+					<div class="my-chall">
+						<strong>나의 챌린지</strong><br>
+						<span class="active-tab">진행중</span>
+						<span class="finish-tab">종료</span>
+						<div id="chall-list">
+							<div class="active-chall-listView">
+								<p>진행중인 챌린지 list</p>
+							</div>
+							<div class="finish-chall-listView">
+								<p>종료된 챌린지 list</p>
+							</div>
+						</div>
+					</div>
 
 
-			</div>
-			<div class="tab-view sub-view">
-				<div class="sub-view-container">
-					<strong>나의 트레이너</strong>
-					<div class="my-sub">
-						<p>구독한 트레이너 list</p>
+				</div>
+				<div class="tab-view sub-view">
+					<div class="sub-view-container">
+						<strong>나의 트레이너</strong>
+						<div class="my-sub">
+							<p>구독한 트레이너 list</p>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+	</th:block>
 	<div id="another-page">
 		<div class="bmi">
-			<a href="#">BMI</a>
+			<a href="/sidebar/bmi">BMI</a>
 		</div>
 		<div class="health-center">
-			<a href="#">보건소</a>
+			<a href="/sidebar/healthCenter">보건소</a>
 		</div>
-		<div class="trainer-apply">
-			<a href="#">트레이너 신청</a>
-		</div>
+		<th:block  th:if="${session.user != null}">
+			<div class="trainer-apply">
+				<a href="/usermypage/user_applytrainer">트레이너 신청</a>
+			</div>
+		</th:block>
 	</div>
 </section>
 <div id="wrap">
 	<form name="joinForm" method="post" action="/user/join"
 		  onsubmit="return sendit()">
 		<h2 style="text-align: center;">회원가입</h2>
+		<hr>
 		<table>
 			<tr id="page1">
 				<td id="result" colspan="2">&nbsp;</td>
@@ -260,10 +308,10 @@
 					<div>
 						<ul>
 							<li class="radio_item">
-								<input type="radio" id="userGender1" name="userGender" value="M"><label for="userGender1">남자</label>
+								<input type="radio" id="userGender1" name="userGender" value="남성"><label for="userGender1">남성</label>
 							</li>
 							<li class="radio_item">
-								<input type="radio" id="userGender2" name="userGender" value="W"><label for="userGender2">여자</label>
+								<input type="radio" id="userGender2" name="userGender" value="여성"><label for="userGender2">여성</label>
 							</li>
 						</ul>
 					</div>
@@ -275,11 +323,11 @@
 			</tr>
 			<tr id="page1">
 				<th><label for="userTel">전화번호</label></th>
-				<td><input type="tel" name="userTel" id="userTel" placeholder="전화번호를 입력하세요"></td>
+				<td><input type="tel" name="userTel" id="userTel" placeholder="010-1234-1234"></td>
 			</tr>
 			<tr id="page1">
 				<th><label for="userMail">이메일</label></th>
-				<td><input type="email" name="userMail" id="userMail" placeholder="이메일을 입력하세요"></td>
+				<td><input type="email" name="userMail" id="userMail" placeholder="apple@naver.com"></td>
 			</tr>
 			<tr id="page1">
 				<th colspan="2">
@@ -293,19 +341,102 @@
 			</tr>
 			<tr id="page2">
 				<th><label for="weight">몸무게 (kg)</label></th>
-				<td><input type="text" name="userWeight" id="weight"></td>
+				<td><input type="text" name="userWeight" id="weight" placeholder="kg은 제외하고 입력하세요"></td>
 			</tr>
 			<tr id="page2">
 				<th><label for="height">키 (cm)</label></th>
-				<td><input type="text" name="userHeight" id="height"></td>
+				<td><input type="text" name="userHeight" id="height" placeholder="cm는 제외하고 입력하세요"></td>
 			</tr>
 			<tr id="page2">
 				<th><label for="weightGoal">목표 체중 (kg)</label></th>
-				<td><input type="text" name="weightGoal" id="weightGoal"></td>
+				<td><input type="text" name="weightGoal" id="weightGoal" placeholder="kg은 제외하고 입력하세요"></td>
 			</tr>
 			<tr id="page2">
 				<th><label for="caloriesGoal">목표 칼로리 (kcal)</label></th>
-				<td><input type="text" name="caloriesGoal" id="caloriesGoal"></td>
+				<td><input type="text" name="caloriesGoal" id="caloriesGoal" placeholder="kcal는 제외하고 입력하세요"></td>
+			</tr>
+			<tr id="page2">
+				<td>
+					<div class="agree-container pt50">
+						<p class="agree-tit">
+							이용약관 동의
+							<em class="retext">*</em>
+						</p>
+						<div class="agree-contents">
+							<span class="agree-txt all">전체 동의합니다.</span>
+							<p class="agree-chk">
+								<span class="agree-chkbox">
+									<input type="checkbox" name="cc" id="c1" onclick="chkAll(this);">
+									<label for="c1">
+										<!--<span></span>-->
+									</label>
+								</span>
+							</p>
+						</div>
+						<div class="agree-contents">
+							<span class="agree-txt">
+								본인은 만 14세 이상 입니다.
+								<em>(필수)</em>
+							</span>
+							<p class="agree-chk">
+								<span class="agree-chkbox">
+									<input type="checkbox" name="cc" id="c4">
+									<label for="c4">
+										<!--<span></span>-->
+									</label>
+								</span>
+							</p>
+						</div>
+						<div class="agree-contents">
+							<span class="agree-txt">
+								이용약관 동의
+								<em>(필수)</em>
+							</span>
+							<p class="agree-see">
+								<a href="/user/useAgree" class="txt">내용보기</a>
+							</p>
+							<p class="agree-chk">
+								<span class="agree-chkbox">
+									<input type="checkbox" name="cc" id="c2">
+									<label for="c2">
+										<!--<span></span>-->
+									</label>
+								</span>
+							</p>
+						</div>
+						<div class="agree-contents">
+							<span class="agree-txt">
+								개인정보처리방침
+								<em>(필수)</em>
+							</span>
+							<p class="agree-see">
+								<a href="/user/policyAgree" class="txt">내용보기</a>
+							</p>
+							<p class="agree-chk">
+								<span class="agree-chkbox">
+									<input type="checkbox" name="cc" id="c3">
+									<label for="c3">
+										<!--<span></span>-->
+									</label>
+								</span>
+							</p>
+						</div>
+						<div class="agree-contents">
+							<span class="agree-txt">
+								위치정보 이용약관 동의
+								<em>(선택)</em>
+							</span>
+							<p class="agree-chk">
+								<span class="agree-chkbox">
+									<input type="checkbox" name="cc" id="c5">
+									<label for="c5">
+										<!--<span></span>-->
+									</label>
+								</span>
+							</p>
+						</div>
+					</div>
+				</td>
 			</tr>
 			<tr id="page2">
 				<th colspan="2"><input class="submit" type="submit" value="가입 완료" onclick="sendit();"></th>

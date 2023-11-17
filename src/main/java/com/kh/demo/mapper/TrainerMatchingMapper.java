@@ -32,13 +32,19 @@ public interface TrainerMatchingMapper {
 
     UTMatchingDTO getutBytrainerId(String trainerId);
 
-    List<BoardDTO> getMachingSearchList(String keyword);
+    List<TrainerMatchingBoardDTO> getMachingSearchList(String keyword);
 
     void saveMessage(MessageDTO newMessage);
+
 
     SubscribeDTO getcheckSubs(SubscribeDTO newSubscribe);
 
     SubscribeDTO getinsertSubs(SubscribeDTO newSubscribe);
 
     SubscribeDTO getdeleteSubs(SubscribeDTO newSubscribe);
+
+    List<TrainerMatchingBoardDTO> get12matchingSearchList(Criteria cri);
+
+    Long getmatchingTotal(Criteria cri);
+
 }

@@ -26,52 +26,67 @@
         }
 
         .bar-container {
+                display: flex;
+                align-items: center;
+                justify-content:center ;
+            }
+
+            .progress-bar{
                 -webkit-appearance: none;
                 -moz-appearance: none;
                 appearance: none;
-                display: block;
                 width: 150px;
                 height: 20px;
                 border-radius: 7px;
                 color: #35495e;
-              }
-              progress::-webkit-progress-bar {
+                margin-right: 10px; /* 오른쪽 마진 추가 */
+            }
+
+            progress::-webkit-progress-bar {
                 background-color: #eee;
                 border-radius: 8px;
-              }
-              progress::-webkit-progress-value {
-                background-color: #5a8100;
-                border-radius: 8px;
-              }
-              progress::-moz-progress-bar {
-                background-color: #5a8100;
-                border-radius: 8px;
-              }
-              .progress-container {
-                display: flex; /* 요소들을 가로로 배치합니다. */
-                align-items: center; /* 수직 가운데 정렬합니다. */
             }
 
-            /* 프로그래스 바 스타일 (선택적으로 조정) */
-            .progress-bar {
-                width: 200px; /* 원하는 너비로 조정 */
-                height: 20px; /* 원하는 높이로 조정 */
-
+            progress::-webkit-progress-value {
+                background-color: #5a8100;
+                border-radius: 8px;
             }
 
-            /* 출석 버튼 스타일 (선택적으로 조정) */
-            .att-btn {
-                margin-left: 10px; /* 프로그래스 바와의 간격 조정 */
-                padding: 5px 10px; /* 원하는 패딩 조정 */
-                background-color: #007bff; /* 배경색 설정 */
-                color: white; /* 글자색 설정 */
-                border: none; /* 테두리 제거 */
-                cursor: pointer; /* 포인터 커서 설정 */
+            progress::-moz-progress-bar {
+                background-color: #5a8100;
+                border-radius: 8px;
+            }
+
+            .bar-container > .att-btn{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 5px 10px;
+                background-color: #8FA746;
+                border-radius: 10px;
+                color: white;
+                cursor: pointer;
+                height: 20px;
+                font-size: 12px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                line-height: normal;
+                vertical-align: middle;
+                box-sizing: border-box;
+
             }
 
         .point-container {
             display: flex;
-            justify-content: space-between;
+            align-items: center;
+        }
+
+        .point-container > div {
+            margin: auto; /* 원하는 여백 크기로 조절 */
+        }
+        .point-container > span {
+            margin-right: 110px;
         }
 
         #tab-menu {
@@ -207,11 +222,60 @@
             margin-bottom: 10px;
         }
 
-        .today-breakfast p:first-child::before,
-        .today-lunch p:first-child::before,
-        .today-dinner p:first-child::before,
+        /* 아침 탭 */
+        .today-breakfast p:first-child::before {
+            content: "칼로리: ";
+        }
+        .today-breakfast p:nth-child(2)::before {
+            content: "탄수화물: ";
+        }
+        .today-breakfast p:nth-child(3)::before {
+            content: "단백질: ";
+        }
+        .today-breakfast p:nth-child(4)::before {
+            content: "지방: ";
+        }
+
+        /* 점심 탭 */
+        .today-lunch p:first-child::before {
+            content: "칼로리: ";
+        }
+        .today-lunch p:nth-child(2)::before {
+            content: "탄수화물: ";
+        }
+        .today-lunch p:nth-child(3)::before {
+            content: "단백질: ";
+        }
+        .today-lunch p:nth-child(4)::before {
+            content: "지방: ";
+        }
+
+        /* 저녁 탭 */
+        .today-dinner p:first-child::before {
+            content: "칼로리: ";
+        }
+        .today-dinner p:nth-child(2)::before {
+            content: "탄수화물: ";
+        }
+        .today-dinner p:nth-child(3)::before {
+            content: "단백질: ";
+        }
+        .today-dinner p:nth-child(4)::before {
+            content: "지방: ";
+        }
+
+        /* 간식 탭 */
         .today-snack p:first-child::before {
             content: "칼로리: ";
+        }
+        .today-snack p:nth-child(2)::before {
+            content: "탄수화물: ";
+        }
+        .today-snack p:nth-child(3)::before {
+            content: "단백질: ";
+        }
+        .today-snack p:nth-child(4)::before {
+            content: "지방: ";
         }
 
         .today-tab .chall-tab .sub-tab .shop-tab{

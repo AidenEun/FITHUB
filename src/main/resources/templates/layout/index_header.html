@@ -1,5 +1,61 @@
 <link xmlns:th="http://www.thymeleaf.org">
 <th:block th:fragment="header(loginUser,user,trainer,admin)">
+    <style>
+        .submenu {
+   width: 150px;
+   position: absolute;
+   font-size: 14px;
+   background: #ebede1;
+   z-index: 5555;
+   border-radius: 15px;
+   padding:0;
+
+ }
+
+ .submenu li {
+   list-style-type: none;
+    color: black !important;
+ }
+
+ .submenu li:hover {
+   background: rgb(203,211,177);
+   transition: ease 1s;
+   border-radius: 15px;
+   padding:0;
+ }
+
+    </style>
+
+    <!--<style>
+        #header {
+      background-color: #5a8100 !important;
+    }
+
+    #header nav > ul > li a {
+      color: white !important;
+    }
+
+    #header h1 a {
+      color: white !important;
+    }
+
+    #header .main ul li > a {
+      color: white !important;
+
+    }
+
+    #footer {
+      background-color: #304400;
+    }-->
+    <!--</style>-->
+
+    <!--<th:block th:if="${session.loginUser == null}">
+        <script>
+            alert("로그인 후 이용 가능합니다!!!");
+            location.replace("/user/login");
+        </script>
+    </th:block>-->
+
     <header id="header" class="alt">
         <h1 style="color: #fff;">
             <a href="/">
@@ -9,14 +65,63 @@
         </h1>
         <nav class="links">
             <ul>
-                <li><a href="/info/info_list" style="color: #fff;">정보</a></li>
-                <li><a href="/calorie/food_calorie_list" style="color: #fff;">칼로리</a></li>
-                <li><a href="/community/commu_list" style="color: #fff;">커뮤니티</a></li>
-                <li><a href="/matching/matching_list" style="color: #fff;">트레이너 매칭</a></li>
-                <li><a href="/challenge/list" style="color: #fff;">챌린지</a></li>
-                <li><a href="#" style="color: #fff;">제품</a></li>
+                <li class="menu-item"><a href="/info/info_list" style="color: white;">정보</a>
+                    <ul class="submenu">
+                        <li><a href="/info/info_list">전체</a></li>
+                        <li><a href="/info/info_news">뉴스</a></li>
+                        <li><a href="/info/info_food">식단</a></li>
+                        <li><a href="/info/info_exercise">운동</a></li>
+                        <li><a href="/info/info_tip">꿀팁</a></li>
+
+                    </ul>
+                </li>
+                <li class="menu-item"><a href="/calorie/food_calorie_list" style="color: white;">칼로리</a>
+                    <ul class="submenu">
+                        <li><a href="/calorie/food_calorie_list">음식칼로리</a></li>
+                        <li><a href="/calorie/exercise_calorie_list">운동칼로리</a></li>
+                    </ul>
+                </li>
+                <li class="menu-item"><a href="/community/commu_list" style="color: white;">커뮤니티</a>
+                    <ul class="submenu">
+                        <li><a href="/community/commu_free">자유게시판</a></li>
+                        <li><a href="/community/commu_food">식단</a></li>
+                        <li><a href="/community/commu_exercise">운동</a></li>
+                        <li><a href="/community/commu_gallery">갤러리</a></li>
+                        <li><a href="/community/commu_qna">고민 Q&A</a></li>
+
+                    </ul>
+                </li>
+                <li class="menu-item"><a href="/matching/matching_list" style="color: white;">트레이너 매칭</a>
+                    <ul class="submenu">
+                        <li><a href="/matching/matching_list">트레이너매칭</a></li>
+                    </ul>
+                </li>
+                <li class="menu-item"><a href="/challenge/list" style="color: white;">챌린지</a>
+                    <ul class="submenu">
+                        <li><a href="/info/submenu1">챌린지</a></li>
+                    </ul>
+                </li>
+                <li class="menu-item"><a href="/product/product_list" style="color: white;">제품</a>
+                    <ul class="submenu">
+                        <li><a href="/info/submenu1">식품</a></li>
+                        <li><a href="/info/submenu1">운동 도구</a></li>
+                    </ul>
+                </li>
             </ul>
         </nav>
+        <script>
+            const menuItems = document.querySelectorAll('.menu-item');
+
+            menuItems.forEach(item => {
+            const submenu = item.querySelector('.submenu');
+            item.addEventListener('mouseenter', () => {
+            submenu.style.display = 'block';
+            });
+            item.addEventListener('mouseleave', () => {
+            submenu.style.display = 'none';
+            });
+            });
+        </script>
         <nav class="main">
             <ul>
                 <li id="login">
@@ -33,8 +138,10 @@
                 </li>
                 <li class="search">
                     <a class="fa-search" href="#search" style="color: #fff;">Search</a>
-                    <form id="search" method="get" action="/totalSearch">
+                    <form id="search" method="get" action="/searchpage/totalSearch">
                         <input type="text" name="keyword" placeholder="Search" />
+<!--                        <input type="hidden" value="1" name="pagenum">-->
+<!--                        <input type="hidden" value="12" name="amount">-->
                     </form>
                 </li>
                 <li class="menu">
@@ -46,12 +153,12 @@
 
     <!-- Menu -->
     <section id="menu">
-        <div class="side-not-login">
-            <th:blcok th:if="${session.loginUser == null}">
+        <th:block th:if="${session.loginUser == null}">
+            <div class="side-not-login">
                 <p>로그인하세요</p>
                 <a th:href="@{/user/login}">로그인</a>
-            </th:blcok>
-        </div>
+            </div>
+        </th:block>
         <th:block th:if="${session.loginUser != null}">
             <div class="side_info">
                 <a href="/usermypage/user_myinfo">
@@ -64,7 +171,12 @@
                             <a class="login" th:href="@{/user/logout}">로그아웃</a>
                         </th:block>
                     </div>
-                    <a href="/usermypage/user_myinfo"><span>등급 / 닉네임(ID)</span></a>
+                    <a href="/usermypage/user_myinfo">
+                        <!--<span>등급 / 닉네임(ID)</span>-->
+                        <th:block th:if="${user !=null && loginUser != null}">
+                            <span>등급</span>/<span th:text="${user.userNickname}"></span>(<span th:text="${user.userId}"></span>)
+                        </th:block>
+                    </a>
                 </div>
                 <div class="bar-container">
                     <progress class="progress-bar" value="0" max="7"></progress>
@@ -80,10 +192,10 @@
                     <div class="tab chall-tab">도전</div>
                     <div class="tab sub-tab">구독</div>
                     <div class="page-tab diary-tab">
-                        <a href="#">일기</a>
+                        <a href="/usermypage/user_diary">일기</a>
                     </div>
                     <div class="page-tab shop-tab">
-                        <a href="#">쇼핑</a>
+                        <a href="/product/product_list">쇼핑</a>
                     </div>
                 </div>
                 <div id="tab-menu-container">
@@ -92,7 +204,7 @@
                         <th:block th:if="${user !=null && loginUser != null}">
                             <p>목표체중 : <span th:text="${user.weightGoal}"></span></p>
                             <p>목표칼로리 : <span th:text="${user.caloriesGoal}"></span></p>
-                            <strong>잔여칼로리: 현재칼로리/목표칼로리</strong>
+                            <strong>잔여칼로리: 현재칼로리/<span th:text="${user.caloriesGoal}"></span></strong>
                             <hr>
                         </th:block>
                         <p>섭취량</p>
@@ -105,28 +217,28 @@
                         </div>
                         <div id="tan-dan-ji-box">
                             <div class="today-breakfast">
-                                <p>칼로리:아침 칼로리</p>
-                                <p>탄수화물</p>
-                                <p>단백질</p>
-                                <p>지방</p>
+                                <p>아침</p>
+                                <p></p>
+                                <p></p>
+                                <p></p>
                             </div>
                             <div class="today-lunch">
-                                <p>칼로리:점심 칼로리</p>
-                                <p>탄수화물</p>
-                                <p>단백질</p>
-                                <p>지방</p>
+                                <p>점심</p>
+                                <p></p>
+                                <p></p>
+                                <p></p>
                             </div>
                             <div class="today-dinner">
-                                <p>칼로리:저녁 칼로리</p>
-                                <p>탄수화물</p>
-                                <p>단백질</p>
-                                <p>지방</p>
+                                <p>저녁</p>
+                                <p></p>
+                                <p></p>
+                                <p></p>
                             </div>
                             <div class="today-snack">
-                                <p>칼로리:간식 칼로리</p>
-                                <p>탄수화물</p>
-                                <p>단백질</p>
-                                <p>지방</p>
+                                <p>간식</p>
+                                <p></p>
+                                <p></p>
+                                <p></p>
                             </div>
                         </div>
                     </div>
@@ -165,9 +277,11 @@
             <div class="health-center">
                 <a href="/sidebar/healthCenter">보건소</a>
             </div>
-            <div class="trainer-apply" th:if="${session.user != null}">
-                <a href="#">트레이너 신청</a>
-            </div>
+            <th:block  th:if="${session.user != null}">
+                <div class="trainer-apply">
+                    <a href="/usermypage/user_applytrainer">트레이너 신청</a>
+                </div>
+            </th:block>
         </div>
     </section>
 </th:block>

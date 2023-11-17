@@ -159,9 +159,22 @@ public class TrainerMatchingServiceImpl implements TrainerMatchingService {
 
     public void saveMessage(MessageDTO newMessage){
         tmmapper.saveMessage(newMessage);
-    };
+    }
+
+//    통합검색
     @Override
-    public List<BoardDTO> getMachingSearchList(String keyword) {
+    public List<TrainerMatchingBoardDTO> get12matchingSearchList(Criteria cri) {
+        return tmmapper.get12matchingSearchList(cri);
+    }
+
+    @Override
+    public Long getmatchingTotal(Criteria cri) {
+        return tmmapper.getmatchingTotal(cri);
+    }
+
+    ;
+    @Override
+    public List<TrainerMatchingBoardDTO> getMachingSearchList(String keyword) {
         return tmmapper.getMachingSearchList(keyword);
     }
 

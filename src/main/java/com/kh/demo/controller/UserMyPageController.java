@@ -96,8 +96,6 @@ public class UserMyPageController {
     public void replaceChallenge(String challCategory, String challTerm, Criteria cri, Model model, HttpServletRequest req) {
         HttpSession session = req.getSession();
         String userId = (String) session.getAttribute("loginUser");
-        System.out.println("challCategory : " + challCategory);
-        System.out.println("challTerm : " + challTerm);
 
         if (challCategory == null) {
             challCategory = "challAll";
@@ -107,21 +105,23 @@ public class UserMyPageController {
         }
 
         List<ChallNoticeBoardDTO> list = service.getMyChallenge(cri, userId, challCategory, challTerm);
-        System.out.println("list:" + list);
         model.addAttribute("list", list);
+        model.addAttribute("challCategory",challCategory);
+        model.addAttribute("challTerm",challTerm);
         model.addAttribute("pageMaker", new PageDTO(service.getChallengeTotal(cri, userId, challCategory, challTerm), cri));
     }
 
 
     @GetMapping("user_subtrainer")
     public void replaceSubTrainer(Criteria cri, Model model, HttpServletRequest req) {
-        cri = new Criteria(cri.getPagenum(), 12);
+        cri.setAmount(12);
         HttpSession session = req.getSession();
         String userId = (String) session.getAttribute("loginUser");
         List<TrainerDTO> list = service.getMyScribe(cri, userId);
-        System.out.println("list:" + list);
+
         model.addAttribute("list", list);
         model.addAttribute("pageMaker", new PageDTO(service.getScribeTotal(cri, userId), cri));
+
     }
 
 
@@ -135,12 +135,14 @@ public class UserMyPageController {
 
     @GetMapping("board_info")
     @ResponseBody
-    public String board_info(@RequestParam("pageNum") int pageNum, HttpServletRequest req) throws Exception {
+    public String board_info(@RequestParam("pageNum") int pageNum, @RequestParam("keyword") String keyword, @RequestParam("type") String type, HttpServletRequest req) throws Exception {
         HttpSession session = req.getSession();
         String userId = (String) session.getAttribute("loginUser");
 
         ObjectNode json = JsonNodeFactory.instance.objectNode();
         Criteria cri = new Criteria(pageNum, 10);
+        cri.setKeyword(keyword);
+        cri.setType(type);
 
         List<BoardDTO> list = service.getMyBookmark(cri, userId);
         PageDTO pageDTO = new PageDTO(service.getBookmarkTotal(cri, userId), cri);
@@ -152,13 +154,15 @@ public class UserMyPageController {
 
     @GetMapping("board_product")
     @ResponseBody
-    public String board_product(@RequestParam("pageNum") int pageNum, HttpServletRequest req) throws Exception {
+    public String board_product(@RequestParam("pageNum") int pageNum, @RequestParam("keyword") String keyword, @RequestParam("type") String type, HttpServletRequest req) throws Exception {
         HttpSession session = req.getSession();
         String userId = (String) session.getAttribute("loginUser");
 
 
         ObjectNode json = JsonNodeFactory.instance.objectNode();
         Criteria cri = new Criteria(pageNum, 10);
+        cri.setKeyword(keyword);
+        cri.setType(type);
 
         List<ProductBoardDTO> list = service.getMyBookmarkProduct(cri, userId);
         PageDTO pageDTO = new PageDTO(service.getBookmarkProductTotal(cri, userId), cri);
@@ -282,6 +286,7 @@ public class UserMyPageController {
     public void replaceDiary(String loginUser, Model model) {
         List<DiaryDTO> diaryList = service.getDiaryList(loginUser);
         model.addAttribute("diaryList", diaryList);
+
     }
 
     @GetMapping("checklist")

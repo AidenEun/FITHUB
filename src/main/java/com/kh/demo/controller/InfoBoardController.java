@@ -114,6 +114,7 @@ public class InfoBoardController {
         HttpSession session = req.getSession();
         BoardDTO board = service.getDetail(boardNum);
         model.addAttribute("board",board);
+        model.addAttribute("files",service.getFileList(boardNum, boardCategory));
         model.addAttribute("files2",service.getFileList(boardNum, boardCategory));
         String loginUser = (String)session.getAttribute("loginUser");
         String requestURI = req.getRequestURI();
@@ -163,20 +164,25 @@ public class InfoBoardController {
         }
     }
     @PostMapping("remove")
-    public String remove(String boardCategory, Long boardnum, Criteria cri, HttpServletRequest req) {
+    public String remove(String boardCategory, Long boardNum, Criteria cri, HttpServletRequest req) {
         HttpSession session = req.getSession();
         String loginUser = (String)session.getAttribute("loginUser");
-        if(service.remove(loginUser, boardnum, boardCategory)) {
+        if(service.remove(loginUser, boardNum, boardCategory)) {
             return "redirect:/info/info_list"+cri.getListLink();
         }
         else {
-            return "redirect:/info/info_get"+cri.getListLink()+"&boardNum="+boardnum;
+            return "redirect:/info/info_get"+cri.getListLink()+"&boardNum="+boardNum;
         }
     }
 
     @GetMapping("thumbnail")
     public ResponseEntity<Resource> thumbnail(String sysName) throws Exception{
         return service.getThumbnailResource(sysName);
+    }
+
+    @GetMapping("file")
+    public ResponseEntity<Object> download(String systemname, String orgname) throws Exception{
+        return service.downloadFile(systemname,orgname);
     }
 
 
