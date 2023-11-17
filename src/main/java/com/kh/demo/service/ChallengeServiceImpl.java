@@ -76,6 +76,59 @@ public class ChallengeServiceImpl implements ChallengeService{
         return row == 1;
     }
 
+    @Override
+    public Long getNoticeTotal(Criteria noticeCri, String challCategory, String challTerm) {
+        if(challCategory.equals("challAll")){
+            if (challTerm.equals("challengeAll")){
+                return challMapper.getChallengeAllAllTotal(noticeCri);
+
+            }else {
+                return challMapper.getChallengeAllTermTotal(noticeCri,challTerm);
+
+            }
+        } else{
+            if (challTerm.equals("challengeAll")){
+                return challMapper.getChallengeCategoryAllTotal(noticeCri,challCategory);
+
+            } else {
+                return challMapper.getChallengeCategoryTermTotal(noticeCri,challCategory,challTerm);
+
+            }
+        }
+    }
+
+    @Override
+    public List<ChallNoticeBoardDTO> getChallNoticeList(Criteria noticeCri, String challCategory, String challTerm) {
+        if(challCategory.equals("challAll")){
+            if (challTerm.equals("challengeAll")){
+                return challMapper.getChallengeAllAll(noticeCri);
+            }else {
+                return challMapper.getChallengeAllTerm(noticeCri, challTerm);
+            }
+        } else{
+            if (challTerm.equals("challengeAll")){
+                return challMapper.getChallengeCategoryAll(noticeCri, challCategory);
+            } else {
+                return challMapper.getChallengeCategoryTerm(noticeCri, challCategory,challTerm);
+            }
+        }
+    }
+
+    @Override
+    public ChallNoticeBoardDTO getChallNoticeDetail(Long challNum) {
+        return challMapper.getChallNoticeDetail(challNum);
+    }
+
+    @Override
+    public void insertMyChall(long challNum, String id) {
+        challMapper.insertMyChall(challNum, id);
+    }
+
+    @Override
+    public void deleteChallNotice(long challNum) {
+        challMapper.deleteChallNotice(challNum);
+    }
+
 
 
 

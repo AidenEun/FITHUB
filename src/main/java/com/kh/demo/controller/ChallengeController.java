@@ -45,15 +45,80 @@ public class ChallengeController {
 
     /*재우*/
     @GetMapping("list")
-    public void challList(Criteria cri, Model model) throws Exception {
+    public void challList(Integer pagenum, Integer amount, String type, String keyword, Integer  noticePagenum, Integer  noticeAmount
+            , String challCategory, String challTerm,Model model) throws Exception {
 
+        if (noticePagenum == null || noticePagenum <= 0) {
+            noticePagenum = 1;
+        }
+        if(noticeAmount == null || noticeAmount <= 0){
+            noticeAmount=8;
+        }
+        if (pagenum == null || pagenum <= 0) {
+            pagenum = 1;
+        }
+        if(amount == null || amount <= 0){
+            amount=10;
+        }
+        if (challCategory == null) {
+            challCategory = "challAll";
+        }
+        if (challTerm == null) {
+            challTerm = "challengeAll";
+        }
+        System.out.println("noticePagenum: "+noticePagenum);
+        System.out.println("noticeAmount: "+noticeAmount);
+        System.out.println("challCategory: "+challCategory);
+        System.out.println("challTerm: "+challTerm);
+        Criteria cri = new Criteria(pagenum,amount);
+        cri.setType(type);
+        cri.setKeyword(keyword);
+        Criteria noticeCri = new Criteria(noticePagenum,noticeAmount);
         List<ChallCertBoardDTO> list = challService.getChallList(cri);
+        List<ChallNoticeBoardDTO> noticeList = challService.getChallNoticeList(noticeCri, challCategory, challTerm);
+        model.addAttribute("challCategory",challCategory);
+        model.addAttribute("challTerm",challTerm);
         model.addAttribute("list",list);
+        model.addAttribute("noticeList",noticeList);
+
         model.addAttribute("pageMaker",new PageDTO(challService.getTotal(cri), cri));
+        model.addAttribute("noticePageMaker",new PageDTO(challService.getNoticeTotal(noticeCri, challCategory, challTerm), noticeCri));
+
         model.addAttribute("newly_board",challService.getNewlyBoardList(list));
         model.addAttribute("reply_cnt_list",challService.getReplyCntList(list));
         model.addAttribute("recent_reply",challService.getRecentReplyList(list));
     }
+
+    @PostMapping("challNoticeGet")
+    @ResponseBody
+    public String challNoticeGet(@RequestParam("challNum") Long challNum) throws Exception{
+        ObjectNode json = JsonNodeFactory.instance.objectNode();
+
+        ChallNoticeBoardDTO list = challService.getChallNoticeDetail(challNum);
+        System.out.println("list: "+list);
+        json.putPOJO("list", list);
+
+        return json.toString();
+    }
+
+    @PostMapping("noticeGetConfirm")
+    public ResponseEntity<String> noticeGetConfirm(@RequestBody ChallCertBoardDTO challCert, HttpServletRequest req) {
+        HttpSession session = req.getSession();
+        String id = (String) session.getAttribute("loginUser");
+
+        challService.insertMyChall(challCert.getChallNum(),id);
+
+        return ResponseEntity.ok("성공");
+    }
+
+    @PostMapping("noticeGetDelete")
+    public ResponseEntity<String> noticeGetDelete(@RequestBody ChallCertBoardDTO challCert) {
+
+        challService.deleteChallNotice(challCert.getChallNum());
+
+        return ResponseEntity.ok("성공");
+    }
+
 
     @GetMapping("successChall")
     @ResponseBody

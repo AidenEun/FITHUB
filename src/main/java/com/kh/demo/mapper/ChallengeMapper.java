@@ -26,6 +26,8 @@ public interface ChallengeMapper {
 
     //select
     List<ChallCertBoardDTO> getList(Criteria cri);
+    
+    
     Long getTotal(Criteria cri);
     Long getLastNum(String userId);
     ChallCertBoardDTO findByNum(Long boardNum);
@@ -38,4 +40,27 @@ public interface ChallengeMapper {
     List<ChallNoticeBoardDTO> getChallSearchList(String keyword);
 
     int insertChallNotice(ChallNoticeBoardDTO chall);
+
+
+    List<ChallNoticeBoardDTO> getChallengeAllAll(Criteria noticeCri);
+
+    List<ChallNoticeBoardDTO> getChallengeAllTerm(Criteria noticeCri, String challTerm);
+
+    List<ChallNoticeBoardDTO> getChallengeCategoryAll(Criteria noticeCri, String challCategory);
+
+    List<ChallNoticeBoardDTO> getChallengeCategoryTerm(Criteria noticeCri, String challCategory, String challTerm);
+
+    Long getChallengeAllAllTotal(Criteria noticeCri);
+
+    Long getChallengeAllTermTotal(Criteria noticeCri, String challTerm);
+
+    Long getChallengeCategoryAllTotal(Criteria noticeCri, String challCategory);
+
+    Long getChallengeCategoryTermTotal(Criteria noticeCri, String challCategory, String challTerm);
+
+    ChallNoticeBoardDTO getChallNoticeDetail(Long challNum);
+
+    void insertMyChall(long challNum, String id);
+
+    void deleteChallNotice(long challNum);
 }

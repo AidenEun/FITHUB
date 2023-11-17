@@ -48,4 +48,14 @@ public interface ChallengeService {
     List<ChallNoticeBoardDTO> getChallSearchList(String keyword);
 
     boolean insertChallNotice(ChallNoticeBoardDTO chall);
+
+    Long getNoticeTotal(Criteria noticeCri, String challCategory, String challTerm);
+
+    List<ChallNoticeBoardDTO> getChallNoticeList(Criteria noticeCri, String challCategory, String challTerm);
+
+    ChallNoticeBoardDTO getChallNoticeDetail(Long challNum);
+
+    void insertMyChall(long challNum, String id);
+
+    void deleteChallNotice(long challNum);
 }

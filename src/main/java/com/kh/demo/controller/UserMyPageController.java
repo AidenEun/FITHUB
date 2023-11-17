@@ -96,8 +96,6 @@ public class UserMyPageController {
     public void replaceChallenge(String challCategory, String challTerm, Criteria cri, Model model, HttpServletRequest req) {
         HttpSession session = req.getSession();
         String userId = (String) session.getAttribute("loginUser");
-        System.out.println("challCategory : " + challCategory);
-        System.out.println("challTerm : " + challTerm);
 
         if (challCategory == null) {
             challCategory = "challAll";
@@ -107,7 +105,6 @@ public class UserMyPageController {
         }
 
         List<ChallNoticeBoardDTO> list = service.getMyChallenge(cri, userId, challCategory, challTerm);
-        System.out.println("list:" + list);
         model.addAttribute("list", list);
         model.addAttribute("challCategory",challCategory);
         model.addAttribute("challTerm",challTerm);
@@ -122,8 +119,6 @@ public class UserMyPageController {
         String userId = (String) session.getAttribute("loginUser");
         List<TrainerDTO> list = service.getMyScribe(cri, userId);
 
-        System.out.println("list:" + list);
-        System.out.println("cri11:" + new PageDTO(service.getScribeTotal(cri, userId), cri));
         model.addAttribute("list", list);
         model.addAttribute("pageMaker", new PageDTO(service.getScribeTotal(cri, userId), cri));
 
