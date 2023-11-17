@@ -25,5 +25,4 @@ public interface UserMapper {
 
   int profileUpdateUser(UserDTO user);
 
-
 }

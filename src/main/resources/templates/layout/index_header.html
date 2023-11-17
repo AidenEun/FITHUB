@@ -184,7 +184,9 @@
                 </div>
                 <div class="point-container">
                     <div>나의 포인트</div>
-                    <span>0p</span>
+                    <th:block th:if="${user != null && loginUser != null}">
+                        <span id="pointDisplay" th:text="${user.userPoint != null ? user.userPoint : 0} + 'p'"></span>
+                    </th:block>
                 </div>
                 <hr>
                 <div id="tab-menu">

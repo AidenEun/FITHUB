@@ -23,7 +23,6 @@
 }
 .btn_area > *{
     display:inline-block;
-    margin-left:10px;
     margin-right:10px;
 }
 input[type=text], input[type=password]{
@@ -38,7 +37,7 @@ input[type=text], input[type=password]{
 input[type=text]:focus, input[type=password]:focus{
     border:1px solid rgb(0,200,80);
 }
-input[type=submit]{
+/*input[type=submit]{
     margin-top:10px;
     padding:10px 20px;
     width:120px;
@@ -48,8 +47,8 @@ input[type=submit]{
     color:#fff;
     font-weight: bold;
     font-size: 18px;
-}
-.join-btn{
+}*/
+/*.join-btn{
     text-decoration:none;
     box-sizing:border-box;
     margin-top:10px;
@@ -61,7 +60,35 @@ input[type=submit]{
     color:black;
     font-weight: bold;
     font-size: 18px;
+    vertical-align: middle;
+}*/
+
+.login-btn,
+.join-btn {
+  text-decoration: none;
+  box-sizing: border-box;
+  margin-top: 10px;
+  padding: 8px 20px;
+  width: 120px;
+  border: none;
+  border-radius: 30px;
+  font-weight: bold;
+  font-size: 18px;
+  display: inline-block; /* 인라인 블록 요소로 설정 */
+  text-align: center; /* 텍스트 가운데 정렬 */
+  line-height: 24px; /* 버튼 높이에 맞게 조절 */
 }
+
+.login-btn {
+  background-color: #5a8100;
+  color: #fff;
+}
+
+.join-btn {
+  background-color: rgb(203, 211, 177);
+  color: black;
+}
+
 .login{
     text-align: center;
     margin-bottom: 50px;

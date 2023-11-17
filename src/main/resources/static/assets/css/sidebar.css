@@ -80,6 +80,7 @@
         .point-container {
             display: flex;
             align-items: center;
+            margin-top: 20px;
         }
 
         .point-container > div {
