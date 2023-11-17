@@ -6,11 +6,12 @@
 -->
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>Untitled</title>
+	<title>Fit Hub</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
 	<link rel="stylesheet" th:href="@{/assets/css/index.css}" />
+	<link rel="stylesheet" th:href="@{/assets/css/common.css}" />
 	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
 
 </head>
@@ -25,11 +26,15 @@
 
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">
-	<div class="inner">
 
-		<header class="major">
-			<h2>마이페이지</h2>
+	<div class="header_box">
+		<header class="test12">
+			<p id="mainText">마이페이지</p>
+			<p id="subText">나의 챌린지</p>
 		</header>
+	</div>
+
+	<div class="inner">
 
 		<!-- Content -->
 		<div class="content">
@@ -131,7 +136,24 @@
 
 
 		<!-- Sidebar -->
-		<th:block th:replace="~{layout/trainermypage_sidebar::sidebar(${session.loginUser})}"></th:block>
+		<div class="sidebar">
+			<section>
+				<div class="boardRanking">
+					<div class="boardRanking_ranking">
+						<table style="width: 90%;">
+							<tr><td><a href="/trainermypage/trainer_modify">내 정보 수정</a></td></tr>
+							<tr><td><a href="/usermypage/user_diary">나의 다이어리</a></td></tr>
+							<tr><td><a href="/trainermypage/trainer_challenge" style="color: #5a8100; font-size: 20px;">나의 챌린지</a></td></tr>
+							<tr><td><a href="/trainermypage/trainer_mysubscribeuser">구독 유저</a></td></tr>
+							<tr><td><a href="/trainermypage/trainer_subbookmark">북마크</a></td></tr>
+							<tr><td><a href="/trainermypage/trainer_boardlist">내 게시물</a></td></tr>
+							<tr><td><a href="/trainermypage/trainer_messagelist">쪽지함</a></td></tr>
+							<tr><td><a th:href="@{/trainermypage/trainer_myprofile (trainerId=${loginUser})}">트레이너 프로필</a></td></tr>
+						</table>
+					</div>
+				</div>
+			</section>
+		</div>
 
 	</div>
 </section>

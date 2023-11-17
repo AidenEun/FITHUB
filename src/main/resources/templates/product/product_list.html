@@ -6,11 +6,13 @@
 -->
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>Untitled</title>
+	<title>Fit Hub</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<link rel="stylesheet" href="/assets/css/main.css" />
-	<noscript><link rel="stylesheet" href="/assets/css/noscript.css" /></noscript>
+	<link rel="stylesheet" th:href="@{/assets/css/index.css}" />
+	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
+	<noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
+	<link rel="stylesheet" th:href="@{/assets/css/common.css}" />
 </head>
 <body class="is-preload">
 
@@ -18,12 +20,15 @@
 
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">
-	<div class="inner">
 
-		<header class="major">
-			<h2>정보</h2>
-			<p>전체</p>
+	<div class="header_box">
+		<header class="test12">
+			<p id="mainText">제품 게시판</p>
+			<p id="subText">제품 게시판</p>
 		</header>
+	</div>
+
+	<div class="inner">
 
 		<!-- Content -->
 		<div class="content">
@@ -118,13 +123,18 @@
 </footer>
 
 <!-- Scripts -->
-<script src="assets/js/jquery.min.js"></script>
-<script src="assets/js/jquery.dropotron.min.js"></script>
-<script src="assets/js/jquery.scrollex.min.js"></script>
-<script src="assets/js/browser.min.js"></script>
-<script src="assets/js/breakpoints.min.js"></script>
-<script src="assets/js/util.js"></script>
-<script src="assets/js/main.js"></script>
+<script th:src="@{/assets/js/jquery.min.js}"></script>
+<script th:src="@{/assets/js/jquery.dropotron.min.js}"></script>
+<script th:src="@{/assets/js/jquery.scrollex.min.js}"></script>
+<script th:src="@{/assets/js/browser.min.js}"></script>
+<script th:src="@{/assets/js/breakpoints.min.js}"></script>
+<script th:src="@{/assets/js/util.js}"></script>
+<script th:src="@{/assets/js/main.js}"></script>
+
+<script th:src="@{/assets/js/util_sub.js}"></script>
+<script th:src="@{/assets/js/main_sub.js}"></script>
+
+<script th:src="@{/assets/js/sidebar.js}"></script>
 
 </body>
 </html>
