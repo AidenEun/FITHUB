@@ -111,18 +111,11 @@
         background-color: white;
     }
 
-    .category_button {
-        margin-right: 10px;
-    }
 
     a {
         border-bottom: none;
     }
 
-    .admin_board_list_box {
-        display: flex;
-        justify-content: space-between;
-    }
 
     .long_text {
         width: 180px;
@@ -167,41 +160,82 @@
     }
 
     #gnb {
-        display: flex;
-        justify-content: center;
+        /*display: flex;*/
+        /*justify-content: center;*/
         /*width: 70%;*/
         margin-top: 10px;
         margin-bottom: 23px;
     }
 
-    input[type=button] {
-        box-shadow: inset 0 0 0 1px #5a810086;
-    }
+    /*input[type=button] {*/
+    /*    box-shadow: inset 0 0 0 1px #5a810086;*/
+    /*}*/
 
-    .btn_area.btn_category {
+    .btn_area {
         display: flex;
         justify-content: space-between;
+        padding: 0 70px 0 70px;
+        margin-bottom: 30px !important;
+        font-size: 14px;
+        font-weight:100 !important;
     }
 
-    .btn_area input[type=button] {
-        border-radius: 8px;
-        height: 45px;
-        line-height: 45px;
+    /*카테고리 버튼 css*/
+    .btn_area input[type=button].ctBtncolor {
+        border-radius: 38px;
+        padding: 0 13px;
+        height: 42px;
+        line-height: 42px;
+        box-shadow: 0px 0px 5px rgb(203,211,177);
+        font-weight:100 !important;
     }
 
-    .btn_area input[type=button]:hover {
+    .btn_area input[type=button].ctBtncolor:hover {
+        padding: 0 15px;
         background: #ebede1;
         box-shadow: none;
         transition: 0.5s ease-out;
+        font-weight:100 !important;
     }
+
+    input[type=button].btn.ctBtncolor.viewNow {
+        background: #ebede1;
+        padding: 0 15px;
+        box-shadow: 0 0 2px 1px #5a8100;
+        font-weight:100 !important;
+    }
+    /*작성, 글쓰기 버튼 컬러 수정*/
+    .more_view.btnColor.btnColor{
+        background: #FFFFFF;
+        border: 1px solid #5a8100;
+        border-radius: 4px;
+        color: #5a8100 !important;
+        box-shadow: 4px 4px 2px 0px rgb(203,211,177);
+
+    }
+
+    .more_view.btnColor.btnColor{
+        background: #FFFFFF;
+        border: 1px solid #8FA746;
+        border-radius: 4px;
+        color: #5a8100 !important;
+        box-shadow: 4px 4px 2px 0px rgb(203,211,177);
+
+    }
+
+    .more_view.btnColor:hover{
+        background: #5a8100;
+        border: 1px solid #8FA746;
+        border-radius: 4px;
+        color: #F7FAF5 !important;
+        box-shadow: 0 0 2px #5a8100;
+
+    }
+
     p>h2:after{
         border-bottom: none;
     }
 
-
-    input[type=button].btn.viewNow {
-        background: #ebede1;
-    }
 
     .pagination.hidden {
         display: none;
@@ -214,7 +248,9 @@
         margin-bottom: 28px;
         font-size: 20px;
         text-align: center;
-        background:#ebede1;
+        /*background:#ebede1;*/
+        height: 37px;
+        line-height: 37px;
     }
     #sidebarRanking{
         position: relative;
@@ -229,6 +265,10 @@
         background-color: transparent;
         margin: 0;
         transition: 0.5s ease-out;
+    }
+    .highlight{
+        display: inline;
+        box-shadow: inset 0 -10px 0 #ebede1;
     }
 
 </style>
@@ -275,21 +315,21 @@
         <!--                </div>-->
         <!--            </div>-->
         <div class="content" id="search_content" th:if="${keyword != null or keyword != ''}">
-            <div id="miniTop"><span style="color: #5a8100" th:text="'&quot;'+${keyword}+'&quot;'"></span><span>&nbsp(으)로 검색된 게시물</span></div>
+            <div id="miniTop"><span style="color: #5a8100" class="highlight" th:text="'&nbsp&nbsp&nbsp&nbsp&quot;'+${keyword}+'&quot;'"></span><span class="highlight">&nbsp(으)로 검색된 게시물&nbsp&nbsp&nbsp&nbsp</span></div>
 
             <div id="gnb">
                 <div class="btn_area" style="margin-bottom: 20px;">
                     <input type="hidden" name="keyword" id="keyword" th:value="${keyword}">
-                    <input class="btn viewNow" type="button" id="allBtn" th:value="'전체&nbsp;'+'('+${boardAllCnt}+')'">
-                    <input type="button" class="btn" id="infoBtn" th:value="'정보&nbsp;('+${boardCntArr[0]}+')'"
+                    <input class="btn viewNow ctBtncolor" type="button" id="allBtn" th:value="'전체&nbsp;'+'('+${boardAllCnt}+')'">
+                    <input type="button" class="btn ctBtncolor" id="infoBtn" th:value="'정보&nbsp;('+${boardCntArr[0]}+')'"
                            onclick="infoView();">
-                    <input type="button" class="btn" id="tipBtn" th:value="'꿀팁&nbsp;('+${boardCntArr[1]}+')'"
+                    <input type="button" class="btn ctBtncolor" id="tipBtn" th:value="'꿀팁&nbsp;('+${boardCntArr[1]}+')'"
                            onclick="tipView();">
-                    <input type="button" class="btn" id="commuBtn" th:value="'커뮤니티&nbsp;('+${boardCntArr[2]}+')'"
+                    <input type="button" class="btn ctBtncolor" id="commuBtn" th:value="'커뮤니티&nbsp;('+${boardCntArr[2]}+')'"
                            onclick="commuView();">
-                    <input type="button" class="btn" id="matchingBtn" th:value="'트레이너 매칭&nbsp;('+${boardCntArr[3]}+')'"
+                    <input type="button" class="btn ctBtncolor" id="matchingBtn" th:value="'트레이너 매칭&nbsp;('+${boardCntArr[3]}+')'"
                            onclick="matchingView();">
-                    <input type="button" class="btn" id="challBtn" th:value="'챌린지&nbsp;('+${boardCntArr[4]}+')'"
+                    <input type="button" class="btn ctBtncolor" id="challBtn" th:value="'챌린지&nbsp;('+${boardCntArr[4]}+')'"
                            onclick="challView();">
                 </div>
             </div>
@@ -344,7 +384,7 @@
                                 <td colspan="5" style="text-align: center;">
                                 </td>
                                 <td>
-                                    <a href="#" onclick="infoView();" class="button more_view">더보기</a>
+                                    <a href="#" onclick="infoView();" class="button more_view btnColor">더보기</a>
                                 </td>
                             </tr>
                         </th:block>

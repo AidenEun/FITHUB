@@ -116,14 +116,14 @@
     .input_area {
         display: flex;
         justify-content: space-between;
-        box-shadow: 0px 0px 5px rgb(203,211,177);
+        box-shadow: 0px 0px 4px rgb(203,211,177);
     }
 
     .list_area {
         height: 100px;
-        border: 1px solid green;
+        border: 1px solid #5a8100;
         margin-top: 20px;
-        border-radius: 10px;
+        border-radius: 4px;
     }
 
 
@@ -154,7 +154,7 @@
         border-radius: 4px;
         border: none;
         /*box-shadow: 4px 4px 2px 0px rgb(203,211,177);*/
-        box-shadow: 0 0px 5px rgb(203,211,177);
+        box-shadow: 0 0px 5px rgb(203,211,177) !important;
     }
 
 
@@ -170,15 +170,6 @@
         border-radius: 5px;
     }
 
-    /* 추가한 css */
-    table tbody tr:nth-child(2n + 1) {
-        background-color: white;
-
-    }
-
-    /*td div > input[type=button] {*/
-    /*    box-shadow: inset 0 0 0 2px #e6e6e6;*/
-    /*}*/
     .food_area:hover{
         border-radius: 4px;
         box-shadow: 0 0 5px rgb(203,211,177);
@@ -186,6 +177,12 @@
     .ex_area:hover{
         border-radius: 4px;
         box-shadow: 0 0 5px rgb(203,211,177);
+    }
+
+    /* 추가한 css */
+    table tbody tr:nth-child(2n + 1) {
+        background-color: white;
+
     }
 
     .food_area .list_area {
@@ -217,6 +214,12 @@
         text-align: right !important;
     }
 
+    input[type=button].removeBtn{
+        box-shadow: 0 0 2px #5a8100;
+    }
+    input[type=button].removeBtn:hover{
+        background-color: #ebede1 !important;
+    }
     /*작성, 글쓰기 버튼 컬러 수정*/
     input[type=button].btnColor{
         background: #FFFFFF;
@@ -292,30 +295,23 @@
 
 <div class="header_box">
     <header class="test12">
-        <p id="mainText">마이페이지</p>
+        <p id="mainText">다이어리 작성</p>
         <p id="subText">다이어리</p>
     </header>
 </div>
 
 <div id="container1">
-    <div id="side_box">
-        <section>
-            <div class="boardRanking">
-                <div class="boardRanking_ranking">
-                    <table style="width: 90%;">
-                        <tr><td><a href="/usermypage/user_myinfo">내 정보 수정</a></td></tr>
-                        <tr><td><a href="/usermypage/user_diary" style="color: #5a8100; font-size: 20px;">나의 다이어리</a></td></tr>
-                        <tr><td><a href="/usermypage/user_challenge">나의 챌린지</a></td></tr>
-                        <tr><td><a href="/usermypage/user_subtrainer">구독한 트레이너</a></td></tr>
-                        <tr><td><a href="/usermypage/user_subbookmark">북마크</a></td></tr>
-                        <tr><td><a href="/usermypage/user_boardlist">내 게시물</a></td></tr>
-                        <tr><td><a href="/usermypage/user_messagelist">쪽지함</a></td></tr>
-                        <tr><td><a href="/usermypage/user_applytrainer">트레이너 전환 신청</a></td></tr>
-                    </table>
-                </div>
-            </div>
-        </section>
-    </div>
+<!--    <div id="side_box">-->
+<!--        <section>-->
+<!--            <div class="boardRanking">-->
+<!--                <div class="boardRanking_ranking">-->
+<!--                    <table style="width: 90%;">-->
+<!--                        <tr><td><a href="/usermypage/user_diary" style="color: #5a8100; font-size: 20px;">다이어리 작성</a></td></tr>-->
+<!--                    </table>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </section>-->
+<!--    </div>-->
 
     <div id="main_box">
         <!--        <form id="diaryForm" action="/usermypage/diaryWrite" method="post">-->
@@ -373,7 +369,7 @@
                             <input type="button" class="opensearch">
                         </div>
                         <div class="list_area" id="bf_result" readonly></div>
-                        <div><input type="button" value="전체 삭제" onclick="removebf()"></div>
+                        <div><input type="button" class="removeBtn" value="전체 삭제" onclick="removebf()"></div>
                     </td>
                     <td class="food_area">
                         <div class="lunch_input input_area">
@@ -384,7 +380,7 @@
                             <input type="button" class="opensearch">
                         </div>
                         <div type="text" class="list_area" id="lunch_result"></div>
-                        <div><input type="button" value="전체 삭제" onclick="removelunch()"></div>
+                        <div><input type="button" class="removeBtn" value="전체 삭제" onclick="removelunch()"></div>
                     </td>
                 </tr>
                 <tr>
@@ -398,7 +394,7 @@
                         </div>
                         <div type="text" class="list_area" id="dinner_result"></div>
 
-                        <div><input type="button" value="전체 삭제" onclick="removedinner()"></div>
+                        <div><input type="button" class="removeBtn" value="전체 삭제" onclick="removedinner()"></div>
                     </td>
                     <td class="food_area">
                         <div class="snack_input input_area">
@@ -410,7 +406,7 @@
                         </div>
                         <div type="text" class="list_area" id="snack_result"></div>
 
-                        <div><input type="button" value="전체 삭제" onclick="removesnack()"></div>
+                        <div><input type="button" class="removeBtn" value="전체 삭제" onclick="removesnack()"></div>
                     </td>
                 </tr>
                 <tr>
@@ -425,7 +421,7 @@
                         </div>
                         <div type="text" class="excrcise_list list_area" id="exer_result"></div>
 
-                        <div><input type="button" value="전체 삭제" onclick="removeexer()"></div>
+                        <div><input type="button" class="removeBtn" value="전체 삭제" onclick="removeexer()"></div>
                     </td>
                 </tr>
                 <tr>
@@ -506,7 +502,7 @@
 
                 <tr style="text-align: right;">
 
-                    <td colspan="2">
+                    <td colspan="2" style="padding-top: 30px">
                         <div>
                             <input type="button" class="btnColor"  value="작성취소" onclick="location.href='/usermypage/user_diary'">
                             <input type="button" class="btnColor" value="작성완료" onclick="sendit()">
