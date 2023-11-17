@@ -172,7 +172,7 @@ public class TrainerMatchingServiceImpl implements TrainerMatchingService {
 
     ;
     @Override
-    public List<BoardDTO> getMachingSearchList(String keyword) {
+    public List<TrainerMatchingBoardDTO> getMachingSearchList(String keyword) {
         return tmmapper.getMachingSearchList(keyword);
     }
 }

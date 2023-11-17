@@ -229,15 +229,12 @@ public class MatchingController {
         List<BoardDTO> tipSearchList = boardservice.getTipSearchList(keyword);
         List<BoardDTO> commuSearchList = boardservice.getCommuSearchList(keyword);
 
-        List<BoardDTO> matchingSearchList = MatchingService.getMachingSearchList(keyword);
+        List<TrainerMatchingBoardDTO> matchingSearchList = MatchingService.getMachingSearchList(keyword);
         List<ChallNoticeBoardDTO> challSearchList = challService.getChallSearchList(keyword);
 
         int[] boardCntArr ={infoSearchList.size(),
                 tipSearchList.size(),commuSearchList.size(),matchingSearchList.size(),challSearchList.size()};
 
-//        model.addAttribute("newsSearchList",newsSearchList);
-//        model.addAttribute("exerSearchList",exerSearchList);
-//        model.addAttribute("foodSearchList",foodSearchList);
         model.addAttribute("infoSearchList",infoSearchList);
         model.addAttribute("tipSearchList",tipSearchList);
         model.addAttribute("commuSearchList",commuSearchList);

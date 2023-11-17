@@ -148,3 +148,8 @@ function closeModal() {
     var MessageModalBox = $('.modal_box');
     MessageModalBox.removeClass("active");
 }
+
+//모달 닫았을때 스크롤 올라가기 막음.
+$(document).on('click','a[href="#"]',function (e){
+    e.preventDefault();
+});

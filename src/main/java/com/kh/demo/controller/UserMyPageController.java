@@ -286,6 +286,7 @@ public class UserMyPageController {
     public void replaceDiary(String loginUser, Model model) {
         List<DiaryDTO> diaryList = service.getDiaryList(loginUser);
         model.addAttribute("diaryList", diaryList);
+
     }
 
     @GetMapping("checklist")
