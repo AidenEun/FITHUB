@@ -157,25 +157,32 @@
 	});
 
 	$(document).ready(function() {
+		const searchForm = $("#searchForm");
+        let keyword = searchForm.find("option:selected").val();
+		let type = searchForm.find("input[name='keyword']").val();
         let category = 'board_info';
         loadPage('/usermypage/board_info', 1);
 
         $('#boardInfo').click(function() {
             category = 'board_info';
-            loadPage('/usermypage/board_info', 1);
+			keyword = searchForm.find("option:selected").val();
+			type = searchForm.find("input[name='keyword']").val();
+            loadPage('/usermypage/board_info', 1, keyword, type);
         });
 
         $('#boardProduct').click(function() {
             category = 'board_product';
-            loadPage('/usermypage/board_product', 1);
+            keyword = searchForm.find("option:selected").val();
+			type = searchForm.find("input[name='keyword']").val();
+            loadPage('/usermypage/board_product', 1, keyword, type);
         });
 
 
         // 페이지 데이터를 불러오는 함수
-        function loadPage(url, pageNum) {
+        function loadPage(url, pageNum, keyword, type) {
             $.ajax({
                 url: url,
-                data: { pageNum: pageNum, category: category },
+                data: { pageNum: pageNum, category: category , keyword, type},
                 type: 'GET',
                 dataType: 'json',
                 success: function (data) {
@@ -224,8 +231,11 @@
             $(".changePage").on("click", function (e) {
                 e.preventDefault(); // 기본 동작 중지
 
+
+				let keyword = searchForm.find("option:selected").val();
+				let type = searchForm.find("input[name='keyword']").val();
                 var pageNum = $(this).attr('href');
-                loadPage('/usermypage/' + category, pageNum);
+                loadPage('/usermypage/' + category, pageNum, keyword, type);
             });
         }
 
@@ -265,6 +275,21 @@
             });
 		}
 	});
+
+
+	const searchForm = $("#searchForm");
+	$("#searchForm a").on("click",sendit);
+	function sendit(){
+		if(!searchForm.find("option:selected").val()){
+			alert("검색 기준을 선택하세요!");
+			return false;
+		}
+		if(!document.getElementById("keyword").value){
+			alert("키워드를 입력하세요!");
+			return false;
+		}
+		$(".now_cate").click()
+	}
 </script>
 </body>
 </html>
