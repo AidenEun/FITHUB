@@ -43,12 +43,12 @@ function reportAdminModalDom(data) {
     tableBody.empty();
 
     var row = $('<tr style="text-align: center;">');
-    row.append('<td class="long_text"><a href="#">' + data.reportDTO.reportNum + '</a></td>');
+    row.append('<td class="long_text">' + data.reportDTO.reportNum + '</td>');
     row.append('<td class="long_text"><a href="#" class="open">' + data.reportDTO.userId + '</a></td>');
-    row.append('<td class="long_text"><a href="#">' + data.reportDTO.reportedUser + '</a></td>');
-    row.append('<td class="long_text"><a href="#">' + data.reportDTO.boardCategoryName + '</a></td>');
-    row.append('<td class="long_text"><a href="#">' + data.reportDTO.reportBoardnum + '</a></td>');
-    row.append('<td class="long_text"><a href="#">' + data.reportDTO.reportDate + '</a></td>');
+    row.append('<td class="long_text">' + data.reportDTO.reportedUser + '</td>');
+    row.append('<td class="long_text">' + data.reportDTO.boardCategoryName + '</td>');
+    row.append('<td class="long_text">' + data.reportDTO.reportBoardnum + '</td>');
+    row.append('<td class="long_text">' + data.reportDTO.reportDate + '</td>');
     tableBody.append(row);
 
     var newRow = $('<tr style="text-align: center;">');
@@ -88,6 +88,7 @@ document.querySelector('.confirmReportAdminButton').addEventListener('click', fu
             location.reload();
         } else {
             window.alert('신고 처리 실패. 다시 시도하세요.');
+            location.reload();
         }
     })
     .catch(error => {

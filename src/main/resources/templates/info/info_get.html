@@ -127,6 +127,9 @@
 			font-size: 13px;
 			font-weight: 700 !important;
 		}
+		.displayNoneDiv{
+			display: none;
+		}
 	</style>
 </head>
 <body class="is-preload">
@@ -234,9 +237,11 @@
 									<a class="button" href="javascript:document.boardForm.submit()">삭제</a>
 								</form>
 							</th:block>
-							<div class="displayNoneDiv writer">[[${board.userId}]]</div>
-							<div class="displayNoneDiv boardNum">[[${board.boardNum}]]</div>
-							<div class="displayNoneDiv boardCategory">[[${board.boardCategory}]]</div>
+							<div class="displayNoneDiv">
+								<div class="displayNoneDiv writer">[[${board.userId}]]</div>
+								<div class="displayNoneDiv boardNum">[[${board.boardNum}]]</div>
+								<div class="displayNoneDiv boardCategory">[[${board.boardCategory}]]</div>
+							</div>
 							<div class="btn_area">
 								<th:block th:if="${board.userId != session.loginUser}">
 									<a class="button reportOpen" style="float:left;">글 신고</a>

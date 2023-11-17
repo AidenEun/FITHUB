@@ -110,27 +110,19 @@
 					<tbody id="data-table">
 						<tr th:if="${reportList != null and reportList.size() > 0}" th:each="reportBoard : ${reportList}" id="result_execlist">
 							<td class="long_text">
-								<a href="#">
-									[[${reportBoard.reportNum}]]
-								</a>
+								[[${reportBoard.reportNum}]]
 							</td>
 							<td class="long_text">
 								<a href="#" class="open">[[${reportBoard.userId}]]</a>
 							</td>
 							<td class="long_text">
-								<a href="#">
-									[[${reportBoard.reportBoardnum}]]
-								</a>
+								[[${reportBoard.reportBoardnum}]]
 							</td>
 							<td class="long_text">
-								<a href="#">
-									[[${reportBoard.boardCategoryName}]]
-								</a>
+								[[${reportBoard.boardCategoryName}]]
 							</td>
 							<td class="long_text">
-								<a href="#">
-									[[${reportBoard.reportDate}]]
-								</a>
+								[[${reportBoard.reportDate}]]
 							</td>
 							<td class="long_text">
 								<a href="#" class="reportOpen button">처리하기</a>
@@ -305,21 +297,21 @@
 				data.reportList.forEach(function (reportData) {
 					if (reportData.reportYn === 'n') {
 						var row = $('<tr id="result_execlist">');
-						row.append('<td class="long_text"><a href="#" class="reportNum">' + reportData.reportNum + '</a></td>');
+						row.append('<td class="long_text"><span class="reportNum">' + reportData.reportNum + '</span></td>');
 						row.append('<td class="long_text"><a href="#" class="open">' + reportData.userId + '</a></td>');
-						row.append('<td class="long_text"><a href="#">' + reportData.reportBoardnum + '</a></td>');
-						row.append('<td class="long_text"><a href="#">' + reportData.boardCategoryName + '</a></td>');
-						row.append('<td class="long_text"><a href="#">' + reportData.reportDate + '</a></td>');
+						row.append('<td class="long_text">' + reportData.reportBoardnum + '</td>');
+						row.append('<td class="long_text">' + reportData.boardCategoryName + '</td>');
+						row.append('<td class="long_text">' + reportData.reportDate + '</td>');
 						row.append('<td class="long_text"><a href="#" class="reportAdminOpen button">처리하기</a></td>');
 						tableBody.append(row);
 					}
 					else if (reportData.reportYn === 'y') {
 						var row = $('<tr id="result_execlist">');
-						row.append('<td class="long_text"><a href="#" class="reportNum">' + reportData.reportNum + '</a></td>');
+						row.append('<td class="long_text"><span class="reportNum">' + reportData.reportNum + '</span></td>');
 						row.append('<td class="long_text"><a href="#" class="open">' + reportData.userId + '</a></td>');
-						row.append('<td class="long_text"><a href="#">' + reportData.reportBoardnum + '</a></td>');
-						row.append('<td class="long_text"><a href="#">' + reportData.boardCategoryName + '</a></td>');
-						row.append('<td class="long_text"><a href="#">' + reportData.reportDate + '</a></td>');
+						row.append('<td class="long_text">' + reportData.reportBoardnum + '</td>');
+						row.append('<td class="long_text">' + reportData.boardCategoryName + '</td>');
+						row.append('<td class="long_text">' + reportData.reportDate + '</td>');
 						row.append('<td class="long_text"><a href="#" class="reportAdminOpen button disabled">처리하기</a></td>');
 						tableBody.append(row);
 					}

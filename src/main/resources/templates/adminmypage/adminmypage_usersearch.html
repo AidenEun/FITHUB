@@ -173,8 +173,8 @@
 					<table style="text-align: center; margin-top: 30px;">
 						<thead>
 							<tr style="font-weight: bold;">
-								<td class="long_text">닉네임</td>
 								<td class="long_text">아이디</td>
+								<td class="long_text">닉네임</td>
 								<td class="long_text">성별</td>
 								<td class="long_text">전화번호</td>
 								<td class="long_text">신고당한 횟수</td>
@@ -304,19 +304,19 @@
 				var tableBody = $('<tbody>');
 
 				var tableHeadRow = $('<tr style="font-weight: bold; font-size: 14px; background-color: white">');
-				tableHeadRow.append('<td class="long_text">닉네임</td>');
 				tableHeadRow.append('<td class="long_text">아이디</td>');
+				tableHeadRow.append('<td class="long_text">닉네임</td>');
 				tableHeadRow.append('<td class="long_text">성별</td>');
 				tableHeadRow.append('<td class="long_text">트레이너 전환 날짜</td>');
 				tableHeadRow.append('<td class="long_text">신고 당한 횟수</td>');
 				tableHead.append(tableHeadRow);
 
 				var row = $('<tr id="result_execlist">');
-				row.append('<td class="long_text"><a href="#">' + data.trainerDTO.trainerNickname + '</a></td>');
 				row.append('<td class="long_text"><a href="#" class="open">' + data.trainerDTO.trainerId + '</a></td>');
-				row.append('<td class="long_text"><a href="#">' + data.trainerDTO.trainerGender + '</a></td>');
-				row.append('<td class="long_text"><a href="#">' + data.trainerDTO.transferdate + '</a></td>');
-				row.append('<td class="long_text"><a href="#">' + data.trainerDTO.trainerReportedcnt + '</a></td>');
+				row.append('<td class="long_text">' + data.trainerDTO.trainerNickname + '</td>');
+				row.append('<td class="long_text">' + data.trainerDTO.trainerGender + '</td>');
+				row.append('<td class="long_text">' + data.trainerDTO.transferdate + '</td>');
+				row.append('<td class="long_text">' + data.trainerDTO.trainerReportedcnt + '</td>');
 				tableBody.append(row);
 
 				$('#data-table').append(tableHead);
@@ -332,19 +332,19 @@
 				var tableBody = $('<tbody>');
 
 				var tableHeadRow = $('<tr style="font-weight: bold; font-size: 14px; background-color: white">');
-				tableHeadRow.append('<td class="long_text">닉네임</td>');
 				tableHeadRow.append('<td class="long_text">아이디</td>');
+				tableHeadRow.append('<td class="long_text">닉네임</td>');
 				tableHeadRow.append('<td class="long_text">성별</td>');
 				tableHeadRow.append('<td class="long_text">가입일자</td>');
 				tableHeadRow.append('<td class="long_text">신고 당한 횟수</td>');
 				tableHead.append(tableHeadRow);
 
 				var row = $('<tr id="result_execlist">');
-				row.append('<td class="long_text"><a href="#">' + data.userDTO.userNickname + '</a></td>');
 				row.append('<td class="long_text"><a href="#" class="open">' + data.userDTO.userId + '</a></td>');
-				row.append('<td class="long_text"><a href="#">' + data.userDTO.userGender + '</a></td>');
-				row.append('<td class="long_text"><a href="#">' + data.userDTO.userJoindate + '</a></td>');
-				row.append('<td class="long_text"><a href="#">' + data.userDTO.userReportedcnt + '</a></td>');
+				row.append('<td class="long_text">' + data.userDTO.userNickname + '</td>');
+				row.append('<td class="long_text">' + data.userDTO.userGender + '</td>');
+				row.append('<td class="long_text">' + data.userDTO.userJoindate + '</td>');
+				row.append('<td class="long_text">' + data.userDTO.userReportedcnt + '</td>');
 				tableBody.append(row);
 
 				$('#data-table').append(tableHead);
@@ -465,11 +465,11 @@
 			if (userList != null && userList.length > 0) {
 				userList.forEach(function (userData) {
 					var row = $('<tr id="result_execlist">');
-					row.append('<td class="long_text"><a href="#">' + userData.userNickname + '</a></td>');
 					row.append('<td class="long_text"><a href="#" class="open">' + userData.userId + '</a></td>');
-					row.append('<td class="long_text"><a href="#">' + userData.userGender + '</a></td>');
-					row.append('<td class="long_text"><a href="#">' + userData.userTel + '</a></td>');
-					row.append('<td class="long_text"><a href="#">' + userData.userReportedcnt + '</a></td></tr>');
+					row.append('<td class="long_text">' + userData.userNickname + '</td>');
+					row.append('<td class="long_text">' + userData.userGender + '</td>');
+					row.append('<td class="long_text">' + userData.userTel + '</td>');
+					row.append('<td class="long_text">' + userData.userReportedcnt + '</td></tr>');
 					tableBody.append(row);
 				});
 			}
@@ -492,11 +492,11 @@
 			if (trainerList != null && trainerList.length > 0) {
 				trainerList.forEach(function (trainerData) {
 					var row = $('<tr id="result_execlist">');
-					row.append('<td class="long_text"><a href="#">' + trainerData.trainerNickname + '</a></td>');
 					row.append('<td class="long_text"><a href="#" class="open">' + trainerData.trainerId + '</a></td>');
-					row.append('<td class="long_text"><a href="#">' + trainerData.trainerGender + '</a></td>');
-					row.append('<td class="long_text"><a href="#">' + trainerData.trainerTel + '</a></td>');
-					row.append('<td class="long_text"><a href="#">' + trainerData.trainerReportedcnt + '</a></td>');
+					row.append('<td class="long_text">' + trainerData.trainerNickname + '</td>');
+					row.append('<td class="long_text">' + trainerData.trainerGender + '</td>');
+					row.append('<td class="long_text">' + trainerData.trainerTel + '</td>');
+					row.append('<td class="long_text">' + trainerData.trainerReportedcnt + '</td>');
 					tableBody.append(row);
 				});
 			}

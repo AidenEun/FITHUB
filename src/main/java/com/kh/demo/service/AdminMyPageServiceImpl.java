@@ -290,6 +290,7 @@ public class AdminMyPageServiceImpl implements AdminMyPageService {
 
     @Override
     public void signUpCancel(Long signupNum, String userId) {
+        System.out.println(userId);
         adminMyPageMapper.insertMessageCancelSignUp(userId);
         adminMyPageMapper.deleteSignUp(signupNum);
     }

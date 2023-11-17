@@ -104,20 +104,16 @@
 					<tbody id="data-table">
 						<tr th:if="${signUpList != null and signUpList.size() > 0}" th:each="signUpBoard : ${signUpList}" id="result_execlist">
 							<td class="long_text">
-								<a href="#" class="signupNum">[[${signUpBoard.signupNum}]]</a>
+								<span href="#" class="signupNum">[[${signUpBoard.signupNum}]]</span>
 							</td>
 							<td class="long_text">
 								<a href="#" class="open">[[${signUpBoard.userId}]]</a>
 							</td>
 							<td class="long_text">
-								<a href="#">
-									[[${signUpBoard.trainerPart}]]
-								</a>
+								[[${signUpBoard.trainerPart}]]
 							</td>
 							<td class="long_text">
-								<a href="#">
-									[[${signUpBoard.trainerCareer}]]
-								</a>
+								[[${signUpBoard.trainerCareer}]]
 							</td>
 							<td class="long_text">
 								<a href="#" class="button signUpOpen">처리하기</a>
