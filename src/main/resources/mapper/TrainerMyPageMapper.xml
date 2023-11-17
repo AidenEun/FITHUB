@@ -225,14 +225,13 @@
 	<!--북마크-->
 	<!--bookmark_idx : regdate 로 수정 필요 : 임시값이 null이라 오류로 인해-->
 	<select id="getBookmarkTotal">
-		select count(*) from bookmark where user_id=#{trainerId} and
-		(board_category='infoNew' or board_category='infoExer' or board_category ='infoFood' or board_category='tip'
-		or board_category='comFree' or board_category='comExer' or board_category='comFood' or board_category='comPhoto'
-		or board_category='comQna')
+		select count(*) from board,bookmark where bookmark.user_id=#{trainerId}
+		and board.board_category =bookMark.board_category and board.board_num=bookMark.board_num
 		and <include refid="criBookmark"></include>	bookmark_idx > 0
 	</select>
 	<select id="getBookmarkProductTotal">
-		select count(*) from bookmark where user_id=#{trainerId} and (board_category='prodExer' or board_category='prodFood')
+		select count(*) from product_board,bookmark where bookmark.user_id=#{trainerId}
+		and product_board.category =bookMark.board_category and product_board.board_num=bookMark.board_num
 		and <include refid="criBookmark"></include>	bookmark_idx > 0
 	</select>
 	<select id="getBookmarkLastNum">
@@ -248,18 +247,17 @@
 		and board.board_category =bookMark.board_category and board.board_num=bookMark.board_num and
 		<include refid="criBookmark"></include>
 		<![CDATA[
-			0 < bookmark.regdate order by bookmark.regdate desc limit #{cri.startrow},#{cri.amount}
+			0 < bookmark.bookmark_idx order by bookmark.regdate desc limit #{cri.startrow},#{cri.amount}
 		]]>
 
 	</select><select id="getMyBookmarkProduct">
-	select * from product_board,bookmark where bookmark.user_id=#{trainerId}
-	and product_board.category =bookMark.board_category and product_board.board_num=bookMark.board_num and
-	<include refid="criBookmark"></include>
-	<![CDATA[
-			0 < bookmark.regdate order by bookmark.regdate desc limit #{cri.startrow},#{cri.amount}
-	]]>
-
-</select>
+		select * from product_board,bookmark where bookmark.user_id=#{trainerId}
+		and product_board.category =bookMark.board_category and product_board.board_num=bookMark.board_num and
+		<include refid="criBookmark"></include>
+		<![CDATA[
+				0 < bookmark.bookmark_idx order by bookmark.regdate desc limit #{cri.startrow},#{cri.amount}
+		]]>
+	</select>
 
 	<!--내구독-->
 	<select id="getMyScribe">

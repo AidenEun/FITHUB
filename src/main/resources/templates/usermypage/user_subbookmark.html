@@ -46,8 +46,8 @@
 
 		<!-- Content -->
 		<div class="content">
-			<div id="boardInfo" class="button cate now_cate" style="margin-right: 10px;">정보게시판</div>
-			<div id="boardProduct" class="button cate not_cate" style="margin-right: 10px;">제품추천게시판</div>
+			<div id="board_info" class="button cate now_cate" style="margin-right: 10px;">정보게시판</div>
+			<div id="board_product" class="button cate not_cate" style="margin-right: 10px;">제품추천게시판</div>
 			<!-- 게시글 리스트 띄우는 테이블 -->
 			<table class="list" style="text-align: center;">
 				<thead id="data-table-head">
@@ -80,8 +80,9 @@
 			<!-- 글쓰기 버튼 배치하는 테이블 -->
 
 			<form id="searchForm" th:action="@{/usermypage/user_subbookmark}">
+
 				<div class="search_area flex">
-					<select name="type" style="width: 20%; margin-right:10px;">
+					<select name="type" id="type" style="width: 20%; margin-right:10px;">
 						<option value="" th:selected="${pageMaker.cri.type == null}">검색</option>
 						<option value="T" th:selected="${pageMaker.cri.type == 'T'}">제목</option>
 						<option value="C" th:selected="${pageMaker.cri.type == 'C'}">내용</option>
@@ -146,6 +147,8 @@
 <script th:inline="javascript">
 	const cate = document.querySelectorAll('.cate');
 	let nowCate = document.querySelector('.now_cate');
+	const searchForm = $("#searchForm");
+
 
 	cate.forEach(function(btn) {
 		btn.addEventListener('click', function() {
@@ -164,24 +167,52 @@
 	});
 
 	$(document).ready(function() {
-		const searchForm = $("#searchForm");
-        let keyword = searchForm.find("option:selected").val();
-		let type = searchForm.find("input[name='keyword']").val();
-        let category = 'board_info';
-        loadPage('/usermypage/board_info', 1);
 
-        $('#boardInfo').click(function() {
+
+		$("#searchForm a").on("click",sendit);
+		function sendit(){
+			if(!searchForm.find("option:selected").val()){
+				alert("검색 기준을 선택하세요!");
+				return false;
+			}
+			if(!document.getElementById("keyword").value){
+				alert("키워드를 입력하세요!");
+				return false;
+			}
+			var category = nowCate.id;
+			let type = searchForm.find("option:selected").val();
+			let keyword = searchForm.find("input[name='keyword']").val();
+			loadPage('/usermypage/' + category, 1, keyword, type);
+		}
+
+        let category = 'board_info';
+		let type = searchForm.find("option:selected").val();
+		let keyword = searchForm.find("input[name='keyword']").val();
+
+		alert("keyword: "+keyword);
+		alert("type: "+type);
+        loadPage('/usermypage/board_info', 1, keyword, type);
+
+
+
+        $('#board_info').click(function() {
+			searchForm.find("input[name='keyword']").val("");
+			searchForm.find("option").eq(0).prop("selected", true);
             category = 'board_info';
-			keyword = searchForm.find("option:selected").val();
-			type = searchForm.find("input[name='keyword']").val();
+			let type = searchForm.find("option:selected").val();
+			let keyword = searchForm.find("input[name='keyword']").val();
+
             loadPage('/usermypage/board_info', 1, keyword, type);
         });
 
-        $('#boardProduct').click(function() {
+        $('#board_product').click(function() {
+			searchForm.find("input[name='keyword']").val("");
+			searchForm.find("option").eq(0).prop("selected", true);
             category = 'board_product';
-            keyword = searchForm.find("option:selected").val();
-			type = searchForm.find("input[name='keyword']").val();
-            loadPage('/usermypage/board_product', 1, keyword, type);
+			let type = searchForm.find("option:selected").val();
+			let keyword = searchForm.find("input[name='keyword']").val();
+
+            loadPage('/usermypage/board_product',1 , keyword, type);
         });
 
 
@@ -189,7 +220,7 @@
         function loadPage(url, pageNum, keyword, type) {
             $.ajax({
                 url: url,
-                data: { pageNum: pageNum, category: category , keyword, type},
+                data: { pageNum: pageNum, category: category , keyword: keyword, type: type },
                 type: 'GET',
                 dataType: 'json',
                 success: function (data) {
@@ -239,8 +270,8 @@
                 e.preventDefault(); // 기본 동작 중지
 
 
-				let keyword = searchForm.find("option:selected").val();
-				let type = searchForm.find("input[name='keyword']").val();
+				type = searchForm.find("option:selected").val();
+				keyword = searchForm.find("input[name='keyword']").val();
                 var pageNum = $(this).attr('href');
                 loadPage('/usermypage/' + category, pageNum, keyword, type);
             });
@@ -284,19 +315,7 @@
 	});
 
 
-	const searchForm = $("#searchForm");
-	$("#searchForm a").on("click",sendit);
-	function sendit(){
-		if(!searchForm.find("option:selected").val()){
-			alert("검색 기준을 선택하세요!");
-			return false;
-		}
-		if(!document.getElementById("keyword").value){
-			alert("키워드를 입력하세요!");
-			return false;
-		}
-		$(".now_cate").click()
-	}
+
 </script>
 </body>
 </html>

@@ -140,7 +140,7 @@ public class TrainerMyPageController {
 
     @GetMapping("board_info")
     @ResponseBody
-    public String board_info(@RequestParam("pageNum") int pageNum, HttpServletRequest req) throws Exception{
+    public String board_info(@RequestParam("pageNum") int pageNum, @RequestParam("keyword") String keyword, @RequestParam("type") String type,HttpServletRequest req) throws Exception{
         HttpSession session = req.getSession();
         String TrainerId = (String) session.getAttribute("loginUser");
 
@@ -148,6 +148,8 @@ public class TrainerMyPageController {
 
         ObjectNode json = JsonNodeFactory.instance.objectNode();
         Criteria cri = new Criteria(pageNum, 10);
+        cri.setKeyword(keyword);
+        cri.setType(type);
 
         List<BoardDTO> list = service.getMyBookmark(cri,id.getTrainerId());
         PageDTO pageDTO = new PageDTO(service.getBookmarkTotal(cri,id.getTrainerId()), cri);
@@ -159,7 +161,7 @@ public class TrainerMyPageController {
 
     @GetMapping("board_product")
     @ResponseBody
-    public String board_product(@RequestParam("pageNum") int pageNum, HttpServletRequest req) throws Exception {
+    public String board_product(@RequestParam("pageNum") int pageNum, @RequestParam("keyword") String keyword, @RequestParam("type") String type, HttpServletRequest req) throws Exception {
         HttpSession session = req.getSession();
         String TrainerId = (String) session.getAttribute("loginUser");
 
@@ -167,6 +169,8 @@ public class TrainerMyPageController {
 
         ObjectNode json = JsonNodeFactory.instance.objectNode();
         Criteria cri = new Criteria(pageNum, 10);
+        cri.setKeyword(keyword);
+        cri.setType(type);
 
         List<ProductBoardDTO> list = service.getMyBookmarkProduct(cri,id.getTrainerId());
         PageDTO pageDTO = new PageDTO(service.getBookmarkProductTotal(cri,id.getTrainerId()), cri);
