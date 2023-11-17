@@ -118,3 +118,32 @@ width: 40px;
     width: 5px;
     height:5px;
 }
+.trainer_profile a:hover{
+    color: red;
+    font-weight: bold;
+}
+.subscribe_buttons{
+height:40px;
+}
+.subscribe{
+ padding: 10px 15px 10px 30px;
+    text-align: center;
+        cursor: pointer;
+         outline: none;
+         color: black !important;
+         background-color: #ebede1;
+        border: none;
+         border-radius: 15px;
+        box-shadow: 0 4px #999;
+}
+.subscribe:hover {background-color: #d1d1a3}
+
+.subscribe img{
+    width: 20px;
+    height: 20px;
+    position:relative;
+    right:15px;
+}
+.close{
+border-bottom:none;
+}

@@ -80,9 +80,7 @@
         values (#{userId}, #{trainerId})
     </insert>
     <select id="getutBytrainerId">
-        SELECT *
-        FROM u_t_matching
-        WHERE trainer_id = #{trainerId}
+        SELECT * FROM u_t_matching WHERE trainer_id = #{trainerId}
     </select>
 
 <!--    통합검색-->
@@ -90,10 +88,26 @@
         SELECT * FROM trainer_matching_board where ((board_title like('%${keyword}%')) or (board_content like('%${keyword}%')) or (trainer_id like('%${keyword}%')))
         order by board_num asc;
     </select>
+
     <insert id="saveMessage">
         insert into message (send_id, receive_id, message_content)
         values (#{sendId}, #{receiveId}, #{messageContent})
     </insert>
+
+    <select id="getcheckSubs">
+        SELECT * FROM subscribe WHERE (user_id, trainer_id)
+        value (#{sendId}, #{receiveId})
+    </select>
+    <delete id="getdeleteSubs">
+        DELETE FROM subscribe
+        WHERE user_id = #{sendId} AND trainer_id = #{receiveId};
+    </delete>
+    <insert id="getinsertSubs">
+        insert into subscribe (user_id, trainer_id)
+        values (#{sendId}, #{receiveId})
+    </insert>
+
+
 
 <!--    통합검색 디테일-->
     <select id="get12matchingSearchList">
@@ -111,4 +125,5 @@
         where (board_title like ('%${keyword}%') or board_content like ('%${keyword}%') or
                trainer_id like ('%${keyword}%'));
     </select>
+
 </mapper>

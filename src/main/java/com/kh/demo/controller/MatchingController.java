@@ -209,7 +209,7 @@ public class MatchingController {
         return "success";
     }
 
-    @GetMapping("/totalSearch")
+    @GetMapping("totalSearch")
     public void search(String keyword,Model model){
 //        System.out.println(keyword);
 
@@ -229,15 +229,12 @@ public class MatchingController {
         List<BoardDTO> tipSearchList = boardservice.getTipSearchList(keyword);
         List<BoardDTO> commuSearchList = boardservice.getCommuSearchList(keyword);
 
-        List<BoardDTO> matchingSearchList = MatchingService.getMachingSearchList(keyword);
+        List<TrainerMatchingBoardDTO> matchingSearchList = MatchingService.getMachingSearchList(keyword);
         List<ChallNoticeBoardDTO> challSearchList = challService.getChallSearchList(keyword);
 
         int[] boardCntArr ={infoSearchList.size(),
                 tipSearchList.size(),commuSearchList.size(),matchingSearchList.size(),challSearchList.size()};
 
-//        model.addAttribute("newsSearchList",newsSearchList);
-//        model.addAttribute("exerSearchList",exerSearchList);
-//        model.addAttribute("foodSearchList",foodSearchList);
         model.addAttribute("infoSearchList",infoSearchList);
         model.addAttribute("tipSearchList",tipSearchList);
         model.addAttribute("commuSearchList",commuSearchList);
@@ -250,5 +247,36 @@ public class MatchingController {
 
 
     }
+
+    @PostMapping("subscribe_check")
+    public String checkSubscription(@RequestParam("sendId") String userId, @RequestParam("trainerId") String trainerId) {
+        SubscribeDTO newSubscribe = new SubscribeDTO();
+        newSubscribe.setUserId(userId);
+        newSubscribe.setTrainerId(trainerId);
+        System.out.println("checkSubs"+newSubscribe);
+        SubscribeDTO isSubscribed = MatchingService.checkSubs(newSubscribe);
+
+        if (isSubscribed != null) {
+            return "subscribed";
+        } else {
+            return "unsubscribed";
+        }
+    }
+    @PostMapping("subscribe_click")
+    public String clickSubscription(@RequestParam("sendId") String userId, @RequestParam("trainerId") String trainerId) {
+        SubscribeDTO newSubscribe = new SubscribeDTO();
+        newSubscribe.setUserId(userId);
+        newSubscribe.setTrainerId(trainerId);
+
+        System.out.println("clickSubs"+newSubscribe);
+        SubscribeDTO isSubscribed = MatchingService.clickSubs(newSubscribe);
+
+        if (isSubscribed != null) {
+            return "subscribed";
+        } else {
+            return "unsubscribed";
+        }
+    }
+
 
 }

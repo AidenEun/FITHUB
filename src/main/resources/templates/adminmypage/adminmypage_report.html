@@ -19,48 +19,6 @@
 	<link rel="stylesheet" th:href="@{/assets/css/reportAdminModal.css}">
 </head>
 <style>
-	.top_img_box{
-		width: 100%;
-		height: 310px;
-		margin-bottom: 50px;
-		background-color: red;
-	}
-
-	.top_img_box > img {
-		width: 100%;
-		height: 100%;
-	}
-
-	#main {
-		padding: 0;
-	}
-
-	.wrapper {
-		padding: 0;
-		margin-bottom: 100px;
-	}
-
-	#header {
-		background-color: #8FA746;
-	}
-
-	#footer {
-		background-color: #606C3A;
-	}
-
-	#header nav > ul > li a {
-		color: white;
-	}
-
-	#header h1 a {
-		color: white;
-	}
-
-	#header .main ul li > a {
-		color: white;
-
-	}
-
 	a {
 		border-bottom: none;
 	}
@@ -71,18 +29,6 @@
   		white-space: nowrap;
   		overflow: hidden;
 		text-overflow: ellipsis;
-	}
-
-	.nowPage {
-		background-color: #444 !important;
-		color: #fff;
-		font-size: 16px;
-		padding: 5px 10px;
-	}
-
-	.changePage {
-		font-size: 16px;
-		padding: 5px 10px;
 	}
 
 	.pageTr {
@@ -143,8 +89,6 @@
 		<div class="inner">
 
 
-
-
 			<!-- Content -->
 			<div class="content">
 				<div id="allReport" class="button cate now_cate" style="margin-right: 10px;">전체</div>
@@ -154,7 +98,7 @@
 
 				<table style="text-align: center; margin-top: 20px;">
 					<thead>
-						<tr style="font-weight: bold;">
+						<tr style="font-weight: bold;" class="table_test">
 							<td class="long_text">신고 번호</td>
 							<td class="long_text">신고 유저</td>
 							<td class="long_text">게시글 번호</td>

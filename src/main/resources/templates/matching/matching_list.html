@@ -59,39 +59,43 @@
 		background-color: #304400;
 	}
 
+/* CSS */
 .trainerRanking {
     border-collapse: collapse;
+    display: flex;
+}
+
+.trainerRanking td {
+    text-align: center;
+    padding: 10px;
+
+    flex-grow: 1;
 }
 
 .trainerRanking img {
     width: 100%;
-    height: auto; /* 이미지 비율 유지 */
+    height: auto;
+    display: block; /* 이미지가 줄 바꿈 없이 나타나도록 합니다. */
+    margin-bottom: 5px; /* 이미지와 닉네임 간격 조절 */
 }
 
-.ranking_box_view {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    width: 245px;
-}
-
-/* 닉네임 스타일링 */
-.ranking_box_view span {
+.trainerRanking span {
     display: block;
-    margin-top: 5px; /* 닉네임과 이미지 사이의 간격 조절 */
+    background-color: #ebede1 !important;
+}
+.trainerRanking span {
+    display: block;
+    background-color: #ebede1 !important;
 }
 
 
-#trainerRankling_name{
-border: 1px solid black;
+.rank_number th{
 	height: 50px;
-	text-align: center;
-	}
-	#trainerRankling_name td{
-border: 1px solid black;
-	}
+	font-size: 20px;
+	font-weight: bold;
+}
+
+
 	.Ma_write tr{
 	background-color: white !important;
 	border: none !important;
@@ -121,7 +125,7 @@ border: 1px solid black;
 	display: flex;
 }
 #list_info{
-width: 540px;
+width: 100%;
 }
 .profile-file{
 border:1px solid black;
@@ -130,6 +134,7 @@ height:152.469px;
 }
 .open:hover{
 	color: red;
+	font-weight:bold;
 }
 #list_table:hover{
 	transform: scale(1.02);
@@ -174,12 +179,14 @@ height:152.469px;
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">
 
-	<div class="inner">
-
+	<div class="header_box">
 		<header class="test12">
 			<p id="mainText">트레이너 매칭</p>
 			<p id="subText">매칭 페이지</p>
 		</header>
+	</div>
+
+	<div class="inner">
 
 		<!-- Content -->
 		<div class="content">
@@ -187,47 +194,22 @@ height:152.469px;
 				<h2>트레이너 랭킹</h2>
 				<div>
 					<table class="trainerRanking">
-						<th:block th:if="${list != null and list.size() > 0}" th:each="board, iterStat : ${list}">
-							<div class="ranking_box_view">
-							<tr>
-								<!-- 첫 번째 이미지와 닉네임을 세로로 표시 -->
-								<td th:if="${iterStat.index == 0}">
-									<div class="ranking_box_view">
-										<th:block th:if="${board.profileInfo != null}">
-											<img style="width:245px; height:200;" th:src="@{/matching/thumbnail (sysName=${board.profileInfo.sysName})}">
-										</th:block>
-										<span th:text="${board.trainerInfo.trainerNickname}"></span>
-									</div>
-								</td>
-								<!-- 두 번째 이미지와 닉네임을 가로로 표시 -->
-								<td th:if="${iterStat.index == 1}">
-									<div class="ranking_box_view">
-										<th:block th:if="${board.profileInfo != null}">
-											<img style="width:245px; height:200;" th:src="@{/matching/thumbnail (sysName=${board.profileInfo.sysName})}">
-										</th:block>
-										<span th:text="${board.trainerInfo.trainerNickname}"></span>
-									</div>
-								</td>
-								<!-- 세 번째 이미지와 닉네임을 가로로 표시 -->
-								<td th:if="${iterStat.index == 2}">
-									<div class="ranking_box_view">
-										<th:block th:if="${board.profileInfo != null}">
-											<img style="width:245px; height:200;" th:src="@{/matching/thumbnail (sysName=${board.profileInfo.sysName})}">
-										</th:block>
-										<span th:text="${board.trainerInfo.trainerNickname}"></span>
-									</div>
-								</td>
-								<!-- 네 번째 이미지와 닉네임을 가로로 표시 -->
-								<td th:if="${iterStat.index == 3}">
-									<div class="ranking_box_view">
-										<th:block th:if="${board.profileInfo != null}">
-											<img style="width:245px; height:200;" th:src="@{/matching/thumbnail (sysName=${board.profileInfo.sysName})}">
-										</th:block>
-										<span th:text="${board.trainerInfo.trainerNickname}"></span>
-									</div>
-								</td>
-							</div>
-						</th:block>
+						<tr class="rank_number">
+							<th>1위</th>
+							<th>2위</th>
+							<th>3위</th>
+							<th>4위</th>
+						</tr>
+						<tr th:if="${list != null and list.size() > 0}">
+							<td th:each="board, iterStat : ${list}" th:if="${iterStat.index < 4}">
+								<div class="ranking_box_view">
+									<th:block th:if="${board.profileInfo != null}">
+										<img style="width:100%; height:180;" th:src="@{/matching/thumbnail (sysName=${board.profileInfo.sysName})}">
+									</th:block>
+									<a href="#" class="open"><span th:text="${board.trainerInfo.trainerNickname}"></span></a>
+								</div>
+							</td>
+						</tr>
 					</table>
 				</div>
 			</div>
@@ -244,7 +226,7 @@ height:152.469px;
 						</tr>
 					</table>
 
-					<div id="map" style="width:740px;height:250px;"></div>
+					<div id="map" style="width:100%;height:250px;"></div>
 				<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9d457fe0b04b983671f48d03d84f2fdb"></script>
 				<script>
 					var mapContainer = document.getElementById('map'), // 지도를 표시할 div
@@ -327,21 +309,21 @@ height:152.469px;
 
 							</div>
 							</a>
-							<table class="pagination">
-								<tr align="center" valign="middle">
-									<td>
-										<th:block th:if="${pageMaker != null}">
+						</th:block>
+						<table class="pagination">
+							<tr align="center" valign="middle">
+								<td>
+									<th:block th:if="${pageMaker != null}">
 										<a class="changePage" th:if="${pageMaker.prev}" th:href="${pageMaker.startPage-1}">&lt;</a>
 										<th:block th:each="i : ${#numbers.sequence(pageMaker.startPage,pageMaker.endPage)}">
 											<span class="nowPage" th:text="${i}" th:if="${pageMaker.cri.pagenum == i}"></span>
 											<a class="changePage" th:href="${i}" th:text="${i}" th:unless="${pageMaker.cri.pagenum == i}"></a>
 										</th:block>
 										<a class="changePage" th:if="${pageMaker.next}" th:href="${pageMaker.endPage+1}">&gt;</a>
-										</th:block>
-									</td>
-								</tr>
-							</table>
-						</th:block>
+									</th:block>
+								</td>
+							</tr>
+						</table>
 					</div>
 
 

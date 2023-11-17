@@ -12,6 +12,7 @@
 	<link rel="stylesheet" th:href="@{/assets/css/index.css}" />
 	<noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
 	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
+	<link rel="stylesheet" th:href="@{/assets/css/common.css}" />
 	<link rel="stylesheet" th:href="@{/assets/css/profileModal.css}">
 </head>
 <style>
@@ -138,6 +139,14 @@
 	#pagination {margin:10px auto;text-align: center;}
 	#pagination a {display:inline-block;margin-right:10px;}
 	#pagination .on {font-weight: bold; cursor: default;color:#777;}
+
+	.wrapper.sidebar > .inner > .sidebar {
+	    width: 30%;
+	}
+
+	.wrapper.sidebar > .inner > .content {
+    	width: 70%;
+	}
 </style>
 <body class="is-preload">
 
@@ -145,20 +154,19 @@
 	<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin})}"></th:block>
 
 	<!-- Modal -->
-	<th:block th:replace="~{layout/profileModal::profileModal()}"></th:block>
+	<th:block th:replace="~{layout/profileModal::profileModal}"></th:block>
 
 	<!-- Main -->
 	<section id="main" class="wrapper sidebar left">
-		<div class="top_img_box">
-			<img src="/images/pic01.jpg" alt="">
+
+		<div class="header_box">
+			<header class="test12">
+				<p id="mainText"></p>
+				<p id="subText">보건소 찾기</p>
+			</header>
 		</div>
 
 		<div class="inner">
-
-			<header class="major">
-				<h2>보건소 찾기</h2>
-				<p>지역명을 입력해보세요</p>
-			</header>
 
 
 

@@ -53,7 +53,7 @@ public class SearchController {
         List<BoardDTO> commuSearchList = boardservice.getCommuSearchList(keyword);
         System.out.println(commuSearchList.size());
 
-        List<BoardDTO> matchingSearchList = tmatchingService.getMachingSearchList(keyword);
+        List<TrainerMatchingBoardDTO> matchingSearchList = tmatchingService.getMachingSearchList(keyword);
         List<ChallNoticeBoardDTO> challSearchList = challService.getChallSearchList(keyword);
 
         //전체 보드 테이블 게시글 수 찾기

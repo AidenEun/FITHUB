@@ -64,9 +64,12 @@ function modal(data) {
             modalBox.find('.img_area img').attr('alt', receiveId);
             modalBox.find('.name a').text(data.trainerDTO.trainerNickname + '(' + receiveId + ')');
             modalBox.find('.message').attr('alt', receiveId);
-            modalBox.find('.application_buttons').html(
-                                                        '<p class="trainer_profile"><a>프로필 자세히 보기</a></p>'
-                                                    );
+            modalBox.find('.application_buttons').html('<p class="trainer_profile"><a href="/trainermypage/trainer_profile">프로필 자세히 보기</a></p>');
+
+                        modalBox.find('.application_buttons').on('click', 'trainer_profile a', function(event) {
+                            event.preventDefault();
+                            window.location.href = $(this).attr('href');
+                        });
 
             modalBox.find('.profile_userId a').text(receiveId);
 
@@ -87,9 +90,70 @@ function modal(data) {
             modalBox.find('.img_area img').attr('alt', receiveId);
             modalBox.find('.name a').text(data.userDTO.userNickname + '(' + receiveId + ')');
             modalBox.find('.message').attr('alt', receiveId);
-            modalBox.find('.application_buttons').html(
-                                                        '<p class="trainer_profile"><a>프로필 자세히 보기</a></p>'
-                                                    );
+
+            modalBox.find('.application_buttons').html('<p class="trainer_profile"><a href="/trainermypage/trainer_profile">프로필 자세히 보기</a></p>');
+
+            modalBox.find('.application_buttons').on('click', 'trainer_profile a', function(event) {
+                event.preventDefault();
+                window.location.href = $(this).attr('href');
+            });
+
+
+            // 함수를 통해 구독 상태를 확인하고, 이에 따라 버튼을 업데이트합니다.
+            function checkSubscription() {
+                // AJAX를 사용하여 서버로부터 구독 상태 확인
+                // 예시로서, 서버 응답이 "subscribed" 또는 "unsubscribed"로 가정합니다.
+                $.ajax({
+                    url: '/matching/subscribe_check',
+                    method: 'POST',
+                    data: { sendId: sendId, receiveId: receiveId },
+                    success: function (response) {
+                        updateSubscribeButton(response);
+                    },
+                    error: function (error) {
+                        console.error('구독 상태를 가져오는 데 실패했습니다.', error);
+                    }
+                });
+            }
+
+            // 구독 상태에 따라 버튼을 업데이트합니다.
+            function updateSubscribeButton(response) {
+                if (response === "subscribed") {
+                    modalBox.find('.subscribeButton').html('<a href="#" class="subscribe"><img src="/images/subsIng.png" alt="구독O">구독 중</a>');
+                } else if(response === "unsubscribed"){
+                    modalBox.find('.subscribeButton').html('<a href="#" class="subscribe"><img src="/images/subsCancel.jpg" alt="구독X">구독</a>');
+                } else{
+                    console.log("데이터를 확인해주세요");
+                }
+            }
+
+            // 페이지 로드 시 구독 상태 확인 후 버튼 업데이트
+            checkSubscription();
+
+            // 클릭 이벤트를 사용하여 버튼을 토글합니다.
+             const subscribe = document.querySelector(".subscribe");
+            subscribe.addEventListener("click", function() {
+
+                // 클릭 시, 현재 상태에 따라 서버로 요청을 보내고, 버튼을 업데이트합니다.
+                $.ajax({
+                    url: '/matching/subscribe_click',
+                    method: 'POST',
+                    data: { userId: userId, receiveId: receiveId },
+                    success: function(response) {
+                        if (response === "subscribed") {
+                            alert("구독합니다.");
+                            isSubscribed = true;
+                        } else if (response === "unsubscribed") {
+                            alert("구독을 취소합니다.");
+                            isSubscribed = false;
+                        }
+                        updateSubscribeButton(); // 버튼 상태 업데이트
+                    },
+                    error: function(error) {
+                        console.error('구독 상태 변경에 실패했습니다.', error);
+                    }
+                });
+            });
 
             modalBox.find('.profile_userId a').text(receiveId);
             modalBox.find('.loginUser_userId a').text(sendId);
