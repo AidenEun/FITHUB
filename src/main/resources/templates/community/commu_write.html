@@ -12,6 +12,7 @@
 	<noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
 	<link rel="stylesheet" th:href="@{/assets/css/infoBoard.css}">
 	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
+	<link rel="stylesheet" th:href="@{/assets/css/common.css}" />
 	<script th:src="@{/assets/js/jquery.min.js}"></script>
 	<script th:src="@{/assets/js/jquery.dropotron.min.js}"></script>
 	<script th:src="@{/assets/js/jquery.scrollex.min.js}"></script>
@@ -54,11 +55,11 @@
 			text-align: center;
 			vertical-align: middle;
 		}
-
-		table {
+		.write_table {
 			border: 1.5px solid #5a8100;
-			border-radius: 10px;
+			border-radius: 10px !important;
 			background-color: transparent;
+			padding: 15px 15px 10px 5px;
 		}
 		table tbody tr:nth-child(2n + 1) {
 			background-color: transparent;
@@ -116,13 +117,13 @@
 <section id="main" class="wrapper sidebar left">
 	<div class="inner">
 
-		<header class="major">
-			<h2>커뮤니티</h2>
+		<header class="test12">
+			<p id="mainText">커뮤니티</p>
+			<p id="subText">게시글 작성</p>
 		</header>
 
 		<!-- Content -->
 		<div class="content">
-			<div class="cotent_header"><h2>작성하기</h2></div>
 
 			<form id="boardForm" method="post" name="boardForm" th:action="@{/community/commu_write}" enctype="multipart/form-data">
 				<!-- 날아온 네개의 파라미터를 받아 놓음 -->
@@ -143,7 +144,7 @@
 				</div>
 
 				<!-- 글작성 테이블 -->
-				<table class="write_table" style="border-collapse: collapse;" border="2">
+				<table class="write_table">
 					<tr style="height:30px;">
 						<th>제목</th>
 						<td>
@@ -194,12 +195,18 @@
 		<!-- Sidebar -->
 		<div class="sidebar">
 			<section>
-				<h3><a href="/community/commu_list">전체</a></h3>
-				<h3><a href="/community/commu_free">자유게시판</a></h3>
-				<h3><a href="/community/commu_food">식단</a></h3>
-				<h3><a href="/community/commu_exercise">운동</a></h3>
-				<h3><a href="/community/commu_gallery">갤러리</a></h3>
-				<h3><a href="/community/commu_qna">고민 Q&A</a></h3>
+				<div class="boardRanking">
+					<div class="boardRanking_ranking">
+						<table style="width: 90%;">
+							<tr><td><a href="/community/commu_list">전체</a></td></tr>
+							<tr><td><a href="/community/commu_free">자유게시판</a></td></tr>
+							<tr><td><a href="/community/commu_food">식단</a></td></tr>
+							<tr><td><a href="/community/commu_exercise">운동</a></td></tr>
+							<tr><td><a href="/community/commu_gallery">갤러리</a></td></tr>
+							<tr><td><a href="/community/commu_qna">고민Q&A</a></td></tr>
+						</table>
+					</div>
+				</div>
 			</section>
 		</div>
 

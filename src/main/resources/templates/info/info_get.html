@@ -35,7 +35,6 @@
 
 		}
 		.board_area tr td{
-			width: 100% !important;
 			border-color: transparent;
 		}
 		.board_area tr > td > input, textarea{
@@ -44,6 +43,11 @@
 
 		table tbody tr:nth-child(2n + 1) {
 			background-color: transparent;
+		}
+
+		.content table tr .boardContent p, .boardContent span, .boardContent b{
+			margin-bottom:0;
+
 		}
 
 		.button_table tr > td{
@@ -153,29 +157,35 @@
 				<form>
 
 					<!--게시글 테이블-->
-					<table class="board_area" style="border-collapse: collapse;" border="1" >
+					<table class="board_area">
 						<tr style="height:30px;">
 							<th>제목</th>
-							<td>
+							<td colspan="5">
 								<input type="text" name="boardTitle" size="50" maxlength="50" th:value="${board.boardTitle}" readonly>
 							</td>
 						</tr>
 						<tr style="height:30px;">
 							<th>작성자</th>
-							<td>
+							<td colspan="5">
 								<input type="text" name="userId" size="50" maxlength="50" th:value="${board.userId}" readonly>
 							</td>
 						</tr>
 						<tr>
 							<th>조회수</th>
 							<td>[[${board.viewCnt}]]</td>
+							<th>좋아요</th>
+							<td width="50px" style="padding:5px;">[[${board.likeCnt}]]</td>
+							<th>북마크</th>
+							<td width="50px" style="padding:5px;">[[${board.bookmarkCnt}]]</td>
 						</tr>
 						<tr style="height:300px;">
 							<th>내 용</th>
-							<td>
-									<textarea name="boardContent" style="width:700px;height:290px;resize:none;" readonly th:utext="${board.boardContent}">
-											<!--[[${board.boardContent}]]-->
+							<td class="boardContent" colspan="5">
+								<th:block th:utext="${board.boardContent}">
+									<textarea name="boardContent" style="width:700px;height:290px;resize:none;" readonly>
+
 									</textarea>
+								</th:block>
 							</td>
 						</tr>
 						<th:block th:if="${files2 != null and files2.size() > 0}" th:each="file : ${files2}">
@@ -198,7 +208,7 @@
 						</th:block>
 						<th:block th:unless="${files2 != null and files2.size() > 0}">
 							<tr>
-								<td colspan="2" style="text-align: center; font-size: 14px;">첨부 파일이 없습니다.</td>
+								<td colspan="6" style="text-align: center; font-size: 14px;">첨부 파일이 없습니다.</td>
 							</tr>
 						</th:block>
 					</table>
@@ -217,7 +227,10 @@
 									<a class="button" href="javascript:document.boardForm.submit()">삭제</a>
 								</form>
 							</th:block>
-							<div class="button"><a th:href="${'/info/info_list'+cri.listLink}">목록</a></div>
+							<div class="btn_area">
+								<a class="button" style="float:left;">글 신고</a>
+								<a class="button" th:href="${'/info/info_list'+cri.listLink}">목록</a>
+							</div>
 						</td>
 					</tr>
 				</table>

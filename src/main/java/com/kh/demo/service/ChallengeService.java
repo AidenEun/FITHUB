@@ -58,4 +58,8 @@ public interface ChallengeService {
     void insertMyChall(long challNum, String id);
 
     void deleteChallNotice(long challNum);
+
+    List<ChallNoticeBoardDTO> get12challSearchList(Criteria cri);
+
+    Long getchallTotal(Criteria cri);
 }

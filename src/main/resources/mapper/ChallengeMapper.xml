@@ -100,11 +100,6 @@
         select * from chall_cert_board where board_num=#{boardNum}
     </select>
 
-<!--    통합검색-->
-    <select id="getChallSearchList">
-    SELECT * FROM chall_notice_board where chall_name like('%${keyword}%') or chall_content like('%${keyword}%')
-    order by chall_num asc;
-    </select>
 
     <select id="getChallenge">
         select *,date_add(date(my_challenge.sub_regdate), interval chall_notice_board.chall_term day)  as finishDate from chall_notice_board
@@ -165,6 +160,26 @@
         <![CDATA[
 			0 < chall_num order by chall_num desc limit #{noticeCri.startrow},#{noticeCri.amount}
 		]]>
+    <!--    통합검색-->
+    <select id="getChallSearchList">
+        SELECT * FROM chall_notice_board where chall_name like('%${keyword}%') or chall_content like('%${keyword}%')
+        order by chall_num desc ;
+    </select>
+
+    <select id="get12challSearchList">
+        select *
+        from chall_notice_board
+        where chall_name like CONCAT('%', #{keyword}, '%')
+           or chall_content like CONCAT('%', #{keyword}, '%')
+        order by chall_num desc limit #{startrow}, #{amount}
+    </select>
+
+
+    <select id="getchallTotal">
+        select count(*)
+        from chall_notice_board
+        where chall_name like CONCAT('%', #{keyword}, '%')
+           or chall_content like CONCAT('%', #{keyword}, '%')
     </select>
 
     <select id="getChallNoticeDetail">

@@ -61,53 +61,8 @@ public class HomeController {
     @GetMapping("/index_sidebar")
     public void replace(){}
 
-    @GetMapping("/user/agree")
-    public void agree(){}
-
     @GetMapping("/user/joinTest")
     public void joinTest(){}
 
-    @GetMapping("/totalSearch")
-    public void search(String keyword,Model model){
-        //인기게시글 띄우기
-        List<BoardDTO> boardTop5List = boardservice.getBoardTop5List();
-
-        // 트레이너 랭킹
-        List<TrainerDTO> trainerTop5List= tservice.getTrainerTop5List();
-        //전체 보드 게시글 수 찾기
-        Long boardAllCnt = boardservice.getAllsearchCnt(keyword);
-        System.out.println(boardAllCnt);
-
-        //각 게시판에서 글 가져오기
-
-//        List<BoardDTO> infoSearchList1= boardservice.getcriinfoSearchList(crikey);
-
-        List<BoardDTO> infoSearchList = boardservice.getinfoSearchList(keyword);
-
-        List<BoardDTO> tipSearchList = boardservice.getTipSearchList(keyword);
-        List<BoardDTO> commuSearchList = boardservice.getCommuSearchList(keyword);
-
-        List<BoardDTO> matchingSearchList = MatchingService.getMachingSearchList(keyword);
-        List<ChallNoticeBoardDTO> challSearchList = challService.getChallSearchList(keyword);
-
-        int[] boardCntArr ={infoSearchList.size(),
-                tipSearchList.size(),commuSearchList.size(),matchingSearchList.size(),challSearchList.size()};
-
-//        model.addAttribute("newsSearchList",newsSearchList);
-//        model.addAttribute("exerSearchList",exerSearchList);
-//        model.addAttribute("foodSearchList",foodSearchList);
-        model.addAttribute("infoSearchList",infoSearchList);
-        model.addAttribute("tipSearchList",tipSearchList);
-        model.addAttribute("commuSearchList",commuSearchList);
-        model.addAttribute("matchingSearchList",matchingSearchList);
-        model.addAttribute("challSearchList",challSearchList);
-        model.addAttribute("boardAllCnt",boardAllCnt);
-        model.addAttribute("trainerTop5List",trainerTop5List);
-        model.addAttribute("boardTop5List",boardTop5List);
-        model.addAttribute("boardCntArr",boardCntArr);
-        model.addAttribute("keyword",keyword);
-
-
-    }
 
 }

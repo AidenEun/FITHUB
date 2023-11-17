@@ -33,6 +33,12 @@ public class UserController {
     @GetMapping("join")
     public void replace() {}
 
+    @GetMapping("useAgree")
+    public void showUseAgreePage(){}
+
+    @GetMapping("policyAgree")
+    public void showPolicyAgreePage() {}
+
     @PostMapping("join")
     public String join(UserDTO user, RedirectAttributes ra) {
         if(service.join(user)) {

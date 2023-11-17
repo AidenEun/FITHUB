@@ -16,6 +16,7 @@
 </head>
 <style>
 
+<!--
         .uInputArea {
         display: table;
         width: 100%;
@@ -101,7 +102,33 @@
         border: 0;
         box-shadow: inset 0 0 0 0;
         }
+-->
+	table tr {
+		font-weight: bold;
+	}
 
+	.viewPwBtn {
+		width: 20px;
+		height: 20px;
+		border: 1px solid black;
+		position: relative;
+		right: -530px;
+		top: -20px;
+		transform: translateY(-50%);
+	}
+
+	#viewPwBtn.active {
+		background-color: #8FA746;
+	}
+
+	table tbody tr:nth-child(2n + 1) {
+    	background-color: #fff !important;
+	}
+
+	#myinfo_modify_btn{
+		float: right;
+		margin-right: 10px;
+	}
 </style>
 <body class="is-preload">
 
@@ -110,18 +137,77 @@
 
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">
-
 	<div class="inner">
 
 		<header class="test12">
 			<p id="mainText">마이페이지</p>
-			<p id="subText">내 정보 수정</p>
+			<p id="subText">내 정보</p>
 		</header>
+
 
 		<!-- Content -->
 		<div class="content">
+			<table style="text-align: center; margin: 0px">
+				<tr>
+					<td>아이디</td>
+					<td><input name="userId" type="text" id="inputId" class="inputText" placeholder="6~20자 영문, 숫자" tabindex="1" th:value="${user.userId}" readonly></td>
+				</tr>
+				<tr>
+					<td>닉네임</td>
+					<td><input name="userNickname" type="text" id="inputNickName" class="inputText" placeholder="닉네임" tabindex="2" th:value="${user.userNickname}" readonly></td>
+				</tr>
+				<tr>
+					<td>비밀번호</td>
+					<td><input name="userPw" type="password" id="inputPw" class="inputText" tabindex="3" th:value="${user.userPw}" readonly><div onclick="togglePassword()" id="viewPwBtn" class="viewPwBtn"></div></td>
+				</tr>
+				<tr>
+					<td>이름</td>
+					<td><input name="userName" type="text" id="inputName" class="inputText" placeholder="이름" tabindex="5" th:value="${user.userName}" readonly></td>
+				</tr>
+				<tr>
+					<td>성별</td>
+					<td><input name="userGender" type="text" id="inputgender" class="inputText" placeholder="성별" tabindex="6" th:value="${user.userGender}" readonly></td>
+				</tr>
+				<tr>
+					<td>생년월일</td>
+					<td><input name="userBirth" type="text" id="inputBirth" class="inputText" placeholder="생년월일" tabindex="7" th:value="${user.userBirth}" readonly></td>
+				</tr>
+				<tr>
+					<td>전화번호</td>
+					<td><input name="userTel" type="text" id="inputTel" class="inputText" placeholder="전화번호" tabindex="8" th:value="${user.userTel}" readonly></td>
+				</tr>
+				<tr>
+					<td>이메일</td>
+					<td><input name="userMail" type="text" id="inputEmail" class="inputText" placeholder="이메일" tabindex="9" th:value="${user.userMail}" readonly></td>
+				</tr>
+				<tr>
+					<td>몸무게</td>
+					<td><input name="userWeight" type="text" id="inputWeight" class="inputText" placeholder="몸무게" tabindex="10" th:value="${user.userWeight}" readonly></td>
+				</tr>
+				<tr>
+					<td>키</td>
+					<td><input name="userHeight" type="text" id="inputHeight" class="inputText" placeholder="키" tabindex="11" th:value="${user.userHeight}" readonly></td>
+				</tr>
+				<tr>
+					<td>목표 체중</td>
+					<td><input name="weightGoal" type="text" id="inputWeightGoal" class="inputText" placeholder="목표체중" tabindex="12" th:value="${user.weightGoal}" readonly></td>
+				</tr>
+				<tr>
+					<td>목표 칼로리</td>
+					<td><input name="caloriesGoal" type="text" id="inputCaloriesGoal" class="inputText" placeholder="목표칼로리" tabindex="13" th:value="${user.caloriesGoal}" readonly></td>
+				</tr>
+				<tr>
+					<td>가입일자</td>
+					<td><input name="userJoindate" type="text" id="inputJoinDate" class="inputText" placeholder="가입일자" tabindex="14" th:value="${user.userJoindate}" readonly></td>
+				</tr>
+				<tr>
+					<td>신고당한 횟수</td>
+					<td><input name="userReportedcnt" type="text" id="inputReportedcnt" class="inputText" placeholder="신고당한횟수" tabindex="15" th:value="${user.userReportedcnt}" readonly></td>
+				</tr>
+			</table>
+			<a href="/usermypage/user_myinfo_modify" id="myinfo_modify_btn" class="button primary small" >수정</a>
 
-			<form name="myuserForm" method="post" th:action="@{/usermypage/user_myinfo}">
+			<!--<form name="myuserForm" method="post" th:action="@{/usermypage/user_myinfo}" style="display: none">
 				<div class="uBlock">
 					<div class="uInputArea">
 						<div class="col">
@@ -344,8 +430,7 @@
 					<div class="uErrorText" style="display: block;"></div>
 				</div>
 				<a href="/usermypage/user_myinfo_modify" class="button primary small" >수정</a>
-			</form>
-
+			</form>-->
 		</div>
 
 
@@ -355,7 +440,7 @@
 				<div class="boardRanking">
 					<div class="boardRanking_ranking">
 						<table style="width: 90%;">
-							<tr><td><a href="/usermypage/user_myinfo" style="color: #5a8100; font-size: 20px;">내 정보 수정</a></td></tr>
+							<tr><td><a href="/usermypage/user_myinfo" style="color: #5a8100; font-size: 20px;">내 정보</a></td></tr>
 							<tr><td><a href="/usermypage/user_diary">나의 다이어리</a></td></tr>
 							<tr><td><a href="/usermypage/user_challenge">나의 챌린지</a></td></tr>
 							<tr><td><a href="/usermypage/user_subtrainer">구독한 트레이너</a></td></tr>
@@ -386,6 +471,16 @@
 
 <script th:src="@{/assets/js/sidebar.js}"></script>
 
+<script>
+    function togglePassword() {
+        var passwordInput = document.getElementById("inputPw");
+        var viewPwBtn = document.getElementById("viewPwBtn");
+
+        passwordInput.type = (passwordInput.type === "password") ? "text" : "password";
+
+		viewPwBtn.classList.toggle("active");
+    }
+</script>
 
 </body>
 </html>

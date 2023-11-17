@@ -129,7 +129,14 @@ public class ChallengeServiceImpl implements ChallengeService{
         challMapper.deleteChallNotice(challNum);
     }
 
+    public List<ChallNoticeBoardDTO> get12challSearchList(Criteria cri) {
+        return challMapper.get12challSearchList(cri);
+    }
 
+    @Override
+    public Long getchallTotal(Criteria cri) {
+        return challMapper.getchallTotal(cri);
+    }
 
 
     /*재우*/

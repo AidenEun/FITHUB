@@ -185,19 +185,28 @@ if (passwordInput) {
 
 function isInvalidAdminId(id) {
     // 대소문자 무작위 조합으로 막기
-        const mixedCaseAdminRegex = /a.*d.*m.*i.*n/i;
+    const mixedCaseAdminRegex = /a.*d.*m.*i.*n/i;
 
-        // 대문자, 소문자 모두 막기
-        const caseSensitiveAdminRegex = /admin/i;
+    // 대문자, 소문자 모두 막기
+    const caseSensitiveAdminRegex = /admin/i;
 
-        // 대소문자 무작위로 섞인 경우 막기
-        const randomCaseAdminRegex = /a(?:(?![aA]).)*d(?:(?![dD]).)*m(?:(?![mM]).)*i(?:(?![iI]).)*n/i;
+    // 대소문자 무작위로 섞인 경우 막기
+    const randomCaseAdminRegex = /a(?:(?![aA]).)*d(?:(?![dD]).)*m(?:(?![mM]).)*i(?:(?![iI]).)*n/i;
 
-        // 특수문자 막기
-        const specialCharRegex = /^[a-zA-Z0-9]*$/;
+    // 특수문자 막기
+    const specialCharRegex = /^[a-zA-Z0-9]*$/;
 
-        // 특수문자 포함 또는 특수문자로만 구성된 경우 막기
-        return mixedCaseAdminRegex.test(id) || caseSensitiveAdminRegex.test(id) || randomCaseAdminRegex.test(id) || !specialCharRegex.test(id) || /^[!@#$%^&*(),.?":{}|<>]*$/.test(id);
+    // 특수문자 포함 또는 특수문자로만 구성된 경우 막기
+    return mixedCaseAdminRegex.test(id) || caseSensitiveAdminRegex.test(id) || randomCaseAdminRegex.test(id) || !specialCharRegex.test(id) || /^[!@#$%^&*(),.?":{}|<>]*$/.test(id);
+}
+
+function isInvalidAdminNickname(nickname) {
+    const mixedCaseAdminRegex = /a.*d.*m.*i.*n/i;
+    const caseSensitiveAdminRegex = /admin/i;
+    const randomCaseAdminRegex = /a(?:(?![aA]).)*d(?:(?![dD]).)*m(?:(?![mM]).)*i(?:(?![iI]).)*n/i;
+    const specialCharRegex = /^[a-zA-Z0-9]*$/;
+
+    return mixedCaseAdminRegex.test(nickname) || caseSensitiveAdminRegex.test(nickname) || randomCaseAdminRegex.test(nickname) || !specialCharRegex.test(nickname) || /^[!@#$%^&*(),.?":{}|<>]*$/.test(nickname);
 }
 
 function checkId(){
@@ -265,6 +274,19 @@ function checkNickname() {
         userNickname.focus();
         return false;
     }
+    if(userNickname.value.includes("관리자")) {
+        alert("사용할 수 없는 닉네임입니다!");
+        userNickname.value = '';
+        userNickname.focus();
+        return false;
+    }
+
+    if(isInvalidAdminNickname(userNickname.value)) {
+        alert("사용할 수 없는 닉네임입니다!");
+        userNickname.value = '';
+        userNickname.focus();
+        return false;
+    }
 
     /*if(isInvalidAdminId(userId.value)) {
         *//*result.innerHTML = "사용할 수 없는 아이디입니다!";*//*
@@ -286,7 +308,7 @@ function checkNickname() {
                 }
                 else{
                     /*result.innerHTML = "중복된 아이디가 있습니다!";*/
-                    alert("중복된 아이디가 있습니다!");
+                    alert("중복된 닉네임이 있습니다!");
                     userNickname.value = '';
                     userNickname.focus();
                 }
@@ -316,3 +338,10 @@ function goToPrevPage() {
         el.style.display = 'block';
     });
 }
+
+function chkAll(source) {
+     const checkboxes = document.querySelectorAll('input[name="cc"]');
+     checkboxes.forEach(checkbox => {
+         checkbox.checked = source.checked;
+     });
+ }

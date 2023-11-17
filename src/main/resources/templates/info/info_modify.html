@@ -32,31 +32,36 @@
 		}
 		.info_category > .button{
 			border-radius: 10px;
-			height: 2.5em;
-			line-height: 2.5em;
+			height: 33px;
+			line-height: 33px;
+			background-color: rgb(203,211,177);
+			color: #5a8100 !important;
+			box-shadow: inset 0 0 0 1.5px #5a8100;
 		}
 		.info_category .active {
 			background-color: #5a8100; /* 변경할 배경색 */
 			color: white !important; /* 변경할 텍스트색 */
 		}
-		.write_table > th {
+		.write_table th {
 			text-align: center;
 			vertical-align: middle;
-			width: 60px;
+			width: 90px;
 		}
 		a {
 			border-bottom:none;
 		}
-		.file0_cont{
+		.th:.${'r'+fileStat.index}{
 			text-align: center;
 			vertical-align: middle;
 		}
 
-		table {
-			border: 1.5px solid black;
-			border-radius: 10px;
+		.write_table {
+			border: 1.5px solid #5a8100;
+			border-radius: 10px !important;
 			background-color: transparent;
+			padding: 15px 15px 10px 5px;
 		}
+
 		table tbody tr:nth-child(2n + 1) {
 			background-color: transparent;
 		}
@@ -69,18 +74,31 @@
 		.button_table tr > td{
 			border: none;
 		}
-		.button_table tr > td > button{
-			border: 0.8px solid black;
+		.button_table tr > td > .button{
+			border: 1.5px solid #5a8100;
 			border-radius: 10px;
+			height: 35px;
+			line-height: 35px;
+			background-color: rgb(203,211,177);
+			color: #5a8100 !important;
+			box-shadow: none;
 		}
-		.file0_cont button{
+		.button_table tr > td > .button:hover{
+			background-color: #5a8100;
+			color: white !important;
+		}
+		.write_table .button{
 			padding: 0;
 			border-radius: 10px;
 			height: 30px;
 			width: 85px;
 			vertical-align: middle;
+			line-height: 30px;
+			background-color: rgb(203,211,177);
+			color: #5a8100 !important;
+			box-shadow: none;
 		}
-		.file0_cont button > a{
+		.at > a{
 			display: block;
 			width: 100%;
 			line-height: 100%;
@@ -115,23 +133,24 @@
 				<input type="hidden" th:value="${cri.amount}" name="amount">
 				<input type="hidden" th:value="${cri.type}" name="type">
 				<input type="hidden" th:value="${cri.keyword}" name="keyword">
-				<input type="hidden" name="boardCategory">
+				<input type="hidden" th:value="${board.boardNum}" name="boardNum">
+				<input type="hidden" th:value="${board.boardCategory}" name="boardCategory">
 
 
 				<div class="info_category">
 					<h3>카테고리 선택</h3>
-					<div class="button" style="margin-right: 10px;" onclick="selectCategory('infoNews')">뉴스</div>
-					<div class="button" style="margin-right: 10px;" onclick="selectCategory('infoFood')">식단</div>
-					<div class="button" style="margin-right: 10px;" onclick="selectCategory('infoExer')">운동</div>
-					<div class="button" onclick="selectCategory('infoTip')">꿀팁</div>
+					<div style="margin-right: 10px;" th:class="${(board.boardCategory == 'infoNews' ? 'active' : '') + ' button'}" onclick="selectCategory('infoNews')">뉴스</div>
+					<div style="margin-right: 10px;" th:class="${(board.boardCategory == 'infoFood' ? 'active' : '') + ' button'}" onclick="selectCategory('infoFood')">식단</div>
+					<div style="margin-right: 10px;" th:class="${(board.boardCategory == 'infoExer' ? 'active' : '') + ' button'}" onclick="selectCategory('infoExer')">운동</div>
+					<div th:class="${(board.boardCategory == 'infoTip' ? 'active' : '') + ' button'}" onclick="selectCategory('infoTip')">꿀팁</div>
 				</div>
 
 				<!-- 글작성 테이블 -->
-				<table class="write_table" style="border-collapse: collapse;" border="2">
+				<table class="write_table">
 					<tr style="height:30px;">
 						<th>제목</th>
 						<td>
-							<input type="text" name="boardTitle" size="50" maxlength="50" placeholder="제목을 입력하세요.">
+							<input type="text" name="boardTitle" size="50" maxlength="50" th:value="${board.boardTitle}">
 						</td>
 					</tr>
 					<tr style="height:30px;">
@@ -144,71 +163,55 @@
 					<tr style="height:500px;">
 						<th>내 용</th>
 						<td>
-							<textarea id="summernote" name="boardContent" style="width:100%;height:350px;resize:none;" ></textarea>
+							<textarea id="summernote" name="boardContent" style="width:100%;height:350px;resize:none;" >[[${board.boardContent}]]</textarea>
 						</td>
 					</tr>
-					<tr th:class="${'r'+fileStat.index}" th:if="${files != null and files.size() > 0}" th:each="file : ${files}">
+					<tr th:class="${'r'+fileStat.index}" th:if="${files2 != null and files2.size() > 0}" th:each="file : ${files2}">
 						<th>파일 첨부[[${fileStat.index+1}]]</th>
 						<td th:class="${'file'+fileStat.index+'_cont'}">
 							<div style="float:left;">
-								<input type="file" name="files" th:id="${'file'+fileStat.index}" style="display:none">
+								<input type="file" name="files2" th:id="${'file'+fileStat.index}" style="display:none">
 								<span th:id="${'file'+fileStat.index+'name'}" th:text="${file.orgname}"></span>
 							</div>
-							<div style="float:right; margin-right: 100px;">
+							<div style="float:right;">
 								<!-- <a href="javascript:upload('file5','DateTIMEUUID.png')"> -->
-								<a th:href="'javascript:upload(\'file'+${fileStat.index}+'\',\''+${file.systemname}+'\')'">파일 선택</a>
-								<a th:href="'javascript:cancelFile(\'file'+${fileStat.index}+'\',\''+${file.systemname}+'\')'">첨부 삭제</a>
+								<a class="button" th:href="'javascript:upload(\'file'+${fileStat.index}+'\',\''+${file.systemname}+'\')'">파일 선택</a>
+								<a class="button" th:href="'javascript:cancelFile(\'file'+${fileStat.index}+'\',\''+${file.systemname}+'\')'">첨부 삭제</a>
 							</div>
 							<input type="hidden" name="orgname" th:value="${file.orgname}">
 							<th:block th:with="sar=${file.orgname.split('[.]')}">
 								<th:block th:with="ext=${sar[sar.length-1]}">
-									<img th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}" th:src="@{/board/thumbnail (systemname=${file.systemname})}" class="thumbnail">
+									<img th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}" th:src="@{/info/thumbnail (systemname=${file.systemname})}" class="thumbnail">
 								</th:block>
 							</th:block>
 						</td>
 					</tr>
-					<tr th:class="${'r'+files.size()}">
-						<th>파일 첨부[[${files.size()+1}]]</th>
-						<td th:class="${'file'+files.size()+'_cont'}">
+					<tr th:class="${'r'+files2.size()}">
+						<th style="vertical-align: middle">파일 첨부[[${files2.size()+1}]]</th>
+						<td th:class="${'file'+files2.size()+'_cont'}">
 							<div style="float:left;">
-								<input type="file" name="files" th:id="${'file'+files.size()}" style="display:none">
-								<span th:id="${'file'+files.size()+'name'}">선택된 파일 없음</span>
+								<input type="file" name="files2" th:id="${'file'+files2.size()}" style="display:none">
+								<span th:id="${'file'+files2.size()+'name'}">선택된 파일 없음</span>
 							</div>
-							<div style="float:right; margin-right: 100px;">
+							<div style="float:right;">
 								<!-- <a href="javascript:upload('file9','')"> -->
-								<a th:href="'javascript:upload(\'file'+${files.size()}+'\',\'\')'">파일 선택</a>
+								<a class="button" th:href="'javascript:upload(\'file'+${files2.size()}+'\',\'\')'">파일 선택</a>
 								<!-- <a href="javascript:cancelFile('file9','')"> -->
-								<a th:href="'javascript:cancelFile(\'file'+${files.size()}+'\',\'\')'">첨부 삭제</a>
+								<a class="button" th:href="'javascript:cancelFile(\'file'+${files2.size()}+'\',\'\')'">첨부 삭제</a>
 							</div>
 						</td>
 					</tr>
 					<input type="hidden" value="" name="updateCnt" id="updateCnt">
-
-
-					<!--
-					<tr class="r0 at">
-						<th style="vertical-align: middle">파일 첨부1</th>
-						<td class="file0_cont">
-							<div style="float:left;">
-								<input type="file" name="files" id="file0" style="display:none">
-								<span id="file0name">선택된 파일 없음</span>
-							</div>
-							<div style="float:right;">
-								<button><a href="javascript:upload('file0')">파일 선택</a></button>
-								<button><a href="javascript:cancelFile('file0')">첨부 삭제</a></button>
-							</div>
-						</td>
-					</tr> -->
 				</table>
 			</form>
 			<!-- 등록, 목록 버튼 테이블 -->
 			<table class="button_table">
 				<tr align="right" valign="middle">
 					<td>
-						<button><a href="javascript:document.boardForm.submit()">수정</a></button> <!-- javascript의 sendit 함수 호출 -->
+						<a class="button" href="javascript:document.boardForm.submit()">수정</a>
 					</td>
 					<td>
-						<button><a th:href="${'/info/info_list'+cri.listLink}">목록</a></button> <!-- cri.listLink를 붙여 목록으로 돌아가기 -->
+						<a class="button" th:href="${'/info/info_list'+cri.listLink}">목록</a> <!-- cri.listLink를 붙여 목록으로 돌아가기 -->
 					</td>
 				</tr>
 			</table>
@@ -282,7 +285,7 @@
 	});
 </script>
 <script>
-	let i = /*[[${files.size()}]]*/'';
+	let i = /*[[${files2.size()}]]*/'';
 	let orgSize = i;
 
 	let updateCheck = false;
@@ -299,6 +302,7 @@
 	let sysname = "";
 	console.log(orgname);
 	console.log(org_thumbnail);
+
 	function cancelFile(name,systemname){
 		updateCnt.val(updateCnt.val()+"\\"+systemname)
 		let num = name.split("e")[1];
@@ -408,7 +412,7 @@
 				lastElement.children("th").text("파일 첨부"+(i+1));
 				lastElement.children("td").attr("class","file"+i+"_cont");
 
-				lastElement.find("input[type='file']").attr("name","files");
+				lastElement.find("input[type='file']").attr("name","files2");
 				lastElement.find("input[type='file']").attr("id","file"+i);
 				lastElement.find("input[type='file']").val("");
 
@@ -421,6 +425,8 @@
 
 		}
 	})
+
+
 	function selectCategory(boardCategory) {
 		var selectedButton = document.querySelector('.button.active');
 
@@ -440,6 +446,7 @@
 
 		document.boardForm.boardCategory.value = boardCategory;
 	}
+
 
 </script>
 </html>

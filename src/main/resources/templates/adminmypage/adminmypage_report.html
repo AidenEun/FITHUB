@@ -133,12 +133,15 @@
 	<!-- Main -->
 	<section id="main" class="wrapper sidebar left">
 
-		<div class="inner">
-
+		<div class="header_box">
 			<header class="test12">
 				<p id="mainText">마이페이지</p>
 				<p id="subText">신고 접수</p>
 			</header>
+		</div>
+
+		<div class="inner">
+
 
 
 
@@ -177,7 +180,7 @@
 							</td>
 							<td class="long_text">
 								<a href="#">
-									[[${reportBoard.boardCategory}]]
+									[[${reportBoard.boardCategoryName}]]
 								</a>
 							</td>
 							<td class="long_text">
@@ -219,7 +222,7 @@
 						<div class="boardRanking_ranking">
 							<table style="width: 90%;">
 								<tr><td><a href="/adminmypage/adminmypage_list">전체</a></td></tr>
-								<tr><td><a href="/adminmypage/adminmypage_report" style="color: #5a8100;">신고 접수</a></td></tr>
+								<tr><td><a href="/adminmypage/adminmypage_report" style="color: #5a8100; font-size: 20px;">신고 접수</a></td></tr>
 								<tr><td><a href="/adminmypage/adminmypage_trainer">트레이너 신청 내역</a></td></tr>
 								<tr><td><a href="/adminmypage/adminmypage_board">관리자 게시물</a></td></tr>
 								<tr><td><a href="/adminmypage/adminmypage_usersearch">유저 검색</a></td></tr>
@@ -361,7 +364,7 @@
 						row.append('<td class="long_text"><a href="#" class="reportNum">' + reportData.reportNum + '</a></td>');
 						row.append('<td class="long_text"><a href="#" class="open">' + reportData.userId + '</a></td>');
 						row.append('<td class="long_text"><a href="#">' + reportData.reportBoardnum + '</a></td>');
-						row.append('<td class="long_text"><a href="#">' + reportData.boardCategory + '</a></td>');
+						row.append('<td class="long_text"><a href="#">' + reportData.boardCategoryName + '</a></td>');
 						row.append('<td class="long_text"><a href="#">' + reportData.reportDate + '</a></td>');
 						row.append('<td class="long_text"><a href="#" class="reportAdminOpen button">처리하기</a></td>');
 						tableBody.append(row);
@@ -371,7 +374,7 @@
 						row.append('<td class="long_text"><a href="#" class="reportNum">' + reportData.reportNum + '</a></td>');
 						row.append('<td class="long_text"><a href="#" class="open">' + reportData.userId + '</a></td>');
 						row.append('<td class="long_text"><a href="#">' + reportData.reportBoardnum + '</a></td>');
-						row.append('<td class="long_text"><a href="#">' + reportData.boardCategory + '</a></td>');
+						row.append('<td class="long_text"><a href="#">' + reportData.boardCategoryName + '</a></td>');
 						row.append('<td class="long_text"><a href="#">' + reportData.reportDate + '</a></td>');
 						row.append('<td class="long_text"><a href="#" class="reportAdminOpen button disabled">처리하기</a></td>');
 						tableBody.append(row);

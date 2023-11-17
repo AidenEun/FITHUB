@@ -30,12 +30,11 @@
 			background-color: #5a8100;
 			box-shadow: none !important;
 			border-radius: 5px;
-		}
-		.content .button a{
+			color: white !important;
+			font-size: 13px;
 			text-align: center;
-			font-size: 12px;
-			color: white;
 		}
+
 		table {
 			background-color: transparent;
 		}
@@ -137,7 +136,7 @@
 						</tr>
 					</th:block>
 				</div>
-				<div class="button"><a th:href="${'/info/info_news'}">더보기</a></div>
+				<a class="button" th:href="${'/info/info_news'}">더보기</a>
 			</div>
 			<hr>
 			<div class="info_food">
@@ -171,7 +170,7 @@
 						</tr>
 					</th:block>
 				</div>
-				<div class="button"><a th:href="${'/info/info_food'}">더보기</a></div>
+				<a class="button" th:href="${'/info/info_food'}">더보기</a>
 			</div>
 			<hr>
 			<div class="info_exer">
@@ -205,7 +204,7 @@
 						</tr>
 					</th:block>
 				</div>
-				<div class="button"><a th:href="${'/info/info_exercise'}">더보기</a></div>
+				<a class="button" th:href="${'/info/info_exercise'}">더보기</a>
 			</div>
 			<hr>
 			<div class="info_tip">
@@ -239,7 +238,7 @@
 						</tr>
 					</th:block>
 				</div>
-				<div class="button"><a th:href="${'/info/info_tip'}">더보기</a></div>
+				<a class="button" th:href="${'/info/info_tip'}">더보기</a>
 			</div>
 			<hr>
 			<form name="pageForm" id="pageForm" th:action="@{/info/info_list}">

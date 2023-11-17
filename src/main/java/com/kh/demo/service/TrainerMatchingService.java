@@ -40,4 +40,8 @@ public interface TrainerMatchingService {
     List<BoardDTO> getMachingSearchList(String keyword);
 
     void saveMessage(MessageDTO newMessage);
+
+    List<TrainerMatchingBoardDTO> get12matchingSearchList(Criteria cri);
+
+    Long getmatchingTotal(Criteria cri);
 }
