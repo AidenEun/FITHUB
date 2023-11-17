@@ -29,50 +29,81 @@ challTabs.forEach((challTab, index) => {
     });
 });
 
-/*const progressBar = document.querySelector('.progress-bar');
-const attBtn = document.querySelector('.att-btn');
-let filledGauges = 0;
+/*document.addEventListener('DOMContentLoaded', function () {
+    const progressBar = document.querySelector('.progress-bar');
+    const attBtn = document.querySelector('.att-btn');
+    const pointDisplay = document.getElementById('pointDisplay');
 
-attBtn.addEventListener('click', () => {
-    if (filledGauges < 7) {
+    let filledGauges = 0; // 현재 출석 게이지가 찬 횟수
+    let totalPoints = parseInt(pointDisplay.innerText); // 초기 포인트 설정
+    let alreadyAttended = false; // 출석 여부 확인
+
+    attBtn.addEventListener('click', function () {
+        if (!alreadyAttended) {
+            filledGauges++;
+            progressBar.value = filledGauges;
+
+            if (filledGauges === 7) {
+                // 7회 출석 완료 시 포인트 지급
+                totalPoints += 10; // 10 포인트로 테스트
+
+                // 포인트 표시 갱신
+                pointDisplay.innerText = totalPoints + 'p';
+
+                // 출석 게이지 초기화
+                setTimeout(function () {
+                    progressBar.value = 0;
+                    filledGauges = 0;
+                }, 1000);
+
+                // 출석이 완료되었습니다. 알림 메시지
+                alert('출석이 완료되었습니다. 포인트 10점을 획득하셨습니다!');
+            } else {
+                // 출석이 완료되었습니다. 알림 메시지
+                alert('출석이 완료되었습니다.');
+            }
+
+            // 출석 여부 갱신
+            alreadyAttended = true;
+        } else {
+            // 중복 출석 경고 메시지
+            alert('오늘은 이미 출석을 완료하였습니다.');
+        }
+    });
+});*/
+
+document.addEventListener('DOMContentLoaded', function () {
+    const progressBar = document.querySelector('.progress-bar');
+    const attBtn = document.querySelector('.att-btn');
+    const pointDisplay = document.getElementById('pointDisplay');
+
+    let filledGauges = 0; // 현재 출석 게이지가 찬 횟수
+    let totalPoints = parseInt(pointDisplay.innerText) || 0; // 초기 포인트 설정
+
+    attBtn.addEventListener('click', function () {
         filledGauges++;
         progressBar.value = filledGauges;
 
         if (filledGauges === 7) {
-            setTimeout(() => {
+            // 7회 출석 완료 시 포인트 지급
+            totalPoints += 10; // 10 포인트로 테스트
+
+            // 포인트 표시 갱신
+            pointDisplay.innerText = totalPoints + 'p';
+
+            // 출석 게이지 초기화
+            setTimeout(function () {
                 progressBar.value = 0;
                 filledGauges = 0;
-            }, 1000); // 1000ms(1초) 후 초기화
-        }
-    }
-});*/
-
-const progressBar = document.querySelector('.progress-bar');
-const attBtn = document.querySelector('.att-btn');
-let isAttended = false;
-
-attBtn.addEventListener('click', () => {
-    if (!isAttended) {
-        progressBar.value += 1;
-        isAttended = true;
-
-        if (progressBar.value === 7) {
-            // 출석을 7회 완료하면 버튼 비활성화
-            attBtn.disabled = true;
-
-            setTimeout(() => {
-                // 1초 후에 게이지와 출석 여부 초기화
-                progressBar.value = 0;
-                isAttended = false;
-
-                // 버튼 다시 활성화
-                attBtn.disabled = false;
             }, 1000);
+
+            // 출석이 완료되었습니다. 알림 메시지
+            alert('출석이 완료되었습니다. 포인트 10점을 획득하셨습니다!');
+        } else {
+            // 출석이 완료되었습니다. 알림 메시지
+            alert('출석이 완료되었습니다.');
         }
-    } else {
-        // 이미 출석했음을 알리는 경고 표시
-        alert('오늘은 이미 출석 하셨습니다.');
-    }
+    });
 });
 
 document.addEventListener("DOMContentLoaded", function() {
