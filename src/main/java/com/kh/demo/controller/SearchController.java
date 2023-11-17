@@ -60,9 +60,6 @@ public class SearchController {
         Long boardAllCnt = boardservice.getAllsearchCnt(keyword) + matchingSearchList.size()+challSearchList.size();
         System.out.println("총 게시글"+boardAllCnt);
 
-        System.out.println("보드테이블 전체:"+boardservice.getAllsearchCnt(keyword));
-        System.out.println("매칭테이블:"+matchingSearchList.size());
-        System.out.println("챌린지 :"+challSearchList.size());
 
         int[] boardCntArr ={infoSearchList.size(),
                 tipSearchList.size(),commuSearchList.size(),matchingSearchList.size(),challSearchList.size()};

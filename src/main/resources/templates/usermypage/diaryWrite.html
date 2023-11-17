@@ -116,6 +116,7 @@
     .input_area {
         display: flex;
         justify-content: space-between;
+        box-shadow: 0px 0px 5px rgb(203,211,177);
     }
 
     .list_area {
@@ -150,8 +151,12 @@
         background: url(/images/addbutton.png) no-repeat;
         background-size: 50% 50%;
         background-position: center;
-        /* box-shadow: inset 0 0 0 2px #5a810086; */
+        border-radius: 4px;
+        border: none;
+        /*box-shadow: 4px 4px 2px 0px rgb(203,211,177);*/
+        box-shadow: 0 0px 5px rgb(203,211,177);
     }
+
 
     .food_area div:last-child input[type=button] {
         width: 100%;
@@ -171,8 +176,16 @@
 
     }
 
-    td div > input[type=button] {
-        box-shadow: inset 0 0 0 2px #e6e6e6;
+    /*td div > input[type=button] {*/
+    /*    box-shadow: inset 0 0 0 2px #e6e6e6;*/
+    /*}*/
+    .food_area:hover{
+        border-radius: 4px;
+        box-shadow: 0 0 5px rgb(203,211,177);
+    }
+    .ex_area:hover{
+        border-radius: 4px;
+        box-shadow: 0 0 5px rgb(203,211,177);
     }
 
     .food_area .list_area {
@@ -182,6 +195,7 @@
         height: 100px;
         width: 364.1px;
         overflow-y: auto;
+
 
     }
 
@@ -203,11 +217,47 @@
         text-align: right !important;
     }
 
-    .mychallBtn.viewchallBtn {
+    /*작성, 글쓰기 버튼 컬러 수정*/
+    input[type=button].btnColor{
+        background: #FFFFFF;
+        border: 1px solid #5a8100;
+        border-radius: 4px;
+        color: #5a8100 !important;
+        box-shadow: 4px 4px 2px 0px rgb(203,211,177);
+
+    }
+
+    input[type=submit].btnColor{
+        background: #FFFFFF;
+        border: 1px solid #5a8100;
+        border-radius: 4px;
+        color: #5a8100 !important;
+        box-shadow: 4px 4px 2px 0px rgb(203,211,177);
+
+    }
+
+    input[type=button].btnColor:hover{
+        background: #5a8100;
+        border: 1px solid #5a8100;
+        border-radius: 4px;
+        color: #F7FAF5 !important;
+        box-shadow: 0 0 2px #5a8100;
+
+    }
+
+    input[type=button].mychallBtn{
+        background: #FFFFFF;
+        border: 1px solid #5a8100;
+        border-radius: 4px;
+        color: #5a8100 !important;
+        box-shadow: 4px 4px 2px 0px rgb(203,211,177);
+    }
+
+    input[type=button].mychallBtn.viewchallBtn {
         /*border: 1px solid #5a8100 !important;*/
-        color: #5a8100;
-        background-color: #ebede1;
-        box-shadow: inset 0 0 0 2px gray;
+        color: #F7FAF5 !important;
+        background-color: #5a8100;
+        box-shadow: inset 0 0 0 2px #5a8100;
 
     }
 
@@ -381,7 +431,7 @@
                 <tr>
                     <td colspan="2">
                         <div class="total_area" style="text-align: center">
-                            <input type="button" onclick="totalsum()" value="최종 칼로리" style="margin-right: 15px">
+                            <input type="button" class="btnColor" onclick="totalsum()" value="최종 칼로리" style="margin-right: 15px">
                             <input type="text" id="totalFood" placeholder="총 음식칼로리" readonly>
                             <input type="text" value="-" readonly>
                             <input type="text" id="totalexer" placeholder="총 운동칼로리" readonly>
@@ -458,8 +508,8 @@
 
                     <td colspan="2">
                         <div>
-                            <input type="button" value="작성취소" onclick="location.href='/usermypage/user_diary'">
-                            <input type="button" value="작성완료" onclick="sendit()">
+                            <input type="button" class="btnColor"  value="작성취소" onclick="location.href='/usermypage/user_diary'">
+                            <input type="button" class="btnColor" value="작성완료" onclick="sendit()">
                         </div>
                     </td>
                 </tr>
