@@ -192,5 +192,31 @@ public class TrainerMatchingServiceImpl implements TrainerMatchingService {
 
     };
 
+    @Override
+    public boolean modify(TrainerMatchingBoardDTO board) {
+        int row = tmmapper.updateBoard(board);
+        if(row != 1) {
+            return false;
+        }
+
+        return true;
+
+    }
+
+
+
+    @Override
+    public boolean remove(String loginUser, Long boardNum) {
+        TrainerMatchingBoardDTO board = tmmapper.findByNum(boardNum);
+        if(board.getTrainerId().equals(loginUser)) {
+            return tmmapper.deleteBoard(boardNum) == 1;
+        }
+        return false;
+    }
+
+    @Override
+    public Long getTotal(Criteria cri) {
+        return tmmapper.getTotal(cri);
+    }
 
 }

@@ -221,9 +221,9 @@
         <div class="content">
             <div class="cotent_header"><h2>매칭 글 작성하기</h2></div>
 
-            <form id="boardForm" method="post" name="boardForm" th:action="@{/matching/matching_write}">
-
-                <input type="hidden" th:value="${cri.pagenum}" name="pagenum">
+            <form id="boardForm" method="post" name="boardForm" th:action="@{/matching/matching_modify}">
+                <th:block th:if="${list != null and list.size() > 0}" th:each="board : ${list}">
+                <input type="hidden" th:value="${cri.pageNum}" name="pageNum">
                 <input type="hidden" th:value="${cri.amount}" name="amount">
                 <input type="hidden" th:value="${cri.type}" name="type">
                 <input type="hidden" th:value="${cri.keyword}" name="keyword">
@@ -235,7 +235,7 @@
                     <tr>
                         <th>제목</th>
                         <td colspan="3">
-                            <input type="text" name="boardTitle" size="50" maxlength="50" placeholder="제목을 입력하세요.">
+                            <input type="text" name="boardTitle" size="50" maxlength="50" th:value="${board.boardTitle}">
                         </td>
                     </tr>
                     <tr>
@@ -247,13 +247,13 @@
                         <td class="datepicker">
 
                             <label for="expiration_time"><b style="color: gray"></b></label>
-                            <input type="text" id="expiration_time" name="expirationTime" placeholder="마감 일을 지정해주세요">
+                            <input type="text" id="expiration_time" name="expirationTime" th:value="${board.expirationTime}">
                         </td>
                     </tr>
                     <tr>
                         <th class="font-size">상담 가능 요일</th>
                         <td>
-                            <select id="avail_consult_weeks" name="availConsultWeeks" class="font-size2">
+                            <select id="avail_consult_weeks" name="availConsultWeeks" class="font-size2" th:value="${board.availConsultWeeks}">
                                 <option>전체 요일 가능</option>
                                 <option>월요일</option>
                                 <option>화요일</option>
@@ -266,7 +266,7 @@
                         </td>
                         <th class="font-size">상담 가능 시간</th>
                         <td>
-                            <select id="avail_consult_time" name="availConsultTime" class="font-size2">
+                            <select id="avail_consult_time" name="availConsultTime" class="font-size2" th:value="${board.availConsultTime}">
                                 <option>편한 시간 가능</option>
                                 <option>09:00 ~ 12:00</option>
                                 <option>12:00 ~ 15:00</option>
@@ -276,15 +276,15 @@
                         </td>
                     </tr>
                     <tr>
-                        <th colspan="2" class="adrr_text"><input type="text" id="sample4_postcode" name="trainerZipcode" placeholder="우편번호"></th>
+                        <th colspan="2" class="adrr_text"><input type="text" id="sample4_postcode" name="trainerZipcode" th:value="${board.trainerZipcode}"></th>
                         <td colspan="2"><input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br></td>
                     </tr>
                     <tr>
-                        <th colspan="2" class="adrr_text"><input type="text" name="trainerAddr" id="sample4_roadAddress" placeholder="도로명주소"></th>
+                        <th colspan="2" class="adrr_text"><input type="text" name="trainerAddr" id="sample4_roadAddress" th:value="${board.trainerAddr}"></th>
                         <span id="guide" style="color:#999;display:none"></span>
                         <td colspan="2" class="adrr_text">
-                            <input type="text" name="trainerAddrdetail" id="sample4_detailAddress" placeholder="상세주소">
-                            <input type="hidden" id="sample4_extraAddress" name="trainerAddretc" placeholder="참고항목">
+                            <input type="text" name="trainerAddrdetail" id="sample4_detailAddress" th:value="${board.trainerAddrdetail}">
+                            <input type="hidden" id="sample4_extraAddress" name="trainerAddretc" th:value="${board.trainerAddretc}">
                         </td>
                     </tr>
                     <tr id="content_title">
@@ -292,20 +292,21 @@
                     </tr>
                     <tr style="height:380px;" id="content_tr">
                         <td colspan="4">
-                            <textarea id="summernote" name="boardContent" style="width:100%;height:350px;resize:none;" placeholder="내용을 입력해주세요"></textarea>
+                            <textarea id="summernote" name="boardContent" style="width:100%;height:350px;resize:none;" th:value="${board.boardContent}"></textarea>
                         </td>
                     </tr>
                 </table>
+                </th:block>
             </form>
             <!-- 등록, 목록 버튼 테이블 -->
             <table class="button_table">
                 <tr align="center" valign="middle">
                     <td>
-                        <a href="javascript:sendit()">등록</a> <!-- javascript의 sendit 함수 호출 -->
+                        <a href="javascript:sendit()">수정</a> <!-- javascript의 sendit 함수 호출 -->
                     </td>
                     <td>
 
-                        <a th:href="${'/matching/matching_list'+cri.listLink}">취소</a>
+                        <a th:href="${'/matching/matching_list'+cri.listLink}">취소</a> <!-- cri.listLink를 붙여 목록으로 돌아가기 -->
                     </td>
                 </tr>
             </table>

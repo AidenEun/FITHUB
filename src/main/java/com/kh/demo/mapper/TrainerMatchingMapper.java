@@ -47,4 +47,11 @@ public interface TrainerMatchingMapper {
 
     Long getmatchingTotal(Criteria cri);
 
+    TrainerMatchingBoardDTO findByNum(Long boardNum);
+
+    int deleteBoard(Long boardNum);
+
+ int updateBoard(TrainerMatchingBoardDTO board);
+
+ Long getTotal(Criteria cri);
 }
