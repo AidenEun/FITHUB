@@ -36,7 +36,15 @@ public interface TrainerMatchingMapper {
 
     void saveMessage(MessageDTO newMessage);
 
+
+    SubscribeDTO getcheckSubs(SubscribeDTO newSubscribe);
+
+    SubscribeDTO getinsertSubs(SubscribeDTO newSubscribe);
+
+    SubscribeDTO getdeleteSubs(SubscribeDTO newSubscribe);
+
     List<TrainerMatchingBoardDTO> get12matchingSearchList(Criteria cri);
 
     Long getmatchingTotal(Criteria cri);
+
 }

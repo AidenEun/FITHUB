@@ -46,8 +46,10 @@ public class TrainerMatchingServiceImpl implements TrainerMatchingService {
             // 각각의 board에 대한 trainer 정보를 가져와서 설정
             ProfileDTO profileInfo = pfmapper.getProfileInfo(board.getTrainerId());
             TrainerDTO trainerInfo = tmapper.getTrainerInfo(board.getTrainerId());
+
             board.setProfileInfo(profileInfo);
             board.setTrainerInfo(trainerInfo);
+
 
         }
         return list;
@@ -175,4 +177,20 @@ public class TrainerMatchingServiceImpl implements TrainerMatchingService {
     public List<TrainerMatchingBoardDTO> getMachingSearchList(String keyword) {
         return tmmapper.getMachingSearchList(keyword);
     }
+
+    public SubscribeDTO checkSubs(SubscribeDTO newSubscribe){return tmmapper.getcheckSubs(newSubscribe);};
+
+    public SubscribeDTO clickSubs(SubscribeDTO newSubscribe){
+        SubscribeDTO result = tmmapper.getcheckSubs(newSubscribe);
+
+        if(result != null){
+            return tmmapper.getdeleteSubs(newSubscribe);
+        }
+        else {
+            return tmmapper.getinsertSubs(newSubscribe);
+        }
+
+    };
+
+
 }

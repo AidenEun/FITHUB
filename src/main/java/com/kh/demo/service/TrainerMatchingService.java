@@ -41,7 +41,13 @@ public interface TrainerMatchingService {
 
     void saveMessage(MessageDTO newMessage);
 
+
+    SubscribeDTO checkSubs(SubscribeDTO newSubscribe);
+
+    SubscribeDTO clickSubs(SubscribeDTO newSubscribe);
+
     List<TrainerMatchingBoardDTO> get12matchingSearchList(Criteria cri);
 
     Long getmatchingTotal(Criteria cri);
+
 }
