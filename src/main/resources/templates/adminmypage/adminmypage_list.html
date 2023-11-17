@@ -161,27 +161,19 @@
 							<tbody id="data-table">
 								<tr th:if="${reportList != null and reportList.size() > 0}" th:each="reportBoard : ${reportList}" id="result_execlist">
 									<td class="long_text">
-										<a href="#">
-											[[${reportBoard.reportNum}]]
-										</a>
+										[[${reportBoard.reportNum}]]
 									</td>
 									<td class="long_text">
 										<a href="#" class="open">[[${reportBoard.userId}]]</a>
 									</td>
 									<td class="long_text">
-										<a href="#">
-											[[${reportBoard.reportBoardnum}]]
-										</a>
+										[[${reportBoard.reportBoardnum}]]
 									</td>
 									<td class="long_text">
-										<a href="#">
-											[[${reportBoard.boardCategoryName}]]
-										</a>
+										[[${reportBoard.boardCategoryName}]]
 									</td>
 									<td class="long_text">
-										<a href="#">
-											[[${reportBoard.reportDate}]]
-										</a>
+										[[${reportBoard.reportDate}]]
 									</td>
 								</tr>
 							</tbody>
@@ -210,20 +202,16 @@
 							<tbody id="data-table">
 							<tr th:if="${signUpList != null and signUpList.size() > 0}" th:each="signUpBoard : ${signUpList}" id="result_execlist">
 								<td class="long_text">
-									<a href="#" class="signupNum">[[${signUpBoard.signupNum}]]</a>
+									<span href="#" class="signupNum">[[${signUpBoard.signupNum}]]</span>
 								</td>
 								<td class="long_text">
 									<a href="#" class="open">[[${signUpBoard.userId}]]</a>
 								</td>
 								<td class="long_text">
-									<a href="#">
-										[[${signUpBoard.trainerPart}]]
-									</a>
+									[[${signUpBoard.trainerPart}]]
 								</td>
 								<td class="long_text">
-									<a href="#">
-										[[${signUpBoard.trainerCareer}]]
-									</a>
+									[[${signUpBoard.trainerCareer}]]
 								</td>
 							</tr>
 							</tbody>
@@ -255,27 +243,19 @@
 									<tbody id="data-table">
 									<tr th:if="${boardList != null and boardList.size() > 0}" th:each="adminBoard : ${boardList}" id="result_execlist">
 										<td class="long_text">
-											<a href="#">
-												[[${adminBoard.boardNum}]]
-											</a>
+											[[${adminBoard.boardNum}]]
 										</td>
 										<td class="long_text">
-											<a href="#">
-												[[${adminBoard.boardTitle}]]
-											</a>
+											[[${adminBoard.boardTitle}]]
 										</td>
 										<td class="long_text">
 											<a href="#" class="open">[[${adminBoard.userId}]]</a>
 										</td>
 										<td class="long_text">
-											<a href="#">
-												[[${adminBoard.viewCnt}]]
-											</a>
+											[[${adminBoard.viewCnt}]]
 										</td>
 										<td class="long_text">
-											<a href="#">
-												[[${adminBoard.likeCnt}]]
-											</a>
+											[[${adminBoard.likeCnt}]]
 										</td>
 									</tr>
 									<tr th:if="${boardList == null or boardList.size() == 0}">

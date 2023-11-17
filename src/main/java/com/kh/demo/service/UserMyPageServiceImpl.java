@@ -491,6 +491,7 @@ public class UserMyPageServiceImpl implements UserMyPageService{
                 profdto.setUserId(user.getUserId());
                 profdto.setSysName(systemname);
                 profdto.setOrgName(orgname);
+                profdto.setProfileCategory("C");
 
                 //실제 파일 업로드
                 file.transferTo(new File(path));

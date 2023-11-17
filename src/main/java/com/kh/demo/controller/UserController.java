@@ -7,6 +7,7 @@ import com.kh.demo.service.AdminService;
 import com.kh.demo.service.TrainerService;
 import com.kh.demo.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;

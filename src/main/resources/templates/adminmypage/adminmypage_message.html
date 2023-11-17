@@ -107,22 +107,16 @@
 					<tbody id="data-table">
 						<tr th:if="${messageList != null and messageList.size() > 0}" th:each="messageBoard : ${messageList}" id="result_execlist">
 							<td class="long_text">
-								<a href="#">
-									[[${messageBoard.messageNum}]]
-								</a>
+								[[${messageBoard.messageNum}]]
 							</td>
 							<td class="long_text">
 								<a href="#" class="open">[[${messageBoard.sendId}]]</a>
 							</td>
 							<td class="long_text">
-								<a href="#">
-									[[${messageBoard.messageContent}]]
-								</a>
+								[[${messageBoard.messageContent}]]
 							</td>
 							<td class="long_text">
-								<a href="#">
-									[[${messageBoard.sendDate}]]
-								</a>
+								[[${messageBoard.sendDate}]]
 							</td>
 							<td class="long_text">
 								<a href="#" class="button messageOpen">처리하기</a>
@@ -291,10 +285,10 @@
 			if (data.messageList != null && data.messageList.length > 0) {
 				data.messageList.forEach(function (messageData) {
 					var row = $('<tr id="result_execlist">');
-					row.append('<td class="long_text"><a href="#" class="messageNum">' + messageData.messageNum + '</a></td>');
+					row.append('<td class="long_text"><span href="#" class="messageNum">' + messageData.messageNum + '</span></td>');
 					row.append('<td class="long_text"><a href="#" class="open messageUserId">' + messageData.sendId + '</a></td>');
-					row.append('<td class="long_text"><a href="#">' + messageData.messageContent + '</a></td>');
-					row.append('<td class="long_text"><a href="#">' + messageData.sendDate + '</a></td>');
+					row.append('<td class="long_text">' + messageData.messageContent + '</td>');
+					row.append('<td class="long_text">' + messageData.sendDate + '</td>');
 					row.append('<td class="long_text"><a href="#" class="messageOpen button">처리하기</a></td>');
 					tableBody.append(row);
 				});

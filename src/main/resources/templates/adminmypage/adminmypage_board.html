@@ -107,35 +107,25 @@
 					<tbody id="data-table">
 						<tr th:if="${boardList != null and boardList.size() > 0}" th:each="adminBoard : ${boardList}" id="result_execlist">
 							<td class="long_text">
-								<a href="#">
-									[[${adminBoard.boardNum}]]
-								</a>
+								[[${adminBoard.boardNum}]]
 							</td>
 							<td class="long_text">
-								<a href="#">
-									[[${adminBoard.boardTitle}]]
-								</a>
+								[[${adminBoard.boardTitle}]]
 							</td>
 							<td class="long_text">
 								<a href="#" class="open">[[${adminBoard.userId}]]</a>
 							</td>
 							<td class="long_text">
-								<a href="#">
-									[[${adminBoard.viewCnt}]]
-								</a>
+								[[${adminBoard.viewCnt}]]
 							</td>
 							<td class="long_text">
-								<a href="#">
-									[[${adminBoard.likeCnt}]]
-								</a>
+								[[${adminBoard.likeCnt}]]
 							</td>
 							<td class="long_text">
-								<a href="#">
-									[[${adminBoard.regdate}]]
-									<th:block th:if="${adminBoard.regdate != adminBoard.updateDate}">
-										(수정됨)
-									</th:block>
-								</a>
+								[[${adminBoard.regdate}]]
+								<th:block th:if="${adminBoard.regdate != adminBoard.updateDate}">
+									(수정됨)
+								</th:block>
 							</td>
 						</tr>
 						<tr th:if="${boardList == null or boardList.size() == 0}">
@@ -310,11 +300,11 @@
             if (data.boardList != null && data.boardList.length > 0) {
                 data.boardList.forEach(function (boardData) {
                     var row = $('<tr id="result_execlist">');
-                    row.append('<td class="long_text"><a href="#">' + boardData.boardNum + '</a></td>');
-                    row.append('<td class="long_text"><a href="#">' + boardData.boardTitle + '</a></td>');
+                    row.append('<td class="long_text">' + boardData.boardNum + '</td>');
+                    row.append('<td class="long_text">' + boardData.boardTitle + '</td>');
                     row.append('<td class="long_text"><a href="#" class="open">' + boardData.userId + '</a></td>');
-                    row.append('<td class="long_text"><a href="#">' + boardData.viewCnt + '</a></td>');
-                    row.append('<td class="long_text"><a href="#">' + boardData.likeCnt + '</a></td>');
+                    row.append('<td class="long_text">' + boardData.viewCnt + '</td>');
+                    row.append('<td class="long_text">' + boardData.likeCnt + '</td>');
 
 					var regdateText = boardData.regdate;
 					if (boardData.regdate != boardData.updateDate) {
