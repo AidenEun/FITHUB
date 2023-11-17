@@ -28,7 +28,7 @@
     </insert>
     <select id="getList">
         select * from trainer_matching_board where
-<!--        <include refid="cri"></include>-->
+        <include refid="cri"></include>
         <![CDATA[
 			0 < board_num order by board_num desc limit #{startrow},#{amount}
 		]]>
@@ -106,6 +106,21 @@
         insert into subscribe (user_id, trainer_id)
         values (#{sendId}, #{receiveId})
     </insert>
+    <select id="findByNum">
+        select * from trainer_matching_board where board_num=#{boardNum}
+    </select>
+    <delete id="deleteBoard">
+        delete from trainer_matching_board where board_num=#{boardNum}
+    </delete>
+    <update id="updateBoard">
+        update trainer_matching_board set (board_title, trainer_id, expiration_time, avail_consult_weeks, avail_consult_time, trainer_zipcode, trainer_addr, trainer_addrdetail, board_content)
+        values (#{boardTitle}, #{trainerId}, #{expirationTime}, #{availConsultWeeks}, #{availConsultTime}, #{trainerZipcode}, #{trainerAddr}, #{trainerAddrdetail}, #{boardContent})
+    </update>
+    <select id="getTotal">
+        select count(*) from trainer_matching_board where
+        <include refid="cri"></include> board_num > 0
+    </select>
+
 
 
 

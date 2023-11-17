@@ -382,12 +382,12 @@ border-radius: 15px;
           <tr align="right" valign="middle">
             <td>
               <th:block th:if="${board.trainerId == session.loginUser}">
-                <form name="boardForm" method="post" th:action="@{/board/remove}">
-                <!--  <input name="boardnum" th:value="${board.boardnum}" type="hidden">
+                <form name="boardForm" method="post" th:action="@{/matching/remove}">
+                  <input name="boardNum" th:value="${board.boardNum}" type="hidden">
                   <input name="pagenum" th:value="${cri.pagenum}" type="hidden">
                   <input name="amount" th:value="${cri.amount}" type="hidden">
                   <input name="type" th:value="${cri.type}" type="hidden">
-                  <input name="keyword" th:value="${cri.keyword}" type="hidden">-->
+                  <input name="keyword" th:value="${cri.keyword}" type="hidden">
                   <a href="javascript:modify()">수정</a>
                   <a href="javascript:document.boardForm.submit()">삭제</a>
                 </form>
@@ -399,7 +399,7 @@ border-radius: 15px;
               <a href="#" class="open" data-trainer-id="${trainerInfo.trainerId}">신청하기</a>
             </td>
             <td>
-              <a th:href="${'/matching/matching_list'}">목록</a>
+              <a th:href="${'/matching/matching_list'+cri.listLink}">목록</a>
             </td>
           </tr>
 
@@ -407,36 +407,31 @@ border-radius: 15px;
         </table>
           <!-- review -->
         <div class="reply_line">
-          <div style="margin-bottom: 20px; width: 100%;">
-            <a href="#" class="regist"><h2>댓글 등록</h2></a>
-          </div>
-          <div class="replyForm row" style="font-size: 14px;">
+          <a href="#" class="regist">댓글 등록</a>
+          <div class="replyForm row">
             <div style="width:20%">
-              <b>작성자</b>
-              <input type="text" name="userId" th:value="${session.loginUser}" readonly style="text-align: center; margin-top: 10px;">
+              <h4>작성자</h4>
+              <input type="text" name="userId" th:value="${session.loginUser}" readonly style="text-align: center;">
             </div>
             <div style="width:65%">
-              <b>내 용</b>
-              <textarea name="replyContent" placeholder="댓글을 입력해주세요." style="resize:none; margin-top: 10px;"></textarea>
+              <h4>내 용</h4>
+              <div class="rating" data-star-rating="0">
+                <span class="star" data-rating="1">&#9733;</span>
+                <span class="star" data-rating="2">&#9733;</span>
+                <span class="star" data-rating="3">&#9733;</span>
+                <span class="star" data-rating="4">&#9733;</span>
+                <span class="star" data-rating="5">&#9733;</span>
+              </div>
+              <textarea name="replycontents" placeholder="리뷰를 작성해주세요" style="resize:none;"></textarea>
             </div>
-            <div style="width:15%; margin-top: 10px;">
-              <a href="#" class="button finish" style="margin-top:25px; margin-bottom:1rem;">등록</a>
+            <div style="width:15%">
+              <a href="#" class="button finish" style="margin-bottom:1rem;">등록</a>
               <a href="#" class="button cancel">취소</a>
             </div>
           </div>
           <ul class="replies"></ul>
-          <div class="page" style="margin: 0 auto; text-align: center; clear: both;"></div>
+          <div class="page"></div>
         </div>
-
-
-        <div class="rating" data-star-rating="0">
-          <span class="star" data-rating="1">&#9733;</span>
-          <span class="star" data-rating="2">&#9733;</span>
-          <span class="star" data-rating="3">&#9733;</span>
-          <span class="star" data-rating="4">&#9733;</span>
-          <span class="star" data-rating="5">&#9733;</span>
-        </div>
-
       </th:block>
     </div>
   </div>
@@ -486,192 +481,14 @@ border-radius: 15px;
 <script th:src="@{/assets/js/main_sub.js}"></script>
 
 <script th:src="@{/assets/js/sidebar.js}"></script>
+<script th:src="@{/assets/js/reply.js}"></script>
 <script th:src="@{/assets/js/matching_u_t_matching.js}"></script>
 
 
 
 <script th:src="@{/assets/js/review.js}"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script th:inline="javascript">
-  const loginUser = /*[[${session.loginUser}]]*/'';
-  const boardNum = /*[[${board.boardNum}]]*/'';
-  const boardCategory = /*[[${board.boardCategory}]]*/'';
-  const replies = $(".replies")
-  const page = $(".page")
-  let nowpage = 0;
 
-  $(document).ready(function(){
-      $(".replyForm").hide();
-      nowpage = 1;
-      showList(1);
-  })
-  $(".regist").on("click",function(e){
-      e.preventDefault();
-      $(".replyForm").show();
-      $(this).hide();
-      $(".noreply").hide();
-  })
-  $(".finish").on("click",function(e){
-      e.preventDefault();
-      let replyContent = $("[name='replyContent']").val();
-
-      replyService.add(
-              {"boardNum":boardNum,"boardCategory":boardCategory,"userId":loginUser, "replyContent":replyContent},
-              function(result){
-                  alert("등록!");
-                  showList(1);
-              }
-      )
-
-
-  })
-
-  function showList(pagenum){
-      replyService.getList(
-              {boardNum:boardNum, pagenum:pagenum||1},
-              function(replyCnt, list){
-                  let str = "";
-                  if(list == null || list.length == 0){
-                      str += '<li class="noreply" style="clear:both;">등록된 댓글이 없습니다.</li>';
-                      replies.html(str);
-                      return;
-                  }
-
-                  for(let i=0;i<list.length;i++){
-                      //<li style="clear:both;" class="li3">
-                      str += '<li style="clear:both;" class="li'+list[i].replyNum+'"><div>';
-                      str += '<div style="display:inline; float:left; width:75%;">';
-                      //<strong class="userid3">apple</strong>
-                      str += '<strong class="userId'+list[i].replyNum+'">'+list[i].userId+'</strong>';
-                      //<p class="reply3">댓글내용</p>
-                      str += '<p class="reply'+list[i].replyNum+'">'+list[i].replyContent+'</p>';
-                      str += '</div><div style="text-align:right;">'
-                      str += '<strong>'+replyService.displayTime(list[i])+'</strong>'
-                      if(list[i].userId == loginUser){
-                          //<a href="3" class="modify">수정</a>
-                          str += '<a href="'+list[i].replyNum+'" class="modify">수정</a>';
-                          str += '<a href="'+list[i].replyNum+'" class="mfinish" style="display:none;">수정하기</a>';
-                          str += '<a href="'+list[i].replyNum+'" class="remove">삭제</a>';
-                      }
-                      str += '</div></div></li>';
-                  }
-                  replies.html(str);
-
-                  $(".remove").on("click",deleteReply);
-                  $(".modify").on("click",modifyReply);
-                  $(".mfinish").on("click",modifyReplyOk);
-
-                  showReplyPage(replyCnt, pagenum);
-              }
-      )
-  }
-
-  function showReplyPage(replyCnt, pagenum){
-      let endPage = Math.ceil(pagenum/5)*5;
-      let startPage = endPage - 4;
-
-      let prev = startPage != 1;
-      endPage = (endPage-1)*5 >= replyCnt ? Math.ceil(replyCnt/5) : endPage;
-      let next = endPage*5 < replyCnt ? true : false;
-
-      let str = "";
-      if(prev){
-          //<a class="changePage" href="5"><code>&lt;</code></a>
-          str += '<a class="changePage" href="'+(startPage-1)+'"><code>&lt;</code></a>';
-      }
-      for(let i=startPage;i<=endPage;i++){
-          if(i == pagenum){
-              //<code class="nowPage">7</code>
-              str += '<code class="nowPage">'+i+'</code>';
-          }
-          else{
-              //<a class="changePage" href="9"><code>9</code></a>
-              str += '<a class="changePage" href="'+i+'"><code>'+i+'</code></a>';
-          }
-      }
-      if(next){
-          str += '<a class="changePage" href="'+(endPage+1)+'"><code>&gt;</code></a>';
-      }
-
-      page.html(str);
-
-      $(".changePage").on("click",function(e){
-          e.preventDefault();
-          let target = $(this).attr("href");
-          nowpage = parseInt(target);
-          showList(nowpage);
-          window.setTimeout(function(){
-              window.scrollTo(0,document.body.scrollHeight)
-          },10)
-      })
-  }
-
-  function deleteReply(e){
-      e.preventDefault();
-      let replyNum = $(this).attr("href");
-      replyService.remove(
-              replyNum,
-              function(result){
-                  if(result == "success"){
-                      alert("댓글 삭제 완료!");
-                      showList(nowpage);
-                  }
-              }
-      )
-  }
-  let replyFlag = false;
-  function modifyReply(e){
-      e.preventDefault();
-      if(!replyFlag){
-          replyFlag = true;
-          let replyNum = $(this).attr("href");
-          const replyTag = $(".reply"+replyNum);
-          //<textarea class="3 mdf">댓글내용</textarea>
-          replyTag.html('<textarea class="'+replyNum+' mdf">'+replyTag.text()+'</textarea>')
-          $(this).hide();
-          $(this).next().show();
-      }
-      else{
-          alert("수정중인 댓글이 있습니다.");
-      }
-  }
-  function modifyReplyOk(e){
-      e.preventDefault();
-      replyFlag = false;
-
-      let replyNum = $(this).attr("href");
-      let replyContent = $("."+replyNum).val();
-
-      if(replyContent == ""){
-          alert("수정할 댓글 내용을 입력하세요");
-          return;
-      }
-      replyService.modify(
-              {replyNum:replyNum, replyContent:replyContent, boardNum:boardNum, userId:loginUser},
-              function(result){
-                  if(result == "success"){
-                      alert("댓글 수정 완료!");
-                      showList(nowpage);
-                  }
-              }
-      )
-  }
-
-
-  function modify(){
-      const boardForm = document.boardForm;
-      boardForm.setAttribute("action",/*[[@{/info/info_modify}]]*/'');
-      boardForm.setAttribute("method","get");
-      boardForm.submit();
-  }
-
-  $(".cancel").on("click",function(e){
-      e.preventDefault();
-      $(".replyForm").hide();
-      $(".regist").show();
-      $("[name='replyContent']").val("");
-  })
-</script>
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     const stars = document.querySelectorAll(".rating .star");
@@ -713,6 +530,20 @@ border-radius: 15px;
     }
   }
 
+
+  function modify(){
+		const boardForm = document.boardForm;
+		boardForm.setAttribute("action",/*[[@{/matching/matching_modify}]]*/'');
+		boardForm.setAttribute("method","get");
+		boardForm.submit();
+	}
+
+	$(".cancel").on("click",function(e){
+		e.preventDefault();
+		$(".replyForm").hide();
+		$(".regist").show();
+		$("[name='replyContents']").val("");
+	})
 
 
 

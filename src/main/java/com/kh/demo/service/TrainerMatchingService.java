@@ -50,4 +50,9 @@ public interface TrainerMatchingService {
 
     Long getmatchingTotal(Criteria cri);
 
+    boolean remove(String loginUser, Long boardNum);
+
+    boolean modify(TrainerMatchingBoardDTO board);
+
+    Long getTotal(Criteria cri);
 }
