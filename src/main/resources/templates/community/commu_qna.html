@@ -57,6 +57,30 @@
 			text-overflow: ellipsis;
 			white-space: nowrap;
 		}
+		.content .button.btnColor{
+			background: #FFFFFF;
+			border: 1px solid #5a8100;
+			border-radius: 4px;
+			color: #5a8100 !important;
+			box-shadow: 4px 4px 2px 0px rgb(203,211,177);
+			font-weight: 700 !important;
+			height: 2.75em !important;
+			line-height: 2.75em !important;
+
+		}
+		.content .button.btnColor a{
+			color: #5a8100;
+		}
+		.button.btnColor:hover a { color:#F7FAF5; }
+
+		.button.btnColor:hover{
+			background: #5a8100;
+			border: 1px solid #5a8100;
+			border-radius: 4px;
+			color: #F7FAF5 !important;
+			box-shadow: 0 0 2px #5a8100;
+
+		}
 	</style>
 </head>
 <body class="is-preload">
@@ -79,7 +103,7 @@
 		<!-- Content -->
 		<div class="content">
 			<div class="cotent_header"><h2>고민 Q&A</h2></div>
-			<div class="button"><a th:href="${'/community/commu_write'+pageMaker.cri.listLink}">작성하기</a></div>
+			<div class="button btnColor"><a th:href="${'/community/commu_write'+pageMaker.cri.listLink}">작성하기</a></div>
 			<div style="width: 100%;">
 				<!-- 게시글 리스트 띄우는 테이블 -->
 				<table id="list" class="commu_qna_list" style="border-bottom: 1px #304400; width: 100%;">

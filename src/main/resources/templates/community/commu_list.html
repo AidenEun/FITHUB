@@ -64,6 +64,28 @@
 			margin-top: 50px;
 			margin-bottom: 30px;
 		}
+		.button.more_view{
+			background: #FFFFFF;
+			border: 1px solid #5a8100;
+			border-radius: 4px;
+			color: #5a8100 !important;
+			box-shadow: 4px 4px 2px 0px rgb(203,211,177) !important;
+			font-weight: 700 !important;
+			height: 2.75em !important;
+			line-height: 2.75em !important;
+			padding:0 1.5em !important;
+			width: 86px !important;
+
+		}
+
+		.button.more_view:hover{
+			background: #5a8100;
+			border: 1px solid #5a8100;
+			border-radius: 4px;
+			color: #F7FAF5 !important;
+			box-shadow: 0 0 2px #5a8100 !important;
+
+		}
 	</style>
 </head>
 <body class="is-preload">
@@ -136,7 +158,7 @@
 						</th:block>
 					</table>
 				</div>
-				<a class="button" th:href="${'/community/commu_free'}">더보기</a>
+				<a class="button more_view" th:href="${'/community/commu_free'}">더보기</a>
 			</div>
 			<hr>
 			<div class="commu_food">
@@ -189,7 +211,7 @@
 						</th:block>
 					</table>
 				</div>
-				<a class="button" th:href="${'/community/commu_food'}">더보기</a>
+				<a class="button more_view" th:href="${'/community/commu_food'}">더보기</a>
 			</div>
 			<hr>
 			<div class="commu_exercise">
@@ -242,7 +264,7 @@
 						</th:block>
 					</table>
 				</div>
-				<a class="button" th:href="${'/community/commu_exercise'}">더보기</a>
+				<a class="button more_view" th:href="${'/community/commu_exercise'}">더보기</a>
 			</div>
 			<hr>
 			<div class="commu_gallery">
@@ -295,7 +317,7 @@
 						</th:block>
 					</table>
 				</div>
-				<a class="button" th:href="${'/community/commu_gallery'}">더보기</a>
+				<a class="button more_view" th:href="${'/community/commu_gallery'}">더보기</a>
 			</div>
 			<hr>
 			<div class="commu_qna">
@@ -348,7 +370,7 @@
 						</th:block>
 					</table>
 				</div>
-				<a class="button" th:href="${'/community/commu_qna'}">더보기</a>
+				<a class="button more_view" th:href="${'/community/commu_qna'}">더보기</a>
 			</div>
 			<hr>
 			<form name="pageForm" id="pageForm" th:action="@{/community/commu_list}">
