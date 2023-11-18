@@ -107,4 +107,29 @@ public class UserServiceImpl implements UserService{
         return userDTOList;
     }
 
+    @Override
+    public void updateUserAttendance(String userid) {
+        umapper.updateUserAttendance(userid);
+    }
+
+    @Override
+    public int getUserAttendance(String userid) {
+        return umapper.getUserAttendance(userid);
+    }
+
+    @Override
+    public void updateUserPoint(String userid) {
+        umapper.updateUserPoint(userid);
+    }
+
+    @Override
+    public Long getUserPoint(String userid) {
+        return umapper.getUserPoint(userid);
+    }
+
+    @Override
+    public void resetUserAttendance(String userid) {
+        umapper.resetUserAttendance(userid);
+    }
+
 }

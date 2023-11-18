@@ -29,7 +29,7 @@ challTabs.forEach((challTab, index) => {
     });
 });
 
-/*document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function () {
     const progressBar = document.querySelector('.progress-bar');
     const attBtn = document.querySelector('.att-btn');
     const pointDisplay = document.getElementById('pointDisplay');
@@ -56,8 +56,8 @@ challTabs.forEach((challTab, index) => {
                     filledGauges = 0;
                 }, 1000);
 
-                // 출석이 완료되었습니다. 알림 메시지
-                alert('출석이 완료되었습니다. 포인트 10점을 획득하셨습니다!');
+                // 축하 및 포인트 지급 알림 메시지
+                alert('축하합니다! 포인트 10점을 획득하셨습니다!');
             } else {
                 // 출석이 완료되었습니다. 알림 메시지
                 alert('출석이 완료되었습니다.');
@@ -68,40 +68,6 @@ challTabs.forEach((challTab, index) => {
         } else {
             // 중복 출석 경고 메시지
             alert('오늘은 이미 출석을 완료하였습니다.');
-        }
-    });
-});*/
-
-document.addEventListener('DOMContentLoaded', function () {
-    const progressBar = document.querySelector('.progress-bar');
-    const attBtn = document.querySelector('.att-btn');
-    const pointDisplay = document.getElementById('pointDisplay');
-
-    let filledGauges = 0; // 현재 출석 게이지가 찬 횟수
-    let totalPoints = parseInt(pointDisplay.innerText) || 0; // 초기 포인트 설정
-
-    attBtn.addEventListener('click', function () {
-        filledGauges++;
-        progressBar.value = filledGauges;
-
-        if (filledGauges === 7) {
-            // 7회 출석 완료 시 포인트 지급
-            totalPoints += 10; // 10 포인트로 테스트
-
-            // 포인트 표시 갱신
-            pointDisplay.innerText = totalPoints + 'p';
-
-            // 출석 게이지 초기화
-            setTimeout(function () {
-                progressBar.value = 0;
-                filledGauges = 0;
-            }, 1000);
-
-            // 출석이 완료되었습니다. 알림 메시지
-            alert('출석이 완료되었습니다. 포인트 10점을 획득하셨습니다!');
-        } else {
-            // 출석이 완료되었습니다. 알림 메시지
-            alert('출석이 완료되었습니다.');
         }
     });
 });
