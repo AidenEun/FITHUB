@@ -167,9 +167,6 @@
         margin-bottom: 23px;
     }
 
-    /*input[type=button] {*/
-    /*    box-shadow: inset 0 0 0 1px #5a810086;*/
-    /*}*/
 
     .btn_area {
         display: flex;
@@ -204,8 +201,10 @@
         box-shadow: 0 0 2px 1px #5a8100;
         font-weight:100 !important;
     }
-    /*작성, 글쓰기 버튼 컬러 수정*/
-    .more_view.btnColor.btnColor{
+
+    /*더보기 버튼 컬러 수정*/
+
+    .more_view.btnColor{
         background: #FFFFFF;
         border: 1px solid #5a8100;
         border-radius: 4px;
@@ -214,18 +213,9 @@
 
     }
 
-    .more_view.btnColor.btnColor{
-        background: #FFFFFF;
-        border: 1px solid #8FA746;
-        border-radius: 4px;
-        color: #5a8100 !important;
-        box-shadow: 4px 4px 2px 0px rgb(203,211,177);
-
-    }
-
     .more_view.btnColor:hover{
         background: #5a8100;
-        border: 1px solid #8FA746;
+        border: 1px solid #5a8100;
         border-radius: 4px;
         color: #F7FAF5 !important;
         box-shadow: 0 0 2px #5a8100;
@@ -255,9 +245,7 @@
     #sidebarRanking{
         position: relative;
     }
-    /*.nofix{*/
-    /*    position: relative;*/
-    /*}*/
+
     .fix{
         /*position: fixed;*/
         width: 206px;
@@ -270,6 +258,7 @@
         display: inline;
         box-shadow: inset 0 -10px 0 #ebede1;
     }
+
 
 </style>
 <body class="is-preload">
@@ -700,7 +689,7 @@
     $(window).scroll(
         function(){
             //스크롤의 위치가 상단에서 450보다 크면
-            if($(window).scrollTop() < 1600 && $(window).scrollTop() > 200) {
+            if($(window).scrollTop() > 200) {
                 /* if(window.pageYOffset >= $('원하는위치의엘리먼트').offset().top){ */
                 $('#sidebarRanking').addClass("fix");
                 $('#sidebarRanking').css("position","fixed")
@@ -836,7 +825,7 @@
             dataType: 'json',
             success: function (data) {
                 // 게시글 목록 업데이트
-                displayData(data.boardDTO);
+                displayData(data.boardDTO,currentCategory);
                 // 페이징 버튼 업데이트
                 displayPaging(data.pageDTO, currentCategory, keyword);
             },
@@ -895,9 +884,9 @@
 
             boardDTO.forEach(function (boardData) {
                 var row = $('<tr>');
-                row.append('<td class="long_text"><a href="#">' + boardData.challNum + '</a></td>');
-                row.append('<td class="long_text"><a href="#">' + boardData.challName + '</a></td>');
-                row.append('<td class="long_text"><a href="#">' + boardData.regdate + '</a></td>');
+                row.append('<td class="long_text">' + boardData.challNum + '</td>');
+                row.append('<td class="long_text"><a href="/challenge/list">' + boardData.challName + '</a></td>');
+                row.append('<td class="long_text">' + boardData.regdate + '/td>');
                 tableBody.append(row);
             });
             tableBody.before(tableHead);
@@ -906,7 +895,7 @@
         }
     }
 
-    function displayData(boardDTO) {
+    function displayData(boardDTO,currentCategory) {
         var tableBody = $('#data-table');
         var tableBody1 = $('#data-table1');
         var tableBody2 = $('#data-table2');
@@ -927,6 +916,16 @@
             boardDTO.forEach(function (boardData) {
                 var row = $('<tr>');
                 row.append('<td class="long_text"><a href="#">' + boardData.boardNum + '</a></td>');
+
+                if(currentCategory ==='info' || currentCategory ==='tip'){
+                    row.append('<td class="long_text"><a href="/info/info_get?boardNum=' + boardData.boardNum + '">' + boardData.boardTitle + '</a></td>');
+                }
+                else if(currentCategory === 'commu'){
+                    row.append('<td class="long_text"><a href="/community/commu_get?boardNum=' + boardData.boardNum + '">' + boardData.boardTitle + '</a></td>');
+                }
+                else if(currentCategory === 'matching'){
+                    row.append('<td class="long_text"><a href="/matching/matching_view?boardNum=' + boardData.boardNum + '">' + boardData.boardTitle + '</a></td>');
+                }
                 row.append('<td class="long_text"><a href="#">' + boardData.boardTitle + '</a></td>');
                 if (boardData.hasOwnProperty('trainerId')) {
                     row.append('<td class="long_text"><a href="#" class="open">' + boardData.trainerId + '</a></td>');
