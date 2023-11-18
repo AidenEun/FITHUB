@@ -174,3 +174,13 @@ tr.special-row{
     box-shadow: 0 0 2px 1px #5a8100;
     font-weight:100 !important;
 }
+
+.td_padding td {
+    padding: 0.75em 0.75em;
+}
+
+.flex{
+    display: flex;
+    justify-content: space-between;
+}
+

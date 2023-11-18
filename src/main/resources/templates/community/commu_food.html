@@ -154,7 +154,7 @@
 			</div>
 			<br>
 			<!-- 페이징 처리하는 테이블 -->
-			<table class="pagination">
+			<table class="pagination none_color_table">
 				<tr align="center" valign="middle">
 					<td>
 						<!--이전버튼-->
@@ -171,8 +171,8 @@
 			</table>
 			<!-- 검색 -->
 			<form id="searchForm" th:action="@{/community/commu_food}">
-				<div class="search_area">
-					<select name="type">
+				<div class="search_area flex">
+					<select name="type" style="width: 20%; margin-right:10px;">
 						<option value="" th:selected="${pageMaker.cri.type == null}">검색</option>
 						<option value="T" th:selected="${pageMaker.cri.type == 'T'}">제목</option>
 						<option value="C" th:selected="${pageMaker.cri.type == 'C'}">내용</option>
@@ -181,8 +181,8 @@
 						<option value="TW" th:selected="${pageMaker.cri.type == 'TW'}">제목 또는 작성자</option>
 						<option value="TCW" th:selected="${pageMaker.cri.type == 'TCW'}">제목 또는 내용 또는 작성자</option>
 					</select>
-					<input type="text" name="keyword" id="keyword" th:value="${pageMaker.cri.keyword}">
-					<a href="#" class="button primary">검색</a>
+					<input type="text" name="keyword" id="keyword" th:value="${pageMaker.cri.keyword}" style="margin-right:10px;">
+					<a href="#" class="button btnColor">검색</a>
 				</div>
 				<input type="hidden" value="1" name="pagenum">
 				<input type="hidden" value="10" name="amount">
@@ -202,7 +202,7 @@
 			<section>
 				<div class="boardRanking">
 					<div class="boardRanking_ranking">
-						<table style="width: 90%;">
+						<table style="width: 90%;" class="td_padding">
 							<tr><td><a href="/community/commu_list">전체</a></td></tr>
 							<tr><td><a href="/community/commu_free">자유게시판</a></td></tr>
 							<tr><td><a href="/community/commu_food" style="color: #5a8100; font-size: 20px;">식단</a></td></tr>
