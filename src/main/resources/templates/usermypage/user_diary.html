@@ -2,139 +2,200 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Fit Hub</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="stylesheet" th:href="@{/assets/css/index.css}" />
-    <link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
-    <noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
-    <link rel="stylesheet" th:href="@{/assets/css/common.css}" />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+    <link rel="stylesheet" th:href="@{/assets/css/index.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/sidebar.css}"/>
+    <noscript>
+        <link rel="stylesheet" th:href="@{/assets/css/noscript.css}"/>
+    </noscript>
+    <link rel="stylesheet" th:href="@{/assets/css/common.css}"/>
 </head>
 <style>
-    *{
+    * {
         box-sizing: border-box;
-        margin: 0; padding: 0;
+        margin: 0;
+        padding: 0;
 
     }
+
     /* MAIN IMG 게시글 상단 고정 */
-    #top_main_img{
+    #top_main_img {
         width: 100%;
         height: 250px;
         border: 1px solid red;
     }
 
-    #container1{
+    #container1 {
         margin: 0 auto;
         width: 1080px;
         height: 100%;
         display: flex;
         justify-content: center;
         margin-top: 30px;
+        margin-bottom: 50px;
     }
+
     /* #container1::after{
         clear: both;
     } */
-    #container1 #side_box{
+    #container1 #side_box {
         /* float: left; */
         width: 310px;
         height: 100%;
         /*border: 1px solid violet;*/
         /* background-color: antiquewhite; */
     }
-    #container1 #main_box{
+
+    #container1 #main_box {
         /* float: left; */
         height: 100%;
         width: 770px;
         /* border: 1px solid violet; */
         /* background-color: yellowgreen; */
     }
+
     /* 사이드 카테고리  */
-    #container1 #side_box .cate_list{
+    #container1 #side_box .cate_list {
         list-style: none;
         margin-top: 40px;
     }
-    #container1 #side_box .cate_list li{
+
+    #container1 #side_box .cate_list li {
         margin: 30px;
 
     }
+
+    .highlight {
+        display: inline;
+        box-shadow: inset 0 -10px 0 #ebede1;
+    }
+
     /* 캘린더 스타일 */
-    .calender{
-        width: 650px;
+    .calender {
+        position: relative;
+        width: 680px;
         margin: 50px;
-        padding: 20px;
+        padding: 52px;
         margin: 0 auto;
         margin-top: 40px;
         margin-bottom: 40px;
-        box-shadow: 0px 0px 10px 5px #5a8100b1 ;
+        box-shadow: 0px 0px 10px 5px rgb(203, 211, 177);
         /* border: 1px solid green; */
         border-radius: 15px;
     }
-    .calender .calen_header{
-        display: flex;
-        justify-content: space-between;
+
+    .calender .calen_header {
+        /*display: flex;*/
+        /*justify-content: space-around;*/
         align-items: center;
+        margin-top: 17px;
         margin-bottom: 40px;
-        color:#5a8100;
-
+        color: #5a8100;
 
     }
-    .calender .calen_header .year_month{
-        padding: 25px 30px 10px;
+
+    .calender .calen_header .year_month {
+        /*padding: 25px 30px 10px;*/
+        display: inline-block;
         font-size: 30px;
+        padding-left: 28px;
+        padding-right: 28px;
     }
 
-    .calender .calen_header .nav{
-        display: flex;
-        /* border: 1px solid #333333; */
-        /* border-radius: 5px; */
+    /*.calender .calen_header .nav{*/
+    /*    display: flex;*/
+    /*    justify-content: space-evenly;*/
+    /*}*/
+
+    .nav {
+        display: inline-block;
+        position: absolute;
+        right: 50px;
     }
-    .calender .calen_header .nav .nav_btn{
-        box-shadow:none;
-        padding: 0;
-        width: 38px;
-        height: 38px;
-        border: 0;
-        color: #878787 !important;
-        font-size: 1rem;
-        line-height: 38px;
-        border-radius: 50%;
-        /* background-color: #f2f2f2; */
+
+    .calender .calen_header .nav .nav_btn {
+        /*box-shadow:none;*/
+        /*padding: 0;*/
+        /*border: 0;*/
+        /*color: #878787 !important;*/
+        /*font-size: 1rem;*/
+        line-height: 32px;
+        /*border-radius: 50%;*/
         cursor: pointer;
+        background: #FFFFFF;
+        /*border: 1px solid #5a8100;*/
+        border-radius: 4px;
+        color: #5a8100 !important;
+        box-shadow: 4px 4px 2px 0px rgb(203, 211, 177);
 
     }
-    .calender .calen_header .nav .nav_btn:hover{
+
+    .calender .calen_header .nav .nav_btn:hover {
         /* background-color: #f2f2f2; */
-        background-color: rgb(203,211,177);
+        background-color: rgb(203, 211, 177);
     }
 
-    .go_today{
-        box-shadow:none;
+    .go_today {
+        cursor: pointer;
+        background: #FFFFFF;
+        border: 1px solid #5a8100;
+        border-radius: 4px;
+        color: #5a8100 !important;
+        box-shadow: 4px 4px 2px 0px rgb(203, 211, 177);
         width: 75px;
-        height: 38px;
-        /* color: #878787 !important; */
-        border: 3px solid #5a8100;
-        padding: 0 10px;
-        margin: 0 10px;
-        border-radius: 5px;
-        /* background-color: #f2f2f2; */
-        cursor: pointer;
+        padding: 0px 0px !important;
+        letter-spacing: 1px;
+        font-size: 12px;
+        font-weight: 300;
+        height: 37px;
 
     }
-    .go_today:hover{
-        background-color: rgb(203,211,177);
+
+    /*.go_today:hover{*/
+    /*    !*background-color: rgb(203,211,177);*!*/
+    /*    background-color: rgb(203,211,177);*/
+    /*    border: 1px solid #5a8100;*/
+    /*    border-radius: 4px;*/
+    /*    color: #F7FAF5 !important;*/
+    /*    box-shadow: 0 0 2px #5a8100;*/
+    /*}*/
+    input[type=button].go_today {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    input[type=button].go_today.btnColor {
+        background: #FFFFFF;
+        /*border: 1px solid #5a8100;*/
+        height: 37px;
+        border-radius: 4px;
+        color: #5a8100 !important;
+        box-shadow: 4px 4px 2px 0px rgb(203, 211, 177);
 
     }
-    .weeks{
+
+    input[type=button].go_today.btnColor:hover {
+        background: rgb(203, 211, 177);
+        /*border: 1px solid #5a8100;*/
+        border-radius: 4px;
+        /*color: #F7FAF5 !important;*/
+        box-shadow: 0 0 2px #5a8100;
+
+    }
+
+    .weeks {
         display: flex;
         margin: 25px 0;
     }
 
-    .day{
+    .day {
         width: calc(100% / 7);
         text-align: center;
         font-weight: 600;
     }
 
-    .dates{
+    .dates {
         display: flex;
         flex-flow: row wrap;
         /* height: 500px; */
@@ -142,14 +203,21 @@
         border: 0;
     }
 
-    .calen_contents .date{
+    .calen_contents {
+        padding: 10px;
+        box-shadow: 4px 4px 2px 0px rgb(203, 211, 177);
+        border-radius: 4px;
+    }
+
+    .calen_contents .date {
         width: calc(100% / 7);
         position: relative;
         padding: 15px;
         text-align: center;
         cursor: pointer;
     }
-    .calender .calen_contents .date::before{
+
+    .calender .calen_contents .date::before {
         position: absolute;
         content: "";
         height: 47px;
@@ -162,33 +230,35 @@
 
 
     }
-    .dates .date:hover::before{
+
+    .dates .date:hover::before {
         background-color: #f2f2f2;
+        box-shadow: 4px 4px 2px 0px rgb(203, 211, 177);
 
     }
 
 
     .day:nth-child(7n +1 ),
-    .date:nth-child(7n +1){
+    .date:nth-child(7n +1) {
         color: #D13E3E;
     }
 
     .day:nth-child(7n),
-    .date:nth-child(7n){
+    .date:nth-child(7n) {
         color: #396ee2;
     }
 
-    .other{
+    .other {
         opacity: 0.6;
         cursor: default;
     }
 
-    .today{
+    .today {
         position: relative;
         color: white;
     }
 
-    .today::before{
+    .today::before {
         position: absolute;
         top: 70%;
         left: 50%;
@@ -197,11 +267,10 @@
         width: 47px;
         height: 47px;
         display: block;
-        /* border: 2px solid #5a8100; */
         background-color: #5a8100;
-        /* background-color: rgb(203,211,177); */
+        box-shadow: 4px 4px 2px 0px rgb(203, 211, 177);
         border-radius: 50%;
-        content:'';
+        content: '';
 
     }
 
@@ -209,11 +278,26 @@
         border-bottom: none;
     }
 
+    #side_box .boardRanking .boardRanking_ranking input[type=button] {
+        border-radius: 38px !important;
+        border: 1px solid;
+        box-shadow: 4px 4px 2px 0px #5a8100;
+    }
+
+    #side_box .boardRanking .boardRanking_ranking input[type=button]:hover {
+        background-color: #ebede1;;
+    }
+
+    .boardRanking_ranking {
+        padding: 32px;
+        padding-left: 32px;
+    }
 </style>
 <body class="is-preload">
 
 <!-- Header -->
-<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin})}"></th:block>
+<th:block
+        th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin})}"></th:block>
 
 <!--<div id="top_main_img">
     이미지 추가 예정
@@ -240,31 +324,39 @@
 
 </section> -->
 <div id="container1">
-<!--    <div id="side_box">-->
-<!--        <section>-->
-<!--            <div class="boardRanking">-->
-<!--                <div class="boardRanking_ranking">-->
-<!--                    <table style="width: 90%;">-->
-<!--                        <tr><td><a href="/usermypage/user_myinfo">내 정보 수정</a></td></tr>-->
-<!--                        <tr><td><a href="/usermypage/user_diary" style="color: #5a8100; font-size: 20px;">나의 다이어리</a></td></tr>-->
-<!--                        <tr><td><a href="/usermypage/user_challenge">나의 챌린지</a></td></tr>-->
-<!--                        <tr><td><a href="/usermypage/user_subtrainer">구독한 트레이너</a></td></tr>-->
-<!--                        <tr><td><a href="/usermypage/user_subbookmark">북마크</a></td></tr>-->
-<!--                        <tr><td><a href="/usermypage/user_boardlist">내 게시물</a></td></tr>-->
-<!--                        <tr><td><a href="/usermypage/user_messagelist">쪽지함</a></td></tr>-->
-<!--                        <tr><td><a href="/usermypage/user_applytrainer">트레이너 전환 신청</a></td></tr>-->
-<!--                    </table>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </section>-->
-<!--    </div>-->
+    <div id="side_box">
+        <section>
+            <div class="boardRanking">
+                <div class="boardRanking_ranking">
+                    <!--                    <table style="width: 90%;">-->
+                    <!--                        <tr><td><a href="/usermypage/user_myinfo">내 정보 수정</a></td></tr>-->
+                    <!--                        <tr><td><a href="/usermypage/user_diary" style="color: #5a8100; font-size: 20px;">나의 다이어리</a></td></tr>-->
+                    <!--                        <tr><td><a href="/usermypage/user_challenge">나의 챌린지</a></td></tr>-->
+                    <!--                        <tr><td><a href="/usermypage/user_subtrainer">구독한 트레이너</a></td></tr>-->
+                    <!--                        <tr><td><a href="/usermypage/user_subbookmark">북마크</a></td></tr>-->
+                    <!--                        <tr><td><a href="/usermypage/user_boardlist">내 게시물</a></td></tr>-->
+                    <!--                        <tr><td><a href="/usermypage/user_messagelist">쪽지함</a></td></tr>-->
+                    <!--                        <tr><td><a href="/usermypage/user_applytrainer">트레이너 전환 신청</a></td></tr>-->
+                    <!--                    </table>-->
+                    <h3 class="side_ranking">트레이너 구독 순위</h3>
+                    <table style="width: 90%;">
+                        <tr th:each="trainerTop5List, dataStat: ${trainerTop5List}">
+                            <td th:text="${dataStat.index + 1}"></td>
+                            <td class="open">[[${trainerTop5List.trainerId}]]</a></td>
+                        </tr>
+                    </table>
+                    <input type="button" value="트레이너 보러가기" onclick="location.href='/matching/matching_list'">
+                </div>
+            </div>
+        </section>
+    </div>
     <div id="main_box">
         <div class="calender">
             <div class="calen_header">
-                <div class="year_month"></div>
+                <div class="year_month highlight"></div>
                 <div class="nav">
                     <button class="nav_btn go_prev" onclick="prevMonth()">&lt;</button>
-                    <button class="go_today" onclick="goToday()">Today</button>
+                    <input type="button" class="go_today btnColor" onclick="goToday()" value="today">
                     <button class="nav_btn go_next" onclick="nextMonth()">&gt;</button>
                 </div>
             </div>
@@ -306,6 +398,5 @@
 <script th:src="@{/assets/js/calender.js}"></script>
 
 <script th:src="@{https://code.jquery.com/jquery-3.6.0.min.js}"></script>
-
 </body>
 </html>
