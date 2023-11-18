@@ -88,8 +88,9 @@
 			width: 100%;
 		}
 		.replyForm textarea{
-			background-color: rgb(240,229,215);
-			border-radius: 15px;
+			/*background-color: rgb(240,229,215);*/
+			background-color: #ebede1;
+			border-radius: 4px;
 		}
 
 		.replies ul{
@@ -129,6 +130,30 @@
 		}
 		.displayNoneDiv{
 			display: none;
+		}
+		.button.btnColor{
+			background: #FFFFFF;
+			border: 1px solid #5a8100;
+			border-radius: 4px;
+			color: #5a8100 !important;
+			box-shadow: 4px 4px 2px 0px rgb(203,211,177);
+			font-weight: 700 !important;
+			height: 2.75em !important;
+			line-height: 2.75em !important;
+
+		}
+		.button.btnColor a{
+			color: #5a8100;
+		}
+		.button.btnColor:hover a { color:#F7FAF5; }
+
+		.button.btnColor:hover{
+			background: #5a8100;
+			border: 1px solid #5a8100;
+			border-radius: 4px;
+			color: #F7FAF5 !important;
+			box-shadow: 0 0 2px #5a8100;
+
 		}
 	</style>
 </head>
@@ -233,8 +258,8 @@
 									<input name="amount" th:value="${cri.amount}" type="hidden">
 									<input name="type" th:value="${cri.type}" type="hidden">
 									<input name="keyword" th:value="${cri.keyword}" type="hidden">
-									<a class="button" href="javascript:modify()">수정</a>
-									<a class="button" href="javascript:document.boardForm.submit()">삭제</a>
+									<a class="button btnColor" href="javascript:modify()">수정</a>
+									<a class="button btnColor" href="javascript:document.boardForm.submit()">삭제</a>
 								</form>
 							</th:block>
 							<div class="displayNoneDiv">
@@ -244,9 +269,9 @@
 							</div>
 							<div class="btn_area">
 								<th:block th:if="${board.userId != session.loginUser}">
-									<a class="button reportOpen" style="float:left;">글 신고</a>
+									<a class="button reportOpen btnColor" style="float:left;">신고하기</a>
 								</th:block>
-								<a class="button" th:href="${'/info/info_list'+cri.listLink}">목록</a>
+								<a class="button btnColor" th:href="${'/info/info_list'+cri.listLink}">목록</a>
 							</div>
 						</td>
 					</tr>
@@ -266,8 +291,8 @@
 							<textarea name="replyContent" placeholder="댓글을 입력해주세요." style="resize:none; margin-top: 10px;"></textarea>
 						</div>
 						<div style="width:15%; margin-top: 10px;">
-							<a href="#" class="button finish" style="margin-top:25px; margin-bottom:1rem;">등록</a>
-							<a href="#" class="button cancel">취소</a>
+							<a href="#" class="button finish btnColor" style="margin-top:25px; margin-bottom:5px; border-radius: 30px">등록</a>
+							<a href="#" class="button cancel btnColor" style="border-radius: 30px">취소</a>
 						</div>
 					</div>
 					<ul class="replies"></ul>
