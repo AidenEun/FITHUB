@@ -29,4 +29,6 @@ public class UserDTO {
 
     private String formattedJoindate;
 
+    //출석정보를저장하기위해추가
+    private int userAttendance;
 }

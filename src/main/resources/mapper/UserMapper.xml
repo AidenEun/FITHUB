@@ -3,8 +3,8 @@
 <mapper namespace="com.kh.demo.mapper.UserMapper">
 
 	<insert id="insertUser" parameterType="com.kh.demo.domain.dto.UserDTO">
-		INSERT INTO user (user_id, user_name, user_nickname, user_pw, weight_goal, calories_goal, user_tel, user_mail, user_height, user_weight, user_gender, user_birth, user_joindate, user_point, user_reportedcnt)
-		VALUES (#{userId}, #{userName}, #{userNickname}, #{userPw}, #{weightGoal}, #{caloriesGoal}, #{userTel}, #{userMail}, #{userHeight}, #{userWeight}, #{userGender}, #{userBirth}, #{userJoindate}, #{userPoint}, #{userReportedcnt})
+		INSERT INTO user (user_id, user_name, user_nickname, user_pw, weight_goal, calories_goal, user_tel, user_mail, user_height, user_weight, user_gender, user_birth, user_joindate, user_point, user_reportedcnt, user_attendance)
+		VALUES (#{userId}, #{userName}, #{userNickname}, #{userPw}, #{weightGoal}, #{caloriesGoal}, #{userTel}, #{userMail}, #{userHeight}, #{userWeight}, #{userGender}, #{userBirth}, #{userJoindate}, #{userPoint}, #{userReportedcnt}, #{userAttendance})
 	</insert>
 
 	<select id="findById">
@@ -51,6 +51,40 @@
 		WHERE user_id=#{userId}
 	</update>
 
+	<!-- updateUserAttendance 메서드 추가 -->
+	<update id="updateUserAttendance">
+		UPDATE user
+		SET user_attendance = user_attendance + 1
+		WHERE user_id = #{userId}
+	</update>
+
+	<!-- getUserAttendance 메서드 추가 -->
+	<select id="getUserAttendance">
+		SELECT user_attendance
+		FROM user
+		WHERE user_id = #{userId}
+	</select>
+
+	<!-- updateUserPoint 메서드 추가 -->
+	<update id="updateUserPoint">
+		UPDATE user
+		SET user_point = CASE WHEN user_attendance = 7 THEN user_point + 10 ELSE user_point END
+		WHERE user_id = #{userId}
+	</update>
+
+	<!-- getUserPoint 메서드 추가 -->
+	<select id="getUserPoint">
+		SELECT user_point
+		FROM user
+		WHERE user_id = #{userId}
+	</select>
+
+	<!-- resetUserAttendance 메서드 추가 -->
+	<update id="resetUserAttendance">
+		UPDATE user
+		SET user_attendance = 0
+		WHERE user_id = #{userId}
+	</update>
 
 </mapper>
 

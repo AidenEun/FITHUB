@@ -18,5 +18,15 @@ public interface UserService {
 
     List<UserDTO> getSignUpListInUser(Criteria cri);
 
+    void updateUserAttendance(String userid);
+
+    int getUserAttendance(String userid);
+
+    void updateUserPoint(String userid);
+
+    Long getUserPoint(String userid);
+
+    void resetUserAttendance(String userid);
+
 
 }
