@@ -83,7 +83,7 @@ table tr {
     /*font-weight: bold;*/
 }
 
-table tbody tr:nth-child(2n + 1) {
+.none_color_table tbody tr:nth-child(2n + 1) {
     background-color: #fff;
 }
 
@@ -105,11 +105,6 @@ tr.special-row{
     font-weight: bold;
 }
 
-tr.special-row td {
-    border-top: 1px solid #8FA746;
-    border-bottom: 1px solid #8FA746;
-}
-
 .flex{
     display: flex;
     justify-content: space-between;
@@ -126,4 +121,56 @@ tr.special-row td {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+/*작성, 글쓰기 버튼 컬러 수정*/
+.btnColor{
+    background: #FFFFFF;
+    border: 1px solid #5a8100;
+    border-radius: 4px;
+    color: #5a8100 !important;
+    box-shadow: 4px 4px 2px 0px rgb(203,211,177);
+
+}
+
+.btnColor{
+    background: #FFFFFF;
+    border: 1px solid #5a8100;
+    border-radius: 4px;
+    color: #5a8100 !important;
+    box-shadow: 4px 4px 2px 0px rgb(203,211,177);
+
+}
+
+.btnColor:hover{
+    background: #5a8100;
+    border: 1px solid #5a8100;
+    border-radius: 4px;
+    color: #F7FAF5 !important;
+    box-shadow: 0 0 2px #5a8100;
+}
+
+/*카테고리 버튼 css*/
+.ctBtncolor {
+    border-radius: 38px;
+    padding: 0 13px;
+    height: 42px;
+    line-height: 42px;
+    box-shadow: 0px 0px 5px rgb(203,211,177);
+    font-weight:100 !important;
+}
+
+.ctBtncolor:hover {
+    padding: 0 15px;
+    background: #ebede1;
+    box-shadow: none;
+    transition: 0.5s ease-out;
+    font-weight:100 !important;
+}
+
+.ctBtncolor.now_cate {
+    background: #ebede1;
+    padding: 0 15px;
+    box-shadow: 0 0 2px 1px #5a8100;
+    font-weight:100 !important;
 }

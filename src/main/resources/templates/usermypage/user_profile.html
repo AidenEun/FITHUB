@@ -52,10 +52,6 @@
 	table.careerTable tr th{
 		width: 15%;
 	}
-
-	.button {
-		background-color: #8FA746 !important;
-	}
 </style>
 <body class="is-preload">
 
@@ -105,7 +101,7 @@
 				</div>
 
 						<div class="thumbnail_div">
-						<table style="margin: auto 0; text-align: center;">
+						<table style="margin: auto 0; text-align: center;" class="none_color_table">
 							<tr>
 								<td style="width: 20%;">닉네임(아이디)</td>
 								<td>
@@ -149,7 +145,7 @@
 								<td></td>
 								<td colspan="2">
 									<th:block th:if="${session.loginUser} == ${user.userId}">
-										<a href="/usermypage/user_profile_modify" class="button">수정하기</a>
+										<a href="/usermypage/user_profile_modify" class="button btnColor">수정하기</a>
 									</th:block>
 								</td>
 							</tr>

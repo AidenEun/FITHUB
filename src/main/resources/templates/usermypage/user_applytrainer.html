@@ -114,12 +114,14 @@
 		margin-right: 10px;
 	}
 
-	.button {
-		background-color: #8FA746 !important;
-	}
-
 	table tr {
 		font-weight: bold;
+	}
+
+	.file_text{
+		display: block;
+ 		height: 40px;
+    	line-height: 3;
 	}
 </style>
 <body class="is-preload">
@@ -144,7 +146,7 @@
 		<div class="content">
 
 			<form id="boardForm" name="boardForm" method="post" th:action="@{/usermypage/applytrainer}" enctype="multipart/form-data">
-				<table style="text-align: center; margin: 0px">
+				<table style="text-align: center; margin: 0px" class="none_color_table">
 					<tr>
 						<td>아이디</td>
 						<td><input name="userId" type="text" id="inputId" class="inputText" placeholder="6~20자 영문, 숫자" tabindex="1" th:value="${user.userId}" readonly></td>
@@ -153,7 +155,7 @@
 						<td>우편번호</td>
 						<td style="display: flex;">
 							<input style="width:79%; margin-right: 10px;" readonly name="trainerZipcode" type="text" id="sample6_postcode" placeholder="우편번호" onclick="sample6_execDaumPostcode()">
-							<input style="width:20%;" type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" class="button">
+							<div style="width:20%;" onclick="sample6_execDaumPostcode()" class="button btnColor">우편번호 찾기</div>
 						</td>
 					</tr>
 					<tr>
@@ -181,24 +183,24 @@
 						<td><input name="trainerContent" type="text" id="inputcontents" class="inputText" placeholder="내용" tabindex="8" value="" ></td>
 					</tr>
 				</table>
-				<table style="text-align: center;">
+				<table style="text-align: center;" class="none_color_table">
 					<tr class="r0 at">
 						<th>파일 첨부1</th>
 						<td class="file0_cont">
 							<div style="float:left;">
 								<input type="file" name="files" id="file0" style="display:none">
-								<span id="file0name">선택된 파일 없음</span>
+								<span id="file0name" class="file_text">선택된 파일 없음</span>
 							</div>
 							<div style="float:right;">
-								<a href="javascript:upload('file0')" class="button">파일 선택</a>
-								<a href="javascript:cancelFile('file0')" class="button">첨부 삭제</a>
+								<a href="javascript:upload('file0')" class="button btnColor">파일 선택</a>
+								<a href="javascript:cancelFile('file0')" class="button btnColor">첨부 삭제</a>
 							</div>
 						</td>
 					</tr>
 				</table>
 
 				<div class="btn_box">
-					<input class="submit button" type="button" value="신청 완료" onclick="sendit();">
+					<div class="submit button btnColor" onclick="sendit();">신청 완료</div>
 				</div>
 			</form>
 		</div>
