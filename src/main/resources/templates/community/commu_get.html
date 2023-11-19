@@ -227,7 +227,7 @@
 							<div class="displayNoneDiv boardCategory">[[${board.boardCategory}]]</div>
 							<div class="btn_area">
 								<th:block th:if="${board.userId != session.loginUser}">
-									<a class="button btnColor reportOpen">글 신고</a>
+									<a class="button btnColor reportOpen">신고</a>
 								</th:block>
 									<a class="button btnColor" th:href="${'/community/commu_list'+cri.listLink}">목록</a>
 							</div>

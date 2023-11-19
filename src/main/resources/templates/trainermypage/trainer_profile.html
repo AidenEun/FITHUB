@@ -101,9 +101,9 @@
 				</div>
 
 						<div class="thumbnail_div">
-						<table style="margin: auto 0;">
+						<table style="margin: auto 0; text-align: center;" class="none_color_table">
 							<tr>
-								<td width="20%">닉네임(아이디)</td>
+								<td style="width: 20%;">닉네임(아이디)</td>
 								<td>
 									<div class="inputBox">
 										<input readonly  name="trainerNickname" type="text" id="trainerNickname" class="inputText" placeholder="닉네임" th:value="${trainer.trainerNickname}" >
@@ -145,10 +145,10 @@
 								<td></td>
 								<td colspan="2">
 									<th:block th:if="${session.loginUser} != ${trainer.trainerId}">
-										<a href="#">구독하기</a>
+										<a href="#" class="button btnColor">구독하기</a>
 									</th:block>
 									<th:block th:if="${session.loginUser} == ${trainer.trainerId}">
-										<a href="/trainermypage/trainer_profile_modify">수정하기</a>
+										<a href="/trainermypage/trainer_profile_modify" class="button btnColor">수정하기</a>
 									</th:block>
 								</td>
 							</tr>
@@ -159,7 +159,7 @@
 
 				<table>
 					<tr>
-						<th>나의 소개	</th>
+						<td style="font-weight: bold;">나의 소개</td>
 					</tr>
 					<tr>
 						<td>
@@ -172,7 +172,7 @@
 
 				<table class="careerTable">
 					<tr>
-						<th colspan="2">트레이너 자격증 및 경력사항</th>
+						<td colspan="2" style="font-weight: bold;">트레이너 자격증 및 경력사항</td>
 					</tr>
 					<tr th:class="${'r'+fileStat.index}" th:if="${files != null and files.size() > 0}" th:each="file : ${files}">
 						<th>파일 첨부[[${fileStat.index+1}]]</th>
@@ -195,17 +195,21 @@
 				</table>
 			</form>
 
-			<table>
+			<table style="text-align: center; margin-top: 30px;">
 				<tr>
-					<td colspan="6">[[${trainer.trainerNickname}]]님의 게시글<span style="float:right;">글 개수 : [[${pageMaker.total}]]</span></td>
+					<td colspan="6">
+						<div style="float:left; font-weight: bold;">
+							[[${trainer.trainerNickname}]]님의 게시글
+						</div>
+						<span style="float:right;">글 개수 : [[${pageMaker.total}]]</span></td>
 				</tr>
-				<tr align="center" valign="middle">
-					<th width="8%">번호</th>
-					<th></th>
-					<th>제목</th>
-					<th width="15%">작성자</th>
-					<th width="17%">날짜</th>
-					<th width="10%">조회수</th>
+				<tr class="special-row" style="background-color: #fff;">
+					<td style="width: 8%" class="long_text">번호</td>
+					<td style="width: 8%" class="long_text"></td>
+					<td class="long_text">제목</td>
+					<td style="width: 15%" class="long_text">작성자</td>
+					<td style="width: 25%" class="long_text">날짜</td>
+					<td style="width: 10%" class="long_text">조회수</td>
 				</tr>
 				<tr th:if="${list != null and list.size()>0}" th:each="board : ${list}">
 					<td>[[${board.boardNum}]]</td>
@@ -233,7 +237,7 @@
 				</th:block>
 			</table>
 				<!-- 페이징 처리하는 테이블 -->
-			<table class="pagination">
+			<table class="pagination none_color_table">
 				<tr align="center" valign="middle">
 					<td>
 						<a class="changePage" th:if="${pageMaker.prev}" th:href="${pageMaker.startPage-1}">&lt;</a>
@@ -249,7 +253,7 @@
 			<!--다이어리-->
 			<table>
 				<tr>
-					<td>[[${trainer.trainerNickname}]]님의 다이어리</td>
+					<td style="font-weight: bold;">[[${trainer.trainerNickname}]]님의 다이어리</td>
 				</tr>
 				<tr>
 					<td>
