@@ -103,6 +103,36 @@
     box-shadow: inset 0 0 0 0;
 	}
 
+
+
+
+	#myinfo_modify_btn{
+		float: right;
+		margin-right: 10px;
+	}
+	table tr {
+		font-weight: bold;
+	}
+
+	.viewPwBtn {
+		width: 20px;
+		height: 20px;
+		border: 1px solid black;
+		position: relative;
+		right: -530px;
+		top: -20px;
+		transform: translateY(-50%);
+	}
+
+	#viewPwBtn.active {
+		background-color: #8FA746;
+	}
+
+	table tbody tr:nth-child(2n + 1) {
+    	background-color: #fff !important;
+	}
+
+
 </style>
 <body class="is-preload">
 
@@ -123,273 +153,87 @@
 
 		<!-- Content -->
 		<div class="content">
-			<form id="boardForm" name="boardForm" method="post" th:action="@{/}">
-				<div class="uBlock">
-					<div class="uInputArea">
-						<div class="col">
-							<div class="uInput">
-								<label for="inputId">아이디</label>
-								<div class="inputBox">
-									<input name="trainerId" type="text" id="inputId" class="inputText" placeholder="6~20자 영문, 숫자" th:value="${user.trainerId}" readonly>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="uErrorText" style="display: block;"></div>
-				</div>
-
-				<div class="uBlock">
-					<div class="uInputArea">
-						<div class="col">
-							<div class="uInput">
-								<label for="inputNickName">닉네임</label>
-								<div class="inputBox">
-									<input name="trainerNickname" type="text" id="inputNickName" class="inputText" placeholder="닉네임" th:value="${user.trainerNickname}" readonly>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="uErrorText" style="display: block;"></div>
-				</div>
-
-				<div class="uBlock">
-					<div class="uInputArea">
-						<div class="col">
-							<div class="uInput">
-								<label for="inputPw">비밀번호</label>
-								<div class="inputBox">
-									<input name="trainerPw" type="password" id="inputPw" class="inputText" placeholder="8~12자 영문, 숫자, 특수문자" value="" readonly>
-								</div>
-							</div>
-						</div>
-						<div class="col">
-							<div class="uBtnArea">
-								<button type="button" class="uBtn">보기</button>
-							</div>
-						</div>
-					</div>
-					<div class="uErrorText" style="display: block;"></div>
-				</div>
-
-				<div class="uBlock">
-					<div class="uInputArea">
-						<div class="col">
-							<div class="uInput">
-								<label for="inputPwConfirm">비밀번호 확인</label>
-								<div class="inputBox">
-									<input name="trainerPwRe" type="password" id="inputPwConfirm" class="inputText" placeholder="8~12자 영문, 숫자, 특수문자" value="" readonly>
-								</div>
-							</div>
-						</div>
-						<div class="col">
-							<div class="uBtnArea">
-								<button type="button" class="uBtn">보기</button>
-							</div>
-						</div>
-					</div>
-					<div class="uErrorText" style="display:block"></div>
-				</div>
-
-				<div class="uBlock">
-					<div class="uInputArea">
-						<div class="col">
-							<div class="uInput">
-								<label for="inputName">이름</label>
-								<div class="inputBox">
-									<input name="trainerName" type="text" id="inputName" class="inputText" placeholder="이름" th:value="${user.trainerName}" readonly>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="uErrorText" style="display: block;"></div>
-				</div>
-
-				<div class="uBlock">
-					<div class="uInputArea">
-						<div class="col">
-							<div class="uInput">
-								<label for="inputgender">성별</label>
-								<div class="inputBox">
-									<input name="trainerGender" type="text" id="inputgender" class="inputText" placeholder="성별" th:value="${user.trainerGender}" readonly>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="uErrorText" style="display: block;"></div>
-				</div>
-
-
-
-				<div class="uBlock">
-					<div class="uInputArea">
-						<div class="col">
-							<div class="uInput">
-								<label for="inputBirth">생년월일</label>
-								<div class="inputBox">
-									<input name="trainerBirth" type="text" id="inputBirth" class="inputText" placeholder="생년월일" th:value="${user.trainerBirth}" readonly>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="uErrorText" style="display: block;"></div>
-				</div>
-
-				<div class="uBlock">
-					<div class="uInputArea">
-						<div class="col">
-							<div class="uInput">
-								<label for="inputTel">전화번호</label>
-								<div class="inputBox">
-									<input name="trainerTel" type="text" id="inputTel" class="inputText" placeholder="이메일" th:value="${user.trainerTel}" readonly>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="uErrorText" style="display: block;"></div>
-				</div>
-
-				<div class="uBlock">
-					<div class="uInputArea">
-						<div class="col">
-							<div class="uInput">
-								<label for="inputEmail">이메일</label>
-								<div class="inputBox">
-									<input name="trainerMail" type="text" id="inputEmail" class="inputText" placeholder="이메일" th:value="${user.trainerMail}" readonly>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="uErrorText" style="display: block;"></div>
-				</div>
-
-				<div class="uBlock">
-					<div class="uInputArea">
-						<div class="col">
-							<div class="uInput">
-								<label for="inputWeight">몸무게</label>
-								<div class="inputBox">
-									<input name="trainerWeight" type="text" id="inputWeight" class="inputText" placeholder="몸무게" th:value="${user.trainerWeight}" readonly>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="uErrorText" style="display: block;"></div>
-				</div>
-
-				<div class="uBlock">
-					<div class="uInputArea">
-						<div class="col">
-							<div class="uInput">
-								<label for="inputHeight">키</label>
-								<div class="inputBox">
-									<input name="trainerHeight" type="text" id="inputHeight" class="inputText" placeholder="키" th:value="${user.trainerHeight}" readonly>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="uErrorText" style="display: block;"></div>
-				</div>
-
-				<div class="uBlock">
-					<div class="uInputArea">
-						<div class="col">
-							<div class="uInput">
-								<label for="inputJoinDate">가입일자</label>
-								<div class="inputBox">
-									<input name="trainerJoindate" type="text" id="inputJoinDate" class="inputText" placeholder="가입일자" th:value="${user.trainerJoindate}" readonly>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="uErrorText" style="display: block;"></div>
-				</div>
-
-				<div class="uBlock">
-					<div class="uInputArea">
-						<div class="col">
-							<div class="uInput">
-								<label for="inputTransferdate">전환일자</label>
-								<div class="inputBox">
-									<input name="transferdate" type="text" id="inputTransferdate" class="inputText" placeholder="전환일자" th:value="${user.transferdate}" readonly>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="uErrorText" style="display: block;"></div>
-				</div>
-
-				<div class="uBlock">
-					<div class="uInputArea">
-						<div class="col">
-							<div class="uInput">
-								<label for="inputReportedcnt">신고당한횟수</label>
-								<div class="inputBox">
-									<input name="trainerReportedcnt" type="text" id="inputReportedcnt" class="inputText" placeholder="신고당한횟수" th:value="${user.trainerReportedcnt}" readonly>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="uErrorText" style="display: block;"></div>
-				</div>
-
-					<tr class="zipcode_area">
-						<th>우편번호</th>
-						<td><input readonly name="trainerZipcode" type="text" th:value="${user.trainerZipcode}"
-								   id="sample6_postcode" placeholder="우편번호" onclick="sample6_execDaumPostcode()"><input
-								type="button" onclick="sample6_execDaumPostcode()" value="우편번호">
-						</td>
-					</tr>
-					<tr class="addr_area">
-						<th>주소</th>
-						<td><input readonly name="trainerAddr" type="text"
-								   id="sample6_address" placeholder="주소" th:value="${user.trainerAddr}"></td>
-					</tr>
-					<tr>
-						<th>상세주소</th>
-						<td><input readonly name="trainerAddrdetail" type="text"
-								   id="sample6_detailAddress" placeholder="상세주소" th:value="${user.trainerAddrdetail}"></td>
-					</tr>
-					<tr>
-						<th>참고항목</th>
-						<td><input readonly name="trainerAddretc" type="text"
-								   id="sample6_extraAddress" placeholder="참고항목" th:value="${user.trainerAddretc}"></td>
-					</tr>
-
-					<div class="uBlock">
-						<div class="uInputArea">
-							<div class="col">
-								<div class="uInput">
-									<label for="inputTrainerPart">파트</label>
-									<div class="inputBox">
-										<input readonly name="trainerPart" type="text" id="inputTrainerPart" class="inputText" placeholder="성별" th:value="trainerPart" >
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="uErrorText" style="display: block;"></div>
-					</div>
-
-
-					<div class="uBlock">
-						<div class="uInputArea">
-							<div class="col">
-								<div class="uInput">
-									<label for="inputTrainerCareer">경력</label>
-									<div class="inputBox">
-										<input readonly name="trainerCareer" type="text" id="inputTrainerCareer" class="inputText" placeholder="경력" th:value="trainerCareer" >
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="uErrorText" style="display: block;"></div>
-					</div>
-
-				</form>
-
-				<input class="submit" type="button" value="수정" onclick="sendit();">
-				<!--<a href="/trainermypage/trainer_myinfo_modify" class="button primary small" >수정</a>-->
-			</form>
-
+			<table style="text-align: center; margin: 0px">
+				<tr>
+					<td>아이디</td>
+					<td><input name="trainerId" type="text" id="inputId" class="inputText" placeholder="6~20자 영문, 숫자" th:value="${user.trainerId}" readonly></td>
+				</tr>
+				<tr>
+					<td>닉네임</td>
+					<td><input name="trainerNickname" type="text" id="inputNickName" class="inputText" placeholder="닉네임" th:value="${user.trainerNickname}" readonly></td>
+				</tr>
+				<tr>
+					<td>비밀번호</td>
+					<td><input name="trainerPw" type="password" id="inputPw" class="inputText" placeholder="8~12자 영문, 숫자, 특수문자" th:value="${user.trainerPw}" readonly><div onclick="togglePassword()" id="viewPwBtn" class="viewPwBtn"></div></td>
+				</tr>
+				<tr>
+					<td>이름</td>
+					<td><input name="trainerName" type="text" id="inputName" class="inputText" placeholder="이름" th:value="${user.trainerName}" readonly></td>
+				</tr>
+				<tr>
+					<td>성별</td>
+					<td><input name="trainerGender" type="text" id="inputgender" class="inputText" placeholder="성별" th:value="${user.trainerGender}" readonly></td>
+				</tr>
+				<tr>
+					<td>생년월일</td>
+					<td><input name="trainerBirth" type="text" id="inputBirth" class="inputText" placeholder="생년월일" th:value="${user.trainerBirth}" readonly></td>
+				</tr>
+				<tr>
+					<td>전화번호</td>
+					<td><input name="trainerTel" type="text" id="inputTel" class="inputText" placeholder="이메일" th:value="${user.trainerTel}" readonly></td>
+				</tr>
+				<tr>
+					<td>이메일</td>
+					<td><input name="trainerMail" type="text" id="inputEmail" class="inputText" placeholder="이메일" th:value="${user.trainerMail}" readonly></td>
+				</tr>
+				<tr>
+					<td>몸무게</td>
+					<td><input name="trainerWeight" type="text" id="inputWeight" class="inputText" placeholder="몸무게" th:value="${user.trainerWeight}" readonly></td>
+				</tr>
+				<tr>
+					<td>키</td>
+					<td><input name="trainerHeight" type="text" id="inputHeight" class="inputText" placeholder="키" th:value="${user.trainerHeight}" readonly></td>
+				</tr>
+				<tr>
+					<td>가입일자</td>
+					<td><input name="trainerJoindate" type="text" id="inputJoinDate" class="inputText" placeholder="가입일자" th:value="${user.trainerJoindate}" readonly></td>
+				</tr>
+				<tr>
+					<td>전환일자</td>
+					<td><input name="transferdate" type="text" id="inputTransferdate" class="inputText" placeholder="전환일자" th:value="${user.transferdate}" readonly></td>
+				</tr>
+				<tr>
+					<td>신고당한 횟수</td>
+					<td><input name="trainerReportedcnt" type="text" id="inputReportedcnt" class="inputText" placeholder="신고당한횟수" th:value="${user.trainerReportedcnt}" readonly></td>
+				</tr>
+				<tr>
+					<td>우편번호</td>
+					<td style="display: flex;">
+						<input readonly name="trainerZipcode" type="text" id="sample6_postcode" th:value="${user.trainerZipcode}" placeholder="우편번호" onclick="sample6_execDaumPostcode()">
+					</td>
+				</tr>
+				<tr>
+					<td>주소</td>
+					<td><input readonly name="trainerAddr" type="text" id="sample6_address" placeholder="주소" th:value="${user.trainerAddr}"></td>
+				</tr>
+				<tr>
+					<td>상세주소</td>
+					<td><input name="trainerAddrdetail" type="text" id="sample6_detailAddress" placeholder="상세주소" th:value="${user.trainerAddrdetail}"></td>
+				</tr>
+				<tr>
+					<td>참고항목</td>
+					<td><input readonly name="trainerAddretc" type="text" id="sample6_extraAddress" placeholder="참고항목" th:value="${user.trainerAddretc}"></td>
+				</tr>
+				<tr>
+					<td>파트</td>
+					<td><input readonly name="trainerPart" type="text" id="inputTrainerPart" class="inputText" placeholder="파트" th:value="${user.trainerPart}" ></td>
+				</tr>
+				<tr>
+					<td>경력</td>
+					<td><input readonly name="trainerCareer" type="text" id="inputTrainerCareer" class="inputText" placeholder="경력" th:value="${user.trainerCareer}" ></td>
+				</tr>
+			</table>
+			<a href="/trainermypage/trainermypage_myinfo_modify" id="myinfo_modify_btn" class="button btnColor small">수정</a>
 		</div>
 
 
@@ -399,7 +243,7 @@
 				<div class="boardRanking">
 					<div class="boardRanking_ranking">
 						<table style="width: 90%;">
-							<tr><td><a href="/trainermypage/trainer_modify" style="color: #5a8100; font-size: 20px;">내 정보 수정</a></td></tr>
+							<tr><td><a href="/trainermypage/trainer_modify" style="color: #5a8100; font-size: 20px;">내 정보</a></td></tr>
 <!--							<tr><td><a href="/usermypage/user_diary">나의 다이어리</a></td></tr>-->
 							<tr><td><a href="/trainermypage/trainer_challenge">나의 챌린지</a></td></tr>
 							<tr><td><a href="/trainermypage/trainer_mysubscribeuser">구독 유저</a></td></tr>
@@ -429,7 +273,16 @@
 <script th:src="@{/assets/js/main_sub.js}"></script>
 
 <script th:src="@{/assets/js/sidebar.js}"></script>
+<script>
+	function togglePassword() {
+        var passwordInput = document.getElementById("inputPw");
+        var viewPwBtn = document.getElementById("viewPwBtn");
 
+        passwordInput.type = (passwordInput.type === "password") ? "text" : "password";
+
+        viewPwBtn.classList.toggle("active");
+    }
+</script>
 
 </body>
 </html>

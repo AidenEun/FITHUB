@@ -28,14 +28,6 @@
     text-align: center;
 }
 
-.report_Admin_modal_contents button{
-    background-color: #fff;
-    color: #ccc;
-    font-size: 20px;
-    border: none;
-
-}
-
 .reportAdminClose{
     cursor: pointer;
 }
@@ -69,7 +61,8 @@ li > label {
 }
 
 .title-container .reportAdminClose {
-    margin-right: 300px; /* 버튼과 제목 사이의 간격 설정 */
+    margin-right: 300px;
+    margin-left: 14px;
 }
 
 #report-content-box{

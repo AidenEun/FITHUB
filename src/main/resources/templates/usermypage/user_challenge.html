@@ -55,12 +55,12 @@
 					<td colspan="2" style="padding-left:0;">
 						<div class="search_area">
 							<form id="challCategoryForm" th:action="@{/usermypage/user_challenge}" style="margin:0">
-								<select name="challCategory" id="challCategory" style="widht:35%; margin-right:10px;">
+								<select name="challCategory" id="challCategory" style="width:130px; margin-right:10px;">
 									<option value="challAll" th:selected="${challCategory == 'challAll'|| challCategory == null}">전체</option>
 									<option value="challExer" th:selected="${challCategory == 'challExer'}">운동</option>
 									<option value="challFood" th:selected="${challCategory == 'challFood'}">식단</option>
 								</select>
-								<select name="challTerm" id="challTerm" style="widht:35%; margin-right:10px;">
+								<select name="challTerm" id="challTerm" style="width:130px; margin-right:10px;">
 									<option value="challengeAll" th:selected="${challTerm == 'challengeAll'||challTerm == null}">전체</option>
 									<option value="7" th:selected="${challTerm == '7'}">7일</option>
 									<option value="15" th:selected="${challTerm == '15'}">15일</option>
@@ -73,12 +73,12 @@
 					<td colspan="4">챌린지 개수 : [[${pageMaker.total}]]</td>
 				</tr>
 				<tr class="special-row">
-					<td width="8%">번호</td>
-					<td>카테고리</td>
+					<td style="width: 5%;">번호</td>
+					<td style="width: 10%;">카테고리</td>
 					<td>챌린지 이름</td>
-					<td width="15%">챌린지 기간</td>
-					<td width="17%">등록일자</td>
-					<td width="10%">달성일수</td>
+					<td style="width: 13%;">챌린지 기간</td>
+					<td style="width: 17%;">등록일자</td>
+					<td style="width: 10%;">달성일수</td>
 				</tr>
 				<tr th:if="${list != null and list.size()>0}" th:each="board : ${list}">
 					<td>[[${board.challNum}]]</td>
