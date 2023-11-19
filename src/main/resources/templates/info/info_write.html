@@ -31,16 +31,18 @@
 			border-bottom: none;
 		}
 		.info_category > .button{
-			border-radius: 10px;
-			height: 33px;
-			line-height: 33px;
-			background-color: rgb(203,211,177);
-			color: #5a8100 !important;
-			box-shadow: inset 0 0 0 1.5px #5a8100;
+			border-radius: 38px;
+			padding: 0 13px;
+			height: 42px;
+			line-height: 42px;
+			box-shadow: 0px 0px 5px rgb(203,211,177);
+			font-weight:100 !important;
 		}
 		.info_category .active {
-			background-color: #5a8100; /* 변경할 배경색 */
-			color: white !important; /* 변경할 텍스트색 */
+			background: #ebede1;
+			padding: 0 15px;
+			box-shadow: 0 0 2px 1px #5a8100;
+			font-weight:100 !important;
 		}
 		.write_table th {
 			text-align: center;
@@ -72,30 +74,6 @@
 		}
 		.button_table tr > td{
 			border: none;
-		}
-		.button_table tr > td > .button{
-			border: 1.5px solid #5a8100;
-			border-radius: 10px;
-			height: 35px;
-			line-height: 35px;
-			background-color: rgb(203,211,177);
-			color: #5a8100 !important;
-			box-shadow: none;
-		}
-		.button_table tr > td > .button:hover{
-			background-color: #5a8100;
-			color: white !important;
-		}
-		.at .button{
-			padding: 0;
-			border-radius: 10px;
-			height: 30px;
-			width: 85px;
-			vertical-align: middle;
-			line-height: 30px;
-			background-color: rgb(203,211,177);
-			color: #5a8100 !important;
-			box-shadow: none;
 		}
 		.at > a{
 			display: block;
@@ -174,8 +152,8 @@
 								<span id="file0name">선택된 파일 없음</span>
 							</div>
 							<div style="float:right;">
-								<a class="button" href="javascript:upload('file0')">파일 선택</a>
-								<a class="button" href="javascript:cancelFile('file0')">첨부 삭제</a>
+								<a class="button btnColor small" href="javascript:upload('file0')">파일 선택</a>
+								<a class="button btnColor small" href="javascript:cancelFile('file0')">첨부 삭제</a>
 							</div>
 						</td>
 					</tr>
@@ -185,10 +163,8 @@
 			<table class="button_table">
 				<tr align="center" valign="middle">
 					<td>
-						<a class="button" href="javascript:sendit()">등록</a> <!-- javascript의 sendit 함수 호출 -->
-					</td>
-					<td>
-						<a class="button" th:href="${'/info/info_list'+cri.listLink}">취소</a> <!-- cri.listLink를 붙여 목록으로 돌아가기 -->
+						<a style="float: right;"  class="button btnColor small" href="javascript:sendit()">등록</a> <!-- javascript의 sendit 함수 호출 -->
+						<a style="float: right; margin-right: 10px;"  class="button btnColor small" th:href="${'/info/info_list'+cri.listLink}">취소</a> <!-- cri.listLink를 붙여 목록으로 돌아가기 -->
 					</td>
 				</tr>
 			</table>
