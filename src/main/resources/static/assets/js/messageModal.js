@@ -61,7 +61,7 @@ function messageModalDom(data) {
     row.append('<td class="long_text">' + data.messageDTO.messageNum + '</td>');
     row.append('<td class="long_text"><a href="#" class="open">' + data.messageDTO.sendId + '</a></td>');
     row.append('<td class="long_text">' + data.messageDTO.sendDate + '</td>');
-    row.append('<td class="long_text"><a href="#" class="messageFormOpen button">처리하기</a></td>');
+    row.append('<td class="long_text"><a href="#" class="messageFormOpen button btnColor">처리하기</a></td>');
     tableBody.append(row);
 
     var newRow = $('<tr style="text-align: center;">');

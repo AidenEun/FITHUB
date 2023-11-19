@@ -33,16 +33,16 @@
 
 	#search_input{
 		height: 60px;
-		border-radius: 10px 0 0 10px;
+		border-radius: 5px;
 		border : 1px solid rgb(200, 200, 200);
 		padding-left: 150px;
 	}
 
-	#search-button{
+	.search_btn{
 		width: 100px;
 		height: 60px;
-		border-radius: 0 10px 10px 0;
-		background-color: gainsboro;
+		line-height: 4;
+		margin-left: 10px;
 	}
 
 	.search_content{
@@ -50,6 +50,7 @@
 		margin: 0px;
 		background-color: gainsboro;
 	}
+
 	.search_content p{
 		font-size: 18px;
 		font-weight: bold;
@@ -91,30 +92,30 @@
 		background-color: #ebede1 !important;
 	}
 
-	.button {
-		border-radius: 10px;
-	}
-
-	.button:hover {
-		background-color: #8FA746 !important;
-	}
-
 	.pageTr {
 		background-color: white !important;
 		border: none;
 	}
 
-	#result_execlist:hover{
-		transform: scaleX(1.05);
-		background-color: #5a8100;
+	.header_box{
+		width: 100%;
+		background:
+			linear-gradient(to right, rgba(143, 167, 70, 0.7), rgba(143, 167, 70, 0.3)),
+			url('/images/admintop3.png');
+		background-size: cover;
+		background-position: top;
+		background-repeat: no-repeat;
 	}
 
-	#result_execlist:hover td{
-		color:white !important;
-	}
-
-	#result_execlist:hover a{
-		color:white !important;
+	.test12 {
+		width: 1080px;
+		height: 250px;
+		margin: 0 auto;
+		margin-bottom: 4em;
+		color: #fff;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
 	}
 </style>
 <body class="is-preload">
@@ -146,9 +147,9 @@
 
 			<!-- Content -->
 			<div class="content">
-				<div id="searchBtn" class="button cate now_cate" style="margin-right: 10px;">검색</div>
-				<div id="userSearchBtn" class="button cate not_cate" style="margin-right: 10px;">유저</div>
-				<div id="trainerSearchBtn" class="button cate not_cate">트레이너</div>
+				<div id="searchBtn" class="button cate now_cate ctBtncolor" style="margin-right: 10px;">검색</div>
+				<div id="userSearchBtn" class="button cate not_cate ctBtncolor" style="margin-right: 10px;">유저</div>
+				<div id="trainerSearchBtn" class="button cate not_cate ctBtncolor">트레이너</div>
 
 				<div class="searchContainer" id="searchContainer">
 					<div class="search" style="margin-top: 30px;">
@@ -156,8 +157,8 @@
 							<option value="user">유저</option>
 							<option value="trainer">트레이너</option>
 						</select>
-						<input type="text" id="search_input" placeholder="유저 아이디를 입력하세요">
-						<input type="button" id="search-button" value="검색" onclick="search()">
+						<input style="width: 90%" type="text" id="search_input" placeholder="유저 아이디를 입력하세요">
+						<div id="search-button" onclick="search()" class="btnColor button search_btn">검색</div>
 					</div>
 					<div style="margin-top: 30px;" class="button primary fit" id="no_keyword">검색 결과가 없습니다!!!</div>
 					<table style="text-align: center; margin-top: 50px;" id="search_result">
