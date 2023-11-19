@@ -1,0 +1,212 @@
+<!DOCTYPE HTML>
+<!--
+	Slate by Pixelarity
+	pixelarity.com | hello@pixelarity.com
+	License: pixelarity.com/license
+-->
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Fit Hub</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
+	<link rel="stylesheet" th:href="@{/assets/css/infoBoard.css}">
+	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
+	<link rel="stylesheet" th:href="@{/assets/css/common.css}" />
+	<style>
+		/*.boardContent {*/
+		/*	text-overflow: ellipsis;*/
+		/*	display: -webkit-box; !* display: -webkit-box => 해당 영역을 box 형태로 관리 *!*/
+		/*	-webkit-line-clamp: 3; !*-webkit-line-clamp => 해당 영역 내 텍스트의 최대 라인수 *!*/
+		/*	-webkit-box-orient: vertical; !* -webkit-box-orient: vertical => box의 흐름 방향을 수직으로 지정 *!*/
+		/*}*/
+		.content .button{
+			float: right;
+			margin-top: 5px;
+			margin-right: 3px;
+			padding: 0 !important;
+			height: 25px; width: 60px;
+			line-height: 25px;
+			background-color: #5a8100;
+			box-shadow: none !important;
+			border-radius: 5px;
+			color: white !important;
+			font-size: 13px;
+			text-align: center;
+		}
+
+		table {
+			background-color: transparent;
+		}
+		table tbody tr:nth-child(2n + 1) {
+			background-color: transparent;
+		}
+		table p{
+			margin-bottom: 0;
+		}
+
+		.content table tr .boardTitle{
+			line-height: 14px !important;
+			font-size: 14px !important;
+		}
+		.boardTitle b{
+			line-height : 20px;
+		}
+
+		hr{
+			margin-top: 50px;
+			margin-bottom: 30px;
+		}
+		img{
+			width: 235px !important;
+			height: 270px !important;
+			background-color: transparent;
+		}
+		.prod_list{
+			width:20% !important;
+		}
+	</style>
+</head>
+<body class="is-preload">
+
+<!-- Header -->
+<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin})}"></th:block>
+
+<!-- Main -->
+<section id="main" class="wrapper sidebar left">
+
+	<div class="inner">
+
+		<header class="test12">
+			<p id="mainText">게시판</p>
+			<p id="subText">제품</p>
+		</header>
+
+		<!-- Content -->
+		<div class="content">
+			<div class="cotent_header"> </div>
+
+			<div class="prod_food">
+				<h2>식품</h2>
+				<div style="display: flex; width: 100%; flex-wrap:wrap;">
+					<th:block th:if="${foodList != null and foodList.size()>0}">
+						<th:block th:each="board, iterStat : ${foodList}" th:if="${iterStat.index < 6}">
+							<table class="prod_list">
+								<tr>
+									<td class="thumbnail">
+										<a class="get" th:href="${board.boardNum}">
+											<img th:src="${board.prodImg}" alt="Image" />
+										</a>
+									</td>
+								</tr>
+								<tr>
+									<td class="boardTitle" style="height: 70px; ">
+										<a class="get" th:href="${board.boardNum}">
+											<b>[[${board.boardTitle}]]</b></a>
+									</td>
+								</tr>
+							</table>
+						</th:block>
+					</th:block>
+					<th:block th:if="${(foodList == null or foodList.size() == 0)}">
+						<tr>
+							<td style="text-align: center; font-size: 14px;">등록된 제품이 없습니다.</td>
+						</tr>
+					</th:block>
+				</div>
+				<a class="button" th:href="${'/product/prod_food'}">더보기</a>
+			</div>
+			<hr>
+			<div class="prod_exer">
+				<h2>운동도구</h2>
+				<div style="display: flex; width: 100%; flex-wrap:wrap;">
+					<th:block th:if="${exerList != null and exerList.size()>0}">
+						<th:block th:each="board, iterStat : ${exerList}" th:if="${iterStat.index < 6}">
+							<table class="prod_list">
+								<tr>
+									<td class="thumbnail">
+										<a class="get" th:href="${board.boardNum}">
+											<img th:src="${board.prodImg}" alt="Image" />
+										</a>
+									</td>
+								</tr>
+								<tr>
+									<td class="boardTitle" style="height: 70px; ">
+										<a class="get" th:href="${board.boardNum}">
+											<b>[[${board.boardTitle}]]</b></a>
+									</td>
+								</tr>
+							</table>
+						</th:block>
+					</th:block>
+					<th:block th:if="${(exerList == null or exerList.size() == 0)}">
+						<tr>
+							<td style="text-align: center; font-size: 14px;">등록된 제품이 없습니다.</td>
+						</tr>
+					</th:block>
+				</div>
+				<a class="button" th:href="${'/product/prod_exercise'}">더보기</a>
+			</div>
+			<hr>
+
+			<form name="pageForm" id="pageForm" th:action="@{/product/prod_list}">
+				<input type="hidden" name="pagenum" th:value="${pageMaker.cri.pagenum}">
+				<input type="hidden" name="amount" th:value="${pageMaker.cri.amount}">
+				<input type="hidden" name="type" th:value="${pageMaker.cri.type}">
+				<input type="hidden" name="keyword" th:value="${pageMaker.cri.keyword}">
+			</form>
+		</div>
+
+
+		<!-- Sidebar -->
+		<div class="sidebar">
+			<section>
+				<div class="boardRanking">
+					<div class="boardRanking_ranking">
+						<table style="width: 90%;">
+							<tr><td><a href="/product/prod_list" style="color: #5a8100; font-size: 20px;">전체</a></td></tr>
+							<tr><td><a href="/product/prod_food">식품</a></td></tr>
+							<tr><td><a href="/product/prod_exercise">운동도구</a></td></tr>
+						</table>
+					</div>
+				</div>
+			</section>
+		</div>
+
+	</div>
+</section>
+
+<!-- Footer -->
+<th:block th:replace="~{layout/footer::footer}"></th:block>
+
+<!-- Scripts -->
+<script th:src="@{/assets/js/jquery.min.js}"></script>
+<script th:src="@{/assets/js/jquery.dropotron.min.js}"></script>
+<script th:src="@{/assets/js/jquery.scrollex.min.js}"></script>
+<script th:src="@{/assets/js/browser.min.js}"></script>
+<script th:src="@{/assets/js/breakpoints.min.js}"></script>
+<script th:src="@{/assets/js/util.js}"></script>
+<script th:src="@{/assets/js/main.js}"></script>
+
+<script th:src="@{/assets/js/util_sub.js}"></script>
+<script th:src="@{/assets/js/main_sub.js}"></script>
+
+<script th:src="@{/assets/js/sidebar.js}"></script>
+<script th:src="@{/assets/js/profile.js}"></script>
+</body>
+<script th:inline="javascript">
+
+	const pageForm = $("#pageForm");
+
+	$(".get").on("click",function(e){
+		e.preventDefault();
+		let boardNum = $(this).attr("href");
+		let url=/*[[@{/product/prod_get}]]*/'';
+		pageForm.append("<input type='hidden' name='boardNum' value='"+boardNum+"'>")
+		pageForm.attr("action",url);
+		pageForm.attr("method","get");
+		pageForm.submit();
+	})
+
+</script>
+</html>
