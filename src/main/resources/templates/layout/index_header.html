@@ -211,6 +211,28 @@
                         </th:block>
                         <p>섭취량</p>
                         <p>소비량</p>
+                        <script>
+                            document.addEventListener("DOMContentLoaded", function () {
+                                const tabs = document.querySelectorAll("#meal-options > div");
+                                const contents = document.querySelectorAll("#tan-dan-ji-box > div");
+
+                                contents.forEach(content => {
+                                    content.style.display = "none";
+                                });
+
+                                contents[0].style.display = "block";
+
+                                tabs.forEach((tab, index) => {
+                                    tab.addEventListener("click", function () {
+                                        contents.forEach(content => {
+                                            content.style.display = "none";
+                                        });
+
+                                        contents[index].style.display = "block";
+                                    });
+                                });
+                            });
+                        </script>
                         <div id="meal-options">
                             <div class="brack-fst">아침</div>
                             <div class="lunch">점심</div>
@@ -219,25 +241,25 @@
                         </div>
                         <div id="tan-dan-ji-box">
                             <div class="today-breakfast">
-                                <p></p>
+                                <p>아침</p>
                                 <p></p>
                                 <p></p>
                                 <p></p>
                             </div>
                             <div class="today-lunch">
-                                <p></p>
+                                <p>점심</p>
                                 <p></p>
                                 <p></p>
                                 <p></p>
                             </div>
                             <div class="today-dinner">
-                                <p></p>
+                                <p>저녁</p>
                                 <p></p>
                                 <p></p>
                                 <p></p>
                             </div>
                             <div class="today-snack">
-                                <p></p>
+                                <p>간식</p>
                                 <p></p>
                                 <p></p>
                                 <p></p>
