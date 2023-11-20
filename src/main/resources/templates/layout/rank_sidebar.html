@@ -1,11 +1,35 @@
 <th:block th:fragment="sidebar">
-    <div class="sidebar">
+    <div class="sidebar" id="side_box">
         <section>
-            <div class="side_rank_top">
-                랭크1
+            <div class="rankBox">
+                <table>
+                    <tr>
+                        <td colspan="2"><h3 class="side_ranking">인기 게시글 순위</h3></td>
+                    </tr>
+                    <tr th:each="boardTop5List, dataStat :${boardTop5List}">
+                        <td th:text="${dataStat.index+1}"></td>
+                        <td><a href="#">[[${boardTop5List.boardTitle}]]</a></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><input class="rankBtn" type="button" value="게시물 보러가기" onclick="location.href='/info/info_list'">
+                        </td>
+                    </tr>
+                </table>
             </div>
-            <div class="side_rank_bottom">
-                랭크2
+            <div class="rankBox">
+                <table>
+                    <tr>
+                        <td colspan="2"><h3 class="side_ranking">트레이너 Top 5</h3></td>
+                    </tr>
+                    <tr th:each="trainerTop5List, dataStat: ${trainerTop5List}">
+                        <td th:text="${dataStat.index + 1}">1</td>
+                        <td class="open">[[${trainerTop5List.trainerId}]]</a></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><input class="rankBtn" type="button" value="트레이너 보러가기"
+                                               onclick="location.href='/matching/matching_list'"></td>
+                    </tr>
+                </table>
             </div>
         </section>
     </div>

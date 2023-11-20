@@ -1,0 +1,20 @@
+select{
+    margin-right: 20px;
+}
+#side_box .side_rank_top.rankBox{
+    width: 206px;
+}
+#side_box .rankBox input.rankBtn {
+    border-radius: 38px !important;
+    border: 1px solid;
+    box-shadow: 4px 4px 2px 0px #5a8100 !important;
+}
+
+#side_box .rankBox input.rankBtn:hover {
+    color: #444 !important;
+    background-color: #ebede1; !important;
+}
+
+#side_box .rankBox{
+    margin-bottom: 30px !important;
+}
