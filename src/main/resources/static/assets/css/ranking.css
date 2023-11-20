@@ -18,3 +18,19 @@ select{
 #side_box .rankBox{
     margin-bottom: 30px !important;
 }
+.rankBox table tr td {
+    /*text-align: center;*/
+    background: #FFFFFF;
+    overflow: hidden;
+    text-overflow: ellipsis
+}
+
+.rankBox table tr td {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 160px;
+}
+.rankBox:first-child td a{
+    cursor: default !important;
+}
+
