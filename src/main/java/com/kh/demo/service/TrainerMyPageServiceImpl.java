@@ -409,7 +409,7 @@ public class TrainerMyPageServiceImpl implements TrainerMyPageService {
                     }
                 }
             }
-            if(profile != null) {
+            if(profile.getOriginalFilename() != null && !profile.getOriginalFilename().equals("")) {
                 boolean flag = false;
                 //후에 비즈니스 로직 실패 시 원래대로 복구하기 위해 업로드 성공했던 파일들도 삭제해주어야 한다.
                 //업로드 성공한 파일들의 이름을 해당 리스트에 추가하면서 로직을 진행한다.
