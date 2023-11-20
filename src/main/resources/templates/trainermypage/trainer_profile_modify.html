@@ -212,7 +212,7 @@
 					</td>
 				</tr>
 				<tr th:class="${'r'+files.size()}">
-					<td>파일 첨부[[${files.size()+1}]]</td>
+					<th>파일 첨부[[${files.size()+1}]]</th>
 					<td th:class="${'file'+files.size()+'_cont'}">
 						<div style="float:left;">
 							<input type="file" name="files" th:id="${'file'+files.size()}" style="display:none">
