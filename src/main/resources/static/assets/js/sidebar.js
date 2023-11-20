@@ -68,6 +68,8 @@ document.addEventListener('DOMContentLoaded', function () {
             alert('오늘은 이미 출석을 완료하였습니다.');
         }
     });*/
+
+    //임시 코드
     attBtn.addEventListener('click', function () {
         filledGauges++;
         progressBar.value = filledGauges;
@@ -87,3 +89,30 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
+function updatePoints(points) {
+    // AJAX를 사용하여 서버로 데이터 전송
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/attend', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+    // 서버로 전송할 데이터
+    var userId = '<%= session.getAttribute("userId") %>'; // 세션에서 사용자 아이디 가져오기
+    var data = 'userid=' + encodeURIComponent(userId);
+
+    // 데이터를 전송
+    xhr.send(data);
+
+    // 서버 응답 처리
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                // 성공적으로 처리된 경우
+                console.log('포인트 업데이트 성공');
+            } else {
+                // 실패한 경우
+                console.error('포인트 업데이트 실패');
+            }
+        }
+    };
+}
