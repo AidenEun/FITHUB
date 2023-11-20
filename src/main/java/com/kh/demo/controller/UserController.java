@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -105,13 +107,22 @@ public class UserController {
         }
     }
 
-    @GetMapping("attend")
+    @Transactional
+    @PostMapping("attend")
     @ResponseBody
     public ResponseEntity<Integer> attend(@RequestParam String userid) {
         try {
             // 출석 버튼을 클릭할 때마다 출석 및 포인트 증가
             service.updateUserAttendance(userid);
-            service.updateUserPoint(userid);
+
+            // 출석 후 포인트 업데이트
+            int filledGauges = service.getUserAttendance(userid);
+
+            if (filledGauges >= 7) {
+                service.updateUserPoint(userid);
+                filledGauges = 0;  // 출석 포인트가 7 이상이면 초기화
+                service.resetUserAttendance(userid);  // 출석 초기화
+            }
 
             // 현재 포인트 가져오기
             Long userPoint = service.getUserPoint(userid);
@@ -125,6 +136,11 @@ public class UserController {
             // 예외 처리
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
+    }
+
+    @GetMapping("index_header")
+    public String indexHeader(Model model) {
+        return "index_header"; // index_header.html 반환
     }
 }
 
