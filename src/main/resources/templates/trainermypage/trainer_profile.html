@@ -271,6 +271,7 @@
 
 		<!-- Sidebar -->
 		<div class="sidebar">
+			<th:block th:if="${session.loginUser} == ${trainer.trainerId}">
 			<section>
 				<div class="boardRanking">
 					<div class="boardRanking_ranking">
@@ -287,6 +288,10 @@
 					</div>
 				</div>
 			</section>
+			</th:block>
+			<th:block th:unless="${session.loginUser} == ${trainer.trainerId}">
+				<th:block th:replace="~{layout/rank_sidebar::sidebar}"></th:block>
+			</th:block>
 		</div>
 
 	</div>
