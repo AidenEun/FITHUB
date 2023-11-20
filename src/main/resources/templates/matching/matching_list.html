@@ -416,9 +416,7 @@ height:152.469px;
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </body>
-<script>
-
-
+<script th:inline="javascript">
         const searchForm = $("#searchForm");
         const pageForm = $("#pageForm");
 
@@ -434,6 +432,7 @@ height:152.469px;
 		e.preventDefault();
 		let boardNum = $(this).attr("href");
 		let url=/*[[@{/matching/matching_view}]]*/'';
+		console.log(boardNum);
 		pageForm.append("<input type='hidden' name='boardNum' value='"+boardNum+"'>")
 		pageForm.attr("action",url);
 		pageForm.attr("method","get");

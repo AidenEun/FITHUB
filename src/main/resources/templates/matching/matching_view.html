@@ -249,7 +249,7 @@ border-radius: 15px;
 
     <!-- Content -->
     <div class="content">
-      <th:block th:if="${list != null and list.size() > 0}" th:each="board : ${list}">
+      <th:block th:if="${list != null}" th:each="board : ${list}">
         <div class="cotent_header"><span>[[${trainerInfo.trainerNickname}]]님의 글입니다</span></div>
 
         <form>
