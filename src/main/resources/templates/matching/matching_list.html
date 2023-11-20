@@ -233,59 +233,52 @@ height:152.469px;
                 <th:block th:if="${list != null and list.size() > 0}" th:each="board : ${list}">
 					<div id="map" style="width:100%;height:350px;"></div>
 				<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9d457fe0b04b983671f48d03d84f2fdb"></script>
+					<div id="map" style="width:100%;height:350px;"></div>
+				<!--[[${board.trainerInfo.trainerNickname}]]
+				[[${board.trainer_addr}]]-->
+					<script>
+						var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+                            mapOption = {
+                                center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                                level: 3 // 지도의 확대 레벨
+                            };
 
-				<script>
-					var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-                      mapOption = {
-                            center: new kakao.maps.LatLng(37.54699, 127.09598), // 지도의 중심좌표
-                            level: 4 // 지도의 확대 레벨
-                        };
+                        // 지도를 생성합니다
+                        var map = new kakao.maps.Map(mapContainer, mapOption);
 
-                    var map = new kakao.maps.Map(mapContainer, mapOption);
+                        // 주소-좌표 변환 객체를 생성합니다
+                        var geocoder = new kakao.maps.services.Geocoder();
 
+                        // 주소로 좌표를 검색합니다
+                        geocoder.addressSearch([[${board.trainerInfo.trainerNickname}]], function(result, status) {
 
+                            // 정상적으로 검색이 완료됐으면
+                             if (status === kakao.maps.services.Status.OK) {
 
-  // 주소-좌표 변환 객체를 생성합니다
-  var geocoder = new kakao.maps.services.Geocoder();
+                                var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 
-  var positions = [
-    {
-      title: '[[${board.trainerInfo.trainerNickname}]]',
-      address: '[[${board.trainerAddr}]]'
-    }
-  ];
+                                // 결과값으로 받은 위치를 마커로 표시합니다
+                                var marker = new kakao.maps.Marker({
+                                    map: map,
+                                    position: coords
+                                });
 
-  positions.forEach(function (position) { //추가한 코드
-    // 주소로 좌표를 검색합니다
-    geocoder.addressSearch(position.address, function(result, status) {
+                                // 인포윈도우로 장소에 대한 설명을 표시합니다
+                                var infowindow = new kakao.maps.InfoWindow({
+                                    content: '<div style="width:150px;text-align:center;padding:6px 0;">[[${board.trainerInfo.trainerNickname}]]</div>'
+                                });
+                                infowindow.open(map, marker);
 
-      // 정상적으로 검색이 완료됐으면
-      if (status === kakao.maps.services.Status.OK) {
-
-        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-
-        // 결과값으로 받은 위치를 마커로 표시합니다
-        var marker = new kakao.maps.Marker({
-          map: map,
-          position: coords
-        });
-
-        // 인포윈도우로 장소에 대한 설명을 표시합니다
-        //변경한 코드
-        var infowindow = new kakao.maps.InfoWindow({
-          content: '<div style="width:150px;text-align:center;padding:6px 0;">' + position.title + '</div>'
-        });
-        infowindow.open(map, marker);
-
-        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-        map.setCenter(coords);
-      }
-    });
-  });
-                </script>
-				</script>
+                                // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+                                map.setCenter(coords);
+                            }
+                        });
+					</script>
+				</th:block>
 			</div>
-            </th:block>
+
+		</div>
+
 			<div class="TrainerMatching_box">
 				<div class="matching_list">
 					<div class="list_hover">
