@@ -380,7 +380,7 @@ border-radius: 15px;
       <!-- 등록, 목록 버튼 테이블 -->
         <table class="button_table">
           <tr align="right" valign="middle">
-            <td>
+            <td colspan="2">
               <th:block th:if="${board.trainerId == session.loginUser}">
                 <form name="boardForm" method="post" th:action="@{/matching/remove}">
                   <input name="boardNum" th:value="${board.boardNum}" type="hidden">
@@ -388,7 +388,7 @@ border-radius: 15px;
                   <input name="amount" th:value="${cri.amount}" type="hidden">
                   <input name="type" th:value="${cri.type}" type="hidden">
                   <input name="keyword" th:value="${cri.keyword}" type="hidden">
-                  <a href="javascript:modify()">수정</a>
+                  <a class="modify" th:href="${board.boardNum}">수정</a>
                   <a href="javascript:document.boardForm.submit()">삭제</a>
                 </form>
               </th:block>
@@ -400,6 +400,15 @@ border-radius: 15px;
             </td>
             <td>
               <a th:href="${'/matching/matching_list'+cri.listLink}">목록</a>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a href="#">좋아요</a>
+              <a href="#">구독하기</a>
+            </td>
+            <td>
+              <a href="#">신고하기</a>
             </td>
           </tr>
 
@@ -530,13 +539,14 @@ border-radius: 15px;
     }
   }
 
-
-  function modify(){
-		const boardForm = document.boardForm;
-		boardForm.setAttribute("action",/*[[@{/matching/matching_modify}]]*/'');
+$(".modify").on("click",function(e){
+		e.preventDefault();
+		let boardNum = $(this).attr("href");
+		let url=/*[[@{/matching/modify}]]*/'';
+		boardForm.setAttribute("action",url);
 		boardForm.setAttribute("method","get");
 		boardForm.submit();
-	}
+	})
 
 	$(".cancel").on("click",function(e){
 		e.preventDefault();
