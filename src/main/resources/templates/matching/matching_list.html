@@ -320,54 +320,56 @@
                         </tr>
                     </table>
                     <div id="map" style="width:100%;height:350px;"></div>
+                    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
                     <script type="text/javascript"
-                            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9d457fe0b04b983671f48d03d84f2fdb"></script>
+                            src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=9d457fe0b04b983671f48d03d84f2fdb"></script>
                     <script>
                         var mapContainer = document.getElementById('map'), // 지도를 표시할 div
                             mapOption = {
-                                center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-                                level: 3 // 지도의 확대 레벨
+                                center: new kakao.maps.LatLng(37.5125, 127.102778), // 지도의 중심좌표
+                                level: 4 // 지도의 확대 레벨
                             };
 
                         var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 
                         $.ajax({
-    url: 'matching/map', // 데이터를 가져올 엔드포인트 URL
-    method: 'GET',
-    success: function(data) {
-        data.forEach(function(boardData) {
-            var address = boardData.TrainerAddr; // 주소 정보 가져오기
-            var trainerNickname = boardData.trainerNickname; // 트레이너 닉네임 가져오기
+                            url: 'matching/map', // 데이터를 가져올 엔드포인트 URL
+                            method: 'GET',
+                            success: function(data) {
+                                data.forEach(function(boardData) {
+                                    var address = boardData.TrainerAddr; // 주소 정보 가져오기
+                                    console.log(address);
+                                    var trainerNickname = boardData.trainerNickname; // 트레이너 닉네임 가져오기
+                                    console.log(trainerNickname);
+                                    var geocoder = new kakao.maps.services.Geocoder();
+                                    geocoder.addressSearch(address, function(result, status) {
+                                        if (status === kakao.maps.services.Status.OK) {
+                                            var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+                                            var marker = new kakao.maps.Marker({
+                                                map: map,
+                                                position: coords,
+                                                title: trainerNickname // 마커 이름은 트레이너 닉네임으로 지정
+                                            });
 
-            var geocoder = new kakao.maps.services.Geocoder();
-            geocoder.addressSearch(address, function(result, status) {
-                if (status === kakao.maps.services.Status.OK) {
-                    var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-                    var marker = new kakao.maps.Marker({
-                        map: map,
-                        position: coords,
-                        title: trainerNickname // 마커 이름은 트레이너 닉네임으로 지정
-                    });
+                                            // 각 마커별로 인포윈도우 생성
+                                            var infowindow = new kakao.maps.InfoWindow({
+                                                content: '<div><strong>' + trainerNickname + '</strong><br>' + address + '</div>'
+                                            });
 
-                    // 각 마커별로 인포윈도우 생성
-                    var infowindow = new kakao.maps.InfoWindow({
-                        content: '<div><strong>' + trainerNickname + '</strong><br>' + address + '</div>'
-                    });
-
-                    // 마커에 클릭 이벤트 추가
-                    kakao.maps.event.addListener(marker, 'click', function() {
-                        infowindow.open(map, marker);
-                    });
-                } else {
-                    console.error('Geocoder failed:', status);
-                }
-            });
-        });
-    },
-    error: function(err) {
-        console.error('Error fetching data:', err);
-    }
-});
+                                            // 마커에 클릭 이벤트 추가
+                                            kakao.maps.event.addListener(marker, 'click', function() {
+                                                infowindow.open(map, marker);
+                                            });
+                                        } else {
+                                            console.error('Geocoder failed:', status);
+                                        }
+                                    });
+                                });
+                            },
+                            error: function(err) {
+                                console.error('Error fetching data:', err);
+                            }
+                        });
                     </script>
                 </div>
 
