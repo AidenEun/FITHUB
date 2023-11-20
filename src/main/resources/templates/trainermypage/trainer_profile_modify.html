@@ -51,6 +51,15 @@
 	}
 	table.careerTable tr th{
 		width: 15%;
+		vertical-align: top;
+    	padding-top: 11px;
+	}
+
+	.trainer_profile_btn_box{
+		width: 100%;
+		margin-bottom: 20px;
+		padding-left: 704px;
+		display: flex;
 	}
 
 
@@ -76,7 +85,10 @@
 
 		<!-- Content -->
 		<div class="content">
-
+			<div class="trainer_profile_btn_box">
+				<a style="margin-right: 10px;" href="javascript:document.profileForm.submit()" class="button btnColor small" >수정완료</a>
+				<a th:href="@{/trainermypage/trainer_myprofile}" class="button btnColor small">취소</a>
+			</div>
 			<!-- 게시글 리스트 띄우는 테이블 -->
 			<form id="profileForm" name="profileForm" method="post" th:action="@{/trainermypage/trainer_myprofile_modify}" enctype="multipart/form-data">
 			<div class="thumbnail_box">
@@ -162,13 +174,6 @@
 									</div>
 								</td>
 							</tr>
-							<tr>
-								<td></td>
-								<td colspan="2">
-									<a href="javascript:document.profileForm.submit()" class="button btnColor" >수정완료</a>
-									<a th:href="@{/trainermypage/trainer_myprofile}" class="button btnColor">취소</a>
-								</td>
-							</tr>
 						</table>
 					</div>
 				</div>
@@ -228,25 +233,7 @@
 				</tr>
 				<input type="hidden" value="" name="updateCnt" id="updateCnt">
 			</table>
-				</form>
-
-
-			<!--다이어리-->
-			<table>
-				<tr>
-					<td style="font-weight: bold;">[[${trainer.trainerNickname}]]님의 다이어리</td>
-				</tr>
-				<tr>
-					<td>
-						<div>
-
-						</div>
-					</td>
-				</tr>
-			</table>
-
-
-
+			</form>
 		</div>
 
 		<form name="pageForm" id="pageForm" th:action="@{/trainermypage/trainer_myprofile}">
@@ -261,7 +248,7 @@
 				<div class="boardRanking">
 					<div class="boardRanking_ranking">
 						<table style="width: 90%;">
-							<tr><td><a href="/trainermypage/trainer_modify">내 정보 수정</a></td></tr>
+							<tr><td><a href="/trainermypage/trainer_modify">내 정보</a></td></tr>
 <!--							<tr><td><a href="/usermypage/user_diary">나의 다이어리</a></td></tr>-->
 							<tr><td><a href="/trainermypage/trainer_challenge">나의 챌린지</a></td></tr>
 							<tr><td><a href="/trainermypage/trainer_mysubscribeuser">구독 유저</a></td></tr>

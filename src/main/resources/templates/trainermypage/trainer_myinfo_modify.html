@@ -119,7 +119,7 @@
 		height: 20px;
 		border: 1px solid black;
 		position: relative;
-		right: -530px;
+		right: -614px;
 		top: -20px;
 		transform: translateY(-50%);
 	}
@@ -137,6 +137,10 @@
     	background-color: #fff !important;
 	}
 
+	.btn_box{
+		float: right;
+		margin-right: 10px;
+	}
 
 </style>
 <body class="is-preload">
@@ -219,7 +223,7 @@
 					<tr>
 						<td>우편번호</td>
 						<td style="display: flex;">
-							<input readonly name="trainerZipcode" type="text" id="sample6_postcode" th:value="${user.trainerZipcode}" placeholder="우편번호" onclick="sample6_execDaumPostcode()">
+							<input style="width:79%; margin-right: 10px;" readonly name="trainerZipcode" type="text" id="sample6_postcode" th:value="${user.trainerZipcode}" placeholder="우편번호" onclick="sample6_execDaumPostcode()">
 							<div style="width:20%;" onclick="sample6_execDaumPostcode()" class="button btnColor">우편번호 찾기</div>
 						</td>
 					</tr>
