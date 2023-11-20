@@ -58,7 +58,7 @@ function signUpModalDom(data) {
     // innerDiv에 CSS 스타일 추가
     innerDiv.css({
         'display': 'flex',
-        'justify-content': 'center',
+        'justify-content': 'space-between',
         'align-items': 'center',
         'width': '100%'
     });

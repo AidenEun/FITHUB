@@ -52,7 +52,7 @@ function reportAdminModalDom(data) {
     tableBody.append(row);
 
     var newRow = $('<tr style="text-align: center;">');
-    newRow.append('<td class="long_text" colspan="6"><div class="button fit" style="cursor: auto !important;">신고 내용 : ' + data.reportDTO.reportContentName + '</div></td>');
+    newRow.append('<td class="long_text" colspan="6"><div class="button fit btnColor" style="cursor: auto !important;">신고 내용 : ' + data.reportDTO.reportContentName + '</div></td>');
     tableBody.append(newRow);
 }
 

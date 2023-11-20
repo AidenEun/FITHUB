@@ -24,11 +24,10 @@
 			background-color: #5a8100;
 			box-shadow: none;
 			padding: 0;
-		}
-		.content .button a{
-			color: white;
+			color: white !important;
 			font-size: 14.5px;
 		}
+
 		table {
 			background-color: transparent;
 		}
@@ -40,18 +39,20 @@
 		}
 		table td{
 			padding: 5px 10px;
-			vertical-align: middle;
 		}
-		#thumbnail{
-			width: 210px !important;
-			height: 190px !important;
-			background-color: #5a8100;
-			padding: 10px;
+		#thumbnail > td{
+			width: 240px !important;
+			height: 270px !important;
+			background-color: transparent;
+			padding: 5px 10px !important;
 		}
-		#thumbnail #img{
-			width: 190px !important;
-			height: 170px !important;
-			background-color: beige;
+		img{
+			width: 240px !important;
+			height: 270px !important;
+			background-color: transparent;
+		}
+		#img a{
+			font-size:0px;
 		}
 		#boardtitle{
 			padding: 0;
@@ -59,54 +60,12 @@
 		#boardtitle b{
 			font-size: 15px !important;
 		}
+		.prod_exer_list{
+			width:20% !important;
+		}
 
-		#boardcontent{
-			height: 100px !important;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			display: -webkit-box; /* display: -webkit-box => 해당 영역을 box 형태로 관리 */
-			-webkit-line-clamp: 3; /*-webkit-line-clamp => 해당 영역 내 텍스트의 최대 라인수 */
-			-webkit-box-orient: vertical; /* -webkit-box-orient: vertical => box의 흐름 방향을 수직으로 지정 */
-		}
-		#boardcontent p, #boardcontent span, #boardcontent b{
-			display: inline;
-			font-size: 14px !important;
-			text-decoration: none !important;
-			font-weight: normal;
-		}
-		#boardcontent img{
-			display: none;
-		}
-		#cnt {
-			height: 30px;
-			font-size: 12px;
-			line-height: 12px;
-			padding: 5px 11px;
-		}
-		.content .button.btnColor{
-			background: #FFFFFF;
-			border: 1px solid #5a8100;
-			border-radius: 4px;
-			color: #5a8100 !important;
-			box-shadow: 4px 4px 2px 0px rgb(203,211,177);
-			font-weight: 700 !important;
-			height: 2.75em !important;
-			line-height: 2.75em !important;
 
-		}
-		.content .button.btnColor a{
-			color: #5a8100;
-		}
-		.button.btnColor:hover a { color:#F7FAF5; }
 
-		.button.btnColor:hover{
-			background: #5a8100;
-			border: 1px solid #5a8100;
-			border-radius: 4px;
-			color: #F7FAF5 !important;
-			box-shadow: 0 0 2px #5a8100;
-
-		}
 	</style>
 </head>
 <body class="is-preload">
@@ -117,57 +76,46 @@
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">
 
-	<div class="header_box">
-		<header class="test12">
-			<p id="mainText">정보</p>
-			<p id="subText">식단</p>
-		</header>
-	</div>
-
 	<div class="inner">
+
+		<header class="test12">
+			<p id="mainText">제품</p>
+			<p id="subText">운동도구</p>
+		</header>
 
 		<!-- Content -->
 		<div class="content">
-			<div class="cotent_header"><h2>식단</h2></div>
-			<div class="button btnColor"><a th:href="${'/info/info_write'+pageMaker.cri.listLink}">작성하기</a></div>
-			<div style="width: 100%">
+			<div class="cotent_header"><h2>운동도구</h2></div>
+			<a class="button " th:href="${'/product/prod_write'+pageMaker.cri.listLink}">등록하기</a>
+			<div style="display: flex; width: 100%; flex-wrap:wrap;">
 				<!-- 게시글 리스트 띄우는 테이블 -->
-				<table id="list" class="info_food_list" style="border-bottom: 1px #304400; width: 100%;">
-					<th:block th:if="${list != null and list.size()>0}" th:each="board : ${list}">
+				<th:block th:if="${list != null and list.size()>0}" th:each="board : ${list}">
+					<table id="list" class="prod_exer_list">
 						<tr valign="middle">
-							<td id="thumbnail" rowspan="3" style="width: 100%">
-								<div id="img">썸네일</div>
-								<!--/*								[[${board.썸네일}]]*/-->
+							<td id="thumbnail">
+								<a id="img" th:href="${board.boardNum}">
+									<img th:src="${board.prodImg}" alt="Image" />
+
+								</a>
 							</td>
-							<td style="height: 35px; padding: 5px 10px;">
+						</tr>
+						<tr>
+							<td style="height: 85px; padding: 5px 10px;">
 								<a class="get" id="boardtitle" th:href="${board.boardNum}">
 									<b>[[${board.boardTitle}]]</b>
 								</a>
 							</td>
 						</tr>
-						<tr>
-							<td style="height: 45px; font-size: 14px;" >
-								<a class="get" id="boardcontent" th:href="${board.boardNum}" th:utext="${board.boardContent}">
-								</a>
-							</td>
-						</tr>
-						<tr>
-							<td id="cnt" >
-								<span style="margin-right: 10px; margin-left: 5px;">댓글수 0</span>
-								<!--								<span class="reply_cnt" th:text="${reply_cnt_list[boardStat.index]}">댓글수</span>-->
-								<span [[${board.viewCnt}]]>조회수 0</span>
-							</td>
-						</tr>
-
-					</th:block>
-					<th:block th:if="${(list == null or list.size() == 0)}">
-						<tr>
-							<td colspan="2" style="text-align: center; font-size: 14px;">등록된
-								게시글이 없습니다.</td>
-						</tr>
-					</th:block>
+					</table>
+				</th:block>
+				<th:block th:if="${(list == null or list.size() == 0)}">
+					<tr>
+						<td colspan="2" style="text-align: center; font-size: 14px;">등록된 게시글이 없습니다.</td>
+					</tr>
+				</th:block>
 				</table>
 			</div>
+
 			<br>
 			<!-- 페이징 처리하는 테이블 -->
 			<table class="pagination">
@@ -186,9 +134,9 @@
 				</tr>
 			</table>
 			<!-- 검색 -->
-			<form id="searchForm" th:action="@{/info/info_food}">
-				<div class="search_area flex">
-					<select name="type" style="width: 30%; margin-right:10px;">
+			<form id="searchForm" th:action="@{/product/prod_exercise}">
+				<div class="search_area">
+					<select name="type">
 						<option value="" th:selected="${pageMaker.cri.type == null}">검색</option>
 						<option value="T" th:selected="${pageMaker.cri.type == 'T'}">제목</option>
 						<option value="C" th:selected="${pageMaker.cri.type == 'C'}">내용</option>
@@ -197,18 +145,20 @@
 						<option value="TW" th:selected="${pageMaker.cri.type == 'TW'}">제목 또는 작성자</option>
 						<option value="TCW" th:selected="${pageMaker.cri.type == 'TCW'}">제목 또는 내용 또는 작성자</option>
 					</select>
-					<input type="text" name="keyword" id="keyword" th:value="${pageMaker.cri.keyword}" style="margin-right:10px;">
-					<a href="#" class="button btnColor" style="padding: 0 1.5em;">검색</a>
+					<input type="text" name="keyword" id="keyword" th:value="${pageMaker.cri.keyword}">
+					<a href="#" class="button primary">검색</a>
 				</div>
 				<input type="hidden" value="1" name="pagenum">
-				<input type="hidden" value="10" name="amount">
+				<input type="hidden" value="15" name="amount">
 			</form>
 			<!--페이지폼-->
-			<form name="pageForm" id="pageForm" th:action="@{/info/info_food}">
+			<form name="pageForm" id="pageForm" th:action="@{/product/prod_exercise}">
 				<input type="hidden" name="pagenum" th:value="${pageMaker.cri.pagenum}">
 				<input type="hidden" name="amount" th:value="${pageMaker.cri.amount}">
 				<input type="hidden" name="type" th:value="${pageMaker.cri.type}">
 				<input type="hidden" name="keyword" th:value="${pageMaker.cri.keyword}">
+				<input type="hidden" name="category" th:value="${pageMaker.cri.category}">
+
 			</form>
 		</div>
 
@@ -218,12 +168,10 @@
 			<section>
 				<div class="boardRanking">
 					<div class="boardRanking_ranking">
-						<table style="width: 90%;" class="td_padding">
-							<tr><td><a href="/info/info_list">전체</a></td></tr>
-							<tr><td><a href="/info/info_news">뉴스</a></td></tr>
-							<tr><td><a href="/info/info_food" style="color: #5a8100; font-size: 20px;">식단</a></td></tr>
-							<tr><td><a href="/info/info_exercise">운동</a></td></tr>
-							<tr><td><a href="/info/info_tip">꿀팁</a></td></tr>
+						<table style="width: 90%;">
+							<tr><td><a href="/product/prod_list">전체</a></td></tr>
+							<tr><td><a href="/product/prod_food" >식품</a></td></tr>
+							<tr><td><a href="/product/prod_exercise" style="color: #5a8100; font-size: 20px;">운동도구</a></td></tr>
 						</table>
 					</div>
 				</div>
@@ -265,7 +213,7 @@
 	$(".get").on("click",function(e){
 		e.preventDefault();
 		let boardNum = $(this).attr("href");
-		let url=/*[[@{/info/info_get}]]*/'';
+		let url=/*[[@{/product/prod_get}]]*/'';
 		pageForm.append("<input type='hidden' name='boardNum' value='"+boardNum+"'>")
 		pageForm.attr("action",url);
 		pageForm.attr("method","get");

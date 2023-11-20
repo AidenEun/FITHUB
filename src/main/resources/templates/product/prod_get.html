@@ -13,7 +13,6 @@
 	<link rel="stylesheet" th:href="@{/assets/css/infoBoard.css}">
 	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
 	<link rel="stylesheet" th:href="@{/assets/css/common.css}" />
-	<link rel="stylesheet" th:href="@{/assets/css/reportModal.css}" />
 	<style>
 
 		a {
@@ -24,16 +23,14 @@
 		}
 
 		.board_area {
-			border: 1.5px solid #5a8100;
-			border-radius: 10px;
 			background-color: transparent;
+			border : none;
 		}
-		.board_area th {
-			text-align: center;
-			vertical-align: middle;
-			width: 90px !important;
+		td > .img {
+			width:360px !important;
 
 		}
+
 		.board_area tr td{
 			border-color: transparent;
 		}
@@ -49,9 +46,32 @@
 			margin-bottom:0;
 
 		}
+		.boardTitle{
+			font-weight: 700 !important;
+    		font-size: 20px !important;
+    		display: block !important;
+        	width: 100%;
+        	box-sizing: border-box !important;
+        	vertical-align:top;
+		}
 
 		.button_table tr > td{
 			border: none;
+		}
+		.button_table tr > td > button{
+			border: 0.8px solid black;
+			border-radius: 10px;
+		}
+		.button{
+			padding: 0;
+			border-radius: 10px;
+			height: 30px;
+			width: 60px;
+			vertical-align: middle;
+			background-color: #5a8100;
+			color: white !important;
+			line-height: 30px;
+			box-shadow: none;
 		}
 		.button > a{
 			display: block;
@@ -60,7 +80,9 @@
 			text-align: center;
 			color: white;
 		}
-
+		.button:hover {
+			background-color: rgb(203,211,177);
+		}
 		.replyForm input{
 			border: none;
 			background-color: #5a8100;
@@ -109,41 +131,27 @@
 			font-size: 13px;
 			font-weight: 700 !important;
 		}
-
-		.displayNoneDiv{
-			display: none;
-		}
 	</style>
 </head>
 <body class="is-preload">
 
 <!-- Header -->
 <th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin})}"></th:block>
-
-<!-- Modal -->
-<th:block th:replace="~{layout/reportModal::reportModal()}"></th:block>
-
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">
-
-	<div class="header_box">
-		<header class="test12">
-			<p id="mainText">커뮤니티</p>
-			<p id="subText">게시글 보기</p>
-		</header>
-	</div>
-
 	<div class="inner">
+
+		<header class="test12">
+			<p id="mainText">제품</p>
+			<p id="subText">상세 보기</p>
+		</header>
 
 		<!-- Content -->
 		<div class="content">
 			<div class="cotent_header">
-					<span th:switch="${board.boardCategory}">
-						<span th:case="'commuFree'"><h2>자유게시판</h2></span>
-						<span th:case="'commuFood'"><h2>식단</h2></span>
-						<span th:case="'commuExer'"><h2>운동</h2></span>
-						<span th:case="'commuGallery'"><h2>갤러리</h2></span>
-						<span th:case="'commuQna'"><h2>고민 Q&A</h2></span>
+					<span th:switch="${board.category}">
+						<span th:case="'prodFood'"><h2>식품</h2></span>
+						<span th:case="'prodExer'"><h2>운동도구</h2></span>
 					</span>
 			</div>
 
@@ -151,19 +159,27 @@
 				<form>
 
 					<!--게시글 테이블-->
-					<table class="board_area">
-						<tr style="height:30px;">
-							<th>제목</th>
-							<td colspan="5">
-								<input type="text" name="boardTitle" size="50" maxlength="50" th:value="${board.boardTitle}" readonly>
+					<table class="board_area" width="100%">
+						<tr>
+							<!-- 이미지 -->
+							<td class="img" rowspan="2"  width="360px">
+								<a class="get" id="img">
+									<img th:src="${board.prodImg}" alt="Image" />
+								</a>
+							</td>
+							<!-- 제목 -->
+							<td class="boardTitle" width="390px" style="vertical-align:top;">
+								<input class="boardTitle" type="text" name="boardTitle" th:value="${board.boardTitle}" readonly>
 							</td>
 						</tr>
-						<tr style="height:30px;">
-							<th>작성자</th>
-							<td colspan="5">
-								<input type="text" name="userId" size="50" maxlength="50" th:value="${board.userId}" readonly>
+						<tr>
+							<!-- 내용 -->
+							<td width="390px">
+								<input class="boardContent" type="text" name="boardContent" th:value="${board.boardContent}" readonly>
 							</td>
 						</tr>
+					</table>
+					<table width="100%">
 						<tr>
 							<th>조회수</th>
 							<td>[[${board.viewCnt}]]</td>
@@ -172,64 +188,28 @@
 							<th>북마크</th>
 							<td width="50px" style="padding:5px;">[[${board.bookmarkCnt}]]</td>
 						</tr>
-						<tr style="height:300px;">
-							<th>내 용</th>
-							<td class="boardContent" colspan="5">
-								<th:block th:utext="${board.boardContent}">
-									<textarea name="boardContent" style="width:700px;height:290px;resize:none;" readonly>
-
-									</textarea>
-								</th:block>
-							</td>
-
-						</tr>
-						<th:block th:if="${files2 != null and files2.size() > 0}" th:each="file : ${files2}">
-							<th:block th:with="sar=${file.orgName.split('[.]')}">
-								<tr>
-									<th>첨부파일[[${fileStat.index+1}]]</th>
-									<td>
-										<a th:href="@{/community/file (systemname=${file.sysName},orgname=${file.orgName})}">[[${file.orgName}]]</a>
-									</td>
-								</tr>
-								<th:block th:with="ext=${sar[sar.length-1]}">
-									<tr th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}">
-										<td></td>
-										<td>
-											<img style="width:100%;" th:src="@{/community/thumbnail (systemname=${file.sysName})}">
-										</td>
-									</tr>
-								</th:block>
-							</th:block>
-						</th:block>
-						<th:block th:unless="${files2 != null and files2.size() > 0}">
-							<tr>
-								<td colspan="2" style="text-align: center; font-size: 14px;">첨부 파일이 없습니다.</td>
-							</tr>
-						</th:block>
 					</table>
 				</form>
 				<table class="btn_area" style="width: 100%">
 					<tr align="right" valign="middle">
 						<td>
-							<th:block th:if="${board.userId == session.loginUser}">
-								<form name="boardForm" method="post" th:action="@{/community/remove}">
+							<th:block th:if="${board.adminId == session.loginUser}">
+								<form name="boardForm" method="post" th:action="@{/product/remove}">
 									<input name="boardNum" th:value="${board.boardNum}" type="hidden">
 									<input name="pagenum" th:value="${cri.pagenum}" type="hidden">
 									<input name="amount" th:value="${cri.amount}" type="hidden">
 									<input name="type" th:value="${cri.type}" type="hidden">
 									<input name="keyword" th:value="${cri.keyword}" type="hidden">
-									<a class="button btnColor" href="javascript:modify()">수정</a>
-									<a class="button btnColor" href="javascript:document.boardForm.submit()">삭제</a>
+									<input name="keyword" th:value="${cri.category}" type="hidden">
+
+									<a class="button" href="javascript:modify()">수정</a>
+									<a class="button" href="javascript:document.boardForm.submit()">삭제</a>
 								</form>
 							</th:block>
-							<div class="displayNoneDiv writer">[[${board.userId}]]</div>
-							<div class="displayNoneDiv boardNum">[[${board.boardNum}]]</div>
-							<div class="displayNoneDiv boardCategory">[[${board.boardCategory}]]</div>
 							<div class="btn_area">
-								<th:block th:if="${board.userId != session.loginUser}">
-									<a class="button btnColor reportOpen">신고</a>
-								</th:block>
-									<a class="button btnColor" th:href="${'/community/commu_list'+cri.listLink}">목록</a>
+								<a class="button btnColor" style="float:left;">좋아요</a>
+								<a class="button btnColor" style="float:left;margin-left:10px;">북마크</a>
+								<a class="button btnColor" th:href="${'/product'+cri.prodBoardListLink}">목록</a>
 							</div>
 						</td>
 					</tr>
@@ -249,8 +229,8 @@
 							<textarea name="replyContent" placeholder="댓글을 입력해주세요." style="resize:none; margin-top: 10px;"></textarea>
 						</div>
 						<div style="width:15%; margin-top: 10px;">
-							<a href="#" class="button btnColor small finish" style="margin-top:27px; margin-bottom:5px;">등록</a>
-							<a href="#" class="button btnColor small cancel">취소</a>
+							<a href="#" class="button finish" style="margin-top:25px; margin-bottom:1rem;">등록</a>
+							<a href="#" class="button cancel">취소</a>
 						</div>
 					</div>
 					<ul class="replies"></ul>
@@ -265,12 +245,9 @@
 				<div class="boardRanking">
 					<div class="boardRanking_ranking">
 						<table style="width: 90%;">
-							<tr><td><a href="/community/commu_list">전체</a></td></tr>
-							<tr><td><a href="/community/commu_free">자유게시판</a></td></tr>
-							<tr><td><a href="/community/commu_food">식단</a></td></tr>
-							<tr><td><a href="/community/commu_exercise">운동</a></td></tr>
-							<tr><td><a href="/community/commu_gallery">갤러리</a></td></tr>
-							<tr><td><a href="/community/commu_qna">고민Q&A</a></td></tr>
+							<tr><td><a href="/product/prod_list">전체</a></td></tr>
+							<tr><td><a href="/product/prod_food">식품</a></td></tr>
+							<tr><td><a href="/product/prod_exercise">운동도구</a></td></tr>
 						</table>
 					</div>
 				</div>
@@ -300,12 +277,10 @@
 </body>
 
 <script th:src="@{/assets/js/reply.js}"></script>
-<script th:src="@{/assets/js/reportModal.js}"></script>
-
 <script th:inline="javascript">
 	const loginUser = /*[[${session.loginUser}]]*/'';
 	const boardNum = /*[[${board.boardNum}]]*/'';
-	const boardCategory = /*[[${board.boardCategory}]]*/'';
+	const category = /*[[${board.category}]]*/'';
 	const replies = $(".replies")
 	const page = $(".page")
 	let nowpage = 0;
@@ -326,7 +301,7 @@
 		let replyContent = $("[name='replyContent']").val();
 
 		replyService.add(
-				{"boardNum":boardNum,"boardCategory":boardCategory,"userId":loginUser, "replyContent":replyContent},
+				{"boardNum":boardNum,"boardCategory":category,"userId":loginUser, "replyContent":replyContent},
 				function(result){
 					alert("등록!");
 					showList(1);
@@ -470,7 +445,7 @@
 
 	function modify(){
 		const boardForm = document.boardForm;
-		boardForm.setAttribute("action",/*[[@{/community/commu_modify}]]*/'');
+		boardForm.setAttribute("action",/*[[@{/product/prod_modify}]]*/'');
 		boardForm.setAttribute("method","get");
 		boardForm.submit();
 	}
