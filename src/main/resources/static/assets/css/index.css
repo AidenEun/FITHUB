@@ -1931,7 +1931,7 @@ input, select, textarea {
 		button:hover,
 		.button:hover {
 			background-color: #5a8100;
-			/*color: #F7FAF5;*/
+			color: #ffffff !important;
 		}
 
 		input[type="submit"]:active,
@@ -1949,7 +1949,7 @@ input, select, textarea {
 		.button.primary {
 			box-shadow: none;
 			background-color: #444;
-			color: #fff !important;
+			color: #fff;
 		}
 
 			input[type="submit"].primary:hover,
@@ -1959,6 +1959,7 @@ input, select, textarea {
 			.button.primary:hover {
 				/*background-color: #515151;*/
 				background-color: #5a8100;
+				color: #ffffff;
 			}
 
 			input[type="submit"].primary:active,
@@ -1967,6 +1968,7 @@ input, select, textarea {
 			button.primary:active,
 			.button.primary:active {
 				background-color: #373737;
+
 			}
 
 /* Features */
