@@ -113,15 +113,16 @@
         delete from trainer_matching_board where board_num=#{boardNum}
     </delete>
     <update id="updateBoard">
-        update trainer_matching_board set (board_title, trainer_id, expiration_time, avail_consult_weeks, avail_consult_time, trainer_zipcode, trainer_addr, trainer_addrdetail, board_content)
-        values (#{boardTitle}, #{trainerId}, #{expirationTime}, #{availConsultWeeks}, #{availConsultTime}, #{trainerZipcode}, #{trainerAddr}, #{trainerAddrdetail}, #{boardContent})
+        update trainer_matching_board set board_title=#{boardTitle}, trainer_id=#{trainerId}, expiration_time=#{expirationTime}, avail_consult_weeks=#{availConsultWeeks}, avail_consult_time=#{availConsultTime}, trainer_zipcode=#{trainerZipcode}, trainer_addr=#{trainerAddr}, trainer_addrdetail=#{trainerAddrdetail}, board_content=#{boardContent}
+        where board_num=#{boardNum}
     </update>
     <select id="getTotal">
         select count(*) from trainer_matching_board where
         <include refid="cri"></include> board_num > 0
     </select>
-
-
+    <select id="getAllBoards">
+        select * from trainer_matching_board
+    </select>
 
 
 <!--    통합검색 디테일-->
@@ -140,5 +141,6 @@
         where (board_title like ('%${keyword}%') or board_content like ('%${keyword}%') or
                trainer_id like ('%${keyword}%'));
     </select>
+
 
 </mapper>

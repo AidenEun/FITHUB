@@ -388,14 +388,14 @@ border-radius: 15px;
           <tr align="right" valign="middle">
             <td colspan="2">
               <th:block th:if="${board.trainerId == session.loginUser}">
-                <form name="boardForm" method="post" th:action="@{/matching/remove}">
+                <form name="BoardPageForm" method="post" th:action="@{/matching/remove}">
                   <input name="boardNum" th:value="${board.boardNum}" type="hidden">
                   <input name="pagenum" th:value="${cri.pagenum}" type="hidden">
                   <input name="amount" th:value="${cri.amount}" type="hidden">
                   <input name="type" th:value="${cri.type}" type="hidden">
                   <input name="keyword" th:value="${cri.keyword}" type="hidden">
-                  <a class="modify" th:href="${board.boardNum}">수정</a>
-                  <a href="javascript:document.boardForm.submit()">삭제</a>
+                  <a href="javascript:modify()">수정</a>
+                  <a href="javascript:document.BoardPageForm.submit()">삭제</a>
                 </form>
               </th:block>
             </td>
@@ -411,7 +411,7 @@ border-radius: 15px;
           <tr>
             <td>
               <a href="#">좋아요</a>
-              <a href="#">구독하기</a>
+              <a href="#">북마크</a>
             </td>
             <td>
               <a href="#">신고하기</a>
@@ -504,7 +504,7 @@ border-radius: 15px;
 <script th:src="@{/assets/js/review.js}"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<script>
+<script th:inline="javascript">
   document.addEventListener("DOMContentLoaded", function () {
     const stars = document.querySelectorAll(".rating .star");
     const resultDiv = document.getElementById("result");
@@ -545,14 +545,16 @@ border-radius: 15px;
     }
   }
 
-$(".modify").on("click",function(e){
-		e.preventDefault();
-		let boardNum = $(this).attr("href");
-		let url=/*[[@{/matching/modify}]]*/'';
-		boardForm.setAttribute("action",url);
-		boardForm.setAttribute("method","get");
-		boardForm.submit();
-	})
+
+  function modify() {
+    const BoardPageForm = document.BoardPageForm;
+    console.log(BoardPageForm);
+
+    BoardPageForm.setAttribute("action",/*[[@{/matching/matching_modify}]]*/'');
+    BoardPageForm.setAttribute("method","get");
+    BoardPageForm.submit();
+  }
+
 
 	$(".cancel").on("click",function(e){
 		e.preventDefault();

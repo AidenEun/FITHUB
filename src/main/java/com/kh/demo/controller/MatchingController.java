@@ -1,6 +1,7 @@
 package com.kh.demo.controller;
 
 import com.fasterxml.jackson.databind.DatabindContext;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.kh.demo.domain.dto.*;
@@ -80,7 +81,7 @@ public class MatchingController {
 
 
 
-    @GetMapping("matching_view")
+    @GetMapping(value = {"matching_view","matching_modify"})
     public String get(@RequestParam Long boardNum, Criteria cri, HttpServletRequest req, HttpServletResponse resp, Model model) {
         TrainerMatchingBoardDTO list = MatchingService.boardView(boardNum);
         ProfileDTO profileInfo = MatchingService.getProfileInfo(list.getTrainerId());
@@ -124,24 +125,6 @@ public class MatchingController {
         return requestURI;
     }
 
-    @GetMapping("modify")
-    public String get2(@RequestParam Long boardNum, Criteria cri, HttpServletRequest req, HttpServletResponse resp, Model model) {
-        TrainerMatchingBoardDTO list = MatchingService.boardView(boardNum);
-        ProfileDTO profileInfo = MatchingService.getProfileInfo(list.getTrainerId());
-        ProfileDTO careerInfo = MatchingService.getCareerInfo(list.getTrainerId());
-        TrainerDTO trainerInfo = MatchingService.getTrainerInfo(list.getTrainerId());
-
-        model.addAttribute("cri",cri);
-        model.addAttribute("profileInfo",profileInfo);
-        model.addAttribute("careerInfo",careerInfo);
-        model.addAttribute("trainerInfo",trainerInfo);
-        model.addAttribute("list", list);
-
-        if (list == null) {
-            return "error";
-        }
-        return "redirect:/matching/matching_modify"+cri.getListLink()+"&boardNum="+list.getBoardNum();
-    }
 
 
 
@@ -324,5 +307,27 @@ public class MatchingController {
         }
     }
 
+    @PostMapping("map")
+    @ResponseBody
+    public String map() throws Exception {
+        ObjectNode json = JsonNodeFactory.instance.objectNode();
 
+        List<TrainerMatchingBoardDTO> boardList = MatchingService.getAllBoards(); // 예시일 뿐 실제 코드는 다를 수 있습니다.
+
+        // 가져온 데이터를 JSON으로 변환하여 JSON 객체에 담습니다.
+        ArrayNode arrayNode = json.putArray("boardList");
+        for (TrainerMatchingBoardDTO board : boardList) {
+            ObjectNode boardNode = JsonNodeFactory.instance.objectNode();
+            // 필요한 정보들을 boardNode에 추가합니다.
+            List<TrainerDTO> trainerInfo = MatchingService.getTrainerNickname(board.getTrainerId());
+            boardNode.put("TrainerAddr", board.getTrainerAddr());
+            for (TrainerDTO info : trainerInfo) {
+                boardNode.put("trainerNickname", info.getTrainerNickname());
+            }
+
+            arrayNode.add(boardNode);
+        }
+
+        return json.toString();
+    }
 }

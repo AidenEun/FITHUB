@@ -54,4 +54,6 @@ public interface TrainerMatchingMapper {
  int updateBoard(TrainerMatchingBoardDTO board);
 
  Long getTotal(Criteria cri);
+
+    List<TrainerMatchingBoardDTO> getAllBoards();
 }
