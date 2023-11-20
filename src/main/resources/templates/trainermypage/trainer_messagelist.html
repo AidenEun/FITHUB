@@ -49,7 +49,8 @@
 				<tr style="background-color: #fff;">
 					<td colspan="6">
 						<div style="float: left;">
-							<div id="messageAll" class="button cate now_cate message ctBtncolor" style="margin-right: 10px;">전체보기</div>
+							<input type="hidden" id="message" th:value="${message}">
+							<div id="messageAll" class="button cate not_cate message ctBtncolor" style="margin-right: 10px;">전체보기</div>
 							<div id="messageSend" class="button cate not_cate message ctBtncolor" style="margin-right: 10px;">보낸쪽지함</div>
 							<div id="messageReceive" class="button cate not_cate message ctBtncolor" style="margin-right: 10px;">받은쪽지함</div>
 							<div id="u_t_matching" class="button cate not_cate message ctBtncolor" style="margin-right: 10px;">매칭쪽지함</div>
@@ -171,6 +172,16 @@
 	const searchForm = $("#searchForm");
 	const pageForm = $("#pageForm");
 
+	const messageId = document.querySelector('#message');
+	const messageClass = document.querySelectorAll('.message');
+	window.onload = function() {
+		 messageClass.forEach(element => {
+			if(element.id == messageId.value){
+				element.classList.remove('not_cate');
+				element.classList.add('now_cate');
+			}
+		});
+	};
 	const cate = document.querySelectorAll('.cate');
 	let nowCate = document.querySelector('.now_cate');
 

@@ -202,6 +202,7 @@ public class UserMyPageController {
 
         System.out.println(cri);
         System.out.println("list:" + list);
+        model.addAttribute("message",message);
         model.addAttribute("list", list);
         model.addAttribute("pageMaker", new PageDTO(service.getMessageTotal(cri, userId, message), cri));
         model.addAttribute("newly_Message", service.getMessageNewlyList(list));
