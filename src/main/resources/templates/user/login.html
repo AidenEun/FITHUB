@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <!--
-	Future Imperfect by Pixelarity
+	Slate by Pixelarity
 	pixelarity.com | hello@pixelarity.com
 	License: pixelarity.com/license
 -->
@@ -9,417 +9,193 @@
 	<title>Fit Hub</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<link rel="stylesheet" th:href="@{/assets/css/login-header.css}" />
+	<link rel="stylesheet" th:href="@{/assets/css/index.css}" />
+	<noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
 	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
-	<link rel="stylesheet" th:href="@{/assets/css/login.css}" />
-	<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	<link rel="stylesheet" th:href="@{/assets/css/common.css}" />
+	<link rel="stylesheet" th:href="@{/assets/css/profileModal.css}">
 </head>
 <style>
-@font-face {
-    font-family: 'EASTARJET-Medium';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_231029@1.1/EASTARJET-Medium.woff2') format('woff2');
-    font-weight: 500;
-    font-style: normal;
-}
 
-* {
-    font-family: 'EASTARJET-Medium', sans-serif !important;
-}
+	#main {
+		padding: 0;
+	}
+
+	.wrapper {
+		padding: 0;
+		margin-bottom: 100px;
+	}
+
 	#header {
-  background-color: #5a8100 !important;
-}
+		background-color: #5a8100;
+	}
 
-#header nav > ul > li a {
-  color: white !important;
-}
+	#header nav > ul > li a {
+		color: white;
+	}
 
-#header h1 a {
-  color: white !important;
-}
+	#header h1 a {
+		color: white;
+	}
 
-#header .main ul li > a {
-  color: white !important;
+	#header .main ul li > a {
+		color: white;
+	}
 
-}
+	#footer {
+		background-color: #304400;
+	}
 
-#footer {
-  background-color: #304400;
-}
-</style>
+	a {
+		border-bottom: none;
+	}
 
-<!--<style>
+	.long_text {
+		width: 180px;
+		max-width: 180px;
+  		white-space: nowrap;
+  		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	#login-btn {
+		background: #FFFFFF;
+		border: 1px solid #5a8100;
+		border-radius: 4px;
+		color: #5a8100 !important;
+		box-shadow: 4px 4px 2px 0px rgb(203,211,177);
+	}
+
+	#login-btn:hover {
+		background: #5a8100;
+		border: 1px solid #5a8100;
+		border-radius: 4px;
+		color: #F7FAF5 !important;
+		box-shadow: 0 0 2px #5a8100;
+	}
+
 	#login-wrap{
-    width:600px;
-    height:400px;
-    margin:200px auto;
-}
-.login-body{
-	background-color: #fff;
-}
-.login-btn{
-    box-sizing: border-box;
-    cursor: pointer;
-}
-.login-tbl{
-	border-collapse: collapse; margin:0 auto;
-}
-.login-tbl > td,th{
-	padding: 10px; text-align: center;
-}
-.btn_area{
-    margin:0 auto;
-    display: flex;
-    justify-content: center;
-}
-.btn_area > *{
-    display:inline-block;
-    margin-left:10px;
-    margin-right:10px;
-}
-input[type=text], input[type=password]{
-    padding:10px;
-    width:200px;
-    margin-left:20px;
-    border: none;
-    border-bottom: 1px solid #ccc;
-    outline: none;
-    cursor: auto;
-}
-input[type=text]:focus, input[type=password]:focus{
-    border:1px solid rgb(0,200,80);
-}
-input[type=submit]{
-    margin-top:10px;
-    padding:10px 20px;
-    width:120px;
-    border:none;
-    background-color:#5a8100;
-    border-radius: 30px;
-    color:#fff;
-    font-weight: bold;
-    font-size: 18px;
-}
-.join-btn{
-    text-decoration:none;
-    box-sizing:border-box;
-    margin-top:10px;
-    padding:10px 20px;
-    width:120px;
-    border:none;
-    background-color:rgb(203,211,177);
-    border-radius: 30px;
-    color:black;
-    font-weight: bold;
-    font-size: 18px;
-}
-.login{
-    text-align: center;
-    margin-bottom: 50px;
-}
+		width:600px;
+		margin: 0 auto;
+	}
 
-#login-box{
-    box-sizing: border-box;
-    border: 1px solid #eee;
-}
+	.wrapper.sidebar > .inner > .content  {
+		width: 100%;
+	}
 
-.login-txt{
-    display: block;
-    font-size: 1em;
-    color: #777;
-    font-weight: normal;
-}
-</style>-->
+	table{
+		border-collapse: separate;
+	}
+
+	.btn_area {
+		display: flex;
+		margin-left: 140px;
+	}
+
+	#login-box {
+		width: 100%;
+		border: 1px solid #5a8100;
+		padding: 10px 50px;
+		border-radius: 4px;
+	}
+
+	#clear_btn1 {
+		position: relative;
+		top: -31px;
+		right: -450px;
+		cursor: pointer;
+		color: white;
+	}
+
+	#clear_btn2 {
+		position: relative;
+		top: -31px;
+		right: -450px;
+		cursor: pointer;
+		color: white;
+	}
+</style>
 <body class="is-preload">
 
-<!-- Wrapper -->
+	<!-- Header -->
+	<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin})}"></th:block>
 
-<!-- Header -->
-<header id="header" class="alt">
-	<h1 style="color: #fff;">
-		<a href="/">
-			Fit
-			<span>Hub</span>
-		</a>
-	</h1>
-	<nav class="links">
-		<ul>
-			<li class="menu-item"><a href="/info/info_list" style="color: white;">정보</a>
-				<ul class="submenu">
-					<li><a href="/info/info_list">전체</a></li>
-					<li><a href="/info/info_news">뉴스</a></li>
-					<li><a href="/info/info_food">식단</a></li>
-					<li><a href="/info/info_exercise">운동</a></li>
-					<li><a href="/info/info_tip">꿀팁</a></li>
+	<!-- Main -->
+	<section id="main" class="wrapper sidebar left">
 
-				</ul>
-			</li>
-			<li class="menu-item"><a href="/calorie/food_calorie_list" style="color: white;">칼로리</a>
-				<ul class="submenu">
-					<li><a href="/calorie/food_calorie_list">음식칼로리</a></li>
-					<li><a href="/calorie/exercise_calorie_list">운동칼로리</a></li>
-				</ul>
-			</li>
-			<li class="menu-item"><a href="/community/commu_list" style="color: white;">커뮤니티</a>
-				<ul class="submenu">
-					<li><a href="/community/commu_free">자유게시판</a></li>
-					<li><a href="/community/commu_food">식단</a></li>
-					<li><a href="/community/commu_exercise">운동</a></li>
-					<li><a href="/community/commu_gallery">갤러리</a></li>
-					<li><a href="/community/commu_qna">고민 Q&A</a></li>
+		<div class="header_box">
+			<header class="test12">
+				<p id="mainText"></p>
+				<p id="subText">로그인</p>
+			</header>
+		</div>
 
-				</ul>
-			</li>
-			<li class="menu-item"><a href="/matching/matching_list" style="color: white;">트레이너 매칭</a>
-				<ul class="submenu">
-					<li><a href="/matching/matching_list">트레이너매칭</a></li>
-				</ul>
-			</li>
-			<li class="menu-item"><a href="/challenge/list" style="color: white;">챌린지</a>
-				<ul class="submenu">
-					<li><a href="/info/submenu1">챌린지</a></li>
-				</ul>
-			</li>
-			<li class="menu-item"><a href="/product/product_list" style="color: white;">제품</a>
-				<ul class="submenu">
-					<li><a href="/info/submenu1">식품</a></li>
-					<li><a href="/info/submenu1">운동 도구</a></li>
-				</ul>
-			</li>
-		</ul>
-	</nav>
-	<nav class="main">
-		<ul>
-			<li id="login">
-				<th:block th:if="${session.loginUser == null}">
-					<a class="login" th:href="@{/user/login}" style="color: #fff;">Login</a>
-				</th:block>
-				<th:block th:if="${session.loginUser != null}">
-					<a class="login" th:href="@{/user/logout}" style="color: #fff;">logout</a>
+		<div class="inner">
+
+			<!-- Content -->
+			<div class="content">
+
+				<th:block th:if="${joinid != null and joinid != ''}">
+					<script th:inline="javascript">
+						window.onload = function(){
+                            alert("가입을 축하합니다!");
+                            document.getElementById("userId").value = /*[[${joinid}]]*/'';
+                            document.getElementById("userPw").focus();
+                        }
+					</script>
 				</th:block>
 
-				<a class="login" href="/usermypage/user_myinfo" style="color: #fff;">유저</a>
-				<a class="login" href="/trainermypage/trainer_modify" style="color: #fff;">트레</a>
-				<a class="login" href="/adminmypage/adminmypage_list" style="color: #fff;">관리</a>
-			</li>
-			<li class="search">
-				<a class="fa-search" href="#search" style="color: #fff;">Search</a>
-				<form id="search" method="get" action="/totalSearch">
-					<input type="text" name="keyword" placeholder="Search" />
-					<input type="hidden" value="1" name="pagenum">
-					<!--                        <input type="hidden" value="12" name="amount">-->
-				</form>
-			</li>
-			<li class="menu">
-				<a class="fa-bars" href="#menu" style="color: #fff;">Menu</a>
-			</li>
-		</ul>
-	</nav>
-</header>
-
-<!-- Menu -->
-<section id="menu">
-	<th:block th:if="${session.loginUser == null}">
-		<div class="side-not-login">
-			<p>로그인하세요</p>
-			<a th:href="@{/user/login}">로그인</a>
-		</div>
-	</th:block>
-	<th:block th:if="${session.loginUser != null}">
-		<div class="side_info">
-			<a href="/usermypage/user_myinfo">
-				<img src="images/profile_img.png" class="prof_img" width="102px" height="102px">
-			</a>
-			<div id="my_info">
-				<div>
-					<a href="/usermypage/user_myinfo">내 정보</a>
-					<th:block th:if="${session.loginUser != null}">
-						<a class="login" th:href="@{/user/logout}">로그아웃</a>
-					</th:block>
-				</div>
-				<a href="/usermypage/user_myinfo">
-					<!--<span>등급 / 닉네임(ID)</span>-->
-					<th:block th:if="${user !=null && loginUser != null}">
-						<span>등급</span>/<span th:text="${user.userNickname}"></span>(<span th:text="${user.userId}"></span>)
-					</th:block>
-				</a>
-			</div>
-			<div class="bar-container">
-				<progress class="progress-bar" value="0" max="7"></progress>
-				<input type="button" value="출석" class="att-btn">
-			</div>
-			<div class="point-container">
-				<div>나의 포인트</div>
-				<span>0p</span>
-			</div>
-			<hr>
-			<div id="tab-menu">
-				<div class="tab today-tab">오늘</div>
-				<div class="tab chall-tab">도전</div>
-				<div class="tab sub-tab">구독</div>
-				<div class="page-tab diary-tab">
-					<a href="/usermypage/user_diary">일기</a>
-				</div>
-				<div class="page-tab shop-tab">
-					<a href="/product/product_list">쇼핑</a>
-				</div>
-			</div>
-			<div id="tab-menu-container">
-				<div class="tab-view today-view">
-					<strong>나의 목표</strong>
-					<th:block th:if="${user !=null && loginUser != null}">
-						<p>목표체중 : <span th:text="${user.weightGoal}"></span></p>
-						<p>목표칼로리 : <span th:text="${user.caloriesGoal}"></span></p>
-						<strong>잔여칼로리: 현재칼로리/<span th:text="${user.caloriesGoal}"></span></strong>
-						<hr>
-					</th:block>
-					<p>섭취량</p>
-					<p>소비량</p>
-					<div id="meal-options">
-						<div class="brack-fst">아침</div>
-						<div class="lunch">점심</div>
-						<div class="dinner">저녁</div>
-						<div class="snack">간식</div>
-					</div>
-					<div id="tan-dan-ji-box">
-						<div class="today-breakfast">
-							<p>아침</p>
-							<p></p>
-							<p></p>
-							<p></p>
+				<div id="login-wrap">
+					<form name="loginForm" action="/user/login" method="post" onsubmit="return sendit()">
+						<div id="login-box">
+							<table class="login-tbl none_color_table">
+								<tr>
+									<td colspan="2" style="text-align: center; font-weight: bold;">
+										<br>
+										<span class="login-txt">아이디와 비밀번호를 입력해주세요.</span>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<input type="text" id="userid" name="userid" th:value="${joinid}" placeholder="아이디 입력">
+										<div id="clear_btn1">X</div>
+										<input type="password" id="userpw" name="userpw" placeholder="비밀번호 입력">
+										<div id="clear_btn2">X</div>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<div class="btn_area">
+											<input type="submit" value="로그인" id="login-btn" style="margin-right: 10px;">
+											<a href="/user/join" class="button btnColor">회원가입</a>
+										</div>
+									</td>
+								</tr>
+							</table>
 						</div>
-						<div class="today-lunch">
-							<p>점심</p>
-							<p></p>
-							<p></p>
-							<p></p>
-						</div>
-						<div class="today-dinner">
-							<p>저녁</p>
-							<p></p>
-							<p></p>
-							<p></p>
-						</div>
-						<div class="today-snack">
-							<p>간식</p>
-							<p></p>
-							<p></p>
-							<p></p>
-						</div>
-					</div>
-				</div>
-				<div class="tab-view chall-view">
-					<div class="my-chall">
-						<strong>나의 챌린지</strong><br>
-						<span class="active-tab">진행중</span>
-						<span class="finish-tab">종료</span>
-						<div id="chall-list">
-							<div class="active-chall-listView">
-								<p>진행중인 챌린지 list</p>
-							</div>
-							<div class="finish-chall-listView">
-								<p>종료된 챌린지 list</p>
-							</div>
-						</div>
-					</div>
-
-
-				</div>
-				<div class="tab-view sub-view">
-					<div class="sub-view-container">
-						<strong>나의 트레이너</strong>
-						<div class="my-sub">
-							<p>구독한 트레이너 list</p>
-						</div>
-					</div>
+					</form>
 				</div>
 			</div>
 		</div>
-	</th:block>
-	<div id="another-page">
-		<div class="bmi">
-			<a href="/sidebar/bmi">BMI</a>
-		</div>
-		<div class="health-center">
-			<a href="/sidebar/healthCenter">보건소</a>
-		</div>
-		<th:block  th:if="${session.user != null}">
-			<div class="trainer-apply">
-				<a href="/usermypage/user_applytrainer">트레이너 신청</a>
-			</div>
-		</th:block>
-	</div>
-</section>
+	</section>
 
-<th:block th:if="${joinid != null and joinid != ''}">
-	<script th:inline="javascript">
-		window.onload = function(){
-            alert("가입을 축하합니다!");
-            document.getElementById("userId").value = /*[[${joinid}]]*/'';
-            document.getElementById("userPw").focus();
-        }
-	</script>
-</th:block>
-<div id="login-wrap">
-	<form name="loginForm" action="/user/login" method="post" onsubmit="return sendit()">
-		<h2 class="login">로그인</h2>
-		<div id="login-box">
-			<table class="login-tbl">
-				<tr>
-					<td colspan="2" style="text-align: left;">
-						<span class="login-tit">로그인</span>
-						<br>
-						<span class="login-txt">아이디와 비밀번호를 입력해주세요.</span>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<input type="text" id="userid" name="userid" th:value="${joinid}" placeholder="아이디 입력">
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<input type="password" id="userpw" name="userpw" placeholder="비밀번호 입력">
-					</td>
-				</tr>
-				<tr>
-					<td colspan="2">
-						<div class="btn_area">
-							<input type="submit" value="로그인" class="login-btn">
-							<a href="/user/join" class="join-btn">회원가입</a>
-						</div>
-					</td>
-				</tr>
-			</table>
-		</div>
-	</form>
-</div>
-
-<!-- Footer -->
-<footer id="footer">
-	<div class="inner">
-		<p class="copyright">&copy; Untitled Corp. All rights reserved. Lorem ipsum dolor sit amet feugiat tempus aliquam.</p>
-		<ul class="menu">
-			<li><a href="#">Terms<span> of Use</span></a></li>
-			<li><a href="/adminmypage/adminmypage_list">Privacy<span> Policy</span></a></li>
-			<li><a href="#">Legal<span> Information</span></a></li>
-		</ul>
-	</div>
-</footer>
+	<!-- Footer -->
+	<th:block th:replace="~{layout/footer::footer}"></th:block>
 
 <!-- Scripts -->
-<script src="assets/js/jquery.min.js"></script>
-<script src="assets/js/jquery.dropotron.min.js"></script>
-<script src="assets/js/jquery.scrollex.min.js"></script>
-<script src="assets/js/browser.min.js"></script>
-<script src="assets/js/breakpoints.min.js"></script>
-<script src="assets/js/util.js"></script>
-<script src="assets/js/main.js"></script>
+<script th:src="@{/assets/js/jquery.min.js}"></script>
+<script th:src="@{/assets/js/jquery.dropotron.min.js}"></script>
+<script th:src="@{/assets/js/jquery.scrollex.min.js}"></script>
+<script th:src="@{/assets/js/browser.min.js}"></script>
+<script th:src="@{/assets/js/breakpoints.min.js}"></script>
+<script th:src="@{/assets/js/util.js}"></script>
+<script th:src="@{/assets/js/main.js}"></script>
 
+<script th:src="@{/assets/js/util_sub.js}"></script>
+<script th:src="@{/assets/js/main_sub.js}"></script>
 
-<script src="assets/js/util_sub.js"></script>
-<script src="assets/js/main_sub.js"></script>
-
-<script src="assets/js/sidebar.js"></script>
+<script th:src="@{/assets/js/sidebar.js}"></script>
+<script th:src="@{/assets/js/profile.js}"></script>
 <script>
 	function sendit(){
 		const loginForm = document.loginForm;
@@ -436,9 +212,42 @@ input[type=submit]{
 		}
 		return true;
 	}
+
+	document.addEventListener("DOMContentLoaded", function () {
+		var userid = document.getElementById("userid");
+		var clearButton1 = document.getElementById("clear_btn1");
+
+		userid.addEventListener("input", function () {
+			if (userid.value) {
+				clearButton1.style.color = "#444";
+			}
+			else {
+				clearButton1.style.color = "white";
+			}
+		});
+
+		clearButton1.addEventListener("click", function () {
+			userid.value = "";
+			clearButton1.style.color = "white";
+		});
+
+		var userpw = document.getElementById("userpw");
+		var clearButton2 = document.getElementById("clear_btn2");
+
+		userpw.addEventListener("input", function () {
+			if (userpw.value) {
+				clearButton2.style.color = "#444";
+			}
+			else {
+				clearButton2.style.color = "white";
+			}
+		});
+
+		clearButton2.addEventListener("click", function () {
+			userpw.value = "";
+			clearButton2.style.color = "white";
+		});
+	});
 </script>
-
-
-
 </body>
 </html>

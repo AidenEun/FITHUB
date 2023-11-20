@@ -36,6 +36,26 @@ function sendit() {
             return false;
         }
     }
+
+    const userNickname = joinForm.userNickname;
+    if (userNickname.value == "") {
+        alert("닉네임을 입력하세요!");
+        userNickname.focus();
+        return false;
+    }
+
+    const nicknameResult = document.getElementById("nicknameResult");
+    if (nicknameResult.innerHTML == "&nbsp;") {
+        alert("닉네임 중복검사를 진행해주세요!");
+        userNickname.focus();
+        return false;
+    }
+    if (nicknameResult.innerHTML == "중복된 닉네임이 있습니다!") {
+        alert("중복체크 통과 후 가입이 가능합니다!");
+        userNickname.focus();
+        return false;
+    }
+
     const userName = joinForm.userName;
     if (userName.value == "") {
         alert("이름을 입력하세요!");
@@ -53,6 +73,21 @@ function sendit() {
         alert("성별을 선택하세요!");
         return false;
     }
+
+    const userBirth = joinForm.userBirth;
+    if (userBirth.value == "") {
+        alert("생년월일을 입력하세요!");
+        userBirth.focus();
+        return false;
+    }
+
+    const userTel = joinForm.userTel;
+    if (userTel.value == "") {
+        alert("전화번호를 입력하세요!");
+        userTel.focus();
+        return false;
+    }
+
     const userMail = joinForm.userMail;
     if (!isValidEmail(userMail.value)) {
         alert("이메일 주소를 확인하세요!");
@@ -60,47 +95,71 @@ function sendit() {
         return false;
     }
 
-    const userNickname = joinForm.userNickname;
-    if (userNickname.value == "") {
-        alert("닉네임을 입력하세요!");
-        userNickname.focus();
+    const userWeight = joinForm.userWeight;
+    if (userWeight.value == "") {
+        alert("몸무게를 입력하세요!");
+        userWeight.focus();
         return false;
     }
+
+    const userHeight = joinForm.userHeight;
+    if (userHeight.value == "") {
+        alert("키를 입력하세요!");
+        userHeight.focus();
+        return false;
+    }
+
+    const weightGoal = joinForm.weightGoal;
+    if (weightGoal.value == "") {
+        alert("목표 체중을 입력하세요!");
+        weightGoal.focus();
+        return false;
+    }
+
+    const caloriesGoal = joinForm.caloriesGoal;
+    if (caloriesGoal.value == "") {
+        alert("목표 칼로리를 입력하세요!");
+        caloriesGoal.focus();
+        return false;
+    }
+    const user = {
+         userId: userId.value,
+         userPw: userPw.value,
+         userName: userName.value,
+         userGender: userGender[0].checked ? "M" : "F",
+         userMail: userMail.value,
+         userNickname: userNickname.value,
+         userTel: userTel.value,
+         userBirth: userBirth.value,
+         userWeight: userWeight.value,
+         userHeight: userHeight.value,
+         weightGoal: weightGoal.value,
+         caloriesGoal: caloriesGoal.value
+     };
+    console.log(user)
 
     fetch("/user/join", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-            userId: userId.value,
-            userPw: userPw.value,
-            userName: userName.value,
-            userGender: userGender[0].checked ? "M" : "F",
-            userMail: userMail.value,
-            userNickname: userNickname.value,
-            userTel: userTel.value,
-            userBirth: userBirth.value,
-            userWeight: userWeight.value,
-            userHeight: userHeight.value,
-            weightGoal: weightGoal.value,
-            caloriesGoal: caloriesGoal.value
-        }),
+        body: JSON.stringify(user)
     })
-        .then(response => response.json())
-        .then(data => {
-            // 서버에서의 응답에 따른 처리
-            console.log(data);
-            if (data.success) {
-                alert("가입이 완료되었습니다!");
-                // 가입이 성공했을 때 추가적인 처리가 필요하다면 여기에 작성
-            } else {
-                alert("가입에 실패했습니다. 다시 시도해주세요.");
-            }
-        })
-        .catch(error => {
-            console.error("가입 요청 중 에러 발생:", error);
-        });
+    .then(response => response.json())
+    .then((response) => {
+        console.log(response);
+        // 서버에서의 응답에 따른 처리
+        if (response) {
+            alert("가입이 완료되었습니다!");
+            // 가입이 성공했을 때 추가적인 처리가 필요하다면 여기에 작성
+            location.replace("/user/login")
+        } else {
+            alert("가입에 실패했습니다. 다시 시도해주세요.");
+        }
+    })
+    .catch(error => {
+        console.error("가입 요청 중 에러 발생:", error);
+    });
 
 //    joinForm.submit();
     return true;
@@ -267,7 +326,7 @@ function isValidEmail(email) {
 
 function checkNickname() {
     const xhr = new XMLHttpRequest();
-    const result = document.getElementById("result");
+    const nicknameResult = document.getElementById("nicknameResult");
     const userNickname = document.joinForm.userNickname;
     if(userNickname.value == ""){
         alert("닉네임을 입력하세요!")
@@ -303,6 +362,7 @@ function checkNickname() {
                 txt = txt.trim();
                 if(txt == 'O'){
                     /*result.innerHTML = "사용할 수 있는 아이디입니다!";*/
+                    nicknameResult.innerHTML = '';
                     alert("사용할 수 있는 닉네임입니다!");
                     document.joinForm.userName.focus();
                 }

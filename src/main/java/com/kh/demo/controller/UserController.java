@@ -44,11 +44,14 @@ public class UserController {
     public void showPolicyAgreePage() {}
 
     @PostMapping("join")
-    public String join(UserDTO user, RedirectAttributes ra) {
+    @ResponseBody
+    public String join(@RequestBody UserDTO user, RedirectAttributes ra) {
         if(service.join(user)) {
             ra.addAttribute("joinid",user.getUserId());
+            System.out.println("Controller");
+            return "true";
         }
-        return "redirect:/";
+        return "false";
     }
     @GetMapping("login")
     public void replaceLogin(){}

@@ -46,4 +46,7 @@ public class SideBarController {
     @GetMapping("healthCenter")
     public void healthCenter(){}
 
+    @GetMapping("join_test")
+    public void join_test(){}
+
 }
