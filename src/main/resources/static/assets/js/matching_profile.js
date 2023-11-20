@@ -65,7 +65,7 @@ function modal(data) {
             modalBox.find('.name a').text(data.trainerDTO.trainerNickname + '(' + receiveId + ')');
             modalBox.find('.message').attr('alt', receiveId);
             modalBox.find('.application_buttons').html(
-                                                        '<p class="trainer_profile"><a>프로필 자세히 보기</a></p>'
+                                                        '<p class="trainer_profile"><a href="/trainermypage/trainer_profile">프로필 자세히 보기</a></p>'
                                                     );
 
             modalBox.find('.profile_userId a').text(receiveId);
@@ -88,10 +88,9 @@ function modal(data) {
             modalBox.find('.name a').text(data.userDTO.userNickname + '(' + receiveId + ')');
             modalBox.find('.message').attr('alt', receiveId);
             modalBox.find('.application_buttons').html(
-                                                        '<p class="trainer_profile"><a>프로필 자세히 보기</a></p>'
+                                                        '<p class="trainer_profile"><a href="/trainermypage/trainer_profile">프로필 자세히 보기</a></p>'
                                                     );
 
-            modalBox.find('.application_buttons').html('<p class="trainer_profile"><a href="/trainermypage/trainer_profile?trainerId=trainerId">프로필 자세히 보기</a></p>');
             modalBox.find('.application_buttons').on('click', 'trainer_profile a', function(event) {
                 event.preventDefault();
                 window.location.href = $(this).attr('href');
