@@ -16,7 +16,7 @@ public interface TrainerMatchingMapper {
 
    void updateViewCount(Long boardNum);
 
-    List<TrainerMatchingBoardDTO> boardView(Long boardNum);
+    TrainerMatchingBoardDTO boardView(Long boardNum);
 
     boolean getUserByIdBoolean(String trainerNickname);
 

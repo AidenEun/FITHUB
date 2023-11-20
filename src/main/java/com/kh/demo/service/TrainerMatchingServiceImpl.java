@@ -79,8 +79,8 @@ public class TrainerMatchingServiceImpl implements TrainerMatchingService {
     };
 
     @Override
-    public List<TrainerMatchingBoardDTO> boardView(Long boardNum){
-        List<TrainerMatchingBoardDTO> list = tmmapper.boardView(boardNum);
+    public TrainerMatchingBoardDTO boardView(Long boardNum){
+        TrainerMatchingBoardDTO list = tmmapper.boardView(boardNum);
 
         return list;
     };

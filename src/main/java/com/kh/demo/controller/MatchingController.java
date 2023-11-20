@@ -74,21 +74,17 @@ public class MatchingController {
 
 
 
-    @GetMapping(value = {"/matching/matching_view", "/matching/matching_modify"})
+    @GetMapping(value={"matching_view","matching_modify"})
     public String get(@RequestParam Long boardNum, Criteria cri, HttpServletRequest req, HttpServletResponse resp, Model model) {
-        List<TrainerMatchingBoardDTO> list = MatchingService.boardView(boardNum);
+        TrainerMatchingBoardDTO list = MatchingService.boardView(boardNum);
+        ProfileDTO profileInfo = MatchingService.getProfileInfo(list.getTrainerId());
+        ProfileDTO careerInfo = MatchingService.getCareerInfo(list.getTrainerId());
+        TrainerDTO trainerInfo = MatchingService.getTrainerInfo(list.getTrainerId());
+
         model.addAttribute("cri",cri);
-
-        for (TrainerMatchingBoardDTO board : list) {
-
-            ProfileDTO profileInfo = MatchingService.getProfileInfo(board.getTrainerId());
-            ProfileDTO careerInfo = MatchingService.getCareerInfo(board.getTrainerId());
-            TrainerDTO trainerInfo = MatchingService.getTrainerInfo(board.getTrainerId());
-
-            model.addAttribute("profileInfo", profileInfo);
-            model.addAttribute("careerInfo",careerInfo);
-            model.addAttribute("trainerInfo",trainerInfo);
-        }
+        model.addAttribute("profileInfo",profileInfo);
+        model.addAttribute("careerInfo",careerInfo);
+        model.addAttribute("trainerInfo",trainerInfo);
         model.addAttribute("list", list);
 
         if (list == null) {
@@ -121,8 +117,6 @@ public class MatchingController {
         }
         return requestURI;
     }
-
-
 
 
 

@@ -19,7 +19,7 @@ public interface TrainerMatchingService {
 
     ResponseEntity<Resource> getThumbnailResource(String sysName) throws Exception;
 
-    List<TrainerMatchingBoardDTO> boardView(Long boardNum);
+    TrainerMatchingBoardDTO boardView(Long boardNum);
 
     void updateViewCount(Long boardNum);
 
