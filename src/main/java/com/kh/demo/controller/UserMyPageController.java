@@ -40,6 +40,10 @@ public class UserMyPageController {
     @Autowired
     private ChallengeService challService;
 
+    @Autowired
+    @Qualifier("TrainerServiceImpl")
+    private TrainerService tservice;
+
 
     @GetMapping("user_myinfo")
     public String user_myinfo(HttpServletRequest req, HttpServletResponse response, Model model) throws IOException {
@@ -284,9 +288,12 @@ public class UserMyPageController {
 
     @GetMapping("user_diary")
     public void replaceDiary(String loginUser, Model model) {
+        // 트레이너 랭킹
+        List<TrainerDTO> trainerTop5List= tservice.getTrainerTop5List();
+
         List<DiaryDTO> diaryList = service.getDiaryList(loginUser);
         model.addAttribute("diaryList", diaryList);
-
+        model.addAttribute("trainerTop5List",trainerTop5List);
     }
 
     @GetMapping("checklist")
@@ -298,7 +305,10 @@ public class UserMyPageController {
         //작성으로 이동
         if (service.checkList(choicedate, loginUser) == null) {
 //            System.out.println(choicedate);
+
             UserDTO user = serviceUser.getDetail(loginUser);
+            List<TrainerDTO> trainerTop5List= tservice.getTrainerTop5List();
+            model.addAttribute("trainerTop5List",trainerTop5List);
             model.addAttribute("regdate", choicedate);
             model.addAttribute("user", user);
             return "/usermypage/diaryWrite";
@@ -322,6 +332,9 @@ public class UserMyPageController {
         String loginUser = (String) session.getAttribute("loginUser");
         UserDTO user = serviceUser.getDetail(loginUser);
         DiaryDTO diary = service.getDiaryDetail(choicedate, loginUser);
+        // 트레이너 랭킹
+        List<TrainerDTO> trainerTop5List= tservice.getTrainerTop5List();
+        model.addAttribute("trainerTop5List",trainerTop5List);
 //        System.out.println(diary);
 
         //오늘의 비교 계산

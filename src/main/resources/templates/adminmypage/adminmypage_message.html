@@ -39,25 +39,25 @@
 		background-color: #ebede1 !important;
 	}
 
-	.button {
-		border-radius: 10px;
+	.header_box{
+		width: 100%;
+		background:
+			linear-gradient(to right, rgba(143, 167, 70, 0.7), rgba(143, 167, 70, 0.3)),
+			url('/images/admintop3.png');
+		background-size: cover;
+		background-position: top;
+		background-repeat: no-repeat;
 	}
 
-	.button:hover {
-		background-color: #8FA746 !important;
-	}
-
-	#result_execlist:hover{
-		transform: scaleX(1.05);
-		background-color: #5a8100;
-	}
-
-	#result_execlist:hover td{
-		color:white !important;
-	}
-
-	#result_execlist:hover a{
-		color:white !important;
+	.test12 {
+		width: 1080px;
+		height: 250px;
+		margin: 0 auto;
+		margin-bottom: 4em;
+		color: #fff;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
 	}
 </style>
 <body class="is-preload">
@@ -90,9 +90,9 @@
 
 			<!-- Content -->
 			<div class="content">
-				<div id="allMessage" class="button cate now_cate" style="margin-right: 10px;">전체</div>
-				<div id="byUserMessage" class="button cate not_cate" style="margin-right: 10px;">유저</div>
-				<div id="byTrainerMessage" class="button cate not_cate">트레이너</div>
+				<div id="allMessage" class="button cate now_cate ctBtncolor" style="margin-right: 10px;">전체</div>
+				<div id="byUserMessage" class="button cate not_cate ctBtncolor" style="margin-right: 10px;">유저</div>
+				<div id="byTrainerMessage" class="button cate not_cate ctBtncolor">트레이너</div>
 
 				<table style="text-align: center; margin-top: 20px;">
 					<thead>
@@ -107,25 +107,19 @@
 					<tbody id="data-table">
 						<tr th:if="${messageList != null and messageList.size() > 0}" th:each="messageBoard : ${messageList}" id="result_execlist">
 							<td class="long_text">
-								<a href="#">
-									[[${messageBoard.messageNum}]]
-								</a>
+								[[${messageBoard.messageNum}]]
 							</td>
 							<td class="long_text">
 								<a href="#" class="open">[[${messageBoard.sendId}]]</a>
 							</td>
 							<td class="long_text">
-								<a href="#">
-									[[${messageBoard.messageContent}]]
-								</a>
+								[[${messageBoard.messageContent}]]
 							</td>
 							<td class="long_text">
-								<a href="#">
-									[[${messageBoard.sendDate}]]
-								</a>
+								[[${messageBoard.sendDate}]]
 							</td>
 							<td class="long_text">
-								<a href="#" class="button messageOpen">처리하기</a>
+								<a href="#" class="button messageOpen btnColor">처리하기</a>
 							</td>
 						</tr>
 						<tr th:if="${messageList == null or messageList.size() == 0}">
@@ -291,11 +285,11 @@
 			if (data.messageList != null && data.messageList.length > 0) {
 				data.messageList.forEach(function (messageData) {
 					var row = $('<tr id="result_execlist">');
-					row.append('<td class="long_text"><a href="#" class="messageNum">' + messageData.messageNum + '</a></td>');
+					row.append('<td class="long_text"><span href="#" class="messageNum">' + messageData.messageNum + '</span></td>');
 					row.append('<td class="long_text"><a href="#" class="open messageUserId">' + messageData.sendId + '</a></td>');
-					row.append('<td class="long_text"><a href="#">' + messageData.messageContent + '</a></td>');
-					row.append('<td class="long_text"><a href="#">' + messageData.sendDate + '</a></td>');
-					row.append('<td class="long_text"><a href="#" class="messageOpen button">처리하기</a></td>');
+					row.append('<td class="long_text">' + messageData.messageContent + '</td>');
+					row.append('<td class="long_text">' + messageData.sendDate + '</td>');
+					row.append('<td class="long_text"><a href="#" class="messageOpen button btnColor">처리하기</a></td>');
 					tableBody.append(row);
 				});
 			}

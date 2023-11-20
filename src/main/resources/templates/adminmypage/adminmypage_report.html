@@ -40,25 +40,25 @@
 		background-color: #ebede1 !important;
 	}
 
-	.button {
-		border-radius: 10px;
+	.header_box{
+		width: 100%;
+		background:
+			linear-gradient(to right, rgba(143, 167, 70, 0.7), rgba(143, 167, 70, 0.3)),
+			url('/images/admintop3.png');
+		background-size: cover;
+		background-position: top;
+		background-repeat: no-repeat;
 	}
 
-	.button:hover {
-		background-color: #8FA746 !important;
-	}
-
-	#result_execlist:hover{
-		transform: scaleX(1.05);
-		background-color: #5a8100;
-	}
-
-	#result_execlist:hover td{
-		color:white !important;
-	}
-
-	#result_execlist:hover a{
-		color:white !important;
+	.test12 {
+		width: 1080px;
+		height: 250px;
+		margin: 0 auto;
+		margin-bottom: 4em;
+		color: #fff;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
 	}
 </style>
 <body class="is-preload">
@@ -91,10 +91,10 @@
 
 			<!-- Content -->
 			<div class="content">
-				<div id="allReport" class="button cate now_cate" style="margin-right: 10px;">전체</div>
-				<div id="byUserReport" class="button cate not_cate" style="margin-right: 10px;">유저</div>
-				<div id="byTrainerReport" class="button cate not_cate" style="margin-right: 10px;">트레이너</div>
-				<div id="doneReport" class="button cate not_cate">처리완료</div>
+				<div id="allReport" class="button cate now_cate ctBtncolor" style="margin-right: 10px;">전체</div>
+				<div id="byUserReport" class="button cate not_cate ctBtncolor" style="margin-right: 10px;">유저</div>
+				<div id="byTrainerReport" class="button cate not_cate ctBtncolor" style="margin-right: 10px;">트레이너</div>
+				<div id="doneReport" class="button cate not_cate ctBtncolor">처리완료</div>
 
 				<table style="text-align: center; margin-top: 20px;">
 					<thead>
@@ -110,30 +110,22 @@
 					<tbody id="data-table">
 						<tr th:if="${reportList != null and reportList.size() > 0}" th:each="reportBoard : ${reportList}" id="result_execlist">
 							<td class="long_text">
-								<a href="#">
-									[[${reportBoard.reportNum}]]
-								</a>
+								[[${reportBoard.reportNum}]]
 							</td>
 							<td class="long_text">
 								<a href="#" class="open">[[${reportBoard.userId}]]</a>
 							</td>
 							<td class="long_text">
-								<a href="#">
-									[[${reportBoard.reportBoardnum}]]
-								</a>
+								[[${reportBoard.reportBoardnum}]]
 							</td>
 							<td class="long_text">
-								<a href="#">
-									[[${reportBoard.boardCategoryName}]]
-								</a>
+								[[${reportBoard.boardCategoryName}]]
 							</td>
 							<td class="long_text">
-								<a href="#">
-									[[${reportBoard.reportDate}]]
-								</a>
+								[[${reportBoard.reportDate}]]
 							</td>
 							<td class="long_text">
-								<a href="#" class="reportOpen button">처리하기</a>
+								<a href="#" class="reportAdminOpen button btnColor">처리하기</a>
 							</td>
 						</tr>
 						<tr th:if="${reportList == null or reportList.size() == 0}">
@@ -205,7 +197,7 @@
 	cate.forEach(function(btn) {
 		btn.addEventListener('click', function() {
 			if (btn.classList.contains('now_cate')) {
-			 return;
+		 		return;
 			}
 
 			btn.classList.remove('not_cate');
@@ -305,22 +297,22 @@
 				data.reportList.forEach(function (reportData) {
 					if (reportData.reportYn === 'n') {
 						var row = $('<tr id="result_execlist">');
-						row.append('<td class="long_text"><a href="#" class="reportNum">' + reportData.reportNum + '</a></td>');
+						row.append('<td class="long_text"><span class="reportNum">' + reportData.reportNum + '</span></td>');
 						row.append('<td class="long_text"><a href="#" class="open">' + reportData.userId + '</a></td>');
-						row.append('<td class="long_text"><a href="#">' + reportData.reportBoardnum + '</a></td>');
-						row.append('<td class="long_text"><a href="#">' + reportData.boardCategoryName + '</a></td>');
-						row.append('<td class="long_text"><a href="#">' + reportData.reportDate + '</a></td>');
-						row.append('<td class="long_text"><a href="#" class="reportAdminOpen button">처리하기</a></td>');
+						row.append('<td class="long_text">' + reportData.reportBoardnum + '</td>');
+						row.append('<td class="long_text">' + reportData.boardCategoryName + '</td>');
+						row.append('<td class="long_text">' + reportData.reportDate + '</td>');
+						row.append('<td class="long_text"><a href="#" class="reportAdminOpen button btnColor">처리하기</a></td>');
 						tableBody.append(row);
 					}
 					else if (reportData.reportYn === 'y') {
 						var row = $('<tr id="result_execlist">');
-						row.append('<td class="long_text"><a href="#" class="reportNum">' + reportData.reportNum + '</a></td>');
+						row.append('<td class="long_text"><span class="reportNum">' + reportData.reportNum + '</span></td>');
 						row.append('<td class="long_text"><a href="#" class="open">' + reportData.userId + '</a></td>');
-						row.append('<td class="long_text"><a href="#">' + reportData.reportBoardnum + '</a></td>');
-						row.append('<td class="long_text"><a href="#">' + reportData.boardCategoryName + '</a></td>');
-						row.append('<td class="long_text"><a href="#">' + reportData.reportDate + '</a></td>');
-						row.append('<td class="long_text"><a href="#" class="reportAdminOpen button disabled">처리하기</a></td>');
+						row.append('<td class="long_text">' + reportData.reportBoardnum + '</td>');
+						row.append('<td class="long_text">' + reportData.boardCategoryName + '</td>');
+						row.append('<td class="long_text">' + reportData.reportDate + '</td>');
+						row.append('<td class="long_text"><a href="#" class="reportAdminOpen button disabled btnColor">처리하기</a></td>');
 						tableBody.append(row);
 					}
 				});

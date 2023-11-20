@@ -46,7 +46,7 @@ public class MatchingController {
     public void matching_list(Criteria cri, Model model) throws Exception {
         List<TrainerMatchingBoardDTO> list = MatchingService.getmatchingList(cri);
         model.addAttribute("list", list);
-
+        model.addAttribute("pageMaker",new PageDTO(MatchingService.getTotal(cri), cri));
        /* model.addAttribute("review_cnt_list",MatchingService.getReviewCntList(list));*/
     }
 
@@ -62,10 +62,10 @@ public class MatchingController {
 
     @PostMapping("matching_write")
     public String write(TrainerMatchingBoardDTO board, Criteria cri) throws Exception{
-        Long boardnum = 0l;
+        Long boardNum = 0l;
         if(MatchingService.regist(board)) {
-            boardnum = MatchingService.getLastNum(board.getTrainerId());
-            return "redirect:/matching/matching_view"+cri.getListLink()+"&boardnum="+boardnum;
+            boardNum = MatchingService.getLastNum(board.getTrainerId());
+            return "redirect:/matching/matching_view"+cri.getListLink()+"&boardNum="+boardNum;
         }
         else {
             return "redirect:/matching/matching_list"+cri.getListLink();
@@ -74,9 +74,10 @@ public class MatchingController {
 
 
 
-    @GetMapping("/matching/matching_view")
-    public String get(@RequestParam Long boardNum, HttpServletRequest req, HttpServletResponse resp, Model model) {
+    @GetMapping(value = {"/matching/matching_view", "/matching/matching_modify"})
+    public String get(@RequestParam Long boardNum, Criteria cri, HttpServletRequest req, HttpServletResponse resp, Model model) {
         List<TrainerMatchingBoardDTO> list = MatchingService.boardView(boardNum);
+        model.addAttribute("cri",cri);
 
         for (TrainerMatchingBoardDTO board : list) {
 
@@ -90,50 +91,75 @@ public class MatchingController {
         }
         model.addAttribute("list", list);
 
-
         if (list == null) {
             return "error";
         }
-
         HttpSession session = req.getSession();
-        model.addAttribute("list", list);
+        String loginUser = (String)session.getAttribute("loginUser");
+        String requestURI = req.getRequestURI();
+        if(requestURI.contains("/get")) {
+            Cookie[] cookies = req.getCookies();
+            boolean hasViewed = false;
 
-        // foodNum에 대한 조회수 증가 처리
-        Cookie[] cookies = req.getCookies();
-        boolean hasViewed = false;
-
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("view_board" + boardNum)) {
-                    hasViewed = true;
-                    break;
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if (cookie.getName().equals("view_board" + boardNum)) {
+                        hasViewed = true;
+                        break;
+                    }
                 }
             }
+            if (!hasViewed) {
+                // 조회수 증가
+                MatchingService.updateViewCount(boardNum);
+
+                // "view_food{foodNum}" 이름의 쿠키(유효기간: 3600초)를 생성해서 클라이언트 컴퓨터에 저장
+                Cookie cookie = new Cookie("view_food" + boardNum, "viewed");
+                cookie.setMaxAge(3600);
+                resp.addCookie(cookie);
+            }
         }
-
-        if (!hasViewed) {
-            // 조회수 증가
-            MatchingService.updateViewCount(boardNum);
-
-            // "view_food{foodNum}" 이름의 쿠키(유효기간: 3600초)를 생성해서 클라이언트 컴퓨터에 저장
-            Cookie cookie = new Cookie("view_food" + boardNum, "viewed");
-            cookie.setMaxAge(3600);
-            resp.addCookie(cookie);
-        }
-
-        return "matching/matching_view";
+        return requestURI;
     }
+
+
+
+
+
+    @PostMapping("matching_modify")
+    public String modify(TrainerMatchingBoardDTO board, Criteria cri, Model model) throws Exception {
+
+        if(MatchingService.modify(board)) {
+            return "redirect:/matching/matching_view"+cri.getListLink()+"&boardNum="+board.getBoardNum();
+        }
+        else {
+            return "redirect:/matching/view"+cri.getListLink();
+        }
+    }
+
+    @PostMapping("remove")
+    public String remove(Long boardNum, Criteria cri, HttpServletRequest req) {
+        HttpSession session = req.getSession();
+        String loginUser = (String)session.getAttribute("loginUser");
+        if(MatchingService.remove(loginUser, boardNum)) {
+            return "redirect:/matching/matching_list"+cri.getListLink();
+        }
+        else {
+            return "redirect:/matching/matching_list"+cri.getListLink()+"&boardNum="+boardNum;
+        }
+    }
+
 
     @PostMapping("profileModal")
     @ResponseBody
-    public String reportModal(@RequestParam("trainerNickname") String trainerNickname, HttpServletRequest req) throws Exception {
+    public String reportModal(@RequestParam("trainerNickname") String trainerNickname, HttpServletRequest req)throws Exception {
         ObjectNode json = JsonNodeFactory.instance.objectNode();
         Object userInfo = MatchingService.getUserByNickname(trainerNickname);
 
         HttpSession session = req.getSession();
         String loginUser_userId = (String) session.getAttribute("loginUser");
 
-        if (userInfo instanceof TrainerDTO) {
+        if  (userInfo instanceof TrainerDTO) {
             TrainerDTO trainerDTO = (TrainerDTO) userInfo;
             json.putPOJO("trainerDTO", trainerDTO);
             json.putPOJO("loginUser_userId", loginUser_userId);

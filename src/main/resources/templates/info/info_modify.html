@@ -31,16 +31,18 @@
 			border-bottom: none;
 		}
 		.info_category > .button{
-			border-radius: 10px;
-			height: 33px;
-			line-height: 33px;
-			background-color: rgb(203,211,177);
-			color: #5a8100 !important;
-			box-shadow: inset 0 0 0 1.5px #5a8100;
+			border-radius: 38px;
+			padding: 0 13px;
+			height: 42px;
+			line-height: 42px;
+			box-shadow: 0px 0px 5px rgb(203,211,177);
+			font-weight:100 !important;
 		}
 		.info_category .active {
-			background-color: #5a8100; /* 변경할 배경색 */
-			color: white !important; /* 변경할 텍스트색 */
+			background: #ebede1;
+			padding: 0 15px;
+			box-shadow: 0 0 2px 1px #5a8100;
+			font-weight:100 !important;
 		}
 		.write_table th {
 			text-align: center;
@@ -73,30 +75,6 @@
 		}
 		.button_table tr > td{
 			border: none;
-		}
-		.button_table tr > td > .button{
-			border: 1.5px solid #5a8100;
-			border-radius: 10px;
-			height: 35px;
-			line-height: 35px;
-			background-color: rgb(203,211,177);
-			color: #5a8100 !important;
-			box-shadow: none;
-		}
-		.button_table tr > td > .button:hover{
-			background-color: #5a8100;
-			color: white !important;
-		}
-		.write_table .button{
-			padding: 0;
-			border-radius: 10px;
-			height: 30px;
-			width: 85px;
-			vertical-align: middle;
-			line-height: 30px;
-			background-color: rgb(203,211,177);
-			color: #5a8100 !important;
-			box-shadow: none;
 		}
 		.at > a{
 			display: block;
@@ -197,9 +175,9 @@
 							</div>
 							<div style="float:right;">
 								<!-- <a href="javascript:upload('file9','')"> -->
-								<a class="button" th:href="'javascript:upload(\'file'+${files2.size()}+'\',\'\')'">파일 선택</a>
+								<a class="button btnColor small" th:href="'javascript:upload(\'file'+${files2.size()}+'\',\'\')'">파일 선택</a>
 								<!-- <a href="javascript:cancelFile('file9','')"> -->
-								<a class="button" th:href="'javascript:cancelFile(\'file'+${files2.size()}+'\',\'\')'">첨부 삭제</a>
+								<a class="button btnColor small" th:href="'javascript:cancelFile(\'file'+${files2.size()}+'\',\'\')'">첨부 삭제</a>
 							</div>
 						</td>
 					</tr>
@@ -210,10 +188,8 @@
 			<table class="button_table">
 				<tr align="right" valign="middle">
 					<td>
-						<a class="button" href="javascript:document.boardForm.submit()">수정</a>
-					</td>
-					<td>
-						<a class="button" th:href="${'/info/info_list'+cri.listLink}">목록</a> <!-- cri.listLink를 붙여 목록으로 돌아가기 -->
+						<a style="float: right;" class="button btnColor small" href="javascript:document.boardForm.submit()">수정완료</a>
+						<a style="float: right; margin-right: 10px;" class="button btnColor small" th:href="${'/info/info_list'+cri.listLink}">목록</a> <!-- cri.listLink를 붙여 목록으로 돌아가기 -->
 					</td>
 				</tr>
 			</table>

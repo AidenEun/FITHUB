@@ -1,0 +1,87 @@
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.demo.mapper.ProductBoardMapper">
+	<sql id="cri">
+		<if test="keyword != '' and type != ''">
+			<trim prefixOverrides="or" prefix="(" suffix=") and">
+				<foreach collection="typeArr" item="type">
+					or
+					<choose>
+						<when test="type == 'T'.toString()">
+							(board_title like('%${keyword}%'))
+						</when>
+						<when test="type == 'C'.toString()">
+							(board_content like('%${keyword}%'))
+						</when>
+						<when test="type == 'W'.toString()">
+							(admin_id like('%${keyword}%'))
+						</when>
+					</choose>
+				</foreach>
+			</trim>
+		</if>
+	</sql>
+
+	<insert id="insertBoard">
+		insert into product_board (category,board_title,board_content, prod_img, admin_id)
+		values(#{category},#{boardTitle},#{boardContent},#{prodImg},#{adminId})
+	</insert>
+
+	<update id="updateReadCount">
+		update product_board set view_cnt = view_cnt+1 where board_num = #{boardNum}
+	</update>
+
+	<update id="updateBoard">
+		update product_board set category=#{category}, board_title=#{boardTitle}, board_content=#{boardContent},update_date=now()
+		where board_num=#{boardNum}
+	</update>
+
+	<delete id="deleteBoard">
+		delete from product_board where board_num=#{boardNum}
+	</delete>
+
+	<select id="getList">
+		select * from product_board where
+		<include refid="cri"/>
+		<![CDATA[
+			0 < board_num and category=#{category} order by board_num desc limit #{startrow},#{amount}
+		]]>
+
+	</select>
+
+	<select id="getProdFoodList">
+		select * from product_board where
+		<include refid="cri"/>
+		<![CDATA[
+			0 < board_num and category='prodFood' order by board_num desc limit #{startrow},#{amount}
+		]]>
+	</select>
+
+	<select id="getProdExerList">
+		select * from product_board where
+		<include refid="cri"/>
+		<![CDATA[
+			0 < board_num and category='prodExer' order by board_num desc limit #{startrow},#{amount}
+		]]>
+	</select>
+
+	<select id="getTotal">
+		select count(*) from product_board where
+		<include refid="cri"/> board_num > 0
+	</select>
+	<select id="getLastNum">
+		select max(board_num) from product_board where admin_id=#{adminId}
+	</select>
+
+	<select id="findByNum">
+		select * from product_board where board_num=#{boardNum}
+	</select>
+
+</mapper>
+
+
+
+
+
+
+

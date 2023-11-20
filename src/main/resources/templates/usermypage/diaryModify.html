@@ -63,6 +63,10 @@
         padding: 0;
 
     }
+    table tbody tr:nth-child(2n + 1) {
+        background-color: white;
+
+    }
 
 
     /* MAIN IMG 게시글 상단 고정 */
@@ -116,6 +120,7 @@
     .input_area {
         display: flex;
         justify-content: space-between;
+        box-shadow: 0px 0px 4px rgb(203,211,177);
     }
 
     .list_area {
@@ -150,8 +155,12 @@
         background: url(/images/addbutton.png) no-repeat;
         background-size: 50% 50%;
         background-position: center;
-        /* box-shadow: inset 0 0 0 2px #5a810086; */
+        border-radius: 4px;
+        border: none;
+        /*box-shadow: 4px 4px 2px 0px rgb(203,211,177);*/
+        box-shadow: 0 0px 5px rgb(203,211,177) !important;
     }
+
 
     .food_area div:last-child input[type=button] {
         width: 100%;
@@ -165,15 +174,15 @@
         border-radius: 5px;
     }
 
-    /* 추가한 css */
-    table tbody tr:nth-child(2n + 1) {
-        background-color: white;
-
+    .food_area:hover{
+        border-radius: 4px;
+        box-shadow: 0 0 5px rgb(203,211,177);
+    }
+    .ex_area:hover{
+        border-radius: 4px;
+        box-shadow: 0 0 5px rgb(203,211,177);
     }
 
-    td div > input[type=button] {
-        box-shadow: inset 0 0 0 2px #e6e6e6;
-    }
 
     .food_area .list_area {
         text-align: center;
@@ -203,13 +212,40 @@
         text-align: right !important;
     }
 
-    .mychallBtn.viewchallBtn {
-        /*border: 1px solid #5a8100 !important;*/
-        color: #5a8100;
-        background-color: #ebede1;
-        box-shadow: inset 0 0 0 2px gray;
+    input[type=button].removeBtn{
+        box-shadow: 0 0 2px #5a8100;
+    }
+    input[type=button].removeBtn:hover{
+        background-color: #ebede1 !important;
+    }
+    /*작성, 글쓰기 버튼 컬러 수정*/
+    input[type=button].btnColor{
+        background: #FFFFFF;
+        border: 1px solid #5a8100;
+        border-radius: 4px;
+        color: #5a8100 !important;
+        box-shadow: 4px 4px 2px 0px rgb(203,211,177);
 
     }
+
+    input[type=submit].btnColor{
+        background: #FFFFFF;
+        border: 1px solid #5a8100;
+        border-radius: 4px;
+        color: #5a8100 !important;
+        box-shadow: 4px 4px 2px 0px rgb(203,211,177);
+
+    }
+
+    input[type=button].btnColor:hover{
+        background: #5a8100;
+        border: 1px solid #5a8100;
+        border-radius: 4px;
+        color: #F7FAF5 !important;
+        box-shadow: 0 0 2px #5a8100;
+
+    }
+
 
     .challcheckList.hiddenList {
         display: none;
@@ -226,6 +262,39 @@
     .input_area input[type=text]:nth-child(1) {
         text-align: center;
     }
+    input[type=button].noBtnColor{
+        background: #FFFFFF;
+        border: 1px solid #5a8100;
+        border-radius: 4px;
+        color: #5a8100 !important;
+        box-shadow: 0 0 5px rgb(203,211,177);
+        cursor: default;
+    }
+    /*.addline{*/
+    /*    border-radius: 4px;*/
+    /*    box-shadow: 0 0 5px rgb(203,211,177);*/
+    /*}*/
+    input[type=button].noBtnColor:hover{
+        background: #FFFFFF;
+        border: 1px solid #5a8100;
+        border-radius: 4px;
+        color: #5a8100 !important;
+        box-shadow: 0 0 5px rgb(203,211,177);
+        cursor: default;
+    }
+    #side_box .boardRanking .boardRanking_ranking input[type=button] {
+        border-radius: 38px !important;
+        border: 1px solid;
+        box-shadow: 4px 4px 2px 0px #5a8100;
+    }
+
+    #side_box .boardRanking .boardRanking_ranking input[type=button]:hover {
+        background-color: #ebede1;;
+    }
+    .boardRanking_ranking {
+        padding: 32px;
+        padding-left: 32px;
+    }
 
 </style>
 <body class="is-preload">
@@ -240,7 +309,7 @@
 
 <div class="header_box">
     <header class="test12">
-        <p id="mainText">마이페이지</p>
+        <p id="mainText">다이어리 수정</p>
         <p id="subText">다이어리</p>
     </header>
 </div>
@@ -250,16 +319,24 @@
         <section>
             <div class="boardRanking">
                 <div class="boardRanking_ranking">
+<!--                    <table style="width: 90%;">-->
+<!--                        <tr><td><a href="/usermypage/user_myinfo">내 정보 수정</a></td></tr>-->
+<!--                        <tr><td><a href="/usermypage/user_diary" style="color: #5a8100; font-size: 20px;">나의 다이어리</a></td></tr>-->
+<!--                        <tr><td><a href="/usermypage/user_challenge">나의 챌린지</a></td></tr>-->
+<!--                        <tr><td><a href="/usermypage/user_subtrainer">구독한 트레이너</a></td></tr>-->
+<!--                        <tr><td><a href="/usermypage/user_subbookmark">북마크</a></td></tr>-->
+<!--                        <tr><td><a href="/usermypage/user_boardlist">내 게시물</a></td></tr>-->
+<!--                        <tr><td><a href="/usermypage/user_messagelist">쪽지함</a></td></tr>-->
+<!--                        <tr><td><a href="/usermypage/user_applytrainer">트레이너 전환 신청</a></td></tr>-->
+<!--                    </table>-->
+                    <h3 class="side_ranking">트레이너 구독 순위</h3>
                     <table style="width: 90%;">
-                        <tr><td><a href="/usermypage/user_myinfo">내 정보 수정</a></td></tr>
-                        <tr><td><a href="/usermypage/user_diary" style="color: #5a8100; font-size: 20px;">나의 다이어리</a></td></tr>
-                        <tr><td><a href="/usermypage/user_challenge">나의 챌린지</a></td></tr>
-                        <tr><td><a href="/usermypage/user_subtrainer">구독한 트레이너</a></td></tr>
-                        <tr><td><a href="/usermypage/user_subbookmark">북마크</a></td></tr>
-                        <tr><td><a href="/usermypage/user_boardlist">내 게시물</a></td></tr>
-                        <tr><td><a href="/usermypage/user_messagelist">쪽지함</a></td></tr>
-                        <tr><td><a href="/usermypage/user_applytrainer">트레이너 전환 신청</a></td></tr>
+                        <tr th:each="trainerTop5List, dataStat: ${trainerTop5List}">
+                            <td th:text="${dataStat.index + 1}">1</td>
+                            <td class="open">[[${trainerTop5List.trainerId}]]</a></td>
+                        </tr>
                     </table>
+                    <input type="button" value="트레이너 보러가기" onclick="location.href='/matching/matching_list'">
                 </div>
             </div>
         </section>
@@ -321,7 +398,7 @@
                             <input type="button" class="opensearch">
                         </div>
                         <div class="list_area" id="bf_result" th:text="${listNameArr[0]}" readonly></div>
-                        <div><input type="button" value="전체 삭제" onclick="removebf()"></div>
+                        <div><input type="button" class="removeBtn" value="전체 삭제" onclick="removebf()"></div>
                     </td>
                     <td class="food_area">
                         <div class="lunch_input input_area">
@@ -332,7 +409,7 @@
                             <input type="button" class="opensearch">
                         </div>
                         <div type="text" class="list_area" id="lunch_result" th:text="${listNameArr[1]}" readonly></div>
-                        <div><input type="button" value="전체 삭제" onclick="removelunch()"></div>
+                        <div><input type="button" class="removeBtn" value="전체 삭제" onclick="removelunch()"></div>
                     </td>
                 </tr>
                 <tr>
@@ -346,7 +423,7 @@
                         </div>
                         <div type="text" class="list_area" id="dinner_result" th:text="${listNameArr[2]}"
                              readonly></div>
-                        <div><input type="button" value="전체 삭제" onclick="removedinner()"></div>
+                        <div><input type="button"  class="removeBtn" value="전체 삭제" onclick="removedinner()"></div>
                     </td>
                     <td class="food_area">
                         <div class="snack_input input_area">
@@ -357,7 +434,7 @@
                             <input type="button" class="opensearch">
                         </div>
                         <div type="text" class="list_area" id="snack_result" th:text="${listNameArr[3]}" readonly></div>
-                        <div><input type="button" value="전체 삭제" onclick="removesnack()"></div>
+                        <div><input type="button" class="removeBtn" value="전체 삭제" onclick="removesnack()"></div>
                     </td>
                 </tr>
                 <tr>
@@ -373,13 +450,13 @@
                         </div>
                         <div type="text" class="excrcise_list list_area" id="exer_result" th:text="${listNameArr[4]}"
                              readonly></div>
-                        <div><input type="button" value="전체 삭제" onclick="removeexer()"></div>
+                        <div><input type="button"  class="removeBtn" value="전체 삭제" onclick="removeexer()"></div>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2">
                         <div class="total_area" style="text-align: center">
-                            <input type="button" onclick="totalsum()" value="최종 칼로리" style="margin-right: 15px">
+                            <input type="button" class="btnColor" onclick="totalsum()" value="최종 칼로리" style="margin-right: 15px">
                             <input type="text" id="totalFood"
                                    th:value="${diary.foodCalories != null ? diary.foodCalories+'kcal' : '0kcal'}"
                                    readonly>
@@ -437,30 +514,30 @@
                     </td>
                 </tr>
 
-                <tr>
+                <tr class="addline">
                     <td>
                         <!--폼으로 보낼때 체크 눌렀지는 확인하는 유효성 검사 필요 -->
-                        <input type="button" value="챌린지 도장 찍기" class="mychallBtn viewchallBtn" id="mychallBtn"
+                        <input type="button" value="챌린지 도장 찍기" class="noBtnColor" id="mychallBtn"
                                onclick="checkMychall()">
                     </td>
                     <td>
                         <!--                        공백으로 비워두기-->
                     </td>
                 </tr>
-                <tr class="challcheckList" id="challList">
+                <tr class="challcheckList addline" id="challList">
                     <td colspan="2">
                         <input type="hidden" id="myINGChallNum" name="myINGChallNum">
                         <table id="mychallDataList">
                             <tbody id="chall-table">
                             <!-- <th:block th:if="${#strings.isEmpty(diary.myChallNum)}">-->
                             <th:block th:if="${ myChallINGDTOList == null and myChallINGDTOList.size() == 0}">
-                                <tr>
+                                <tr class="addline">
                                     <!-- 챌린지가 없을 때의 블록 -->
                                     <td style="text-align: center;">진행 중인 챌린지가 없습니다.</td>
                                 </tr>
                             </th:block>
                             <th:block th:if="${ myChallINGDTOList != null or myChallINGDTOList.size() > 0}">
-                                <tr class="mychall_area">
+                                <tr class="mychall_area addline">
                                     <td th:each="myINGChallDTO, dataStat : ${myChallINGDTOList}">
                                         <input type="checkbox" name="myChallNum" onClick="return false;"
                                                th:id="'challNum_' + ${myINGChallDTO.challNum}"
@@ -479,8 +556,8 @@
                 <tr style="text-align: right;">
                     <td colspan="2">
                         <div>
-                            <input type="button" value="취소" onclick="cancel()">
-                            <input type="button" value="수정 완료" onclick="sendit()">
+                            <input type="button" class="btnColor" value="취소" onclick="cancel()">
+                            <input type="button" class="btnColor" value="수정 완료" onclick="sendit()">
                         </div>
 
                     </td>
@@ -649,11 +726,6 @@
         if (diaryContent.value === "") {
             alert("내용을 입력해 해주세요!")
             diaryContent.focus();
-            return false;
-        }
-        if (mychallBtn.classList.contains("viewchallBtn") === false) {
-            alert("진행 중인 챌린지 현황을 확인해 주세요!")
-            mychallBtn.focus();
             return false;
         }
         if (confirm("최종 칼로리가 정말 맞습니까?") == true) {

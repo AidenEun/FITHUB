@@ -16,10 +16,6 @@
 
 </head>
 <style>
-	.button {
-		background-color: #8FA746 !important;
-	}
-
 	.long_text {
 		word-break: break-all;
 		white-space: normal;
@@ -50,21 +46,21 @@
 
 			<!-- 게시글 리스트 띄우는 테이블 -->
 			<table class="list" style="text-align: center;">
-					<tr>
+					<tr style="background-color: #fff;">
 						<td colspan="6">
 							<div style="float: left;">
-								<div id="messageAll" class="button cate now_cate message" style="margin-right: 10px;">전체보기</div>
-								<div id="messageSend" class="button cate not_cate message" style="margin-right: 10px;">보낸쪽지함</div>
-								<div id="messageReceive" class="button cate not_cate message" style="margin-right: 10px;">받은쪽지함</div>
-								<div id="u_t_matching" class="button cate not_cate message" style="margin-right: 10px;">매칭쪽지함</div>
+								<div id="messageAll" class="button cate now_cate message ctBtncolor" style="margin-right: 10px;">전체보기</div>
+								<div id="messageSend" class="button cate not_cate message ctBtncolor" style="margin-right: 10px;">보낸쪽지함</div>
+								<div id="messageReceive" class="button cate not_cate message ctBtncolor" style="margin-right: 10px;">받은쪽지함</div>
+								<div id="u_t_matching" class="button cate not_cate message ctBtncolor" style="margin-right: 10px;">매칭쪽지함</div>
 							</div>
 							<div style="float: right;">
 								쪽지 개수 : [[${pageMaker.total}]]
-								<a style="margin-left: 10px;" class="write button" th:href="${'/board/write'+pageMaker.cri.listLink}">쪽지 보내기</a>
+								<a style="margin-left: 10px;" class="write button small btnColor" th:href="${'/board/write'+pageMaker.cri.listLink}">쪽지 보내기</a>
 							</div>
 						</td>
 					</tr>
-					<tr class="special-row">
+					<tr class="special-row" style="background-color: #fff;">
 						<td class="long_text" style="width: 8%;">번호</td>
 						<td class="long_text" style="width: 8%;"></td>
 						<td class="long_text" style="width: 15%;">보낸사람</td>
@@ -94,7 +90,7 @@
 
 			</table>
 			<br>	<!-- 페이징 처리하는 테이블 -->
-			<table class="pagination">
+			<table class="pagination none_color_table">
 				<tr align="center" valign="middle">
 					<td>
 						<a class="changePage" th:if="${pageMaker.prev}" th:href="${pageMaker.startPage-1}">&lt;</a>
@@ -117,7 +113,7 @@
 						<option value="SR" th:selected="${pageMaker.cri.type == 'SR'}">보낸사람 또는 받은사람</option>
 					</select>
 					<input type="text" name="keyword" id="keyword" th:value="${pageMaker.cri.keyword}" style="margin-right:10px;">
-					<a href="#" class="button">검색</a>
+					<a href="#" class="button btnColor">검색</a>
 				</div>
 				<input type="hidden" value="1" name="pagenum">
 				<input type="hidden" value="10" name="amount">
@@ -144,7 +140,7 @@
 					<div class="boardRanking_ranking">
 						<table style="width: 90%;">
 							<tr><td><a href="/usermypage/user_myinfo">내 정보 수정</a></td></tr>
-							<tr><td><a href="/usermypage/user_diary">나의 다이어리</a></td></tr>
+<!--							<tr><td><a href="/usermypage/user_diary">나의 다이어리</a></td></tr>-->
 							<tr><td><a href="/usermypage/user_challenge">나의 챌린지</a></td></tr>
 							<tr><td><a href="/usermypage/user_subtrainer">구독한 트레이너</a></td></tr>
 							<tr><td><a href="/usermypage/user_subbookmark">북마크</a></td></tr>
@@ -181,6 +177,25 @@
 	const searchForm = $("#searchForm");
 	const pageForm = $("#pageForm");
 
+	const cate = document.querySelectorAll('.cate');
+	let nowCate = document.querySelector('.now_cate');
+
+	cate.forEach(function(btn) {
+		btn.addEventListener('click', function() {
+			if (btn.classList.contains('now_cate')) {
+			 return;
+			}
+
+			btn.classList.remove('not_cate');
+			btn.classList.add('now_cate');
+
+			nowCate.classList.remove('now_cate');
+			nowCate.classList.add('not_cate');
+
+			nowCate = btn;
+		});
+	});
+
 	$(".changePage").on("click",function(e){
 		//e(이벤트)의 기본 작동 막기
 		e.preventDefault();
@@ -191,6 +206,7 @@
 		pageForm.find("input[name='pagenum']").val(pagenum);
 		pageForm.submit();
 	});
+
 	$(".get").on("click",function(e){
 		e.preventDefault();
 		let boardnum = $(this).attr("href");
@@ -213,25 +229,6 @@
 		}
 		searchForm.submit();
 	}
-
-	const cate = document.querySelectorAll('.cate');
-	let nowCate = document.querySelector('.now_cate');
-
-	cate.forEach(function(btn) {
-		btn.addEventListener('click', function() {
-			if (btn.classList.contains('now_cate')) {
-			 return;
-			}
-
-			btn.classList.remove('not_cate');
-			btn.classList.add('now_cate');
-
-			nowCate.classList.remove('now_cate');
-			nowCate.classList.add('not_cate');
-
-			nowCate = btn;
-		});
-	});
 
 	const messageForm = $("#messageForm");
 	$(".message").on("click",function(e){

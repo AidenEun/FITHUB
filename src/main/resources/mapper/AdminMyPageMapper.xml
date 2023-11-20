@@ -33,7 +33,7 @@
             , user_mail
             , user_height
             , user_weight
-            , case when user_gender in ('M', 'Male') then '남자' when user_gender in ('F', 'Female') then '여자' else '기타' end user_gender
+            , case when user_gender in ('M', 'Male', '남성') then '남자' when user_gender in ('F', 'Female', '여성') then '여자' else '기타' end user_gender
             , user_birth
             , user_point
             , user_reportedcnt
@@ -54,7 +54,7 @@
             , trainer_addretc
             , trainer_height
             , trainer_weight
-            , case when trainer_gender in ('M', 'Male') then '남자' when trainer_gender in ('F', 'Female') then '여자' else '기타' end trainer_gender
+            , case when trainer_gender in ('M', 'Male', '남성') then '남자' when trainer_gender in ('F', 'Female', '여성') then '여자' else '기타' end trainer_gender
             , trainer_birth
             , trainer_part
             , trainer_career
@@ -496,7 +496,7 @@
 
     <insert id="insertMessageCancelSignUp">
         INSERT INTO message (message_content, send_id, receive_id)
-        VALUES (트레이너 신청이 거절되었습니다.', 'admin', #{userId})
+        VALUES ('트레이너 신청이 거절되었습니다.', 'admin', #{userId})
     </insert>
 
     <delete id="deleteSignUp">

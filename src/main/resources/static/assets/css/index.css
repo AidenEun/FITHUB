@@ -1829,6 +1829,7 @@ input, select, textarea {
 
 	.box {
 		border-color: #e6e6e6;
+		/*background-color: #5a8100;*/
 	}
 
 /* Button */
@@ -1847,7 +1848,7 @@ input, select, textarea {
 		-ms-transition: background-color 0.2s ease-in-out;
 		transition: background-color 0.2s ease-in-out;
 		border: 0;
-		border-radius: 0;
+		border-radius: 4px;
 		cursor: pointer;
 		display: inline-block;
 		font-family: "Raleway", Helvetica, sans-serif;
@@ -1921,7 +1922,7 @@ input, select, textarea {
 	.button {
 		background-color: transparent;
 		color: #444 !important;
-		box-shadow: inset 0 0 0 1px #444;
+		box-shadow: 0 0 2px #5a8100;
 	}
 
 		input[type="submit"]:hover,
@@ -1929,7 +1930,8 @@ input, select, textarea {
 		input[type="button"]:hover,
 		button:hover,
 		.button:hover {
-			background-color: #f6f6f6;
+			background-color: #5a8100;
+			color: #ffffff !important;
 		}
 
 		input[type="submit"]:active,
@@ -1947,7 +1949,7 @@ input, select, textarea {
 		.button.primary {
 			box-shadow: none;
 			background-color: #444;
-			color: #fff !important;
+			color: #fff;
 		}
 
 			input[type="submit"].primary:hover,
@@ -1955,7 +1957,9 @@ input, select, textarea {
 			input[type="button"].primary:hover,
 			button.primary:hover,
 			.button.primary:hover {
-				background-color: #515151;
+				/*background-color: #515151;*/
+				background-color: #5a8100;
+				color: #ffffff;
 			}
 
 			input[type="submit"].primary:active,
@@ -1964,6 +1968,7 @@ input, select, textarea {
 			button.primary:active,
 			.button.primary:active {
 				background-color: #373737;
+
 			}
 
 /* Features */
@@ -2050,7 +2055,8 @@ input, select, textarea {
 		}
 
 	.features > section:before {
-		background-color: #e6e6e6;
+		/*background-color: #e6e6e6;*/
+		background-color: #5a8100;
 	}
 
 /* Form */
@@ -2160,6 +2166,7 @@ input, select, textarea {
 			font-family: "Open Sans", Helvetica, sans-serif;
 			font-weight: 400;
 			text-transform: none;
+			border-radius:4px;
 		}
 
 			input[type="checkbox"] + label:before,
@@ -2174,6 +2181,7 @@ input, select, textarea {
 				text-transform: none !important;
 				font-family: 'Font Awesome 5 Free';
 				font-weight: 900;
+				border-radius:4px;
 			}
 
 			input[type="checkbox"] + label:before,
@@ -2272,8 +2280,10 @@ input, select, textarea {
 
 	input[type="checkbox"]:checked + label:before,
 	input[type="radio"]:checked + label:before {
-		background-color: #444;
-		border-color: #444;
+		/*background-color: #444;*/
+		background-color: #5a8100;
+		/*border-color: #444;*/
+		border-color: #5a8100;
 		color: #fff;
 	}
 
@@ -3063,7 +3073,8 @@ input, select, textarea {
 	}
 
 		table tbody tr:nth-child(2n + 1) {
-			background-color: #f6f6f6;
+			/*background-color: #f6f6f6;*/
+			background-color: #F7FAF5;
 		}
 
 	table th {

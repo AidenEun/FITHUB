@@ -11,6 +11,7 @@ public class Criteria {
 	private String keyword;
 	private int startrow;
 	private String boardCategory;
+	private String category;
 
 	public Criteria() {
 		this(1,10);
@@ -39,6 +40,20 @@ public class Criteria {
 		// fromPath("/board/write").queryParam("userid","apple")
 		//												//? 앞에 붙는 uri 문자열
 		UriComponentsBuilder builder = UriComponentsBuilder.fromPath("")
+				.queryParam("pagenum", pagenum)	//파라미터 추가
+				.queryParam("amount", amount)
+				.queryParam("keyword",keyword)
+				.queryParam("type", type);
+		return builder.toUriString();	//빌더가 가지고 있는 설정대로 문자열 만들기
+	}
+
+	public String getProdBoardListLink() {
+		// /board/write?userid=apple
+		// fromPath("/board/write").queryParam("userid","apple")
+		//												//? 앞에 붙는 uri 문자열
+		UriComponentsBuilder builder = UriComponentsBuilder.fromPath("")
+//				.queryParam("category", category)
+				.queryParam("category", "prodFood".equals(category) ? "prod_food" : "prod_exercise")
 				.queryParam("pagenum", pagenum)	//파라미터 추가
 				.queryParam("amount", amount)
 				.queryParam("keyword",keyword)

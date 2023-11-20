@@ -1,7 +1,7 @@
 <link xmlns:th="http://www.thymeleaf.org">
 <th:block th:fragment="header(loginUser,user,trainer,admin)">
     <style>
-        .submenu {
+.submenu {
    width: 150px;
    position: absolute;
    font-size: 14px;
@@ -23,6 +23,10 @@
    border-radius: 15px;
    padding:0;
  }
+
+#header nav > ul > li .submenu_black{
+    color: black !important;
+}
 
     </style>
 
@@ -67,44 +71,36 @@
             <ul>
                 <li class="menu-item"><a href="/info/info_list" style="color: white;">정보</a>
                     <ul class="submenu">
-                        <li><a href="/info/info_list">전체</a></li>
-                        <li><a href="/info/info_news">뉴스</a></li>
-                        <li><a href="/info/info_food">식단</a></li>
-                        <li><a href="/info/info_exercise">운동</a></li>
-                        <li><a href="/info/info_tip">꿀팁</a></li>
+                        <li><a class="submenu_black" href="/info/info_list">전체</a></li>
+                        <li><a class="submenu_black" href="/info/info_news">뉴스</a></li>
+                        <li><a class="submenu_black" href="/info/info_food">식단</a></li>
+                        <li><a class="submenu_black" href="/info/info_exercise">운동</a></li>
+                        <li><a class="submenu_black" href="/info/info_tip">꿀팁</a></li>
 
                     </ul>
                 </li>
                 <li class="menu-item"><a href="/calorie/food_calorie_list" style="color: white;">칼로리</a>
                     <ul class="submenu">
-                        <li><a href="/calorie/food_calorie_list">음식칼로리</a></li>
-                        <li><a href="/calorie/exercise_calorie_list">운동칼로리</a></li>
+                        <li><a class="submenu_black" href="/calorie/food_calorie_list">음식칼로리</a></li>
+                        <li><a class="submenu_black" href="/calorie/exercise_calorie_list">운동칼로리</a></li>
                     </ul>
                 </li>
                 <li class="menu-item"><a href="/community/commu_list" style="color: white;">커뮤니티</a>
                     <ul class="submenu">
-                        <li><a href="/community/commu_free">자유게시판</a></li>
-                        <li><a href="/community/commu_food">식단</a></li>
-                        <li><a href="/community/commu_exercise">운동</a></li>
-                        <li><a href="/community/commu_gallery">갤러리</a></li>
-                        <li><a href="/community/commu_qna">고민 Q&A</a></li>
+                        <li><a class="submenu_black" href="/community/commu_free">자유게시판</a></li>
+                        <li><a class="submenu_black" href="/community/commu_food">식단</a></li>
+                        <li><a class="submenu_black" href="/community/commu_exercise">운동</a></li>
+                        <li><a class="submenu_black" href="/community/commu_gallery">갤러리</a></li>
+                        <li><a class="submenu_black" href="/community/commu_qna">고민 Q&A</a></li>
 
                     </ul>
                 </li>
-                <li class="menu-item"><a href="/matching/matching_list" style="color: white;">트레이너 매칭</a>
+                <li class="menu-item"><a href="/matching/matching_list" style="color: white;">트레이너 매칭</a></li>
+                <li class="menu-item"><a href="/challenge/list" style="color: white;">챌린지</a></li>
+                <li class="menu-item"><a href="/product/prod_list" style="color: white;">제품</a>
                     <ul class="submenu">
-                        <li><a href="/matching/matching_list">트레이너매칭</a></li>
-                    </ul>
-                </li>
-                <li class="menu-item"><a href="/challenge/list" style="color: white;">챌린지</a>
-                    <ul class="submenu">
-                        <li><a href="/info/submenu1">챌린지</a></li>
-                    </ul>
-                </li>
-                <li class="menu-item"><a href="/product/product_list" style="color: white;">제품</a>
-                    <ul class="submenu">
-                        <li><a href="/info/submenu1">식품</a></li>
-                        <li><a href="/info/submenu1">운동 도구</a></li>
+                        <li><a class="submenu_black" href="/product/prod_food">식품</a></li>
+                        <li><a class="submenu_black" href="/product/prod_exercise">운동 도구</a></li>
                     </ul>
                 </li>
             </ul>

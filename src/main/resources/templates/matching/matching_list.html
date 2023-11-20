@@ -123,6 +123,7 @@
 	}
 #list_table{
 	display: flex;
+	width: 864px;
 }
 #list_info{
 width: 100%;
@@ -140,7 +141,12 @@ height:152.469px;
 	transform: scale(1.02);
     transition: transform 0.2s;
 }
-
+.search_area{
+	display: flex;
+}
+.search_area select{
+	width: 150px;
+}
 
 
 	.sidebar .ranking {
@@ -225,54 +231,60 @@ height:152.469px;
 							</td>
 						</tr>
 					</table>
-
-					<div id="map" style="width:100%;height:250px;"></div>
+					<div id="map" style="width:100%;height:350px;"></div>
 				<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9d457fe0b04b983671f48d03d84f2fdb"></script>
-				<script>
-					var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-                      mapOption = {
-                            center: new kakao.maps.LatLng(37.54699, 127.09598), // 지도의 중심좌표
-                            level: 4 // 지도의 확대 레벨
-                        };
+					<script>
+						var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+                            mapOption = {
+                                center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                                level: 3 // 지도의 확대 레벨
+                            };
 
-                    var map = new kakao.maps.Map(mapContainer, mapOption);
+                        var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 
-                    var imageSrc = '/images/map.png', // 마커이미지의 주소입니다
-                        imageSize = new kakao.maps.Size(64, 69), // 마커이미지의 크기입니다
-                        imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+                        // 마커를 표시할 위치와 title 객체 배열입니다
+                        var positions = [
+                            {
+                                title: '카카오',
+                                latlng: new kakao.maps.LatLng(33.450705, 126.570677)
+                            },
+                            {
+                                title: '생태연못',
+                                latlng: new kakao.maps.LatLng(33.450936, 126.569477)
+                            },
+                            {
+                                title: '텃밭',
+                                latlng: new kakao.maps.LatLng(33.450879, 126.569940)
+                            },
+                            {
+                                title: '근린공원',
+                                latlng: new kakao.maps.LatLng(33.451393, 126.570738)
+                            }
+                        ];
 
-                    // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
-                    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
-                        markerPosition = new kakao.maps.LatLng(37.54699, 127.09598); // 마커가 표시될 위치입니다
+                        // 마커 이미지의 이미지 주소입니다
+                        var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
 
-                    // 마커를 생성합니다
-                    var marker = new kakao.maps.Marker({
-                      position: markerPosition,
-                      image: markerImage // 마커이미지 설정
-                    });
+                        for (var i = 0; i < positions.length; i ++) {
 
-                    // 마커가 지도 위에 표시되도록 설정합니다
-                    marker.setMap(map);
+                            // 마커 이미지의 이미지 크기 입니다
+                            var imageSize = new kakao.maps.Size(24, 35);
 
-                    // 커스텀 오버레이에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-                    var content = '<div class="customoverlay">' +
-                        '  <a href="https://map.kakao.com/link/map/11394059" target="_blank">' +
-                        '    <span class="title">FITHUB</span>' +    //주소 이름 작성하는곳
-                        '  </a>' +
-                        '</div>';
+                            // 마커 이미지를 생성합니다
+                            var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
 
-                    // 커스텀 오버레이가 표시될 위치입니다
-                    var position = new kakao.maps.LatLng(37.54699, 127.09598);
-
-                    // 커스텀 오버레이를 생성합니다
-                    var customOverlay = new kakao.maps.CustomOverlay({
-                        map: map,
-                        position: position,
-                        content: content,
-                        yAnchor: 1
-                    });
-				</script>
+                            // 마커를 생성합니다
+                            var marker = new kakao.maps.Marker({
+                                map: map, // 마커를 표시할 지도
+                                position: positions[i].latlng, // 마커를 표시할 위치
+                                title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+                                image : markerImage // 마커 이미지
+                            });
+                        }
+					</script>
 			</div>
+
+		</div>
 
 			<div class="TrainerMatching_box">
 				<div class="matching_list">
@@ -280,7 +292,6 @@ height:152.469px;
 						<th:block th:if="${list != null and list.size() > 0}" th:each="board : ${list}">
 							<a class="get" th:href="${board.boardNum}">
 							<div id="list_table">
-
 								<table id="list_info">
 									<tr>
 										<th id="trainerNickname" colspan="3">
@@ -298,7 +309,7 @@ height:152.469px;
 										</td>
 									</tr>
 									<tr>
-										<td colspan="3">[[${board.boardTitle}]]</td>
+										<td colspan="4">[[${board.boardTitle}]]</td>
 									</tr>
 								</table>
 								<div class="profile-file">
@@ -306,32 +317,56 @@ height:152.469px;
 										<img style="width:100%; height:100%;" th:src="@{/matching/thumbnail (sysName=${board.profileInfo.sysName})}">
 									</th:block>
 								</div>
-
+								<th:block th:if="${list == null or list.size() == 0}">
+									<tr>
+										<td colspan="4" style="text-align: center; font-size: 20px;">등록된
+											게시글이 없습니다.</td>
+									</tr>
+								</th:block>
 							</div>
 							</a>
 						</th:block>
+						<br>
 						<table class="pagination">
 							<tr align="center" valign="middle">
 								<td>
-									<th:block th:if="${pageMaker != null}">
-										<a class="changePage" th:if="${pageMaker.prev}" th:href="${pageMaker.startPage-1}">&lt;</a>
-										<th:block th:each="i : ${#numbers.sequence(pageMaker.startPage,pageMaker.endPage)}">
-											<span class="nowPage" th:text="${i}" th:if="${pageMaker.cri.pagenum == i}"></span>
-											<a class="changePage" th:href="${i}" th:text="${i}" th:unless="${pageMaker.cri.pagenum == i}"></a>
-										</th:block>
-										<a class="changePage" th:if="${pageMaker.next}" th:href="${pageMaker.endPage+1}">&gt;</a>
+									<a class="changePage" th:if="${pageMaker.prev}" th:href="${pageMaker.startPage-1}">&lt;</a>
+									<th:block th:each="i : ${#numbers.sequence(pageMaker.startPage,pageMaker.endPage)}">
+										<span class="nowPage" th:text="${i}" th:if="${pageMaker.cri.pagenum == i}"></span>
+										<a class="changePage" th:href="${i}" th:text="${i}" th:unless="${pageMaker.cri.pagenum == i}"></a>
 									</th:block>
+									<a class="changePage" th:if="${pageMaker.next}" th:href="${pageMaker.endPage+1}">&gt;</a>
 								</td>
 							</tr>
 						</table>
+						<form id="searchForm" th:action="@{/matching/matching_list}">
+							<div class="search_area">
+								<select name="type">
+									<option value="" th:selected="${pageMaker.cri.type == null}">검색</option>
+									<option value="T" th:selected="${pageMaker.cri.type == 'T'}">제목</option>
+									<option value="C" th:selected="${pageMaker.cri.type == 'C'}">내용</option>
+									<option value="W" th:selected="${pageMaker.cri.type == 'W'}">작성자</option>
+									<option value="TC" th:selected="${pageMaker.cri.type == 'TC'}">제목 또는 내용</option>
+									<option value="TW" th:selected="${pageMaker.cri.type == 'TW'}">제목 또는 작성자</option>
+									<option value="TCW" th:selected="${pageMaker.cri.type == 'TCW'}">제목 또는 내용 또는 작성자</option>
+								</select>
+								<input type="text" name="keyword" id="keyword" th:value="${pageMaker.cri.keyword}">
+								<a href="#" class="button primary">검색</a>
+							</div>
+							<input type="hidden" value="1" name="pagenum">
+							<input type="hidden" value="10" name="amount">
+						</form>
 					</div>
-
-
 				</div>
 			</div>
 		</div>
 	</div>
-
+	<form name="pageForm" id="pageForm" th:action="@{/matching/matching_list}">
+		<input type="hidden" name="pagenum" th:value="${pageMaker.cri.pagenum}">
+		<input type="hidden" name="amount" th:value="${pageMaker.cri.amount}">
+		<input type="hidden" name="type" th:value="${pageMaker.cri.type}">
+		<input type="hidden" name="keyword" th:value="${pageMaker.cri.keyword}">
+	</form>
 	<!-- Sidebar -->
 
 	<section>
@@ -395,19 +430,15 @@ height:152.469px;
             pageForm.submit();
         });
 
-
-     $('.get').click(function(event) {
-        event.preventDefault();
-          var boardNum = $(this).attr('href');
-          console.log(boardNum);
-          // 다음 페이지 URL 구성
-          var Url = '/matching/matching_view?boardNum=' + boardNum;
-            console.log(Url);
-          // 페이지 이동
-          window.location.href = Url;
-
-      });
-
+	$(".get").on("click",function(e){
+		e.preventDefault();
+		let boardNum = $(this).attr("href");
+		let url=/*[[@{/matching/matching_view}]]*/'';
+		pageForm.append("<input type='hidden' name='boardNum' value='"+boardNum+"'>")
+		pageForm.attr("action",url);
+		pageForm.attr("method","get");
+		pageForm.submit();
+	})
 
         $("#searchForm a").on("click",sendit);
         function sendit(){

@@ -38,25 +38,25 @@
 		background-color: #ebede1 !important;
 	}
 
-	.button {
-		border-radius: 10px;
+	.header_box{
+		width: 100%;
+		background:
+			linear-gradient(to right, rgba(143, 167, 70, 0.7), rgba(143, 167, 70, 0.3)),
+			url('/images/admintop3.png');
+		background-size: cover;
+		background-position: top;
+		background-repeat: no-repeat;
 	}
 
-	.button:hover {
-		background-color: #8FA746 !important;
-	}
-
-	#result_execlist:hover{
-		transform: scaleX(1.05);
-		background-color: #5a8100;
-	}
-
-	#result_execlist:hover td{
-		color:white !important;
-	}
-
-	#result_execlist:hover a{
-		color:white !important;
+	.test12 {
+		width: 1080px;
+		height: 250px;
+		margin: 0 auto;
+		margin-bottom: 4em;
+		color: #fff;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
 	}
 </style>
 <body class="is-preload">
@@ -87,11 +87,11 @@
 
 			<!-- Content -->
 			<div class="content">
-				<div id="allBtn" class="button board_cate now_cate" style="margin-right: 10px;">전체</div>
-				<div id="newsBtn" class="button board_cate not_cate" style="margin-right: 10px;">뉴스</div>
-				<div id="exerBtn" class="button board_cate not_cate" style="margin-right: 10px;">운동 정보</div>
-				<div id="recipeBtn" class="button board_cate not_cate" style="margin-right: 10px;">식단 레시피</div>
-				<div id="tipBtn" class="button board_cate not_cate">꿀팁</div>
+				<div id="allBtn" class="button board_cate now_cate ctBtncolor" style="margin-right: 10px;">전체</div>
+				<div id="newsBtn" class="button board_cate not_cate ctBtncolor" style="margin-right: 10px;">뉴스</div>
+				<div id="exerBtn" class="button board_cate not_cate ctBtncolor" style="margin-right: 10px;">운동 정보</div>
+				<div id="recipeBtn" class="button board_cate not_cate ctBtncolor" style="margin-right: 10px;">식단 레시피</div>
+				<div id="tipBtn" class="button board_cate not_cate ctBtncolor">꿀팁</div>
 
 				<table style="text-align: center; margin-top: 20px;">
 					<thead>
@@ -107,35 +107,25 @@
 					<tbody id="data-table">
 						<tr th:if="${boardList != null and boardList.size() > 0}" th:each="adminBoard : ${boardList}" id="result_execlist">
 							<td class="long_text">
-								<a href="#">
-									[[${adminBoard.boardNum}]]
-								</a>
+								[[${adminBoard.boardNum}]]
 							</td>
 							<td class="long_text">
-								<a href="#">
-									[[${adminBoard.boardTitle}]]
-								</a>
+								[[${adminBoard.boardTitle}]]
 							</td>
 							<td class="long_text">
 								<a href="#" class="open">[[${adminBoard.userId}]]</a>
 							</td>
 							<td class="long_text">
-								<a href="#">
-									[[${adminBoard.viewCnt}]]
-								</a>
+								[[${adminBoard.viewCnt}]]
 							</td>
 							<td class="long_text">
-								<a href="#">
-									[[${adminBoard.likeCnt}]]
-								</a>
+								[[${adminBoard.likeCnt}]]
 							</td>
 							<td class="long_text">
-								<a href="#">
-									[[${adminBoard.regdate}]]
-									<th:block th:if="${adminBoard.regdate != adminBoard.updateDate}">
-										(수정됨)
-									</th:block>
-								</a>
+								[[${adminBoard.regdate}]]
+								<th:block th:if="${adminBoard.regdate != adminBoard.updateDate}">
+									(수정됨)
+								</th:block>
 							</td>
 						</tr>
 						<tr th:if="${boardList == null or boardList.size() == 0}">
@@ -310,11 +300,11 @@
             if (data.boardList != null && data.boardList.length > 0) {
                 data.boardList.forEach(function (boardData) {
                     var row = $('<tr id="result_execlist">');
-                    row.append('<td class="long_text"><a href="#">' + boardData.boardNum + '</a></td>');
-                    row.append('<td class="long_text"><a href="#">' + boardData.boardTitle + '</a></td>');
+                    row.append('<td class="long_text">' + boardData.boardNum + '</td>');
+                    row.append('<td class="long_text">' + boardData.boardTitle + '</td>');
                     row.append('<td class="long_text"><a href="#" class="open">' + boardData.userId + '</a></td>');
-                    row.append('<td class="long_text"><a href="#">' + boardData.viewCnt + '</a></td>');
-                    row.append('<td class="long_text"><a href="#">' + boardData.likeCnt + '</a></td>');
+                    row.append('<td class="long_text">' + boardData.viewCnt + '</td>');
+                    row.append('<td class="long_text">' + boardData.likeCnt + '</td>');
 
 					var regdateText = boardData.regdate;
 					if (boardData.regdate != boardData.updateDate) {

@@ -84,6 +84,33 @@
 			margin-top: 50px;
 			margin-bottom: 30px;
 		}
+		.button.more_view{
+			background: #FFFFFF;
+			border: 1px solid #5a8100;
+			border-radius: 4px;
+			color: #5a8100 !important;
+			box-shadow: 4px 4px 2px 0px rgb(203,211,177) !important;
+			font-weight: 700 !important;
+			height: 2.75em !important;
+			line-height: 2.75em !important;
+			padding:0 1.5em !important;
+			width: 86px !important;
+
+		}
+
+		.button.more_view:hover{
+			background: #5a8100;
+			border: 1px solid #5a8100;
+			border-radius: 4px;
+			color: #F7FAF5 !important;
+			box-shadow: 0 0 2px #5a8100 !important;
+
+		}
+
+		hr {
+		  border: none;
+		  border-top: 1px solid transparent; /* 투명한 선으로 만듭니다. */
+		}
 	</style>
 </head>
 <body class="is-preload">
@@ -138,7 +165,7 @@
 						</tr>
 					</th:block>
 				</div>
-				<a class="button" th:href="${'/info/info_news'}">더보기</a>
+				<a class="button more_view" th:href="${'/info/info_news'}">더보기</a>
 			</div>
 			<hr>
 			<div class="info_food">
@@ -172,7 +199,7 @@
 						</tr>
 					</th:block>
 				</div>
-				<a class="button" th:href="${'/info/info_food'}">더보기</a>
+				<a class="button more_view" th:href="${'/info/info_food'}">더보기</a>
 			</div>
 			<hr>
 			<div class="info_exer">
@@ -206,7 +233,7 @@
 						</tr>
 					</th:block>
 				</div>
-				<a class="button" th:href="${'/info/info_exercise'}">더보기</a>
+				<a class="button more_view" th:href="${'/info/info_exercise'}">더보기</a>
 			</div>
 			<hr>
 			<div class="info_tip">
@@ -240,7 +267,7 @@
 						</tr>
 					</th:block>
 				</div>
-				<a class="button" th:href="${'/info/info_tip'}">더보기</a>
+				<a class="button more_view" th:href="${'/info/info_tip'}">더보기</a>
 			</div>
 			<hr>
 			<form name="pageForm" id="pageForm" th:action="@{/info/info_list}">

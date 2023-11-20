@@ -13,6 +13,7 @@
     <link rel="stylesheet" th:href="@{/assets/css/sidebar.css}"/>
     <link rel="stylesheet" th:href="@{/assets/css/profileModal.css}"/>
     <link rel="stylesheet" th:href="@{/assets/css/common.css}"/>
+    <!--    <link rel="stylesheet" th:href="@{/assets/css/challNoticeBoardModal.css}">-->
     <noscript>
         <link rel="stylesheet" th:href="@{/assets/css/noscript.css}"/>
     </noscript>
@@ -21,7 +22,8 @@
     table {
         border-collapse: separate;
     }
-    table tr td{
+
+    table tr td {
         cursor: default;
     }
 
@@ -104,43 +106,16 @@
         padding: 0;
     }
 
-    .admin_board_list {
-        width: 240px;
-        height: 120px;
-        background-color: transparent;
-        color: #444 !important;
-        box-shadow: inset 0 0 0 1px #444;
-        margin-top: 20px;
-        text-align: center;
-        padding: 10px;
-        overflow: hidden;
-        white-space: normal;
-        text-overflow: ellipsis;
-        cursor: pointer;
-    }
-
-    .admin_board_list > div {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: normal;
-    }
 
     tr {
         background-color: white;
     }
 
-    .category_button {
-        margin-right: 10px;
-    }
 
     a {
         border-bottom: none;
     }
 
-    .admin_board_list_box {
-        display: flex;
-        justify-content: space-between;
-    }
 
     .long_text {
         width: 180px;
@@ -156,11 +131,14 @@
 
     .sidebar {
         padding-right: 10px;
+        position: relative;
     }
 
     .sidebar .ranking {
         margin-bottom: 69px;
     }
+
+
 
     .ranking table tr td {
         text-align: center;
@@ -182,51 +160,105 @@
     }
 
     #gnb {
-        display: flex;
-        justify-content: center;
+        /*display: flex;*/
+        /*justify-content: center;*/
         /*width: 70%;*/
-        margin-top: 80px;
+        margin-top: 10px;
+        margin-bottom: 23px;
     }
 
-    input[type=button] {
-        box-shadow: inset 0 0 0 2px #5a810086;
-    }
 
-    .btn_area.btn_category {
+    .btn_area {
         display: flex;
         justify-content: space-between;
+        padding: 0 70px 0 70px;
+        margin-bottom: 30px !important;
+        font-size: 14px;
+        font-weight:100 !important;
     }
 
-    .btn_area input[type=button] {
-        border-radius: 8px;
-        height: 45px;
-        line-height: 45px;
+    /*카테고리 버튼 css*/
+    .btn_area input[type=button].ctBtncolor {
+        border-radius: 38px;
+        padding: 0 13px;
+        height: 42px;
+        line-height: 42px;
+        box-shadow: 0px 0px 5px rgb(203,211,177);
+        font-weight:100 !important;
     }
 
-    .btn_area input[type=button]:hover {
-        /*background: #fafbf7 ;*/
+    .btn_area input[type=button].ctBtncolor:hover {
+        padding: 0 15px;
         background: #ebede1;
         box-shadow: none;
         transition: 0.5s ease-out;
-        /*border-top-left-radius: 20px;*/
-        /*border-top-right-radius: px;*/
+        font-weight:100 !important;
     }
 
-
-    .sidebar {
-        /*margin-top: 100px;*/
-    }
-
-    input[type=button].btn.viewNow {
+    input[type=button].btn.ctBtncolor.viewNow {
         background: #ebede1;
+        padding: 0 15px;
+        box-shadow: 0 0 2px 1px #5a8100;
+        font-weight:100 !important;
     }
+
+    /*더보기 버튼 컬러 수정*/
+
+    .more_view.btnColor{
+        background: #FFFFFF;
+        border: 1px solid #5a8100;
+        border-radius: 4px;
+        color: #5a8100 !important;
+        box-shadow: 4px 4px 2px 0px rgb(203,211,177);
+
+    }
+
+    .more_view.btnColor:hover{
+        background: #5a8100;
+        border: 1px solid #5a8100;
+        border-radius: 4px;
+        color: #F7FAF5 !important;
+        box-shadow: 0 0 2px #5a8100;
+
+    }
+
+    p>h2:after{
+        border-bottom: none;
+    }
+
 
     .pagination.hidden {
         display: none;
     }
-    .open{
+
+    .open {
         cursor: pointer;
     }
+    #miniTop{
+        margin-bottom: 28px;
+        font-size: 20px;
+        text-align: center;
+        /*background:#ebede1;*/
+        height: 37px;
+        line-height: 37px;
+    }
+    #sidebarRanking{
+        position: relative;
+    }
+
+    .fix{
+        /*position: fixed;*/
+        width: 206px;
+        top: 60px;
+        background-color: transparent;
+        margin: 0;
+        transition: 0.5s ease-out;
+    }
+    .highlight{
+        display: inline;
+        box-shadow: inset 0 -10px 0 #ebede1;
+    }
+
 
 </style>
 <body class="is-preload">
@@ -241,7 +273,7 @@
 <!-- Header -->
 <th:block
         th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin})}"></th:block>
-
+<!--<th:block th:replace="~{challenge/challNoticeGetModal::challNoticeGetModal()}"></th:block>-->
 <!-- Modal -->
 <th:block th:replace="~{layout/profileModal::profileModal}"></th:block>
 
@@ -257,49 +289,39 @@
 
     <div class="inner">
 
+        <!-- Content -->
+        <!--        <th:block th:if="${keyword == null or keyword == ''}">-->
+        <!--            <div>-->
+        <!--                <div class="search_box">-->
+        <!--                    <h2 th:text="검색어가 없습니다"></h2>-->
+        <!--                    <div class="search_content_box">-->
+        <!--                        <table>-->
+        <!--                            <tr>-->
+        <!--                                <td>검색어를 다시 입력하세요!</td>-->
+        <!--                            </tr>-->
+        <!--                        </table>-->
+        <!--                    </div>-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <div class="content" id="search_content" th:if="${keyword != null or keyword != ''}">
+            <div id="miniTop"><span style="color: #5a8100" class="highlight" th:text="'&nbsp&nbsp&nbsp&nbsp&quot;'+${keyword}+'&quot;'"></span><span class="highlight">&nbsp(으)로 검색된 게시물&nbsp&nbsp&nbsp&nbsp</span></div>
 
-    <header class="major">
-            <div>
-                <h2>통합 검색 ([[${boardAllCnt}]])</h2>
-                <p th:text="'['+${keyword}+']로 검색된 결과'"></p>
-            </div>
             <div id="gnb">
                 <div class="btn_area" style="margin-bottom: 20px;">
                     <input type="hidden" name="keyword" id="keyword" th:value="${keyword}">
-                    <input class="btn viewNow" type="button" id="allBtn" th:value="'전체&nbsp;'+'('+${boardAllCnt}+')'">
-                    <!--                </div>-->
-                    <!--                <div class="btn_area btn_category">-->
-                    <input type="button" class="btn" id="infoBtn" th:value="'정보&nbsp;('+${boardCntArr[0]}+')'"
+                    <input class="btn viewNow ctBtncolor" type="button" id="allBtn" th:value="'전체&nbsp;'+'('+${boardAllCnt}+')'">
+                    <input type="button" class="btn ctBtncolor" id="infoBtn" th:value="'정보&nbsp;('+${boardCntArr[0]}+')'"
                            onclick="infoView();">
-                    <input type="button" class="btn" id="tipBtn" th:value="'꿀팁&nbsp;('+${boardCntArr[1]}+')'"
+                    <input type="button" class="btn ctBtncolor" id="tipBtn" th:value="'꿀팁&nbsp;('+${boardCntArr[1]}+')'"
                            onclick="tipView();">
-                    <input type="button" class="btn" id="commuBtn" th:value="'커뮤니티&nbsp;('+${boardCntArr[2]}+')'"
+                    <input type="button" class="btn ctBtncolor" id="commuBtn" th:value="'커뮤니티&nbsp;('+${boardCntArr[2]}+')'"
                            onclick="commuView();">
-                    <input type="button" class="btn" id="matchingBtn" th:value="'트레이너 매칭&nbsp;('+${boardCntArr[3]}+')'"
+                    <input type="button" class="btn ctBtncolor" id="matchingBtn" th:value="'트레이너 매칭&nbsp;('+${boardCntArr[3]}+')'"
                            onclick="matchingView();">
-                    <input type="button" class="btn" id="challBtn" th:value="'챌린지&nbsp;('+${boardCntArr[4]}+')'"
+                    <input type="button" class="btn ctBtncolor" id="challBtn" th:value="'챌린지&nbsp;('+${boardCntArr[4]}+')'"
                            onclick="challView();">
                 </div>
             </div>
-        </header>
-
-
-        <!-- Content -->
-        <th:block th:if="${keyword == null or keyword == ''}">
-            <div>
-                <div class="search_box">
-                    <h2 th:text="검색어가 없습니다"></h2>
-                    <div class="search_content_box">
-                        <table>
-                            <tr>
-                                <td>검색어를 다시 입력하세요!</td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </th:block>
-        <div class="content" id="search_content" th:if="${keyword != null or keyword != ''}">
             <div class="search_box">
                 <h2 id="searchtitle" th:text="'정보&nbsp;('+${boardCntArr[0]}+')'"></h2>
                 <div class="search_content_box">
@@ -317,7 +339,7 @@
                         <tbody id="data-table">
                         <tr th:each="board, boardStat : ${infoSearchList}" th:if="${boardStat.index < 5}">
                             <td class="long_text">
-                                    [[${board.boardNum}]]
+                                [[${board.boardNum}]]
                             </td>
                             <td class="long_text">
                                 <a th:href="'/info/info_get?boardNum='+${board.boardNum}">
@@ -330,13 +352,13 @@
                                 </a>
                             </td>
                             <td class="long_text">
-                                    [[${board.viewCnt}]]
+                                [[${board.viewCnt}]]
                             </td>
                             <td class="long_text">
-                                    [[${board.likeCnt}]]
+                                [[${board.likeCnt}]]
                             </td>
                             <td class="long_text">
-                                    [[${board.regdate}]]
+                                [[${board.regdate}]]
                             </td>
                         </tr>
                         <th:block th:if="${infoSearchList == null or infoSearchList.size() == 0}">
@@ -351,7 +373,7 @@
                                 <td colspan="5" style="text-align: center;">
                                 </td>
                                 <td>
-                                    <a href="#" onclick="infoView();" class="button more_view">더보기</a>
+                                    <a href="#" onclick="infoView();" class="button more_view btnColor">더보기</a>
                                 </td>
                             </tr>
                         </th:block>
@@ -376,7 +398,7 @@
                         </thead>
                         <tr th:each="board, boardStat : ${tipSearchList}" th:if="${boardStat.index < 5}">
                             <td class="long_text">
-                                    [[${board.boardNum}]]
+                                [[${board.boardNum}]]
                             </td>
                             <td class="long_text">
                                 <a th:href="'/info/info_get?boardNum='+${board.boardNum}">
@@ -389,13 +411,13 @@
                                 </a>
                             </td>
                             <td class="long_text">
-                                    [[${board.viewCnt}]]
+                                [[${board.viewCnt}]]
                             </td>
                             <td class="long_text">
-                                    [[${board.likeCnt}]]
+                                [[${board.likeCnt}]]
                             </td>
                             <td class="long_text">
-                                    [[${board.regdate}]]
+                                [[${board.regdate}]]
                             </td>
                         </tr>
                         <th:block th:if="${tipSearchList == null or tipSearchList.size() == 0}">
@@ -410,7 +432,7 @@
                                 <td colspan="5" style="text-align: center;">
                                 </td>
                                 <td>
-                                    <a href="#"  onclick="tipView();" class="button more_view">더보기</a>
+                                    <a href="#" onclick="tipView();" class="button more_view">더보기</a>
                                 </td>
                             </tr>
                         </th:block>
@@ -433,7 +455,7 @@
                         </thead>
                         <tr th:each="board, boardStat : ${commuSearchList}" th:if="${boardStat.index < 5}">
                             <td class="long_text">
-                                    [[${board.boardNum}]]
+                                [[${board.boardNum}]]
                             </td>
                             <td class="long_text">
                                 <a th:href="'/community/commu_get?boardNum='+${board.boardNum}">
@@ -446,13 +468,13 @@
                                 </a>
                             </td>
                             <td class="long_text">
-                                    [[${board.viewCnt}]]
+                                [[${board.viewCnt}]]
                             </td>
                             <td class="long_text">
-                                    [[${board.likeCnt}]]
+                                [[${board.likeCnt}]]
                             </td>
                             <td class="long_text">
-                                    [[${board.regdate}]]
+                                [[${board.regdate}]]
                             </td>
                         </tr>
                         <th:block th:if="${commuSearchList == null or commuSearchList.size() == 0}">
@@ -490,7 +512,7 @@
                         </thead>
                         <tr th:each="board, boardStat : ${matchingSearchList}" th:if="${boardStat.index < 5}">
                             <td class="long_text">
-                                    [[${board.boardNum}]]
+                                [[${board.boardNum}]]
                             </td>
                             <td class="long_text">
                                 <a th:href="'/matching/matching_view?boardNum='+${board.boardNum}">
@@ -503,13 +525,13 @@
                                 </a>
                             </td>
                             <td class="long_text">
-                                    [[${board.viewCnt}]]
+                                [[${board.viewCnt}]]
                             </td>
                             <td class="long_text">
-                                    [[${board.likeCnt}]]
+                                [[${board.likeCnt}]]
                             </td>
                             <td class="long_text">
-                                    [[${board.regdate}]]
+                                [[${board.regdate}]]
                             </td>
                         </tr>
                         <th:block th:if="${matchingSearchList == null or matchingSearchList.size() == 0}">
@@ -544,15 +566,15 @@
                         </thead>
                         <tr th:each="board, boardStat : ${challSearchList}" th:if="${boardStat.index < 5}">
                             <td class="long_text">
-                                    [[${board.challNum}]]
+                                [[${board.challNum}]]
                             </td>
                             <td class="long_text">
-                                <a th:href="'/challenge/get?challNum='+${board.challNum}">
+                                <a href="/challenge/list">
                                     [[${board.challName}]]
                                 </a>
                             </td>
                             <td class="long_text">
-                                    [[${board.regdate}]]
+                                [[${board.regdate}]]
                             </td>
                         </tr>
                         <th:block th:if="${challSearchList == null or challSearchList.size() == 0}">
@@ -584,7 +606,7 @@
         <!-- Sidebar -->
         <div class="sidebar">
 
-            <section>
+            <section id="sidebarRanking">
                 <h3 class="side_ranking">인기 게시글 순위</h3>
                 <div class="ranking">
                     <div class="boardRanking_ranking">
@@ -627,12 +649,72 @@
 <script th:src="@{/assets/js/util.js}"></script>
 <script th:src="@{/assets/js/main.js}"></script>
 
+
 <script th:src="@{/assets/js/util_sub.js}"></script>
 <script th:src="@{/assets/js/main_sub.js}"></script>
 
+<!--<script th:src="@{/assets/js/challNoticeBoardModal.js}"></script>-->
 <script th:src="@{/assets/js/sidebar.js}"></script>
 <script th:src="@{/assets/js/profile.js}"></script>
 <script>
+
+    window.addEventListener('scroll', function(){
+        console.log(window.scrollY)
+    });
+
+    const lagAmount = 50;
+    const maxSpeed = 100;
+    const frameRate = 30;
+    const selector = document.getElementById("sidebarRanking");
+    //code
+    let scrollTop = 0;
+    let pinTop = 0;
+    let lastTime;
+    const updatePinPosition = (time) => {
+        if (!lastTime)
+            lastTime = time;
+        let delta = time - lastTime;
+        if (delta >= frameRate){
+            scrollTop = $(window).scrollTop();
+            var move = (scrollTop - pinTop) * delta / (lagAmount + delta);
+            var direction = move === 0 ? 0 : move / Math.abs(move);
+            pinTop = pinTop + Math.min( Math.abs(move), maxSpeed ) * direction;
+            $(selector).css('transform', `translateY(${-move}px`)
+            lastTime = time;
+        }
+        requestAnimationFrame(updatePinPosition);
+    }
+    requestAnimationFrame(updatePinPosition);
+
+    $(window).scroll(
+        function(){
+            //스크롤의 위치가 상단에서 450보다 크면
+            if($(window).scrollTop() > 200) {
+                /* if(window.pageYOffset >= $('원하는위치의엘리먼트').offset().top){ */
+                $('#sidebarRanking').addClass("fix");
+                $('#sidebarRanking').css("position","fixed")
+                // $('#sidebarRanking').remove("nofix");
+                //위의 if문에 대한 조건 만족시 fix라는 class를 부여함
+                console.log($('body').prop('scrollHeight')-($(window).scrollTop()));
+            // }else if($('body').prop('scrollHeight')-($(window).scrollTop())===850){
+            //     console.log($('body').prop('scrollHeight')-($(window).scrollTop()));
+            //     $('#sidebarRanking').removeClass("fix");
+                // $('#sidebarRanking').css({
+                //     "position": "absolute",
+                //     "bottom":"-170px"
+                // }
+                // );
+                //위의 if문에 대한 조건 아닌경우 fix라는 class를 삭제함
+            }else{
+                $('#sidebarRanking').removeClass("fix");
+                // $('#sidebarRanking').css({
+                //     "position": "fixed",
+                //     "bottom":"0",
+                //     "top":"60px"
+                // });
+            }
+        }
+    );
 
     $(".open").on("click", function (e) {
         e.preventDefault();
@@ -642,7 +724,7 @@
         modalBox.classList.add("active");
     });
 
-    $(document).on('click','a[href="#"]',function (e){
+    $(document).on('click', 'a[href="#"]', function (e) {
         e.preventDefault();
     });
 
@@ -732,7 +814,7 @@
         nowBtn.classList.add('viewNow');
 
         let keyword = document.getElementById("keyword").value;
-        loadPageChall("/searchpage/searchchall", 1, keyword,'chall');
+        loadPageChall("/searchpage/searchchall", 1, keyword, 'chall');
     }
 
     function loadPage(url, pageNum, keyword, currentCategory) {
@@ -743,7 +825,7 @@
             dataType: 'json',
             success: function (data) {
                 // 게시글 목록 업데이트
-                displayData(data.boardDTO);
+                displayData(data.boardDTO,currentCategory);
                 // 페이징 버튼 업데이트
                 displayPaging(data.pageDTO, currentCategory, keyword);
             },
@@ -770,6 +852,7 @@
             }
         });
     }
+
     function displaychallData(boardDTO) {
 
         var tableBody = $('#data-table');
@@ -801,9 +884,9 @@
 
             boardDTO.forEach(function (boardData) {
                 var row = $('<tr>');
-                row.append('<td class="long_text"><a href="#">' + boardData.challNum + '</a></td>');
-                row.append('<td class="long_text"><a href="#">' + boardData.challName + '</a></td>');
-                row.append('<td class="long_text"><a href="#">' + boardData.regdate + '</a></td>');
+                row.append('<td class="long_text">' + boardData.challNum + '</td>');
+                row.append('<td class="long_text"><a href="/challenge/list">' + boardData.challName + '</a></td>');
+                row.append('<td class="long_text">' + boardData.regdate + '/td>');
                 tableBody.append(row);
             });
             tableBody.before(tableHead);
@@ -812,7 +895,7 @@
         }
     }
 
-    function displayData(boardDTO) {
+    function displayData(boardDTO,currentCategory) {
         var tableBody = $('#data-table');
         var tableBody1 = $('#data-table1');
         var tableBody2 = $('#data-table2');
@@ -833,6 +916,16 @@
             boardDTO.forEach(function (boardData) {
                 var row = $('<tr>');
                 row.append('<td class="long_text"><a href="#">' + boardData.boardNum + '</a></td>');
+
+                if(currentCategory ==='info' || currentCategory ==='tip'){
+                    row.append('<td class="long_text"><a href="/info/info_get?boardNum=' + boardData.boardNum + '">' + boardData.boardTitle + '</a></td>');
+                }
+                else if(currentCategory === 'commu'){
+                    row.append('<td class="long_text"><a href="/community/commu_get?boardNum=' + boardData.boardNum + '">' + boardData.boardTitle + '</a></td>');
+                }
+                else if(currentCategory === 'matching'){
+                    row.append('<td class="long_text"><a href="/matching/matching_view?boardNum=' + boardData.boardNum + '">' + boardData.boardTitle + '</a></td>');
+                }
                 row.append('<td class="long_text"><a href="#">' + boardData.boardTitle + '</a></td>');
                 if (boardData.hasOwnProperty('trainerId')) {
                     row.append('<td class="long_text"><a href="#" class="open">' + boardData.trainerId + '</a></td>');
@@ -841,9 +934,9 @@
                 }
                 row.append('<td class="long_text"><a href="#">' + boardData.viewCnt + '</a></td>');
                 row.append('<td class="long_text"><a href="#">' + boardData.likeCnt + '</a></td>');
-                if(boardData.hasOwnProperty('updateDate')) {
+                if (boardData.hasOwnProperty('updateDate')) {
                     row.append('<td class="long_text"><a href="#">' + boardData.updateDate + '</a></td>');
-                }else{
+                } else {
                     row.append('<td class="long_text"><a href="#">' + boardData.regdate + '</a></td>');
                 }
                 tableBody.append(row);
@@ -869,16 +962,16 @@
         var searchtitle = $('#searchtitle');
 
         searchtitle.empty();
-        if(currentCategory === 'info'){
-            searchtitle.append("정보("+pageDTO.total+")");
-        }else if(currentCategory === 'tip'){
-            searchtitle.append("꿀팁("+pageDTO.total+")");
-        }else if(currentCategory === 'commu'){
-            searchtitle.append("커뮤니티("+pageDTO.total+")");
-        }else if(currentCategory === 'matching'){
-            searchtitle.append("트레이너 매칭("+pageDTO.total+")");
-        }else if(currentCategory === 'chall'){
-            searchtitle.append("챌린지("+pageDTO.total+")")
+        if (currentCategory === 'info') {
+            searchtitle.append("정보(" + pageDTO.total + ")");
+        } else if (currentCategory === 'tip') {
+            searchtitle.append("꿀팁(" + pageDTO.total + ")");
+        } else if (currentCategory === 'commu') {
+            searchtitle.append("커뮤니티(" + pageDTO.total + ")");
+        } else if (currentCategory === 'matching') {
+            searchtitle.append("트레이너 매칭(" + pageDTO.total + ")");
+        } else if (currentCategory === 'chall') {
+            searchtitle.append("챌린지(" + pageDTO.total + ")")
         }
 
         var str = '';

@@ -102,7 +102,7 @@
 							<span id="profilename" th:text="${profile.orgName}"></span>
 						</div>
 						<div class="thumbnail_img_bottom" style="float:right; margin-right: 100px;">
-							<a th:href="'javascript:profileupload(\'profile\',\''+${profile.sysName}+'\')'">사진변경</a>
+							<a th:href="'javascript:profileupload(\'profile\',\''+${profile.sysName}+'\')'" class="button btnColor">사진변경</a>
 							<input type="hidden" name="profileOrgname" th:value="${profile.orgName}">
 						</div>
 					</th:block>
@@ -115,17 +115,16 @@
 							<span id="profilename_no" style="display:none">선택된 파일 없음</span>
 						</div>
 						<div class="thumbnail_img_bottom">
-							<a th:href="'javascript:profileupload(\'profile\',\'\')'">사진변경</a>
-
+							<a th:href="'javascript:profileupload(\'profile\',\'\')'" class="button btnColor">사진변경</a>
 						</div>
 					</th:block>
 
 					</div>
 				</div>
 					<div class="thumbnail_div">
-						<table>
+						<table style="margin: auto 0; text-align: center;" class="none_color_table">
 							<tr>
-								<td>닉네임(아이디) : </td>
+								<td style="width: 20%;">닉네임(아이디) : </td>
 								<td>
 									<div class="inputBox">
 										<input  name="trainerNickname" type="text" id="trainerNickname" class="inputText" placeholder="닉네임" th:value="${trainer.trainerNickname}" >
@@ -166,8 +165,8 @@
 							<tr>
 								<td></td>
 								<td colspan="2">
-									<a href="javascript:document.profileForm.submit()" class="button primary small" >수정완료</a>
-									<a th:href="@{/trainermypage/trainer_myprofile}" class="button small">취소</a>
+									<a href="javascript:document.profileForm.submit()" class="button btnColor" >수정완료</a>
+									<a th:href="@{/trainermypage/trainer_myprofile}" class="button btnColor">취소</a>
 								</td>
 							</tr>
 						</table>
@@ -177,7 +176,7 @@
 
 				<table>
 					<tr>
-						<th>나의 소개	</th>
+						<td style="font-weight: bold;">나의 소개	</td>
 					</tr>
 					<tr>
 						<td>
@@ -188,9 +187,9 @@
 					</tr>
 				</table>
 
-			<table class="careerTable">
+			<table class="careerTable none_color_table">
 				<tr>
-					<th colspan="2">트레이너 자격증 및 경력사항</th>
+					<td colspan="2" style="font-weight: bold; background-color: #F7FAF5;">트레이너 자격증 및 경력사항</td>
 				</tr>
 				<tr th:class="${'r'+fileStat.index}" th:if="${files != null and files.size() > 0}" th:each="file : ${files}">
 					<th>파일 첨부[[${fileStat.index+1}]]</th>
@@ -213,7 +212,7 @@
 					</td>
 				</tr>
 				<tr th:class="${'r'+files.size()}">
-					<th>파일 첨부[[${files.size()+1}]]</th>
+					<td>파일 첨부[[${files.size()+1}]]</td>
 					<td th:class="${'file'+files.size()+'_cont'}">
 						<div style="float:left;">
 							<input type="file" name="files" th:id="${'file'+files.size()}" style="display:none">
@@ -231,61 +230,11 @@
 			</table>
 				</form>
 
-			<table>
-				<tr>
-					<td colspan="6">[[${trainer.trainerNickname}]]님의 게시글<span style="float:right;">글 개수 : [[${pageMaker.total}]]</span></td>
-				</tr>
-				<tr align="center" valign="middle">
-					<th width="8%">번호</th>
-					<th></th>
-					<th>제목</th>
-					<th width="15%">작성자</th>
-					<th width="17%">날짜</th>
-					<th width="10%">조회수</th>
-				</tr>
-				<tr th:if="${list != null and list.size()>0}" th:each="board : ${list}">
-					<td>[[${board.boardNum}]]</td>
-					<td>
-						<sup class="hot" th:if="${recent_reply[boardStat.index] == 'O'}">Hot</sup>
-						<sup class="new" th:if="${newly_board[boardStat.index] == 'O'}">New</sup>
-					</td>
-					<td>
-						<a class="get" th:href="${board.boardNum}">
-							[[${board.boardTitle}]]
-							<span class="reply_cnt" th:text="'['+${reply_cnt_list[boardStat.index]}+']'"></span>
-						</a>
-					</td>
-					<td>[[${board.userId}]]</td>
-					<td>
-						[[${board.regdate}]]
-					</td>
-					<td>[[${board.viewCnt}]]</td>
-				</tr>
-				<th:block th:if="${list == null or list.size() == 0}">
-					<tr>
-						<td colspan="6" style="text-align: center; font-size: 20px;">등록된
-							게시글이 없습니다.</td>
-					</tr>
-				</th:block>
-			</table>
-				<!-- 페이징 처리하는 테이블 -->
-			<table class="pagination">
-				<tr align="center" valign="middle">
-					<td>
-						<a class="changePage" th:if="${pageMaker.prev}" th:href="${pageMaker.startPage-1}">&lt;</a>
-						<th:block th:each="i : ${#numbers.sequence(pageMaker.startPage,pageMaker.endPage)}">
-							<span class="nowPage" th:text="${i}" th:if="${pageMaker.cri.pagenum == i}"></span>
-							<a class="changePage" th:href="${i}" th:text="${i}" th:unless="${pageMaker.cri.pagenum == i}"></a>
-						</th:block>
-						<a class="changePage" th:if="${pageMaker.next}" th:href="${pageMaker.endPage+1}">&gt;</a>
-					</td>
-				</tr>
-			</table>
 
 			<!--다이어리-->
 			<table>
 				<tr>
-					<td>[[${trainer.trainerNickname}]]님의 다이어리</td>
+					<td style="font-weight: bold;">[[${trainer.trainerNickname}]]님의 다이어리</td>
 				</tr>
 				<tr>
 					<td>
@@ -312,14 +261,14 @@
 				<div class="boardRanking">
 					<div class="boardRanking_ranking">
 						<table style="width: 90%;">
-							<tr><td><a href="/trainermypage/trainer_modify" style="color: #5a8100; font-size: 20px;">내 정보 수정</a></td></tr>
-							<tr><td><a href="/usermypage/user_diary">나의 다이어리</a></td></tr>
+							<tr><td><a href="/trainermypage/trainer_modify">내 정보 수정</a></td></tr>
+<!--							<tr><td><a href="/usermypage/user_diary">나의 다이어리</a></td></tr>-->
 							<tr><td><a href="/trainermypage/trainer_challenge">나의 챌린지</a></td></tr>
 							<tr><td><a href="/trainermypage/trainer_mysubscribeuser">구독 유저</a></td></tr>
 							<tr><td><a href="/trainermypage/trainer_subbookmark">북마크</a></td></tr>
 							<tr><td><a href="/trainermypage/trainer_boardlist">내 게시물</a></td></tr>
 							<tr><td><a href="/trainermypage/trainer_messagelist">쪽지함</a></td></tr>
-							<tr><td><a th:href="@{/trainermypage/trainer_myprofile (trainerId=${loginUser})}">트레이너 프로필</a></td></tr>
+							<tr><td><a th:href="@{/trainermypage/trainer_myprofile (trainerId=${loginUser})}" style="color: #5a8100; font-size: 20px;">트레이너 프로필</a></td></tr>
 						</table>
 					</div>
 				</div>

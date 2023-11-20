@@ -34,6 +34,7 @@ public class UserServiceImpl implements UserService{
         }
 
         user.setUserJoindate(LocalDateTime.now());
+        user.setUserPoint(0L);
         return umapper.insertUser(user) == 1;
     }
 
@@ -106,6 +107,29 @@ public class UserServiceImpl implements UserService{
         return userDTOList;
     }
 
+    @Override
+    public void updateUserAttendance(String userid) {
+        umapper.updateUserAttendance(userid);
+    }
 
+    @Override
+    public int getUserAttendance(String userid) {
+        return umapper.getUserAttendance(userid);
+    }
+
+    @Override
+    public void updateUserPoint(String userid) {
+        umapper.updateUserPoint(userid);
+    }
+
+    @Override
+    public Long getUserPoint(String userid) {
+        return umapper.getUserPoint(userid);
+    }
+
+    @Override
+    public void resetUserAttendance(String userid) {
+        umapper.resetUserAttendance(userid);
+    }
 
 }

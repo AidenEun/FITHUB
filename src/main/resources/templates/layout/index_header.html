@@ -101,10 +101,10 @@
                         <li><a href="/info/submenu1">챌린지</a></li>
                     </ul>
                 </li>
-                <li class="menu-item"><a href="/product/product_list" style="color: white;">제품</a>
+                <li class="menu-item"><a href="/product/prod_list" style="color: white;">제품</a>
                     <ul class="submenu">
-                        <li><a href="/info/submenu1">식품</a></li>
-                        <li><a href="/info/submenu1">운동 도구</a></li>
+                        <li><a href="/product/prod_food">식품</a></li>
+                        <li><a href="/product/prod_exercise">운동 도구</a></li>
                     </ul>
                 </li>
             </ul>
@@ -184,7 +184,9 @@
                 </div>
                 <div class="point-container">
                     <div>나의 포인트</div>
-                    <span>0p</span>
+                    <th:block th:if="${user != null && loginUser != null}">
+                        <span id="pointDisplay" th:text="${user.userPoint != null ? user.userPoint : 0} + 'p'"></span>
+                    </th:block>
                 </div>
                 <hr>
                 <div id="tab-menu">
@@ -217,25 +219,25 @@
                         </div>
                         <div id="tan-dan-ji-box">
                             <div class="today-breakfast">
-                                <p>아침</p>
+                                <p></p>
                                 <p></p>
                                 <p></p>
                                 <p></p>
                             </div>
                             <div class="today-lunch">
-                                <p>점심</p>
+                                <p></p>
                                 <p></p>
                                 <p></p>
                                 <p></p>
                             </div>
                             <div class="today-dinner">
-                                <p>저녁</p>
+                                <p></p>
                                 <p></p>
                                 <p></p>
                                 <p></p>
                             </div>
                             <div class="today-snack">
-                                <p>간식</p>
+                                <p></p>
                                 <p></p>
                                 <p></p>
                                 <p></p>

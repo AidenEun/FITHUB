@@ -46,10 +46,6 @@
 		float: right;
 		margin-right: 10px;
 	}
-
-	.button {
-		background-color: #8FA746 !important;
-	}
 </style>
 <body class="is-preload">
 
@@ -137,8 +133,8 @@
 					</tr>
 				</table>
 				<div class="btn_box">
-					<a href="javascript:document.myuserForm.submit()" class="button" >수정완료</a>
-					<a th:href="@{/usermypage/user_myinfo}" class="button">취소</a>
+					<a href="javascript:document.myuserForm.submit()" class="button btnColor small" >수정완료</a>
+					<a th:href="@{/usermypage/user_myinfo}" class="button btnColor small">취소</a>
 				</div>
 			</form>
 
@@ -152,7 +148,7 @@
 					<div class="boardRanking_ranking">
 						<table style="width: 90%;">
 							<tr><td><a href="/usermypage/user_myinfo" style="color: #5a8100; font-size: 20px;">내 정보 수정</a></td></tr>
-							<tr><td><a href="/usermypage/user_diary">나의 다이어리</a></td></tr>
+<!--							<tr><td><a href="/usermypage/user_diary">나의 다이어리</a></td></tr>-->
 							<tr><td><a href="/usermypage/user_challenge">나의 챌린지</a></td></tr>
 							<tr><td><a href="/usermypage/user_subtrainer">구독한 트레이너</a></td></tr>
 							<tr><td><a href="/usermypage/user_subbookmark">북마크</a></td></tr>

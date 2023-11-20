@@ -7,11 +7,15 @@ import com.kh.demo.service.AdminService;
 import com.kh.demo.service.TrainerService;
 import com.kh.demo.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 
 
 @Controller
@@ -100,4 +104,27 @@ public class UserController {
             return "O";
         }
     }
+
+    @GetMapping("attend")
+    @ResponseBody
+    public ResponseEntity<Integer> attend(@RequestParam String userid) {
+        try {
+            // 출석 버튼을 클릭할 때마다 출석 및 포인트 증가
+            service.updateUserAttendance(userid);
+            service.updateUserPoint(userid);
+
+            // 현재 포인트 가져오기
+            Long userPoint = service.getUserPoint(userid);
+
+            if (userPoint != null) {
+                return ResponseEntity.ok(userPoint.intValue());
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            // 예외 처리
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 }
+

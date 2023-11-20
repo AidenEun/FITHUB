@@ -41,14 +41,14 @@ function signUpModalDom(data) {
     tableBody.empty();
 
     var row = $('<tr style="text-align: center;">');
-    row.append('<td class="long_text"><a href="#">' + data.signUpDTO.signupNum + '</a></td>');
+    row.append('<td class="long_text">' + data.signUpDTO.signupNum + '</td>');
     row.append('<td class="long_text"><a href="#" class="open">' + data.signUpDTO.userId + '</a></td>');
-    row.append('<td class="long_text"><a href="#">' + data.signUpDTO.trainerPart + '</a></td>');
-    row.append('<td class="long_text"><a href="#">' + data.signUpDTO.trainerCareer + '</a></td>');
-    row.append('<td class="long_text"><a href="#">' + data.signUpDTO.trainerContent + '</a></td>');
-    row.append('<td class="long_text"><a href="#">' + data.userDTO.userAge + '</a></td>');
-    row.append('<td class="long_text"><a href="#">' + data.userDTO.userGender + '</a></td>');
-    row.append('<td class="long_text"><a href="#">' + data.userDTO.userReportedcnt + '</a></td>');
+    row.append('<td class="long_text">' + data.signUpDTO.trainerPart + '</td>');
+    row.append('<td class="long_text">' + data.signUpDTO.trainerCareer + '</td>');
+    row.append('<td class="long_text">' + data.signUpDTO.trainerContent + '</td>');
+    row.append('<td class="long_text">' + data.userDTO.userAge + '</td>');
+    row.append('<td class="long_text">' + data.userDTO.userGender + '</td>');
+    row.append('<td class="long_text">' + data.userDTO.userReportedcnt + '</td>');
     tableBody.append(row);
 
     var newRow = $('<tr style="text-align: center;">');
@@ -58,7 +58,7 @@ function signUpModalDom(data) {
     // innerDiv에 CSS 스타일 추가
     innerDiv.css({
         'display': 'flex',
-        'justify-content': 'center',
+        'justify-content': 'space-between',
         'align-items': 'center',
         'width': '100%'
     });
@@ -133,6 +133,7 @@ document.querySelector('.cancelSignUpButton').addEventListener('click', function
                 location.reload();
             } else {
                 window.alert('트레이너 거절 실패. 다시 시도하세요.');
+                location.reload();
             }
         })
         .catch(error => {

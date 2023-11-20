@@ -39,22 +39,22 @@
 
 		<!-- Content -->
 		<div class="content">
-			<div id="board_info" class="button cate now_cate" style="margin-right: 10px;">정보게시판</div>
-			<div id="board_product" class="button cate not_cate" style="margin-right: 10px;">제품추천게시판</div>
+			<div id="board_info" class="button cate now_cate ctBtncolor" style="margin-right: 10px;">정보게시판</div>
+			<div id="board_product" class="button cate not_cate ctBtncolor" style="margin-right: 10px;">제품추천게시판</div>
 			<!-- 게시글 리스트 띄우는 테이블 -->
-			<table class="list">
+			<table class="list" style="text-align: center;">
 				<thead id="data-table-head">
 					<tr align="right" valign="middle">
 						<td colspan="6">글 개수 : [[${pageMaker.total}]]</td>
 					</tr>
 				</thead>
-				<tr align="center" valign="middle">
-					<th width="8%">북마크번호</th>
-					<th>게시판번호</th>
-					<th>제목</th>
-					<th width="15%">작성자</th>
-					<th width="17%">날짜</th>
-					<th width="10%">조회수</th>
+				<tr align="center" valign="middle" style="background-color: #fff;">
+					<td class="long_text">북마크번호</td>
+					<td class="long_text">게시판번호</td>
+					<td class="long_text">제목</td>
+					<td class="long_text">작성자</td>
+					<td class="long_text">날짜</td>
+					<td class="long_text">조회수</td>
 				</tr>
 				<tbody id="data-table">
 
@@ -87,7 +87,7 @@
 				</tbody>
 			</table>
 			<br>	<!-- 페이징 처리하는 테이블 -->
-			<table class="pagination">
+			<table class="pagination none_color_table">
 				<tr align="center" valign="middle">
 					<td>
 						<a class="changePage" th:if="${pageMaker.prev}" th:href="${pageMaker.startPage-1}">&lt;</a>
@@ -102,8 +102,8 @@
 			<!-- 글쓰기 버튼 배치하는 테이블 -->
 
 			<form id="searchForm" th:action="@{/trainermypage/trainer_subbookmark}">
-				<div class="search_area">
-					<select name="type">
+				<div class="search_area flex">
+					<select name="type" style="width: 30%; margin-right:10px;">
 						<option value="" th:selected="${pageMaker.cri.type == null}">검색</option>
 						<option value="T" th:selected="${pageMaker.cri.type == 'T'}">제목</option>
 						<option value="C" th:selected="${pageMaker.cri.type == 'C'}">내용</option>
@@ -112,8 +112,8 @@
 						<option value="TW" th:selected="${pageMaker.cri.type == 'TW'}">제목 또는 작성자</option>
 						<option value="TCW" th:selected="${pageMaker.cri.type == 'TCW'}">제목 또는 내용 또는 작성자</option>
 					</select>
-					<input type="text" name="keyword" id="keyword" th:value="${pageMaker.cri.keyword}">
-					<a href="#" class="button primary">검색</a>
+					<input type="text" name="keyword" id="keyword" th:value="${pageMaker.cri.keyword}" style="margin-right:10px;">
+					<a href="#" class="button btnColor">검색</a>
 				</div>
 				<input type="hidden" value="1" name="pagenum">
 				<input type="hidden" value="10" name="amount">
@@ -134,7 +134,7 @@
 					<div class="boardRanking_ranking">
 						<table style="width: 90%;">
 							<tr><td><a href="/trainermypage/trainer_modify">내 정보 수정</a></td></tr>
-							<tr><td><a href="/usermypage/user_diary">나의 다이어리</a></td></tr>
+<!--							<tr><td><a href="/usermypage/user_diary">나의 다이어리</a></td></tr>-->
 							<tr><td><a href="/trainermypage/trainer_challenge">나의 챌린지</a></td></tr>
 							<tr><td><a href="/trainermypage/trainer_mysubscribeuser">구독 유저</a></td></tr>
 							<tr><td><a href="/trainermypage/trainer_subbookmark" style="color: #5a8100; font-size: 20px;">북마크</a></td></tr>
@@ -207,8 +207,6 @@
 		let type = searchForm.find("option:selected").val();
 		let keyword = searchForm.find("input[name='keyword']").val();
 
-		alert("keyword: "+keyword);
-		alert("type: "+type);
         loadPage('/trainermypage/board_info', 1, keyword, type);
 
 

@@ -64,6 +64,33 @@
 			margin-top: 50px;
 			margin-bottom: 30px;
 		}
+		.button.more_view{
+			background: #FFFFFF;
+			border: 1px solid #5a8100;
+			border-radius: 4px;
+			color: #5a8100 !important;
+			box-shadow: 4px 4px 2px 0px rgb(203,211,177) !important;
+			font-weight: 700 !important;
+			height: 2.75em !important;
+			line-height: 2.75em !important;
+			padding:0 1.5em !important;
+			width: 86px !important;
+
+		}
+
+		.button.more_view:hover{
+			background: #5a8100;
+			border: 1px solid #5a8100;
+			border-radius: 4px;
+			color: #F7FAF5 !important;
+			box-shadow: 0 0 2px #5a8100 !important;
+
+		}
+
+		hr {
+		  border: none;
+		  border-top: 1px solid transparent; /* 투명한 선으로 만듭니다. */
+		}
 	</style>
 </head>
 <body class="is-preload">
@@ -136,7 +163,7 @@
 						</th:block>
 					</table>
 				</div>
-				<a class="button" th:href="${'/community/commu_free'}">더보기</a>
+				<a class="button more_view" th:href="${'/community/commu_free'}">더보기</a>
 			</div>
 			<hr>
 			<div class="commu_food">
@@ -189,7 +216,7 @@
 						</th:block>
 					</table>
 				</div>
-				<a class="button" th:href="${'/community/commu_food'}">더보기</a>
+				<a class="button more_view" th:href="${'/community/commu_food'}">더보기</a>
 			</div>
 			<hr>
 			<div class="commu_exercise">
@@ -242,7 +269,7 @@
 						</th:block>
 					</table>
 				</div>
-				<a class="button" th:href="${'/community/commu_exercise'}">더보기</a>
+				<a class="button more_view" th:href="${'/community/commu_exercise'}">더보기</a>
 			</div>
 			<hr>
 			<div class="commu_gallery">
@@ -295,7 +322,7 @@
 						</th:block>
 					</table>
 				</div>
-				<a class="button" th:href="${'/community/commu_gallery'}">더보기</a>
+				<a class="button more_view" th:href="${'/community/commu_gallery'}">더보기</a>
 			</div>
 			<hr>
 			<div class="commu_qna">
@@ -348,7 +375,7 @@
 						</th:block>
 					</table>
 				</div>
-				<a class="button" th:href="${'/community/commu_qna'}">더보기</a>
+				<a class="button more_view" th:href="${'/community/commu_qna'}">더보기</a>
 			</div>
 			<hr>
 			<form name="pageForm" id="pageForm" th:action="@{/community/commu_list}">
@@ -365,7 +392,7 @@
 			<section>
 				<div class="boardRanking">
 					<div class="boardRanking_ranking">
-						<table style="width: 90%;">
+						<table style="width: 90%;" class="td_padding">
 							<tr><td><a href="/community/commu_list" style="color: #5a8100; font-size: 20px;">전체</a></td></tr>
 							<tr><td><a href="/community/commu_free">자유게시판</a></td></tr>
 							<tr><td><a href="/community/commu_food">식단</a></td></tr>

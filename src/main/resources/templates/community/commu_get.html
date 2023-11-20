@@ -53,21 +53,6 @@
 		.button_table tr > td{
 			border: none;
 		}
-		.button_table tr > td > button{
-			border: 0.8px solid black;
-			border-radius: 10px;
-		}
-		.button{
-			padding: 0;
-			border-radius: 10px;
-			height: 30px;
-			width: 60px;
-			vertical-align: middle;
-			background-color: #5a8100;
-			color: white !important;
-			line-height: 30px;
-			box-shadow: none;
-		}
 		.button > a{
 			display: block;
 			width: 100%;
@@ -75,9 +60,7 @@
 			text-align: center;
 			color: white;
 		}
-		.button:hover {
-			background-color: rgb(203,211,177);
-		}
+
 		.replyForm input{
 			border: none;
 			background-color: #5a8100;
@@ -87,8 +70,8 @@
 			width: 100%;
 		}
 		.replyForm textarea{
-			background-color: rgb(240,229,215);
-			border-radius: 15px;
+			background-color: #ebede1;
+			border-radius: 4px;
 		}
 
 		.replies ul{
@@ -235,18 +218,18 @@
 									<input name="amount" th:value="${cri.amount}" type="hidden">
 									<input name="type" th:value="${cri.type}" type="hidden">
 									<input name="keyword" th:value="${cri.keyword}" type="hidden">
-									<a class="button" href="javascript:modify()">수정</a>
-									<a class="button" href="javascript:document.boardForm.submit()">삭제</a>
+									<a class="button btnColor" href="javascript:modify()">수정</a>
+									<a class="button btnColor" href="javascript:document.boardForm.submit()">삭제</a>
 								</form>
 							</th:block>
 							<div class="displayNoneDiv writer">[[${board.userId}]]</div>
 							<div class="displayNoneDiv boardNum">[[${board.boardNum}]]</div>
 							<div class="displayNoneDiv boardCategory">[[${board.boardCategory}]]</div>
 							<div class="btn_area">
-							<th:block th:if="${board.userId != session.loginUser}">
-								<a class="button reportOpen" style="float:left;">글 신고</a>
-							</th:block>
-								<a class="button" th:href="${'/community/commu_list'+cri.listLink}">목록</a>
+								<th:block th:if="${board.userId != session.loginUser}">
+									<a class="button btnColor reportOpen">신고</a>
+								</th:block>
+									<a class="button btnColor" th:href="${'/community/commu_list'+cri.listLink}">목록</a>
 							</div>
 						</td>
 					</tr>
@@ -266,8 +249,8 @@
 							<textarea name="replyContent" placeholder="댓글을 입력해주세요." style="resize:none; margin-top: 10px;"></textarea>
 						</div>
 						<div style="width:15%; margin-top: 10px;">
-							<a href="#" class="button finish" style="margin-top:25px; margin-bottom:1rem;">등록</a>
-							<a href="#" class="button cancel">취소</a>
+							<a href="#" class="button btnColor small finish" style="margin-top:27px; margin-bottom:5px;">등록</a>
+							<a href="#" class="button btnColor small cancel">취소</a>
 						</div>
 					</div>
 					<ul class="replies"></ul>

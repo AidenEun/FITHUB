@@ -21,12 +21,15 @@
 		justify-content: space-between;
 	}
 
-	.button{
-		background-color: #8FA746 !important;
-	}
-
 	.write {
 		margin-left: 10px;
+	}
+	.long_text {
+		word-break: break-all;
+		white-space: normal;
+		width: 180px;
+		max-width: 180px;
+		overflow: hidden;
 	}
 </style>
 <body class="is-preload">
@@ -52,18 +55,18 @@
 
 			<!-- 게시글 리스트 띄우는 테이블 -->
 			<table class="list" style="text-align: center; margin-top: 20px;">
-				<tr align="right" valign="middle">
+				<tr align="right" valign="middle" style="background-color: #fff;">
 					<td colspan="6" style="padding-right: 0;">글 개수 : [[${pageMaker.total}]]
-						<a class="write button" th:href="${'/community/commu_write'+pageMaker.cri.listLink}">글쓰기</a>
+						<a class="write button btnColor small" th:href="${'/community/commu_write'+pageMaker.cri.listLink}">글쓰기</a>
 					</td>
 				</tr>
-				<tr class="special-row">
-					<td width="8%">번호</td>
-					<td></td>
-					<td>제목</td>
-					<td width="15%">작성자</td>
-					<td width="17%">날짜</td>
-					<td width="10%">조회수</td>
+				<tr class="special-row" style="background-color: #fff;">
+					<td style="width: 8%" class="long_text">번호</td>
+					<td style="width: 8%" class="long_text"></td>
+					<td class="long_text">제목</td>
+					<td style="width: 15%" class="long_text">작성자</td>
+					<td style="width: 25%" class="long_text">날짜</td>
+					<td style="width: 10%" class="long_text">조회수</td>
 				</tr>
 				<tr th:if="${list != null and list.size()>0}" th:each="board : ${list}">
 					<td>[[${board.boardNum}]]</td>
@@ -91,7 +94,7 @@
 				</th:block>
 			</table>
 			<br>	<!-- 페이징 처리하는 테이블 -->
-			<table class="pagination">
+			<table class="pagination none_color_table">
 				<tr align="center" valign="middle">
 					<td>
 						<a class="changePage" th:if="${pageMaker.prev}" th:href="${pageMaker.startPage-1}">&lt;</a>
@@ -113,7 +116,7 @@
 						<option value="TC" th:selected="${pageMaker.cri.type == 'TC'}">제목 또는 내용</option>
 					</select>
 					<input type="text" name="keyword" id="keyword" th:value="${pageMaker.cri.keyword}" style="margin-right:10px;">
-					<a href="#" class="button">검색</a>
+					<a href="#" class="button btnColor">검색</a>
 				</div>
 				<input type="hidden" value="1" name="pagenum">
 				<input type="hidden" value="10" name="amount">
@@ -134,7 +137,7 @@
 					<div class="boardRanking_ranking">
 						<table style="width: 90%;">
 							<tr><td><a href="/usermypage/user_myinfo">내 정보 수정</a></td></tr>
-							<tr><td><a href="/usermypage/user_diary">나의 다이어리</a></td></tr>
+<!--							<tr><td><a href="/usermypage/user_diary">나의 다이어리</a></td></tr>-->
 							<tr><td><a href="/usermypage/user_challenge">나의 챌린지</a></td></tr>
 							<tr><td><a href="/usermypage/user_subtrainer">구독한 트레이너</a></td></tr>
 							<tr><td><a href="/usermypage/user_subbookmark">북마크</a></td></tr>

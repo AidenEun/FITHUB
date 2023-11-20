@@ -41,15 +41,10 @@
 		padding: 0.15em 1.5em;
 	}
 
-	.button{
-		background-color: #8FA746 !important;
-	}
-
 	.search_area input[type="search"] {
 		width : 250px;
 		height: 33px;
 	}
-
 
     .galleryAll{
         float: left;
@@ -135,7 +130,7 @@
 
 			<!-- 게시글 리스트 띄우는 테이블 -->
 			<table class="list">
-				<tr align="right" valign="middle">
+				<tr align="right" valign="middle" style="background-color: #fff;">
 					<td>현재 구독중인 트레이너 수 :[[${pageMaker.total}]]</td>
 				</tr>
 
@@ -168,7 +163,7 @@
 						</th:block>
 						<th:block th:unless="${list != null and list.size()>0}">
 							<div>
-								<div style="text-align: center; font-size: 20px;">현재 구독중인 트레이너가 없습니다.</div>
+								<div style="text-align: center; font-size: 20px;">현재 구독중인 트레이너 정보가 없습니다.</div>
 							</div>
 						</th:block>
 					</td>
@@ -177,7 +172,7 @@
 
 			</table>
 			<br>	<!-- 페이징 처리하는 테이블 -->
-			<table class="pagination">
+			<table class="pagination none_color_table">
 				<tr align="center" valign="middle">
 					<td>
 						<a class="changePage" th:if="${pageMaker.prev}" th:href="${pageMaker.startPage-1}">&lt;</a>
@@ -200,7 +195,7 @@
 						<option value="IN" th:selected="${pageMaker.cri.type == 'IN'}">아이디 또는 닉네임</option>
 					</select>
 					<input type="text" name="keyword" id="keyword" th:value="${pageMaker.cri.keyword}" style="margin-right:10px;">
-					<a href="#" class="button">검색</a>
+					<a href="#" class="button btnColor">검색</a>
 				</div>
 				<input type="hidden" value="1" name="pagenum">
 				<input type="hidden" value="12" name="amount">
@@ -222,7 +217,7 @@
 					<div class="boardRanking_ranking">
 						<table style="width: 90%;">
 							<tr><td><a href="/usermypage/user_myinfo">내 정보 수정</a></td></tr>
-							<tr><td><a href="/usermypage/user_diary">나의 다이어리</a></td></tr>
+<!--							<tr><td><a href="/usermypage/user_diary">나의 다이어리</a></td></tr>-->
 							<tr><td><a href="/usermypage/user_challenge">나의 챌린지</a></td></tr>
 							<tr><td><a href="/usermypage/user_subtrainer" style="color: #5a8100; font-size: 20px;">구독한 트레이너</a></td></tr>
 							<tr><td><a href="/usermypage/user_subbookmark">북마크</a></td></tr>

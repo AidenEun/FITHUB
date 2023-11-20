@@ -16,7 +16,13 @@
 
 </head>
 <style>
-
+	.long_text {
+		word-break: break-all;
+		white-space: normal;
+		width: 180px;
+		max-width: 180px;
+		overflow: hidden;
+	}
 </style>
 <body class="is-preload">
 
@@ -37,46 +43,53 @@
 
 		<!-- Content -->
 		<div class="content">
-			<div id="messageAll" class="button cate now_cate message" style="margin-right: 10px;">전체보기</div>
-			<div id="messageSend" class="button cate not_cate message" style="margin-right: 10px;">보낸쪽지함</div>
-			<div id="messageReceive" class="button cate not_cate message" style="margin-right: 10px;">받은쪽지함</div>
-			<div id="u_t_matching" class="button cate not_cate message" style="margin-right: 10px;">매칭쪽지함</div>
+
 			<!-- 게시글 리스트 띄우는 테이블 -->
-			<table class="list">
-				<tr align="right" valign="middle">
-					<td colspan="6">글 개수 : [[${pageMaker.total}]]</td>
+			<table class="list" style="text-align: center;">
+				<tr style="background-color: #fff;">
+					<td colspan="6">
+						<div style="float: left;">
+							<div id="messageAll" class="button cate now_cate message ctBtncolor" style="margin-right: 10px;">전체보기</div>
+							<div id="messageSend" class="button cate not_cate message ctBtncolor" style="margin-right: 10px;">보낸쪽지함</div>
+							<div id="messageReceive" class="button cate not_cate message ctBtncolor" style="margin-right: 10px;">받은쪽지함</div>
+							<div id="u_t_matching" class="button cate not_cate message ctBtncolor" style="margin-right: 10px;">매칭쪽지함</div>
+						</div>
+						<div style="float: right;">
+							쪽지 개수 : [[${pageMaker.total}]]
+							<a style="margin-left: 10px;" class="write button small btnColor" th:href="${'/board/write'+pageMaker.cri.listLink}">쪽지 보내기</a>
+						</div>
+					</td>
 				</tr>
-				<tr align="center" valign="middle">
-					<th width="8%">번호</th>
-					<th></th>
-					<th width="15%">보낸사람</th>
-					<th width="15%">받는사람</th>
-					<th width="30%">내용</th>
-					<th width="10%">날짜</th>
+				<tr class="special-row" style="background-color: #fff;">
+					<td class="long_text" style="width: 8%;">번호</td>
+					<td class="long_text" style="width: 8%;"></td>
+					<td class="long_text" style="width: 15%;">보낸사람</td>
+					<td class="long_text" style="width: 15%;">받는사람</td>
+					<td class="long_text">내용</td>
+					<td class="long_text" style="width: 22%;">날짜</td>
 				</tr>
 				<tr th:if="${list != null and list.size()>0}" th:each="message : ${list}">
-					<td>[[${message.messageNum}]]</td>
-					<td>
+					<td class="long_text">[[${message.messageNum}]]</td>
+					<td class="long_text">
 						<sup class="new" th:if="${newly_Message[messageStat.index] == 'O'}">New</sup>
 					</td>
-					<td>[[${message.sendId}]]</td>
-					<td>[[${message.receiveId}]]</td>
-					<td>
+					<td class="long_text">[[${message.sendId}]]</td>
+					<td class="long_text">[[${message.receiveId}]]</td>
+					<td class="long_text">
 						[[${message.messageContent}]]
 					</td>
-					<td>
+					<td class="long_text">
 						[[${message.sendDate}]]
 					</td>
 				</tr>
 				<th:block th:if="${list == null or list.size() == 0}">
 					<tr>
-						<td colspan="6" style="text-align: center; font-size: 20px;">등록된
-							게시글이 없습니다.</td>
+						<td colspan="6" style="text-align: center; font-size: 20px;">쪽지가 없습니다.</td>
 					</tr>
 				</th:block>
 			</table>
 			<br>	<!-- 페이징 처리하는 테이블 -->
-			<table class="pagination">
+			<table class="pagination none_color_table">
 				<tr align="center" valign="middle">
 					<td>
 						<a class="changePage" th:if="${pageMaker.prev}" th:href="${pageMaker.startPage-1}">&lt;</a>
@@ -88,25 +101,17 @@
 					</td>
 				</tr>
 			</table>
-			<!-- 글쓰기 버튼 배치하는 테이블 -->
-			<table>
-				<tr align="right" valign="middle">
-					<td>
-						<a class="write" th:href="${'/board/write'+pageMaker.cri.listLink}">글쓰기</a>
-					</td>
-				</tr>
-			</table>
 			<form id="searchForm" th:action="@{/trainermypage/trainer_messagelist}">
-				<div class="search_area">
-					<select name="type">
+				<div class="search_area flex">
+					<select name="type" style="width: 30%; margin-right:10px;">
 						<option value="" th:selected="${pageMaker.cri.type == null}">검색</option>
 						<option value="C" th:selected="${pageMaker.cri.type == 'C'}">내용</option>
 						<option value="S" th:selected="${pageMaker.cri.type == 'S'}">보낸사람</option>
 						<option value="R" th:selected="${pageMaker.cri.type == 'R'}">받은사람</option>
 						<option value="SR" th:selected="${pageMaker.cri.type == 'SR'}">보낸사람 또는 받은사람</option>
 					</select>
-					<input type="text" name="keyword" id="keyword" th:value="${pageMaker.cri.keyword}">
-					<a href="#" class="button primary">검색</a>
+					<input type="text" name="keyword" id="keyword" th:value="${pageMaker.cri.keyword}" style="margin-right:10px;">
+					<a href="#" class="button btnColor">검색</a>
 				</div>
 				<input type="hidden" value="1" name="pagenum">
 				<input type="hidden" value="10" name="amount">
@@ -131,7 +136,7 @@
 					<div class="boardRanking_ranking">
 						<table style="width: 90%;">
 							<tr><td><a href="/trainermypage/trainer_modify">내 정보 수정</a></td></tr>
-							<tr><td><a href="/usermypage/user_diary">나의 다이어리</a></td></tr>
+<!--							<tr><td><a href="/usermypage/user_diary">나의 다이어리</a></td></tr>-->
 							<tr><td><a href="/trainermypage/trainer_challenge">나의 챌린지</a></td></tr>
 							<tr><td><a href="/trainermypage/trainer_mysubscribeuser">구독 유저</a></td></tr>
 							<tr><td><a href="/trainermypage/trainer_subbookmark">북마크</a></td></tr>
@@ -166,6 +171,25 @@
 	const searchForm = $("#searchForm");
 	const pageForm = $("#pageForm");
 
+	const cate = document.querySelectorAll('.cate');
+	let nowCate = document.querySelector('.now_cate');
+
+	cate.forEach(function(btn) {
+		btn.addEventListener('click', function() {
+			if (btn.classList.contains('now_cate')) {
+			 return;
+			}
+
+			btn.classList.remove('not_cate');
+			btn.classList.add('now_cate');
+
+			nowCate.classList.remove('now_cate');
+			nowCate.classList.add('not_cate');
+
+			nowCate = btn;
+		});
+	});
+
 	$(".changePage").on("click",function(e){
 		//e(이벤트)의 기본 작동 막기
 		e.preventDefault();
@@ -176,6 +200,7 @@
 		pageForm.find("input[name='pagenum']").val(pagenum);
 		pageForm.submit();
 	});
+
 	$(".get").on("click",function(e){
 		e.preventDefault();
 		let boardnum = $(this).attr("href");
@@ -198,25 +223,6 @@
 		}
 		searchForm.submit();
 	}
-
-	const cate = document.querySelectorAll('.cate');
-	let nowCate = document.querySelector('.now_cate');
-
-	cate.forEach(function(btn) {
-		btn.addEventListener('click', function() {
-			if (btn.classList.contains('now_cate')) {
-			 return;
-			}
-
-			btn.classList.remove('not_cate');
-			btn.classList.add('now_cate');
-
-			nowCate.classList.remove('now_cate');
-			nowCate.classList.add('not_cate');
-
-			nowCate = btn;
-		});
-	});
 
 	const messageForm = $("#messageForm");
 	$(".message").on("click",function(e){
