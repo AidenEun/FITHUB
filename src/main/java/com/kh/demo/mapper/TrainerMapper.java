@@ -11,7 +11,7 @@ public interface TrainerMapper {
 
     TrainerDTO findById(String userid);
 
-    int updateUser(TrainerDTO user);
+    int updateInfo(TrainerDTO user);
 
 
     TrainerDTO getTrainerInfo(String trainerId);

@@ -15,6 +15,15 @@
         where trainer_id=#{trainerId}
     </update>
 
+    <!--내 정보 수정-->
+    <update id="updateInfo">
+        update trainer set
+        trainer_nickname=#{trainerNickname}, trainer_pw=#{trainerPw},trainer_tel=#{trainerTel}, trainer_mail=#{trainerMail},
+        trainer_weight=#{trainerWeight}, trainer_height=#{trainerHeight}, trainer_zipcode=#{trainerZipcode}, trainer_addr=#{trainerAddr},
+        trainer_addrdetail=#{trainerAddrdetail}, trainer_addretc=#{trainerAddretc}, trainer_part=#{trainerPart}, trainer_career=#{trainerCareer}
+        where trainer_id=#{trainerId}
+    </update>
+
     <select id="getTrainerInfo">
         select * from trainer where trainer_id=#{trainerId};
     </select>

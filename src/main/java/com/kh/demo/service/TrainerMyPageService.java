@@ -61,7 +61,7 @@ public interface TrainerMyPageService {
 
     //내정보수정
     TrainerDTO getUserDetail(String userid);
-    boolean user_modify(TrainerDTO trainerdto);
+    boolean updateInfo(TrainerDTO trainerdto);
 
     //내구독
     List<UserDTO> getMyScribe(Criteria cri, String userId);

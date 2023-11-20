@@ -164,7 +164,7 @@
 				</tr>
 				<tr>
 					<td>비밀번호</td>
-					<td><input name="trainerPw" type="password" id="inputPw" class="inputText" placeholder="8~12자 영문, 숫자, 특수문자" th:value="${user.trainerPw}" readonly><div onclick="togglePassword()" id="viewPwBtn" class="viewPwBtn"></div></td>
+					<td><input name="trainerPw" type="password" id="inputPw" class="inputText" placeholder="5~12자 영문, 숫자, 특수문자" th:value="${user.trainerPw}" readonly><div onclick="togglePassword()" id="viewPwBtn" class="viewPwBtn"></div></td>
 				</tr>
 				<tr>
 					<td>이름</td>
@@ -218,7 +218,7 @@
 				</tr>
 				<tr>
 					<td>상세주소</td>
-					<td><input name="trainerAddrdetail" type="text" id="sample6_detailAddress" placeholder="상세주소" th:value="${user.trainerAddrdetail}"></td>
+					<td><input readonly name="trainerAddrdetail" type="text" id="sample6_detailAddress" placeholder="상세주소" th:value="${user.trainerAddrdetail}"></td>
 				</tr>
 				<tr>
 					<td>참고항목</td>
@@ -233,7 +233,7 @@
 					<td><input readonly name="trainerCareer" type="text" id="inputTrainerCareer" class="inputText" placeholder="경력" th:value="${user.trainerCareer}" ></td>
 				</tr>
 			</table>
-			<a href="/trainermypage/trainermypage_myinfo_modify" id="myinfo_modify_btn" class="button btnColor small">수정</a>
+			<a href="/trainermypage/trainer_myinfo_modify" id="myinfo_modify_btn" class="button btnColor small">수정</a>
 		</div>
 
 
