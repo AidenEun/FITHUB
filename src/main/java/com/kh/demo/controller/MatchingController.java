@@ -47,6 +47,12 @@ public class MatchingController {
         List<TrainerMatchingBoardDTO> list = MatchingService.getmatchingList(cri);
         model.addAttribute("list", list);
         model.addAttribute("pageMaker",new PageDTO(MatchingService.getTotal(cri), cri));
+        //인기게시글 띄우기
+        List<BoardDTO> boardTop5List = boardservice.getBoardTop5List();
+        // 트레이너 랭킹
+        List<TrainerDTO> trainerTop5List= tservice.getTrainerTop5List();
+        model.addAttribute("trainerTop5List",trainerTop5List);
+        model.addAttribute("boardTop5List",boardTop5List);
        /* model.addAttribute("review_cnt_list",MatchingService.getReviewCntList(list));*/
     }
 
