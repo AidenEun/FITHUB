@@ -63,6 +63,10 @@
         padding: 0;
 
     }
+    table tbody tr:nth-child(2n + 1) {
+        background-color: white;
+
+    }
 
 
     /* MAIN IMG 게시글 상단 고정 */
@@ -266,10 +270,10 @@
         box-shadow: 0 0 5px rgb(203,211,177);
         cursor: default;
     }
-    .addline{
-        border-radius: 4px;
-        box-shadow: 0 0 5px rgb(203,211,177);
-    }
+    /*.addline{*/
+    /*    border-radius: 4px;*/
+    /*    box-shadow: 0 0 5px rgb(203,211,177);*/
+    /*}*/
     input[type=button].noBtnColor:hover{
         background: #FFFFFF;
         border: 1px solid #5a8100;
@@ -722,11 +726,6 @@
         if (diaryContent.value === "") {
             alert("내용을 입력해 해주세요!")
             diaryContent.focus();
-            return false;
-        }
-        if (mychallBtn.classList.contains("viewchallBtn") === false) {
-            alert("진행 중인 챌린지 현황을 확인해 주세요!")
-            mychallBtn.focus();
             return false;
         }
         if (confirm("최종 칼로리가 정말 맞습니까?") == true) {
