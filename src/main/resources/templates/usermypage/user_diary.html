@@ -296,6 +296,17 @@
     .open:hover{
         cursor: default;
     }
+    /*.hasdiary{*/
+    /*    width: 30px;*/
+    /*    height: 30px;*/
+    /*    border-radius: 50%;*/
+    /*    background-color: rgb(203, 211, 177);*/
+    /*    opacity: 26%;*/
+    /*    position: absolute;*/
+    /*    right: 25px;*/
+    /*    top: 12px;*/
+    /*    z-index: -5;*/
+    /*}*/
 </style>
 <body class="is-preload">
 
@@ -355,6 +366,7 @@
         </section>
     </div>
     <div id="main_box">
+        <input type="hidden" name="diaryList" id="diaryList" th:value="${diaryList}">
         <div class="calender">
             <div class="calen_header">
                 <div class="year_month highlight"></div>
@@ -402,5 +414,8 @@
 <script th:src="@{/assets/js/calender.js}"></script>
 
 <script th:src="@{https://code.jquery.com/jquery-3.6.0.min.js}"></script>
+<script>
+
+</script>
 </body>
 </html>
