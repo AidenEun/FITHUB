@@ -20,6 +20,12 @@
     <link rel="stylesheet" th:href="@{/assets/css/profileModal.css}">
 </head>
 <style>
+    .header_box {
+        width: 100%;
+        background: linear-gradient(to right, rgba(143, 167, 70, 0.25), rgba(143, 167, 70, 0.3)), url(/images/test3.png);
+        background-size: cover;
+        background-position:  0 65%;
+    }
     .wrapper.sidebar > .inner > .inner_main {
         width: 75%;
     }
@@ -156,8 +162,9 @@
     }
 
     .open:hover {
-        color: red;
+        color: #5a8100;
         font-weight: bold;
+        cursor: pointer !important;
     }
 
     #list_table:hover {
@@ -234,6 +241,24 @@
         height: 12px;
         background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')
     }
+    a.btnColor{
+        background: #FFFFFF;
+        border: 1px solid #5a8100;
+        border-radius: 4px;
+        color: #5a8100 !important;
+        box-shadow: 4px 4px 2px 0px rgb(203,211,177);
+
+    }
+    a.btnColor:hover{
+        background: #5a8100;
+        border: 1px solid #5a8100;
+        border-radius: 4px;
+        color: #F7FAF5 !important;
+        box-shadow: 0 0 2px #5a8100;
+
+    }
+
+
 </style>
 
 <!-- Header -->
@@ -289,7 +314,7 @@
                             <td><h2 class="ma_title">나에게 맞는 트레이너를 매칭해보세요</h2></td>
                             <td>
                                 <th:block th:if="${session.trainer != null}">
-                                    <a class="write" href="/matching/matching_write">글쓰기</a>
+                                    <a class="write btnColor" href="/matching/matching_write">글쓰기</a>
                                 </th:block>
                             </td>
                         </tr>
@@ -423,8 +448,8 @@
                                     <option value="TCW" th:selected="${pageMaker.cri.type == 'TCW'}">제목 또는 내용 또는 작성자
                                     </option>
                                 </select>
-                                <input type="text" name="keyword" id="keyword" th:value="${pageMaker.cri.keyword}">
-                                <a href="#" class="button primary">검색</a>
+                                <input type="text" style="margin-right: 20px" name="keyword" id="keyword" th:value="${pageMaker.cri.keyword}">
+                                <a href="#" class="button btnColor primary">검색</a>
                             </div>
                             <input type="hidden" value="1" name="pagenum">
                             <input type="hidden" value="10" name="amount">

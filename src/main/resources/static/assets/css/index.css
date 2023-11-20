@@ -1947,9 +1947,9 @@ input, select, textarea {
 		input[type="button"].primary,
 		button.primary,
 		.button.primary {
-			box-shadow: none;
-			background-color: #444;
-			color: #fff;
+			box-shadow: 4px 4px 2px 0px rgb(203,211,177);
+			background: #FFFFFF;
+			color: #5a8100
 		}
 
 			input[type="submit"].primary:hover,
