@@ -211,6 +211,7 @@ public class TrainerMyPageController {
         }
 
         List<MessageDTO> list = service.getMessageMyList(cri,id.getTrainerId(),message);
+        model.addAttribute("message",message);
         model.addAttribute("list",list);
         model.addAttribute("pageMaker",new PageDTO(service.getMessageTotal(cri,id.getTrainerId(),message), cri));
         model.addAttribute("newly_Message",service.getMessageNewlyList(list));
