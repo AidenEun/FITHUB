@@ -64,7 +64,29 @@
 			width:20% !important;
 		}
 
+		.button.btnColor{
+			background: #FFFFFF;
+			border: 1px solid #5a8100;
+			border-radius: 4px;
+			color: #5a8100 !important;
+			box-shadow: 4px 4px 2px 0px rgb(203,211,177);
+			font-weight: 700 !important;
+			height: 2.75em !important;
+			line-height: 2.75em !important;
+			margin-left: 10px;
+		}
+		.button.btnColor a{
+			color: #5a8100;
+		}
+		.button.btnColor:hover a { color:#F7FAF5; }
 
+		.button.btnColor:hover{
+			background: #5a8100;
+			border: 1px solid #5a8100;
+			border-radius: 4px;
+			color: #F7FAF5 !important;
+			box-shadow: 0 0 2px #5a8100;
+		}
 
 	</style>
 </head>
@@ -86,14 +108,14 @@
 		<!-- Content -->
 		<div class="content">
 			<div class="cotent_header"><h2>운동도구</h2></div>
-			<a class="button " th:href="${'/product/prod_write'+pageMaker.cri.listLink}">등록하기</a>
+			<a class="button btnColor small" th:href="${'/product/prod_write'+pageMaker.cri.listLink}">등록하기</a>
 			<div style="display: flex; width: 100%; flex-wrap:wrap;">
 				<!-- 게시글 리스트 띄우는 테이블 -->
 				<th:block th:if="${list != null and list.size()>0}" th:each="board : ${list}">
 					<table id="list" class="prod_exer_list">
 						<tr valign="middle">
 							<td id="thumbnail">
-								<a id="img" th:href="${board.boardNum}">
+								<a class="get" id="img" th:href="${board.boardNum}">
 									<img th:src="${board.prodImg}" alt="Image" />
 
 								</a>
@@ -135,8 +157,8 @@
 			</table>
 			<!-- 검색 -->
 			<form id="searchForm" th:action="@{/product/prod_exercise}">
-				<div class="search_area">
-					<select name="type">
+				<div class="search_area flex">
+					<select name="type" style="width: 30%; margin-right:10px;">
 						<option value="" th:selected="${pageMaker.cri.type == null}">검색</option>
 						<option value="T" th:selected="${pageMaker.cri.type == 'T'}">제목</option>
 						<option value="C" th:selected="${pageMaker.cri.type == 'C'}">내용</option>
@@ -145,8 +167,8 @@
 						<option value="TW" th:selected="${pageMaker.cri.type == 'TW'}">제목 또는 작성자</option>
 						<option value="TCW" th:selected="${pageMaker.cri.type == 'TCW'}">제목 또는 내용 또는 작성자</option>
 					</select>
-					<input type="text" name="keyword" id="keyword" th:value="${pageMaker.cri.keyword}">
-					<a href="#" class="button primary">검색</a>
+					<input type="text" name="keyword" id="keyword" th:value="${pageMaker.cri.keyword}" style="margin-right:10px;">
+					<a href="#" class="button btnColor" style="padding: 0 1.5em;">검색</a>
 				</div>
 				<input type="hidden" value="1" name="pagenum">
 				<input type="hidden" value="15" name="amount">

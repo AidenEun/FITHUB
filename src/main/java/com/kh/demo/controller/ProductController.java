@@ -41,6 +41,7 @@ public class ProductController {
 
     }
 
+    //localhost:8080/prod/prod_food?category=&pagenum=4
     @GetMapping("prod_food")
     public void prod_food_list(Criteria cri, Model model) throws Exception{
         cri.setCategory("prodFood");
@@ -65,7 +66,8 @@ public class ProductController {
     }
 
     @GetMapping("prod_write")
-    public void prod_write(@ModelAttribute("cri") Criteria cri, Model model){
+    public String prod_write(@ModelAttribute("cri") Criteria cri, Model model){
+        return "product/prod_write";
     }
 
     @PostMapping("prod_write")
@@ -74,10 +76,10 @@ public class ProductController {
         Long boardNum = 0l;	//long 타입의 0(0+l)
         if(service.regist(board, files)) {
             boardNum = service.getLastNum(board.getAdminId());
-            return "redirect:/product/prod_get"+cri.getProdBoardListLink()+"&boardNum="+boardNum;
+            return "redirect:/product/prod_get"+cri.getListLink()+"&boardNum="+boardNum;
         } //성공시 게시글 보는 페이지로 이동(commu_get.html)
         else {
-            return "redirect:/product"+cri.getProdBoardListLink();
+            return "redirect:/product/prod_list"+cri.getListLink();
         } //실패시 게시글 목록 페이지로 이동
     }
 
@@ -129,10 +131,10 @@ public class ProductController {
         }
         System.out.println("controller : "+updateCnt);
         if(service.modify(board, files, updateCnt, category)) {
-            return "redirect:/product/prod_get"+cri.getProdBoardListLink()+"&boardNum="+board.getBoardNum();
+            return "redirect:/product/prod_get"+cri.getListLink()+"&boardNum="+board.getBoardNum();
         }
         else {
-            return "redirect:/product"+cri.getProdBoardListLink();
+            return "redirect:/product/prod_list"+cri.getListLink();
         }
     }
     @PostMapping("remove")
@@ -140,10 +142,10 @@ public class ProductController {
         HttpSession session = req.getSession();
         String loginUser = (String)session.getAttribute("loginUser");
         if(service.remove(loginUser, boardNum, category)) {
-            return "redirect:/product"+cri.getProdBoardListLink();
+            return "redirect:/product/prod_list"+cri.getListLink();
         }
         else {
-            return "redirect:/product/prod_get"+cri.getProdBoardListLink()+"&boardNum="+boardNum;
+            return "redirect:/product/prod_get"+cri.getListLink()+"&boardNum="+boardNum;
         }
     }
 

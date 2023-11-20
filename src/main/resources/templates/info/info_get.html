@@ -1,4 +1,4 @@
-	<!DOCTYPE HTML>
+<!DOCTYPE HTML>
 <!--
 	Slate by Pixelarity
 	pixelarity.com | hello@pixelarity.com
@@ -122,7 +122,7 @@
 			font-weight: 700 !important;
 			height: 2.75em !important;
 			line-height: 2.75em !important;
-
+			margin-left: 10px;
 		}
 		.button.btnColor a{
 			color: #5a8100;
@@ -240,8 +240,8 @@
 									<input name="amount" th:value="${cri.amount}" type="hidden">
 									<input name="type" th:value="${cri.type}" type="hidden">
 									<input name="keyword" th:value="${cri.keyword}" type="hidden">
-									<a class="button btnColor" href="javascript:modify()">수정</a>
-									<a class="button btnColor" href="javascript:document.boardForm.submit()">삭제</a>
+									<a class="button btnColor small" href="javascript:modify()">수정</a>
+									<a class="button btnColor small" href="javascript:document.boardForm.submit()">삭제</a>
 								</form>
 							</th:block>
 							<div class="displayNoneDiv">
@@ -251,9 +251,17 @@
 							</div>
 							<div class="btn_area">
 								<th:block th:if="${board.userId != session.loginUser}">
-									<a class="button reportOpen btnColor">신고</a>
+									<a class="button btnColor small" style="float:left;">좋아요</a>
+									<a class="button btnColor small" style="float:left; margin-left:10px;">북마크</a>
+									<a class="button reportOpen btnColor small" style="float:left; margin-left:10px;">신고</a>
 								</th:block>
-								<a class="button btnColor" th:href="${'/info/info_list'+cri.listLink}">목록</a>
+
+								<span th:if="${board != null}" style="float: right; margin-left: 10px;" th:switch="${board.boardCategory}">
+									<span th:case="'infoNews'"><a class="button btnColor small" th:href="${'/info/info_news'+cri.listLink}">목록</a></span>
+									<span th:case="'infoExer'"><a class="button btnColor small" th:href="${'/info/info_exercise'+cri.listLink}">목록</a></span>
+									<span th:case="'infoFood'"><a class="button btnColor small" th:href="${'/info/info_food'+cri.listLink}">목록</a></span>
+									<span th:case="'infoTip'"><a class="button btnColor small" th:href="${'/info/info_tip'+cri.listLink}">목록</a></span>
+								</span>
 							</div>
 						</td>
 					</tr>
