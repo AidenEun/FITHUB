@@ -258,14 +258,14 @@
             <!-- Content -->
             <div class="content">
                 <div class="ranking_box">
-                    <h2>트레이너 랭킹</h2>
+                    <h2>최근 등록한 트레이너</h2>
                     <div>
                         <table class="trainerRanking">
                             <tr class="rank_number">
-                                <th>1위</th>
-                                <th>2위</th>
-                                <th>3위</th>
-                                <th>4위</th>
+                                <th>1.</th>
+                                <th>2.</th>
+                                <th>3.</th>
+                                <th>4.</th>
                             </tr>
                             <tr th:if="${list != null and list.size() > 0}">
                                 <td th:each="board, iterStat : ${list}" th:if="${iterStat.index < 4}">
@@ -306,45 +306,43 @@
 
                         var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 
-                        // 마커를 표시할 위치와 title 객체 배열입니다
-                        var positions = [
-                            {
-                                title: '카카오',
-                                latlng: new kakao.maps.LatLng(33.450705, 126.570677)
-                            },
-                            {
-                                title: '생태연못',
-                                latlng: new kakao.maps.LatLng(33.450936, 126.569477)
-                            },
-                            {
-                                title: '텃밭',
-                                latlng: new kakao.maps.LatLng(33.450879, 126.569940)
-                            },
-                            {
-                                title: '근린공원',
-                                latlng: new kakao.maps.LatLng(33.451393, 126.570738)
-                            }
-                        ];
+                        $.ajax({
+    url: 'matching/map', // 데이터를 가져올 엔드포인트 URL
+    method: 'GET',
+    success: function(data) {
+        data.forEach(function(boardData) {
+            var address = boardData.TrainerAddr; // 주소 정보 가져오기
+            var trainerNickname = boardData.trainerNickname; // 트레이너 닉네임 가져오기
 
-                        // 마커 이미지의 이미지 주소입니다
-                        var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+            var geocoder = new kakao.maps.services.Geocoder();
+            geocoder.addressSearch(address, function(result, status) {
+                if (status === kakao.maps.services.Status.OK) {
+                    var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+                    var marker = new kakao.maps.Marker({
+                        map: map,
+                        position: coords,
+                        title: trainerNickname // 마커 이름은 트레이너 닉네임으로 지정
+                    });
 
-                        for (var i = 0; i < positions.length; i++) {
+                    // 각 마커별로 인포윈도우 생성
+                    var infowindow = new kakao.maps.InfoWindow({
+                        content: '<div><strong>' + trainerNickname + '</strong><br>' + address + '</div>'
+                    });
 
-                            // 마커 이미지의 이미지 크기 입니다
-                            var imageSize = new kakao.maps.Size(24, 35);
-
-                            // 마커 이미지를 생성합니다
-                            var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-
-                            // 마커를 생성합니다
-                            var marker = new kakao.maps.Marker({
-                                map: map, // 마커를 표시할 지도
-                                position: positions[i].latlng, // 마커를 표시할 위치
-                                title: positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-                                image: markerImage // 마커 이미지
-                            });
-                        }
+                    // 마커에 클릭 이벤트 추가
+                    kakao.maps.event.addListener(marker, 'click', function() {
+                        infowindow.open(map, marker);
+                    });
+                } else {
+                    console.error('Geocoder failed:', status);
+                }
+            });
+        });
+    },
+    error: function(err) {
+        console.error('Error fetching data:', err);
+    }
+});
                     </script>
                 </div>
 

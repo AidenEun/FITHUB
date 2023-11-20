@@ -36,5 +36,8 @@
         ORDER BY subscription_count DESC
             LIMIT 5
     </select>
+    <select id="getTrainerNickname">
+        select * from trainer where trainer_id=#{trainerId};
+    </select>
 </mapper>
 
