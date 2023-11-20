@@ -312,7 +312,7 @@ public class MatchingController {
     public String map() throws Exception {
         ObjectNode json = JsonNodeFactory.instance.objectNode();
 
-        List<TrainerMatchingBoardDTO> boardList = MatchingService.getAllBoards(); // 예시일 뿐 실제 코드는 다를 수 있습니다.
+        List<TrainerMatchingBoardDTO> boardList = MatchingService.getAllBoards();
 
         // 가져온 데이터를 JSON으로 변환하여 JSON 객체에 담습니다.
         ArrayNode arrayNode = json.putArray("boardList");
