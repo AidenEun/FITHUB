@@ -1,0 +1,480 @@
+<!DOCTYPE HTML>
+<!--
+	Future Imperfect by Pixelarity
+	pixelarity.com | hello@pixelarity.com
+	License: pixelarity.com/license
+-->
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Fit Hub</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}"/>
+	<link rel="stylesheet" th:href="@{/assets/css/login-header.css}" />
+	<link rel="stylesheet" th:href="@{/assets/css/join.css}"/>
+	<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+</head>
+<style>
+	#header {
+  background-color: #8FA746 !important;
+}
+
+#header nav > ul > li a {
+  color: white !important;
+}
+
+#header h1 a {
+  color: white !important;
+}
+
+#header .main ul li > a {
+  color: white !important;
+
+}
+
+#footer {
+  background-color: #304400;
+}
+</style>
+<body class="is-preload">
+
+<!-- Wrapper -->
+
+<!-- Header -->
+<header id="header" class="alt">
+	<h1 style="color: #fff;">
+		<a href="/">
+			Fit
+			<span>Hub</span>
+		</a>
+	</h1>
+	<nav class="links">
+		<ul>
+			<li class="menu-item"><a href="/info/info_list" style="color: white;">정보</a>
+				<ul class="submenu">
+					<li><a href="/info/info_list">전체</a></li>
+					<li><a href="/info/info_news">뉴스</a></li>
+					<li><a href="/info/info_food">식단</a></li>
+					<li><a href="/info/info_exercise">운동</a></li>
+					<li><a href="/info/info_tip">꿀팁</a></li>
+
+				</ul>
+			</li>
+			<li class="menu-item"><a href="/calorie/food_calorie_list" style="color: white;">칼로리</a>
+				<ul class="submenu">
+					<li><a href="/calorie/food_calorie_list">음식칼로리</a></li>
+					<li><a href="/calorie/exercise_calorie_list">운동칼로리</a></li>
+				</ul>
+			</li>
+			<li class="menu-item"><a href="/community/commu_list" style="color: white;">커뮤니티</a>
+				<ul class="submenu">
+					<li><a href="/community/commu_free">자유게시판</a></li>
+					<li><a href="/community/commu_food">식단</a></li>
+					<li><a href="/community/commu_exercise">운동</a></li>
+					<li><a href="/community/commu_gallery">갤러리</a></li>
+					<li><a href="/community/commu_qna">고민 Q&A</a></li>
+
+				</ul>
+			</li>
+			<li class="menu-item"><a href="/matching/matching_list" style="color: white;">트레이너 매칭</a>
+				<ul class="submenu">
+					<li><a href="/matching/matching_list">트레이너매칭</a></li>
+				</ul>
+			</li>
+			<li class="menu-item"><a href="/challenge/list" style="color: white;">챌린지</a>
+				<ul class="submenu">
+					<li><a href="/info/submenu1">챌린지</a></li>
+				</ul>
+			</li>
+			<li class="menu-item"><a href="/product/product_list" style="color: white;">제품</a>
+				<ul class="submenu">
+					<li><a href="/info/submenu1">식품</a></li>
+					<li><a href="/info/submenu1">운동 도구</a></li>
+				</ul>
+			</li>
+		</ul>
+	</nav>
+	<nav class="main">
+		<ul>
+			<li id="login">
+				<th:block th:if="${session.loginUser == null}">
+					<a class="login" th:href="@{/user/login}" style="color: #fff;">Login</a>
+				</th:block>
+				<th:block th:if="${session.loginUser != null}">
+					<a class="login" th:href="@{/user/logout}" style="color: #fff;">logout</a>
+				</th:block>
+
+				<a class="login" href="/usermypage/user_myinfo" style="color: #fff;">유저</a>
+				<a class="login" href="/trainermypage/trainer_modify" style="color: #fff;">트레</a>
+				<a class="login" href="/adminmypage/adminmypage_list" style="color: #fff;">관리</a>
+			</li>
+			<li class="search">
+				<a class="fa-search" href="#search" style="color: #fff;">Search</a>
+				<form id="search" method="get" action="/totalSearch">
+					<input type="text" name="keyword" placeholder="Search" />
+					<input type="hidden" value="1" name="pagenum">
+					<!--                        <input type="hidden" value="12" name="amount">-->
+				</form>
+			</li>
+			<li class="menu">
+				<a class="fa-bars" href="#menu" style="color: #fff;">Menu</a>
+			</li>
+		</ul>
+	</nav>
+</header>
+
+<!-- Menu -->
+<section id="menu">
+	<th:block th:if="${session.loginUser == null}">
+		<div class="side-not-login">
+			<p>로그인하세요</p>
+			<a th:href="@{/user/login}">로그인</a>
+		</div>
+	</th:block>
+	<th:block th:if="${session.loginUser != null}">
+		<div class="side_info">
+			<a href="/usermypage/user_myinfo">
+				<img src="images/profile_img.png" class="prof_img" width="102px" height="102px">
+			</a>
+			<div id="my_info">
+				<div>
+					<a href="/usermypage/user_myinfo">내 정보</a>
+					<th:block th:if="${session.loginUser != null}">
+						<a class="login" th:href="@{/user/logout}">로그아웃</a>
+					</th:block>
+				</div>
+				<a href="/usermypage/user_myinfo">
+					<!--<span>등급 / 닉네임(ID)</span>-->
+					<th:block th:if="${user !=null && loginUser != null}">
+						<span>등급</span>/<span th:text="${user.userNickname}"></span>(<span th:text="${user.userId}"></span>)
+					</th:block>
+				</a>
+			</div>
+			<div class="bar-container">
+				<progress class="progress-bar" value="0" max="7"></progress>
+				<input type="button" value="출석" class="att-btn">
+			</div>
+			<div class="point-container">
+				<div>나의 포인트</div>
+				<span>0p</span>
+			</div>
+			<hr>
+			<div id="tab-menu">
+				<div class="tab today-tab">오늘</div>
+				<div class="tab chall-tab">도전</div>
+				<div class="tab sub-tab">구독</div>
+				<div class="page-tab diary-tab">
+					<a href="/usermypage/user_diary">일기</a>
+				</div>
+				<div class="page-tab shop-tab">
+					<a href="/product/product_list">쇼핑</a>
+				</div>
+			</div>
+			<div id="tab-menu-container">
+				<div class="tab-view today-view">
+					<strong>나의 목표</strong>
+					<th:block th:if="${user !=null && loginUser != null}">
+						<p>목표체중 : <span th:text="${user.weightGoal}"></span></p>
+						<p>목표칼로리 : <span th:text="${user.caloriesGoal}"></span></p>
+						<strong>잔여칼로리: 현재칼로리/<span th:text="${user.caloriesGoal}"></span></strong>
+						<hr>
+					</th:block>
+					<p>섭취량</p>
+					<p>소비량</p>
+					<div id="meal-options">
+						<div class="brack-fst">아침</div>
+						<div class="lunch">점심</div>
+						<div class="dinner">저녁</div>
+						<div class="snack">간식</div>
+					</div>
+					<div id="tan-dan-ji-box">
+						<div class="today-breakfast">
+							<p>아침</p>
+							<p></p>
+							<p></p>
+							<p></p>
+						</div>
+						<div class="today-lunch">
+							<p>점심</p>
+							<p></p>
+							<p></p>
+							<p></p>
+						</div>
+						<div class="today-dinner">
+							<p>저녁</p>
+							<p></p>
+							<p></p>
+							<p></p>
+						</div>
+						<div class="today-snack">
+							<p>간식</p>
+							<p></p>
+							<p></p>
+							<p></p>
+						</div>
+					</div>
+				</div>
+				<div class="tab-view chall-view">
+					<div class="my-chall">
+						<strong>나의 챌린지</strong><br>
+						<span class="active-tab">진행중</span>
+						<span class="finish-tab">종료</span>
+						<div id="chall-list">
+							<div class="active-chall-listView">
+								<p>진행중인 챌린지 list</p>
+							</div>
+							<div class="finish-chall-listView">
+								<p>종료된 챌린지 list</p>
+							</div>
+						</div>
+					</div>
+
+
+				</div>
+				<div class="tab-view sub-view">
+					<div class="sub-view-container">
+						<strong>나의 트레이너</strong>
+						<div class="my-sub">
+							<p>구독한 트레이너 list</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</th:block>
+	<div id="another-page">
+		<div class="bmi">
+			<a href="/sidebar/bmi">BMI</a>
+		</div>
+		<div class="health-center">
+			<a href="/sidebar/healthCenter">보건소</a>
+		</div>
+		<th:block  th:if="${session.user != null}">
+			<div class="trainer-apply">
+				<a href="/usermypage/user_applytrainer">트레이너 신청</a>
+			</div>
+		</th:block>
+	</div>
+</section>
+<div id="wrap">
+	<form name="joinForm" method="post" action="/user/join"
+		  onsubmit="return sendit()">
+		<h2 style="text-align: center;">회원가입</h2>
+		<hr>
+		<table>
+			<tr id="page1">
+				<td id="result" colspan="2">&nbsp;</td>
+			</tr>
+			<tr id="page1">
+				<th><label for="userId">아이디</label></th>
+				<td>
+					<input type="text" name="userId" id="userId">
+					<input type="button" value="중복검사" onclick="checkId()">
+				</td>
+			</tr>
+			<tr id="page1">
+				<th><label for="userPw">비밀번호</label></th>
+				<td><input type="password" name="userPw" id="userPw" onkeyup="pwcheck()"></td>
+			</tr>
+			<tr id="page1">
+				<th><label for="userPwRe">비밀번호 확인</label></th>
+				<td><input type="password" name="userPwRe" id="userPwRe" onkeyup="pwcheck()"></td>
+			</tr>
+			<tr id="page1">
+				<th colspan="2">
+					<div class="pwCheck">
+						<span>영어 대문자, 소문자, 숫자, 특수문자(~,?,!,@,-)를 모두 하나 이상 포함해야 해요 😃</span>
+						<span>최소 8자 이상의 비밀번호가 보안에 안전해요 😄</span>
+						<span>같은 문자가 연속해서 사용되지 않았어요 😆</span>
+						<span>사용할 수 없는 문자가 포함되지 않았어요 🙂</span>
+						<span>비밀번호 확인이 완료되었어요! 😊</span>
+					</div>
+				</th>
+			</tr>
+			<tr id="page1">
+				<th><label for="userNickname">닉네임</label></th>
+				<td>
+					<input type="text" name="userNickname" id="userNickname">
+					<input type="button" value="중복검사" onclick="checkNickname()">
+				</td>
+			</tr>
+			<tr id="page1">
+				<th><label for="userName">이름</label></th>
+				<td><input type="text" name="userName" id="userName"></td>
+			</tr>
+			<tr class="gender_area" id="page1">
+				<th>성별</th>
+				<td>
+					<div>
+						<ul>
+							<li class="radio_item">
+								<input type="radio" id="userGender1" name="userGender" value="남성"><label for="userGender1">남성</label>
+							</li>
+							<li class="radio_item">
+								<input type="radio" id="userGender2" name="userGender" value="여성"><label for="userGender2">여성</label>
+							</li>
+						</ul>
+					</div>
+				</td>
+			</tr>
+			<tr id="page1">
+				<th><label for="userBirth">생년월일</label></th>
+				<td><input type="date" name="userBirth" id="userBirth"></td>
+			</tr>
+			<tr id="page1">
+				<th><label for="userTel">전화번호</label></th>
+				<td><input type="tel" name="userTel" id="userTel" placeholder="010-1234-1234"></td>
+			</tr>
+			<tr id="page1">
+				<th><label for="userMail">이메일</label></th>
+				<td><input type="email" name="userMail" id="userMail" placeholder="apple@naver.com"></td>
+			</tr>
+			<tr id="page1">
+				<th colspan="2">
+					<input class="next-button" type="button" value="다음" onclick="goToNextPage();">
+				</th>
+			</tr>
+			<tr id="page2">
+				<th colspan="2">
+					<input class="prev-button" type="button" value="이전" onclick="goToPrevPage();">
+				</th>
+			</tr>
+			<tr id="page2">
+				<th><label for="weight">몸무게 (kg)</label></th>
+				<td><input type="text" name="userWeight" id="weight" placeholder="kg은 제외하고 입력하세요"></td>
+			</tr>
+			<tr id="page2">
+				<th><label for="height">키 (cm)</label></th>
+				<td><input type="text" name="userHeight" id="height" placeholder="cm는 제외하고 입력하세요"></td>
+			</tr>
+			<tr id="page2">
+				<th><label for="weightGoal">목표 체중 (kg)</label></th>
+				<td><input type="text" name="weightGoal" id="weightGoal" placeholder="kg은 제외하고 입력하세요"></td>
+			</tr>
+			<tr id="page2">
+				<th><label for="caloriesGoal">목표 칼로리 (kcal)</label></th>
+				<td><input type="text" name="caloriesGoal" id="caloriesGoal" placeholder="kcal는 제외하고 입력하세요"></td>
+			</tr>
+			<tr id="page2">
+				<td>
+					<div class="agree-container pt50">
+						<p class="agree-tit">
+							이용약관 동의
+							<em class="retext">*</em>
+						</p>
+						<div class="agree-contents">
+							<span class="agree-txt all">전체 동의합니다.</span>
+							<p class="agree-chk">
+								<span class="agree-chkbox">
+									<input type="checkbox" name="cc" id="c1" onclick="chkAll(this);">
+									<label for="c1">
+										<!--<span></span>-->
+									</label>
+								</span>
+							</p>
+						</div>
+						<div class="agree-contents">
+							<span class="agree-txt">
+								본인은 만 14세 이상 입니다.
+								<em>(필수)</em>
+							</span>
+							<p class="agree-chk">
+								<span class="agree-chkbox">
+									<input type="checkbox" name="cc" id="c4">
+									<label for="c4">
+										<!--<span></span>-->
+									</label>
+								</span>
+							</p>
+						</div>
+						<div class="agree-contents">
+							<span class="agree-txt">
+								이용약관 동의
+								<em>(필수)</em>
+							</span>
+							<p class="agree-see">
+								<a href="/user/useAgree" class="txt">내용보기</a>
+							</p>
+							<p class="agree-chk">
+								<span class="agree-chkbox">
+									<input type="checkbox" name="cc" id="c2">
+									<label for="c2">
+										<!--<span></span>-->
+									</label>
+								</span>
+							</p>
+						</div>
+						<div class="agree-contents">
+							<span class="agree-txt">
+								개인정보처리방침
+								<em>(필수)</em>
+							</span>
+							<p class="agree-see">
+								<a href="/user/policyAgree" class="txt">내용보기</a>
+							</p>
+							<p class="agree-chk">
+								<span class="agree-chkbox">
+									<input type="checkbox" name="cc" id="c3">
+									<label for="c3">
+										<!--<span></span>-->
+									</label>
+								</span>
+							</p>
+						</div>
+						<div class="agree-contents">
+							<span class="agree-txt">
+								위치정보 이용약관 동의
+								<em>(선택)</em>
+							</span>
+							<p class="agree-chk">
+								<span class="agree-chkbox">
+									<input type="checkbox" name="cc" id="c5">
+									<label for="c5">
+										<!--<span></span>-->
+									</label>
+								</span>
+							</p>
+						</div>
+					</div>
+				</td>
+			</tr>
+			<tr id="page2">
+				<th colspan="2"><input class="submit" type="submit" value="가입 완료" onclick="sendit();"></th>
+			</tr>
+		</table>
+	</form>
+</div>
+<!-- Footer -->
+<footer id="footer">
+	<div class="inner">
+		<p class="copyright">&copy; Untitled Corp. All rights reserved. Lorem ipsum dolor sit amet feugiat tempus aliquam.</p>
+		<ul class="menu">
+			<li><a href="#">Terms<span> of Use</span></a></li>
+			<li><a href="/adminmypage/adminmypage_list">Privacy<span> Policy</span></a></li>
+			<li><a href="#">Legal<span> Information</span></a></li>
+		</ul>
+	</div>
+</footer>
+
+<!-- Scripts -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/jquery.dropotron.min.js"></script>
+<script src="assets/js/jquery.scrollex.min.js"></script>
+<script src="assets/js/browser.min.js"></script>
+<script src="assets/js/breakpoints.min.js"></script>
+<script src="assets/js/util.js"></script>
+<script src="assets/js/main.js"></script>
+
+
+<script src="assets/js/util_sub.js"></script>
+<script src="assets/js/main_sub.js"></script>
+
+<script src="assets/js/sidebar.js"></script>
+<script th:src="@{/assets/js/user.js}"></script>
+
+
+
+
+</body>
+
+
