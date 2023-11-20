@@ -3,13 +3,16 @@ package com.kh.demo.controller;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.kh.demo.domain.dto.*;
+import com.kh.demo.service.BoardService;
 import com.kh.demo.service.ChallengeService;
+import com.kh.demo.service.TrainerService;
 import com.kh.demo.service.UserMyPageService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -23,11 +26,20 @@ import java.util.List;
 @RequestMapping("/challenge/*")
 public class ChallengeController {
 
+
     @Autowired
     private ChallengeService challService;
 
     @Autowired
     private UserMyPageService umpService;
+
+    @Autowired
+    @Qualifier("BoardServiceImpl")
+    private BoardService boardservice;
+
+    @Autowired
+    @Qualifier("TrainerServiceImpl")
+    private TrainerService tservice;
 
     @GetMapping("#")
     public void replace(){}
@@ -76,6 +88,13 @@ public class ChallengeController {
         Criteria noticeCri = new Criteria(noticePagenum,noticeAmount);
         List<ChallCertBoardDTO> list = challService.getChallList(cri);
         List<ChallNoticeBoardDTO> noticeList = challService.getChallNoticeList(noticeCri, challCategory, challTerm);
+        //인기게시글 띄우기
+        List<BoardDTO> boardTop5List = boardservice.getBoardTop5List();
+        // 트레이너 랭킹
+        List<TrainerDTO> trainerTop5List= tservice.getTrainerTop5List();
+        model.addAttribute("trainerTop5List",trainerTop5List);
+        model.addAttribute("boardTop5List",boardTop5List);
+
         model.addAttribute("challCategory",challCategory);
         model.addAttribute("challTerm",challTerm);
         model.addAttribute("list",list);
