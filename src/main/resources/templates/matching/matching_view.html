@@ -6,236 +6,302 @@
 -->
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>Fit Hub</title>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-  <link rel="stylesheet" th:href="@{/assets/css/index.css}" />
-  <link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
-  <noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
-  <link rel="stylesheet" th:href="@{/assets/css/common.css}" />
+    <title>Fit Hub</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+    <link rel="stylesheet" th:href="@{/assets/css/index.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/sidebar.css}"/>
+    <noscript>
+        <link rel="stylesheet" th:href="@{/assets/css/noscript.css}"/>
+    </noscript>
+    <link rel="stylesheet" th:href="@{/assets/css/common.css}"/>
 
-  <!-- Modal -->
-  <link rel="stylesheet" th:href="@{/assets/css/matchingModal.css}">
-  <link rel="stylesheet" th:href="@{/assets/css/profileModal.css}">
+    <!-- Modal -->
+    <link rel="stylesheet" th:href="@{/assets/css/matchingModal.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/profileModal.css}">
 
 </head>
 <style>
-  .header_box {
-    width: 100%;
-    background: linear-gradient(to right, rgba(143, 167, 70, 0.25), rgba(143, 167, 70, 0.3)), url(/images/test3.png);
-    background-size: cover;
-    background-position:  0 65%;
-  }
-  .top_img_box{
-      width: 100%;
-      height: 310px;
-      margin-bottom: 50px;
-      background-color: red;
-  }
-
-  .top_img_box > img {
-      width: 100%;
-      height: 100%;
-  }
-
-  #main {
-      padding: 0;
-  }
-
-  .wrapper {
-      padding: 0;
-      margin-bottom: 100px;
-  }
-
-  #header {
-      <!--background-color: #5a8100;-->
-  }
-
-  #header nav > ul > li a {
-      color: white;
-  }
-
-  #header h1 a {
-      color: white;
-  }
-
-  #header .main ul li > a {
-      color: white;
-
-  }
-
-  #footer {
-      background-color: #304400;
-  }
-
-
-
-
-.write_table{
-  border: none;
-}
-  .write_table tr{
-      border-top: none;
-      border-bottom: 1px solid gray;
-      background-color: white !important;
-      height: 50px;
-  }
-.write_table:hover {
-    transform: scale(1.04);
-    transition: transform 0.2s;
-    box-shadow: 8px 8px 11px rgba(0, 0, 0, 0.3); /* 그림자 효과 추가 */
-
-}
-
-.write_table:active {
-    transform: scale(1.04);
-}
-  .write_table tr:hover{
-      background-color: #ebede1 !important;
-       transition: transform 0.2s;
-  }
-
-.cotent_header{
-  font-size: 30px;
-  font-weight:bold;
-  margin-bottom: 50px;
-}
-#profileInfo{
-width: 350px;
-vertical-align: top;
-}
-#profileInfo img{
-max-width: 100%;
-    height: auto;
-    display: block; /* 이미지 사이에 생기는 여백을 제거하기 위해 추가 */
-    margin: auto; /* 이미지를 가운데 정렬하기 위해 추가 */
-}
-#careerInfo{
-width: 700px;
- height: 270px;
-}
-#careerInfo img{
-  margin: auto;
-  width: 200px;
- height: 250px;
-}
-#careerInfo img:hover{
-  transform: scale(1.5);
-    transition: transform 0.2s;
-}
-#content_title th{
- padding-top: 20px;
-}
-.careerPic th{
-background-color: white !important;
-border-top: none;
-border-bottom: 1px solid black;
-margin-bottom : 15px;
-}
-.careerPic tr{
-border-top: none;
-
-}
-.button_table{
-
-  background-color: white !important;
-}
-.button_table tr{
-  border: none;
-  background-color: white !important;
-  height: 80px;
-}
-
-.button_table tr td a{
- border: 1px solid gray;
- border-radius: 20px;
- padding: 15px;
-  box-shadow: 5px 5px 8px rgba(0, 0, 0, 0.3); /* 그림자 효과 추가 */
-}
-.button_table tr td a:hover{
-    background-color: #ebede1 !important;
-       transition: transform 0.4s;
-       font-weight:bold;
-}
-#review_userid{
-  border:none;
-  font-weight: bold;
-}
-#review_textarea{
-margin-top: 20px;
-}
-.review_result a{
-border-radius: 15px;
-}
-.review_result h4:after{
-  border-bottom: none;
-}
-#finish_button{
-  margin-top: 40px;
-}
-.open:hover{
-	color: red;
-	font-weight:bold;
-}
-
-
-
-
-
-<!-- star rating -->
-.rating {
-  unicode-bidi: bidi-override;
-  direction: rtl;
-  text-align: center;
-}
-
-.star {
-  display: inline-block;
-  margin: 0 5px;
-  font-size: 24px;
-  cursor: pointer;
-  color: #ccc;
-}
-
-.star.active,
-.star:hover {
-  color: #ffcc00;
-}
-
-
-
-
-
-
-
-
-
-
-<!-- sidebar -->
-.sidebar .ranking {
-        margin-bottom: 69px;
+    .header_box {
+        width: 100%;
+        background: linear-gradient(to right, rgba(143, 167, 70, 0.25), rgba(143, 167, 70, 0.3)), url(/images/test3.png);
+        background-size: cover;
+        background-position: 0 65%;
+    }
+    .wrapper.sidebar > .inner > .content{
+        width: 75%
     }
 
-    .ranking table tr td {
+    #side_box{
+        width: 25%;
+    }
+
+    #side_box table tbody tr:nth-child(2n + 1) {
+        background-color: #FFFFFF;
+    }
+
+    .top_img_box {
+        width: 100%;
+        height: 310px;
+        margin-bottom: 50px;
+        background-color: red;
+    }
+
+    .top_img_box > img {
+        width: 100%;
+        height: 100%;
+    }
+
+    #main {
+        padding: 0;
+    }
+
+    .wrapper {
+        padding: 0;
+        margin-bottom: 100px;
+    }
+
+    #header {
+    <!-- background-color: #5a8100;
+    -->
+    }
+
+    #header nav > ul > li a {
+        color: white;
+    }
+
+    #header h1 a {
+        color: white;
+    }
+
+    #header .main ul li > a {
+        color: white;
+
+    }
+
+    #footer {
+        background-color: #304400;
+    }
+
+
+    .write_table {
+        border: none;
+    }
+
+    .write_table tr {
+        border-top: none;
+        border-bottom: 1px solid gray;
+        background-color: white !important;
+        height: 50px;
+    }
+
+    .write_table:hover {
+        transform: scale(1.04);
+        transition: transform 0.2s;
+        box-shadow: 8px 8px 11px rgba(0, 0, 0, 0.3); /* 그림자 효과 추가 */
+
+    }
+
+    .write_table:active {
+        transform: scale(1.04);
+    }
+
+    .write_table tr:hover {
+        background-color: #ebede1 !important;
+        transition: transform 0.2s;
+    }
+
+    .cotent_header {
+        font-size: 30px;
+        font-weight: bold;
+        margin-bottom: 50px;
+    }
+
+    #profileInfo {
+        width: 350px;
+        vertical-align: top;
+    }
+
+    #profileInfo img {
+        max-width: 100%;
+        height: auto;
+        display: block; /* 이미지 사이에 생기는 여백을 제거하기 위해 추가 */
+        margin: auto; /* 이미지를 가운데 정렬하기 위해 추가 */
+    }
+
+    #careerInfo {
+        width: 700px;
+        height: 270px;
+    }
+
+    #careerInfo img {
+        margin: auto;
+        width: 200px;
+        height: 250px;
+    }
+
+    #careerInfo img:hover {
+        transform: scale(1.5);
+        transition: transform 0.2s;
+    }
+
+    #content_title th {
+        padding-top: 20px;
+    }
+
+    .careerPic th {
+        background-color: white !important;
+        border-top: none;
+        border-bottom: 1px solid black;
+        margin-bottom: 15px;
+    }
+
+    .careerPic tr {
+        border-top: none;
+
+    }
+
+    .button_table {
+
+        background-color: white !important;
+    }
+
+    .button_table tr {
+        border: none;
+        background-color: white !important;
+        height: 80px;
+    }
+
+    .button_table tr td a {
+        /*border: 1px solid gray;*/
+        /*border-radius: 20px;*/
+        padding: 15px;
+        /*box-shadow: 5px 5px 8px rgba(0, 0, 0, 0.3); !* 그림자 효과 추가 *!*/
+    }
+
+    .button_table tr td a:hover {
+        /*background-color: #ebede1 !important;*/
+        transition: transform 0.4s;
+        font-weight: bold;
+    }
+
+    #review_userid {
+        border: none;
+        font-weight: bold;
+    }
+
+    #review_textarea {
+        margin-top: 20px;
+    }
+
+    .review_result a {
+        border-radius: 15px;
+    }
+
+    .review_result h4:after {
+        border-bottom: none;
+    }
+
+    #finish_button {
+        margin-top: 40px;
+    }
+
+    .open:hover {
+        color: red;
+        font-weight: bold;
+    }
+
+
+    <!--
+    star rating
+
+    -->
+    .rating {
+        unicode-bidi: bidi-override;
+        direction: rtl;
         text-align: center;
-        background: #FFFFFF;
-        overflow: hidden;
-        text-overflow: ellipsis
     }
 
-    .ranking table tr td {
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        max-width: 160px;
+    .star {
+        display: inline-block;
+        margin: 0 5px;
+        font-size: 24px;
+        cursor: pointer;
+        color: #ccc;
     }
-   .sidebar {
-        /*margin-top: 100px;*/
+
+    .star.active,
+    .star:hover {
+        color: #ffcc00;
     }
+
+    a.btnColor{
+        background: #FFFFFF;
+        border: 1px solid #5a8100;
+        border-radius: 4px;
+        color: #5a8100 !important;
+        box-shadow: 4px 4px 2px 0px rgb(203,211,177);
+
+    }
+    a.btnColor:hover{
+        background: #5a8100;
+        border: 1px solid #5a8100;
+        border-radius: 4px;
+        color: #F7FAF5 !important;
+        box-shadow: 0 0 2px #5a8100;
+
+    }
+    #side_box .rankBox input[type=button].rankBtn {
+        border-radius: 38px !important;
+        border: 1px solid;
+        box-shadow: 4px 4px 2px 0px #5a8100 !important;
+    }
+
+    #side_box .rankBox input[type=button].rankBtn:hover {
+        color: #444 !important;
+        background-color: #ebede1; !important;
+    }
+    #side_box .open:hover {
+        color: #5a8100;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    .rankBox:first-child td a{
+        cursor: default !important;
+    }
+
+
+
+    <!--
+    sidebar
+
+    -->
+    /*.sidebar .ranking {*/
+    /*    margin-bottom: 69px;*/
+    /*}*/
+
+    /*.ranking table tr td {*/
+    /*    text-align: center;*/
+    /*    background: #FFFFFF;*/
+    /*    overflow: hidden;*/
+    /*    text-overflow: ellipsis*/
+    /*}*/
+
+    /*.ranking table tr td {*/
+    /*    text-overflow: ellipsis;*/
+    /*    white-space: nowrap;*/
+    /*    max-width: 160px;*/
+    /*}*/
+
+    /*.sidebar {*/
+    /*    !*margin-top: 100px;*!*/
+    /*}*/
 
 </style>
 
 <!-- Header -->
-<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin})}"></th:block>
+<th:block
+        th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin})}"></th:block>
 
 <!-- Modal -->
 <th:block th:replace="~{layout/matchingModal::matchingModal()}"></th:block>
@@ -244,240 +310,221 @@ border-radius: 15px;
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">
 
-  <div class="header_box">
-    <header class="test12">
-      <p id="mainText">트레이너 매칭</p>
-      <p id="subText">매칭 글 페이지</p>
-    </header>
-  </div>
+    <div class="header_box">
+        <header class="test12">
+            <p id="mainText">트레이너 매칭</p>
+            <p id="subText">매칭 글 페이지</p>
+        </header>
+    </div>
 
-  <div class="inner">
+    <div class="inner">
 
-    <!-- Content -->
-    <div class="content">
-      <th:block th:if="${list != null}" th:each="board : ${list}">
-        <div class="cotent_header"><span>[[${trainerInfo.trainerNickname}]]님의 글입니다</span></div>
+        <!-- Content -->
+        <div class="content">
+            <th:block th:if="${list != null}" th:each="board : ${list}">
+                <div class="cotent_header"><span>[[${trainerInfo.trainerNickname}]]님의 글입니다</span></div>
 
-        <form>
-        <!-- 글작성 테이블 -->
-        <div>
+                <form>
+                    <!-- 글작성 테이블 -->
+                    <div>
 
-          <table class="write_table" style="border-collapse: collapse;" border="2">
-            <tr>
-              <th>제목</th>
-              <th>만료일시 : </th>
-              <th>[[${board.expirationTime}]]</th>
-            </tr>
-            <tr>
-              <td colspan="3">
-                <input type="text" name="boardTitle" size="50" maxlength="50" th:value="${board.boardTitle}" readonly>
-              </td>
-            </tr>
-            <tr>
-              <th rowspan="6" id="profileInfo">
-                <th:block th:if="${profileInfo != null}">
-                  <div style="display:flex; justify-content:center;">
-                    <img style="width:100%; height:100%;" th:src="@{/matching/thumbnail (sysName=${profileInfo.sysName})}">
-                  </div>
-              </th:block></th>
-              <th>트레이너</th>
-              <td><a href="#" class="open">[[${trainerInfo.trainerNickname}]]</a></td>
-            </tr>
-            <tr>
-              <th>
-                상담가능시간
-              </th>
-              <td>
-                [[${board.availConsultWeeks}]]
-                [[${board.availConsultTime}]]
-              </td>
-            </tr>
-            <tr>
-              <th>파트</th>
-              <th>경력</th>
-            </tr>
-            <tr>
-              <th>[[${trainerInfo.trainerPart}]]</th>
-              <th>[[${trainerInfo.trainerCareer}]]</th>
-            </tr>
-            <tr>
-              <th colspan="2" >트레이너 소개</th>
-            </tr>
-            <tr>
-              <th colspan="2" >[[${trainerInfo.trainerIntro}]]</th>
-            </tr>
-            <tr>
-              <th colspan="3">트레이너의 위치</th>
-            </tr>
-            <tr>
-              <th colspan="3">[[${board.trainerAddr}]]</th>
-            </tr>
-            <tr>
-              <th colspan="3">
-              <div id="map" style="width:100%;height:350px;"></div>
-              <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9d457fe0b04b983671f48d03d84f2fdb&libraries=services"></script>
-              <script>
-                var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-                    mapOption = {
-                        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-                        level: 3 // 지도의 확대 레벨
-                    };
+                        <table class="write_table" style="border-collapse: collapse;" border="2">
+                            <tr>
+                                <th>제목</th>
+                                <th>만료일시 :</th>
+                                <th>[[${board.expirationTime}]]</th>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <input type="text" name="boardTitle" size="50" maxlength="50"
+                                           th:value="${board.boardTitle}" readonly>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th rowspan="6" id="profileInfo">
+                                    <th:block th:if="${profileInfo != null}">
+                                        <div style="display:flex; justify-content:center;">
+                                            <img style="width:100%; height:100%;"
+                                                 th:src="@{/matching/thumbnail (sysName=${profileInfo.sysName})}">
+                                        </div>
+                                    </th:block>
+                                </th>
+                                <th>트레이너</th>
+                                <td><a href="#" class="open">[[${trainerInfo.trainerNickname}]]</a></td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    상담가능시간
+                                </th>
+                                <td>
+                                    [[${board.availConsultWeeks}]]
+                                    [[${board.availConsultTime}]]
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>파트</th>
+                                <th>경력</th>
+                            </tr>
+                            <tr>
+                                <th>[[${trainerInfo.trainerPart}]]</th>
+                                <th>[[${trainerInfo.trainerCareer}]]</th>
+                            </tr>
+                            <tr>
+                                <th colspan="2">트레이너 소개</th>
+                            </tr>
+                            <tr>
+                                <th colspan="2">[[${trainerInfo.trainerIntro}]]</th>
+                            </tr>
+                            <tr>
+                                <th colspan="3">트레이너의 위치</th>
+                            </tr>
+                            <tr>
+                                <th colspan="3">[[${board.trainerAddr}]]</th>
+                            </tr>
+                            <tr>
+                                <th colspan="3">
+                                    <div id="map" style="width:100%;height:350px;"></div>
+                                    <script type="text/javascript"
+                                            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9d457fe0b04b983671f48d03d84f2fdb&libraries=services"></script>
+                                    <script>
+                                        var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+                                            mapOption = {
+                                                center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                                                level: 3 // 지도의 확대 레벨
+                                            };
 
-                // 지도를 생성합니다
-                var map = new kakao.maps.Map(mapContainer, mapOption);
+                                        // 지도를 생성합니다
+                                        var map = new kakao.maps.Map(mapContainer, mapOption);
 
-                // 주소-좌표 변환 객체를 생성합니다
-                var geocoder = new kakao.maps.services.Geocoder();
+                                        // 주소-좌표 변환 객체를 생성합니다
+                                        var geocoder = new kakao.maps.services.Geocoder();
 
-                var address = '[[${board.trainerAddr}]]';
+                                        var address = '[[${board.trainerAddr}]]';
 
 
-                // 주소로 좌표를 검색합니다
-                geocoder.addressSearch(address, function(result, status) {
+                                        // 주소로 좌표를 검색합니다
+                                        geocoder.addressSearch(address, function (result, status) {
 
-                    // 정상적으로 검색이 완료됐으면
-                     if (status === kakao.maps.services.Status.OK) {
+                                            // 정상적으로 검색이 완료됐으면
+                                            if (status === kakao.maps.services.Status.OK) {
 
-                        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+                                                var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 
-                        // 결과값으로 받은 위치를 마커로 표시합니다
-                        var marker = new kakao.maps.Marker({
-                            map: map,
-                            position: coords
-                        });
+                                                // 결과값으로 받은 위치를 마커로 표시합니다
+                                                var marker = new kakao.maps.Marker({
+                                                    map: map,
+                                                    position: coords
+                                                });
 
-                        // 인포윈도우로 장소에 대한 설명을 표시합니다
-                        var infowindow = new kakao.maps.InfoWindow({
-                            content: '<div style="width:150px;text-align:center;padding:6px 0;">[[${trainerInfo.trainerNickname}]]</div>'
-                        });
-                        infowindow.open(map, marker);
+                                                // 인포윈도우로 장소에 대한 설명을 표시합니다
+                                                var infowindow = new kakao.maps.InfoWindow({
+                                                    content: '<div style="width:150px;text-align:center;padding:6px 0;">[[${trainerInfo.trainerNickname}]]</div>'
+                                                });
+                                                infowindow.open(map, marker);
 
-                        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-                        map.setCenter(coords);
-                    }
-                });
-              </script>
-              </th>
-            </tr>
-            <tr>
-              <th colspan="3">내용</th>
-            </tr>
-            <tr style="height:380px;" id="content_tr">
-              <td colspan="3">
-                <textarea name="boardContent" style="width:100%;height:350px;resize:none;" readonly>[[${board.boardContent}]]</textarea>
-              </td>
-            </tr>
-          </table>
-          <table class="careerPic">
-            <tr>
-              <th>경력 및 자격 사진</th>
-            </tr>
-          </table>
-          <div>
-            <div id="careerInfo">
-              <th:block th:if="${careerInfo != null}">
-                <img th:src="@{/matching/thumbnail (sysName=${careerInfo.sysName})}">
-              </th:block>
-            </div>
-          </div>
-        </div>
-      </form>
-
-      <!-- 등록, 목록 버튼 테이블 -->
-        <table class="button_table">
-          <tr align="right" valign="middle">
-            <td colspan="2">
-              <th:block th:if="${board.trainerId == session.loginUser}">
-                <form name="BoardPageForm" method="post" th:action="@{/matching/remove}">
-                  <input name="boardNum" th:value="${board.boardNum}" type="hidden">
-                  <input name="pagenum" th:value="${cri.pagenum}" type="hidden">
-                  <input name="amount" th:value="${cri.amount}" type="hidden">
-                  <input name="type" th:value="${cri.type}" type="hidden">
-                  <input name="keyword" th:value="${cri.keyword}" type="hidden">
-                  <a href="javascript:modify()">수정</a>
-                  <a href="javascript:document.BoardPageForm.submit()">삭제</a>
+                                                // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+                                                map.setCenter(coords);
+                                            }
+                                        });
+                                    </script>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th colspan="3">내용</th>
+                            </tr>
+                            <tr style="height:380px;" id="content_tr">
+                                <td colspan="3">
+                                    <textarea name="boardContent" style="width:100%;height:350px;resize:none;" readonly>[[${board.boardContent}]]</textarea>
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="careerPic">
+                            <tr>
+                                <th>경력 및 자격 사진</th>
+                            </tr>
+                        </table>
+                        <div>
+                            <div id="careerInfo">
+                                <th:block th:if="${careerInfo != null}">
+                                    <img th:src="@{/matching/thumbnail (sysName=${careerInfo.sysName})}">
+                                </th:block>
+                            </div>
+                        </div>
+                    </div>
                 </form>
-              </th:block>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <a href="#" class="open" data-trainer-id="${trainerInfo.trainerId}">신청하기</a>
-            </td>
-            <td>
-              <a th:href="${'/matching/matching_list'+cri.listLink}">목록</a>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <a href="#">좋아요</a>
-              <a href="#">북마크</a>
-            </td>
-            <td>
-              <a href="#">신고하기</a>
-            </td>
-          </tr>
+
+                <!-- 등록, 목록 버튼 테이블 -->
+                <table class="button_table">
+                    <tr align="right" valign="middle">
+                        <td colspan="2">
+                            <th:block th:if="${board.trainerId == session.loginUser}">
+                                <form name="BoardPageForm" method="post" th:action="@{/matching/remove}">
+                                    <input name="boardNum" th:value="${board.boardNum}" type="hidden">
+                                    <input name="pagenum" th:value="${cri.pagenum}" type="hidden">
+                                    <input name="amount" th:value="${cri.amount}" type="hidden">
+                                    <input name="type" th:value="${cri.type}" type="hidden">
+                                    <input name="keyword" th:value="${cri.keyword}" type="hidden">
+                                    <a class="btnColor" href="javascript:modify()">수정</a>
+                                    <a class="btnColor" href="javascript:document.BoardPageForm.submit()">삭제</a>
+                                </form>
+                            </th:block>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="#" class="open btnColor" data-trainer-id="${trainerInfo.trainerId}">신청하기</a>
+                        </td>
+                        <td>
+                            <a class="btnColor" th:href="${'/matching/matching_list'+cri.listLink}">목록</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="#" class="btnColor small">좋아요</a>
+                            <a href="# " class="btnColor small">북마크</a>
+                        </td>
+                        <td>
+                            <a href="#" class="btnColor">신고하기</a>
+                        </td>
+                    </tr>
 
 
-        </table>
-          <!-- review -->
-        <div class="reply_line">
-          <a href="#" class="regist">댓글 등록</a>
-          <div class="replyForm row">
-            <div style="width:20%">
-              <h4>작성자</h4>
-              <input type="text" name="userId" th:value="${session.loginUser}" readonly style="text-align: center;">
-            </div>
-            <div style="width:65%">
-              <h4>내 용</h4>
-              <div class="rating" data-star-rating="0">
-                <span class="star" data-rating="1">&#9733;</span>
-                <span class="star" data-rating="2">&#9733;</span>
-                <span class="star" data-rating="3">&#9733;</span>
-                <span class="star" data-rating="4">&#9733;</span>
-                <span class="star" data-rating="5">&#9733;</span>
-              </div>
-              <textarea name="replycontents" placeholder="리뷰를 작성해주세요" style="resize:none;"></textarea>
-            </div>
-            <div style="width:15%">
-              <a href="#" class="button finish" style="margin-bottom:1rem;">등록</a>
-              <a href="#" class="button cancel">취소</a>
-            </div>
-          </div>
-          <ul class="replies"></ul>
-          <div class="page"></div>
+                </table>
+                <!-- review -->
+                <div class="reply_line">
+                    <a href="#" class="regist">댓글 등록</a>
+                    <div class="replyForm row">
+                        <div style="width:20%">
+                            <h4>작성자</h4>
+                            <input type="text" name="userId" th:value="${session.loginUser}" readonly
+                                   style="text-align: center;">
+                        </div>
+                        <div style="width:65%">
+                            <h4>내 용</h4>
+                            <div class="rating" data-star-rating="0">
+                                <span class="star" data-rating="1">&#9733;</span>
+                                <span class="star" data-rating="2">&#9733;</span>
+                                <span class="star" data-rating="3">&#9733;</span>
+                                <span class="star" data-rating="4">&#9733;</span>
+                                <span class="star" data-rating="5">&#9733;</span>
+                            </div>
+                            <textarea name="replycontents" placeholder="리뷰를 작성해주세요" style="resize:none;"></textarea>
+                        </div>
+                        <div style="width:15%">
+                            <a href="#" class="button finish btnColor small" style="margin-bottom:1rem;">등록</a>
+                            <a href="#" class="button cancel btnColor small">취소</a>
+                        </div>
+                    </div>
+                    <ul class="replies"></ul>
+                    <div class="page"></div>
+                </div>
+            </th:block>
         </div>
-      </th:block>
-    </div>
-  </div>
 
-    <!-- Sidebar -->
-
-  <section>
-    <h3 class="side_ranking">인기 게시글 순위</h3>
-    <div class="ranking">
-      <div class="boardRanking_ranking">
-        <table style="width: 90%;">
-          <tr th:each="boardTop5List, dataStat :${boardTop5List}">
-            <td th:text="${dataStat.index+1}"></td>
-            <td>[[${boardTop5List.boardTitle}]]</td>
-          </tr>
-        </table>
-
-      </div>
+        <th:block th:replace="~{layout/rank_sidebar::sidebar}"></th:block>
     </div>
-    <h3 class="side_ranking">트레이너 구독 순위</h3>
-    <div class="ranking">
-      <div class="boardRanking_ranking">
-        <table style="width: 90%;">
-          <tr th:each="trainerTop5List, dataStat: ${trainerTop5List}">
-            <td th:text="${dataStat.index + 1}">1</td>
-            <td>[[${trainerTop5List.trainerId}]]</td>
-          </tr>
-        </table>
-      </div>
-    </div>
-  </section>
+
+
 </section>
 
 <!-- Footer -->
@@ -500,69 +547,67 @@ border-radius: 15px;
 <script th:src="@{/assets/js/matching_u_t_matching.js}"></script>
 
 
-
 <script th:src="@{/assets/js/review.js}"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script th:inline="javascript">
-  document.addEventListener("DOMContentLoaded", function () {
-    const stars = document.querySelectorAll(".rating .star");
-    const resultDiv = document.getElementById("result");
-    let selectedRating = 0;
+    document.addEventListener("DOMContentLoaded", function () {
+        const stars = document.querySelectorAll(".rating .star");
+        const resultDiv = document.getElementById("result");
+        let selectedRating = 0;
 
-    stars.forEach(function (star, index) {
-      star.addEventListener("click", function () {
-        selectedRating = parseInt(this.getAttribute("data-rating"));
-        resultDiv.textContent = `별점: ${selectedRating}`;
-        this.parentNode.setAttribute("data-star-rating", selectedRating);
-        resetStars();
-        highlightStars(index);
-      });
+        stars.forEach(function (star, index) {
+            star.addEventListener("click", function () {
+                selectedRating = parseInt(this.getAttribute("data-rating"));
+                resultDiv.textContent = `별점: ${selectedRating}`;
+                this.parentNode.setAttribute("data-star-rating", selectedRating);
+                resetStars();
+                highlightStars(index);
+            });
 
-      star.addEventListener("mouseover", function () {
-        const rating = parseInt(this.getAttribute("data-rating"));
-        highlightStars(rating - 1);
-      });
+            star.addEventListener("mouseover", function () {
+                const rating = parseInt(this.getAttribute("data-rating"));
+                highlightStars(rating - 1);
+            });
 
-      star.addEventListener("mouseout", function () {
-        resetStars();
-        highlightStars(selectedRating - 1);
-      });
+            star.addEventListener("mouseout", function () {
+                resetStars();
+                highlightStars(selectedRating - 1);
+            });
+        });
     });
-  });
 
-  function resetStars() {
-    const stars = document.querySelectorAll(".rating .star");
-    stars.forEach(function (star) {
-      star.classList.remove("active");
-    });
-  }
-
-  function highlightStars(index) {
-    const stars = document.querySelectorAll(".rating .star");
-    for (let i = 0; i <= index; i++) {
-      stars[i].classList.add("active");
+    function resetStars() {
+        const stars = document.querySelectorAll(".rating .star");
+        stars.forEach(function (star) {
+            star.classList.remove("active");
+        });
     }
-  }
+
+    function highlightStars(index) {
+        const stars = document.querySelectorAll(".rating .star");
+        for (let i = 0; i <= index; i++) {
+            stars[i].classList.add("active");
+        }
+    }
 
 
-  function modify() {
-    const BoardPageForm = document.BoardPageForm;
-    console.log(BoardPageForm);
+    function modify() {
+        const BoardPageForm = document.BoardPageForm;
+        console.log(BoardPageForm);
 
-    BoardPageForm.setAttribute("action",/*[[@{/matching/matching_modify}]]*/'');
-    BoardPageForm.setAttribute("method","get");
-    BoardPageForm.submit();
-  }
+        BoardPageForm.setAttribute("action",/*[[@{/matching/matching_modify}]]*/'');
+        BoardPageForm.setAttribute("method", "get");
+        BoardPageForm.submit();
+    }
 
 
-	$(".cancel").on("click",function(e){
-		e.preventDefault();
-		$(".replyForm").hide();
-		$(".regist").show();
-		$("[name='replyContents']").val("");
-	})
-
+    $(".cancel").on("click", function (e) {
+        e.preventDefault();
+        $(".replyForm").hide();
+        $(".regist").show();
+        $("[name='replyContents']").val("");
+    })
 
 
 </script>

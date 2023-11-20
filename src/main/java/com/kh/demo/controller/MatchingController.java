@@ -65,6 +65,12 @@ public class MatchingController {
     @GetMapping("matching_write")
     public void write(@ModelAttribute("cri") Criteria cri,Model model) {
         System.out.println(cri);
+        //인기게시글 띄우기
+        List<BoardDTO> boardTop5List = boardservice.getBoardTop5List();
+        // 트레이너 랭킹
+        List<TrainerDTO> trainerTop5List= tservice.getTrainerTop5List();
+        model.addAttribute("trainerTop5List",trainerTop5List);
+        model.addAttribute("boardTop5List",boardTop5List);
     }
 
     @PostMapping("matching_write")
@@ -87,6 +93,13 @@ public class MatchingController {
         ProfileDTO profileInfo = MatchingService.getProfileInfo(list.getTrainerId());
         ProfileDTO careerInfo = MatchingService.getCareerInfo(list.getTrainerId());
         TrainerDTO trainerInfo = MatchingService.getTrainerInfo(list.getTrainerId());
+
+        //인기게시글 띄우기
+        List<BoardDTO> boardTop5List = boardservice.getBoardTop5List();
+        // 트레이너 랭킹
+        List<TrainerDTO> trainerTop5List= tservice.getTrainerTop5List();
+        model.addAttribute("trainerTop5List",trainerTop5List);
+        model.addAttribute("boardTop5List",boardTop5List);
 
         model.addAttribute("cri",cri);
         model.addAttribute("profileInfo",profileInfo);

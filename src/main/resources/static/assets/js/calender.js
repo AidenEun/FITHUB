@@ -45,6 +45,7 @@ const renderCalender = () => {
         const condition = i >= firstDateIndex && i < lastDateIndex + 1
             ? 'this' : 'other';
         if (condition === 'this') {
+            // dates[i] = `<div class="date" onclick="choicedate(${viewYear},${viewMonth},${date})"><div class="hasdiary"></div><span class=${condition}>${date}</span></div>`;
             dates[i] = `<div class="date" onclick="choicedate(${viewYear},${viewMonth},${date})"><span class=${condition}>${date}</span></div>`;
         }
         else {
@@ -72,12 +73,30 @@ renderCalender();
 
 function choicedate(viewYear, viewMonth, date) {
 
+
     let viewrealMonth = viewMonth + 1;
     if (date < 10) date = "0" + date;
     if (viewrealMonth < 10) viewrealMonth = "0" + viewrealMonth;
     // $("#click_date").val(viewYear+"-"+(viewrealMonth)+"-"+date);
-    console.log(viewYear + "-" + (viewrealMonth) + "-" + date);
-    location.replace("/usermypage/checklist?choicedate=" + viewYear + "-" + viewrealMonth + "-" + date);
+
+    var today = new Date();
+    var year = today.getFullYear();
+    var month = ('0' + (today.getMonth() + 1)).slice(-2);
+    var day = ('0' + today.getDate()).slice(-2);
+    var todaydateString = year + '-' + month  + '-' + day;
+
+    const chociedate = viewYear + "-" + (viewrealMonth) + "-" + date;
+    if(chociedate <= todaydateString){
+        // console.log("과거");
+        location.replace("/usermypage/checklist?choicedate=" + viewYear + "-" + viewrealMonth + "-" + date);
+    }
+    else {
+        // console.log("미래");
+        alert("다이어리를 미리 작성할 수 없습니다.\n내일 다시 시도해 주세요!")
+    }
+    // console.log("클릭한 날짜:"+chociedate);
+    // console.log("오늘 날짜"+todaydateString);
+    // console.log(viewYear + "-" + (viewrealMonth) + "-" + date);
 }
 
 const prevMonth = () => {
