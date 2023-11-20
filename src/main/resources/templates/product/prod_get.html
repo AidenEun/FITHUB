@@ -30,9 +30,16 @@
 			width:360px !important;
 
 		}
+		img{
+			width:360px !important;
+		}
 
 		.board_area tr td{
 			border-color: transparent;
+			vertical-align:top !important;
+		}
+		.board_area > tr{
+			vertical-align:top !important;
 		}
 		.board_area tr > td > input, textarea{
 			border-color: transparent;
@@ -49,10 +56,12 @@
 		.boardTitle{
 			font-weight: 700 !important;
     		font-size: 20px !important;
-    		display: block !important;
-        	width: 100%;
         	box-sizing: border-box !important;
         	vertical-align:top;
+			width: 100%; /* 입력 상자의 너비를 조정하여 수평으로 확장되도록 설정합니다. */
+			height: auto; /* 높이를 자동으로 설정하여 텍스트가 세로로 표시되도록 합니다. */
+			display: block; /* 입력 상자를 블록 요소로 표시하여 너비 조정이 제대로 적용되도록 합니다. */
+			resize: none; /* 사용자가 입력 상자 크기를 조정할 수 없도록 설정합니다. */
 		}
 
 		.button_table tr > td{
@@ -61,28 +70,31 @@
 		.button_table tr > td > button{
 			border: 0.8px solid black;
 			border-radius: 10px;
+
+		.button.btnColor{
+			background: #FFFFFF;
+			border: 1px solid #5a8100;
+			border-radius: 4px;
+			color: #5a8100 !important;
+			box-shadow: 4px 4px 2px 0px rgb(203,211,177);
+			font-weight: 700 !important;
+			height: 2.75em !important;
+			line-height: 2.75em !important;
+			margin-left: 10px;
 		}
-		.button{
-			padding: 0;
-			border-radius: 10px;
-			height: 30px;
-			width: 60px;
-			vertical-align: middle;
-			background-color: #5a8100;
-			color: white !important;
-			line-height: 30px;
-			box-shadow: none;
+		.button.btnColor a{
+			color: #5a8100;
 		}
-		.button > a{
-			display: block;
-			width: 100%;
-			line-height: 30px;
-			text-align: center;
-			color: white;
+		.button.btnColor:hover a { color:#F7FAF5; }
+
+		.button.btnColor:hover{
+			background: #5a8100;
+			border: 1px solid #5a8100;
+			border-radius: 4px;
+			color: #F7FAF5 !important;
+			box-shadow: 0 0 2px #5a8100;
 		}
-		.button:hover {
-			background-color: rgb(203,211,177);
-		}
+
 		.replyForm input{
 			border: none;
 			background-color: #5a8100;
@@ -168,13 +180,13 @@
 								</a>
 							</td>
 							<!-- 제목 -->
-							<td class="boardTitle" width="390px" style="vertical-align:top;">
+							<td class="boardTitle" width="390px" style="vertical-align:top; height:30%;">
 								<input class="boardTitle" type="text" name="boardTitle" th:value="${board.boardTitle}" readonly>
 							</td>
 						</tr>
 						<tr>
 							<!-- 내용 -->
-							<td width="390px">
+							<td width="390px" height="70%">
 								<input class="boardContent" type="text" name="boardContent" th:value="${board.boardContent}" readonly>
 							</td>
 						</tr>
@@ -202,14 +214,17 @@
 									<input name="keyword" th:value="${cri.keyword}" type="hidden">
 									<input name="keyword" th:value="${cri.category}" type="hidden">
 
-									<a class="button" href="javascript:modify()">수정</a>
-									<a class="button" href="javascript:document.boardForm.submit()">삭제</a>
+									<a class="button btnColor small" href="javascript:modify()">수정</a>
+									<a class="button btnColor small" href="javascript:document.boardForm.submit()">삭제</a>
 								</form>
 							</th:block>
 							<div class="btn_area">
-								<a class="button btnColor" style="float:left;">좋아요</a>
-								<a class="button btnColor" style="float:left;margin-left:10px;">북마크</a>
-								<a class="button btnColor" th:href="${'/product'+cri.prodBoardListLink}">목록</a>
+								<a class="button btnColor small" style="float:left;">좋아요</a>
+								<a class="button btnColor small" style="float:left;margin-left:10px;">북마크</a>
+								<span th:switch="${board.category}">
+									<span th:case="'prodFood'"><a class="button btnColor small" th:href="${'/product/prod_food'+cri.listLink}">목록</a></span>
+									<span th:case="'prodExer'"><a class="button btnColor small" th:href="${'/product/prod_exercise'+cri.listLink}">목록</a></span>
+								</span>
 							</div>
 						</td>
 					</tr>
@@ -229,8 +244,8 @@
 							<textarea name="replyContent" placeholder="댓글을 입력해주세요." style="resize:none; margin-top: 10px;"></textarea>
 						</div>
 						<div style="width:15%; margin-top: 10px;">
-							<a href="#" class="button finish" style="margin-top:25px; margin-bottom:1rem;">등록</a>
-							<a href="#" class="button cancel">취소</a>
+							<a href="#" class="button finish btnColor small" style="margin-top:25px; margin-bottom:1rem;">등록</a>
+							<a href="#" class="button cancel btnColor small">취소</a>
 						</div>
 					</div>
 					<ul class="replies"></ul>

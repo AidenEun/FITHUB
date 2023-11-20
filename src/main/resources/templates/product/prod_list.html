@@ -65,6 +65,29 @@
 		.prod_list{
 			width:20% !important;
 		}
+		.button.btnColor{
+			background: #FFFFFF;
+			border: 1px solid #5a8100;
+			border-radius: 4px;
+			color: #5a8100 !important;
+			box-shadow: 4px 4px 2px 0px rgb(203,211,177);
+			font-weight: 700 !important;
+			height: 2.75em !important;
+			line-height: 2.75em !important;
+			margin-left: 10px;
+		}
+		.button.btnColor a{
+			color: #5a8100;
+		}
+		.button.btnColor:hover a { color:#F7FAF5; }
+
+		.button.btnColor:hover{
+			background: #5a8100;
+			border: 1px solid #5a8100;
+			border-radius: 4px;
+			color: #F7FAF5 !important;
+			box-shadow: 0 0 2px #5a8100;
+		}
 	</style>
 </head>
 <body class="is-preload">
@@ -114,7 +137,7 @@
 						</tr>
 					</th:block>
 				</div>
-				<a class="button" th:href="${'/product/prod_food'}">더보기</a>
+				<a class="button btnColor small" th:href="${'/product/prod_food'}">더보기</a>
 			</div>
 			<hr>
 			<div class="prod_exer">
@@ -145,7 +168,7 @@
 						</tr>
 					</th:block>
 				</div>
-				<a class="button" th:href="${'/product/prod_exercise'}">더보기</a>
+				<a class="button btnColor small" th:href="${'/product/prod_exercise'}">더보기</a>
 			</div>
 			<hr>
 

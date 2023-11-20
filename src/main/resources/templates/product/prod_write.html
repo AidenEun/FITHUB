@@ -79,6 +79,30 @@
 		.note-editable > p{
 			margin-bottom: 0px;
 		}
+		.button.btnColor{
+			background: #FFFFFF;
+			border: 1px solid #5a8100;
+			border-radius: 4px;
+			color: #5a8100 !important;
+			box-shadow: 4px 4px 2px 0px rgb(203,211,177);
+			font-weight: 700 !important;
+			height: 2.75em !important;
+			line-height: 2.75em !important;
+			margin-left: 10px;
+		}
+		.button.btnColor a{
+			color: #5a8100;
+		}
+		.button.btnColor:hover a { color:#F7FAF5; }
+
+		.button.btnColor:hover{
+			background: #5a8100;
+			border: 1px solid #5a8100;
+			border-radius: 4px;
+			color: #F7FAF5 !important;
+			box-shadow: 0 0 2px #5a8100;
+
+		}
 	</style>
 </head>
 <body class="is-preload">
@@ -92,7 +116,7 @@
 	<div class="header_box">
 		<header class="test12">
 			<p id="mainText">제품</p>
-			<p id="subText">게시글 작성</p>
+			<p id="subText">제품 등록</p>
 		</header>
 	</div>
 
@@ -119,7 +143,7 @@
 				<!-- 글작성 테이블 -->
 				<table class="write_table">
 					<tr style="height:30px;">
-						<th>제목</th>
+						<th>제품명</th>
 						<td>
 							<input type="text" name="boardTitle" size="50" maxlength="50" placeholder="제품명을 입력하세요.">
 						</td>
@@ -131,10 +155,16 @@
 							<input type="text" name="adminId" size="50" maxlength="50" th:value="${session.loginUser}" readonly>
 						</td>
 					</tr>
-					<tr style="height:500px;">
-						<th>내 용</th>
+					<tr style="height:380px;">
+						<th>상세정보</th>
 						<td>
 							<textarea name="boardContent" style="width:100%;height:350px;resize:none;" ></textarea>
+						</td>
+					</tr>
+					<tr style="height:60px;">
+						<th>이미지 URL</th>
+						<td>
+							<textarea name="prodImg" style="width:100%;height:60px;resize:none;" ></textarea>
 						</td>
 					</tr>
 					<tr class="r0 at">
@@ -157,7 +187,7 @@
 				<tr align="center" valign="middle">
 					<td>
 						<a style="float: right;" class="button btnColor small" href="javascript:sendit()">등록</a> <!-- javascript의 sendit 함수 호출 -->
-						<a style="float: right; margin-right: 10px;" class="button btnColor small" th:href="${'/product'+cri.prodBoardListLink}">취소</a> <!-- cri.listLink를 붙여 목록으로 돌아가기 -->
+						<a style="float: right; margin-right: 10px;" class="button btnColor small" th:href="${'/product/prod_list'+cri.listLink}">취소</a>
 					</td>
 				</tr>
 			</table>
@@ -202,146 +232,146 @@
 
 <script>
 	let i = 0;
-	function upload(name){
-		$("#"+name).click();
-	}
-	//$(선택자).change(함수) : 해당 선택자의 요소에 변화가 일어난다면 넘겨주는 함수 호출
-	$("[type='file']").change(function(e){
-		//e : 파일이 업로드된 상황 자체를 담고있는 객체
-		//e.target : 파일이 업로드가 된 input[type=file] 객체(태그객체)
-		//e.target.files : 파일태그에 업로드를 한 파일 객체들의 배열
-		const file = e.target.files[0];
-		const fileTag = e.target;
+    function upload(name){
+        $("#"+name).click();
+    }
+    //$(선택자).change(함수) : 해당 선택자의 요소에 변화가 일어난다면 넘겨주는 함수 호출
+    $("[type='file']").change(function(e){
+        //e : 파일이 업로드된 상황 자체를 담고있는 객체
+        //e.target : 파일이 업로드가 된 input[type=file] 객체(태그객체)
+        //e.target.files : 파일태그에 업로드를 한 파일 객체들의 배열
+        const file = e.target.files[0];
+        const fileTag = e.target;
 
-		if(file == undefined){
-			//파일이 업로드 되었다가 없어진 경우
-			cancelFile(fileTag.id);
-		}
-		else{
-			//파일이 없었다가 업로드 한 경우
-			//#file0name
-			$("#"+fileTag.id+"name").text(file.name);
-			//업로드 된 파일의 확장자명
-			let ext = file.name.split(".").pop();
-			if(ext == 'jpeg' || ext == 'jpg' || ext == 'png' || ext == 'gif' || ext == 'webp'){
-				$("."+fileTag.id+"_cont .thumbnail").remove();
-				const reader = new FileReader();
+        if(file == undefined){
+            //파일이 업로드 되었다가 없어진 경우
+            cancelFile(fileTag.id);
+        }
+        else{
+            //파일이 없었다가 업로드 한 경우
+            //#file0name
+            $("#"+fileTag.id+"name").text(file.name);
+            //업로드 된 파일의 확장자명
+            let ext = file.name.split(".").pop();
+            if(ext == 'jpeg' || ext == 'jpg' || ext == 'png' || ext == 'gif' || ext == 'webp'){
+                $("."+fileTag.id+"_cont .thumbnail").remove();
+                const reader = new FileReader();
 
-				reader.onload = function(ie){
-					const img = document.createElement("img");
-					img.setAttribute("src",ie.target.result)
-					img.setAttribute("class","thumbnail");
-					document.querySelector("."+fileTag.id+"_cont").appendChild(img);
-				}
-				reader.readAsDataURL(file);
-			}
-			else{
-				const temp = $("."+fileTag.id+"_cont .thumbnail");
-				if(temp != null){
-					temp.remove();
-				}
-			}
-			//가장 마지막 파일 선택 버튼을 눌렀을 때
-			if(fileTag.id.split("e")[1] == i){
-				const cloneElement = $(".r"+i).clone(true);
-				i++;
-				cloneElement.appendTo("#boardForm tbody")
-				const lastElement = $("#boardForm tbody").children().last();
+                reader.onload = function(ie){
+                    const img = document.createElement("img");
+                    img.setAttribute("src",ie.target.result)
+                    img.setAttribute("class","thumbnail");
+                    document.querySelector("."+fileTag.id+"_cont").appendChild(img);
+                }
+                reader.readAsDataURL(file);
+            }
+            else{
+                const temp = $("."+fileTag.id+"_cont .thumbnail");
+                if(temp != null){
+                    temp.remove();
+                }
+            }
+            //가장 마지막 파일 선택 버튼을 눌렀을 때
+            if(fileTag.id.split("e")[1] == i){
+                const cloneElement = $(".r"+i).clone(true);
+                i++;
+                cloneElement.appendTo("#boardForm tbody")
+                const lastElement = $("#boardForm tbody").children().last();
 
-				lastElement.attr("class","r"+i+" at");
-				lastElement.children("th").text("파일 첨부"+(i+1));
-				lastElement.children("td").attr("class","file"+i+"_cont");
+                lastElement.attr("class","r"+i+" at");
+                lastElement.children("th").text("파일 첨부"+(i+1));
+                lastElement.children("td").attr("class","file"+i+"_cont");
 
-				lastElement.find("input[type='file']").attr("name","files");
-				lastElement.find("input[type='file']").attr("id","file"+i);
-				lastElement.find("input[type='file']").val("");
+                lastElement.find("input[type='file']").attr("name","files");
+                lastElement.find("input[type='file']").attr("id","file"+i);
+                lastElement.find("input[type='file']").val("");
 
-				lastElement.find("span").attr("id","file"+i+"name");
-				lastElement.find("span").text("선택된 파일 없음");
+                lastElement.find("span").attr("id","file"+i+"name");
+                lastElement.find("span").text("선택된 파일 없음");
 
-				lastElement.find("a")[0].href = "javascript:upload('file"+i+"')";
-				lastElement.find("a")[1].href = "javascript:cancelFile('file"+i+"')"
-			}
+                lastElement.find("a")[0].href = "javascript:upload('file"+i+"')";
+                lastElement.find("a")[1].href = "javascript:cancelFile('file"+i+"')"
+            }
 
-		}
-	})
+        }
+    })
 
-	function cancelFile(name){
-		//가장 마지막 첨부 삭제 버튼을 누른 경우
-		if(name.split("e")[1] == i){ return; }
-		//현재 업로드된 파일이 여러개일 때
-		if(i != 0){
-			//tr지우기
-			let temp = Number(name.split("e")[1]);
-			//해당 행 지우기
-			$(".r"+temp).remove();
-			//지워진 다음 행 부터 숫자 바꿔주기
-			for(let j=temp+1;j<=i;j++){
-				const el = $("#boardForm tbody").find(".r"+j);
-				el.attr("class","r"+(j-1)+" at");
+    function cancelFile(name){
+        //가장 마지막 첨부 삭제 버튼을 누른 경우
+        if(name.split("e")[1] == i){ return; }
+        //현재 업로드된 파일이 여러개일 때
+        if(i != 0){
+            //tr지우기
+            let temp = Number(name.split("e")[1]);
+            //해당 행 지우기
+            $(".r"+temp).remove();
+            //지워진 다음 행 부터 숫자 바꿔주기
+            for(let j=temp+1;j<=i;j++){
+                const el = $("#boardForm tbody").find(".r"+j);
+                el.attr("class","r"+(j-1)+" at");
 
-				el.children('th').text("파일 첨부"+j);
+                el.children('th').text("파일 첨부"+j);
 
-				el.children('td').attr("class","file"+(j-1)+"_cont");
+                el.children('td').attr("class","file"+(j-1)+"_cont");
 
-				const fileTag = el.find("input[type='file']");
-				fileTag.attr("name","file"+(j-1));
-				fileTag.attr("id","file"+(j-1));
+                const fileTag = el.find("input[type='file']");
+                fileTag.attr("name","file"+(j-1));
+                fileTag.attr("id","file"+(j-1));
 
-				el.find("span").attr("id","file"+(j-1)+"name");
+                el.find("span").attr("id","file"+(j-1)+"name");
 
-				el.find("a")[0].href = "javascript:upload('file"+(j-1)+"')"
-				el.find("a")[1].href = "javascript:cancelFile('file"+(j-1)+"')"
+                el.find("a")[0].href = "javascript:upload('file"+(j-1)+"')"
+                el.find("a")[1].href = "javascript:cancelFile('file"+(j-1)+"')"
 
-			}
-			i--;
-		}
-	}
+            }
+            i--;
+        }
+    }
 
-	function selectCategory(category) {
-		var selectedButton = document.querySelector('.button.active');
+    function selectCategory(category) {
+        var selectedButton = document.querySelector('.button.active');
 
-		if (selectedButton) {
-			if (selectedButton.getAttribute('onclick') === `selectCategory('${category}')`) {
-				selectedButton.classList.remove('active');
-				return ;
-			} else {
-				alert("카테고리를 하나만 선택하세요.");
-				return false;
-			}
-		}
-		var clickedButton = document.querySelector(`[onclick="selectCategory('${category}')"]`);
-		clickedButton.classList.toggle('active');
+        if (selectedButton) {
+            if (selectedButton.getAttribute('onclick') === `selectCategory('${category}')`) {
+                selectedButton.classList.remove('active');
+                return ;
+            } else {
+                alert("카테고리를 하나만 선택하세요.");
+                return false;
+            }
+        }
+        var clickedButton = document.querySelector(`[onclick="selectCategory('${category}')"]`);
+        clickedButton.classList.toggle('active');
 
-		console.log("선택된 카테고리:", category);
+        console.log("선택된 카테고리:", category);
 
-		document.boardForm.category.value = category;
-	}
+        document.boardForm.category.value = category;
+    }
 
-	function sendit(){
-		const boardForm = document.boardForm;
-		const category = boardForm.category;
-		if(category.value === ""){
-			alert("카테고리를 선택하세요!");
-			category.focus();
-			return false;
-		}
+    function sendit(){
+        const boardForm = document.boardForm;
+        const category = boardForm.category;
+        if(category.value === ""){
+            alert("카테고리를 선택하세요!");
+            category.focus();
+            return false;
+        }
 
-		const boardTitle = boardForm.boardTitle;
-		if(boardTitle.value === ""){
-			alert("제품명을 입력하세요!");
-			boardTitle.focus();
-			return false;
-		}
+        const boardTitle = boardForm.boardTitle;
+        if(boardTitle.value === ""){
+            alert("제품명을 입력하세요!");
+            boardTitle.focus();
+            return false;
+        }
 
-		const boardContent = boardForm.boardContent;
-		if(boardContent.value === ""){
-			alert("내용을 입력하세요!");
-			boardContent.focus();
-			return false;
-		}
+        const boardContent = boardForm.boardContent;
+        if(boardContent.value === ""){
+            alert("내용을 입력하세요!");
+            boardContent.focus();
+            return false;
+        }
 
-		boardForm.submit();
-	}
+        boardForm.submit();
+    }
 </script>
 </html>

@@ -227,9 +227,17 @@
 							<div class="displayNoneDiv boardCategory">[[${board.boardCategory}]]</div>
 							<div class="btn_area">
 								<th:block th:if="${board.userId != session.loginUser}">
-									<a class="button btnColor reportOpen">신고</a>
+									<a class="button btnColor small" style="float:left;">좋아요</a>
+									<a class="button btnColor small" style="float:left; margin-left:10px;">북마크</a>
+									<a class="button btnColor reportOpen" style="float:left; margin-left:10px;">신고</a>
 								</th:block>
-									<a class="button btnColor" th:href="${'/community/commu_list'+cri.listLink}">목록</a>
+								<span th:if="${board != null}" style="float: right;" th:switch="${board.boardCategory}">
+									<span th:case="'commuFree'"><a class="button btnColor small" th:href="${'/community/commu_free'+cri.listLink}">목록</a></span>
+									<span th:case="'commuExer'"><a class="button btnColor small" th:href="${'/community/commu_exercise'+cri.listLink}">목록</a></span>
+									<span th:case="'commuFood'"><a class="button btnColor small" th:href="${'/community/commu_food'+cri.listLink}">목록</a></span>
+									<span th:case="'commuGallery'"><a class="button btnColor small" th:href="${'/community/commu_gallery'+cri.listLink}">목록</a></span>
+									<span th:case="'commuQna'"><a class="button btnColor small" th:href="${'/community/commu_qna'+cri.listLink}">목록</a></span>
+								</span> <!-- cri.listLink를 붙여 목록으로 돌아가기 -->
 							</div>
 						</td>
 					</tr>

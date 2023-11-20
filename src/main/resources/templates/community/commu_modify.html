@@ -191,7 +191,13 @@
 				<tr align="right" valign="middle">
 					<td>
 						<a style="float: right;"  class="button btnColor small" href="javascript:document.boardForm.submit()">수정완료</a>
-						<a style="float: right; margin-right: 10px;" class="button btnColor small" th:href="${'/community/commu_list'+cri.listLink}">목록</a> <!-- cri.listLink를 붙여 목록으로 돌아가기 -->
+						<span th:if="${board != null}" style="float: right;" th:switch="${board.boardCategory}">
+							<span th:case="'commuFree'"><a class="button btnColor small" th:href="${'/community/commu_free'+cri.listLink}">목록</a></span>
+							<span th:case="'commuExer'"><a class="button btnColor small" th:href="${'/community/commu_exercise'+cri.listLink}">목록</a></span>
+							<span th:case="'commuFood'"><a class="button btnColor small" th:href="${'/community/commu_food'+cri.listLink}">목록</a></span>
+							<span th:case="'commuGallery'"><a class="button btnColor small" th:href="${'/community/commu_gallery'+cri.listLink}">목록</a></span>
+							<span th:case="'commuQna'"><a class="button btnColor small" th:href="${'/community/commu_qna'+cri.listLink}">목록</a></span>
+						</span> <!-- cri.listLink를 붙여 목록으로 돌아가기 -->
 					</td>
 				</tr>
 			</table>
@@ -427,5 +433,5 @@
 		document.boardForm.boardCategory.value = boardCategory;
 	}
 
-	</script>
+</script>
 </html>

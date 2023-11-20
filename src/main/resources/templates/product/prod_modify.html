@@ -13,24 +13,18 @@
 	<link rel="stylesheet" th:href="@{/assets/css/infoBoard.css}">
 	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
 	<link rel="stylesheet" th:href="@{/assets/css/common.css}" />
-	<script th:src="@{/assets/js/jquery.min.js}"></script>
-	<script th:src="@{/assets/js/jquery.dropotron.min.js}"></script>
-	<script th:src="@{/assets/js/jquery.scrollex.min.js}"></script>
-	<!-- summernote -->
-	<script th:src="@{/assets/js/summernote/summernote-lite.js}"></script>
-	<script th:src="@{/assets/js/summernote/lang/summernote-ko-KR.js}"></script>
-	<link rel="stylesheet" th:href="@{/assets/css/summernote/summernote-lite.css}">
+
 	<style>
-		.info_category {
+		.prod_category {
 			margin-bottom: 30px;
 		}
-		.info_category > h3{
+		.prod_category > h3{
 			margin: 0;
 		}
-		.info_category > h3:after{
+		.prod_category > h3:after{
 			border-bottom: none;
 		}
-		.info_category > .button{
+		.prod_category > .button{
 			border-radius: 38px;
 			padding: 0 13px;
 			height: 42px;
@@ -38,7 +32,7 @@
 			box-shadow: 0px 0px 5px rgb(203,211,177);
 			font-weight:100 !important;
 		}
-		.info_category .active {
+		.prod_category .active {
 			background: #ebede1;
 			padding: 0 15px;
 			box-shadow: 0 0 2px 1px #5a8100;
@@ -76,6 +70,7 @@
 		.button_table tr > td{
 			border: none;
 		}
+
 		.at > a{
 			display: block;
 			width: 100%;
@@ -84,29 +79,6 @@
 		}
 		.note-editable > p{
 			margin-bottom: 0px;
-		}
-		.button.btnColor{
-			background: #FFFFFF;
-			border: 1px solid #5a8100;
-			border-radius: 4px;
-			color: #5a8100 !important;
-			box-shadow: 4px 4px 2px 0px rgb(203,211,177);
-			font-weight: 700 !important;
-			height: 2.75em !important;
-			line-height: 2.75em !important;
-			margin-left: 10px;
-		}
-		.button.btnColor a{
-			color: #5a8100;
-		}
-		.button.btnColor:hover a { color:#F7FAF5; }
-
-		.button.btnColor:hover{
-			background: #5a8100;
-			border: 1px solid #5a8100;
-			border-radius: 4px;
-			color: #F7FAF5 !important;
-			box-shadow: 0 0 2px #5a8100;
 		}
 	</style>
 </head>
@@ -120,7 +92,7 @@
 
 	<div class="header_box">
 		<header class="test12">
-			<p id="mainText">정보</p>
+			<p id="mainText">제품</p>
 			<p id="subText">게시글 수정</p>
 		</header>
 	</div>
@@ -130,28 +102,27 @@
 		<!-- Content -->
 		<div class="content">
 
-			<form id="boardForm" method="post" name="boardForm" th:action="@{/info/info_modify}" enctype="multipart/form-data">
+			<form id="boardForm" method="post" name="boardForm" th:action="@{/product/prod_modify}" enctype="multipart/form-data">
 				<!-- 날아온 네개의 파라미터를 받아 놓음 -->
 				<input type="hidden" th:value="${cri.pagenum}" name="pagenum">
 				<input type="hidden" th:value="${cri.amount}" name="amount">
 				<input type="hidden" th:value="${cri.type}" name="type">
 				<input type="hidden" th:value="${cri.keyword}" name="keyword">
 				<input type="hidden" th:value="${board.boardNum}" name="boardNum">
-				<input type="hidden" th:value="${board.boardCategory}" name="boardCategory">
+				<input type="hidden" th:value="${board.category}" name="category">
 
 
-				<div class="info_category">
+				<div class="prod_category">
 					<h3>카테고리 선택</h3>
-					<div style="margin-right: 10px;" th:class="${(board.boardCategory == 'infoNews' ? 'active' : '') + ' button'}" onclick="selectCategory('infoNews')">뉴스</div>
-					<div style="margin-right: 10px;" th:class="${(board.boardCategory == 'infoFood' ? 'active' : '') + ' button'}" onclick="selectCategory('infoFood')">식단</div>
-					<div style="margin-right: 10px;" th:class="${(board.boardCategory == 'infoExer' ? 'active' : '') + ' button'}" onclick="selectCategory('infoExer')">운동</div>
-					<div th:class="${(board.boardCategory == 'infoTip' ? 'active' : '') + ' button'}" onclick="selectCategory('infoTip')">꿀팁</div>
+
+					<div style="margin-right: 10px;" th:class="${(board.category == 'prodFood' ? 'active' : '') + ' button'}" onclick="selectCategory('prodFood')">식품</div>
+					<div th:class="${(board.category == 'prodExer' ? 'active' : '') + ' button'}" onclick="selectCategory('prodExer')">운동도구</div>
 				</div>
 
 				<!-- 글작성 테이블 -->
 				<table class="write_table">
 					<tr style="height:30px;">
-						<th>제목</th>
+						<th>제품명</th>
 						<td>
 							<input type="text" name="boardTitle" size="50" maxlength="50" th:value="${board.boardTitle}">
 						</td>
@@ -163,17 +134,23 @@
 							<input type="text" name="userId" size="50" maxlength="50" th:value="${session.loginUser}" readonly>
 						</td>
 					</tr>
-					<tr style="height:500px;">
-						<th>내 용</th>
+					<tr style="height:380px;">
+						<th>상세정보</th>
 						<td>
-							<textarea id="summernote" name="boardContent" style="width:100%;height:350px;resize:none;" >[[${board.boardContent}]]</textarea>
+							<textarea name="boardContent" style="width:100%;height:350px;resize:none;" >[[${board.boardContent}]]</textarea>
 						</td>
 					</tr>
-					<tr th:class="${'r'+fileStat.index}" th:if="${files2 != null and files2.size() > 0}" th:each="file : ${files2}">
+					<tr style="height:60px;">
+						<th>이미지 URL</th>
+						<td>
+							<textarea name="prodImg" style="width:100%;height:60px;resize:none;" >[[${board.prodImg}]]</textarea>
+						</td>
+					</tr>
+					<tr th:class="${'r'+fileStat.index}" th:if="${files != null and files.size() > 0}" th:each="file : ${files}">
 						<th>파일 첨부[[${fileStat.index+1}]]</th>
 						<td th:class="${'file'+fileStat.index+'_cont'}">
 							<div style="float:left;">
-								<input type="file" name="files2" th:id="${'file'+fileStat.index}" style="display:none">
+								<input type="file" name="files" th:id="${'file'+fileStat.index}" style="display:none">
 								<span th:id="${'file'+fileStat.index+'name'}" th:text="${file.orgname}"></span>
 							</div>
 							<div style="float:right;">
@@ -184,23 +161,23 @@
 							<input type="hidden" name="orgname" th:value="${file.orgname}">
 							<th:block th:with="sar=${file.orgname.split('[.]')}">
 								<th:block th:with="ext=${sar[sar.length-1]}">
-									<img th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}" th:src="@{/info/thumbnail (systemname=${file.systemname})}" class="thumbnail">
+									<img th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}" th:src="@{/product/thumbnail (systemname=${file.systemname})}" class="thumbnail">
 								</th:block>
 							</th:block>
 						</td>
 					</tr>
-					<tr th:class="${'r'+files2.size()}">
-						<th style="vertical-align: middle">파일 첨부[[${files2.size()+1}]]</th>
-						<td th:class="${'file'+files2.size()+'_cont'}">
+					<tr th:class="${'r'+files.size()}">
+						<th style="vertical-align: middle">파일 첨부[[${files.size()+1}]]</th>
+						<td th:class="${'file'+files.size()+'_cont'}">
 							<div style="float:left;">
-								<input type="file" name="files2" th:id="${'file'+files2.size()}" style="display:none">
-								<span th:id="${'file'+files2.size()+'name'}">선택된 파일 없음</span>
+								<input type="file" name="files" th:id="${'file'+files.size()}" style="display:none">
+								<span th:id="${'file'+files.size()+'name'}">선택된 파일 없음</span>
 							</div>
 							<div style="float:right;">
 								<!-- <a href="javascript:upload('file9','')"> -->
-								<a class="button btnColor small" th:href="'javascript:upload(\'file'+${files2.size()}+'\',\'\')'">파일 선택</a>
+								<a class="button btnColor small" th:href="'javascript:upload(\'file'+${files.size()}+'\',\'\')'">파일 선택</a>
 								<!-- <a href="javascript:cancelFile('file9','')"> -->
-								<a class="button btnColor small" th:href="'javascript:cancelFile(\'file'+${files2.size()}+'\',\'\')'">첨부 삭제</a>
+								<a class="button btnColor small" th:href="'javascript:cancelFile(\'file'+${files.size()}+'\',\'\')'">첨부 삭제</a>
 							</div>
 						</td>
 					</tr>
@@ -209,15 +186,15 @@
 			</form>
 			<!-- 등록, 목록 버튼 테이블 -->
 			<table class="button_table">
+
 				<tr align="right" valign="middle">
 					<td>
-						<a style="float: right;" class="button btnColor small" href="javascript:document.boardForm.submit()">수정완료</a>
-						<span th:if="${board != null}" style="float: right;" th:switch="${board.boardCategory}">
-							<span th:case="'infoNews'"><a class="button btnColor small" th:href="${'/info/info_news'+cri.listLink}">목록</a></span>
-							<span th:case="'infoExer'"><a class="button btnColor small" th:href="${'/info/info_exercise'+cri.listLink}">목록</a></span>
-							<span th:case="'infoFood'"><a class="button btnColor small" th:href="${'/info/info_food'+cri.listLink}">목록</a></span>
-							<span th:case="'infoTip'"><a class="button btnColor small" th:href="${'/info/info_tip'+cri.listLink}">목록</a></span>
-						</span> <!-- cri.listLink를 붙여 목록으로 돌아가기 -->
+						<a style="float: right;"  class="button btnColor small" href="javascript:document.boardForm.submit()">수정완료</a>
+						<span th:if="${board != null}" style="float: right; margin-right: 10px;" th:switch="${board.category}">
+							<span th:case="'prodFood'"><a class="button btnColor small" th:href="${'/product/prod_food'+cri.listLink}">목록</a></span>
+							<span th:case="'prodExer'"><a class="button btnColor small" th:href="${'/product/prod_exercise'+cri.listLink}">목록</a></span>
+						</span>
+
 					</td>
 				</tr>
 			</table>
@@ -229,11 +206,9 @@
 				<div class="boardRanking">
 					<div class="boardRanking_ranking">
 						<table style="width: 90%;">
-							<tr><td><a href="/info/info_list">전체</a></td></tr>
-							<tr><td><a href="/info/info_news">뉴스</a></td></tr>
-							<tr><td><a href="/info/info_food">식단</a></td></tr>
-							<tr><td><a href="/info/info_exercise">운동</a></td></tr>
-							<tr><td><a href="/info/info_tip">꿀팁</a></td></tr>
+							<tr><td><a href="/product/prod_list">전체</a></td></tr>
+							<tr><td><a href="/product/prod_food">식품</a></td></tr>
+							<tr><td><a href="/product/prod_exercise">운동도구</a></td></tr>
 						</table>
 					</div>
 				</div>
@@ -247,6 +222,9 @@
 <th:block th:replace="~{layout/footer::footer}"></th:block>
 
 <!-- Scripts -->
+<script th:src="@{/assets/js/jquery.min.js}"></script>
+<script th:src="@{/assets/js/jquery.dropotron.min.js}"></script>
+<script th:src="@{/assets/js/jquery.scrollex.min.js}"></script>
 <script th:src="@{/assets/js/browser.min.js}"></script>
 <script th:src="@{/assets/js/breakpoints.min.js}"></script>
 <script th:src="@{/assets/js/util.js}"></script>
@@ -257,41 +235,10 @@
 
 <script th:src="@{/assets/js/sidebar.js}"></script>
 <script th:src="@{/assets/js/profile.js}"></script>
-
 </body>
+
 <script>
-	<!-- summernote	-->
-	$('#summernote').summernote({
-		// 에디터 높이
-		height: 370,
-		// 에디터 한글 설정
-		lang: "ko-KR",
-		// 에디터에 커서 이동 (input창의 autofocus라고 생각)
-		focus : true,
-		toolbar: [
-			// 글꼴 설정
-			['fontname', ['fontname']],
-			// 글자 크기 설정
-			['fontsize', ['fontsize']],
-			// 굵기, 기울임꼴, 밑줄,취소 선, 서식지우기
-			['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
-			// 글자색
-			['color', ['forecolor','color']],
-			// 표만들기
-			['table', ['table']],
-			// 글머리 기호, 번호매기기, 문단정렬
-			['para', ['ul', 'ol', 'paragraph']],
-			// 줄간격
-			['height', ['height']],
-		],
-		// 추가한 글꼴
-		fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋음체','바탕체'],
-		// 추가한 폰트사이즈
-		fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
-	});
-</script>
-<script>
-	let i = /*[[${files2.size()}]]*/'';
+	let i = /*[[${files.size()}]]*/'';
 	let orgSize = i;
 
 	let updateCheck = false;
@@ -308,7 +255,6 @@
 	let sysname = "";
 	console.log(orgname);
 	console.log(org_thumbnail);
-
 	function cancelFile(name,systemname){
 		updateCnt.val(updateCnt.val()+"\\"+systemname)
 		let num = name.split("e")[1];
@@ -418,7 +364,7 @@
 				lastElement.children("th").text("파일 첨부"+(i+1));
 				lastElement.children("td").attr("class","file"+i+"_cont");
 
-				lastElement.find("input[type='file']").attr("name","files2");
+				lastElement.find("input[type='file']").attr("name","files");
 				lastElement.find("input[type='file']").attr("id","file"+i);
 				lastElement.find("input[type='file']").val("");
 
@@ -431,13 +377,11 @@
 
 		}
 	})
-
-
-	function selectCategory(boardCategory) {
+	function selectCategory(category) {
 		var selectedButton = document.querySelector('.button.active');
 
 		if (selectedButton) {
-			if (selectedButton.getAttribute('onclick') === `selectCategory('${boardCategory}')`) {
+			if (selectedButton.getAttribute('onclick') === `selectCategory('${category}')`) {
 				selectedButton.classList.remove('active');
 				return ;
 			} else {
@@ -445,14 +389,13 @@
 				return false;
 			}
 		}
-		var clickedButton = document.querySelector(`[onclick="selectCategory('${boardCategory}')"]`);
+		var clickedButton = document.querySelector(`[onclick="selectCategory('${category}')"]`);
 		clickedButton.classList.toggle('active');
 
-		console.log("선택된 카테고리:", boardCategory);
+		console.log("선택된 카테고리:", category);
 
-		document.boardForm.boardCategory.value = boardCategory;
+		document.boardForm.category.value = category;
 	}
 
-
-</script>
+	</script>
 </html>
