@@ -74,10 +74,11 @@ public class MatchingController {
 
 
 
-    @GetMapping("/matching/matching_view")
+    @GetMapping(value = {"/matching/matching_view", "/matching/matching_modify"})
     public String get(@RequestParam Long boardNum, Criteria cri, HttpServletRequest req, HttpServletResponse resp, Model model) {
         List<TrainerMatchingBoardDTO> list = MatchingService.boardView(boardNum);
         model.addAttribute("cri",cri);
+
         for (TrainerMatchingBoardDTO board : list) {
 
             ProfileDTO profileInfo = MatchingService.getProfileInfo(board.getTrainerId());
@@ -118,30 +119,13 @@ public class MatchingController {
                 resp.addCookie(cookie);
             }
         }
-        return "/matching/matching_view";
+        return requestURI;
     }
-    @GetMapping("/matching/matching_modify")
-    public String modify(@RequestParam Long boardNum, Criteria cri, HttpServletRequest req, HttpServletResponse resp, Model model) {
-        List<TrainerMatchingBoardDTO> list = MatchingService.boardView(boardNum);
-        model.addAttribute("cri",cri);
-        for (TrainerMatchingBoardDTO board : list) {
 
-            ProfileDTO profileInfo = MatchingService.getProfileInfo(board.getTrainerId());
-            ProfileDTO careerInfo = MatchingService.getCareerInfo(board.getTrainerId());
-            TrainerDTO trainerInfo = MatchingService.getTrainerInfo(board.getTrainerId());
 
-            model.addAttribute("profileInfo", profileInfo);
-            model.addAttribute("careerInfo",careerInfo);
-            model.addAttribute("trainerInfo",trainerInfo);
-        }
-        model.addAttribute("list", list);
 
-        if (list == null) {
-            return "error";
-        }
 
-        return "/matching/matching_modify";
-    }
+
     @PostMapping("matching_modify")
     public String modify(TrainerMatchingBoardDTO board, Criteria cri, Model model) throws Exception {
 

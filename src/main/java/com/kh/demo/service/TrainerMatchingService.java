@@ -55,4 +55,6 @@ public interface TrainerMatchingService {
     boolean modify(TrainerMatchingBoardDTO board);
 
     Long getTotal(Criteria cri);
+
+    TrainerMatchingBoardDTO getDetail(Long boardNum);
 }

@@ -223,11 +223,11 @@
 
             <form id="boardForm" method="post" name="boardForm" th:action="@{/matching/matching_modify}">
                 <th:block th:if="${list != null and list.size() > 0}" th:each="board : ${list}">
-                <input type="hidden" th:value="${cri.pageNum}" name="pageNum">
+                <input type="hidden" th:value="${cri.pagenum}" name="pagenum">
                 <input type="hidden" th:value="${cri.amount}" name="amount">
                 <input type="hidden" th:value="${cri.type}" name="type">
                 <input type="hidden" th:value="${cri.keyword}" name="keyword">
-                <input type="hidden" name="boardCategory">
+                <input type="hidden" th:value="${board.boardNum}" name="boardNum">
 
 
                 <!-- 글작성 테이블 -->
@@ -305,7 +305,6 @@
                         <a href="javascript:sendit()">수정</a> <!-- javascript의 sendit 함수 호출 -->
                     </td>
                     <td>
-
                         <a th:href="${'/matching/matching_list'+cri.listLink}">취소</a> <!-- cri.listLink를 붙여 목록으로 돌아가기 -->
                     </td>
                 </tr>

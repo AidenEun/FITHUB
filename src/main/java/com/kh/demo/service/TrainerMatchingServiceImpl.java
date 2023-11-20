@@ -219,4 +219,9 @@ public class TrainerMatchingServiceImpl implements TrainerMatchingService {
         return tmmapper.getTotal(cri);
     }
 
+    @Override
+    public TrainerMatchingBoardDTO getDetail(Long boardNum) {
+        return tmmapper.findByNum(boardNum);
+    }
+
 }
