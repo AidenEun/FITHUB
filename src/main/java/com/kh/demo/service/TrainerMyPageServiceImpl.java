@@ -256,8 +256,8 @@ public class TrainerMyPageServiceImpl implements TrainerMyPageService {
     }
 
     @Override
-    public boolean user_modify(TrainerDTO user) {
-        int row = tmapper.updateUser(user);
+    public boolean updateInfo(TrainerDTO user) {
+        int row = tmapper.updateInfo(user);
         if (row != 1) {
             return false;
         }

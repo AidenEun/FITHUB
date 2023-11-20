@@ -285,10 +285,10 @@ public class TrainerMyPageController {
 
     @PostMapping("trainer_myinfo_modify")
     public String trainer_myinfo_modify(TrainerDTO trainerdto, Model model) {
-        if (service.user_modify(trainerdto)){
+        if (service.updateInfo(trainerdto)){
             TrainerDTO user = service.getUserDetail(trainerdto.getTrainerId());
             model.addAttribute("user", user);
-            return "redirect:/trainermypage/trainer_myinfo";
+            return "redirect:/trainermypage/trainer_modify";
         }
         else {
             return "redirect:/";
