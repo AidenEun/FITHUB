@@ -137,10 +137,5 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-
-    @GetMapping("index_header")
-    public String indexHeader(Model model) {
-        return "index_header"; // index_header.html 반환
-    }
 }
 

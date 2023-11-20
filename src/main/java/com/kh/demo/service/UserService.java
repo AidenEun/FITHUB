@@ -28,5 +28,4 @@ public interface UserService {
 
     void resetUserAttendance(String userid);
 
-
 }

@@ -174,127 +174,30 @@
                     <a href="/usermypage/user_myinfo">
                         <!--<span>등급 / 닉네임(ID)</span>-->
                         <th:block th:if="${user !=null && loginUser != null}">
-                            <span>등급</span>/<span th:text="${user.userNickname}"></span>(<span th:text="${user.userId}"></span>)
+                            <span th:text="${user.userNickname}"></span>(<span th:text="${user.userId}"></span>)
                         </th:block>
                     </a>
                 </div>
-                <div class="bar-container">
-                    <progress class="progress-bar" value="0" max="7"></progress>
-                    <input type="button" value="출석" class="att-btn">
-                </div>
-                <div class="point-container">
-                    <div>나의 포인트</div>
-                    <th:block th:if="${user != null && loginUser != null}">
-                        <span id="pointDisplay" th:text="${user.userPoint != null ? user.userPoint : 0} + 'p'"></span>
-                    </th:block>
-                </div>
                 <hr>
-                <div id="tab-menu">
-                    <div class="tab today-tab">오늘</div>
-                    <div class="tab chall-tab">도전</div>
-                    <div class="tab sub-tab">구독</div>
-                    <div class="page-tab diary-tab">
-                        <a href="/usermypage/user_diary">일기</a>
-                    </div>
-                    <div class="page-tab shop-tab">
-                        <a href="/product/product_list">쇼핑</a>
-                    </div>
+                <div id="diary-link">
+                    <a href="/usermypage/user_diary">일기</a>
                 </div>
-                <div id="tab-menu-container">
-                    <div class="tab-view today-view">
-                        <strong>나의 목표</strong>
-                        <th:block th:if="${user !=null && loginUser != null}">
-                            <p>목표체중 : <span th:text="${user.weightGoal}"></span></p>
-                            <p>목표칼로리 : <span th:text="${user.caloriesGoal}"></span></p>
-                            <strong>잔여칼로리: 현재칼로리/<span th:text="${user.caloriesGoal}"></span></strong>
-                            <hr>
-                        </th:block>
-                        <p>섭취량</p>
-                        <p>소비량</p>
-                        <script>
-                            document.addEventListener("DOMContentLoaded", function () {
-                                const tabs = document.querySelectorAll("#meal-options > div");
-                                const contents = document.querySelectorAll("#tan-dan-ji-box > div");
-
-                                contents.forEach(content => {
-                                    content.style.display = "none";
-                                });
-
-                                contents[0].style.display = "block";
-
-                                tabs.forEach((tab, index) => {
-                                    tab.addEventListener("click", function () {
-                                        contents.forEach(content => {
-                                            content.style.display = "none";
-                                        });
-
-                                        contents[index].style.display = "block";
-                                    });
-                                });
-                            });
-                        </script>
-                        <div id="meal-options">
-                            <div class="brack-fst">아침</div>
-                            <div class="lunch">점심</div>
-                            <div class="dinner">저녁</div>
-                            <div class="snack">간식</div>
-                        </div>
-                        <div id="tan-dan-ji-box">
-                            <div class="today-breakfast">
-                                <p>아침</p>
-                                <p></p>
-                                <p></p>
-                                <p></p>
-                            </div>
-                            <div class="today-lunch">
-                                <p>점심</p>
-                                <p></p>
-                                <p></p>
-                                <p></p>
-                            </div>
-                            <div class="today-dinner">
-                                <p>저녁</p>
-                                <p></p>
-                                <p></p>
-                                <p></p>
-                            </div>
-                            <div class="today-snack">
-                                <p>간식</p>
-                                <p></p>
-                                <p></p>
-                                <p></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-view chall-view">
-                        <div class="my-chall">
-                            <strong>나의 챌린지</strong><br>
-                            <span class="active-tab">진행중</span>
-                            <span class="finish-tab">종료</span>
-                            <div id="chall-list">
-                                <div class="active-chall-listView">
-                                    <p>진행중인 챌린지 list</p>
-                                </div>
-                                <div class="finish-chall-listView">
-                                    <p>종료된 챌린지 list</p>
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
-                    <div class="tab-view sub-view">
-                        <div class="sub-view-container">
-                            <strong>나의 트레이너</strong>
-                            <div class="my-sub">
-                                <p>구독한 트레이너 list</p>
-                            </div>
-                        </div>
-                    </div>
+                <div id="product-link">
+                    <a href="/product/product_list">제품</a>
+                </div>
+                <div id="bmi-link">
+                    <a href="/sidebar/bmi">BMI</a>
+                </div>
+                <div id="health-link">
+                    <a href="/sidebar/healthCenter">보건소</a>
+                </div>
+                <div id="trainer-apply">
+                    <a href="/usermypage/user_applytrainer">트레이너 신청</a>
                 </div>
             </div>
         </th:block>
-        <div id="another-page">
+
+        <!--<div id="another-page">
             <div class="bmi">
                 <a href="/sidebar/bmi">BMI</a>
             </div>
@@ -306,7 +209,7 @@
                     <a href="/usermypage/user_applytrainer">트레이너 신청</a>
                 </div>
             </th:block>
-        </div>
+        </div>-->
     </section>
 </th:block>
 
