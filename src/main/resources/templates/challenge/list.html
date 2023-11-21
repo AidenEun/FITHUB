@@ -80,7 +80,10 @@
 		border-radius: 4px;
 		color: #F7FAF5 !important;
 		box-shadow: 0 0 2px #5a8100;
+	}
 
+	.search_area{
+		display: flex;
 	}
 </style>
 <body class="is-preload">
@@ -109,23 +112,24 @@
 		<!-- Content -->
 		<div class="content">
 
+			<h2>챌린지 공지</h2>
 			<table class="list">
 				<tr align="right" valign="middle">
 					<td>
 						<div class="search_area">
 							<form id="challCategoryForm" th:action="@{/challenge/list}">
-								<select name="challCategory" id="challCategory">
+								<select name="challCategory" id="challCategory" style="width:130px; margin-right:10px;">
 									<option value="challAll" th:selected="${challCategory == 'challAll'|| challCategory == null}">전체</option>
 									<option value="challExer" th:selected="${challCategory == 'challExer'}">운동</option>
 									<option value="challFood" th:selected="${challCategory == 'challFood'}">식단</option>
 								</select>
-								<select name="challTerm" id="challTerm">
+								<select name="challTerm" id="challTerm" style="width:130px; margin-right:10px;">
 									<option value="challengeAll" th:selected="${challTerm == 'challengeAll'||challTerm == null}">전체</option>
 									<option value="7" th:selected="${challTerm == '7'}">7일</option>
 									<option value="15" th:selected="${challTerm == '15'}">15일</option>
 									<option value="30" th:selected="${challTerm == '30'}">30일</option>
 								</select>
-								<a href="#" class="button primary btnColor">검색</a>
+								<a href="#" class="button btnColor">검색</a>
 
 
 								<input type="hidden" name="noticePagenum" th:value="${noticePageMaker.cri.pagenum}">
@@ -136,14 +140,15 @@
 								<input type="hidden" name="keyword" th:value="${pageMaker.cri.keyword}">
 							</form>
 						</div>
-						<div>글 개수 :[[${noticePageMaker.total}]]</div>
+					</td>
+					<td>
+						<div>현재 등록된 챌린지 개수 :[[${noticePageMaker.total}]]</div>
 					</td>
 				</tr>
 
-				<tr >
+				<tr>
 					<td>
 						<th:block th:if="${noticeList != null and noticeList.size()>0}" th:each="list : ${noticeList}">
-
 							<div class ="noticeBox">
 								<table style="margin:0;">
 									<tr>
@@ -166,13 +171,11 @@
 						</th:block>
 						<th:block th:unless="${noticeList != null and noticeList.size()>0}">
 							<div>
-								<div style="text-align: center; font-size: 20px;">등록된
-									게시글이 없습니다.</div>
+								<div style="text-align: center; font-size: 20px;">현재 등록된 챌린지가 없습니다.</div>
 							</div>
 						</th:block>
 					</td>
 				</tr>
-
 			</table>
 				<!-- 페이징 처리하는 테이블 -->
 			<table class="pagination">
@@ -191,8 +194,8 @@
 				<tr>
 					<td>
 						<div style="text-align: right;">
-							<!--<th:block th:if="">-->
-							<input type="button" class="writeOpen btnColor" value="글쓰기">
+							<!--<th:block th:if="${session.admin != null}">-->
+								<input type="button" class="writeOpen btnColor" value="챌린지 등록하기">
 							<!--</th:block>-->
 						</div>
 					</td>
@@ -212,7 +215,7 @@
 
 
 
-
+			<h2>챌린지 인증</h2>
 			<!-- 게시글 리스트 띄우는 테이블 -->
 			<table class="list">
 				<tr align="right" valign="middle">
@@ -277,8 +280,8 @@
 				</tr>
 			</table>
 			<form id="searchForm" th:action="@{/challenge/list}">
-				<div class="search_area">
-					<select name="type">
+				<div class="search_area flex">
+					<select name="type" style="width: 20%; margin-right:10px;">
 						<option value="" th:selected="${pageMaker.cri.type == null}">검색</option>
 						<option value="T" th:selected="${pageMaker.cri.type == 'T'}">제목</option>
 						<option value="C" th:selected="${pageMaker.cri.type == 'C'}">내용</option>
@@ -287,7 +290,7 @@
 						<option value="TW" th:selected="${pageMaker.cri.type == 'TW'}">제목 또는 작성자</option>
 						<option value="TCW" th:selected="${pageMaker.cri.type == 'TCW'}">제목 또는 내용 또는 작성자</option>
 					</select>
-					<input type="text" name="keyword" id="keyword" th:value="${pageMaker.cri.keyword}">
+					<input type="text" name="keyword" id="keyword" th:value="${pageMaker.cri.keyword}" style="margin-right:10px;">
 					<a href="#" class="button btnColor primary">검색</a>
 				</div>
 				<input type="hidden" value="1" name="pagenum">
