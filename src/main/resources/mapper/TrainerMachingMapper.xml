@@ -123,6 +123,17 @@
     <select id="getAllBoards">
         select * from trainer_matching_board where board_num=#{boardNum}
     </select>
+    <select id="utCheck">
+        SELECT * FROM u_t_matching
+        WHERE user_id=#{userId}
+        AND trainer_id=#{trainerId}
+        AND trainer_check = 'O';
+    </select>
+
+
+
+
+
 
 
 <!--    통합검색 디테일-->
