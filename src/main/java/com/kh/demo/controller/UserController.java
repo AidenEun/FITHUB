@@ -3,9 +3,7 @@ package com.kh.demo.controller;
 import com.kh.demo.domain.dto.AdminDTO;
 import com.kh.demo.domain.dto.TrainerDTO;
 import com.kh.demo.domain.dto.UserDTO;
-import com.kh.demo.service.AdminService;
-import com.kh.demo.service.TrainerService;
-import com.kh.demo.service.UserService;
+import com.kh.demo.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class UserController {
 
     @Autowired
-    @Qualifier("userServiceImpl")
+    @Qualifier("UserServiceImpl")
     private UserService service;
 
     @Autowired
@@ -35,6 +33,18 @@ public class UserController {
     @Autowired
     @Qualifier("AdminServiceImpl")
     private AdminService serviceAdmin;
+
+    @Autowired
+    @Qualifier("UserMyPageServiceImpl")
+    private UserMyPageService umpservice;
+
+    @Autowired
+    @Qualifier("TrainerMyPageServiceImpl")
+    private TrainerMyPageService tmpservice;
+
+    public UserController() {
+    }
+
 
     @GetMapping("join")
     public void replace() {}
@@ -61,7 +71,6 @@ public class UserController {
     @PostMapping("login")
     public String login(String userid, String userpw, HttpServletRequest req) {
         Object loginUser = service.login(userid, userpw);
-
         if (loginUser instanceof AdminDTO) {
             AdminDTO admin = serviceAdmin.getDetail(((AdminDTO) loginUser).getAdminId());
             req.getSession().setAttribute("loginUser",((AdminDTO) loginUser).getAdminId());
@@ -72,12 +81,14 @@ public class UserController {
             TrainerDTO trainer = serviceTrainer.getDetail(((TrainerDTO) loginUser).getTrainerId());
             req.getSession().setAttribute("loginUser",((TrainerDTO) loginUser).getTrainerId());
             req.getSession().setAttribute("trainer",trainer);
+            req.getSession().setAttribute("profile", tmpservice.getProFileList(trainer.getTrainerId()));
             return "redirect:/";
         }
         else if (loginUser instanceof UserDTO) {
             UserDTO user = service.getDetail(((UserDTO) loginUser).getUserId());
             req.getSession().setAttribute("loginUser",((UserDTO) loginUser).getUserId());
             req.getSession().setAttribute("user",user);
+            req.getSession().setAttribute("profile", umpservice.getProFileList(user.getUserId()));
             return "redirect:/";
         }
         else {
