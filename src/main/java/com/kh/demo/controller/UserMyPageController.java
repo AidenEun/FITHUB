@@ -269,6 +269,10 @@ public class UserMyPageController {
     public ResponseEntity<Resource> thumbnail(String sysName) throws Exception{
         return service.getThumbnailResource(sysName);
     }
+    @GetMapping("thumbnail_id")
+    public ResponseEntity<Resource> thumbnail_id(String id) throws Exception{
+        return service.getThumbnailResource_id(id);
+    }
 
 
     @GetMapping("user_applytrainer")

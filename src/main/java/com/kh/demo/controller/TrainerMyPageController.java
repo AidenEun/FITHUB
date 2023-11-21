@@ -85,7 +85,10 @@ public class TrainerMyPageController {
     public ResponseEntity<Resource> thumbnail(String sysName) throws Exception{
         return service.getThumbnailResource(sysName);
     }
-
+    @GetMapping("thumbnail_id")
+    public ResponseEntity<Resource> thumbnail_id(String id) throws Exception{
+        return service.getThumbnailResource_id(id);
+    }
 
     @GetMapping("trainer_challenge")
     public void trainer_challenge(String challCategory ,String challTerm ,Criteria cri, Model model, HttpServletRequest req) {

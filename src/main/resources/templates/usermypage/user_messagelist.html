@@ -13,6 +13,7 @@
 	<link rel="stylesheet" th:href="@{/assets/css/index.css}" />
 	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
 	<link rel="stylesheet" th:href="@{/assets/css/common.css}" />
+	<link rel="stylesheet" th:href="@{/assets/css/profileModal.css}"/>
 
 </head>
 <style>
@@ -35,6 +36,8 @@
 <!-- Header -->
 <th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin},${session.profile})}"></th:block>
 
+<!-- Modal -->
+<th:block th:replace="~{layout/profileModal::profileModal}"></th:block>
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">
 
@@ -80,8 +83,8 @@
 						<td class="long_text">
 							<sup class="new" th:if="${newly_Message[messageStat.index] == 'O'}">New</sup>
 						</td>
-						<td class="long_text">[[${message.sendId}]]</td>
-						<td class="long_text">[[${message.receiveId}]]</td>
+						<td class="long_text"><a class="open">[[${message.sendId}]]</a></td>
+						<td class="long_text"><a class="open">[[${message.receiveId}]]</a></td>
 						<td class="long_text">
 							[[${message.messageContent}]]
 						</td>
@@ -179,6 +182,7 @@
 <script th:src="@{/assets/js/main_sub.js}"></script>
 
 <script th:src="@{/assets/js/sidebar.js}"></script>
+<script th:src="@{/assets/js/profile.js}"></script>
 
 <script th:inline="javascript">
 	const searchForm = $("#searchForm");
@@ -259,6 +263,14 @@
 		messageForm.attr("method","get");
 		messageForm.submit();
 	});
+
+	$(".open").on("click", function (e) {
+        e.preventDefault();
+        var userId = $(this).text();
+
+        sendUserIdToModal(userId);
+        modalBox.classList.add("active");
+    });
 
 
 </script>
