@@ -13,6 +13,7 @@
 	<link rel="stylesheet" th:href="@{/assets/css/index.css}" />
 	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
 	<link rel="stylesheet" th:href="@{/assets/css/common.css}" />
+	<link rel="stylesheet" th:href="@{/assets/css/profileModal.css}"/>
 
 </head>
 <style>
@@ -71,8 +72,10 @@
 
 
 <!-- Header -->
-<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin})}"></th:block>
+<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin},${session.profile})}"></th:block>
 
+<!-- Modal -->
+<th:block th:replace="~{layout/profileModal::profileModal}"></th:block>
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">
 
@@ -235,7 +238,7 @@
 							<span class="reply_cnt" th:text="'['+${reply_cnt_list[boardStat.index]}+']'"></span>
 						</a>
 					</td>
-					<td>[[${board.userId}]]</td>
+					<td><a class="open">[[${board.userId}]]</a></td>
 					<td>
 						[[${board.regdate}]]
 					</td>
@@ -310,14 +313,10 @@
 <script th:src="@{/assets/js/main_sub.js}"></script>
 
 <script th:src="@{/assets/js/sidebar.js}"></script>
+<script th:src="@{/assets/js/profile.js}"></script>
 
 <script th:inline="javascript">
-
-
-
-
-
-		const pageForm = $("#pageForm");
+	const pageForm = $("#pageForm");
 
 	$(".changePage").on("click",function(e){
 		//e(이벤트)의 기본 작동 막기
@@ -327,6 +326,14 @@
 		pageForm.submit();
 	});
 
+
+	$(".open").on("click", function (e) {
+        e.preventDefault();
+        var userId = $(this).text();
+
+        sendUserIdToModal(userId);
+        modalBox.classList.add("active");
+    });
 </script>
 </body>
 </html>

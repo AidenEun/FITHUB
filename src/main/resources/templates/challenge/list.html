@@ -16,6 +16,8 @@
 	<link rel="stylesheet" th:href="@{/assets/css/common.css}">
 	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
 	<link rel="stylesheet" th:href="@{/assets/css/ranking.css}" />
+	<link rel="stylesheet" th:href="@{/assets/css/profileModal.css}"/>
+
 
 </head>
 <style>
@@ -40,6 +42,10 @@
             border-radius: 10px;
             position: relative;
         }
+
+	.noticeChangePage{
+		padding: 5px 10px;
+	}
 
 	.noticeBox table td {
     	padding: 0.5px 0.5px;
@@ -90,18 +96,17 @@
 
 
 <!-- Header -->
-<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin})}"></th:block>
+<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin},${session.profile})}"></th:block>
 <!--Modal-->
 <th:block th:replace="~{layout/challengeModal::challengeModal()}"></th:block>
 <th:block th:replace="~{challenge/challNoticeBoardModal::challNoticeBoardModal()}"></th:block>
 <th:block th:replace="~{challenge/challNoticeGetModal::challNoticeGetModal()}"></th:block>
-
+<th:block th:replace="~{layout/profileModal::profileModal}"></th:block>
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">
 
 	<div class="header_box">
 		<header class="test12">
-			<p id="mainText">챌린지</p>
 			<p id="subText">챌린지</p>
 		</header>
 	</div>
@@ -147,7 +152,7 @@
 				</tr>
 
 				<tr>
-					<td>
+					<td colspan="2">
 						<th:block th:if="${noticeList != null and noticeList.size()>0}" th:each="list : ${noticeList}">
 							<div class ="noticeBox">
 								<table style="margin:0;">
@@ -195,7 +200,7 @@
 					<td>
 						<div style="text-align: right;">
 							<!--<th:block th:if="${session.admin != null}">-->
-								<input type="button" class="writeOpen btnColor" value="챌린지 등록하기">
+							<div class="writeOpen button btnColor" value="챌린지 등록하기">챌린지 등록하기</div>
 							<!--</th:block>-->
 						</div>
 					</td>
@@ -241,7 +246,7 @@
 							<span class="reply_cnt" th:text="'['+${reply_cnt_list[boardStat.index]}+']'"></span>
 						</a>
 					</td>
-					<td>[[${board.userId}]]</td>
+					<td ><a class="open">[[${board.userId}]]</a></td>
 					<td>
 						[[${board.regdate}]]
 						<th:block th:if="${board.regdate != board.updateDate}">
@@ -275,7 +280,7 @@
 			<table>
 				<tr align="right" valign="middle">
 					<td>
-						<input type="button" class="challengeOpen btnColor" value="글쓰기">
+						<div class="challengeOpen button btnColor">글 쓰기</div>
 					</td>
 				</tr>
 			</table>
@@ -338,6 +343,7 @@
 <script th:src="@{/assets/js/main_sub.js}"></script>
 
 <script th:src="@{/assets/js/sidebar.js}"></script>
+<script th:src="@{/assets/js/profile.js}"></script>
 
 <script th:src="@{/assets/js/challengeModal.js}"></script>
 <script th:src="@{/assets/js/challNoticeBoardModal.js}"></script>
@@ -394,7 +400,13 @@ function challCategory(){
 	challCategoryForm.submit();
 }
 
+$(".open").on("click", function (e) {
+        e.preventDefault();
+        var userId = $(this).text();
 
+        sendUserIdToModal(userId);
+        modalBox.classList.add("active");
+    });
 
 
 </script>

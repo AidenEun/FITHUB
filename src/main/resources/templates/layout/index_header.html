@@ -1,5 +1,5 @@
 <link xmlns:th="http://www.thymeleaf.org">
-<th:block th:fragment="header(loginUser,user,trainer,admin)">
+<th:block th:fragment="header(loginUser,user,trainer,admin,profile)">
     <style>
         .submenu {
    width: 150px;
@@ -162,7 +162,18 @@
         <th:block th:if="${session.loginUser != null}">
             <div class="side_info">
                 <a href="/usermypage/user_myinfo">
-                    <img src="images/profile_img.png" class="prof_img" width="102px" height="102px">
+                    <th:block th:if="${profile != null}">
+                        <th:block th:with="sar=${profile.orgName.split('[.]')}">
+                            <th:block th:with="ext=${sar[sar.length-1]}">
+                                <th:block th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}">
+                                    <img style="width:102px; height:102px" th:src="@{/usermypage/thumbnail (sysName=${profile.sysName})}">
+                                </th:block>
+                            </th:block>
+                        </th:block>
+                    </th:block>
+                    <th:block th:unless="${profile != null}">
+                        <img style="width:102px; height:102px" th:src="@{/usermypage/thumbnail (sysName='profile_img.png')}">
+                    </th:block>
                 </a>
                 <div id="my_info">
                     <div>
@@ -179,37 +190,57 @@
                     </a>
                 </div>
                 <hr>
-                <div id="diary-link">
-                    <a href="/usermypage/user_diary">일기</a>
-                </div>
-                <div id="product-link">
-                    <a href="/product/product_list">제품</a>
-                </div>
-                <div id="bmi-link">
-                    <a href="/sidebar/bmi">BMI</a>
-                </div>
-                <div id="health-link">
-                    <a href="/sidebar/healthCenter">보건소</a>
-                </div>
-                <div id="trainer-apply">
-                    <a href="/usermypage/user_applytrainer">트레이너 신청</a>
+                <div class="sidebar-link">
+                    <!-- 상단에 위치할 링크들 -->
+                    <div class="diary_lnk_img">
+                        <a href="/usermypage/user_diary">
+                            <img src="images/lnk-image/diary/diary_lnk_img.jpg" alt="diary">
+                        </a>
+                        <a href="/usermypage/user_diary">
+                            다이어리
+                        </a>
+                    </div>
+
+                    <div class="product_lnk_img">
+                        <a href="/product/prod_list">
+                            <img src="images/lnk-image/product/prod_lnk_img.jpg" alt="product">
+                        </a>
+                        <a href="/product/prod_list">
+                            제품
+                        </a>
+                    </div>
+
+                    <div class="bmi_lnk_img">
+                        <a href="/sidebar/bmi">
+                            <img src="images/lnk-image/BMI/bmi_lnk_img.jpg" alt="bmi">
+                        </a>
+                        <a href="/sidebar/bmi">
+                            BMI
+                        </a>
+                    </div>
+
+                    <div class="health_lnk_img">
+                        <a href="/sidebar/healthCenter">
+                            <img src="images/lnk-image/health/heal_lnk_img.jpg" alt="health">
+                        </a>
+                        <a href="/sidebar/healthCenter">
+                            보건소
+                        </a>
+                    </div>
+
+                    <div class="trainer_lnk_img">
+                        <a href="/usermypage/user_applytrainer">
+                            <img src="images/lnk-image/trainer/apply_lnk_img.jpg" alt="trainer">
+                        </a>
+                        <th:block th:if="${session.user != null}">
+                            <a href="/usermypage/user_applytrainer">
+                                트레이너 신청
+                            </a>
+                        </th:block>
+                    </div>
                 </div>
             </div>
         </th:block>
-
-        <!--<div id="another-page">
-            <div class="bmi">
-                <a href="/sidebar/bmi">BMI</a>
-            </div>
-            <div class="health-center">
-                <a href="/sidebar/healthCenter">보건소</a>
-            </div>
-            <th:block  th:if="${session.user != null}">
-                <div class="trainer-apply">
-                    <a href="/usermypage/user_applytrainer">트레이너 신청</a>
-                </div>
-            </th:block>
-        </div>-->
     </section>
 </th:block>
 

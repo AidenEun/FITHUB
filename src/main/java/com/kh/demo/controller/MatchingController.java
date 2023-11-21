@@ -94,6 +94,11 @@ public class MatchingController {
         ProfileDTO careerInfo = MatchingService.getCareerInfo(list.getTrainerId());
         TrainerDTO trainerInfo = MatchingService.getTrainerInfo(list.getTrainerId());
 
+        HttpSession session = req.getSession();
+        String loginUser = (String)session.getAttribute("loginUser");
+
+
+
         //인기게시글 띄우기
         List<BoardDTO> boardTop5List = boardservice.getBoardTop5List();
         // 트레이너 랭킹
@@ -110,8 +115,7 @@ public class MatchingController {
         if (list == null) {
             return "error";
         }
-        HttpSession session = req.getSession();
-        String loginUser = (String)session.getAttribute("loginUser");
+
         String requestURI = req.getRequestURI();
         if(requestURI.contains("/get")) {
             Cookie[] cookies = req.getCookies();
@@ -136,6 +140,16 @@ public class MatchingController {
             }
         }
         return requestURI;
+    }
+
+    @GetMapping("check")
+    @ResponseBody
+    public UTMatchingDTO utcheck(@RequestParam("trainerId") String trainerId, HttpServletRequest req) {
+        HttpSession session = req.getSession();
+        String userId = (String) session.getAttribute("loginUser");
+
+        UTMatchingDTO check = MatchingService.uTtrainerCheck(trainerId, userId);
+        return check;
     }
 
 

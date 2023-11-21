@@ -89,4 +89,6 @@ public interface TrainerMyPageService {
     ArrayList<String> getMatchingNewlyList(List<UTMatchingDTO> list) throws Exception;
 
     boolean updateMatching(UTMatchingDTO utMatching, String trainerCheck);
+
+    ResponseEntity<Resource> getThumbnailResource_id(String id) throws Exception;
 }

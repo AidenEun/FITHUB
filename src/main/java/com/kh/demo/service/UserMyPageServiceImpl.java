@@ -320,6 +320,35 @@ public class UserMyPageServiceImpl implements UserMyPageService{
     }
 
     @Override
+    public ResponseEntity<Resource> getThumbnailResource_id(String id) throws Exception {
+        ProfileDTO profile = pfmapper.getProfiles(id,"P");
+        List<String> sysName = new ArrayList<>();
+        if(profile != null){
+            String[] sar = profile.getOrgName().split("\\.");
+            String ext= sar[sar.length-1];
+            if (ext.equals("jpg") || ext.equals("jpeg") || ext.equals("png") || ext.equals("gif") || ext.equals("webp")){
+                sysName.add(profile.getSysName());
+            } else {
+                sysName.add("profile_img");
+            }
+        }
+        else {
+            sysName.add("profile_img");
+        }
+        //경로에 관련된 객체(자원으로 가지고 와야 하는 파일에 대한 경로)
+        Path path = Paths.get(saveFolder + sysName.get(0));
+        //경로에 있는 파일의 MIME타입을 조사해서 그대로 담기
+        String contentType = Files.probeContentType(path);
+        //응답 헤더 생성
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_TYPE, contentType);
+
+        //해당 경로(path)에 있는 파일에서부터 뻗어나오는 InputStream(Files.newInputStream)을 통해 자원화(InputStreamResource)
+        Resource resource = new InputStreamResource(Files.newInputStream(path));
+        return new ResponseEntity<>(resource, headers, HttpStatus.OK);
+    }
+
+    @Override
     public boolean user_profile_modify(UserDTO user, MultipartFile profile, String updateCnt) throws IOException {
         int row = umapper.profileUpdateUser(user);
         if (row != 1) {

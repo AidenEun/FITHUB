@@ -148,15 +148,18 @@
 <body class="is-preload">
 
 <!-- Header -->
-<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin})}"></th:block>
+<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin},${session.profile})}"></th:block>
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">
-	<div class="inner">
 
+	<div class="header_box">
 		<header class="test12">
 			<p id="mainText">제품</p>
 			<p id="subText">상세 보기</p>
 		</header>
+	</div>
+
+	<div class="inner">
 
 		<!-- Content -->
 		<div class="content">

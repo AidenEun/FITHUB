@@ -13,7 +13,7 @@
 	<link rel="stylesheet" th:href="@{/assets/css/index.css}" />
 	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
 	<link rel="stylesheet" th:href="@{/assets/css/common.css}" />
-
+	<link rel="stylesheet" th:href="@{/assets/css/profileModal.css}"/>
 </head>
 <style>
 	.long_text {
@@ -27,8 +27,10 @@
 <body class="is-preload">
 
 <!-- Header -->
-<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin})}"></th:block>
+<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin},${session.profile})}"></th:block>
 
+<!-- Modal -->
+<th:block th:replace="~{layout/profileModal::profileModal}"></th:block>
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">
 
@@ -76,10 +78,10 @@
 								<sup class="new" th:if="${newly_Message[messageStat.index] == 'O'}">New</sup>
 							</td>
 							<td>
-								<input type="text" name="userId" th:value="${message.userId}" readonly>
+								<a class="open"><input type="text" name="userId" th:value="${message.userId}" readonly></a>
 							</td>
 							<td>
-								<input type="text" name="trainerId" th:value="${message.trainerId}" readonly>
+								<a class="open"><input type="text" name="trainerId" th:value="${message.trainerId}" readonly></a>
 							</td>
 							<td>
 								<div class="SC_box">
@@ -200,6 +202,7 @@
 <script th:src="@{/assets/js/main_sub.js}"></script>
 
 <script th:src="@{/assets/js/sidebar.js}"></script>
+<script th:src="@{/assets/js/profile.js}"></script>
 
 <script th:inline="javascript">
 	const searchForm = $("#searchForm");
@@ -265,6 +268,14 @@
 		mainForm.append("<input type='hidden' name='SC' value='"+SC+"'>");
 		mainForm.submit();
 	});
+
+	$(".open").on("click", function (e) {
+        e.preventDefault();
+        var userId = $(this).text();
+
+        sendUserIdToModal(userId);
+        modalBox.classList.add("active");
+    });
 </script>
 </body>
 </html>

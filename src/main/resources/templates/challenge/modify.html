@@ -28,7 +28,7 @@
 
 
 <!-- Header -->
-<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin})}"></th:block>
+<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin},${session.profile})}"></th:block>
 
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">
@@ -36,7 +36,7 @@
 	<div class="header_box">
 		<header class="test12">
 			<p id="mainText">챌린지</p>
-			<p id="subText">챌린지</p>
+			<p id="subText">인증 글 수정</p>
 		</header>
 	</div>
 

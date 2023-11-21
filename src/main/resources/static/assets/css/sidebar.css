@@ -25,27 +25,68 @@
             margin-right: 10px;
         }
 
-        #diary-link, #product-link, #bmi-link, #health-link, #trainer-apply {
+        .sidebar-link {
+            position: relative;
+            width: 150px; /* 사이드바 너비를 조절합니다. */
+            margin-left: 20px; /* 여백을 조절합니다. */
+            margin-top: 150px; /* 여백을 조절합니다. */
             display: flex;
-            flex-direction: column;
-            margin-bottom: 10px; /* 각 링크 사이에 간격 조절 */
-          }
+            flex-direction: row; /* 가로로 배열하도록 수정 */
+        }
 
-          #diary-link, #product-link, #bmi-link, #health-link {
-            margin-right: 10px; /* 각 링크 사이에 간격 조절 */
-          }
+        .diary_lnk_img,
+        .product_lnk_img,
+        .bmi_lnk_img,
+        .health_lnk_img,
+        .trainer_lnk_img {
+            box-sizing: border-box;
+            padding: 5px; /* 여백을 조절합니다. */
+            text-align: center; /* 텍스트를 가운데 정렬합니다. */
+            margin-right: 5px; /* 링크 사이의 여백을 조절합니다. */
+            position: relative;
+        }
 
-          #diary-link, #product-link, #bmi-link, #health-link, #trainer-apply a {
-            padding: 10px;
+        .diary_lnk_img img,
+        .product_lnk_img img,
+        .bmi_lnk_img img,
+        .health_lnk_img img,
+        .trainer_lnk_img img {
+            width: 80px; /* 이미지의 너비를 일정 크기로 조절합니다. */
+            height: 80px; /* 이미지의 높이를 일정 크기로 조절합니다. */
+            display: block;
+            margin: 0 auto; /* 이미지를 가운데 정렬합니다. */
+        }
+
+        .diary_lnk_img a,
+        .product_lnk_img a,
+        .bmi_lnk_img a,
+        .health_lnk_img a,
+        .trainer_lnk_img a {
             text-decoration: none;
-            color: #333; /* 링크 색상 설정 */
-            border: 1px solid #ddd; /* 테두리 설정 */
-            border-radius: 5px; /* 테두리를 둥글게 만들기 */
-          }
+            color: #000;
+            font-weight: bold;
+            white-space: nowrap; /* 한 줄로 텍스트를 표시하도록 합니다. */
+        }
 
-          #diary-link, #product-link, #bmi-link, #health-link, #trainer-apply a:hover {
-            background-color: #f5f5f5; /* 호버 시 배경색 변경 */
-          }
+        .product_lnk_img {
+            left: 50px;
+        }
+
+        .bmi_lnk_img {
+            left: 100px;
+        }
+
+        .health_lnk_img {
+            order: 6; /* 보건소를 하단으로 내리는 것처럼 시각적으로 보이도록 순서를 조절합니다. */
+            top: 150px; /* 시각적으로 내려온 것처럼 top 값을 조절합니다. */
+            right: 230px;
+        }
+
+        .trainer_lnk_img {
+            order: 7; /* 트레이너 신청을 하단으로 내리는 것처럼 시각적으로 보이도록 순서를 조절합니다. */
+            top: 150px; /* 시각적으로 내려온 것처럼 top 값을 조절합니다. */
+            right: 170px;
+        }
 
         .side-not-login{
                 padding: 20px;
