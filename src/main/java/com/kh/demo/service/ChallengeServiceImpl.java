@@ -120,8 +120,8 @@ public class ChallengeServiceImpl implements ChallengeService{
     }
 
     @Override
-    public void insertMyChall(long challNum, String id) {
-        challMapper.insertMyChall(challNum, id);
+    public boolean insertMyChall(long challNum, String id) {
+        return challMapper.insertMyChall(challNum, id);
     }
 
     @Override
@@ -136,6 +136,16 @@ public class ChallengeServiceImpl implements ChallengeService{
     @Override
     public Long getchallTotal(Criteria cri) {
         return challMapper.getchallTotal(cri);
+    }
+
+    @Override
+    public boolean checkChall(long challNum, String id) {
+        return challMapper.checkChall(challNum, id);
+    }
+
+    @Override
+    public void deleteMyChall(Long mychallNum) {
+        challMapper.deleteMyChall(mychallNum);
     }
 
 

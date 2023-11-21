@@ -121,13 +121,23 @@ public class ChallengeController {
     }
 
     @PostMapping("noticeGetConfirm")
-    public ResponseEntity<String> noticeGetConfirm(@RequestBody ChallCertBoardDTO challCert, HttpServletRequest req) {
+    @ResponseBody
+    public String noticeGetConfirm(@RequestBody ChallCertBoardDTO challCert, HttpServletRequest req) {
         HttpSession session = req.getSession();
         String id = (String) session.getAttribute("loginUser");
 
-        challService.insertMyChall(challCert.getChallNum(),id);
-
-        return ResponseEntity.ok("성공");
+        if(challService.checkChall(challCert.getChallNum(),id)){
+            System.out.println("fail");
+            return "fail";
+        }
+        else if(challService.insertMyChall(challCert.getChallNum(),id)){
+            System.out.println("success");
+            return "success";
+        }
+        else {
+            System.out.println("error");
+            return "error";
+        }
     }
 
     @PostMapping("noticeGetDelete")
@@ -287,5 +297,12 @@ public class ChallengeController {
     @GetMapping("file")
     public ResponseEntity<Object> download(String sysName, String orgName) throws Exception{
         return challService.downloadFile(sysName,orgName);
+    }
+
+
+    @GetMapping("deleteChall")
+    @ResponseBody
+    public void deleteChall(@RequestParam("mychallNum") Long mychallNum){
+        challService.deleteMyChall(mychallNum);
     }
 }

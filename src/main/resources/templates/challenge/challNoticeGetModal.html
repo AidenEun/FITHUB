@@ -4,7 +4,7 @@
 
             <div class="title-container">
                 <button class="getClose button btnColor">&times;</button>
-                <h1 class="title">챌린지 목록 작성</h1>
+                <h1 class="title">챌린지 추가</h1>
             </div>
             <table id="reportAdminTable">
                 <thead>
@@ -22,10 +22,10 @@
                 </tbody>
             </table>
             <div class="report-button-container">
-                <div class="button btnColor noticeGetConfirmButton">등록</div>
-                <!--<th:block th:if="">-->
+                <div class="button btnColor noticeGetConfirmButton">나의 챌린지에 추가</div>
+                <th:block th:if="${session.admin != null}">
                     <div class="button btnColor noticeGetDeleteButton">삭제</div>
-                <!--</th:block>-->
+                </th:block>
             </div>
             <input type="hidden" id="noticeNumInput" name="noticeNumInput" value="">
         </div>

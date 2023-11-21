@@ -101,17 +101,19 @@ document.querySelector('.noticeGetConfirmButton').addEventListener('click', func
         },
         body: JSON.stringify(data)
     })
-    .then(response => {
-        if (response.ok) {
-            window.alert('챌린지 등록 완료!!');
-            location.reload();
-        } else {
-            window.alert('등록 실패. 다시 시도하세요.');
+    .then(response => response.text())
+    .then(data => {
+        if (data === 'success') {
+          alert("챌린지가 추가되었습니다!")
+        }
+        else if (data === 'fail') {
+          alert("이미 추가한 챌린지입니다!")
+        }
+        else {
+          console.error('Unexpected response:', data);
         }
     })
-    .catch(error => {
-        window.alert('오류 발생: ' + error.message);
-    });
+    .catch(error => console.error('Error:', error));
 
     clearChallNoticeGetModalContent();
     noticeGetModalBox.classList.remove("active");
@@ -193,10 +195,3 @@ const boardForm = document.boardForm;
 
     boardForm.submit();
 }
-
-
-
-
-
-
-

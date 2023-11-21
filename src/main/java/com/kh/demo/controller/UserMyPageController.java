@@ -553,8 +553,8 @@ public class UserMyPageController {
             }
         }
         return "redirect:/usermypage/diaryView?choicedate=" + choicedate;
-
     }
+
 }
 
 
