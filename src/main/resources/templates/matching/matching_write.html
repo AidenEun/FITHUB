@@ -174,17 +174,13 @@
         font-weight: bold;
     }
     .wrapper.sidebar > .inner > .content{
-        width: 75%;
+        width: 70%;
     }
     #side_box{
-        width: 25%;
+        width: 30%;
     }
 
 
-    <!--
-    datepicker
-
-    -->
     #expiration_time {
         display: inline-block;
         z-index: 500;
@@ -208,30 +204,25 @@
         display: inline-block;
 
     }
+    #side_box .rankBox input[type=button].rankBtn {
+        border-radius: 38px !important;
+        border: 1px solid;
+        box-shadow: 4px 4px 2px 0px #5a8100 !important;
+    }
 
+    #side_box .rankBox input[type=button].rankBtn:hover {
+        color: #444 !important;
+        background-color: #ebede1; !important;
+    }
+    #side_box .open:hover {
+        color: #5a8100;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    .rankBox:first-child td a{
+        cursor: default !important;
+    }
 
-    <!--
-    sidebar
-
-    -->
-    /*.DietRanking{*/
-    /*		margin-bottom: 30px;*/
-    /*	}*/
-
-    /*	.DietRanking_ranking{*/
-    /*		border: 3px solid rgb(103, 145, 18);*/
-    /*	box-sizing: border-box;*/
-    /*	height: 300px;*/
-    /*	}*/
-
-    /*	.subRanking_ranking{*/
-    /*	border: 3px solid rgb(103, 145, 18);*/
-    /*	box-sizing: border-box;*/
-    /*	height: 300px;*/
-    /*	}*/
-    /*	.side_ranking{*/
-    /*		font-weight: bold;*/
-    /*	}*/
 </style>
 
 <!-- Header -->
@@ -347,27 +338,8 @@
             </table>
         </div>
 
-
-        <!-- Sidebar -->
         <th:block th:replace="~{layout/rank_sidebar::sidebar}"></th:block>
-        <!--        <div class="sidebar">-->
 
-        <!--            <section>-->
-        <!--                <h3 class="side_ranking">포인트 순위</h3>-->
-        <!--                <div class="DietRanking">-->
-        <!--                    <div class="DietRanking_ranking">-->
-
-        <!--                    </div>-->
-        <!--                </div>-->
-        <!--                <h3 class="side_ranking">트레이너 구독 순위</h3>-->
-        <!--                <div class="subRanking">-->
-        <!--                    <div class="subRanking_ranking">-->
-
-        <!--                    </div>-->
-        <!--                </div>-->
-        <!--            </section>-->
-
-        <!--        </div>-->
     </div>
 </section>
 
@@ -387,6 +359,7 @@
 <script th:src="@{/assets/js/main_sub.js}"></script>
 
 <script th:src="@{/assets/js/sidebar.js}"></script>
+<script th:src="@{/assets/js/profile.js}"></script>
 <!-- summernote -->
 <script src="/assets/js/summernote/summernote-lite.js"></script>
 <script src="/assets/js/summernote/lang/summernote-ko-KR.js"></script>
