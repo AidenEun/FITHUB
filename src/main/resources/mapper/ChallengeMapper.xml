@@ -188,5 +188,16 @@
         select * from chall_notice_board where chall_num = #{challNum}
     </select>
 
+    <select id="checkChall">
+        SELECT COUNT(*)
+        FROM my_challenge
+        WHERE user_id = #{id}
+        AND chall_num = #{challNum}
+    </select>
+
+    <delete id="deleteMyChall">
+        DELETE FROM my_challenge
+        WHERE mychall_num = #{mychallNum}
+    </delete>
 </mapper>
 

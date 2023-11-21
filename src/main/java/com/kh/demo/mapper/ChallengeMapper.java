@@ -60,11 +60,16 @@ public interface ChallengeMapper {
 
     ChallNoticeBoardDTO getChallNoticeDetail(Long challNum);
 
-    void insertMyChall(long challNum, String id);
+    boolean insertMyChall(long challNum, String id);
 
     void deleteChallNotice(long challNum);
 
     List<ChallNoticeBoardDTO> get12challSearchList(Criteria cri);
 
     Long getchallTotal(Criteria cri);
+
+    boolean checkChall(Long challNum, String id);
+
+    void deleteMyChall(Long mychallNum);
+
 }

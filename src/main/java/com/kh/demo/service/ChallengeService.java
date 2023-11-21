@@ -55,11 +55,16 @@ public interface ChallengeService {
 
     ChallNoticeBoardDTO getChallNoticeDetail(Long challNum);
 
-    void insertMyChall(long challNum, String id);
+    boolean insertMyChall(long challNum, String id);
 
     void deleteChallNotice(long challNum);
 
     List<ChallNoticeBoardDTO> get12challSearchList(Criteria cri);
 
     Long getchallTotal(Criteria cri);
+
+    boolean checkChall(long challNum, String id);
+
+    void deleteMyChall(Long mychallNum);
+
 }

@@ -41,20 +41,20 @@ cate.forEach(function(btn) {
 function challengeModal(e){
     e.preventDefault();
 
-challengeModalBox.classList.add("active");
+    challengeModalBox.classList.add("active");
 
-let category = 'successChall';
-loadPage('/challenge/successChall', 1,category);
-
-$('#successChall').click(function() {
-    category = 'successChall';
+    let category = 'successChall';
     loadPage('/challenge/successChall', 1,category);
-});
 
-$('#allChall').click(function() {
-    category = 'allChall';
-    loadPage('/challenge/allChall', 1, category);
-});
+    $('#successChall').click(function() {
+        category = 'successChall';
+        loadPage('/challenge/successChall', 1,category);
+    });
+
+    $('#allChall').click(function() {
+        category = 'allChall';
+        loadPage('/challenge/allChall', 1, category);
+    });
 
 }
 
