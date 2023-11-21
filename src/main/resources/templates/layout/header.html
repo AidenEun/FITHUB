@@ -1,7 +1,7 @@
 <link xmlns:th="http://www.thymeleaf.org">
 <th:block th:fragment="header(loginUser,user,trainer,admin,profile)">
     <style>
-        .submenu {
+.submenu {
    width: 150px;
    position: absolute;
    font-size: 14px;
@@ -24,9 +24,13 @@
    padding:0;
  }
 
+#header nav > ul > li .submenu_black{
+    color: black !important;
+}
+
     </style>
 
-    <!--<style>
+    <style>
         #header {
       background-color: #5a8100 !important;
     }
@@ -46,8 +50,8 @@
 
     #footer {
       background-color: #304400;
-    }-->
-    <!--</style>-->
+    }
+    </style>
 
     <!--<th:block th:if="${session.loginUser == null}">
         <script>
@@ -56,8 +60,8 @@
         </script>
     </th:block>-->
 
-    <header id="header" class="alt">
-        <h1 style="color: #fff;">
+    <header id="header">
+        <h1>
             <a href="/">
                 Fit
                 <span>Hub</span>
@@ -67,44 +71,36 @@
             <ul>
                 <li class="menu-item"><a href="/info/info_list" style="color: white;">정보</a>
                     <ul class="submenu">
-                        <li><a href="/info/info_list">전체</a></li>
-                        <li><a href="/info/info_news">뉴스</a></li>
-                        <li><a href="/info/info_food">식단</a></li>
-                        <li><a href="/info/info_exercise">운동</a></li>
-                        <li><a href="/info/info_tip">꿀팁</a></li>
+                        <li><a class="submenu_black" href="/info/info_list">전체</a></li>
+                        <li><a class="submenu_black" href="/info/info_news">뉴스</a></li>
+                        <li><a class="submenu_black" href="/info/info_food">식단</a></li>
+                        <li><a class="submenu_black" href="/info/info_exercise">운동</a></li>
+                        <li><a class="submenu_black" href="/info/info_tip">꿀팁</a></li>
 
                     </ul>
                 </li>
                 <li class="menu-item"><a href="/calorie/food_calorie_list" style="color: white;">칼로리</a>
                     <ul class="submenu">
-                        <li><a href="/calorie/food_calorie_list">음식칼로리</a></li>
-                        <li><a href="/calorie/exercise_calorie_list">운동칼로리</a></li>
+                        <li><a class="submenu_black" href="/calorie/food_calorie_list">음식칼로리</a></li>
+                        <li><a class="submenu_black" href="/calorie/exercise_calorie_list">운동칼로리</a></li>
                     </ul>
                 </li>
                 <li class="menu-item"><a href="/community/commu_list" style="color: white;">커뮤니티</a>
                     <ul class="submenu">
-                        <li><a href="/community/commu_free">자유게시판</a></li>
-                        <li><a href="/community/commu_food">식단</a></li>
-                        <li><a href="/community/commu_exercise">운동</a></li>
-                        <li><a href="/community/commu_gallery">갤러리</a></li>
-                        <li><a href="/community/commu_qna">고민 Q&A</a></li>
+                        <li><a class="submenu_black" href="/community/commu_free">자유게시판</a></li>
+                        <li><a class="submenu_black" href="/community/commu_food">식단</a></li>
+                        <li><a class="submenu_black" href="/community/commu_exercise">운동</a></li>
+                        <li><a class="submenu_black" href="/community/commu_gallery">갤러리</a></li>
+                        <li><a class="submenu_black" href="/community/commu_qna">고민 Q&A</a></li>
 
                     </ul>
                 </li>
-                <li class="menu-item"><a href="/matching/matching_list" style="color: white;">트레이너 매칭</a>
-                    <ul class="submenu">
-                        <li><a href="/matching/matching_list">트레이너매칭</a></li>
-                    </ul>
-                </li>
-                <li class="menu-item"><a href="/challenge/list" style="color: white;">챌린지</a>
-                    <ul class="submenu">
-                        <li><a href="/info/submenu1">챌린지</a></li>
-                    </ul>
-                </li>
+                <li class="menu-item"><a href="/matching/matching_list" style="color: white;">트레이너 매칭</a></li>
+                <li class="menu-item"><a href="/challenge/list" style="color: white;">챌린지</a></li>
                 <li class="menu-item"><a href="/product/prod_list" style="color: white;">제품</a>
                     <ul class="submenu">
-                        <li><a href="/product/prod_food">식품</a></li>
-                        <li><a href="/product/prod_exercise">운동도구</a></li>
+                        <li><a class="submenu_black" href="/product/prod_food">식품</a></li>
+                        <li><a class="submenu_black" href="/product/prod_exercise">운동도구</a></li>
                     </ul>
                 </li>
             </ul>
@@ -125,13 +121,12 @@
         <nav class="main">
             <ul>
                 <li id="login">
-                    <th:block th:if="${session.loginUser == null}">
+                    <th:block th:if="${loginUser == null}">
                         <a class="login" th:href="@{/user/login}" style="color: #fff;">Login</a>
                     </th:block>
-                    <th:block th:if="${session.loginUser != null}">
+                    <th:block th:if="${loginUser != null}">
                         <a class="login" th:href="@{/user/logout}" style="color: #fff;">logout</a>
                     </th:block>
-
                     <a class="login" href="/usermypage/user_myinfo" style="color: #fff;">유저</a>
                     <a class="login" href="/trainermypage/trainer_modify" style="color: #fff;">트레</a>
                     <a class="login" href="/adminmypage/adminmypage_list" style="color: #fff;">관리</a>
@@ -145,7 +140,7 @@
                     </form>
                 </li>
                 <li class="menu">
-                    <a class="fa-bars" href="#menu" style="color: #fff;">Menu</a>
+                    <a class="fa-bars" href="#menu"style="color: #fff;">Menu</a>
                 </li>
             </ul>
         </nav>
