@@ -127,30 +127,29 @@ function challengeModal(e){
 
 
         var headRow = $('<tr align="right" valign="middle">');
-        headRow.append('<td colspan="8">글 개수 : '+data.pageDTO.total+'</td>');
+        headRow.append('<td colspan="7">완료한 나의 챌린지 개수 : '+data.pageDTO.total+'</td>');
         tableHead.append(headRow);
 
         if (data.list != null && data.list.length > 0) {
             data.list.forEach(function (board) {
                 var row = $('<tr>');
-                row.append('<td class="long_text">'+ board.mychallNum +'</td>');
-                row.append('<td class="long_text">' + board.userId + '</td>');
-                row.append('<td class="long_text">' + board.challCategory+ '</td>');
-                row.append('<td class="long_text">' + board.challNum + '</td>');
-                row.append('<td class="long_text">' + board.challName + '</td>');
-                row.append('<td class="long_text">' + board.subRegdate + '</td>');
-                row.append('<td class="long_text">' + board.challTerm + ' </td>');
-                row.append('<td class="long_text"><a href="'+board.mychallNum+'" class="writeOpen button">선택</a></td>');
+                row.append('<td style="text-align: center;" class="long_text">' + board.challNum + '</td>');
+                row.append('<td style="text-align: center;" class="long_text">' + board.userId + '</td>');
+                row.append('<td style="text-align: center;" class="long_text">' + board.challCategory+ '</td>');
+                row.append('<td style="text-align: center;" class="long_text">' + board.challName + '</td>');
+                row.append('<td style="text-align: center;" class="long_text">' + board.subRegdate + '</td>');
+                row.append('<td style="text-align: center;" class="long_text">' + board.challTerm + ' </td>');
+                row.append('<td style="text-align: center;" class="long_text"><a href="'+board.mychallNum+'" class="button btnColor writeChallOpen button">리뷰 작성</a></td>');
                 tableBody.append(row);
             });
         }
         else {
-            tableBody.append('<tr><td colspan="8">등록된 게시글이 없습니다.</td></tr>');
+            tableBody.append('<tr><td colspan="7">완료한 챌린지가 없습니다.</td></tr>');
         }
 
 
 	    const writeForm = $("#writeForm");
-        $(".writeOpen").on("click",function(e){
+        $(".writeChallOpen").on("click",function(e){
             e.preventDefault();
             let mychallNum = $(this).attr("href");
             writeForm.append("<input type='hidden' name='mychallNum' value='"+mychallNum+"'>")
@@ -168,24 +167,23 @@ function displayData(data) {
 
 
         var headRow = $('<tr align="right" valign="middle">');
-        headRow.append('<td colspan="8">글 개수 : '+data.pageDTO.total+'</td>');
+        headRow.append('<td colspan="6">나의 챌린지 개수 : '+data.pageDTO.total+'</td>');
         tableHead.append(headRow);
 
         if (data.list != null && data.list.length > 0) {
             data.list.forEach(function (board) {
                 var row = $('<tr>');
-                row.append('<td class="long_text">'+ board.mychallNum +'</td>');
-                row.append('<td class="long_text">' + board.userId + '</td>');
-                row.append('<td class="long_text">' + board.challCategory+ '</td>');
-                row.append('<td class="long_text">' + board.challNum + '</td>');
-                row.append('<td class="long_text">' + board.challName + '</td>');
-                row.append('<td class="long_text">' + board.subRegdate + '</td>');
-                row.append('<td colspan="2" class="long_text">' + board.challTerm + '</td>');
+                row.append('<td style="text-align: center;" class="long_text">' + board.challNum + '</td>');
+                row.append('<td style="text-align: center;" class="long_text">' + board.userId + '</td>');
+                row.append('<td style="text-align: center;" class="long_text">' + board.challCategory+ '</td>');
+                row.append('<td style="text-align: center;" class="long_text">' + board.challName + '</td>');
+                row.append('<td style="text-align: center;" class="long_text">' + board.subRegdate + '</td>');
+                row.append('<td style="text-align: center;" colspan="2" class="long_text">' + board.challTerm + ' </td>');
                 tableBody.append(row);
             });
         }
         else {
-            tableBody.append('<tr><td colspan="8">등록된 게시글이 없습니다.</td></tr>');
+            tableBody.append('<tr><td colspan="6">진행중인 챌린지가 없습니다.</td></tr>');
         }
 
     }

@@ -58,6 +58,7 @@ public class CommunityController {
 
     @GetMapping("commu_exercise")
     public void commu_exercise_list(Criteria cri, Model model) throws Exception{
+        System.out.println(cri);
         cri.setBoardCategory("commuExer");
         List<BoardDTO> list = service.getBoardList(cri);
         model.addAttribute("list",list);

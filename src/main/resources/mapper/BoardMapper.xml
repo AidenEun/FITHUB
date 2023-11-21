@@ -126,6 +126,12 @@
 		select count(*) from board where
 		<include refid="cri"/> board_num > 0
 	</select>
+
+	<select id="getTotalWithCategory">
+		select count(*) from board where
+		<include refid="cri"/> board_num > 0
+		AND board_category = #{boardCategory}
+	</select>
 	<select id="getLastNum">
 		select max(board_num) from board where user_id=#{userId}
 	</select>

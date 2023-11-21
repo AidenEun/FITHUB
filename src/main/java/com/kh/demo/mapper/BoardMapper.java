@@ -21,6 +21,7 @@ public interface BoardMapper {
 	//select
 	List<BoardDTO> getList(Criteria cri);
 	Long getTotal(Criteria cri);
+	Long getTotalWithCategory(Criteria cri);
 
 	List<BoardDTO> getInfoNewsList(Criteria cri);
 	List<BoardDTO> getInfoExerList(Criteria cri);

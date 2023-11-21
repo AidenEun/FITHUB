@@ -195,7 +195,12 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public Long getTotal(Criteria cri) {
-		return bmapper.getTotal(cri);
+		if(cri.getBoardCategory() != null){
+			return bmapper.getTotalWithCategory(cri);
+		}
+		else{
+			return bmapper.getTotal(cri);
+		}
 	}
 
 	@Override
