@@ -161,6 +161,7 @@ tr.special-row{
 .ctBtncolor:hover {
     padding: 0 15px;
     background: #ebede1;
+    color: #5a8100 !important;
     box-shadow: none;
     transition: 0.5s ease-out;
     font-weight:100 !important;

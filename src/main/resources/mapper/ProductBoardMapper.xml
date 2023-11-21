@@ -69,6 +69,12 @@
 		select count(*) from product_board where
 		<include refid="cri"/> board_num > 0
 	</select>
+
+	<select id="getTotalWithCategory">
+		select count(*) from product_board where
+		<include refid="cri"/> board_num > 0
+		AND category = #{category}
+	</select>
 	<select id="getLastNum">
 		select max(board_num) from product_board where admin_id=#{adminId}
 	</select>
@@ -76,6 +82,7 @@
 	<select id="findByNum">
 		select * from product_board where board_num=#{boardNum}
 	</select>
+
 
 </mapper>
 
