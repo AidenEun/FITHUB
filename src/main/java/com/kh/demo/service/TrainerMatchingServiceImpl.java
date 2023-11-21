@@ -85,6 +85,12 @@ public class TrainerMatchingServiceImpl implements TrainerMatchingService {
         return list;
     };
     @Override
+    public UTMatchingDTO uTtrainerCheck(String trainerId, String userId) {
+        UTMatchingDTO Check = tmmapper.utCheck(trainerId, userId);
+        return Check;
+    };
+
+    @Override
     public ProfileDTO getProfileInfo(String trainerId){
         ProfileDTO profileInfo = pfmapper.getProfileInfo(trainerId);
         return profileInfo;

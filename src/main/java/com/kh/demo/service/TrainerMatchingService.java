@@ -61,4 +61,7 @@ public interface TrainerMatchingService {
     List<TrainerMatchingBoardDTO> getAllBoards(Long boardNum);
 
     List<TrainerDTO> getTrainerNickname(String trainerId);
+
+
+    UTMatchingDTO uTtrainerCheck(String trainerId, String userId);
 }

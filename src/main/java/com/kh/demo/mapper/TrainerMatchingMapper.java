@@ -56,4 +56,6 @@ public interface TrainerMatchingMapper {
  Long getTotal(Criteria cri);
 
     List<TrainerMatchingBoardDTO> getAllBoards(Long boardNum);
+
+    UTMatchingDTO utCheck(String trainerId, String userId);
 }
