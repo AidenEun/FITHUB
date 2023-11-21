@@ -29,7 +29,7 @@ public interface UserMyPageService {
     DiaryDTO getDiaryDetail(String choicedate, String loginUser);
 
     //달력에 존재하는 일기 조회하기
-    public List<DiaryDTO> getDiaryList(String userid);
+    List<DiaryDTO> getDiaryList(String loginUser);
 
     //일정 여부 확인
     public DiaryDTO checkList(String choicedate,String loginUser);

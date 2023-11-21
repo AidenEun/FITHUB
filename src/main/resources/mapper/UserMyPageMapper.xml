@@ -158,6 +158,10 @@
 		delete from stamp where user_id=#{userId} and regdate=#{regdate}
 	</delete>
 
+	<select id="getDiaryList">
+		select * from diary where user_id=#{loginUser}
+	</select>
+
 	<select id="getDiaryDetail">
 		select * from diary where user_id = #{loginUser} and regdate=#{choicedate}
 	</select>

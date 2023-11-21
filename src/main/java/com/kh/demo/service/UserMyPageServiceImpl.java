@@ -74,8 +74,9 @@ public class UserMyPageServiceImpl implements UserMyPageService{
 
 
     @Override
-    public List<DiaryDTO> getDiaryList(String userid) {
-        return null;
+    public List<DiaryDTO> getDiaryList(String loginUser) {
+
+        return umpmapper.getDiaryList(loginUser);
     }
 
     @Override

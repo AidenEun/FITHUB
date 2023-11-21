@@ -46,7 +46,7 @@ const renderCalender = () => {
             ? 'this' : 'other';
         if (condition === 'this') {
             // dates[i] = `<div class="date" onclick="choicedate(${viewYear},${viewMonth},${date})"><div class="hasdiary"></div><span class=${condition}>${date}</span></div>`;
-            dates[i] = `<div class="date" onclick="choicedate(${viewYear},${viewMonth},${date})"><span class=${condition}>${date}</span></div>`;
+            dates[i] = `<div class="date" onclick="choicedate(${viewYear},${viewMonth+1},${date})"><span class=${condition}>${date}</span></div>`;
         }
         else {
             dates[i] = `<div class="date" ><span class=${condition}>${date}</span></div>`;
@@ -69,12 +69,11 @@ const renderCalender = () => {
 
 renderCalender();
 
-// let day = new Date();
 
 function choicedate(viewYear, viewMonth, date) {
 
 
-    let viewrealMonth = viewMonth + 1;
+    let viewrealMonth = viewMonth;
     if (date < 10) date = "0" + date;
     if (viewrealMonth < 10) viewrealMonth = "0" + viewrealMonth;
     // $("#click_date").val(viewYear+"-"+(viewrealMonth)+"-"+date);
@@ -83,14 +82,13 @@ function choicedate(viewYear, viewMonth, date) {
     var year = today.getFullYear();
     var month = ('0' + (today.getMonth() + 1)).slice(-2);
     var day = ('0' + today.getDate()).slice(-2);
-    var todaydateString = year + '-' + month  + '-' + day;
+    var todaydateString = year + '-' + month + '-' + day;
 
     const chociedate = viewYear + "-" + (viewrealMonth) + "-" + date;
-    if(chociedate <= todaydateString){
+    if (chociedate <= todaydateString) {
         // console.log("과거");
         location.replace("/usermypage/checklist?choicedate=" + viewYear + "-" + viewrealMonth + "-" + date);
-    }
-    else {
+    } else {
         // console.log("미래");
         alert("다이어리를 미리 작성할 수 없습니다.\n내일 다시 시도해 주세요!")
     }
