@@ -319,58 +319,70 @@
                             </td>
                         </tr>
                     </table>
-                    <div id="map" style="width:100%;height:350px;"></div>
-                    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-                    <script type="text/javascript"
-                            src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=9d457fe0b04b983671f48d03d84f2fdb"></script>
-                    <script>
-                        var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-                            mapOption = {
-                                center: new kakao.maps.LatLng(37.5125, 127.102778), // 지도의 중심좌표
-                                level: 4 // 지도의 확대 레벨
-                            };
 
-                        var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+                        <div id="map" style="width:100%;height:350px;"></div>
+                    <th:block th:if="${list != null and list.size() > 0}" th:each="board : ${list}">
+                        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+                        <script type="text/javascript"
+                                src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=9d457fe0b04b983671f48d03d84f2fdb&libraries=services"></script>
+                        <script>
+                            var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+                                mapOption = {
+                                    center: new kakao.maps.LatLng(37.5125, 127.102778), // 지도의 중심좌표
+                                    level: 3 // 지도의 확대 레벨
+                                };
 
-                        $.ajax({
-                            url: 'matching/map', // 데이터를 가져올 엔드포인트 URL
-                            method: 'GET',
-                            success: function(data) {
-                                data.forEach(function(boardData) {
-                                    var address = boardData.TrainerAddr; // 주소 정보 가져오기
+                            // 지도를 생성합니다
+                            var map = new kakao.maps.Map(mapContainer, mapOption);
+
+                            // 주소-좌표 변환 객체를 생성합니다
+                            var geocoder = new kakao.maps.services.Geocoder();
+
+                            $.ajax({
+                                url: '/matching/map?boardNum=[[${board.boardNum}]]',
+                                method: 'GET',
+                                success: function(data) {
+
+                                     var parsedData = JSON.parse(data);
+                                       console.log(parsedData);
+                                    // parsedData를 순회하면서 처리
+                                    parsedData.boardList.forEach(function(boardData) {
+                                    var address = boardData.TrainerAddr;
                                     console.log(address);
-                                    var trainerNickname = boardData.trainerNickname; // 트레이너 닉네임 가져오기
+                                    var trainerNickname = boardData.trainerNickname;
                                     console.log(trainerNickname);
-                                    var geocoder = new kakao.maps.services.Geocoder();
+                                    // 주소로 좌표를 검색합니다
                                     geocoder.addressSearch(address, function(result, status) {
-                                        if (status === kakao.maps.services.Status.OK) {
-                                            var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-                                            var marker = new kakao.maps.Marker({
-                                                map: map,
-                                                position: coords,
-                                                title: trainerNickname // 마커 이름은 트레이너 닉네임으로 지정
-                                            });
 
-                                            // 각 마커별로 인포윈도우 생성
-                                            var infowindow = new kakao.maps.InfoWindow({
-                                                content: '<div><strong>' + trainerNickname + '</strong><br>' + address + '</div>'
-                                            });
+                                    // 정상적으로 검색이 완료됐으면
+                                     if (status === kakao.maps.services.Status.OK) {
 
-                                            // 마커에 클릭 이벤트 추가
-                                            kakao.maps.event.addListener(marker, 'click', function() {
-                                                infowindow.open(map, marker);
-                                            });
-                                        } else {
-                                            console.error('Geocoder failed:', status);
-                                        }
+                                        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+                                        // 결과값으로 받은 위치를 마커로 표시합니다
+                                        var marker = new kakao.maps.Marker({
+                                            map: map,
+                                            position: coords
+                                        });
+
+                                        // 인포윈도우로 장소에 대한 설명을 표시합니다
+                                        var infowindow = new kakao.maps.InfoWindow({
+                                            content: '<div style="width:150px;text-align:center;padding:6px 0;background-color: #ebede1 !important;">' + trainerNickname + '</div>'
+                                        });
+                                        infowindow.open(map, marker);
+
+                                        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+                                        map.setCenter(coords);
+                                           } // 괄호 닫히는 부분 추가
+                                        }); // addressSearch 함수 괄호 닫히는 부분 추가
                                     });
-                                });
-                            },
-                            error: function(err) {
-                                console.error('Error fetching data:', err);
-                            }
-                        });
-                    </script>
+                                },
+                                error: function(err) {
+                                    console.error('Error fetching data:', err);
+                                }
+                            });
+                        </script>
+                    </th:block>
                 </div>
 
             </div>

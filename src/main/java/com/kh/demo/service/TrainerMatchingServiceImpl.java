@@ -224,8 +224,8 @@ public class TrainerMatchingServiceImpl implements TrainerMatchingService {
         return tmmapper.findByNum(boardNum);
     }
     @Override
-    public List<TrainerMatchingBoardDTO> getAllBoards(){
-        return tmmapper.getAllBoards();
+    public List<TrainerMatchingBoardDTO> getAllBoards(Long boardNum){
+        return tmmapper.getAllBoards(boardNum);
     };
     @Override
     public List<TrainerDTO> getTrainerNickname(String trainerId){return tmapper.getTrainerNickname(trainerId);}
