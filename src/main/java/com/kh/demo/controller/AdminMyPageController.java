@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.kh.demo.domain.dto.*;
 import com.kh.demo.service.AdminMyPageService;
 import com.kh.demo.service.TrainerMyPageService;
+import com.kh.demo.service.UserMyPageService;
 import com.kh.demo.service.UserServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -29,6 +30,9 @@ public class AdminMyPageController {
     private UserServiceImpl userService;
     @Autowired @Qualifier("TrainerMyPageServiceImpl")
     private TrainerMyPageService trainerMyPageService;
+    @Autowired @Qualifier("UserMyPageServiceImpl")
+    private UserMyPageService userMyPageService;
+
 
     @GetMapping("adminmypage_list")
     public void replaceList(Model model){
@@ -339,11 +343,13 @@ public class AdminMyPageController {
             TrainerDTO trainerDTO = (TrainerDTO) userInfo;
             json.putPOJO("trainerDTO", trainerDTO);
             json.putPOJO("loginUser_userId", loginUser_userId);
+            json.putPOJO("profile", trainerMyPageService.getProFileList(trainerDTO.getTrainerId()));
         }
         else if (userInfo instanceof UserDTO) {
             UserDTO userDTO = (UserDTO) userInfo;
             json.putPOJO("userDTO", userDTO);
             json.putPOJO("loginUser_userId", loginUser_userId);
+            json.putPOJO("profile", userMyPageService.getProFileList(userDTO.getUserId()));
         }
         else {
             json.put("noData", "noData");

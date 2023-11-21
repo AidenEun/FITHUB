@@ -59,8 +59,27 @@ function modal(data) {
         if (data.hasOwnProperty("trainerDTO")) {
             var modalBox = $('.modal_box');
             var receiveId = data.trainerDTO.trainerId
-            modalBox.find('.img_area img').attr('src', '/images/profile_img.png');
-            modalBox.find('.img_area a').attr('href', '#');
+//            modalBox.find('.img_area img').attr('src', '/images/profile_img.png');
+//            modalBox.find('.img_area a').attr('href', '#');
+
+            var img_area = $('<div class="img_area">');
+            var profile_img = $('<a class="img_area_thumbnail" href="#">');
+
+            if (data.profile != null) {
+                var ext = data.profile.orgName.split(".");
+                var imageSrc = '/trainermypage/thumbnail?sysName=' + data.profile.sysName;
+                if (ext.indexOf("jpg") !== -1 || ext.indexOf("jpeg") !== -1 || ext.indexOf("png") !== -1 || ext.indexOf("gif") !== -1 || ext.indexOf("webp") !== -1) {
+                    profile_img.append('<img style="width:100%;" src="' + imageSrc + '">');
+                }
+                else{
+                    profile_img.append('<img style="width:100%;" src="profile_img.png">');
+                }
+            }
+            else{
+               profile_img.append('<img style="width:100%;" src="profile_img.png">');
+            }
+            img_area.append(profile_img);
+
             modalBox.find('.img_area img').attr('alt', receiveId);
             modalBox.find('.name a').text(data.trainerDTO.trainerNickname + '(' + receiveId + ')');
             modalBox.find('.message').attr('alt', receiveId);
@@ -82,8 +101,27 @@ function modal(data) {
         else if (data.hasOwnProperty("userDTO")) {
             var modalBox = $('.modal_box');
             var receiveId = data.userDTO.userId
-            modalBox.find('.img_area img').attr('src', '/images/profile_img.png');
-            modalBox.find('.img_area a').attr('href', '#');
+//            modalBox.find('.img_area img').attr('src', '/images/profile_img.png');
+//            modalBox.find('.img_area a').attr('href', '#');
+
+            var img_area = $('<div class="img_area">');
+            var profile_img = $('<a class="img_area_thumbnail" href="#">');
+
+            if (data.profile != null) {
+                var ext = data.profile.orgName.split(".");
+                var imageSrc = '/usermypage/thumbnail?sysName=' + data.profile.sysName;
+                if (ext.indexOf("jpg") !== -1 || ext.indexOf("jpeg") !== -1 || ext.indexOf("png") !== -1 || ext.indexOf("gif") !== -1 || ext.indexOf("webp") !== -1) {
+                    profile_img.append('<img style="width:100%;" src="' + imageSrc + '">');
+                }
+                else{
+                    profile_img.append('<img style="width:100%;" src="profile_img.png">');
+                }
+            }
+            else{
+               profile_img.append('<img style="width:100%;" src="profile_img.png">');
+            }
+            img_area.append(profile_img);
+
             modalBox.find('.img_area img').attr('alt', receiveId);
             modalBox.find('.name a').text(data.userDTO.userNickname + '(' + receiveId + ')');
             modalBox.find('.message').attr('alt', receiveId);
