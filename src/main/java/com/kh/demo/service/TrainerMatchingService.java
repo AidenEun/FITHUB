@@ -58,7 +58,7 @@ public interface TrainerMatchingService {
 
     TrainerMatchingBoardDTO getDetail(Long boardNum);
 
-    List<TrainerMatchingBoardDTO> getAllBoards();
+    List<TrainerMatchingBoardDTO> getAllBoards(Long boardNum);
 
     List<TrainerDTO> getTrainerNickname(String trainerId);
 }

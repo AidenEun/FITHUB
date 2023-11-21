@@ -291,6 +291,7 @@ public class MatchingController {
     }
 
     @PostMapping("subscribe_check")
+    @ResponseBody
     public String checkSubscription(@RequestParam("sendId") String userId, @RequestParam("trainerId") String trainerId) {
         SubscribeDTO newSubscribe = new SubscribeDTO();
         newSubscribe.setUserId(userId);
@@ -305,6 +306,7 @@ public class MatchingController {
         }
     }
     @PostMapping("subscribe_click")
+    @ResponseBody
     public String clickSubscription(@RequestParam("sendId") String userId, @RequestParam("trainerId") String trainerId) {
         SubscribeDTO newSubscribe = new SubscribeDTO();
         newSubscribe.setUserId(userId);
@@ -320,19 +322,20 @@ public class MatchingController {
         }
     }
 
-    @PostMapping("map")
+    @GetMapping("/map")
     @ResponseBody
-    public String map() throws Exception {
+    public String map(@RequestParam("boardNum") Long boardNum) throws Exception {
         ObjectNode json = JsonNodeFactory.instance.objectNode();
 
-        List<TrainerMatchingBoardDTO> boardList = MatchingService.getAllBoards();
-
+        List<TrainerMatchingBoardDTO> boardList = MatchingService.getAllBoards(boardNum);
+        //System.out.println(boardList);
         // 가져온 데이터를 JSON으로 변환하여 JSON 객체에 담습니다.
         ArrayNode arrayNode = json.putArray("boardList");
         for (TrainerMatchingBoardDTO board : boardList) {
             ObjectNode boardNode = JsonNodeFactory.instance.objectNode();
             // 필요한 정보들을 boardNode에 추가합니다.
             List<TrainerDTO> trainerInfo = MatchingService.getTrainerNickname(board.getTrainerId());
+            //System.out.println(trainerInfo);
             boardNode.put("TrainerAddr", board.getTrainerAddr());
             for (TrainerDTO info : trainerInfo) {
                 boardNode.put("trainerNickname", info.getTrainerNickname());
