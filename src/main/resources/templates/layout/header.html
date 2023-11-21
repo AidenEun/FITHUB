@@ -1,5 +1,5 @@
 <link xmlns:th="http://www.thymeleaf.org">
-<th:block th:fragment="header(loginUser,user,trainer,admin)">
+<th:block th:fragment="header(loginUser,user,trainer,admin,profile)">
     <style>
 .submenu {
    width: 150px;
@@ -157,7 +157,18 @@
         <th:block th:if="${session.loginUser != null}">
             <div class="side_info">
                 <a href="/usermypage/user_myinfo">
-                    <img src="images/profile_img.png" class="prof_img" width="102px" height="102px">
+                    <th:block th:if="${profile != null}">
+                        <th:block th:with="sar=${profile.orgName.split('[.]')}">
+                            <th:block th:with="ext=${sar[sar.length-1]}">
+                                <th:block th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}">
+                                    <img style="width:102px; height:102px" th:src="@{/usermypage/thumbnail (sysName=${profile.sysName})}">
+                                </th:block>
+                            </th:block>
+                        </th:block>
+                    </th:block>
+                    <th:block th:unless="${profile != null}">
+                        <img style="width:102px; height:102px" th:src="@{/usermypage/thumbnail (sysName='profile_img.png')}">
+                    </th:block>
                 </a>
                 <div id="my_info">
                     <div>
