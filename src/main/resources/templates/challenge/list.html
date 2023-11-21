@@ -16,6 +16,8 @@
 	<link rel="stylesheet" th:href="@{/assets/css/common.css}">
 	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
 	<link rel="stylesheet" th:href="@{/assets/css/ranking.css}" />
+	<link rel="stylesheet" th:href="@{/assets/css/profileModal.css}"/>
+
 
 </head>
 <style>
@@ -95,7 +97,7 @@
 <th:block th:replace="~{layout/challengeModal::challengeModal()}"></th:block>
 <th:block th:replace="~{challenge/challNoticeBoardModal::challNoticeBoardModal()}"></th:block>
 <th:block th:replace="~{challenge/challNoticeGetModal::challNoticeGetModal()}"></th:block>
-
+<th:block th:replace="~{layout/profileModal::profileModal}"></th:block>
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">
 
@@ -241,7 +243,7 @@
 							<span class="reply_cnt" th:text="'['+${reply_cnt_list[boardStat.index]}+']'"></span>
 						</a>
 					</td>
-					<td>[[${board.userId}]]</td>
+					<td ><a class="open">[[${board.userId}]]</a></td>
 					<td>
 						[[${board.regdate}]]
 						<th:block th:if="${board.regdate != board.updateDate}">
@@ -338,6 +340,7 @@
 <script th:src="@{/assets/js/main_sub.js}"></script>
 
 <script th:src="@{/assets/js/sidebar.js}"></script>
+<script th:src="@{/assets/js/profile.js}"></script>
 
 <script th:src="@{/assets/js/challengeModal.js}"></script>
 <script th:src="@{/assets/js/challNoticeBoardModal.js}"></script>
@@ -394,7 +397,13 @@ function challCategory(){
 	challCategoryForm.submit();
 }
 
+$(".open").on("click", function (e) {
+        e.preventDefault();
+        var userId = $(this).text();
 
+        sendUserIdToModal(userId);
+        modalBox.classList.add("active");
+    });
 
 
 </script>

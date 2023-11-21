@@ -13,6 +13,7 @@
 	<link rel="stylesheet" th:href="@{/assets/css/index.css}" />
 	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
 	<link rel="stylesheet" th:href="@{/assets/css/common.css}" />
+	<link rel="stylesheet" th:href="@{/assets/css/profileModal.css}"/>
 
 </head>
 <style>
@@ -107,6 +108,8 @@
 <!-- Header -->
 <th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin},${session.profile})}"></th:block>
 
+<!-- Modal -->
+<th:block th:replace="~{layout/profileModal::profileModal}"></th:block>
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">
 
@@ -135,13 +138,13 @@
 
 							<div class ="galleryAll">
 								<!-- 갤러리뷰로 이동 -->
-								<a href="#">
+								<a class="open" href="#">
 									<div class = "g_Imgbox">
-										<img class="gal_Img thumbnail" style="width:100%;"
-											 src="#" alt="썸네일 이미지">
+										<img class="gal_Img thumbnail" style="width:100%;" th:src="@{/trainermypage/thumbnail_id (id=${user.userId})}">
 									</div>
 									<div class = "g_title_box">
-										<span class="gal_title_name">[[${user.userId}]]([[${user.userNickname}]])</span>
+										<span class="gal_title_name">
+											[[${user.userId}]]([[${user.userNickname}]])</span>
 									</div>
 								</a>
 
@@ -239,6 +242,7 @@
 <script th:src="@{/assets/js/main_sub.js}"></script>
 
 <script th:src="@{/assets/js/sidebar.js}"></script>
+<script th:src="@{/assets/js/profile.js}"></script>
 
 <script th:inline="javascript">
 	const searchForm = $("#searchForm");
@@ -273,6 +277,14 @@
 		}
 		searchForm.submit();
 	}
+
+	$(".open").on("click", function (e) {
+        e.preventDefault();
+        var userId = $(this).text();
+
+        sendUserIdToModal(userId);
+        modalBox.classList.add("active");
+    });
 </script>
 
 </body>
