@@ -1,7 +1,7 @@
 package com.kh.demo.controller;
 
-import com.kh.demo.domain.dto.LikeDTO;
-import com.kh.demo.service.HeartService;
+import com.kh.demo.domain.dto.BookMarkDTO;
+import com.kh.demo.service.BookMarkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -11,18 +11,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping("/heart/*")
-public class HeartController {
+@RequestMapping("/bookmark/*")
+public class BookmarkController {
 
 
-    @Autowired @Qualifier("HeartServiceImpl")
-    private HeartService service;
+    @Autowired @Qualifier("BookMarkServiceImpl")
+    private BookMarkService service;
 
-    @PostMapping("heart")
+    @PostMapping("bookmark")
     @ResponseBody
-    public int heart(@ModelAttribute LikeDTO heart){
-        int result = service.insertHeart(heart);
-
+    public int bookmark(@ModelAttribute BookMarkDTO bookmark){
+        int result = service.insertBookmark(bookmark);
+        System.out.println(result);
         return result;
     }
 

@@ -17,6 +17,7 @@ public interface ProductBoardMapper {
 	int updateReadCount(Long boardNum);
 
 	int updateProductLikeCnt(Long boardNum, String category);
+	int updateProductBookCnt(Long boardNum, String category);
 
 	//delete
 	int deleteBoard(Long boardNum);
@@ -33,6 +34,7 @@ public interface ProductBoardMapper {
 
 
 	Long getTotalWithCategory(Criteria cri);
+
 
 
 }

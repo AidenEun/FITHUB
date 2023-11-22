@@ -254,5 +254,14 @@
 		pageForm.find("input[name='pagenum']").val(pagenum);
 		pageForm.submit();
 	});
+	$(".get").on("click",function(e){
+		e.preventDefault();
+		let boardNum = $(this).attr("href");
+		let url=/*[[@{/community/commu_get}]]*/'';
+		pageForm.append("<input type='hidden' name='boardNum' value='"+boardNum+"'>")
+		pageForm.attr("action",url);
+		pageForm.attr("method","get");
+		pageForm.submit();
+	})
 </script>
 </html>

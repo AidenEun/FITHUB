@@ -53,7 +53,6 @@ public class HeartServiceImpl implements HeartService {
             pbmapper.updateProductLikeCnt(boardNum, boardCategory);
         }
         else {
-            // 다른 카테고리의 경우 BoardMapper를 사용하여 업데이트
             bmapper.updateBoardLikeCnt(boardNum, boardCategory);
         }
     }

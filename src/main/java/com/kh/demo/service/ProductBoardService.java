@@ -21,6 +21,8 @@ public interface ProductBoardService {
 
 	LikeDTO likeCheck(Long boardNum, String loginUser);
 
+	BookMarkDTO bookCheck(Long boardNum, String loginUser);
+
 	//delete
 	public boolean remove(String loginUser, Long boardNum, String category);
 

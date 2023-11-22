@@ -47,6 +47,17 @@
 		WHERE category=#{category} AND board_num=#{boardNum};
 	</update>
 
+	<update id="updateProductBookCnt">
+		UPDATE product_board
+		SET bookmark_cnt = (
+		SELECT COUNT(*)
+		FROM `bookmark`
+		WHERE board_category=#{category}
+		AND board_num=#{boardNum}
+		)
+		WHERE category=#{category} AND board_num=#{boardNum}
+	</update>
+
 	<delete id="deleteBoard">
 		delete from product_board where board_num=#{boardNum}
 	</delete>
