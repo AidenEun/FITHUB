@@ -38,6 +38,17 @@
         select * from review where matching_board_num=#{boardNum}
         limit #{cri.startrow},#{cri.amount}
     </select>
+    <select id="getStarRatingAv">
+        SELECT ROUND(AVG(star_rating), 1) AS averageRating
+        FROM review
+        WHERE matching_board_num=#{boardNum}
+    </select>
+    <select id="getStarAv">
+        SELECT ROUND(AVG(star_rating), 1) AS averageRating
+        FROM review
+        WHERE matching_board_num=#{boardNum}
+    </select>
+
 </mapper>
 
 

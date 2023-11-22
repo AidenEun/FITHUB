@@ -23,6 +23,6 @@ public interface ProfileMapper {
 
 	ProfileDTO getProfileInfo(String trainerId);
 
-    ProfileDTO getCareerInfo(String trainerId);
+	List<ProfileDTO> getCareerInfo(String trainerId);
 
 }

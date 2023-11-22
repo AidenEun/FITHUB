@@ -26,4 +26,8 @@ public interface ReviewMapper {
     int getRecentReview(Long boardNum);
 
     String getUtmatchingNum(Long boardNum);
+
+    Double getStarRatingAv(Long boardNum);
+
+    Double getStarAv(Long boardNum);
 }

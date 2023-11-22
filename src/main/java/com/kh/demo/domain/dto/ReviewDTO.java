@@ -11,4 +11,5 @@ public class ReviewDTO {
     private String userId;
     private String regdate;
     private String updatedate;
+    private Double starRatingAv;
 }
