@@ -17,8 +17,9 @@
     <link rel="stylesheet" th:href="@{/assets/css/common.css}"/>
 
     <!-- Modal -->
-    <link rel="stylesheet" th:href="@{/assets/css/matchingModal.css}">
-    <link rel="stylesheet" th:href="@{/assets/css/profileModal.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/matchingModal.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/profileModal.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/reportModal.css}"/>
 
 </head>
 <style>
@@ -225,6 +226,12 @@ margin-top: 30px;
 .regist{
 padding : 10px;
 }
+.displayNoneDiv{
+display: none;
+}
+
+
+
 
     <!--
     star rating
@@ -298,6 +305,7 @@ padding : 10px;
 <!-- Modal -->
 <th:block th:replace="~{layout/matchingModal::matchingModal()}"></th:block>
 <th:block th:replace="~{layout/profileModal::profileModal}"></th:block>
+<th:block th:replace="~{layout/reportModal::reportModal()}"></th:block>
 
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">
@@ -314,7 +322,7 @@ padding : 10px;
         <!-- Content -->
         <div class="content">
             <th:block th:if="${list != null}" th:each="board : ${list}">
-                <div class="cotent_header"><span>[[${trainerInfo.trainerNickname}]]님의 글입니다</span></div>
+                <div class="cotent_header"><span>[[${trainerInfo.trainerNickname}]]님의 글입니다</span><p style="font-size:15px;text-align:right;">별점 : <span>[[${starRatingAv}]]</span></p></div>
 
                 <form>
                     <!-- 글작성 테이블 -->
@@ -437,8 +445,8 @@ padding : 10px;
                         </table>
                         <div>
                             <div id="careerInfo">
-                                <th:block th:if="${careerInfo != null}">
-                                    <img th:src="@{/matching/thumbnail (sysName=${careerInfo.sysName})}">
+                                <th:block th:if="${careerInfo != null}" th:each="career : ${careerInfo}">
+                                    <img th:src="@{/matching/thumbnail (sysName=${career.sysName})}">
                                 </th:block>
                             </div>
                         </div>
@@ -472,11 +480,14 @@ padding : 10px;
                     </tr>
                     <tr>
                         <td>
-                            <a href="#" class="btnColor small">좋아요</a>
-                            <a href="# " class="btnColor small">북마크</a>
+                            <a href="#" class="heart" style="float:left; margin-right:5px;"><img id="heart" src="/images/like_off.png" style="width:30px;"></a>
+                            <a href="#"  class="btnColor">북마크</a>
                         </td>
                         <td>
-                            <a href="#" class="btnColor">신고하기</a>
+                            <div class="displayNoneDiv writer">[[${board.trainerId}]]</div>
+                            <div class="displayNoneDiv boardNum">[[${board.boardNum}]]</div>
+                            <div class="displayNoneDiv boardCategory">matching</div>
+                            <a href="#"  class="reportOpen btnColor">신고</a>
                         </td>
                     </tr>
 
@@ -544,7 +555,7 @@ padding : 10px;
 <script th:src="@{/assets/js/reply.js}"></script>
 
 <script th:src="@{/assets/js/matching_u_t_matching.js}"></script>
-
+<script th:src="@{/assets/js/reportModal.js}"></script>
 
 <script th:src="@{/assets/js/review.js}"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

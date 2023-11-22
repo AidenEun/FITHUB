@@ -25,7 +25,7 @@ public interface TrainerMatchingService {
 
     ProfileDTO getProfileInfo(String trainerId);
 
-    ProfileDTO getCareerInfo(String trainerId);
+    List<ProfileDTO> getCareerInfo(String trainerId);
 
     TrainerDTO getTrainerInfo(String trainerId);
 
@@ -64,4 +64,6 @@ public interface TrainerMatchingService {
 
 
     UTMatchingDTO uTtrainerCheck(String trainerId, String userId);
+
+    Double getStarRatingAv(Long boardNum);
 }

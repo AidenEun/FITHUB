@@ -493,23 +493,23 @@
 
 
     function sendit() {
-        const boardForm = document.boardForm;
+    const boardForm = document.boardForm;
 
-        const boardTitle = boardForm.boardTitle;
-        if (boardTitle.value === "") {
-            alert("제목을 입력하세요!");
-            boardTitle.focus();
+    // 필수 입력 필드 배열
+    const requiredFields = ["boardTitle", "boardContent", "expirationTime", "trainerZipcode", "trainerAddr", "trainerAddrdetail"];
+
+    for (let field of requiredFields) {
+        const fieldValue = boardForm[field].value.trim();
+
+        // 필드가 비어 있는지 확인
+        if (fieldValue === "") {
+            alert(boardForm[field].placeholder); // 해당 필드의 placeholder를 얻어와 사용자에게 알림
+            boardForm[field].focus();
             return false;
         }
-
-        const boardContent = boardForm.boardContent;
-        if (boardContent.value === "") {
-            alert("내용을 입력하세요!");
-            boardContent.focus();
-            return false;
-        }
-
-        boardForm.submit();
     }
+
+    boardForm.submit();
+}
 </script>
 </html>
