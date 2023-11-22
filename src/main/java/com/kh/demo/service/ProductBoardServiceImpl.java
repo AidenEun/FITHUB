@@ -1,10 +1,7 @@
 package com.kh.demo.service;
 
 import com.kh.demo.domain.dto.*;
-import com.kh.demo.mapper.FileMapper;
-import com.kh.demo.mapper.HeartMapper;
-import com.kh.demo.mapper.ProductBoardMapper;
-import com.kh.demo.mapper.ReplyMapper;
+import com.kh.demo.mapper.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -43,6 +40,8 @@ public class ProductBoardServiceImpl implements ProductBoardService{
 	private FileMapper fmapper;
 	@Autowired
 	private HeartMapper hmapper;
+	@Autowired
+	private BookMarkMapper bookmarkmapper;
 	@Value("${file.dir}")
 	private String saveFolder;
 
@@ -187,6 +186,11 @@ public class ProductBoardServiceImpl implements ProductBoardService{
 	@Override
 	public LikeDTO likeCheck(Long boardNum, String loginUser) {
 		return hmapper.likeCheck(boardNum, loginUser);
+	}
+
+	@Override
+	public BookMarkDTO bookCheck(Long boardNum, String loginUser) {
+		return bookmarkmapper.bookCheck(boardNum, loginUser);
 	}
 
 	@Override

@@ -142,6 +142,14 @@
 			color: #F7FAF5 !important;
 			box-shadow: 0 0 2px #5a8100;
 		}
+		.bookmarked{
+			background: #ebede1 !important;
+			padding: 0 17.6px !important;
+			box-shadow: 0 0 2px 1px #5a8100 !important;
+			font-weight:700 !important;
+			height: 2.75em !important;
+			line-height: 2.75em !important;
+		}
 p {
   overflow-wrap: break-word;
 }
@@ -262,7 +270,7 @@ p {
 							<div class="btn_area">
 								<th:block th:if="${board.userId != session.loginUser}">
 									<a href="#" class="heart" style="float:left; margin-right:5px;"><img id="heart" src="/images/like_off.png" style="width:30px;"></a>
-									<a class="button btnColor small" style="float:left; margin-left:10px;">북마크</a>
+									<a class="bookmark button btnColor small" style="float:left; margin-left:10px;">북마크</a>
 									<a class="button reportOpen btnColor small" style="float:left; margin-left:10px;">신고</a>
 								</th:block>
 
@@ -428,6 +436,33 @@ p {
 		});
 	});
 
+	//북마크
+	$(document).ready(function(){
+
+		//북마크가 있는지 확인한 값을 bookmarkVal에 저장
+		var bookmarkVal = /*[[${bookmark != null ? bookmark.bookmark : ''}]]*/ '';
+		console.log(bookmarkVal);
+
+		//bookmarkVal이 1이면 북마크가 이미 되어있는것
+		if(bookmarkVal>0){
+			$(".bookmark").addClass('bookmarked');
+		}
+
+		//북마크 버튼 클릭 시 실행되는 코드
+		$(".bookmark").on("click", function(){
+			var that = $(this);
+			that.toggleClass('bookmarked');
+			$.ajax({
+				url:'/bookmark/bookmark',
+				type:'POST',
+				data: {'boardNum': boardNum, 'userId': loginUser, 'boardCategory':boardCategory},
+				success: function(data){
+					console.log("data:"+data);
+				}
+			});
+		});
+	});
+
 	function showList(pagenum){
 		replyService.getList(
 				{boardNum:boardNum, pagenum:pagenum||1},
@@ -575,4 +610,6 @@ p {
 		$("[name='replycontents']").val("");
 	})
 </script>
+<script th:src="@{/assets/js/reportModal.js}"></script>
+<script th:src="@{/assets/js/reply.js}"></script>
 </html>

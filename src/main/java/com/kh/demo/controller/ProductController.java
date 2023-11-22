@@ -119,6 +119,10 @@ public class ProductController {
                 LikeDTO heart = new LikeDTO();
                 heart = service.likeCheck(boardNum,loginUser);
                 model.addAttribute("heart",heart);
+
+                BookMarkDTO bookmark = new BookMarkDTO();
+                bookmark = service.bookCheck(boardNum,loginUser);
+                model.addAttribute("bookmark",bookmark);
             }
         }
         return requestURI;

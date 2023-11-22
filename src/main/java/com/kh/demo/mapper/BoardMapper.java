@@ -17,6 +17,7 @@ public interface BoardMapper {
 	int updateReadCount(Long boardNum);
 
 	int updateBoardLikeCnt(Long boardNum, String boardCategory);
+	int updateBoardBookCnt(Long boardNum, String boardCategory);
 
 
 	//delete
