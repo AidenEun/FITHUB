@@ -402,12 +402,14 @@
 				data: {'boardNum': boardNum, 'userId': loginUser, 'boardCategory':boardCategory},
 				success: function(data){
 					that.prop('name',data);
+					console.log("data:"+data);
 					if(data==1){
-						that.prop("src", "/images/like_on.png");
+						$("#heart").prop("src", "/images/like_on.png");
 					}
 					else{
-						that.prop("src", "/images/like_off.png");
+						$("#heart").prop("src", "/images/like_off.png");
 					}
+					console.log("that:"+that);
 				}
 			});
 		});
