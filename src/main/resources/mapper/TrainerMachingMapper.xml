@@ -76,8 +76,8 @@
         WHERE trainer_id = #{trainerId}
     </select>
     <insert id="saveMatching">
-        insert into u_t_matching (user_id, trainer_id)
-        values (#{userId}, #{trainerId})
+        insert into u_t_matching (user_id, trainer_id, board_num)
+        values (#{userId}, #{trainerId}, #{boardNum})
     </insert>
     <select id="getutBytrainerId">
         SELECT * FROM u_t_matching WHERE trainer_id = #{trainerId}

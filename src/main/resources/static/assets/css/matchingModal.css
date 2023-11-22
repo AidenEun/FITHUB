@@ -1,4 +1,4 @@
-.modal_box{
+.matching_modal_box{
     position: fixed;
     top: 0;
     left: 0;
@@ -14,18 +14,18 @@
     z-index: 3300;
 }
 
-.modal_box.active{
+.matching_modal_box.active{
     display: flex;
 }
 
-.modal_contents{
+.matching_modal_contents{
     background-color: #fff;
     width: 400px;
     padding: 20px;
     border-radius: 5px;
     position: relative;
 }
-.modal_contents h1{
+.matching_modal_contents h1{
     text-align: center;
 }
 
@@ -54,8 +54,7 @@ border-radius: 15px;
  transition: transform 0.2s;
 }
 
-.close img{
+.matchingClose img{
     cursor: pointer;
     width: 40px;
-
 }

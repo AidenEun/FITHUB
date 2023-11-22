@@ -1,41 +1,54 @@
-const openButtons = document.querySelectorAll(".open");
-const close = document.querySelector(".close");
-const modalBox = document.querySelector('.modal_box');
+const openMatchingButtons = document.querySelectorAll(".matchingOpen");
+const matchingClose = document.querySelector(".matchingClose");
+const matchingModalBox = document.querySelector('.matching_modal_box');
 // 이벤트 핸들러 등록
-openButtons.forEach(openButton => {
-    openButton.addEventListener("click", () => {
-     modalBox.classList.add("active");
+openMatchingButtons.forEach(openMatchingButton => {
+    openMatchingButton.addEventListener("click", () => {
+     matchingModalBox.classList.add("active");
     });
 });
 
 // 모달 닫기 버튼에 이벤트 핸들러 등록
-close.addEventListener("click", () => {
-   modalBox.classList.remove("active");
+matchingClose.addEventListener("click", () => {
+   matchingModalBox.classList.remove("active");
 });
 
 // 모달 외부 클릭 시 닫기
 document.addEventListener("click", () => {
-    if (!modalBox.contains(event.target)) {
-        modalBox.classList.remove("active");
+    if (!matchingModalBox.contains(event.target)) {
+        matchingModalBox.classList.remove("active");
     }
 });
+
 function matchingModalOpen(e) {
     e.preventDefault();
-    var trainerId = '[[${trainerInfo.trainerId}]]';
+    var trainerId = $('#matchingTrainerId').html();
 
-    modalBox.classList.add("active");
-    sendUserIdToModal(trainerId);
+    matchingModalBox.classList.add("active");
+    sendTrainerIdToModal(trainerId);
 }
 
+$(".matchingOpen").on("click", function (e) {
+    e.preventDefault();
+    var trainerId = $('#matchingTrainerId').html();
+    var boardNum = document.getElementById('boardNum2').value;
+
+    sendTrainerIdToModal(trainerId, boardNum);
+    matchingModalBox.classList.add("active");
+});
+
 // AJAX로 데이터를 가져오고 모달 열기
-function sendTrainerIdToModal(trainerId) {
+function sendTrainerIdToModal(trainerId, boardNum) {
     $.ajax({
         url: '/matching/u_t_matchModal',
         method: 'POST',
-        data: { trainerId: trainerId },
+        data: {
+            trainerId: trainerId,
+            boardNum: boardNum
+         },
         success: function (data) {
          console.log(data);
-            modal(data);
+            matchingModal(data);
         },
         error: function (error) {
         }
@@ -43,11 +56,13 @@ function sendTrainerIdToModal(trainerId) {
 }
 
 // 모달에 데이터 적용
-function modal(data) {
+function matchingModal(data) {
     try {
         data = JSON.parse(data);
         var userId = data.userId;
-        var trainerId = data.trainerMatchingBoardDTO.trainerId
+        var trainerId = data.trainerMatchingBoardDTO.trainerId;
+        var boardNum = data.boardNum;
+
 
         if (!data.hasOwnProperty("trainerMatchingBoardDTO")) {
             console.error("TrainerMatchingBoardDTO is undefined.");
@@ -55,23 +70,23 @@ function modal(data) {
         }
 
         if (userId === trainerId) {
-            var modalBox = $('.modal_box');
+            var matchingModalBox = $('.matching_modal_box');
             // 사용자 ID와 트레이너 닉네임이 같을 경우 신청 주의사항 표시
-            modalBox.find('.name a').text(trainerId + '(' + userId + ')');
-            modalBox.find('.application_notice a').text('자신에게 신청할 수 없습니다.');
+            matchingModalBox.find('.name a').text(trainerId + '(' + userId + ')');
+            matchingModalBox.find('.application_notice a').text('자신에게 신청할 수 없습니다.');
         } else {
             // 신청서가 이미 있는지 확인
                 if (data.hasOwnProperty("utMatchingDTO") && data.utMatchingDTO.userId === userId && data.utMatchingDTO.trainerId === trainerId) {
-                     var modalBox = $('.modal_box');
-                    modalBox.find('.application_notice a').text('이미 신청한 신청서입니다.');
+                     var matchingModalBox = $('.matching_modal_box');
+                    matchingModalBox.find('.application_notice a').text('이미 신청한 신청서입니다.');
                 } else if (data.hasOwnProperty("noData")){
                      console.log("다시 로그인 해주세요. 지금 같은 상황이 반복될시 문의사항에 문의 주세요!");
                 }
                 else  {
 
-                    var modalBox = $('.modal_box');
+                    var matchingModalBox = $('.matching_modal_box');
 
-                                        modalBox.find('.application_buttons').html(
+                                        matchingModalBox.find('.application_buttons').html(
                                             '<p class="application_notice">신청 주의사항:</p>' +
                                             '<ol>' +
                                             '   <li>사칭에 주의하세요: 매칭 상대방의 정체성을 확인하고 신뢰할 수 있는 정보를 교환하세요.</li>' +
@@ -87,16 +102,17 @@ function modal(data) {
                                         );
 
                                         // "신청하기" 버튼에 이벤트 핸들러 등록
-                                        modalBox.find('.apply_now').on('click', function () {
-                                            sendApplication(userId, trainerId);
+                                        matchingModalBox.find('.apply_now').on('click', function () {
+                                            sendApplication(userId, trainerId, boardNum);
                                             console.log(userId)
                                             console.log(trainerId)
+                                            alert(boardNum);
                                         });
 
                 }
         }
 
-        modalBox.addClass("active");
+        matchingModalBox.addClass("active");
     } catch (error) {
         console.error("올바른 데이터 형식이 아닙니다:", error);
     }
@@ -104,11 +120,15 @@ function modal(data) {
 
 // 서버에 신청 데이터 전송
 // 서버에 신청 데이터 전송
-function sendApplication(userId, trainerId) {
+function sendApplication(userId, trainerId, boardNum) {
     $.ajax({
         url: '/matching/apply',
         method: 'POST',
-        data: { userId: userId, trainerId: trainerId },
+        data: {
+            userId: userId,
+            trainerId: trainerId,
+            boardNum: boardNum
+        },
         success: function (response) {
             handleApplicationResponse(response);
         },
@@ -135,11 +155,11 @@ function handleApplicationResponse(response) {
     }
 
     // 모달을 닫기
-    closeModal();
+    closeMatchingModal();
 }
 
 // 모달 닫기
-function closeModal() {
-    var modalBox = $('.modal_box');
-    modalBox.removeClass("active");
+function closeMatchingModal() {
+    var matchingModalBox = $('.matching_modal_box');
+    matchingModalBox.removeClass("active");
 }
