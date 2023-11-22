@@ -225,8 +225,10 @@
 								</form>
 							</th:block>
 							<div class="btn_area">
-								<a class="button btnColor small" style="float:left;">좋아요</a>
-								<a class="button btnColor small" style="float:left;margin-left:10px;">북마크</a>
+								<th:block th:if="${board.adminId != session.loginUser}">
+									<a href="#" class="heart" style="float:left; margin-right:5px;"><img id="heart" src="/images/like_off.png" style="width:30px !important;"></a>
+									<a class="button btnColor small" style="float:left; margin-left:10px;">북마크</a>
+								</th:block>
 								<span th:switch="${board.category}">
 									<span th:case="'prodFood'"><a class="button btnColor small" th:href="${'/product/prod_food'+cri.listLink}">목록</a></span>
 									<span th:case="'prodExer'"><a class="button btnColor small" th:href="${'/product/prod_exercise'+cri.listLink}">목록</a></span>
@@ -331,6 +333,48 @@
 
 
 	})
+
+	//좋아요
+	$(document).ready(function(){
+
+		//좋아요가 있는지 확인한 값을 heartVal에 저장
+		var heartVal = /*[[${heart != null ? heart.heart : ''}]]*/ '';
+		console.log(heartVal);
+
+		//heartVal이 1이면 좋아요가 이미 되어있는것 -> like_on.png 출력
+		if(heartVal>0){
+			console.log(heartVal);
+			$("#heart").prop("src", "/images/like_on.png");	//prop() : 해당 속성을 가져와서 변경
+			$(".heart").prop('name',heartVal);
+		}
+		else{
+			console.log(heartVal);
+			$("#heart").prop("src", "/images/like_off.png");
+			$(".heart").prop('name',heartVal);
+			}
+
+
+		//좋아요 버튼 클릭 시 실행되는 코드
+		$(".heart").on("click", function(){
+			var that = $(this);
+			$.ajax({
+				url:'/heart/heart',
+				type:'POST',
+				data: {'boardNum': boardNum, 'userId': loginUser, 'boardCategory':category},
+				success: function(data){
+					that.prop('name',data);
+					console.log("data:"+data);
+					if(data==1){
+						$("#heart").prop("src", "/images/like_on.png");
+					}
+					else{
+						$("#heart").prop("src", "/images/like_off.png");
+					}
+					console.log("that:"+that);
+				}
+			});
+		});
+	});
 
 	function showList(pagenum){
 		replyService.getList(
