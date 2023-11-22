@@ -129,7 +129,6 @@
 			font-weight: 700 !important;
 			height: 2.75em !important;
 			line-height: 2.75em !important;
-			margin-left: 10px;
 		}
 		.button.btnColor a{
 			color: #5a8100;
@@ -362,18 +361,29 @@ p {
 		$(this).hide();
 		$(".noreply").hide();
 	})
+
 	$(".finish").on("click",function(e){
 		e.preventDefault();
 		let replyContent = $("[name='replyContent']").val();
 
-		replyService.add(
+		if(replyContent.length == 0){
+			alert("댓글 내용을 입력해주세요!");
+		}
+		else{
+			replyService.add(
 				{"boardNum":boardNum,"boardCategory":boardCategory,"userId":loginUser, "replyContent":replyContent},
 				function(result){
 					alert("등록!");
 					showList(nowpage);
+
+					window.setTimeout(function(){
+						window.scrollTo(0,document.body.scrollHeight)
+					},10)
+
 				}
-		)
-		$("[name='replyContent']").val("");
+			)
+			$("[name='replyContent']").val("");
+		}
 	})
 
 	//좋아요
@@ -561,9 +571,8 @@ p {
 		e.preventDefault();
 		$(".replyForm").hide();
 		$(".regist").show();
-		$("[name='replyContent']").val("");
+		$(".noreply").show();
+		$("[name='replycontents']").val("");
 	})
-
-
 </script>
 </html>
