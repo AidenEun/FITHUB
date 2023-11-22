@@ -6,9 +6,9 @@ import lombok.Data;
 public class ReviewDTO {
     private long reviewNum;
     private String reviewContent;
-    private long matchingNum;
-    private long matchingBoardNum;
+    private long boardNum;
     private int starRating;
     private String userId;
     private String regdate;
+    private String updatedate;
 }

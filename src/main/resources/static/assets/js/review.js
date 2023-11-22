@@ -19,10 +19,10 @@ const reviewService = (function(){
 	
 	function selectAll(data,callback){
 		let boardNum = data.boardNum;
-		let pageNum = data.pageNum;
+		let pagenum = data.pagenum;
 		
 		$.getJSON(
-			"/review/pages/"+boardNum+"/"+pageNum,
+			"/review/pages/"+boardNum+"/"+pagenum,
 			function(data){
 				//data : {replyCnt:댓글개수, list:[....]}
 				callback(data.reviewCnt, data.list);
@@ -63,8 +63,8 @@ const reviewService = (function(){
 	}
 	
 	function fmtTime(review){
-		const regdate = reply.regdate;
-		const updatedate = reply.updatedate;
+		const regdate = review.regdate;
+		const updatedate = review.updatedate;
 		
 		const now = new Date();
 		
