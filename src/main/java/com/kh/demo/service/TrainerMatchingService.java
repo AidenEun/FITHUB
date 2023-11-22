@@ -44,7 +44,7 @@ public interface TrainerMatchingService {
 
     SubscribeDTO checkSubs(SubscribeDTO newSubscribe);
 
-    SubscribeDTO clickSubs(SubscribeDTO newSubscribe);
+    String clickSubs(SubscribeDTO newSubscribe);
 
     List<TrainerMatchingBoardDTO> get12matchingSearchList(Criteria cri);
 

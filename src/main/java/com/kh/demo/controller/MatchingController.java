@@ -309,34 +309,20 @@ public class MatchingController {
 
     }
 
-    @PostMapping("subscribe_check")
-    @ResponseBody
-    public String checkSubscription(@RequestParam("sendId") String userId, @RequestParam("trainerId") String trainerId) {
-        SubscribeDTO newSubscribe = new SubscribeDTO();
-        newSubscribe.setUserId(userId);
-        newSubscribe.setTrainerId(trainerId);
-        System.out.println("checkSubs"+newSubscribe);
-        SubscribeDTO isSubscribed = MatchingService.checkSubs(newSubscribe);
-
-        if (isSubscribed != null) {
-            return "subscribed";
-        } else {
-            return "unsubscribed";
-        }
-    }
     @PostMapping("subscribe_click")
     @ResponseBody
-    public String clickSubscription(@RequestParam("sendId") String userId, @RequestParam("trainerId") String trainerId) {
+    public String clickSubscription(@RequestParam("userId") String userId, @RequestParam("trainerId") String trainerId) {
         SubscribeDTO newSubscribe = new SubscribeDTO();
         newSubscribe.setUserId(userId);
         newSubscribe.setTrainerId(trainerId);
 
-        System.out.println("clickSubs"+newSubscribe);
-        SubscribeDTO isSubscribed = MatchingService.clickSubs(newSubscribe);
+        String subscriptionResult = MatchingService.clickSubs(newSubscribe);
 
-        if (isSubscribed != null) {
+        if ("subscribed".equals(subscriptionResult)) {
+            // 이미 구독 중인 경우
             return "subscribed";
         } else {
+            // 구독하지 않은 경우
             return "unsubscribed";
         }
     }

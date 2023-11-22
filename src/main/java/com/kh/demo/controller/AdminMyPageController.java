@@ -5,10 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.kh.demo.domain.dto.*;
-import com.kh.demo.service.AdminMyPageService;
-import com.kh.demo.service.TrainerMyPageService;
-import com.kh.demo.service.UserMyPageService;
-import com.kh.demo.service.UserServiceImpl;
+import com.kh.demo.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +30,8 @@ public class AdminMyPageController {
     @Autowired @Qualifier("UserMyPageServiceImpl")
     private UserMyPageService userMyPageService;
 
+    @Autowired @Qualifier("TrainerMatchingServiceImpl")
+    private TrainerMatchingService MatchingService;
 
     @GetMapping("adminmypage_list")
     public void replaceList(Model model){
@@ -344,6 +343,11 @@ public class AdminMyPageController {
             json.putPOJO("trainerDTO", trainerDTO);
             json.putPOJO("loginUser_userId", loginUser_userId);
             json.putPOJO("profile", trainerMyPageService.getProFileList(trainerDTO.getTrainerId()));
+            SubscribeDTO newSubscribe = new SubscribeDTO();
+            newSubscribe.setUserId(loginUser_userId);
+            newSubscribe.setTrainerId(trainerDTO.getTrainerId());
+            SubscribeDTO isSubscribed = MatchingService.checkSubs(newSubscribe);
+            json.putPOJO("isSubscribed", isSubscribed);
         }
         else if (userInfo instanceof UserDTO) {
             UserDTO userDTO = (UserDTO) userInfo;

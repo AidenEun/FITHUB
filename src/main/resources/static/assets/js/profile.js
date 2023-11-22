@@ -55,7 +55,8 @@ function modal(data) {
     try {
         data = JSON.parse(data);
         var sendId = data.loginUser_userId;
-
+        var subscribed = data.isSubscribed;
+        console.log(subscribed);
         if (data.hasOwnProperty("trainerDTO")) {
             var modalBox = $('.modal_box');
             var receiveId = data.trainerDTO.trainerId
@@ -83,6 +84,18 @@ function modal(data) {
             modalBox.find('.application_buttons').html(
                                                          '<p class="trainer_profile"><a href="/trainermypage/trainer_profile?trainerId=' + receiveId + '">프로필 자세히 보기</a></p>'
                                                     );
+            if (subscribed != null) {
+                modalBox.find('.subscribe_buttons').html('<a href="#" class="subscribe"><img src="/images/subsIng.png" alt="구독O">구독 중</a>');
+            } else{
+                modalBox.find('.subscribe_buttons').html('<a href="#" class="subscribe"><img src="/images/subsCancel.jpg" alt="구독X">구독</a>');
+            }
+
+            modalBox.find('.subscribe').on('click', function () {
+            subscribeClick(sendId,receiveId);
+            });
+
+
+
 
             modalBox.find('.profile_userId a').text(receiveId);
 
@@ -118,9 +131,6 @@ function modal(data) {
             modalBox.find('.img_area img').attr('alt', receiveId);
             modalBox.find('.name a').text(data.userDTO.userNickname + '(' + receiveId + ')');
             modalBox.find('.message').attr('alt', receiveId);
-            modalBox.find('.application_buttons').html(
-                                                        '<p class="trainer_profile"><a href="/trainermypage/trainer_profile?trainerId=' + receiveId + '">프로필 자세히 보기</a></p>'
-                                                    );
 
             modalBox.find('.profile_userId a').text(receiveId);
             modalBox.find('.loginUser_userId a').text(sendId);
@@ -139,6 +149,37 @@ function modal(data) {
         console.error("올바른 데이터 형식이 아닙니다:", error);
     }
 }
+    function subscribeClick(sendId,receiveId){
+         $.ajax({
+            url: '/matching/subscribe_click',
+            method: 'POST',
+            data: { userId: sendId, trainerId: receiveId },
+            success: function(response) {
+                 subscribeSuccess(response, modalBox);
+            },
+            error: function(error) {
+                console.error('구독 상태 변경에 실패했습니다.', error);
+            }
+        });
+    }
+
+
+function subscribeSuccess(response, modalBox) {
+    if (response === "subscribed") {
+        alert("구독합니다.");
+       modalBox.find('.subscribe').html('<a href="#" class="subscribe"><img src="/images/subsIng.png" alt="구독O">구독 중</a>');
+    } else if (response === "unsubscribed") {
+        alert("구독을 취소합니다.");
+       modalBox.find('.subscribe').html('<a href="#" class="subscribe"><img src="/images/subsCancel.png" alt="구독X">구독</a>');
+    } else {
+        alert("신청 중 오류가 발생했습니다.");
+    }
+}
+
+
+
+
+
 
 function sendApplication(receiveId, sendId, contents) {
     $.ajax({
