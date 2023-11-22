@@ -14,6 +14,8 @@ public interface ReviewService {
     Long getLastNum(String userId);
 
     String getUtmatchingNum(Long boardNum);
+
 }
+
 
 

@@ -217,9 +217,15 @@
     .starpoint div{
     margin-left: 20px;
     }
-
-
-
+    #result{
+    margin-bottom:50px;
+    }
+.reviews{
+margin-top: 30px;
+}
+.regist{
+padding : 10px;
+}
 
     <!--
     star rating
@@ -423,7 +429,7 @@
                             </tr>
                             <tr style="height:380px;" id="content_tr">
                                 <td colspan="3">
-                                    <textarea name="boardContent" style="width:450px;height:350px;resize:none;" readonly>[[${board.boardContent}]]</textarea>
+                                    <textarea name="boardContent" style="width:450px;height:350px;resize:none;border:none;" readonly>[[${board.boardContent}]]</textarea>
                                 </td>
                             </tr>
                         </table>
@@ -480,13 +486,14 @@
 
                 </table>
                 <!-- review -->
-                <div class="reply_line">
-                    <a href="#" class="regist">댓글 등록</a>
-                    <div class="replyForm row">
+                <div class="review_line">
+                    <a href="#" class="regist btnColor" style="font-weight:bold; font-size:20px">댓글 등록</a>
+                    <div class="reviewForm row">
                         <div style="width:20%">
                             <h4>작성자</h4>
                             <input type="text" name="userId" th:value="${session.loginUser}" readonly
                                    style="text-align: center;">
+                            <input name="boardNum_1" id="boardNum" th:value="${board.boardNum}" type="hidden">
                         </div>
                         <div style="width:65%">
                             <div class="starpoint">
@@ -499,14 +506,15 @@
                                     <span class="star" data-rating="5">&#9733;</span>
                                 </div>
                             </div>
-                            <textarea name="replycontents" placeholder="리뷰를 작성해주세요" style="resize:none;"></textarea>
+                            <textarea name="reviewContent" placeholder="리뷰를 작성해주세요" style="resize:none;width:450px;"></textarea>
                         </div>
                         <div style="width:15%">
+                            <div id="result" name="starRating">별점 : 0</div>
                             <a href="#" class="button finish btnColor small" style="margin-bottom:1rem;">등록</a>
                             <a href="#" class="button cancel btnColor small">취소</a>
                         </div>
                     </div>
-                    <ul class="replies"></ul>
+                    <ul class="reviews"></ul>
                     <div class="page"></div>
                 </div>
             </th:block>
@@ -534,7 +542,6 @@
 <script th:src="@{/assets/js/main_sub.js}"></script>
 
 <script th:src="@{/assets/js/sidebar.js}"></script>
-<script th:src="@{/assets/js/reply.js}"></script>
 <script th:src="@{/assets/js/matching_u_t_matching.js}"></script>
 
 
@@ -542,7 +549,14 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script th:inline="javascript">
-	$(document).ready(function() {
+    const loginUser = /*[[${session.loginUser}]]*/'';
+	let boardNum = $("[name='boardNum_1']").val();
+	const reviews = $(".reviews")
+	const page = $(".page")
+	let nowpage = 0;
+
+
+$(document).ready(function() {
     var trainerId = [[${trainerInfo.trainerId}]];
     // 초기 로딩 시 데이터 가져오기
     $.ajax({
@@ -552,11 +566,11 @@
             if (data) {
                 // 데이터가 있을 때
                 $(".regist").show(); // 댓글 등록 링크를 보여줍니다.
-                $(".replyForm").hide(); // 댓글 폼을 숨깁니다.
+                $(".reviewForm").hide(); // 댓글 폼을 숨깁니다.
             } else {
                 // 데이터가 없을 때
                 $(".regist").hide(); // 댓글 등록 링크를 숨깁니다.
-                $(".replyForm").hide(); // 댓글 폼을 숨깁니다.
+                $(".reviewForm").hide(); // 댓글 폼을 숨깁니다.
             }
         },
         error: function(error) {
@@ -568,33 +582,207 @@
     $(".regist").click(function(e) {
         e.preventDefault(); // 링크의 기본 동작을 중단합니다.
 
-        $(".replyForm").show(); // 댓글 폼을 보여줍니다.
+        $(".reviewForm").show(); // 댓글 폼을 보여줍니다.
         $(this).hide(); // 댓글 등록 링크를 숨깁니다.
     });
-});
-	$(".finish").on("click",function(e){
-		e.preventDefault();
-		let replycontents = $("[name='replycontents']").val();
+    function showList(pagenum){
+		reviewService.getList(
+			{boardNum:boardNum, pagenum:pagenum||1},
+			function(reviewCnt, list){
+				let str = "";
+				if(list == null || list.length == 0){
+					str += '<li class="noreview" style="clear:both;">등록된 댓글이 없습니다.</li>';
+					reviews.html(str);
+					return;
+				}
 
-		replyService.add(
-			{"boardnum":boardnum,"userid":loginUser, "replycontents":replycontents},
-			function(result){
-				alert("등록!");
-				showList(1);
+				for(let i=0;i<list.length;i++){
+					//<li style="clear:both;" class="li3">
+					str += '<li style="clear:both;" class="li'+list[i].reviewNum+'">';
+					str += '<div style="display:inline; float:left; width:75%;">';
+					//<strong class="userid3">apple</strong>
+					str += '<strong class="userId'+list[i].reviewNum+'">'+list[i].userId+'</strong>';
+					 str += '<span class="userRating" style="margin-left: 10px;">별점: ' + list[i].starRating + '</span>';
+					//<p class="review3">댓글내용</p>
+					str += '<p class="review'+list[i].reviewNum+'">'+list[i].reviewContent+'</p>';
+					str += '</div><div style="text-align:right;">'
+					str += '<strong>'+reviewService.displayTime(list[i])+'</strong>'
+					str += '<br>'
+					if(list[i].userId == loginUser){
+						//<a href="3" class="modify">수정</a>
+						str += '<a href="'+list[i].reviewNum+'" class="modify btnColor" style="padding:5px;">수정</a>';
+						str += '<a href="'+list[i].reviewNum+'" class="mfinish btnColor" style="display:none;padding:5px;">수정 완료</a>';
+						str += '<a href="'+list[i].reviewNum+'" class="remove btnColor"  style="padding:5px;">삭제</a>';
+					}
+					str += '</div></li>';
+				}
+				reviews.html(str);
+
+				$(".remove").on("click",deleteReview);
+				$(".modify").on("click",modifyReview);
+				$(".mfinish").on("click",modifyReviewOk);
+
+				showReviewPage(reviewCnt, pagenum);
 			}
 		)
+	}
+
+	function showReviewPage(reviewCnt, pagenum){
+		let endPage = Math.ceil(pagenum/5)*5;
+		let startPage = endPage - 4;
+
+		let prev = startPage != 1;
+		endPage = (endPage-1)*5 >= reviewCnt ? Math.ceil(reviewCnt/5) : endPage;
+		let next = endPage*5 < reviewCnt ? true : false;
+
+		let str = "";
+		if(prev){
+			//<a class="changePage" href="5"><code>&lt;</code></a>
+			str += '<a class="changePage" href="'+(startPage-1)+'"><code>&lt;</code></a>';
+		}
+		for(let i=startPage;i<=endPage;i++){
+			if(i == pagenum){
+				//<code class="nowPage">7</code>
+				str += '<code class="nowPage">'+i+'</code>';
+			}
+			else{
+				//<a class="changePage" href="9"><code>9</code></a>
+				str += '<a class="changePage" href="'+i+'"><code>'+i+'</code></a>';
+			}
+		}
+		if(next){
+			str += '<a class="changePage" href="'+(endPage+1)+'"><code>&gt;</code></a>';
+		}
+
+		page.html(str);
+
+		$(".changePage").on("click",function(e){
+			e.preventDefault();
+			let target = $(this).attr("href");
+			nowpage = parseInt(target);
+			showList(nowpage);
+			window.setTimeout(function(){
+				window.scrollTo(0,document.body.scrollHeight)
+			},10)
+		})
+	}
+	showList(1);
+    showReviewPage(reviewCnt, pagenum);
+});
 
 
-	})
+$(".finish").on("click", function(e) {
+    e.preventDefault();
+    let reviewContent = $("[name='reviewContent']").val();
+    let starRating = $(".rating").attr("data-star-rating");
+    let boardNum = $("[name='boardNum_1']").val();
+
+    // 리뷰 내용과 별점이 작성되지 않았을 때 알림 표시
+    if (!reviewContent || !starRating) {
+        alert("리뷰 내용과 별점을 작성해주세요!");
+        return; // 이후 코드 실행 중단
+    }
+
+    reviewService.add(
+        {
+            "boardNum": boardNum,
+            "userId": loginUser,
+            "reviewContent": reviewContent,
+            "starRating": starRating
+        },
+        function(result) {
+            alert("등록!");
+            showList(1);
+        }
+    );
+});
 
 
 
+	function deleteReview(e){
+		e.preventDefault();
+		let reviewNum = $(this).attr("href");
+		reviewService.remove(
+			reviewNum,
+			function(result){
+				if(result == "success"){
+					alert(reviewNum+"번 댓글 삭제 완료!");
+					showList(1);
+				}
+			}
+		)
+	}
+	let reviewFlag = false;
+	function modifyReview(e){
+    e.preventDefault();
+    if(!reviewFlag){
+        reviewFlag = true;
+        let reviewNum = $(this).attr("href");
 
+        // 해당 리뷰 정보 가져오기
+        reviewService.getReview(reviewNum, function(review) {
+            const reviewTag = $(".review" + reviewNum);
 
+            // 리뷰 정보로부터 필요한 데이터 가져오기 (예: userId, reviewContent, starRating)
+            const userId = review.userId;
+            const reviewContent = review.reviewContent;
+            const starRating = review.starRating;
 
+            // 수정할 폼 생성 및 초기화
+            let form = '<form class="' + reviewNum + ' mdf">';
+            form += '<input type="text" class="userId" value="' + userId + '"><br>';
+            form += '<textarea class="reviewContent">' + reviewContent + '</textarea><br>';
+            form += '<input type="text" class="starRating" value="' + starRating + '"><br>';
+            form += '<button class="submitEdit">수정 완료</button></form>';
 
+            reviewTag.html(form);
+            $(this).hide();
+            $(this).next().show();
 
+            // 수정 완료 버튼 이벤트 처리
+            $(".submitEdit").on("click", function(event) {
+                event.preventDefault();
 
+                // 수정된 데이터 가져오기
+                const editedReview = {
+                    "userId": $(".userId").val(),
+                    "reviewContent": $(".reviewContent").val(),
+                    "starRating": $(".starRating").val(),
+                    // 다른 필드들도 필요하다면 추가
+                };
+
+                // 업데이트 요청 보내기
+                reviewService.update(editedReview, function(result) {
+                    alert("수정 완료!");
+                    showList(nowpage);
+                });
+            });
+        });
+    } else {
+        alert("수정 중인 댓글이 있습니다!");
+    }
+}
+	function modifyReviewOk(e){
+		e.preventDefault();
+		reviewFlag = false;
+
+		let reviewNum = $(this).attr("href");
+		let reviewContent = $("."+reviewNum).val();
+
+		if(reviewContent == ""){
+			alert("수정할 댓글 내용을 입력하세요!");
+			return;
+		}
+		reviewService.modify(
+			{reviewNum:reviewNum, reviewContent:reviewContent, boardNum:boardNum, userId:loginUser},
+			function(result){
+				if(result == "success"){
+					alert(reviewNum+"번 댓글 수정 완료!");
+					showList(nowpage);
+				}
+			}
+		)
+	}
 
 
 
@@ -655,9 +843,9 @@
 
     $(".cancel").on("click", function (e) {
         e.preventDefault();
-        $(".replyForm").hide();
+        $(".reviewForm").hide();
         $(".regist").show();
-        $("[name='replyContents']").val("");
+        $("[name='reviewContent']").val("");
     })
 
 

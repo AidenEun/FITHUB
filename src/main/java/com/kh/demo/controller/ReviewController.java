@@ -1,28 +1,22 @@
 package com.kh.demo.controller;
 
 import com.kh.demo.domain.dto.Criteria;
+
 import com.kh.demo.domain.dto.ReviewDTO;
 import com.kh.demo.domain.dto.ReviewPageDTO;
 import com.kh.demo.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 @RequestMapping("/review/*")
 @RestController
-public class ReviewContoroller {
+public class ReviewController {
     @Autowired
+    @Qualifier("ReviewServiceImpl")
     private ReviewService service;
-
-    @GetMapping("/getUtmatchingNum/{boardNum}")
-    public ResponseEntity<String> getUtmatchingNum(@PathVariable("boardNum") Long boardNum) {
-        String utmatchingNum = service.getUtmatchingNum(boardNum);
-        return utmatchingNum != null ? new ResponseEntity<>(utmatchingNum, HttpStatus.OK) :
-                new ResponseEntity<>("not exists", HttpStatus.OK);
-    }
-
 
     //ResponseEntity : 서버의 상태코드, 응답 메세지, 응답 데이터 등을 담을 수 있는 타입
     //consumes : 이 메소드가 호출될 때 소비할 데이터의 타입(넘겨지는 RequestBody의 데이터 타입)
@@ -32,17 +26,17 @@ public class ReviewContoroller {
         boolean check = service.regist(review);
         Long reviewNum = service.getLastNum(review.getUserId());
 
-        return check ? new ResponseEntity<String>(reviewNum+"", HttpStatus.OK) :
+        return check ? new ResponseEntity<String>(reviewNum+"",HttpStatus.OK) :
                 new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    // /reply/pages/100/1 : 100번 게시글의 1 페이지 댓글 리스트
-    @GetMapping(value = "/pages/{boardNum}/{pageNum}")
+    // /review/pages/100/1 : 100번 게시글의 1 페이지 댓글 리스트
+    @GetMapping(value = "/pages/{boardNum}/{pagenum}")
     public ResponseEntity<ReviewPageDTO> getList(
             @PathVariable("boardNum") Long boardNum,
-            @PathVariable("pageNum") int pageNum
+            @PathVariable("pagenum") int pagenum
     ){
-        Criteria cri = new Criteria(pageNum, 5);
+        Criteria cri = new Criteria(pagenum, 5);
         return new ResponseEntity<ReviewPageDTO>(service.getList(cri, boardNum), HttpStatus.OK);
     }
 
@@ -59,7 +53,7 @@ public class ReviewContoroller {
     //	모든 데이터들을 다 전달, 자원의 전체 수정, 자원 내의 모든 필드를 전달해야 함
     //PATCH
     //	자원의 일부 수정, 수정할 필드만 전송
-//	@PatchMapping(value = "{replynum}", consumes = "application/json")
+//	@PatchMapping(value = "{reviewNum}", consumes = "application/json")
     @PutMapping(value = "{reviewNum}", consumes = "application/json")
     public ResponseEntity<String> modify(@RequestBody ReviewDTO review){
         return service.modify(review) ?
@@ -67,4 +61,3 @@ public class ReviewContoroller {
                 new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
-
