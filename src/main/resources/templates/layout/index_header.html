@@ -130,11 +130,10 @@
                     </th:block>
                     <th:block th:if="${session.loginUser != null}">
                         <a class="login" th:href="@{/user/logout}" style="color: #fff;">logout</a>
+                        <a class="login" href="/usermypage/user_myinfo" style="color: #fff;">유저</a>
+                        <a class="login" href="/trainermypage/trainer_modify" style="color: #fff;">트레</a>
+                        <a class="login" href="/adminmypage/adminmypage_list" style="color: #fff;">관리</a>
                     </th:block>
-
-                    <a class="login" href="/usermypage/user_myinfo" style="color: #fff;">유저</a>
-                    <a class="login" href="/trainermypage/trainer_modify" style="color: #fff;">트레</a>
-                    <a class="login" href="/adminmypage/adminmypage_list" style="color: #fff;">관리</a>
                 </li>
                 <li class="search">
                     <a class="fa-search" href="#search" style="color: #fff;">Search</a>
