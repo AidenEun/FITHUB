@@ -292,13 +292,22 @@ public class UserMyPageController {
     }
 
     @GetMapping("user_diary")
-    public void replaceDiary(String loginUser, Model model) {
+    public void replaceDiary(HttpServletRequest req, Model model) {
+        HttpSession session = req.getSession();
+        String loginUser = (String)session.getAttribute("loginUser");
         // 트레이너 랭킹
         List<TrainerDTO> trainerTop5List= tservice.getTrainerTop5List();
 
-        List<DiaryDTO> diaryList = service.getDiaryList(loginUser);
-        model.addAttribute("diaryList", diaryList);
+//        List<DiaryDTO> diaryList = service.getDiaryList(loginUser);
+//        ArrayList<String> dateList = new ArrayList<String>();
+//            for (DiaryDTO dtoData : diaryList) {
+//                dateList.add(dtoData.getRegdate());
+//        }
+
+//        System.out.println(dateList);
+//        model.addAttribute("diaryList", diaryList);
         model.addAttribute("trainerTop5List",trainerTop5List);
+//        model.addAttribute("dateList",dateList);
     }
 
     @GetMapping("checklist")
