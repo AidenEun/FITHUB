@@ -95,26 +95,12 @@
         height: 50px;
     }
 
-    .write_table:hover {
-        transform: scale(1.04);
-        transition: transform 0.2s;
-        box-shadow: 8px 8px 11px rgba(0, 0, 0, 0.3); /* 그림자 효과 추가 */
 
-    }
-
-    .write_table:active {
-        transform: scale(1.04);
-    }
-
-    .write_table tr:hover {
-        background-color: #ebede1 !important;
-        transition: transform 0.2s;
-    }
 
     .cotent_header {
         font-size: 30px;
         font-weight: bold;
-        margin-bottom: 50px;
+        margin-bottom: 20px;
     }
 
     #profileInfo {
@@ -140,10 +126,6 @@
         height: 250px;
     }
 
-    #careerInfo img:hover {
-        transform: scale(1.5);
-        transition: transform 0.2s;
-    }
 
     #content_title th {
         padding-top: 20px;
@@ -207,7 +189,7 @@
     }
 
     .open:hover {
-        color: red;
+        color: #5a8100;
         font-weight: bold;
     }
 
@@ -322,67 +304,67 @@ display: none;
         <!-- Content -->
         <div class="content">
             <th:block th:if="${list != null}" th:each="board : ${list}">
-                <div class="cotent_header"><span>[[${trainerInfo.trainerNickname}]]님의 글입니다</span><p style="font-size:15px;text-align:right;">별점 : <span>[[${starRatingAv}]]</span></p></div>
-
+                <div class="cotent_header open" style="display: flex; justify-content: flex-start;">
+                    <div id="profileInfo">
+                        <th:block th:if="${profileInfo != null}">
+                            <div style="display:flex; justify-content:center;">
+                                <img style="width:200px; height:200px; border-radius: 100%;"
+                                     th:src="@{/matching/thumbnail (sysName=${profileInfo.sysName})}">
+                            </div>
+                        </th:block>
+                    </div>
+                    <div class="open" style="line-height: 6.2;">[[${trainerInfo.trainerNickname}]]님의 글입니다</div>
+                    <div style="font-size:15px; line-height: 13.3; margin-left: 20px;">별점 : <span>[[${starRatingAv}]]</span></div>
+                </div>
                 <form>
                     <!-- 글작성 테이블 -->
                     <div>
-
-                        <table class="write_table" style="border-collapse: collapse;" border="2">
+                        <table class="write_table" style="text-align: center;">
                             <tr>
-                                <th>제목</th>
-                                <th>만료일시 :</th>
-                                <th>[[${board.expirationTime}]]</th>
+                                <td style="width: 20%;" colspan="1">제목</td>
+                                <td colspan="2">
+                                    <input type="text" name="boardTitle" style="width:100%;" size="50" maxlength="50" th:value="${board.boardTitle}" readonly>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="1">만료일시</td>
+                                <td colspan="2">
+                                    <input type="text" name="expirationTime" style="width:100%;" size="50" maxlength="50" th:value="${board.expirationTime}" readonly>
+                                    <a style="display: none;" id="matchingTrainerId">[[${trainerInfo.trainerId}]]</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>상담가능시간</td>
+                                <td>
+                                    <input type="text" name="availConsultWeeks" style="width:100%;" size="50" maxlength="50" th:value="${board.availConsultWeeks}" readonly>
+                                </td>
+                                <td>
+                                    <input type="text" name="availConsultTime" style="width:100%;" size="50" maxlength="50" th:value="${board.availConsultTime}" readonly>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>파트 / 경력</td>
+                                <td>
+                                    <input type="text" name="trainerPart" style="width:100%;" size="50" maxlength="50" th:value="${trainerInfo.trainerPart}" readonly>
+                                </td>
+                                <td>
+                                    <input type="text" name="trainerCareer" style="width:100%;" size="50" maxlength="50" th:value="${trainerInfo.trainerCareer}" readonly>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">트레이너 소개</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">[[${trainerInfo.trainerIntro}]]</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">트레이너의 위치</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">[[${board.trainerAddr}]]</td>
                             </tr>
                             <tr>
                                 <td colspan="3">
-                                    <input type="text" name="boardTitle" size="50" maxlength="50"
-                                           th:value="${board.boardTitle}" readonly>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th rowspan="6" id="profileInfo">
-                                    <th:block th:if="${profileInfo != null}">
-                                        <div style="display:flex; justify-content:center;">
-                                            <img style="width:100%; height:100%;"
-                                                 th:src="@{/matching/thumbnail (sysName=${profileInfo.sysName})}">
-                                        </div>
-                                    </th:block>
-                                </th>
-                                <th>트레이너</th>
-                                <td><a href="#" class="open">[[${trainerInfo.trainerNickname}]]</a></td>
-                            </tr>
-                            <tr>
-                                <th>
-                                    상담가능시간
-                                </th>
-                                <td>
-                                    [[${board.availConsultWeeks}]]
-                                    [[${board.availConsultTime}]]
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>파트</th>
-                                <th>경력</th>
-                            </tr>
-                            <tr>
-                                <th>[[${trainerInfo.trainerPart}]]</th>
-                                <th>[[${trainerInfo.trainerCareer}]]</th>
-                            </tr>
-                            <tr>
-                                <th colspan="2">트레이너 소개</th>
-                            </tr>
-                            <tr>
-                                <th colspan="2">[[${trainerInfo.trainerIntro}]]</th>
-                            </tr>
-                            <tr>
-                                <th colspan="3">트레이너의 위치</th>
-                            </tr>
-                            <tr>
-                                <th colspan="3">[[${board.trainerAddr}]]</th>
-                            </tr>
-                            <tr>
-                                <th colspan="3">
                                     <div id="map" style="width:100%;height:350px;"></div>
                                     <script type="text/javascript"
                                             src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9d457fe0b04b983671f48d03d84f2fdb&libraries=services"></script>
@@ -427,10 +409,10 @@ display: none;
                                             }
                                         });
                                     </script>
-                                </th>
+                                </td>
                             </tr>
                             <tr>
-                                <th colspan="3">내용</th>
+                                <td colspan="3">내용</td>
                             </tr>
                             <tr style="height:380px;" id="content_tr">
                                 <td colspan="3">
@@ -440,7 +422,7 @@ display: none;
                         </table>
                         <table class="careerPic">
                             <tr>
-                                <th>경력 및 자격 사진</th>
+                                <td>경력 및 자격 사진</td>
                             </tr>
                         </table>
                         <div>
@@ -472,7 +454,7 @@ display: none;
                     </tr>
                     <tr>
                         <td>
-                            <a href="#" class="open btnColor" data-trainer-id="${trainerInfo.trainerId}">신청하기</a>
+                            <a href="#" class="matchingOpen btnColor" data-trainer-id="${trainerInfo.trainerId}">신청하기</a>
                         </td>
                         <td>
                             <a class="btnColor" th:href="${'/matching/matching_list'+cri.listLink}">목록</a>
@@ -501,7 +483,7 @@ display: none;
                             <h4>작성자</h4>
                             <input type="text" name="userId" th:value="${session.loginUser}" readonly
                                    style="text-align: center;">
-                            <input name="boardNum_1" id="boardNum" th:value="${board.boardNum}" type="hidden">
+                            <input name="boardNum_1" id="boardNum2" th:value="${board.boardNum}" type="hidden">
                         </div>
                         <div style="width:65%">
                             <div class="starpoint">
@@ -861,5 +843,14 @@ $(".finish").on("click", function(e) {
     })
 
 
+	$(".open").on("click", function (e) {
+        e.preventDefault();
+
+        var div = document.getElementById('matchingTrainerId');
+		var userId = div.innerHTML;
+
+        sendUserIdToModal(userId);
+        modalBox.classList.add("active");
+    });
 </script>
 </html>

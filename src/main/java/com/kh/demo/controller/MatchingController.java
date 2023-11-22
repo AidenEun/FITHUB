@@ -221,14 +221,16 @@ public class MatchingController {
     }
     @PostMapping("u_t_matchModal")
     @ResponseBody
-    public String matchingModal(@RequestParam("trainerId") String trainerId, HttpServletRequest req) throws Exception {
+    public String matchingModal(@RequestParam("trainerId") String trainerId, @RequestParam("boardNum") Long boardNum, HttpServletRequest req) throws Exception {
         ObjectNode json = JsonNodeFactory.instance.objectNode();
         HttpSession session = req.getSession();
         String userId = (String) session.getAttribute("loginUser");
+        System.out.println(boardNum);
         // Retrieve board information by trainerId
         TrainerMatchingBoardDTO boardInfo = MatchingService.getBoardBytrainerId(trainerId);
         System.out.println(boardInfo);
         UTMatchingDTO utInfo = MatchingService.getutBytrainerId(trainerId);
+        json.putPOJO("boardNum", boardNum);
         System.out.println(utInfo);
         if (boardInfo instanceof TrainerMatchingBoardDTO) {
             TrainerMatchingBoardDTO trainerMatchingBoardDTO = (TrainerMatchingBoardDTO) boardInfo;
@@ -256,10 +258,11 @@ public class MatchingController {
 
     @PostMapping("apply")
     @ResponseBody
-    public String u_t_matching(@RequestParam("userId") String userId, @RequestParam("trainerId") String trainerId) throws Exception {
+    public String u_t_matching(@RequestParam("userId") String userId, @RequestParam("trainerId") String trainerId, @RequestParam("boardNum") Long boardNum) throws Exception {
         UTMatchingDTO newMatching = new UTMatchingDTO();
         newMatching.setUserId(userId);
         newMatching.setTrainerId(trainerId);
+        newMatching.setBoardNum(boardNum);
 
 
         MatchingService.saveMatching(newMatching);

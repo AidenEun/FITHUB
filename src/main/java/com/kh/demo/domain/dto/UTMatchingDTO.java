@@ -10,4 +10,5 @@ public class UTMatchingDTO {
     private String userCheck;
     private String trainerCheck;
     private String matchingDate;
+    private long boardNum;
 }
