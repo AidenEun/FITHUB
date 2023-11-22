@@ -1,5 +1,6 @@
 package com.kh.demo.mapper;
 
+import com.kh.demo.domain.dto.BoardDTO;
 import com.kh.demo.domain.dto.Criteria;
 import com.kh.demo.domain.dto.ProductBoardDTO;
 import org.apache.ibatis.annotations.Mapper;
@@ -15,6 +16,8 @@ public interface ProductBoardMapper {
 	int updateBoard(ProductBoardDTO pboard);
 	int updateReadCount(Long boardNum);
 
+	int updateProductLikeCnt(Long boardNum, String category);
+
 	//delete
 	int deleteBoard(Long boardNum);
 
@@ -29,7 +32,8 @@ public interface ProductBoardMapper {
 	List<ProductBoardDTO> getProdExerList(Criteria cri);
 
 
-    Long getTotalWithCategory(Criteria cri);
+	Long getTotalWithCategory(Criteria cri);
+
 
 }
 

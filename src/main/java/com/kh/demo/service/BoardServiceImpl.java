@@ -181,6 +181,11 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
+	public void updateBoardLikeCnt(Long boardNum, String boardCategory) {
+		bmapper.updateBoardLikeCnt(boardNum,boardCategory);
+	}
+
+	@Override
 	public boolean remove(String loginUser, Long boardnum, String boardCategory) {
 		BoardDTO board = bmapper.findByNum(boardnum);
 		if(board.getUserId().equals(loginUser)) {
@@ -197,15 +202,6 @@ public class BoardServiceImpl implements BoardService{
 		return false;
 	}
 
-	@Override
-	public BoardDTO updateLikeCnt(Long boardNum) {
-		return bmapper.updateLikeCnt(boardNum);
-	}
-
-	@Override
-	public LikeDTO likeCheck(Long boardNum, String loginUser) {
-		return hmapper.likeCheck(boardNum, loginUser);
-	}
 
 
 	public Long getTotal(Criteria cri) {
@@ -449,6 +445,10 @@ public class BoardServiceImpl implements BoardService{
 		return bmapper.getCommuTotalCnt(cri);
 	}
 
+	@Override
+	public LikeDTO likeCheck(Long boardNum, String loginUser) {
+		return hmapper.likeCheck(boardNum, loginUser);
+	}
 
 
 }

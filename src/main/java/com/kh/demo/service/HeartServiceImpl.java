@@ -1,7 +1,9 @@
 package com.kh.demo.service;
 
 import com.kh.demo.domain.dto.LikeDTO;
+import com.kh.demo.mapper.BoardMapper;
 import com.kh.demo.mapper.HeartMapper;
+import com.kh.demo.mapper.ProductBoardMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,11 @@ public class HeartServiceImpl implements HeartService {
 
     @Autowired
     private HeartMapper hmapper;
+    @Autowired
+    private BoardMapper bmapper;
+    @Autowired
+    private ProductBoardMapper pbmapper;
+
     @Override
     public int insertHeart(LikeDTO heart) {
         Long boardNum = heart.getBoardNum();
@@ -27,10 +34,27 @@ public class HeartServiceImpl implements HeartService {
         if(check==null){
             //insert의 리턴값은 DB에 성공적으로 insert된 갯수를 보내므로 result=1
             result = hmapper.insertHeart(heart);
+            updateLikeCount(heart);
         }else {
             hmapper.deleteHeart(heart);
+            updateLikeCount(heart);
         }
         //0 or 1이 담겨져서 @Controller에 보냄
         return result;
+    }
+
+    public void updateLikeCount(LikeDTO heart) {
+        Long boardNum = heart.getBoardNum();
+        String boardCategory = heart.getBoardCategory();
+
+        if (boardCategory.equals("prodFood")) {
+            pbmapper.updateProductLikeCnt(boardNum, boardCategory);
+        }  else if ("prodExer".equals(boardCategory)){
+            pbmapper.updateProductLikeCnt(boardNum, boardCategory);
+        }
+        else {
+            // 다른 카테고리의 경우 BoardMapper를 사용하여 업데이트
+            bmapper.updateBoardLikeCnt(boardNum, boardCategory);
+        }
     }
 }
