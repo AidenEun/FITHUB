@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -20,6 +21,10 @@ public class HomeController {
     @Autowired
     @Qualifier("userServiceImpl")
     private UserService service;
+
+    @Autowired
+    @Qualifier("UserMyPageServiceImpl")
+    private UserMyPageService umpservice;
 
     @Autowired
     @Qualifier("TrainerServiceImpl")
@@ -58,9 +63,20 @@ public class HomeController {
         return "index";
     }
 
-    @GetMapping("/index_sidebar")
-    public void replace(){}
-
+//    @GetMapping("/index_sidebar")
+//    public void replace(HttpServletRequest req, Model model) {
+//        HttpSession session = req.getSession();
+//        String userid = (String) session.getAttribute("loginUser");
+//        String loginUser = (String) session.getAttribute("loginUser");
+//        UserDTO user = umpservice.getUserDetail(loginUser);
+//
+////       오늘 날짜 구하기
+//        LocalDate todaydate = LocalDate.now();
+//
+//        model.addAttribute("user", user);
+//        model.addAttribute("todaydate", todaydate);
+//
+//    }
     @GetMapping("/user/joinTest")
     public void joinTest(){}
 
