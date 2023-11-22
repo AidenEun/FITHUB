@@ -15,7 +15,12 @@
 	<link rel="stylesheet" th:href="@{/assets/css/common.css}" />
 	<link rel="stylesheet" th:href="@{/assets/css/reportModal.css}" />
 	<style>
-
+		.header_box {
+			width: 100%;
+			background: linear-gradient(to right, rgba(143, 167, 70, 0.25), rgba(143, 167, 70, 0.3)), url(/images/board2.jpg);
+			background-size: cover;
+			background-position: 0 47%;
+		}
 		a {
 			border-bottom:none;
 		}
@@ -34,8 +39,9 @@
 			width: 90px !important;
 
 		}
-		.board_area tr td{
-			border-color: transparent;
+		.board_area td, .board_area th{
+			border-bottom : 1px solid rgb(203,211,177) !important;
+			padding : 5px 10px !important;
 		}
 		.board_area tr > td > input, textarea{
 			border-color: transparent;
@@ -166,7 +172,7 @@
 						</tr>
 						<tr>
 							<th>조회수</th>
-							<td>[[${board.viewCnt}]]</td>
+							<td style="padding:5px 25px !important">[[${board.viewCnt}]]</td>
 							<th>좋아요</th>
 							<td width="50px" style="padding:5px;">[[${board.likeCnt}]]</td>
 							<th>북마크</th>
@@ -174,7 +180,7 @@
 						</tr>
 						<tr style="height:300px;">
 							<th>내 용</th>
-							<td class="boardContent" colspan="5">
+							<td class="boardContent" colspan="5" style="padding: 12px 20px !important;">
 								<th:block th:utext="${board.boardContent}">
 									<textarea name="boardContent" style="width:700px;height:290px;resize:none;" readonly>
 
@@ -203,7 +209,7 @@
 						</th:block>
 						<th:block th:unless="${files2 != null and files2.size() > 0}">
 							<tr>
-								<td colspan="2" style="text-align: center; font-size: 14px;">첨부 파일이 없습니다.</td>
+								<td colspan="6" style="text-align: center; font-size: 14px;">첨부 파일이 없습니다.</td>
 							</tr>
 						</th:block>
 					</table>
@@ -229,7 +235,7 @@
 								<th:block th:if="${board.userId != session.loginUser}">
 									<a class="button btnColor small" style="float:left;">좋아요</a>
 									<a class="button btnColor small" style="float:left; margin-left:10px;">북마크</a>
-									<a class="button btnColor reportOpen" style="float:left; margin-left:10px;">신고</a>
+									<a class="button btnColor small reportOpen" style="float:left; margin-left:10px;">신고</a>
 								</th:block>
 								<span th:if="${board != null}" style="float: right;" th:switch="${board.boardCategory}">
 									<span th:case="'commuFree'"><a class="button btnColor small" th:href="${'/community/commu_free'+cri.listLink}">목록</a></span>
@@ -364,7 +370,7 @@
 						//<p class="reply3">댓글내용</p>
 						str += '<p class="reply'+list[i].replyNum+'">'+list[i].replyContent+'</p>';
 						str += '</div><div style="text-align:right;">'
-						str += '<strong>'+replyService.displayTime(list[i])+'</strong>'
+						str += '<span>'+replyService.displayTime(list[i])+'</span>'
 						if(list[i].userId == loginUser){
 							//<a href="3" class="modify">수정</a>
 							str += '<a href="'+list[i].replyNum+'" class="modify">수정</a>';

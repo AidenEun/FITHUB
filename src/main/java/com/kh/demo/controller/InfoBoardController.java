@@ -2,6 +2,7 @@ package com.kh.demo.controller;
 
 import com.kh.demo.domain.dto.BoardDTO;
 import com.kh.demo.domain.dto.Criteria;
+import com.kh.demo.domain.dto.LikeDTO;
 import com.kh.demo.domain.dto.PageDTO;
 import com.kh.demo.service.BoardService;
 import jakarta.servlet.http.Cookie;
@@ -20,7 +21,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
+
 import java.util.List;
+
 
 @Controller
 @RequestMapping("/info/*")
@@ -143,10 +146,17 @@ public class InfoBoardController {
                     cookie.setMaxAge(3600);
                     resp.addCookie(cookie);
                 }
+
+                //get 페이지 가기전에 유저가 해당 게시글 좋아요한게 있는지 체크
+                LikeDTO heart = new LikeDTO();
+                heart = service.likeCheck(boardNum,loginUser);
+                model.addAttribute("heart",heart);
+
             }
         }
         return requestURI;
     }
+
 
     @PostMapping("info_modify")
     public String info_modify(String boardCategory, BoardDTO board, MultipartFile[] files, MultipartFile[] files2, String updateCnt, Criteria cri, Model model) throws Exception {
@@ -184,7 +194,6 @@ public class InfoBoardController {
     public ResponseEntity<Object> download(String systemname, String orgname) throws Exception{
         return service.downloadFile(systemname,orgname);
     }
-
 
 
 

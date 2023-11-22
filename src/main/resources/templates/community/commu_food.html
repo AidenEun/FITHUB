@@ -16,9 +16,9 @@
 	<style>
 		.header_box {
 			width: 100%;
-			background: linear-gradient(to right, rgba(143, 167, 70, 0.35), rgba(143, 167, 70, 0.3)), url(/images/foodboard.jpg);
+			background: linear-gradient(to right, rgba(143, 167, 70, 0.35), rgba(143, 167, 70, 0.3)), url(/images/food4.jpg);
 			background-size: cover;
-			background-position:  0 47%;
+			background-position: 0 88%;
 		}
 		.content .button{
 			margin-bottom: 30px;
@@ -241,6 +241,7 @@
 
 <script th:src="@{/assets/js/sidebar.js}"></script>
 <script th:src="@{/assets/js/profile.js}"></script>
+<script th:src="@{/assets/js/common.js}"></script>
 </body>
 <script th:inline="javascript">
 	const searchForm = $("#searchForm");
@@ -263,17 +264,5 @@
 		pageForm.submit();
 	})
 
-	$("#searchForm a").on("click",sendit);
-	function sendit(){
-		if(!searchForm.find("option:selected").val()){
-			alert("검색 기준을 선택하세요!");
-			return false;
-		}
-		if(!$("input[name='keyword']").val()){
-			alert("키워드를 입력하세요!");
-			return false;
-		}
-		searchForm.submit();
-	}
 </script>
 </html>

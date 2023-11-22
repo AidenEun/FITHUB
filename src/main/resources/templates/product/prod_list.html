@@ -14,6 +14,12 @@
 	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
 	<link rel="stylesheet" th:href="@{/assets/css/common.css}" />
 	<style>
+		.header_box {
+			width: 100%;
+			background: linear-gradient(to right, rgba(143, 167, 70, 0.25), rgba(143, 167, 70, 0.3)), url(/images/test2.png);
+			background-size: cover;
+			background-position: 0 28%;
+		}
 		/*.boardContent {*/
 		/*	text-overflow: ellipsis;*/
 		/*	display: -webkit-box; !* display: -webkit-box => 해당 영역을 box 형태로 관리 *!*/
@@ -98,12 +104,14 @@
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">
 
-	<div class="inner">
-
+	<div class="header_box">
 		<header class="test12">
-			<p id="mainText">게시판</p>
+			<p id="mainText"></p>
 			<p id="subText">제품</p>
 		</header>
+	</div>
+
+	<div class="inner">
 
 		<!-- Content -->
 		<div class="content">

@@ -114,6 +114,7 @@ public class ChallengeController {
         ObjectNode json = JsonNodeFactory.instance.objectNode();
 
         ChallNoticeBoardDTO list = challService.getChallNoticeDetail(challNum);
+
         System.out.println("list: "+list);
         json.putPOJO("list", list);
 
@@ -192,6 +193,12 @@ public class ChallengeController {
         HttpSession session = req.getSession();
         String userId = (String) session.getAttribute("loginUser");
         ChallNoticeBoardDTO list = challService.getChallenge(userId,mychallNum);
+        //인기게시글 띄우기
+        List<BoardDTO> boardTop5List = boardservice.getBoardTop5List();
+        // 트레이너 랭킹
+        List<TrainerDTO> trainerTop5List= tservice.getTrainerTop5List();
+        model.addAttribute("trainerTop5List",trainerTop5List);
+        model.addAttribute("boardTop5List",boardTop5List);
         System.out.println("list: "+ list);
         model.addAttribute("list",list);
 
@@ -259,6 +266,12 @@ public class ChallengeController {
             }
         }
         System.out.println("requestURI : "+ requestURI);
+        //인기게시글 띄우기
+        List<BoardDTO> boardTop5List = boardservice.getBoardTop5List();
+        // 트레이너 랭킹
+        List<TrainerDTO> trainerTop5List= tservice.getTrainerTop5List();
+        model.addAttribute("trainerTop5List",trainerTop5List);
+        model.addAttribute("boardTop5List",boardTop5List);
         return requestURI;
     }
     @PostMapping("modify")

@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface BoardMapper {
@@ -21,6 +22,7 @@ public interface BoardMapper {
 	//select
 	List<BoardDTO> getList(Criteria cri);
 	Long getTotal(Criteria cri);
+	Long getTotalWithCategory(Criteria cri);
 
 	List<BoardDTO> getInfoNewsList(Criteria cri);
 	List<BoardDTO> getInfoExerList(Criteria cri);
@@ -58,11 +60,11 @@ public interface BoardMapper {
 
 	BoardDTO getFoodTop1();
 
-    List<BoardDTO> getBoardTop5List();
+	List<BoardDTO> getBoardTop5List();
 
 	List<BoardDTO> getinfoSearchList(String keyword);
 
-    List<BoardDTO> get12infoSearchList(Criteria cri);
+	List<BoardDTO> get12infoSearchList(Criteria cri);
 
 	Long getinfoSearchCnt(Criteria cri);
 
@@ -73,6 +75,10 @@ public interface BoardMapper {
 	List<BoardDTO> get12CommuSearchList(Criteria cri);
 
 	Long getCommuTotalCnt(Criteria cri);
+
+	BoardDTO updateLikeCnt(Long boardNum);
+
+
 }
 
 

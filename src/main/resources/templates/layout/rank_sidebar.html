@@ -23,7 +23,7 @@
                     </tr>
                     <tr th:each="trainerTop5List, dataStat: ${trainerTop5List}">
                         <td th:text="${dataStat.index + 1}">1</td>
-                        <td class="open">[[${trainerTop5List.trainerId}]]</a></td>
+                        <td class="open"><a class="cursorPointer">[[${trainerTop5List.trainerId}]]</a></td>
                     </tr>
                     <tr>
                         <td colspan="2"><input class="rankBtn" type="button" value="트레이너 보러가기"

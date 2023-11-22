@@ -29,6 +29,8 @@ public interface ProductBoardMapper {
 	List<ProductBoardDTO> getProdExerList(Criteria cri);
 
 
+    Long getTotalWithCategory(Criteria cri);
+
 }
 
 
