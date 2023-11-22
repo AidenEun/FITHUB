@@ -343,11 +343,10 @@
 				{"boardNum":boardNum,"boardCategory":boardCategory,"userId":loginUser, "replyContent":replyContent},
 				function(result){
 					alert("등록!");
-					showList(1);
+					showList(nowpage);
 				}
 		)
-
-
+		$("[name='replyContent']").val("");
 	})
 
 	function showList(pagenum){
@@ -369,13 +368,13 @@
 						str += '<strong class="userId'+list[i].replyNum+'">'+list[i].userId+'</strong>';
 						//<p class="reply3">댓글내용</p>
 						str += '<p class="reply'+list[i].replyNum+'">'+list[i].replyContent+'</p>';
-						str += '</div><div style="text-align:right;">'
+						str += '</div><div style="text-align:right; clear: both;">'
 						str += '<span>'+replyService.displayTime(list[i])+'</span>'
 						if(list[i].userId == loginUser){
 							//<a href="3" class="modify">수정</a>
-							str += '<a href="'+list[i].replyNum+'" class="modify">수정</a>';
-							str += '<a href="'+list[i].replyNum+'" class="mfinish" style="display:none;">수정하기</a>';
-							str += '<a href="'+list[i].replyNum+'" class="remove">삭제</a>';
+							str += '<a href="'+list[i].replyNum+'" class="modify button btnColor small">수정</a>';
+							str += '<a href="'+list[i].replyNum+'" class="mfinish button btnColor small" style="display:none;">수정하기</a>';
+							str += '<a href="'+list[i].replyNum+'" class="remove button btnColor small">삭제</a>';
 						}
 						str += '</div></div></li>';
 					}
