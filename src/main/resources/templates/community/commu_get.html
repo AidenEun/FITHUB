@@ -329,28 +329,38 @@
 		nowpage = 1;
 		showList(1);
 	})
+
 	$(".regist").on("click",function(e){
 		e.preventDefault();
 		$(".replyForm").show();
 		$(this).hide();
 		$(".noreply").hide();
 	})
-  
-$(".finish").on("click",function(e){
-  e.preventDefault();
-  let replyContent = $("[name='replyContent']").val();
 
-  replyService.add(
-    {"boardNum":boardNum,"boardCategory":boardCategory,"userId":loginUser, "replyContent":replyContent},
-    function(result){
-    alert("등록!");
-    showList(nowpage);
-    }
-  )
 
-  $("[name='replyContent']").val("");
-  })
-})
+	$(".finish").on("click",function(e){
+		e.preventDefault();
+		let replyContent = $("[name='replyContent']").val();
+
+		if(replyContent.length == 0){
+			alert("댓글 내용을 입력해주세요!");
+		}
+		else{
+			replyService.add(
+				{"boardNum":boardNum,"boardCategory":boardCategory,"userId":loginUser, "replyContent":replyContent},
+				function(result){
+					alert("등록!");
+					showList(nowpage);
+
+					window.setTimeout(function(){
+						window.scrollTo(0,document.body.scrollHeight)
+					},10)
+
+				}
+			)
+			$("[name='replyContent']").val("");
+		}
+	})
 
 	//좋아요
 	$(document).ready(function(){
@@ -369,7 +379,7 @@ $(".finish").on("click",function(e){
 			console.log(heartVal);
 			$("#heart").prop("src", "/images/like_off.png");
 			$(".heart").prop('name',heartVal);
-			}
+		}
 
 
 		//좋아요 버튼 클릭 시 실행되는 코드
@@ -538,7 +548,8 @@ $(".finish").on("click",function(e){
 		e.preventDefault();
 		$(".replyForm").hide();
 		$(".regist").show();
-		$("[name='replyContent']").val("");
+		$(".noreply").show();
+		$("[name='replycontents']").val("");
 	})
 </script>
 </html>
