@@ -189,7 +189,7 @@
                     <!-- 상단에 위치할 링크들 -->
                     <div class="diary_lnk_img">
                         <a href="/usermypage/user_diary">
-                            <img src="images/lnk-image/diary/diary_lnk_img.jpg" alt="diary">
+                            <img th:src="@{/images/lnk-image/diary/diary_lnk_img.jpg}" alt="diary">
                         </a>
                         <a href="/usermypage/user_diary">
                             다이어리
@@ -198,7 +198,7 @@
 
                     <div class="product_lnk_img">
                         <a href="/product/prod_list">
-                            <img src="images/lnk-image/product/prod_lnk_img.jpg" alt="product">
+                            <img th:src="@{/images/lnk-image/product/prod_lnk_img.jpg}" alt="product">
                         </a>
                         <a href="/product/prod_list">
                             제품
@@ -207,7 +207,7 @@
 
                     <div class="bmi_lnk_img">
                         <a href="/sidebar/bmi">
-                            <img src="images/lnk-image/BMI/bmi_lnk_img.jpg" alt="bmi">
+                            <img th:src="@{/images/lnk-image/BMI/bmi_lnk_img.jpg}" alt="bmi">
                         </a>
                         <a href="/sidebar/bmi">
                             BMI
@@ -216,23 +216,23 @@
 
                     <div class="health_lnk_img">
                         <a href="/sidebar/healthCenter">
-                            <img src="images/lnk-image/health/heal_lnk_img.jpg" alt="health">
+                            <img th:src="@{/images/lnk-image/health/heal_lnk_img.jpg}" alt="health">
                         </a>
                         <a href="/sidebar/healthCenter">
                             보건소
                         </a>
                     </div>
 
-                    <div class="trainer_lnk_img">
-                        <a href="/usermypage/user_applytrainer">
-                            <img src="images/lnk-image/trainer/apply_lnk_img.jpg" alt="trainer">
-                        </a>
-                        <th:block th:if="${session.user != null}">
+                    <th:block th:if="${session.user != null}">
+                        <div class="trainer_lnk_img">
+                            <a href="/usermypage/user_applytrainer">
+                                <img th:src="@{/images/lnk-image/trainer/apply_lnk_img.jpg}" alt="trainer">
+                            </a>
                             <a href="/usermypage/user_applytrainer">
                                 트레이너 신청
                             </a>
-                        </th:block>
-                    </div>
+                        </div>
+                    </th:block>
                 </div>
             </div>
         </th:block>
