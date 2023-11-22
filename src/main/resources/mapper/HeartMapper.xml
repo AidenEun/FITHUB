@@ -9,8 +9,8 @@
 
     <!--좋아요 저장-->
     <insert id="insertHeart">
-        insert into `like` (board_num, board_category, user_id)
-        values(#{boardNum},#{boardCategory},#{userId})
+        insert into `like` (board_num, board_category, user_id, heart)
+        values(#{boardNum},#{boardCategory},#{userId},1)
     </insert>
 
     <!--좋아요 삭제-->
