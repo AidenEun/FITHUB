@@ -1,9 +1,8 @@
 package com.kh.demo.service;
 
-import com.kh.demo.domain.dto.Criteria;
-import com.kh.demo.domain.dto.FileDTO;
-import com.kh.demo.domain.dto.ProductBoardDTO;
+import com.kh.demo.domain.dto.*;
 import com.kh.demo.mapper.FileMapper;
+import com.kh.demo.mapper.HeartMapper;
 import com.kh.demo.mapper.ProductBoardMapper;
 import com.kh.demo.mapper.ReplyMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +41,8 @@ public class ProductBoardServiceImpl implements ProductBoardService{
 	private ReplyMapper rmapper;
 	@Autowired
 	private FileMapper fmapper;
+	@Autowired
+	private HeartMapper hmapper;
 	@Value("${file.dir}")
 	private String saveFolder;
 
@@ -176,6 +177,16 @@ public class ProductBoardServiceImpl implements ProductBoardService{
 	@Override
 	public void updateReadCount(Long board_num) {
 		bmapper.updateReadCount(board_num);
+	}
+
+	@Override
+	public void updateProductLikeCnt(Long boardNum, String category) {
+		bmapper.updateProductLikeCnt(boardNum,category);
+	}
+
+	@Override
+	public LikeDTO likeCheck(Long boardNum, String loginUser) {
+		return hmapper.likeCheck(boardNum, loginUser);
 	}
 
 	@Override

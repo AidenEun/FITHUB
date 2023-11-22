@@ -13,6 +13,7 @@
 	<link rel="stylesheet" th:href="@{/assets/css/infoBoard.css}">
 	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
 	<link rel="stylesheet" th:href="@{/assets/css/common.css}" />
+	<link rel="icon" href="/images/fithub-favicon.png" type="image/png">
 	<style>
 		.header_box {
 			width: 100%;
@@ -20,13 +21,6 @@
 			background-size: cover;
 			background-position: 0 29%;
 		}
-		/*.boardContent {*/
-		/*	text-overflow: ellipsis;*/
-		/*	display: -webkit-box; !* display: -webkit-box => 해당 영역을 box 형태로 관리 *!*/
-		/*	-webkit-line-clamp: 3; !*-webkit-line-clamp => 해당 영역 내 텍스트의 최대 라인수 *!*/
-		/*	-webkit-box-orient: vertical; !* -webkit-box-orient: vertical => box의 흐름 방향을 수직으로 지정 *!*/
-		/*}*/
-
 		.content .button{
 			float: right;
 			margin-top: 5px;
@@ -148,7 +142,11 @@
 						<th:block th:each="board, iterStat : ${newsList}" th:if="${iterStat.index < 4}">
 							<table style="border : 1px solid lightgrey; margin: 3px;">
 								<tr>
-									<td class="thumbnail">썸네일</td>
+									<td class="thumbnail">썸네일
+										<a class="get" id="img" th:href="${board.boardNum}">
+											<!--											<img th:src="${board.prodImg}" alt="Image" />-->
+										</a>
+									</td>
 								</tr>
 								<tr>
 									<td class="boardTitle" style="height: 30px; ">

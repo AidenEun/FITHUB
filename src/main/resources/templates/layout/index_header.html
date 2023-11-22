@@ -250,11 +250,10 @@
                     </th:block>
                     <th:block th:if="${session.loginUser != null}">
                         <a class="login" th:href="@{/user/logout}" style="color: #fff;">logout</a>
+                        <a class="login" href="/usermypage/user_myinfo" style="color: #fff;">유저</a>
+                        <a class="login" href="/trainermypage/trainer_modify" style="color: #fff;">트레</a>
+                        <a class="login" href="/adminmypage/adminmypage_list" style="color: #fff;">관리</a>
                     </th:block>
-
-                    <a class="login" href="/usermypage/user_myinfo" style="color: #fff;">유저</a>
-                    <a class="login" href="/trainermypage/trainer_modify" style="color: #fff;">트레</a>
-                    <a class="login" href="/adminmypage/adminmypage_list" style="color: #fff;">관리</a>
                 </li>
                 <li class="search">
                     <a class="fa-search" href="#search" style="color: #fff;">Search</a>
@@ -320,6 +319,16 @@
                                         <img style="width:160px; height:160px;"
                                              th:src="@{/usermypage/thumbnail (sysName=${profile.sysName})}">
                                     </th:block>
+
+        <th:block th:if="${session.loginUser != null}">
+            <div class="side_info">
+                <a href="/usermypage/user_myinfo">
+                    <th:block th:if="${profile != null}">
+                        <th:block th:with="sar=${profile.orgName.split('[.]')}">
+                            <th:block th:with="ext=${sar[sar.length-1]}">
+                                <th:block th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}">
+                                    <img style="width:200px; height:200px; border-radius: 100%;" th:src="@{/usermypage/thumbnail (sysName=${profile.sysName})}">
+
                                 </th:block>
                             </th:block>
                         </th:block>
@@ -361,6 +370,7 @@
                     </div>
                 </div>
                 <hr>
+
                 <div class="navi_main">
                     <div class="icon_area">
                         <table style="margin: 0px;">
@@ -397,14 +407,13 @@
                         </div>
                     </div>
                 </div>
-                <!--                <div class="navi_bottom">-->
+            
                 <table class="navi_bottom">
                     <tr>
                         <td><a class="subColor" href="/sidebar/bmi">BMI 계산기</a></td>
                         <td><a class="subColor" href="/sidebar/healthCenter">보건소 찾기</a></td>
                     </tr>
                     <tr th:if="${session.user != null}">
-<!--                    <tr>-->
                         <td colspan="2">
                             <a class="subColor" href="/usermypage/user_applytrainer">트레이너 신청</a>
                         </td>

@@ -36,6 +36,17 @@
 		where board_num=#{boardNum}
 	</update>
 
+	<update id="updateProductLikeCnt">
+		UPDATE product_board
+		SET like_cnt = (
+		SELECT COUNT(*)
+		FROM `like`
+		WHERE board_category=#{category}
+		AND board_num=#{boardNum}
+		)
+		WHERE category=#{category} AND board_num=#{boardNum};
+	</update>
+
 	<delete id="deleteBoard">
 		delete from product_board where board_num=#{boardNum}
 	</delete>

@@ -39,8 +39,9 @@
 			width: 90px !important;
 
 		}
-		.board_area tr td{
-			border-color: transparent;
+		.board_area td, .board_area th{
+			border-bottom : 1px solid rgb(203,211,177) !important;
+			padding : 5px 10px !important;
 		}
 		.board_area tr > td > input, textarea{
 			border-color: transparent;
@@ -171,7 +172,7 @@
 						</tr>
 						<tr>
 							<th>조회수</th>
-							<td>[[${board.viewCnt}]]</td>
+							<td style="padding:5px 25px !important">[[${board.viewCnt}]]</td>
 							<th>좋아요</th>
 							<td width="50px" style="padding:5px;">[[${board.likeCnt}]]</td>
 							<th>북마크</th>
@@ -179,7 +180,7 @@
 						</tr>
 						<tr style="height:300px;">
 							<th>내 용</th>
-							<td class="boardContent" colspan="5">
+							<td class="boardContent" colspan="5" style="padding: 12px 20px !important;">
 								<th:block th:utext="${board.boardContent}">
 									<textarea name="boardContent" style="width:700px;height:290px;resize:none;" readonly>
 
@@ -208,7 +209,7 @@
 						</th:block>
 						<th:block th:unless="${files2 != null and files2.size() > 0}">
 							<tr>
-								<td colspan="2" style="text-align: center; font-size: 14px;">첨부 파일이 없습니다.</td>
+								<td colspan="6" style="text-align: center; font-size: 14px;">첨부 파일이 없습니다.</td>
 							</tr>
 						</th:block>
 					</table>
@@ -232,9 +233,9 @@
 							<div class="displayNoneDiv boardCategory">[[${board.boardCategory}]]</div>
 							<div class="btn_area">
 								<th:block th:if="${board.userId != session.loginUser}">
-									<a class="button btnColor small" style="float:left;">좋아요</a>
+									<a href="#" class="heart" style="float:left; margin-right:5px;"><img id="heart" src="/images/like_off.png" style="width:30px;"></a>
 									<a class="button btnColor small" style="float:left; margin-left:10px;">북마크</a>
-									<a class="button btnColor reportOpen" style="float:left; margin-left:10px;">신고</a>
+									<a class="button reportOpen btnColor small" style="float:left; margin-left:10px;">신고</a>
 								</th:block>
 								<span th:if="${board != null}" style="float: right;" th:switch="${board.boardCategory}">
 									<span th:case="'commuFree'"><a class="button btnColor small" th:href="${'/community/commu_free'+cri.listLink}">목록</a></span>
@@ -328,26 +329,81 @@
 		nowpage = 1;
 		showList(1);
 	})
+
 	$(".regist").on("click",function(e){
 		e.preventDefault();
 		$(".replyForm").show();
 		$(this).hide();
 		$(".noreply").hide();
 	})
+
+
 	$(".finish").on("click",function(e){
 		e.preventDefault();
 		let replyContent = $("[name='replyContent']").val();
 
-		replyService.add(
+		if(replyContent.length == 0){
+			alert("댓글 내용을 입력해주세요!");
+		}
+		else{
+			replyService.add(
 				{"boardNum":boardNum,"boardCategory":boardCategory,"userId":loginUser, "replyContent":replyContent},
 				function(result){
 					alert("등록!");
-					showList(1);
+					showList(nowpage);
+
+					window.setTimeout(function(){
+						window.scrollTo(0,document.body.scrollHeight)
+					},10)
+
 				}
-		)
-
-
+			)
+			$("[name='replyContent']").val("");
+		}
 	})
+
+	//좋아요
+	$(document).ready(function(){
+
+		//좋아요가 있는지 확인한 값을 heartVal에 저장
+		var heartVal = /*[[${heart != null ? heart.heart : ''}]]*/ '';
+		console.log(heartVal);
+
+		//heartVal이 1이면 좋아요가 이미 되어있는것 -> like_on.png 출력
+		if(heartVal>0){
+			console.log(heartVal);
+			$("#heart").prop("src", "/images/like_on.png");	//prop() : 해당 속성을 가져와서 변경
+			$(".heart").prop('name',heartVal);
+		}
+		else{
+			console.log(heartVal);
+			$("#heart").prop("src", "/images/like_off.png");
+			$(".heart").prop('name',heartVal);
+		}
+
+
+		//좋아요 버튼 클릭 시 실행되는 코드
+		$(".heart").on("click", function(){
+			var that = $(this);
+			$.ajax({
+				url:'/heart/heart',
+				type:'POST',
+				data: {'boardNum': boardNum, 'userId': loginUser, 'boardCategory':boardCategory},
+				success: function(data){
+					that.prop('name',data);
+					console.log("data:"+data);
+					if(data==1){
+						$("#heart").prop("src", "/images/like_on.png");
+					}
+					else{
+						$("#heart").prop("src", "/images/like_off.png");
+					}
+					console.log("that:"+that);
+				}
+			});
+		});
+	});
+
 
 	function showList(pagenum){
 		replyService.getList(
@@ -368,13 +424,13 @@
 						str += '<strong class="userId'+list[i].replyNum+'">'+list[i].userId+'</strong>';
 						//<p class="reply3">댓글내용</p>
 						str += '<p class="reply'+list[i].replyNum+'">'+list[i].replyContent+'</p>';
-						str += '</div><div style="text-align:right;">'
-						str += '<strong>'+replyService.displayTime(list[i])+'</strong>'
+						str += '</div><div style="text-align:right; clear: both;">'
+						str += '<span>'+replyService.displayTime(list[i])+'</span>'
 						if(list[i].userId == loginUser){
 							//<a href="3" class="modify">수정</a>
-							str += '<a href="'+list[i].replyNum+'" class="modify">수정</a>';
-							str += '<a href="'+list[i].replyNum+'" class="mfinish" style="display:none;">수정하기</a>';
-							str += '<a href="'+list[i].replyNum+'" class="remove">삭제</a>';
+							str += '<a href="'+list[i].replyNum+'" class="modify button btnColor small">수정</a>';
+							str += '<a href="'+list[i].replyNum+'" class="mfinish button btnColor small" style="display:none;">수정하기</a>';
+							str += '<a href="'+list[i].replyNum+'" class="remove button btnColor small">삭제</a>';
 						}
 						str += '</div></div></li>';
 					}
@@ -492,7 +548,8 @@
 		e.preventDefault();
 		$(".replyForm").hide();
 		$(".regist").show();
-		$("[name='replyContent']").val("");
+		$(".noreply").show();
+		$("[name='replycontents']").val("");
 	})
 </script>
 </html>

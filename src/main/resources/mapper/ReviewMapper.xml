@@ -7,8 +7,8 @@
     </select>
 
     <insert id="insertReview">
-        insert into review(review_content, user_id, star_rating, matching_board_num, matching_num)
-        values(#{reviewContent},#{userId},#{starRating},#{boardNum},#{utmatchingNum})
+        insert into review(review_content, user_id, star_rating, matching_board_num)
+        values(#{reviewContent},#{userId},#{starRating},#{boardNum})
     </insert>
 
     <update id="updateReview">
@@ -32,12 +32,23 @@
 		]]>
     </select>
     <select id="getLastNum">
-        select max(reviewNum) from review where user_id=#{userId}
+        select max(review_num) from review where user_id=#{userId}
     </select>
     <select id="getList">
         select * from review where matching_board_num=#{boardNum}
         limit #{cri.startrow},#{cri.amount}
     </select>
+    <select id="getStarRatingAv">
+        SELECT ROUND(AVG(star_rating), 1) AS averageRating
+        FROM review
+        WHERE matching_board_num=#{boardNum}
+    </select>
+    <select id="getStarAv">
+        SELECT ROUND(AVG(star_rating), 1) AS averageRating
+        FROM review
+        WHERE matching_board_num=#{boardNum}
+    </select>
+
 </mapper>
 
 

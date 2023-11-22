@@ -91,8 +91,9 @@ public class MatchingController {
     public String get(@RequestParam Long boardNum, Criteria cri, HttpServletRequest req, HttpServletResponse resp, Model model) {
         TrainerMatchingBoardDTO list = MatchingService.boardView(boardNum);
         ProfileDTO profileInfo = MatchingService.getProfileInfo(list.getTrainerId());
-        ProfileDTO careerInfo = MatchingService.getCareerInfo(list.getTrainerId());
+        List<ProfileDTO> careerInfo = MatchingService.getCareerInfo(list.getTrainerId());
         TrainerDTO trainerInfo = MatchingService.getTrainerInfo(list.getTrainerId());
+        Double starRatingAv = MatchingService.getStarRatingAv(boardNum);
 
         HttpSession session = req.getSession();
         String loginUser = (String)session.getAttribute("loginUser");
@@ -111,6 +112,7 @@ public class MatchingController {
         model.addAttribute("careerInfo",careerInfo);
         model.addAttribute("trainerInfo",trainerInfo);
         model.addAttribute("list", list);
+        model.addAttribute("starRatingAv",starRatingAv);
 
         if (list == null) {
             return "error";

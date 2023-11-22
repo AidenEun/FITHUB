@@ -3,6 +3,7 @@ package com.kh.demo.service;
 import com.kh.demo.domain.dto.*;
 import com.kh.demo.mapper.BoardMapper;
 import com.kh.demo.mapper.FileMapper;
+import com.kh.demo.mapper.HeartMapper;
 import com.kh.demo.mapper.ReplyMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -31,6 +32,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+
 @Service
 @Qualifier("BoardServiceImpl")
 public class BoardServiceImpl implements BoardService{
@@ -40,6 +42,8 @@ public class BoardServiceImpl implements BoardService{
 	private ReplyMapper rmapper;
 	@Autowired
 	private FileMapper fmapper;
+	@Autowired
+	private HeartMapper hmapper;
 	@Value("${file.dir}")
 	private String saveFolder;
 
@@ -177,6 +181,11 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
+	public void updateBoardLikeCnt(Long boardNum, String boardCategory) {
+		bmapper.updateBoardLikeCnt(boardNum,boardCategory);
+	}
+
+	@Override
 	public boolean remove(String loginUser, Long boardnum, String boardCategory) {
 		BoardDTO board = bmapper.findByNum(boardnum);
 		if(board.getUserId().equals(loginUser)) {
@@ -193,7 +202,8 @@ public class BoardServiceImpl implements BoardService{
 		return false;
 	}
 
-	@Override
+
+
 	public Long getTotal(Criteria cri) {
 		if(cri.getBoardCategory() != null){
 			return bmapper.getTotalWithCategory(cri);
@@ -435,6 +445,10 @@ public class BoardServiceImpl implements BoardService{
 		return bmapper.getCommuTotalCnt(cri);
 	}
 
+	@Override
+	public LikeDTO likeCheck(Long boardNum, String loginUser) {
+		return hmapper.likeCheck(boardNum, loginUser);
+	}
 
 
 }

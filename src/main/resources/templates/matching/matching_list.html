@@ -18,6 +18,7 @@
 
     <link rel="stylesheet" th:href="@{/assets/css/profileModal.css}">
     <link rel="stylesheet" th:href="@{/assets/css/ranking.css}"/>
+    <link rel="icon" href="/images/fithub-favicon.png" type="image/png">
 </head>
 <style>
     .header_box {
@@ -78,6 +79,12 @@
     #footer {
         background-color: #304400;
     }
+
+    .ranking_box_view{
+        width: 194px; height: 198px;
+        margin-bottom: 20px;
+    }
+
 
     /* CSS */
     .trainerRanking {
@@ -294,9 +301,9 @@
                             </tr>
                             <tr th:if="${list != null and list.size() > 0}">
                                 <td th:each="board, iterStat : ${list}" th:if="${iterStat.index < 4}">
-                                    <div class="ranking_box_view">
+                                    <div class="ranking_box_view" >
                                         <th:block th:if="${board.profileInfo != null}">
-                                            <img style="width:100%; height:180;"
+                                            <img style="width:100%; height:100%;"
                                                  th:src="@{/matching/thumbnail (sysName=${board.profileInfo.sysName})}">
                                         </th:block>
                                         <a href="#" class="open"><span
@@ -326,10 +333,11 @@
                         <script type="text/javascript"
                                 src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=9d457fe0b04b983671f48d03d84f2fdb&libraries=services"></script>
                         <script>
+
                             var mapContainer = document.getElementById('map'), // 지도를 표시할 div
                                 mapOption = {
                                     center: new kakao.maps.LatLng(37.5125, 127.102778), // 지도의 중심좌표
-                                    level: 5 // 지도의 확대 레벨
+                                    level: 4 // 지도의 확대 레벨
                                 };
 
                             // 지도를 생성합니다
@@ -344,13 +352,13 @@
                                 success: function(data) {
 
                                      var parsedData = JSON.parse(data);
-                                       console.log(parsedData);
+                                      // console.log(parsedData);
                                     // parsedData를 순회하면서 처리
                                     parsedData.boardList.forEach(function(boardData) {
                                     var address = boardData.TrainerAddr;
-                                    console.log(address);
+                                    //console.log(address);
                                     var trainerNickname = boardData.trainerNickname;
-                                    console.log(trainerNickname);
+                                    //console.log(trainerNickname);
                                     // 주소로 좌표를 검색합니다
                                     geocoder.addressSearch(address, function(result, status) {
 
@@ -396,7 +404,7 @@
                                 <div id="list_table">
                                     <table id="list_info">
                                         <tr>
-                                            <th id="trainerNickname" colspan="3">
+                                            <th id="trainerNickname" colspan="2">
                                                 <a href="#" class="open"><span
                                                         th:text="${board.trainerInfo.trainerNickname}"></span></a>
                                             </th>
@@ -406,14 +414,22 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>[[${board.likeCnt}]]</td>
-                                            <td>[[${board.bookmarkCnt}]]</td>
+                                            <td  colspan="2">
+                                                <span th:if="${board.starRatingAv != null}">
+                                                    별점 : <span th:text="${board.starRatingAv}">점</span>
+                                                </span>
+                                                <span th:unless="${board.starRatingAv != null}">
+                                                작성된 리뷰가 없습니다
+                                                </span>
+                                            </td>
                                             <td id="trainerCareer">
                                                 <span th:text="${board.trainerInfo.trainerCareer}"></span>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td colspan="4">[[${board.boardTitle}]]</td>
+                                            <td colspan="2">[[${board.boardTitle}]]</td>
+
+                                            <td><img src="/images/like_off.png" style="width:17px;"> <span th:text="${board.likeCnt}"></span></td>
                                         </tr>
                                     </table>
                                     <div class="profile-file">
@@ -500,6 +516,8 @@
 
 <script th:src="@{/assets/js/sidebar.js}"></script>
 <script th:src="@{/assets/js/profile.js}"></script>
+<script th:src="@{/assets/js/map_sub.js}"></script>
+
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </body>

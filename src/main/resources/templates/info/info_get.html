@@ -41,8 +41,9 @@
 			width: 90px !important;
 
 		}
-		.board_area tr td{
-			border-color: transparent;
+		.board_area td, .board_area th{
+			border-bottom : 1px solid rgb(203,211,177) !important;
+			padding : 5px 10px !important;
 		}
 		.board_area tr > td > input, textarea{
 			border-color: transparent;
@@ -128,7 +129,6 @@
 			font-weight: 700 !important;
 			height: 2.75em !important;
 			line-height: 2.75em !important;
-			margin-left: 10px;
 		}
 		.button.btnColor a{
 			color: #5a8100;
@@ -141,8 +141,10 @@
 			border-radius: 4px;
 			color: #F7FAF5 !important;
 			box-shadow: 0 0 2px #5a8100;
-
 		}
+p {
+  overflow-wrap: break-word;
+}
 	</style>
 </head>
 <body class="is-preload">
@@ -195,15 +197,17 @@
 						</tr>
 						<tr>
 							<th>조회수</th>
-							<td>[[${board.viewCnt}]]</td>
+							<td style="padding:5px 25px !important">[[${board.viewCnt}]]</td>
 							<th>좋아요</th>
-							<td width="50px" style="padding:5px;">[[${board.likeCnt}]]</td>
+							<td width="50px" style="padding:5px;">
+								[[${board.likeCnt}]]
+							</td>
 							<th>북마크</th>
 							<td width="50px" style="padding:5px;">[[${board.bookmarkCnt}]]</td>
 						</tr>
 						<tr style="height:300px;">
 							<th>내 용</th>
-							<td class="boardContent" colspan="5">
+							<td class="boardContent" colspan="5" style="padding: 12px 20px !important;">
 								<th:block th:utext="${board.boardContent}">
 									<textarea name="boardContent" style="width:700px;height:290px;resize:none;" readonly>
 
@@ -257,7 +261,7 @@
 							</div>
 							<div class="btn_area">
 								<th:block th:if="${board.userId != session.loginUser}">
-									<a class="button btnColor small" style="float:left;">좋아요</a>
+									<a href="#" class="heart" style="float:left; margin-right:5px;"><img id="heart" src="/images/like_off.png" style="width:30px;"></a>
 									<a class="button btnColor small" style="float:left; margin-left:10px;">북마크</a>
 									<a class="button reportOpen btnColor small" style="float:left; margin-left:10px;">신고</a>
 								</th:block>
@@ -357,20 +361,72 @@
 		$(this).hide();
 		$(".noreply").hide();
 	})
+
 	$(".finish").on("click",function(e){
 		e.preventDefault();
 		let replyContent = $("[name='replyContent']").val();
 
-		replyService.add(
+		if(replyContent.length == 0){
+			alert("댓글 내용을 입력해주세요!");
+		}
+		else{
+			replyService.add(
 				{"boardNum":boardNum,"boardCategory":boardCategory,"userId":loginUser, "replyContent":replyContent},
 				function(result){
 					alert("등록!");
-					showList(1);
+					showList(nowpage);
+
+					window.setTimeout(function(){
+						window.scrollTo(0,document.body.scrollHeight)
+					},10)
+
 				}
-		)
-
-
+			)
+			$("[name='replyContent']").val("");
+		}
 	})
+
+	//좋아요
+	$(document).ready(function(){
+
+		//좋아요가 있는지 확인한 값을 heartVal에 저장
+		var heartVal = /*[[${heart != null ? heart.heart : ''}]]*/ '';
+		console.log(heartVal);
+
+		//heartVal이 1이면 좋아요가 이미 되어있는것 -> like_on.png 출력
+		if(heartVal>0){
+			console.log(heartVal);
+			$("#heart").prop("src", "/images/like_on.png");	//prop() : 해당 속성을 가져와서 변경
+			$(".heart").prop('name',heartVal);
+		}
+		else{
+			console.log(heartVal);
+			$("#heart").prop("src", "/images/like_off.png");
+			$(".heart").prop('name',heartVal);
+			}
+
+
+		//좋아요 버튼 클릭 시 실행되는 코드
+		$(".heart").on("click", function(){
+			var that = $(this);
+			$.ajax({
+				url:'/heart/heart',
+				type:'POST',
+				data: {'boardNum': boardNum, 'userId': loginUser, 'boardCategory':boardCategory},
+				success: function(data){
+					that.prop('name',data);
+					console.log("data:"+data);
+					if(data==1){
+						$("#heart").prop("src", "/images/like_on.png");
+					}
+					else{
+						$("#heart").prop("src", "/images/like_off.png");
+					}
+					console.log("that:"+that);
+				}
+			});
+		});
+	});
 
 	function showList(pagenum){
 		replyService.getList(
@@ -390,14 +446,14 @@
 						//<strong class="userid3">apple</strong>
 						str += '<strong class="userId'+list[i].replyNum+'">'+list[i].userId+'</strong>';
 						//<p class="reply3">댓글내용</p>
-						str += '<p class="reply'+list[i].replyNum+'">'+list[i].replyContent+'</p>';
-						str += '</div><div style="text-align:right;">'
-						str += '<strong>'+replyService.displayTime(list[i])+'</strong>'
+						str += '<p style="margin:0;" class="reply_test reply'+list[i].replyNum+'">'+list[i].replyContent+'</p>';
+						str += '</div><div style="text-align:right; clear:both;">'
+						str += '<span>'+replyService.displayTime(list[i])+'</span>'
 						if(list[i].userId == loginUser){
-							//<a href="3" class="modify">수정</a>
-							str += '<a href="'+list[i].replyNum+'" class="modify">수정</a>';
-							str += '<a href="'+list[i].replyNum+'" class="mfinish" style="display:none;">수정하기</a>';
-							str += '<a href="'+list[i].replyNum+'" class="remove">삭제</a>';
+							//<a href="3" class="modify button btnColor small">수정</a>
+							str += '<a href="'+list[i].replyNum+'" class="modify button btnColor small">수정</a>';
+							str += '<a href="'+list[i].replyNum+'" class="mfinish button btnColor small" style="display:none;">수정하기</a>';
+							str += '<a href="'+list[i].replyNum+'" class="remove button btnColor small">삭제</a>';
 						}
 						str += '</div></div></li>';
 					}
@@ -473,7 +529,7 @@
 			let replyNum = $(this).attr("href");
 			const replyTag = $(".reply"+replyNum);
 			//<textarea class="3 mdf">댓글내용</textarea>
-			replyTag.html('<textarea class="'+replyNum+' mdf">'+replyTag.text()+'</textarea>')
+			replyTag.html('<textarea style="resize:none; width:100%;" class="'+replyNum+' mdf">'+replyTag.text()+'</textarea>')
 			$(this).hide();
 			$(this).next().show();
 		}
@@ -515,7 +571,8 @@
 		e.preventDefault();
 		$(".replyForm").hide();
 		$(".regist").show();
-		$("[name='replyContent']").val("");
+		$(".noreply").show();
+		$("[name='replycontents']").val("");
 	})
 </script>
 </html>

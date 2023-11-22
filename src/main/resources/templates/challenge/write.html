@@ -12,10 +12,16 @@
 	<noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
 	<link rel="stylesheet" th:href="@{/assets/css/index.css}" />
 	<link rel="stylesheet" th:href="@{/assets/css/common.css}" />
+	<link rel="stylesheet" th:href="@{/assets/css/ranking.css}" />
 	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
+	<link rel="stylesheet" th:href="@{/assets/css/profileModal.css}"/>
 
 </head>
 <style>
+	.thumbnail {
+		width: 300px;
+	}
+  
 	.header_box {
 		width: 100%;
 		background: linear-gradient(to right, rgba(143, 167, 70, 0.35), rgba(143, 167, 70, 0.3)), url(/images/challenge.jpg);
@@ -29,6 +35,9 @@
 
 <!-- Header -->
 <th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin},${session.profile})}"></th:block>
+
+<!-- Modal -->
+<th:block th:replace="~{layout/profileModal::profileModal}"></th:block>
 
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">
@@ -51,65 +60,62 @@
 			<input type="hidden" th:value="${cri.type}" name="type">
 			<input type="hidden" th:value="${cri.keyword}" name="keyword">
 
-			<table style="border-collapse: collapse;" border="1">
-				<tr style="height:30px;">
-					<th colspan="2" style="text-align:center; width:150px;">제목</th>
-					<td colspan="2">
+			<table class="none_color_table" style="text-align: center;">
+				<tr>
+					<td style="width: 15%;">제목</td>
+					<td colspan="3">
 						<input type="text" name="boardTitle" size="50" maxlength="50" placeholder="제목을 입력하세요">
 					</td>
 				</tr>
-				<tr style="height:30px;">
-					<th style="text-align:center; width:150px;">작성자</th>
+				<tr>
+					<td>작성자</td>
 					<td>
 						<input type="text" name="userId" size="50" maxlength="50" th:value="${session.loginUser}" readonly>
 					</td>
-					<td>챌린지번호</td>
+					<td style="width: 15%;">챌린지 번호</td>
 					<td><input type="text" name="challNum" size="50" maxlength="50" th:value="${list.challNum}" readonly></td>
 				</tr>
 				<tr>
-					<td>챌린지시작</td>
+					<td>챌린지 시작</td>
 					<td><input type="text" name="startDate" size="50" maxlength="50" th:value="${list.subRegdate}" readonly></td>
 
-					<td>챌린지종료</td>
+					<td>챌린지 종료</td>
 					<td><input type="text" name="finishDate" size="50" maxlength="50" th:value="${list.finishDate}" readonly></td>
 
 				</tr>
 
-				<tr style="height:300px;">
-					<th colspan="2" style="text-align:center; width:150px;">내 용</th>
-					<td colspan="2">
-						<textarea name="boardContent" style="width:700px;height:290px;resize:none;"></textarea>
+				<tr>
+					<td style="text-align:center;">내 용</td>
+					<td colspan="3">
+						<textarea placeholder="내용을 입력하세요" style="width: 100%; height:290px; resize: none;" name="boardContent"></textarea>
 					</td>
 				</tr>
 				<tr class="r0 at">
-					<th colspan="2">파일 첨부1</th>
-					<td colspan="2" class="file0_cont">
+					<th style="vertical-align: top; padding-top: 11px;">파일 첨부1</th>
+					<td colspan="3" class="file0_cont">
 						<div style="float:left;">
 							<input type="file" name="files" id="file0" style="display:none">
 							<span id="file0name">선택된 파일 없음</span>
 						</div>
-						<div style="float:right; margin-right: 100px;">
-							<a href="javascript:upload('file0')">파일 선택</a>
-							<a href="javascript:cancelFile('file0')">첨부 삭제</a>
+						<div style="float:right;">
+							<a class="button btnColor small" href="javascript:upload('file0')">파일 선택</a>
+							<a class="button btnColor small" href="javascript:cancelFile('file0')">첨부 삭제</a>
 						</div>
 					</td>
 				</tr>
 			</table>
+			<div style="display: flex; justify-content: flex-end;">
+				<a style="margin-right: 10px;" class="button btnColor" href="javascript:sendit()">등록</a>
+				<a class="button btnColor" th:href="${'/challenge/list'+cri.listLink}">취소</a>
+			</div>
 		</form>
-		<table class="btn_area">
-			<tr align="right" valign="middle">
-				<td>
-					<a href="javascript:sendit()">등록</a>
-					<a th:href="${'/challenge/list'+cri.listLink}">목록</a>
-				</td>
-			</tr>
-		</table>
 	</div>
-	<!-- Sidebar -->
-	<th:block th:replace="~{layout/rank_sidebar::sidebar}"></th:block>
+
+		<!-- Sidebar -->
+		<th:block th:replace="~{layout/rank_sidebar::sidebar}"></th:block>
 
 	</div>
-	</section>
+</section>
 
 	<!-- Footer -->
 	<th:block th:replace="~{layout/footer::footer}"></th:block>
@@ -124,9 +130,12 @@
 <script th:src="@{/assets/js/util_sub.js}"></script>
 <script th:src="@{/assets/js/main_sub.js}"></script>
 
-<script th:src="@{/assets/js/sidebar.js}"></script>
 
-<script>
+<script th:src="@{/assets/js/sidebar.js}"></script>
+<script th:src="@{/assets/js/profile.js}"></script>
+
+
+<script th:inline="javascript">
 	let i = 0;
 	function upload(name){
 		$("#"+name).click();
@@ -243,6 +252,14 @@
 		
 		boardForm.submit();
 	}
+
+	$(".open").on("click", function (e) {
+        e.preventDefault();
+        var userId = $(this).text();
+
+        sendUserIdToModal(userId);
+        modalBox.classList.add("active");
+    });
 </script>
 </body>
 </html>

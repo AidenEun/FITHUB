@@ -46,11 +46,10 @@ public class TrainerMatchingServiceImpl implements TrainerMatchingService {
             // 각각의 board에 대한 trainer 정보를 가져와서 설정
             ProfileDTO profileInfo = pfmapper.getProfileInfo(board.getTrainerId());
             TrainerDTO trainerInfo = tmapper.getTrainerInfo(board.getTrainerId());
-
+            Double starRatingAv = rvmapper.getStarAv(board.getBoardNum());
             board.setProfileInfo(profileInfo);
             board.setTrainerInfo(trainerInfo);
-
-
+            board.setStarRatingAv(starRatingAv);
         }
         return list;
     }
@@ -96,8 +95,8 @@ public class TrainerMatchingServiceImpl implements TrainerMatchingService {
         return profileInfo;
     };
     @Override
-    public ProfileDTO getCareerInfo(String trainerId){
-        ProfileDTO careerInfo = pfmapper.getCareerInfo(trainerId);
+    public List<ProfileDTO> getCareerInfo(String trainerId){
+        List<ProfileDTO> careerInfo = pfmapper.getCareerInfo(trainerId);
         return careerInfo;
     };
     @Override
@@ -105,8 +104,11 @@ public class TrainerMatchingServiceImpl implements TrainerMatchingService {
         TrainerDTO trainerInfo = tmapper.getTrainerInfo(trainerId);
         return trainerInfo;
     };
-
-
+    @Override
+    public Double getStarRatingAv(Long boardNum){
+        Double StarRatingAv = rvmapper.getStarRatingAv(boardNum);
+        return StarRatingAv;
+    };
 
 
 

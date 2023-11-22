@@ -199,6 +199,14 @@
 	});
 
 	$('.signUpOpen').on('click', signUpModal);
+
+	$(".open").on("click", function (e) {
+        e.preventDefault();
+        var userId = $(this).text();
+
+        sendUserIdToModal(userId);
+        modalBox.classList.add("active");
+    });
 </script>
 </body>
 </html>

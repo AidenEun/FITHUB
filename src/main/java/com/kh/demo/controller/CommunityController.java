@@ -2,6 +2,7 @@ package com.kh.demo.controller;
 
 import com.kh.demo.domain.dto.BoardDTO;
 import com.kh.demo.domain.dto.Criteria;
+import com.kh.demo.domain.dto.LikeDTO;
 import com.kh.demo.domain.dto.PageDTO;
 import com.kh.demo.service.BoardService;
 import jakarta.servlet.http.Cookie;
@@ -153,6 +154,11 @@ public class CommunityController {
                     cookie.setMaxAge(3600);
                     resp.addCookie(cookie);
                 }
+
+                //get 페이지 가기전에 유저가 해당 게시글 좋아요한게 있는지 체크
+                LikeDTO heart = new LikeDTO();
+                heart = service.likeCheck(boardNum,loginUser);
+                model.addAttribute("heart",heart);
             }
         }
         return requestURI;

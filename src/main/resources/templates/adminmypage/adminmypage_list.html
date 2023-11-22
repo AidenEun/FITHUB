@@ -14,7 +14,8 @@
 	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
 	<link rel="stylesheet" th:href="@{/assets/css/common.css}" />
 
-	<link rel="stylesheet" th:href="@{/assets/css/profileModal.css}" />
+	<link rel="stylesheet" th:href="@{/assets/css/profileModal.css}"/>
+	<link rel="icon" href="/images/fithub-favicon.png" type="image/png">
 </head>
 <style>
 	.adminmypadge_content_box {
@@ -312,7 +313,13 @@
 	<script th:src="@{/assets/js/profile.js}"></script>
 
 <script>
+	$(".open").on("click", function (e) {
+        e.preventDefault();
+        var userId = $(this).text();
 
+        sendUserIdToModal(userId);
+        modalBox.classList.add("active");
+    });
 </script>
 </body>
 </html>
