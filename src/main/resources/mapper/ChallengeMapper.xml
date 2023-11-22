@@ -91,7 +91,7 @@
     </select>
     <select id="getNoticeTotal">
         select count(*) from chall_notice_board where
-        <include refid="cri"></include> chall_num > 0
+        chall_num > 0
     </select>
     <select id="getLastNum">
         select max(board_num) from chall_cert_board where user_id=#{userId}
