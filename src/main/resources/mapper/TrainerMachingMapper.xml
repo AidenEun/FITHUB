@@ -93,18 +93,32 @@
         insert into message (send_id, receive_id, message_content)
         values (#{sendId}, #{receiveId}, #{messageContent})
     </insert>
-
     <select id="getcheckSubs">
-        SELECT * FROM subscribe WHERE (user_id, trainer_id)
-        value (#{sendId}, #{receiveId})
+        SELECT *
+        FROM subscribe
+        WHERE user_id =#{userId}
+        AND trainer_id =#{trainerId};
     </select>
+    <select id="getclickSubs">
+        SELECT *
+        FROM subscribe
+        WHERE user_id =#{userId}
+        AND trainer_id =#{trainerId};
+    </select>
+    <select id="getrecheckSubs">
+        SELECT *
+        FROM subscribe
+        WHERE user_id =#{userId}
+        AND trainer_id =#{trainerId};
+    </select>
+
     <delete id="getdeleteSubs">
         DELETE FROM subscribe
-        WHERE user_id = #{sendId} AND trainer_id = #{receiveId};
+        WHERE user_id = #{userId} AND trainer_id = #{trainerId};
     </delete>
     <insert id="getinsertSubs">
         insert into subscribe (user_id, trainer_id)
-        values (#{sendId}, #{receiveId})
+        values (#{userId}, #{trainerId})
     </insert>
     <select id="findByNum">
         select * from trainer_matching_board where board_num=#{boardNum}
