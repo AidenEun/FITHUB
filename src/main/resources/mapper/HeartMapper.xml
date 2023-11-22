@@ -1,0 +1,22 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.demo.mapper.HeartMapper">
+
+    <!--좋아요 확인 1이 나오면 좋아요 눌린거, 0이 나오면 안눌린거-->
+    <select id="likeCheck">
+        select * from `like` where board_num=#{boardNum} and user_id=#{userId}
+    </select>
+
+    <!--좋아요 저장-->
+    <insert id="insertHeart">
+        insert into `like` (board_num, board_category, user_id)
+        values(#{boardNum},#{boardCategory},#{userId})
+    </insert>
+
+    <!--좋아요 삭제-->
+    <delete id="deleteHeart">
+        delete from `like` where board_num=#{boardNum} and user_id=#{userId}
+    </delete>
+
+
+</mapper>

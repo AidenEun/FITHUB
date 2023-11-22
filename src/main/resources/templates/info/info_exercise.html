@@ -160,9 +160,8 @@
 						</tr>
 						<tr>
 							<td id="cnt" >
-								<span style="margin-right: 10px; margin-left: 5px;">댓글수 0</span>
-								<!--								<span class="reply_cnt" th:text="${reply_cnt_list[boardStat.index]}">댓글수</span>-->
-								<span [[${board.viewCnt}]]>조회수 0</span>
+								<span class="reply_cnt" th:text="'댓글 '+${reply_cnt_list[boardStat.index]}" style="margin-right: 10px; margin-left: 5px;">댓글수</span>
+								<span>조회수 [[${board.viewCnt}]]</span>
 							</td>
 						</tr>
 					</th:block>
@@ -278,5 +277,7 @@
 		pageForm.attr("method","get");
 		pageForm.submit();
 	})
+
+
 </script>
 </html>
