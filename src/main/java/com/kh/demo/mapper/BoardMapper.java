@@ -16,8 +16,12 @@ public interface BoardMapper {
 	int updateBoard(BoardDTO board);
 	int updateReadCount(Long boardNum);
 
+	int updateBoardLikeCnt(Long boardNum, String boardCategory);
+
+
 	//delete
 	int deleteBoard(Long boardNum);
+
 
 	//select
 	List<BoardDTO> getList(Criteria cri);
@@ -76,7 +80,6 @@ public interface BoardMapper {
 
 	Long getCommuTotalCnt(Criteria cri);
 
-	BoardDTO updateLikeCnt(Long boardNum);
 
 
 }

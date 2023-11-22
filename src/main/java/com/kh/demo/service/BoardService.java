@@ -20,12 +20,11 @@ public interface BoardService {
 
 	public void updateReadCount(Long boardnum);
 
+	public void updateBoardLikeCnt(Long boardNum, String boardCategory);
+
 	//delete
 	public boolean remove(String loginUser, Long boardnum, String boardCategory);
 
-	public BoardDTO updateLikeCnt(Long boardNum);
-
-	public LikeDTO likeCheck(Long boardNum, String loginUser);
 
 	//select
 	Long getTotal(Criteria cri);
@@ -105,9 +104,11 @@ public interface BoardService {
 
 	Long getCommuTotalCnt(Criteria cri);
 
+	public LikeDTO likeCheck(Long boardNum, String loginUser);
+
+
 
 }
-
 
 
 
