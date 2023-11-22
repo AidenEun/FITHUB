@@ -166,7 +166,7 @@
                         <th:block th:with="sar=${profile.orgName.split('[.]')}">
                             <th:block th:with="ext=${sar[sar.length-1]}">
                                 <th:block th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}">
-                                    <img style="width:102px; height:102px" th:src="@{/usermypage/thumbnail (sysName=${profile.sysName})}">
+                                    <img style="width:200px; height:200px; border-radius: 100%;" th:src="@{/usermypage/thumbnail (sysName=${profile.sysName})}">
                                 </th:block>
                             </th:block>
                         </th:block>
@@ -228,16 +228,16 @@
                         </a>
                     </div>
 
-                    <div class="trainer_lnk_img">
-                        <a href="/usermypage/user_applytrainer">
-                            <img src="images/lnk-image/trainer/apply_lnk_img.jpg" alt="trainer">
-                        </a>
-                        <th:block th:if="${session.user != null}">
+                    <th:block th:if="${session.user != null}">
+                        <div class="trainer_lnk_img">
                             <a href="/usermypage/user_applytrainer">
-                                트레이너 신청
+                                <img src="images/lnk-image/trainer/apply_lnk_img.jpg" alt="trainer">
                             </a>
-                        </th:block>
-                    </div>
+                                <a href="/usermypage/user_applytrainer">
+                                    트레이너 신청
+                                </a>
+                        </div>
+                    </th:block>
                 </div>
             </div>
         </th:block>

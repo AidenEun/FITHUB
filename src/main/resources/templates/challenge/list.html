@@ -56,6 +56,11 @@
 	table tbody tr:nth-child(2n + 1) {
 		background-color: #ffffff;
 	}
+
+	.colorTrTable tbody tr:nth-child(2n + 1) {
+		background-color: #F7FAF5;
+	}
+
 	input[type=button].btnColor{
 		background: #FFFFFF;
 		border: 1px solid #5a8100;
@@ -161,11 +166,11 @@
 										<td><input readonly type="text" name="challName" class="" th:value="${list.challName}"></td>
 									</tr>
 									<tr>
-										<td colspan="2"><input readonly type="text" name="challCategory" class="" th:value="${list.challCategory}"></td>
+										<td style="text-align: center;" colspan="2"><input readonly type="text" name="challCategory" class="" th:value="${list.challCategory}"></td>
 									</tr>
 									<tr>
-										<td>기간:</td>
-										<td><input readonly type="text" name="challTerm" class="" th:value="${list.challTerm}"></td>
+										<td style="text-align: center;">기간:</td>
+										<td style="text-align: center;"><input readonly type="text" name="challTerm" class="" th:value="${list.challTerm}"></td>
 									</tr>
 									<tr>
 										<td colspan="2"><input type="button" class="getOpen btnColor" style="width:100%" value="신청하기"></td>
@@ -222,19 +227,19 @@
 
 			<h2>챌린지 인증</h2>
 			<!-- 게시글 리스트 띄우는 테이블 -->
-			<table class="list">
-				<tr align="right" valign="middle">
-					<td colspan="6">글 개수 : [[${pageMaker.total}]]</td>
+			<table class="list colorTrTable" style="margin-bottom: 0px;">
+				<tr>
+					<td style="text-align: right; background-color: #ffffff;" colspan="6">글 개수 : [[${pageMaker.total}]]</td>
 				</tr>
-				<tr align="center" valign="middle">
-					<th width="8%">번호</th>
-					<th></th>
-					<th>제목</th>
-					<th width="15%">작성자</th>
-					<th width="17%">날짜</th>
-					<th width="10%">조회수</th>
+				<tr style="text-align: center;">
+					<td style="width: 8%">번호</td>
+					<td style="width: 5%"></td>
+					<td>제목</td>
+					<td style="width: 15%">작성자</td>
+					<td style="width: 30%">날짜</td>
+					<td style="width: 10%">조회수</td>
 				</tr>
-				<tr th:if="${list != null and list.size()>0}" th:each="board : ${list}">
+				<tr style="text-align: center;" th:if="${list != null and list.size()>0}" th:each="board : ${list}">
 					<td>[[${board.boardNum}]]</td>
 					<td>
 						<sup class="hot" th:if="${recent_reply[boardStat.index] == 'O'}">Hot</sup>
@@ -243,7 +248,6 @@
 					<td>
 						<a class="get" th:href="${board.boardNum}">
 							[[${board.boardTitle}]]
-							<span class="reply_cnt" th:text="'['+${reply_cnt_list[boardStat.index]}+']'"></span>
 						</a>
 					</td>
 					<td ><a class="open">[[${board.userId}]]</a></td>
@@ -264,7 +268,7 @@
 			</table>
 			<br>
 			<!-- 페이징 처리하는 테이블 -->
-			<table class="pagination">
+			<table class="pagination" style="margin-bottom: 0px;">
 				<tr align="center" valign="middle">
 					<td>
 						<a class="changePage" th:if="${pageMaker.prev}" th:href="${pageMaker.startPage-1}">&lt;</a>
@@ -400,7 +404,7 @@ function challCategory(){
 	challCategoryForm.submit();
 }
 
-$(".open").on("click", function (e) {
+	$(".open").on("click", function (e) {
         e.preventDefault();
         var userId = $(this).text();
 

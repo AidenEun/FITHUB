@@ -147,14 +147,15 @@
 					<td>
 						<th:block th:if="${list != null and list.size()>0}" th:each="trainer : ${list}">
 
-							<div class ="galleryAll">
+							<div class="galleryAll">
 								<!-- 갤러리뷰로 이동 -->
-								<a class="open" href="#">
+								<a href="#" class="open">
 									<div class = "g_Imgbox">
 										<img class="gal_Img thumbnail" style="width:100%;" th:src="@{/usermypage/thumbnail_id (id=${trainer.trainerId})}">
 									</div>
 									<div class = "g_title_box">
-										<span class="gal_title_name">[[${trainer.trainerId}]]([[${trainer.trainerNickname}]])</span>
+										<span class="gal_title_name" id="profileId">[[${trainer.trainerId}]]</span>
+										<span>([[${trainer.trainerNickname}]])</span>
 									</div>
 								</a>
 
@@ -171,7 +172,7 @@
 						</th:block>
 						<th:block th:unless="${list != null and list.size()>0}">
 							<div>
-								<div style="text-align: center; font-size: 20px;">현재 구독중인 트레이너 정보가 없습니다.</div>
+								<div style="text-align: center; font-size: 20px;">현재 트레이너가 없습니다.</div>
 							</div>
 						</th:block>
 					</td>
@@ -295,7 +296,9 @@
 
 	$(".open").on("click", function (e) {
         e.preventDefault();
-        var userId = $(this).text();
+
+        var div = document.getElementById('profileId');
+		var userId = div.innerHTML;
 
         sendUserIdToModal(userId);
         modalBox.classList.add("active");
