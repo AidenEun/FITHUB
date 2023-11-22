@@ -233,9 +233,9 @@
 							<div class="displayNoneDiv boardCategory">[[${board.boardCategory}]]</div>
 							<div class="btn_area">
 								<th:block th:if="${board.userId != session.loginUser}">
-									<a class="button btnColor small" style="float:left;">좋아요</a>
+									<a href="#" class="heart" style="float:left; margin-right:5px;"><img id="heart" src="/images/like_off.png" style="width:30px;"></a>
 									<a class="button btnColor small" style="float:left; margin-left:10px;">북마크</a>
-									<a class="button btnColor small reportOpen" style="float:left; margin-left:10px;">신고</a>
+									<a class="button reportOpen btnColor small" style="float:left; margin-left:10px;">신고</a>
 								</th:block>
 								<span th:if="${board != null}" style="float: right;" th:switch="${board.boardCategory}">
 									<span th:case="'commuFree'"><a class="button btnColor small" th:href="${'/community/commu_free'+cri.listLink}">목록</a></span>
@@ -335,19 +335,65 @@
 		$(this).hide();
 		$(".noreply").hide();
 	})
-	$(".finish").on("click",function(e){
-		e.preventDefault();
-		let replyContent = $("[name='replyContent']").val();
+  
+$(".finish").on("click",function(e){
+  e.preventDefault();
+  let replyContent = $("[name='replyContent']").val();
 
-		replyService.add(
-				{"boardNum":boardNum,"boardCategory":boardCategory,"userId":loginUser, "replyContent":replyContent},
-				function(result){
-					alert("등록!");
-					showList(nowpage);
+  replyService.add(
+    {"boardNum":boardNum,"boardCategory":boardCategory,"userId":loginUser, "replyContent":replyContent},
+    function(result){
+    alert("등록!");
+    showList(nowpage);
+    }
+  )
+
+  $("[name='replyContent']").val("");
+  })
+})
+
+	//좋아요
+	$(document).ready(function(){
+
+		//좋아요가 있는지 확인한 값을 heartVal에 저장
+		var heartVal = /*[[${heart != null ? heart.heart : ''}]]*/ '';
+		console.log(heartVal);
+
+		//heartVal이 1이면 좋아요가 이미 되어있는것 -> like_on.png 출력
+		if(heartVal>0){
+			console.log(heartVal);
+			$("#heart").prop("src", "/images/like_on.png");	//prop() : 해당 속성을 가져와서 변경
+			$(".heart").prop('name',heartVal);
+		}
+		else{
+			console.log(heartVal);
+			$("#heart").prop("src", "/images/like_off.png");
+			$(".heart").prop('name',heartVal);
+			}
+
+
+		//좋아요 버튼 클릭 시 실행되는 코드
+		$(".heart").on("click", function(){
+			var that = $(this);
+			$.ajax({
+				url:'/heart/heart',
+				type:'POST',
+				data: {'boardNum': boardNum, 'userId': loginUser, 'boardCategory':boardCategory},
+				success: function(data){
+					that.prop('name',data);
+					console.log("data:"+data);
+					if(data==1){
+						$("#heart").prop("src", "/images/like_on.png");
+					}
+					else{
+						$("#heart").prop("src", "/images/like_off.png");
+					}
+					console.log("that:"+that);
 				}
-		)
-		$("[name='replyContent']").val("");
-	})
+			});
+		});
+	});
+
 
 	function showList(pagenum){
 		replyService.getList(

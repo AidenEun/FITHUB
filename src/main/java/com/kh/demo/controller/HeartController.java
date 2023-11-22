@@ -21,7 +21,6 @@ public class HeartController {
     @PostMapping("heart")
     @ResponseBody
     public int heart(@ModelAttribute LikeDTO heart){
-        System.out.println("A");
         int result = service.insertHeart(heart);
         System.out.println(result);
         return result;

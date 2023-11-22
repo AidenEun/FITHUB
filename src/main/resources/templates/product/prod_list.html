@@ -20,12 +20,7 @@
 			background-size: cover;
 			background-position: 0 28%;
 		}
-		/*.boardContent {*/
-		/*	text-overflow: ellipsis;*/
-		/*	display: -webkit-box; !* display: -webkit-box => 해당 영역을 box 형태로 관리 *!*/
-		/*	-webkit-line-clamp: 3; !*-webkit-line-clamp => 해당 영역 내 텍스트의 최대 라인수 *!*/
-		/*	-webkit-box-orient: vertical; !* -webkit-box-orient: vertical => box의 흐름 방향을 수직으로 지정 *!*/
-		/*}*/
+
 		.content .button{
 			float: right;
 			margin-top: 5px;
@@ -63,7 +58,7 @@
 			margin-top: 50px;
 			margin-bottom: 30px;
 		}
-		img{
+		.prodImg img{
 			width: 235px !important;
 			height: 270px !important;
 			background-color: transparent;
@@ -125,7 +120,7 @@
 							<table class="prod_list">
 								<tr>
 									<td class="thumbnail">
-										<a class="get" th:href="${board.boardNum}">
+										<a class="get prodImg"  th:href="${board.boardNum}">
 											<img th:src="${board.prodImg}" alt="Image" />
 										</a>
 									</td>
@@ -156,7 +151,7 @@
 							<table class="prod_list">
 								<tr>
 									<td class="thumbnail">
-										<a class="get" th:href="${board.boardNum}">
+										<a class="get prodImg"  th:href="${board.boardNum}">
 											<img th:src="${board.prodImg}" alt="Image" />
 										</a>
 									</td>
