@@ -183,3 +183,6 @@ tr.special-row{
     justify-content: space-between;
 }
 
+.cursorPointer{
+    cursor: pointer;
+}

@@ -57,6 +57,12 @@
 	table.careerTable tr th{
 		width: 15%;
 	}
+
+	.user_profile_btn_box{
+		width: 100%;
+		margin-bottom: 20px;
+		padding-left: 774px;
+	}
 </style>
 <body class="is-preload">
 
@@ -79,6 +85,12 @@
 
 		<!-- Content -->
 		<div class="content">
+
+			<div class="user_profile_btn_box">
+				<th:block th:if="${session.loginUser} == ${user.userId}">
+					<a href="/usermypage/user_profile_modify" class="button small btnColor">수정하기</a>
+				</th:block>
+			</div>
 
 			<!-- 게시글 리스트 띄우는 테이블 -->
 			<form id="profileForm" name="profileForm" method="post" th:action="@{/usermypage/user_profile}" enctype="multipart/form-data">
@@ -144,14 +156,6 @@
 									<div class="inputBox">
 										<input readonly name="userJoindate" type="text" id="userJoindate" class="inputText" placeholder="가입일자" th:value="${user.userJoindate}" >
 									</div>
-								</td>
-							</tr>
-							<tr>
-								<td></td>
-								<td colspan="2">
-									<th:block th:if="${session.loginUser} == ${user.userId}">
-										<a href="/usermypage/user_profile_modify" class="button btnColor">수정하기</a>
-									</th:block>
 								</td>
 							</tr>
 						</table>

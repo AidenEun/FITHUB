@@ -58,7 +58,6 @@
 
 				</thead>
 					<tr class="special-row" style="background-color: #fff;">
-						<td class="long_text">북마크번호</td>
 						<td class="long_text">게시판번호</td>
 						<td class="long_text">제목</td>
 						<td class="long_text">작성자</td>
@@ -290,13 +289,12 @@
 
 
 			var headRow = $('<tr align="right" valign="middle">');
-			headRow.append('<td colspan="6">북마크 수 : '+data.pageDTO.total+'</td>');
+			headRow.append('<td colspan="5">북마크 수 : '+data.pageDTO.total+'</td>');
 			tableHead.append(headRow);
 
 			if (data.list != null && data.list.length > 0) {
 				data.list.forEach(function (board) {
 					var row = $('<tr>');
-					row.append('<td class="long_text">x</td>');
 					row.append('<td class="long_text">' + board.boardNum + '</td>');
 					row.append('<td class="long_text">' + board.boardTitle+ '</td>');
 					row.append('<td class="long_text"><a href="#" class="open">' + board.userId + '</a></td>');

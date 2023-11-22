@@ -58,6 +58,13 @@
 	table.careerTable tr th{
 		width: 15%;
 	}
+
+	.user_profile_btn_box{
+		width: 100%;
+		margin-bottom: 20px;
+		padding-left: 704px;
+		display: flex;
+	}
 </style>
 <body class="is-preload">
 
@@ -82,6 +89,10 @@
 		<div class="content">
 
 			<!-- 게시글 리스트 띄우는 테이블 -->
+			<div class="user_profile_btn_box">
+				<a style="margin-right: 10px;" href="javascript:document.profileForm.submit()" class="button btnColor small" >수정완료</a>
+				<a th:href="@{/usermypage/user_profile}" class="button btnColor small">취소</a>
+			</div>
 			<form id="profileForm" name="profileForm" method="post" th:action="@{/usermypage/user_profile_modify}" enctype="multipart/form-data">
 			<div class="thumbnail_box">
 				<div class="thumbnail_img">
@@ -164,13 +175,6 @@
 									<div class="inputBox">
 										<input readonly name="userJoindate" type="text" id="userJoindate" class="inputText" placeholder="가입일자" th:value="${user.userJoindate}" >
 									</div>
-								</td>
-							</tr>
-							<tr>
-								<td></td>
-								<td colspan="2">
-									<a href="javascript:document.profileForm.submit()" class="button btnColor" >수정완료</a>
-									<a th:href="@{/usermypage/user_profile}" class="button btnColor">취소</a>
 								</td>
 							</tr>
 						</table>
