@@ -1,53 +1,173 @@
 <link xmlns:th="http://www.thymeleaf.org">
-<th:block th:fragment="header(loginUser,user,trainer,admin,profile)">
+<th:block th:fragment="header(loginUser,user,trainer,admin,profile,todaydate)">
     <style>
         .submenu {
-   width: 150px;
-   position: absolute;
-   font-size: 14px;
-   background: #ebede1;
-   z-index: 5555;
-   border-radius: 15px;
-   padding:0;
+            width: 150px;
+            position: absolute;
+            font-size: 14px;
+            background: #ebede1;
+            z-index: 5555;
+            border-radius: 15px;
+            padding: 0;
 
- }
+        }
 
- .submenu li {
-   list-style-type: none;
-    color: black !important;
- }
+        .submenu li {
+            list-style-type: none;
+            color: black !important;
+        }
 
- .submenu li:hover {
-   background: rgb(203,211,177);
-   transition: ease 1s;
-   border-radius: 15px;
-   padding:0;
- }
+        .submenu li:hover {
+            background: rgb(203, 211, 177);
+            transition: ease 1s;
+            border-radius: 15px;
+            padding: 0;
+        }
+
+        /*사이드 탭바 디자인*/
+        /*로그인 전 */
+        #menu > * {
+            padding: 2em;
+        }
+
+        #menu > :first-child {
+            padding-top: 35px;
+        }
+
+        #menu table {
+            border-collapse: separate;
+        }
+
+        #menu table tbody tr:nth-child(2n + 1) {
+            background-color: #FFFFFF;
+        }
+
+        #menu table tbody tr:nth-child(2n + 1) {
+            background-color: #FFFFFF;
+        }
+
+        #menu .icon_area table tr td {
+            text-align: center;
+        }
+
+        #menu .icon_area table tr td a img {
+            width: 50px;
+            height: 50px;
+        }
+
+        #menu .icon_area table tr:last-child {
+            font-size: 15px;
+        }
+
+        #menu a.btnColor {
+            display: inline-block;
+            background: #FFFFFF;
+            /*border: 1px solid #5a8100;*/
+            border-radius: 4px;
+            color: #5a8100 !important;
+            box-shadow: 4px 4px 2px 0px rgb(203, 211, 177) !important;
+            font-weight: 700 !important;
+            height: 2.75em !important;
+            line-height: 2.75em !important;
+            padding: 0 1.5em !important;
+            /*width: 125px !important;*/
+
+        }
+
+        #menu a.btnColor:hover {
+            background: #ebede1;
+            /*border: 1px solid #5a8100;*/
+            border-radius: 4px;
+            color: #5a8100 !important;
+            box-shadow: 0 0 2px #5a8100 !important;
+
+        }
+
+        #menu a.subColor {
+            display: inline-block;
+            width: 70%;
+            background: #ebede1;
+            border-radius: 38px;
+            color: #5a8100 !important;
+            box-shadow: 0 0 2px #5a8100 !important;
+            height: 1.55em !important;
+
+        }
+
+        #menu a.subColor:hover {
+            background: #FFFFFF;
+            border-radius: 4px !important;
+            box-shadow: 4px 4px 2px 0px rgb(203, 211, 177) !important
+            color: #5a8100 !important;
+            font-weight: 700 !important;
+            height: 2.75em !important;
+            line-height: 2.75em !important;
+            padding: 0 1.5em !important;
+            width: 100%;
+            transition: ease 0.75s;
+
+        }
+
+        .menu_logo::after {
+            border-bottom: none;
+        }
+
+
+        .menu_logo {
+            margin: 1.5em 0 1.5em 0;
+            line-height: 3.3em;
+        }
+
+        h2.menu_logo {
+            padding-top: 21px;
+            padding-bottom: 0px !important;
+        }
+
+
+        #menu .navi_main .icon_area input[type=image] {
+            width: 45px;
+            height: 45px;
+        }
+
+        #menu .navi_main .icon_area div:last-child {
+            font-size: 12px;
+        }
+
+
+        #menu .navi_main .icon_area td:hover {
+            background-color: #ebede1;
+            border-top-right-radius: 5px;
+            border-top-left-radius: 5px;
+            transition-duration: 1s;
+
+        }
+
+        #menu .navi_main .icon_area td:last-child:hover {
+            cursor: default !important;
+        }
+
+        .navi_main_content {
+            margin: 0px 0px 10px 0px;
+            border-bottom-right-radius: 5px;
+            border-bottom-left-radius: 5px;
+            border: 1px solid #5a8100;
+            border-top: none;
+            /*box-shadow: 0 0 5px #5a8100;*/
+            height: 190px;
+            /*line-height: 315px;*/
+
+        }
+        #menu .navi_bottom{
+            margin-top: 25px;
+        }
+
+        .icon {
+            background-color: #ebede1;
+            border-top-right-radius: 5px;
+            border-top-left-radius: 5px;
+        }
 
     </style>
-
-    <!--<style>
-        #header {
-      background-color: #5a8100 !important;
-    }
-
-    #header nav > ul > li a {
-      color: white !important;
-    }
-
-    #header h1 a {
-      color: white !important;
-    }
-
-    #header .main ul li > a {
-      color: white !important;
-
-    }
-
-    #footer {
-      background-color: #304400;
-    }-->
-    <!--</style>-->
 
     <!--<th:block th:if="${session.loginUser == null}">
         <script>
@@ -113,13 +233,13 @@
             const menuItems = document.querySelectorAll('.menu-item');
 
             menuItems.forEach(item => {
-            const submenu = item.querySelector('.submenu');
-            item.addEventListener('mouseenter', () => {
-            submenu.style.display = 'block';
-            });
-            item.addEventListener('mouseleave', () => {
-            submenu.style.display = 'none';
-            });
+                const submenu = item.querySelector('.submenu');
+                item.addEventListener('mouseenter', () => {
+                    submenu.style.display = 'block';
+                });
+                item.addEventListener('mouseleave', () => {
+                    submenu.style.display = 'none';
+                });
             });
         </script>
         <nav class="main">
@@ -139,9 +259,9 @@
                 <li class="search">
                     <a class="fa-search" href="#search" style="color: #fff;">Search</a>
                     <form id="search" method="get" action="/searchpage/totalSearch">
-                        <input type="text" name="keyword" placeholder="Search" />
-<!--                        <input type="hidden" value="1" name="pagenum">-->
-<!--                        <input type="hidden" value="12" name="amount">-->
+                        <input type="text" name="keyword" placeholder="Search"/>
+                        <!--                        <input type="hidden" value="1" name="pagenum">-->
+                        <!--                        <input type="hidden" value="12" name="amount">-->
                     </form>
                 </li>
                 <li class="menu">
@@ -153,93 +273,159 @@
 
     <!-- Menu -->
     <section id="menu">
-        <th:block th:if="${session.loginUser == null}">
+        <th:block
+                th:unless="${session.loginUser != null && (session.user!=null || session.trainer != null || session.admin != null)}">
             <div class="side-not-login">
-                <p>로그인하세요</p>
-                <a th:href="@{/user/login}">로그인</a>
+                <h1 class="menu_logo" style="border-bottom: 1px solid #5a8100;">Fit Hub에 오신 것을 환영합니다</h1>
+                <h2 class="menu_logo">Fit Hub</h2>
+                <hr>
+                <p>로그인 후 이용해 주세요</p>
+                <div class="login_area">
+                    <a class="btnColor" th:href="@{/user/login}">로그인</a>
+                    <a class="btnColor" th:href="@{/user/join}">회원가입</a>
+                </div>
+            </div>
+            <div class="icon_area">
+                <table>
+                    <tr>
+                        <td>
+                            <div><a href="/sidebar/bmi"><img src="images/icon_BMIIMG1.png" alt="bmi"></a></div>
+                            <div><a href="/sidebar/bmi">BMI 계산기</a></div>
+                        </td>
+                        <td>
+                            <div>
+                                <a href="/sidebar/healthCenter"><img src="images/icon_mapSearch.png" alt="health"></a>
+                            </div>
+                            <div><a href="/sidebar/healthCenter">보건소 찾기</a></div>
+                        </td>
+                    </tr>
+                    <!--                    <tr>-->
+                    <!--                        <td><a href="/sidebar/bmi">BMI 계산기</a></td>-->
+                    <!--                        <td><a href="/sidebar/healthCenter">보건소 찾기</a></td>-->
+                    <!--                    </tr>-->
+                </table>
             </div>
         </th:block>
-        <th:block th:if="${session.loginUser != null}">
-            <div class="side_info">
-                <a href="/usermypage/user_myinfo">
-                    <th:block th:if="${profile != null}">
-                        <th:block th:with="sar=${profile.orgName.split('[.]')}">
-                            <th:block th:with="ext=${sar[sar.length-1]}">
-                                <th:block th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}">
-                                    <img style="width:102px; height:102px" th:src="@{/usermypage/thumbnail (sysName=${profile.sysName})}">
+        <th:block
+                th:if="${session.loginUser != null && (session.user!=null || session.trainer != null || session.admin != null)}">
+            <div class="side_info" style="padding-bottom: 10px;">
+                <div class="profile_photo">
+                    <!--                    <span class="menu_logo" style="border-bottom: 1px solid #5a8100;">Fit Hub에 오신 것을 환영합니다</span>-->
+                    <a href="/usermypage/user_myinfo">
+                        <th:block th:if="${profile != null}">
+                            <th:block th:with="sar=${profile.orgName.split('[.]')}">
+                                <th:block th:with="ext=${sar[sar.length-1]}">
+                                    <th:block
+                                            th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}">
+                                        <img style="width:160px; height:160px;"
+                                             th:src="@{/usermypage/thumbnail (sysName=${profile.sysName})}">
+                                    </th:block>
                                 </th:block>
                             </th:block>
                         </th:block>
-                    </th:block>
-                    <th:block th:unless="${profile != null}">
-                        <img style="width:102px; height:102px" th:src="@{/usermypage/thumbnail (sysName='profile_img.png')}">
-                    </th:block>
-                </a>
-                <div id="my_info">
-                    <div>
-                        <a href="/usermypage/user_myinfo">내 정보</a>
-                        <th:block th:if="${session.loginUser != null}">
-                            <a class="login" th:href="@{/user/logout}">로그아웃</a>
-                        </th:block>
-                    </div>
-                    <a href="/usermypage/user_myinfo">
-                        <!--<span>등급 / 닉네임(ID)</span>-->
-                        <th:block th:if="${user !=null && loginUser != null}">
-                            <span th:text="${user.userNickname}"></span>(<span th:text="${user.userId}"></span>)
+                        <th:block th:unless="${profile != null}">
+
+                            <img style="width:160px; height:160px; margin-bottom: 10px"
+                                 th:src="@{/usermypage/thumbnail (sysName='profile_img.png')}">
                         </th:block>
                     </a>
                 </div>
-                <hr>
-                <div class="sidebar-link">
-                    <!-- 상단에 위치할 링크들 -->
-                    <div class="diary_lnk_img">
-                        <a href="/usermypage/user_diary">
-                            <img src="images/lnk-image/diary/diary_lnk_img.jpg" alt="diary">
-                        </a>
-                        <a href="/usermypage/user_diary">
-                            다이어리
-                        </a>
-                    </div>
-
-                    <div class="product_lnk_img">
-                        <a href="/product/prod_list">
-                            <img src="images/lnk-image/product/prod_lnk_img.jpg" alt="product">
-                        </a>
-                        <a href="/product/prod_list">
-                            제품
-                        </a>
-                    </div>
-
-                    <div class="bmi_lnk_img">
-                        <a href="/sidebar/bmi">
-                            <img src="images/lnk-image/BMI/bmi_lnk_img.jpg" alt="bmi">
-                        </a>
-                        <a href="/sidebar/bmi">
-                            BMI
-                        </a>
-                    </div>
-
-                    <div class="health_lnk_img">
-                        <a href="/sidebar/healthCenter">
-                            <img src="images/lnk-image/health/heal_lnk_img.jpg" alt="health">
-                        </a>
-                        <a href="/sidebar/healthCenter">
-                            보건소
-                        </a>
-                    </div>
-
-                    <div class="trainer_lnk_img">
-                        <a href="/usermypage/user_applytrainer">
-                            <img src="images/lnk-image/trainer/apply_lnk_img.jpg" alt="trainer">
-                        </a>
-                        <th:block th:if="${session.user != null}">
-                            <a href="/usermypage/user_applytrainer">
-                                트레이너 신청
-                            </a>
-                        </th:block>
+                <div id="my_info">
+                    <div>
+                        <div>
+                            <th:block
+                                    th:if="${session.admin!=null && (session.trainer == null && session.user == null)} ">
+                                <div style="height: 40px;"><span>[관리자]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                    <span th:text="${session.admin.adminNickname}+'('+${session.admin.adminId}+')'"></span>
+                                </div>
+                            </th:block>
+                            <th:block
+                                    th:if="${session.trainer!=null && (session.admin == null && session.user == null )}">
+                                <div style="height: 40px;"><span>[트레이너]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                    <span th:text="${session.trainer.trainerNickname}+'('+${session.trainer.trainerId}+')'"></span>
+                                </div>
+                            </th:block>
+                            <th:block
+                                    th:if="${session.user!=null && (session.admin == null && session.trainer == null )}">
+                                <div style="height: 40px;"><span>[일반회원]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                    <span th:text="${session.user.userNickname}+'('+${session.user.userId}+')'"></span>
+                                </div>
+                            </th:block>
+                        </div>
+                        <div>
+                            <a class="btnColor" href="/usermypage/user_myinfo">내 정보</a>
+                            <th:block th:if="${session.loginUser != null}">
+                                <a class="login btnColor" th:href="@{/user/logout}">로그아웃</a>
+                            </th:block>
+                        </div>
                     </div>
                 </div>
+                <hr>
+                <div class="navi_main">
+                    <div class="icon_area">
+                        <table style="margin: 0px;">
+                            <tr>
+                                <td>
+                                    <div><input class="btn" type="image" src="images/iconcal.png" border="0"
+                                                onfocus='this.blur()'
+                                                id="today"></div>
+                                    <div>TODAY</div>
+                                </td>
+                                <td>
+                                    <div><input class="btn" type="image" src="images/iconchall.png" border="0"
+                                                onfocus='this.blur()'
+                                                id="chall"></div>
+                                    <div>CHALLENGE</div>
+                                </td>
+                                <td>
+                                    <div><input type="image" src="images/icondiary.png" border="0" onfocus='this.blur()'
+                                                id="diary" onclick="moveDiary()"></div>
+                                    <div>DIARY</div>
+                                </td>
+                                <td>
+                                    <div><input type="image" src="images/iconshop.png" border="0" onfocus='this.blur()'
+                                                id="shop" onclick="moveShop()"></div>
+                                    <div>SHOP</div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="navi_main_content">
+                        <div id="navi_content_data">
+                            <p style="padding-top: 55px;">[[${session.todaydate}]]</p>
+                            <p>오늘의 기록을 확인해 보세요!</p>
+                        </div>
+                    </div>
+                </div>
+                <!--                <div class="navi_bottom">-->
+                <table class="navi_bottom">
+                    <tr>
+                        <td><a class="subColor" href="/sidebar/bmi">BMI 계산기</a></td>
+                        <td><a class="subColor" href="/sidebar/healthCenter">보건소 찾기</a></td>
+                    </tr>
+                    <tr th:if="${session.user != null}">
+<!--                    <tr>-->
+                        <td colspan="2">
+                            <a class="subColor" href="/usermypage/user_applytrainer">트레이너 신청</a>
+                        </td>
+                    </tr>
+                    <tr th:if="${session.user == null && (session.trainer != null || sessoin.admin.trainer != null)}">
+                        <!--                    <tr>-->
+                        <td colspan="2">
+                            <a class="subColor" href="/trainermypage/trainer_messagelist">매칭 쪽지함 확인하기</a>
+                        </td>
+                    </tr>
+                </table>
+                <!--                    <th:block th:if="${session.user != null} && (${session.trainer == null && session.admin})">-->
+                <!--                        <div class="trainer_lnk_img">-->
+                <!--                            <a class="btnColor" href="/usermypage/user_applytrainer">-->
+                <!--                                트레이너 신청-->
+                <!--                            </a>-->
+                <!--                        </div>-->
+                <!--                    </th:block>-->
+                <!--                </div>-->
             </div>
+
         </th:block>
     </section>
 </th:block>
