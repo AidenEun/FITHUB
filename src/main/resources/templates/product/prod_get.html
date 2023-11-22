@@ -20,6 +20,7 @@
 			background-size: cover;
 			background-position: 0 28%;
 		}
+
 		a {
 			border-bottom:none;
 		}
@@ -156,16 +157,13 @@
 <th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin},${session.profile})}"></th:block>
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">
+	<header class="test12">
+		<p id="mainText">제품</p>
+		<p id="subText">상세 보기</p>
+	</header>
 
-	<div class="header_box">
-		<header class="test12">
-			<p id="mainText">제품</p>
-			<p id="subText">상세 보기</p>
-		</header>
-	</div>
 
 	<div class="inner">
-
 		<!-- Content -->
 		<div class="content">
 			<div class="cotent_header">
@@ -354,7 +352,7 @@
 						//<p class="reply3">댓글내용</p>
 						str += '<p class="reply'+list[i].replyNum+'">'+list[i].replyContent+'</p>';
 						str += '</div><div style="text-align:right;">'
-						str += '<strong>'+replyService.displayTime(list[i])+'</strong>'
+						str += '<span>'+replyService.displayTime(list[i])+'</span>'
 						if(list[i].userId == loginUser){
 							//<a href="3" class="modify">수정</a>
 							str += '<a href="'+list[i].replyNum+'" class="modify">수정</a>';

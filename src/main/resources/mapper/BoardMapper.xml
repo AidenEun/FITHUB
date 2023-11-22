@@ -31,6 +31,10 @@
 		update board set view_cnt = view_cnt+1 where board_num = #{boardNum}
 	</update>
 
+	<update id="updateLikeCnt">
+		update board set like_cnt = like_cnt+1 where board_num = #{boardNum}
+	</update>
+
 	<update id="updateBoard">
 		update board set board_category=#{boardCategory}, board_title=#{boardTitle}, board_content=#{boardContent},update_date=now()
 		where board_num=#{boardNum}

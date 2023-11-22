@@ -9,5 +9,6 @@ public class LikeDTO {
     private String boardCategory;
     private Long boardNum;
     private String regdate;
+    private int heart;
 
 }

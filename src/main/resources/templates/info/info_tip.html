@@ -20,7 +20,6 @@
 			background-size: cover;
 			background-position: 0 64%;
 		}
-
 		.content .button{
 			margin-bottom: 30px;
 			float: right;
@@ -160,9 +159,8 @@
 						</tr>
 						<tr>
 							<td id="cnt" >
-								<span style="margin-right: 10px; margin-left: 5px;">댓글수 0</span>
-								<!--								<span class="reply_cnt" th:text="${reply_cnt_list[boardStat.index]}">댓글수</span>-->
-								<span [[${board.viewCnt}]]>조회수 0</span>
+								<span class="reply_cnt" th:text="'댓글 '+${reply_cnt_list[boardStat.index]}" style="margin-right: 10px; margin-left: 5px;">댓글수</span>
+								<span>조회수 [[${board.viewCnt}]]</span>
 							</td>
 						</tr>
 					</th:block>
@@ -278,7 +276,8 @@
 		pageForm.attr("action",url);
 		pageForm.attr("method","get");
 		pageForm.submit();
-	})bmit();
-	}
+	})
+
+
 </script>
 </html>
