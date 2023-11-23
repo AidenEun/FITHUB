@@ -19,10 +19,13 @@
 	.long_text {
 		word-break: break-all;
 		white-space: normal;
-		width: 180px;
-		max-width: 180px;
 		overflow: hidden;
+
 	}
+	#borderNone input{
+		border: none;
+	}
+
 </style>
 <body class="is-preload">
 
@@ -63,55 +66,55 @@
 							</td>
 						</tr>
 					<tr class="special-row" style="background-color: #fff;">
-						<td class="long_text" >번호</td>
-						<td class="long_text" ></td>
-						<td class="long_text" >보낸사람</td>
-						<td class="long_text" >받는사람</td>
-						<td class="long_text" >수락여부</td>
-						<td class="long_text" >날짜</td>
+						<td class="long_text">번호</td>
+						<td class="long_text"></td>
+						<td class="long_text">보낸사람</td>
+						<td class="long_text">받는사람</td>
+						<td class="long_text">수락여부</td>
+						<td class="long_text">날짜</td>
 					</tr>
-						<tr th:if="${list != null and list.size()>0}" th:each="message : ${list}">
-							<td>
-								<input type="text" name="matchingNum" th:value="${message.matchingNum}" readonly>
+						<tr th:if="${list != null and list.size()>0}" th:each="message : ${list}" id="borderNone">
+							<td style="width:8%;">
+								<input type="text" name="matchingNum" th:value="${message.matchingNum}"  style="text-align: center;" readonly>
 							</td>
-							<td>
-								<sup class="new" th:if="${newly_Message[messageStat.index] == 'O'}">New</sup>
+							<td style="width:6%;">
+								<sup class="new" th:if="${newly_Message[messageStat.index] == 'O'}" style="text-align: center;">New</sup>
 							</td>
-							<td>
-								<a class="open"><input type="text" name="userId" th:value="${message.userId}" readonly></a>
+							<td style="width:15%;">
+								<a class="open"><input type="text" name="userId" th:value="${message.userId}" style="text-align: center;" readonly></a>
 							</td>
-							<td>
-								<a class="open"><input type="text" name="trainerId" th:value="${message.trainerId}" readonly></a>
+							<td style="width:15%;">
+								<a class="open"><input type="text" name="trainerId" th:value="${message.trainerId}" style="text-align: center;" readonly></a>
 							</td>
-							<td>
-								<div class="SC_box">
+							<td style="width:20%;">
+								<div class="SC_box"  style="width=20%;">
 									<th:block th:if="${message.userCheck} == 'O' and ${message.trainerCheck} == '확인중'">
-										<div>
+										<div style="text-align: center;">
 											<a href="#" class="success">수락</a>
 										</div>
-										<div>
+										<div style="text-align: center;">
 											<a href="#" class="cancel">취소</a>
 										</div>
 									</th:block>
 									<th:block th:if="${message.userCheck} == 'O' and ${message.trainerCheck} == 'O'">
-										<div>
+										<div style="text-align: center;">
 											매칭되었습니다.
 										</div>
 									</th:block>
 									<th:block th:if="${message.userCheck} == 'X'">
-										<div>
+										<div style="text-align: center;">
 											취소되었습니다.
 										</div>
 									</th:block>
 									<th:block th:if="${message.trainerCheck} == 'X'">
-										<div>
+										<div style="text-align: center;">
 											거절하였습니다.
 										</div>
 									</th:block>
 								</div>
 							</td>
-							<td>
-								<input type="text" name="matchingDate" th:value="${message.matchingDate}" readonly>
+							<td style="width:51%;">
+								<input type="text" name="matchingDate" th:value="${message.matchingDate}" style="text-align: center;" readonly>
 							</td>
 
 						</tr>
