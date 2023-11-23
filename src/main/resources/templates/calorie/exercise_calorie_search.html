@@ -203,13 +203,17 @@
                     </div>
                     <table class="cal_search_ranking">
                         <tr>
-                            <th width="60%" class="cal_tit">음식명</th>
+                            <th width="60%" class="cal_tit">운동명</th>
                             <th width="40%">칼로리</th>
                         </tr>
                         <!-- 검색 결과를 순회하며 출력 -->
                         <tr th:each="exec : ${execs}" id="result_execlist">
 
-                            <td th:text="${exec.execName}"><a class="get2" th:href="${exec.execNum}"></a></td>
+                            <td>
+                                <a class="get3" th:href="${exec.execNum}">
+                                    <span th:text="${exec.execName}"></span>
+                                </a>
+                            </td>
 
                             <td th:text="${exec.execCalories}"></td>
                         </tr>
@@ -256,7 +260,7 @@
 
 
         $(document).ready(function() {
-    $('.get2').click(function(event) {
+    $('.get3').click(function(event) {
     event.preventDefault();
       var execNum = $(this).attr('href');
       // 다음 페이지 URL 구성

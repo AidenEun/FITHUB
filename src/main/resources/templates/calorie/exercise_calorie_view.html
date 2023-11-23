@@ -380,6 +380,23 @@ left: 29px;
     </body>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+        window.onload = function () {
+        // 운동별 결과 계산 및 표시
+        calculateAndDisplay("walking", 60, 2);
+        calculateAndDisplay("running", 60, 6);
+        calculateAndDisplay("jumprope", 60, 10);
+        calculateAndDisplay("swim", 60, 7);
+        calculateAndDisplay("bicycle", 60, 8);
+    };
+
+    function calculateAndDisplay(activity, execCalories, factor) {
+        var result = (execCalories / 60 / factor) * 60;
+        var resultElement = document.getElementById(activity + "_result");
+        resultElement.textContent = result.toFixed(0); // 소수점 없이 정수로 표시
+    }
+
+
+
         function searchExec() {
             var keyword = $("#search-input").val();
             if (keyword) {
