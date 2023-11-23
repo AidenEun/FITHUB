@@ -118,7 +118,9 @@
 		<!-- Content -->
 		<div class="content">
 			<div class="cotent_header"><h2>식품</h2></div>
+			<th:block th:if="${session.admin != null}">
 			<a class="button btnColor small" th:href="${'/product/prod_write'+pageMaker.cri.listLink}">등록하기</a>
+			</th:block>
 			<div style="display: flex; width: 100%; flex-wrap:wrap;">
 				<!-- 게시글 리스트 띄우는 테이블 -->
 				<th:block th:if="${list != null and list.size()>0}" th:each="board : ${list}">
