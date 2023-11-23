@@ -14,7 +14,8 @@
 	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
 	<link rel="stylesheet" th:href="@{/assets/css/common.css}" />
 	<link rel="stylesheet" th:href="@{/assets/css/profileModal.css}"/>
-
+	<link rel="stylesheet" th:href="@{/assets/css/messageWriteModal.css}"/>
+	<link rel="icon" href="/images/fithub-favicon.png" type="image/png">
 </head>
 <style>
 	.header_box {
@@ -34,10 +35,11 @@
 <body class="is-preload">
 
 <!-- Header -->
-<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin},${session.profile})}"></th:block>
+<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin},${session.profile},${session.todaydate})}"></th:block>
 
 <!-- Modal -->
 <th:block th:replace="~{layout/profileModal::profileModal}"></th:block>
+<th:block th:replace="~{layout/messageWriteModal::messageWriteModal}"></th:block>
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">
 
@@ -66,7 +68,7 @@
 							</div>
 							<div style="float: right;">
 								쪽지 개수 : [[${pageMaker.total}]]
-								<a style="margin-left: 10px;" class="write button small btnColor" th:href="${'/board/write'+pageMaker.cri.listLink}">쪽지 보내기</a>
+								<a style="margin-left: 10px;" class="write button small btnColor messageWriteModalOpen">쪽지 보내기</a>
 							</div>
 						</td>
 					</tr>
@@ -181,8 +183,9 @@
 <script th:src="@{/assets/js/util_sub.js}"></script>
 <script th:src="@{/assets/js/main_sub.js}"></script>
 
-<script th:src="@{/assets/js/sidebar.js}"></script>
+<script th:src="@{/assets/js/sidebarTap.js}"></script>
 <script th:src="@{/assets/js/profile.js}"></script>
+<script th:src="@{/assets/js/messageWriteModal.js}"></script>
 
 <script th:inline="javascript">
 	const searchForm = $("#searchForm");

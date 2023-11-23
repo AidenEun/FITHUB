@@ -8,6 +8,7 @@ public class BoardDTO {
     private String boardCategory;
     private String boardTitle;
     private String boardContent;
+    private String imgURL;
     private String userId;
     private String regdate;
     private String updateDate;

@@ -47,9 +47,9 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public boolean checkNickname(String usernickname) {
-        UserDTO user = umapper.findByNickname(usernickname);
-        return user != null;
+    public boolean checkNickname(String userNickname) {
+        UserDTO user = umapper.findByNickname(userNickname);
+        return user == null;
     }
 
     @Override

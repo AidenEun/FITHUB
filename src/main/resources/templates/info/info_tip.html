@@ -50,13 +50,13 @@
 			vertical-align: middle;
 		}
 		#thumbnail{
-			width: 210px !important;
-			height: 190px !important;
-			padding: 10px;
-		}
-		#thumbnail #img{
 			width: 200px !important;
 			height: 180px !important;
+		}
+		#thumbnail img{
+			width: 200px !important;
+			height: 180px !important;
+			border: 1px solid #ebede1;
 		}
 		#boardtitle{
 			padding: 0;
@@ -68,9 +68,9 @@
 		#boardcontent{
 			height: 100px !important;
 			overflow: hidden;
-			text-overflow: ellipsis;
+			text-overflow: ellipsis ;
 			display: -webkit-box; /* display: -webkit-box => 해당 영역을 box 형태로 관리 */
-			-webkit-line-clamp: 3; /*-webkit-line-clamp => 해당 영역 내 텍스트의 최대 라인수 */
+			-webkit-line-clamp: 4 !important; /*-webkit-line-clamp => 해당 영역 내 텍스트의 최대 라인수 */
 			-webkit-box-orient: vertical; /* -webkit-box-orient: vertical => box의 흐름 방향을 수직으로 지정 */
 		}
 		#boardcontent p, #boardcontent span, #boardcontent b{
@@ -121,7 +121,7 @@
 <body class="is-preload">
 
 <!-- Header -->
-<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin},${session.profile})}"></th:block>
+<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin},${session.profile},${session.todaydate})}"></th:block>
 
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">
@@ -138,15 +138,18 @@
 		<!-- Content -->
 		<div class="content">
 			<div class="cotent_header"><h2>꿀팁</h2></div>
-			<div class="button btnColor"><a th:href="${'/info/info_write'+pageMaker.cri.listLink}">작성하기</a></div>
+			<th:block th:if="${session.admin != null}">
+				<div class="button btnColor"><a th:href="${'/info/info_write'+pageMaker.cri.listLink}">작성하기</a></div>
+			</th:block>
 			<div style="width: 100%">
 				<!-- 게시글 리스트 띄우는 테이블 -->
 				<th:block th:if="${list != null and list.size()>0}" th:each="board : ${list}">
 					<table id="list" class="info_list">
 						<tr valign="middle">
-							<td id="thumbnail" rowspan="3" style="width: 100%;border:1px solid #ebede1;">
-								<div id="img"></div>
-								<!--/*								[[${board.썸네일}]]*/-->
+							<td id="thumbnail" rowspan="3">
+								<a class="get" id="img" th:href="${board.boardNum}">
+									<img th:src="${board.imgURL}" alt="Image" />
+								</a>
 							</td>
 							<td style="height: 35px; padding: 5px 10px;">
 								<a class="get" id="boardtitle" th:href="${board.boardNum}">
@@ -257,7 +260,7 @@
 <script th:src="@{/assets/js/util_sub.js}"></script>
 <script th:src="@{/assets/js/main_sub.js}"></script>
 
-<script th:src="@{/assets/js/sidebar.js}"></script>
+<script th:src="@{/assets/js/sidebarTap.js}"></script>
 <script th:src="@{/assets/js/profile.js}"></script>
 <script th:src="@{/assets/js/common.js}"></script>
 </body>

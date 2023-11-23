@@ -143,6 +143,14 @@
         AND trainer_id=#{trainerId}
         AND trainer_check = 'O';
     </select>
+
+    <select id="CheckReview">
+        SELECT * FROM review
+        WHERE matching_board_num=#{boardNum}
+        AND user_id=#{userId}
+    </select>
+
+
     <update id="updateMatchingLikeCnt">
         UPDATE trainer_matching_board
         SET like_cnt = (
@@ -161,6 +169,8 @@
         )
         WHERE board_num=#{boardNum}
     </update>
+
+
 
 
 

@@ -116,12 +116,15 @@
 			box-shadow: 0 0 2px #5a8100;
 
 		}
+		.thumbnail {
+			width: 300px;
+		}
 	</style>
 </head>
 <body class="is-preload">
 
 <!-- Header -->
-<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin},${session.profile})}"></th:block>
+<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin},${session.profile},${session.todaydate})}"></th:block>
 
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">
@@ -178,7 +181,7 @@
 						</td>
 					</tr>
 					<tr class="r0 at">
-						<th style="vertical-align: middle">파일 첨부1</th>
+						<th style="vertical-align: top">파일 첨부1</th>
 						<td class="file0_cont">
 							<div style="float:left;">
 								<input type="file" name="files2" id="file0" style="display:none">
@@ -225,7 +228,7 @@
 </section>
 
 <!-- Footer -->
-<th:block th:replace="~{layout/footer::footer}"></th:block>
+<th:block th:replace="~{layout/footer_info::footer_info}"></th:block>
 
 <!-- Scripts -->
 <script th:src="@{/assets/js/browser.min.js}"></script>
@@ -236,7 +239,7 @@
 <script th:src="@{/assets/js/util_sub.js}"></script>
 <script th:src="@{/assets/js/main_sub.js}"></script>
 
-<script th:src="@{/assets/js/sidebar.js}"></script>
+<script th:src="@{/assets/js/sidebarTap.js}"></script>
 <script th:src="@{/assets/js/profile.js}"></script>
 </body>
 <script>

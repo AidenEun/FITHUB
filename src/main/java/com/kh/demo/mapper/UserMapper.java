@@ -19,7 +19,7 @@ public interface UserMapper {
 	AdminDTO findAdminById(String userId);
 
 
-	UserDTO findByNickname(String usernickname);
+	UserDTO findByNickname(String userNickname);
 
   TrainerDTO findTrainerById(String userId);
 

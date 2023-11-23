@@ -72,4 +72,6 @@ public interface TrainerMatchingMapper {
     void updateMatchingLikeCnt(Long boardNum);
 
     void updateMatchingBookCnt(Long boardNum);
+
+    ReviewDTO CheckReview(Long boardNum, String userId);
 }

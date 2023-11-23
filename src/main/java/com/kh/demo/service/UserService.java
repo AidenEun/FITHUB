@@ -11,7 +11,7 @@ public interface UserService {
 
     boolean checkId(String userid);
 
-    boolean checkNickname(String usernickname);
+    boolean checkNickname(String userNickname);
 
     Object login(String userid, String userpw);
 

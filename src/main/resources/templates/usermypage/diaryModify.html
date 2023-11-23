@@ -310,7 +310,7 @@
 <body class="is-preload">
 
 
-<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin},${session.profile})}"></th:block>
+<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin},${session.profile},${session.todaydate})}"></th:block>
 <th:block th:replace="~{layout/searchModal::searchModal()}"></th:block>
 
 <!--<div id="top_main_img">
@@ -590,14 +590,14 @@
 <script th:src="@{/assets/js/browser.min.js}"></script>
 <script th:src="@{/assets/js/breakpoints.min.js}"></script>
 
-<script th:src="@{/assets/js/sidebar.js}"></script>
+<script th:src="@{/assets/js/sidebarTap.js}"></script>
 <!--<script th:src="@{/assets/js/profile.js}"></script>-->
 <script th:src="@{/assets/js/searchModal.js}"></script>
 
 
 <script th:src="@{/assets/js/util_sub.js}"></script>
 <script th:src="@{/assets/js/main_sub.js}"></script>
-<script th:src="@{/assets/js/calender.js}"></script>
+<!--<script th:src="@{/assets/js/calender.js}"></script>-->
 <script>
 
 </script>

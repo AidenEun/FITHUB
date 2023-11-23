@@ -135,4 +135,9 @@ public interface AdminMyPageMapper {
     void updateMessageCategory(Long messageNum);
 
     void saveMatching(MessageDTO newMessage);
+
+    void insertMessageToAdmin(String messageContent, String userId);
+
+    void messageWrite(String messageContent, String userId, String receiveId);
+
 }

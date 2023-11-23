@@ -17,6 +17,7 @@
 	<link rel="stylesheet" th:href="@{/assets/css/profileModal.css}">
 	<link rel="stylesheet" th:href="@{/assets/css/reportModal.css}">
 	<link rel="stylesheet" th:href="@{/assets/css/reportAdminModal.css}">
+	<link rel="stylesheet" th:href="@{/assets/css/messageToAdminModal.css}">
 </head>
 <style>
 	a {
@@ -69,12 +70,13 @@
 <!--	</script>-->
 
 	<!-- Header -->
-	<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin},${session.profile})}"></th:block>
+	<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin},${session.profile},${session.todaydate})}"></th:block>
 
 	<!-- Modal -->
 	<th:block th:replace="~{layout/profileModal::profileModal}"></th:block>
 	<th:block th:replace="~{layout/reportModal::reportModal()}"></th:block>
 	<th:block th:replace="~{layout/reportAdminModal::reportAdminModal()}"></th:block>
+	<th:block th:replace="~{layout/messageToAdmin::messageToAdminModal()}"></th:block>
 
 	<!-- Main -->
 	<section id="main" class="wrapper sidebar left">
@@ -186,10 +188,11 @@
 <script th:src="@{/assets/js/util_sub.js}"></script>
 <script th:src="@{/assets/js/main_sub.js}"></script>
 
-<script th:src="@{/assets/js/sidebar.js}"></script>
+<script th:src="@{/assets/js/sidebarTap.js}"></script>
 <script th:src="@{/assets/js/profile.js}"></script>
 <script th:src="@{/assets/js/reportModal.js}"></script>
 <script th:src="@{/assets/js/reportAdminModal.js}"></script>
+<script th:src="@{/assets/js/messageToAdminModal.js}"></script>
 <script>
 	const cate = document.querySelectorAll('.cate');
 	let nowCate = document.querySelector('.now_cate');

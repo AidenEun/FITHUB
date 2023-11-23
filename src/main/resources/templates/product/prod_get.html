@@ -154,12 +154,22 @@
 			height: 2.75em !important;
 			line-height: 2.75em !important;
 		}
+		.heart img{
+		position:relative;
+		left: 60px;
+		top:15px;
+		}
+		#bookmark{
+		position:relative;
+		left: 140px;
+		top:8px;
+		}
 	</style>
 </head>
 <body class="is-preload">
 
 <!-- Header -->
-<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin},${session.profile})}"></th:block>
+<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin},${session.profile},${session.todaydate})}"></th:block>
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">
 
@@ -200,7 +210,7 @@
 						</tr>
 						<tr>
 							<!-- 내용 -->
-							<td width="390px" height="70%">
+							<td width="390px" style="height: 430px; padding-left: 25px;">
 								<input class="boardContent" type="text" name="boardContent" th:value="${board.boardContent}" readonly>
 							</td>
 						</tr>
@@ -209,10 +219,12 @@
 						<tr>
 							<th>조회수</th>
 							<td>[[${board.viewCnt}]]</td>
-							<th>좋아요</th>
+							<th:block th:if="${board.adminId != session.loginUser}">
+							<th><a href="#" class="heart" style="float:left; margin-right:5px;"><img id="heart" th:src="'/images/like_'+${heart!=null?'on':'off'}+'.png'" style="width:30px;"></a></th>
 							<td width="50px" style="padding:5px;">[[${board.likeCnt}]]</td>
-							<th>북마크</th>
+							<th><a th:class="${bookmark != null ? 'bookmarked' : ''}+' bookmark button btnColor small'" id="bookmark" style="float:left; margin-left:10px;">북마크</a></th>
 							<td width="50px" style="padding:5px;">[[${board.bookmarkCnt}]]</td>
+							</th:block>
 						</tr>
 					</table>
 				</form>
@@ -233,10 +245,6 @@
 								</form>
 							</th:block>
 							<div class="btn_area">
-								<th:block th:if="${board.adminId != session.loginUser}">
-									<a href="#" class="heart" style="float:left; margin-right:5px;"><img id="heart" src="/images/like_off.png" style="width:30px !important;"></a>
-									<a class="bookmark button btnColor small" style="float:left; margin-left:10px;">북마크</a>
-								</th:block>
 								<span th:switch="${board.category}">
 									<span th:case="'prodFood'"><a class="button btnColor small" th:href="${'/product/prod_food'+cri.listLink}">목록</a></span>
 									<span th:case="'prodExer'"><a class="button btnColor small" th:href="${'/product/prod_exercise'+cri.listLink}">목록</a></span>
@@ -281,7 +289,7 @@
 <script th:src="@{/assets/js/util_sub.js}"></script>
 <script th:src="@{/assets/js/main_sub.js}"></script>
 
-<script th:src="@{/assets/js/sidebar.js}"></script>
+<script th:src="@{/assets/js/sidebarTap.js}"></script>
 <script th:src="@{/assets/js/profile.js}"></script>
 </body>
 
@@ -304,13 +312,11 @@
 
 		//heartVal이 1이면 좋아요가 이미 되어있는것 -> like_on.png 출력
 		if(heartVal>0){
-			console.log(heartVal);
-			$("#heart").prop("src", "/images/like_on.png");	//prop() : 해당 속성을 가져와서 변경
+			//prop() : 해당 속성을 가져와서 변경
 			$(".heart").prop('name',heartVal);
 		}
 		else{
 			console.log(heartVal);
-			$("#heart").prop("src", "/images/like_off.png");
 			$(".heart").prop('name',heartVal);
 			}
 
@@ -345,10 +351,6 @@
 		console.log(bookmarkVal);
 
 		//bookmarkVal이 1이면 북마크가 이미 되어있는것
-		if(bookmarkVal>0){
-			$(".bookmark").addClass('bookmarked');
-
-		}
 
 		//북마크 버튼 클릭 시 실행되는 코드
 		$(".bookmark").on("click", function(){
