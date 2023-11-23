@@ -6,200 +6,202 @@
 -->
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>Fit Hub</title>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<link rel="stylesheet" th:href="@{/assets/css/index.css}" />
-	<noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
-	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
-	<link rel="stylesheet" th:href="@{/assets/css/common.css}" />
-	<link rel="stylesheet" th:href="@{/assets/css/profileModal.css}">
-	<link rel="icon" href="/images/fithub-favicon.png" type="image/png">
+    <title>Fit Hub</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+    <link rel="stylesheet" th:href="@{/assets/css/index.css}"/>
+    <noscript>
+        <link rel="stylesheet" th:href="@{/assets/css/noscript.css}"/>
+    </noscript>
+    <link rel="stylesheet" th:href="@{/assets/css/sidebar.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/common.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/profileModal.css}">
+    <link rel="icon" href="/images/fithub-favicon.png" type="image/png">
 </head>
 <style>
 
-	#main {
-		padding: 0;
-	}
+    #main {
+        padding: 0;
+    }
 
-	.wrapper {
-		padding: 0;
-		margin-bottom: 100px;
-	}
+    .wrapper {
+        padding: 0;
+        margin-bottom: 100px;
+    }
 
-	#header {
-		background-color: #5a8100;
-	}
+    #header {
+        background-color: #5a8100;
+    }
 
-	#header nav > ul > li a {
-		color: white;
-	}
+    #header nav > ul > li a {
+        color: white;
+    }
 
-	#header h1 a {
-		color: white;
-	}
+    #header h1 a {
+        color: white;
+    }
 
-	#header .main ul li > a {
-		color: white;
-	}
+    #header .main ul li > a {
+        color: white;
+    }
 
-	#footer {
-		background-color: #304400;
-	}
+    #footer {
+        background-color: #304400;
+    }
 
-	a {
-		border-bottom: none;
-	}
+    a {
+        border-bottom: none;
+    }
 
-	.long_text {
-		width: 180px;
-		max-width: 180px;
-  		white-space: nowrap;
-  		overflow: hidden;
-		text-overflow: ellipsis;
-	}
+    .long_text {
+        width: 180px;
+        max-width: 180px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 
-	.wrapper.sidebar > .inner > .content  {
-		width: 70%;
-	}
+    .wrapper.sidebar > .inner > .content {
+        width: 70%;
+    }
 
-	.wrapper.sidebar > .inner > .sidebar  {
-		width: 30%;
-	}
+    .wrapper.sidebar > .inner > .sidebar {
+        width: 30%;
+    }
 
-	.result_box{
-		display: none;
-	}
+    .result_box {
+        display: none;
+    }
 
     #bmiResult {
-		font-weight: bold;
+        font-weight: bold;
     }
 
     #bmiCategory {
-		font-weight: bold;
+        font-weight: bold;
     }
 
     #bmiChart {
-		width: 100%;
-		height: 20px;
-		background-color: lightgray;
-		border: 1px solid gray;
-		margin-top: 10px;
-		position: relative;
+        width: 100%;
+        height: 20px;
+        background-color: lightgray;
+        border: 1px solid gray;
+        margin-top: 10px;
+        position: relative;
     }
 
     #bmiValue {
-		background-color: blue;
-		height: 100%;
-		position: absolute;
+        background-color: blue;
+        height: 100%;
+        position: absolute;
     }
 
     .category-labels {
-		display: flex;
-		justify-content: space-between;
+        display: flex;
+        justify-content: space-between;
     }
 
     .category-labels span {
-		flex: 1;
-		text-align: center;
+        flex: 1;
+        text-align: center;
     }
 
-	input#age {
-		width: 65%;
-		text-align: center;
-	}
+    input#age {
+        width: 65%;
+        text-align: center;
+    }
 
-	input#height {
-		width: 65%;
-		text-align: center;
-	}
+    input#height {
+        width: 65%;
+        text-align: center;
+    }
 
-	input#weight {
-		width: 65%;
-		text-align: center;
-	}
+    input#weight {
+        width: 65%;
+        text-align: center;
+    }
 
-	#submit_btn {
-		background: #FFFFFF;
-		border: 1px solid #5a8100;
-		border-radius: 4px;
-		color: #5a8100 !important;
-		box-shadow: 4px 4px 2px 0px rgb(203,211,177);
-	}
+    #submit_btn {
+        background: #FFFFFF;
+        border: 1px solid #5a8100;
+        border-radius: 4px;
+        color: #5a8100 !important;
+        box-shadow: 4px 4px 2px 0px rgb(203, 211, 177);
+    }
 
-	#submit_btn:hover {
-		background: #5a8100;
-		border: 1px solid #5a8100;
-		border-radius: 4px;
-		color: #F7FAF5 !important;
-		box-shadow: 0 0 2px #5a8100;
-	}
+    #submit_btn:hover {
+        background: #5a8100;
+        border: 1px solid #5a8100;
+        border-radius: 4px;
+        color: #F7FAF5 !important;
+        box-shadow: 0 0 2px #5a8100;
+    }
 </style>
 <body class="is-preload">
 
-	<!-- Header -->
-	<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin},${session.profile},${session.todaydate})}"></th:block>
+<!-- Header -->
+<th:block
+        th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin},${session.profile},${session.todaydate})}"></th:block>
 
-	<!-- Main -->
-	<section id="main" class="wrapper sidebar left">
+<!-- Main -->
+<section id="main" class="wrapper sidebar left">
 
-		<div class="header_box">
-			<header class="test12">
-				<p id="mainText"></p>
-				<p id="subText">간단 BMI 측정</p>
-			</header>
-		</div>
+    <div class="header_box">
+        <header class="test12">
+            <p id="mainText"></p>
+            <p id="subText">간단 BMI 측정</p>
+        </header>
+    </div>
 
-		<div class="inner">
-
-
-
-			<!-- Content -->
-			<div class="content">
-				<div class="result_box">
-					<h2>비만도(BMI) 검사 결과</h2>
-					<div id="bmiChart">
-						<div id="bmiValue"></div>
-					</div>
-					<p id="bmiResult"></p>
-					<div class="category-labels">
-						<span>저체중</span>
-						<span>정상</span>
-						<span>과체중</span>
-						<span>비만</span>
-						<span>고도 비만</span>
-					</div>
-					<p style="font-size: 28px; margin-top: 30px;" id="bmiCategory"></p>
-				</div>
-			</div>
+    <div class="inner">
 
 
-			<!-- Sidebar -->
-			<div class="sidebar">
-				<form id="bmiForm">
-					<input type="radio" id="male" name="gender" value="male">
-					<label for="male">남성</label>
-					<input type="radio" id="female" name="gender" value="female">
-					<label for="female">여성</label><br>
+        <!-- Content -->
+        <div class="content">
+            <div class="result_box">
+                <h2>비만도(BMI) 검사 결과</h2>
+                <div id="bmiChart">
+                    <div id="bmiValue"></div>
+                </div>
+                <p id="bmiResult"></p>
+                <div class="category-labels">
+                    <span>저체중</span>
+                    <span>정상</span>
+                    <span>과체중</span>
+                    <span>비만</span>
+                    <span>고도 비만</span>
+                </div>
+                <p style="font-size: 28px; margin-top: 30px;" id="bmiCategory"></p>
+            </div>
+        </div>
 
-					<label for="age"></label>
-					<input type="number" id="age" name="age" placeholder="나이"><br>
 
-					<label for="height"></label>
-					<input type="number" id="height" name="height" placeholder="키 (cm)"><br>
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <form id="bmiForm">
+                <input type="radio" id="male" name="gender" value="male">
+                <label for="male">남성</label>
+                <input type="radio" id="female" name="gender" value="female">
+                <label for="female">여성</label><br>
 
-					<label for="weight"></label>
-					<input type="number" id="weight" name="weight" placeholder="몸무게 (kg)"><br>
+                <label for="age"></label>
+                <input type="number" id="age" name="age" placeholder="나이"><br>
 
-					<input type="submit" value="BMI 계산" style="margin-top: 20px;" id="submit_btn">
-					<div class="button btnColor" id="resetButton" style="margin-top: 20px;">다시하기</div>
-				</form>
-			</div>
-		</div>
-	</section>
+                <label for="height"></label>
+                <input type="number" id="height" name="height" placeholder="키 (cm)"><br>
 
-	<!-- Footer -->
-	<th:block th:replace="~{layout/footer::footer}"></th:block>
+                <label for="weight"></label>
+                <input type="number" id="weight" name="weight" placeholder="몸무게 (kg)"><br>
+
+                <input type="submit" value="BMI 계산" style="margin-top: 20px;" id="submit_btn">
+                <div class="button btnColor" id="resetButton" style="margin-top: 20px;">다시하기</div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<th:block th:replace="~{layout/footer::footer}"></th:block>
 
 <!-- Scripts -->
 <script th:src="@{/assets/js/jquery.min.js}"></script>
@@ -213,60 +215,55 @@
 <script th:src="@{/assets/js/util_sub.js}"></script>
 <script th:src="@{/assets/js/main_sub.js}"></script>
 
-<script th:src="@{/assets/js/sidebar.js}"></script>
+<script th:src="@{/assets/js/sidebarTap.js}"></script>
 <script th:src="@{/assets/js/profile.js}"></script>
 <script>
-	const bmiForm = document.getElementById("bmiForm");
-	const result_box = document.querySelector('.result_box');
+    const bmiForm = document.getElementById("bmiForm");
+    const result_box = document.querySelector('.result_box');
 
-	bmiForm.addEventListener("submit", function (event) {
-		event.preventDefault();
+    bmiForm.addEventListener("submit", function (event) {
+        event.preventDefault();
 
-		const gender = document.querySelector('input[name="gender"]:checked').value;
-		const age = parseFloat(document.getElementById("age").value);
-		const height = parseFloat(document.getElementById("height").value);
-		const weight = parseFloat(document.getElementById("weight").value);
+        const gender = document.querySelector('input[name="gender"]:checked').value;
+        const age = parseFloat(document.getElementById("age").value);
+        const height = parseFloat(document.getElementById("height").value);
+        const weight = parseFloat(document.getElementById("weight").value);
 
-		if (gender === "male") {
-			var bmi = (weight / ((height / 100) * (height / 100))).toFixed(2);
-		}
-		else {
-			var bmi = (weight / ((height / 100) * (height / 100))).toFixed(2);
-		}
+        if (gender === "male") {
+            var bmi = (weight / ((height / 100) * (height / 100))).toFixed(2);
+        } else {
+            var bmi = (weight / ((height / 100) * (height / 100))).toFixed(2);
+        }
 
-		const bmiChart = document.getElementById("bmiChart");
-		const bmiValue = document.getElementById("bmiValue");
-		bmiValue.style.width = bmi + "%";
-		bmiValue.style.left = bmi + "%";
+        const bmiChart = document.getElementById("bmiChart");
+        const bmiValue = document.getElementById("bmiValue");
+        bmiValue.style.width = bmi + "%";
+        bmiValue.style.left = bmi + "%";
 
-		// BMI 범주를 결정하여 표시
-		let category = "";
-		if (bmi < 18.5) {
-			category = "저체중";
-		}
-		else if (bmi < 24.9) {
-			category = "정상";
-		}
-		else if (bmi < 29.9) {
-			category = "과체중";
-		}
-		else if (bmi < 34.9) {
-			category = "비만";
-		}
-		else {
-			category = "고도 비만";
-		}
-		document.getElementById("bmiCategory").textContent = "당신의 BMI 수치는 " + bmi + "로 " + category + "입니다";
+        // BMI 범주를 결정하여 표시
+        let category = "";
+        if (bmi < 18.5) {
+            category = "저체중";
+        } else if (bmi < 24.9) {
+            category = "정상";
+        } else if (bmi < 29.9) {
+            category = "과체중";
+        } else if (bmi < 34.9) {
+            category = "비만";
+        } else {
+            category = "고도 비만";
+        }
+        document.getElementById("bmiCategory").textContent = "당신의 BMI 수치는 " + bmi + "로 " + category + "입니다";
 
-		// 결과를 표시
-		result_box.style.display = 'block';
-	});
+        // 결과를 표시
+        result_box.style.display = 'block';
+    });
 
-	// "다시하기" 버튼을 누를 때 이전 내용을 비우고 결과를 숨김
-	document.getElementById("resetButton").addEventListener("click", function () {
-		result_box.style.display = 'none';
-		bmiForm.reset();
-	});
+    // "다시하기" 버튼을 누를 때 이전 내용을 비우고 결과를 숨김
+    document.getElementById("resetButton").addEventListener("click", function () {
+        result_box.style.display = 'none';
+        bmiForm.reset();
+    });
 </script>
 </body>
 </html>
