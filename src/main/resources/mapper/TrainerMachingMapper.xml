@@ -148,8 +148,6 @@
 
 
 
-
-
 <!--    통합검색 디테일-->
     <select id="get12matchingSearchList">
         select *
