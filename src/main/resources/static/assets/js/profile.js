@@ -87,11 +87,11 @@ function modal(data) {
             if (subscribed != null) {
                 modalBox.find('.subscribe_buttons').html('<a href="#" class="subscribe"><img src="/images/subsIng.png" alt="구독O">구독 중</a>');
             } else{
-                modalBox.find('.subscribe_buttons').html('<a href="#" class="subscribe"><img src="/images/subsCancel.jpg" alt="구독X">구독</a>');
+                modalBox.find('.subscribe_buttons').html('<a href="#" class="subscribe"><img src="/images/subsCancel.png" alt="구독X">구독</a>');
             }
 
             modalBox.find('.subscribe').on('click', function () {
-            subscribeClick(sendId,receiveId);
+                subscribeClick(sendId,receiveId);
             });
 
 
@@ -104,9 +104,9 @@ function modal(data) {
             modalBox.find('.send-message').on('click', function () {
             var contents = modalBox.find('.contents').val();
             if (contents.trim() === '') {
-                    alert('내용을 작성해주세요.'); // 내용이 비어있을 때 알림창 띄우기
+                    alert('내용을 작성해주세요.');
+                    modalBox.find('.contents').focus();
                 } else {
-                    // 내용이 있다면 해당 내용으로 메시지 전송
                     sendApplication(receiveId, sendId, contents);
                 }
             });
@@ -165,7 +165,7 @@ function modal(data) {
             method: 'POST',
             data: { userId: sendId, trainerId: receiveId },
             success: function(response) {
-                 subscribeSuccess(response, $(".modal_box"));
+                 subscribeSuccess(response, $(".modal_box"), sendId, receiveId);
             },
             error: function(error) {
                 console.error('구독 상태 변경에 실패했습니다.', error);
@@ -174,19 +174,21 @@ function modal(data) {
     }
 
 
-function subscribeSuccess(response, modalBox) {
+function subscribeSuccess(response, modalBox, sendId, receiveId) {
     if (response === "subscribed") {
         alert("구독합니다.");
        modalBox.find('.subscribe_buttons').html('<a href="#" class="subscribe"><img src="/images/subsIng.png" alt="구독O">구독 중</a>');
+
     } else if (response === "unsubscribed") {
         alert("구독을 취소합니다.");
        modalBox.find('.subscribe_buttons').html('<a href="#" class="subscribe"><img src="/images/subsCancel.png" alt="구독X">구독</a>');
+
     } else {
         alert("신청 중 오류가 발생했습니다.");
     }
-    modalBox.find('.subscribe').on('click', function () {
-        subscribeClick(sendId,receiveId);
-    });
+     modalBox.find('.subscribe').on('click', function () {
+         subscribeClick(sendId,receiveId);
+     });
 }
 
 
