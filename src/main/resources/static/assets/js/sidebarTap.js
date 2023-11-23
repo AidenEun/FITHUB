@@ -152,6 +152,13 @@ function displayMyChallData(myChallDTOList) {
 function moveDiary() {
     let navi_main_content = $("#navi_main_content");
     navi_main_content.empty();
+    let row = $('<tr>');
+    row.append('<td style="text-align: center;">오늘은 또 무슨일이 생길까🎵</td>');
+    let table = $('<table style="padding-top: 82px;">');
+    table.append(row);
+    navi_main_content.append(table);
+    let newDiv = $("<div>").html('<a class="subColor" href="/usermypage/user_diary">일기장 보러가기</a>');
+    navi_main_content.append(newDiv);
     location.href = "/usermypage/user_diary";
 }
 
@@ -159,6 +166,13 @@ function moveDiary() {
 function moveShop() {
     let navi_main_content = $("#navi_main_content");
     navi_main_content.empty();
+    let row = $('<tr>');
+    row.append('<td style="text-align: center;">쇼핑하는 중🛒</td>');
+    let table = $('<table style="padding-top: 82px;">');
+    table.append(row);
+    navi_main_content.append(table);
+    let newDiv = $("<div>").html('<a class="subColor" href="/product/prod_list">쇼핑하러 가기</a>');
+    navi_main_content.append(newDiv);
     location.href = "/product/prod_list";
 }
 
