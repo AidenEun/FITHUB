@@ -43,6 +43,9 @@ public class MatchingController {
     @Qualifier("TrainerMatchingServiceImpl")
     private TrainerMatchingService MatchingService;
 
+    @Autowired @Qualifier("BoardServiceImpl")
+    private BoardService service;
+
     @GetMapping("matching_list")
     public void matching_list(Criteria cri, Model model) throws Exception {
         List<TrainerMatchingBoardDTO> list = MatchingService.getmatchingList(cri);
@@ -98,6 +101,13 @@ public class MatchingController {
         HttpSession session = req.getSession();
         String loginUser = (String)session.getAttribute("loginUser");
 
+        LikeDTO heart = new LikeDTO();
+        heart = service.likeCheck(boardNum,loginUser);
+        model.addAttribute("heart",heart);
+
+        BookMarkDTO bookmark = new BookMarkDTO();
+        bookmark = service.bookCheck(boardNum,loginUser);
+        model.addAttribute("bookmark",bookmark);
 
 
         //인기게시글 띄우기
@@ -113,6 +123,8 @@ public class MatchingController {
         model.addAttribute("trainerInfo",trainerInfo);
         model.addAttribute("list", list);
         model.addAttribute("starRatingAv",starRatingAv);
+        model.addAttribute("loginUser",loginUser);
+
 
         if (list == null) {
             return "error";
@@ -154,7 +166,15 @@ public class MatchingController {
         return check;
     }
 
+    @GetMapping("checkReview")
+    @ResponseBody
+    public ReviewDTO checkReview(@RequestParam("boardNum") Long boardNum, HttpServletRequest req) {
+        HttpSession session = req.getSession();
+        String userId = (String) session.getAttribute("loginUser");
 
+        ReviewDTO result = MatchingService.CheckReview(boardNum, userId);
+        return result;
+    }
 
 
 
@@ -309,34 +329,20 @@ public class MatchingController {
 
     }
 
-    @PostMapping("subscribe_check")
-    @ResponseBody
-    public String checkSubscription(@RequestParam("sendId") String userId, @RequestParam("trainerId") String trainerId) {
-        SubscribeDTO newSubscribe = new SubscribeDTO();
-        newSubscribe.setUserId(userId);
-        newSubscribe.setTrainerId(trainerId);
-        System.out.println("checkSubs"+newSubscribe);
-        SubscribeDTO isSubscribed = MatchingService.checkSubs(newSubscribe);
-
-        if (isSubscribed != null) {
-            return "subscribed";
-        } else {
-            return "unsubscribed";
-        }
-    }
     @PostMapping("subscribe_click")
     @ResponseBody
-    public String clickSubscription(@RequestParam("sendId") String userId, @RequestParam("trainerId") String trainerId) {
+    public String clickSubscription(@RequestParam("userId") String userId, @RequestParam("trainerId") String trainerId) {
         SubscribeDTO newSubscribe = new SubscribeDTO();
         newSubscribe.setUserId(userId);
         newSubscribe.setTrainerId(trainerId);
 
-        System.out.println("clickSubs"+newSubscribe);
-        SubscribeDTO isSubscribed = MatchingService.clickSubs(newSubscribe);
+        String subscriptionResult = MatchingService.clickSubs(newSubscribe);
 
-        if (isSubscribed != null) {
+        if ("subscribed".equals(subscriptionResult)) {
+            // 이미 구독 중인 경우
             return "subscribed";
         } else {
+            // 구독하지 않은 경우
             return "unsubscribed";
         }
     }
@@ -365,4 +371,8 @@ public class MatchingController {
 
         return json.toString();
     }
+
+
+
+
 }

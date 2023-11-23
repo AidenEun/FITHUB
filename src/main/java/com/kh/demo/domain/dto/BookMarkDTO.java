@@ -9,5 +9,6 @@ public class BookMarkDTO {
     private String boardCategory;
     private Long boardNum;
     private String regdate;
+    private int bookmark;
 
 }

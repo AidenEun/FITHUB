@@ -55,7 +55,8 @@ function modal(data) {
     try {
         data = JSON.parse(data);
         var sendId = data.loginUser_userId;
-
+        var subscribed = data.isSubscribed;
+        console.log(subscribed);
         if (data.hasOwnProperty("trainerDTO")) {
             var modalBox = $('.modal_box');
             var receiveId = data.trainerDTO.trainerId
@@ -83,6 +84,18 @@ function modal(data) {
             modalBox.find('.application_buttons').html(
                                                          '<p class="trainer_profile"><a href="/trainermypage/trainer_profile?trainerId=' + receiveId + '">프로필 자세히 보기</a></p>'
                                                     );
+            if (subscribed != null) {
+                modalBox.find('.subscribe_buttons').html('<a href="#" class="subscribe"><img src="/images/subsIng.png" alt="구독O">구독 중</a>');
+            } else{
+                modalBox.find('.subscribe_buttons').html('<a href="#" class="subscribe"><img src="/images/subsCancel.png" alt="구독X">구독</a>');
+            }
+
+            modalBox.find('.subscribe').on('click', function () {
+                subscribeClick(sendId,receiveId);
+            });
+
+
+
 
             modalBox.find('.profile_userId a').text(receiveId);
 
@@ -90,7 +103,12 @@ function modal(data) {
 
             modalBox.find('.send-message').on('click', function () {
             var contents = modalBox.find('.contents').val();
-            sendApplication(receiveId,sendId,contents);
+            if (contents.trim() === '') {
+                    alert('내용을 작성해주세요.');
+                    modalBox.find('.contents').focus();
+                } else {
+                    sendApplication(receiveId, sendId, contents);
+                }
             });
 
 
@@ -118,16 +136,18 @@ function modal(data) {
             modalBox.find('.img_area img').attr('alt', receiveId);
             modalBox.find('.name a').text(data.userDTO.userNickname + '(' + receiveId + ')');
             modalBox.find('.message').attr('alt', receiveId);
-            modalBox.find('.application_buttons').html(
-                                                        '<p class="trainer_profile"><a href="/trainermypage/trainer_profile?trainerId=' + receiveId + '">프로필 자세히 보기</a></p>'
-                                                    );
 
             modalBox.find('.profile_userId a').text(receiveId);
             modalBox.find('.loginUser_userId a').text(sendId);
 
             modalBox.find('.send-message').on('click', function () {
             var contents = modalBox.find('.contents').val();
-            sendApplication(receiveId,sendId,contents);
+            if (contents.trim() === '') {
+                    alert('내용을 작성해주세요.'); // 내용이 비어있을 때 알림창 띄우기
+                } else {
+                    // 내용이 있다면 해당 내용으로 메시지 전송
+                    sendApplication(receiveId, sendId, contents);
+                }
             });
 
 
@@ -139,6 +159,42 @@ function modal(data) {
         console.error("올바른 데이터 형식이 아닙니다:", error);
     }
 }
+    function subscribeClick(sendId,receiveId){
+         $.ajax({
+            url: '/matching/subscribe_click',
+            method: 'POST',
+            data: { userId: sendId, trainerId: receiveId },
+            success: function(response) {
+                 subscribeSuccess(response, $(".modal_box"), sendId, receiveId);
+            },
+            error: function(error) {
+                console.error('구독 상태 변경에 실패했습니다.', error);
+            }
+        });
+    }
+
+
+function subscribeSuccess(response, modalBox, sendId, receiveId) {
+    if (response === "subscribed") {
+        alert("구독합니다.");
+       modalBox.find('.subscribe_buttons').html('<a href="#" class="subscribe"><img src="/images/subsIng.png" alt="구독O">구독 중</a>');
+
+    } else if (response === "unsubscribed") {
+        alert("구독을 취소합니다.");
+       modalBox.find('.subscribe_buttons').html('<a href="#" class="subscribe"><img src="/images/subsCancel.png" alt="구독X">구독</a>');
+
+    } else {
+        alert("신청 중 오류가 발생했습니다.");
+    }
+     modalBox.find('.subscribe').on('click', function () {
+         subscribeClick(sendId,receiveId);
+     });
+}
+
+
+
+
+
 
 function sendApplication(receiveId, sendId, contents) {
     $.ajax({

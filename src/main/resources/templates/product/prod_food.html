@@ -141,11 +141,13 @@
 					</table>
 				</th:block>
 				<th:block th:if="${(list == null or list.size() == 0)}">
-					<tr>
-						<td colspan="2" style="text-align: center; font-size: 14px;">등록된 게시글이 없습니다.</td>
-					</tr>
+					<table>
+						<tr>
+							<td colspan="2" style="text-align: center; font-size: 14px;">등록된 게시글이 없습니다.</td>
+						</tr>
+					</table>
 				</th:block>
-				</table>
+
 			</div>
 
 			<br>

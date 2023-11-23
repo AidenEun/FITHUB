@@ -115,15 +115,8 @@
         margin: auto; /* 이미지를 가운데 정렬하기 위해 추가 */
     }
 
-    #careerInfo {
-        width: 700px;
-        height: 270px;
-    }
-
     #careerInfo img {
         margin: auto;
-        width: 200px;
-        height: 250px;
     }
 
 
@@ -154,12 +147,6 @@
         height: 80px;
     }
 
-    .button_table tr td a {
-        /*border: 1px solid gray;*/
-        /*border-radius: 20px;*/
-        padding: 15px;
-        /*box-shadow: 5px 5px 8px rgba(0, 0, 0, 0.3); !* 그림자 효과 추가 *!*/
-    }
 
     .button_table tr td a:hover {
         /*background-color: #ebede1 !important;*/
@@ -204,9 +191,6 @@
     }
 .reviews{
 margin-top: 30px;
-}
-.regist{
-padding : 10px;
 }
 .displayNoneDiv{
 display: none;
@@ -304,7 +288,7 @@ display: none;
         <!-- Content -->
         <div class="content">
             <th:block th:if="${list != null}" th:each="board : ${list}">
-                <div class="cotent_header open" style="display: flex; justify-content: flex-start;">
+                <div class="cotent_header open" style="display: flex; justify-content: flex-start; cursor: pointer;">
                     <div id="profileInfo">
                         <th:block th:if="${profileInfo != null}">
                             <div style="display:flex; justify-content:center;">
@@ -313,7 +297,7 @@ display: none;
                             </div>
                         </th:block>
                     </div>
-                    <div class="open" style="line-height: 6.2;">[[${trainerInfo.trainerNickname}]]님의 글입니다</div>
+                    <div class="open" style="line-height: 9; font-size:22px;">[[${trainerInfo.trainerNickname}]]님의 글입니다</div>
                     <div style="font-size:15px; line-height: 13.3; margin-left: 20px;">별점 : <span>[[${starRatingAv}]]</span></div>
                 </div>
                 <form>
@@ -321,20 +305,20 @@ display: none;
                     <div>
                         <table class="write_table" style="text-align: center;">
                             <tr>
-                                <td style="width: 20%;" colspan="1">제목</td>
+                                <td style="width: 20%; font-weight: bold;" colspan="1">제목</td>
                                 <td colspan="2">
                                     <input type="text" name="boardTitle" style="width:100%;" size="50" maxlength="50" th:value="${board.boardTitle}" readonly>
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="1">만료일시</td>
+                                <td colspan="1" style="font-weight: bold;">만료일시</td>
                                 <td colspan="2">
                                     <input type="text" name="expirationTime" style="width:100%;" size="50" maxlength="50" th:value="${board.expirationTime}" readonly>
                                     <a style="display: none;" id="matchingTrainerId">[[${trainerInfo.trainerId}]]</a>
                                 </td>
                             </tr>
                             <tr>
-                                <td>상담가능시간</td>
+                                <td style="font-weight: bold;">상담가능시간</td>
                                 <td>
                                     <input type="text" name="availConsultWeeks" style="width:100%;" size="50" maxlength="50" th:value="${board.availConsultWeeks}" readonly>
                                 </td>
@@ -343,7 +327,7 @@ display: none;
                                 </td>
                             </tr>
                             <tr>
-                                <td>파트 / 경력</td>
+                                <td style="font-weight: bold;">파트 / 경력</td>
                                 <td>
                                     <input type="text" name="trainerPart" style="width:100%;" size="50" maxlength="50" th:value="${trainerInfo.trainerPart}" readonly>
                                 </td>
@@ -352,16 +336,16 @@ display: none;
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="2">트레이너 소개</td>
+                                <td style="font-weight: bold;" colspan="1">트레이너 소개</td>
+                                <td colspan="2">
+                                    <input type="text" name="trainerIntro" style="width:100%;" size="50" maxlength="50" th:value="${trainerInfo.trainerIntro}" readonly>
+                                </td>
                             </tr>
                             <tr>
-                                <td colspan="2">[[${trainerInfo.trainerIntro}]]</td>
-                            </tr>
-                            <tr>
-                                <td colspan="3">트레이너의 위치</td>
-                            </tr>
-                            <tr>
-                                <td colspan="3">[[${board.trainerAddr}]]</td>
+                                <td style="font-weight: bold;" colspan="1">트레이너의 위치</td>
+                                <td colspan="2">
+                                    <input type="text" name="trainerAddr" style="width:100%;" size="50" maxlength="50" th:value="${board.trainerAddr}" readonly>
+                                </td>
                             </tr>
                             <tr>
                                 <td colspan="3">
@@ -412,23 +396,23 @@ display: none;
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="3">내용</td>
+                                <td style="font-weight: bold;" colspan="3">내용</td>
                             </tr>
-                            <tr style="height:380px;" id="content_tr">
+                            <tr id="content_tr">
                                 <td colspan="3">
-                                    <textarea name="boardContent" style="width:450px;height:350px;resize:none;border:none;" readonly>[[${board.boardContent}]]</textarea>
+                                    <input type="text" name="boardContent" style="width:100%;" size="50" maxlength="50" th:value="${board.boardContent}" readonly>
                                 </td>
                             </tr>
                         </table>
                         <table class="careerPic">
                             <tr>
-                                <td>경력 및 자격 사진</td>
+                                <td style="font-weight: bold;">경력 및 자격 사진</td>
                             </tr>
                         </table>
                         <div>
                             <div id="careerInfo">
                                 <th:block th:if="${careerInfo != null}" th:each="career : ${careerInfo}">
-                                    <img th:src="@{/matching/thumbnail (sysName=${career.sysName})}">
+                                    <img style="width: 200px;" th:src="@{/matching/thumbnail (sysName=${career.sysName})}">
                                 </th:block>
                             </div>
                         </div>
@@ -437,57 +421,47 @@ display: none;
 
                 <!-- 등록, 목록 버튼 테이블 -->
                 <table class="button_table">
-                    <tr align="right" valign="middle">
-                        <td colspan="2">
-                            <th:block th:if="${board.trainerId == session.loginUser}">
-                                <form name="BoardPageForm" method="post" th:action="@{/matching/remove}">
-                                    <input name="boardNum" th:value="${board.boardNum}" type="hidden">
-                                    <input name="pagenum" th:value="${cri.pagenum}" type="hidden">
-                                    <input name="amount" th:value="${cri.amount}" type="hidden">
-                                    <input name="type" th:value="${cri.type}" type="hidden">
-                                    <input name="keyword" th:value="${cri.keyword}" type="hidden">
-                                    <a class="btnColor" href="javascript:modify()">수정</a>
-                                    <a class="btnColor" href="javascript:document.BoardPageForm.submit()">삭제</a>
-                                </form>
-                            </th:block>
-                        </td>
-                    </tr>
                     <tr>
+
                         <td>
-                            <a href="#" class="matchingOpen btnColor" data-trainer-id="${trainerInfo.trainerId}">신청하기</a>
-                        </td>
-                        <td>
-                            <a class="btnColor" th:href="${'/matching/matching_list'+cri.listLink}">목록</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
+                            <a href="#" class="matchingOpen btnColor button" style="margin-left:15px;" data-trainer-id="${trainerInfo.trainerId}">신청하기</a>
                             <a href="#" class="heart" style="float:left; margin-right:5px;"><img id="heart" src="/images/like_off.png" style="width:30px;"></a>
-                            <a href="#"  class="btnColor">북마크</a>
-                        </td>
-                        <td>
+                            <a href="#"  class="bookmark btnColor button">북마크</a>
                             <div class="displayNoneDiv writer">[[${board.trainerId}]]</div>
                             <div class="displayNoneDiv boardNum">[[${board.boardNum}]]</div>
                             <div class="displayNoneDiv boardCategory">matching</div>
-                            <a href="#"  class="reportOpen btnColor">신고</a>
+                            <a href="#"  class="reportOpen btnColor button">신고</a>
+                        </td>
+                        <td colspan="2">
+                            <div style="display: flex; justify-content: flex-end;">
+                                <th:block th:if="${board.trainerId == session.loginUser}">
+                                    <form name="BoardPageForm" method="post" th:action="@{/matching/remove}">
+                                        <input name="boardNum" th:value="${board.boardNum}" type="hidden">
+                                        <input name="pagenum" th:value="${cri.pagenum}" type="hidden">
+                                        <input name="amount" th:value="${cri.amount}" type="hidden">
+                                        <input name="type" th:value="${cri.type}" type="hidden">
+                                        <input name="keyword" th:value="${cri.keyword}" type="hidden">
+                                        <a class="btnColor button" href="javascript:modify()">수정</a>
+                                        <a class="btnColor button" href="javascript:document.BoardPageForm.submit()">삭제</a>
+                                    </form>
+                                </th:block>
+                                <a style="margin-left: 5px;" class="btnColor button" th:href="${'/matching/matching_list'+cri.listLink}">목록</a>
+                            </div>
                         </td>
                     </tr>
-
-
                 </table>
                 <!-- review -->
                 <div class="review_line">
-                    <a href="#" class="regist btnColor" style="font-weight:bold; font-size:20px">댓글 등록</a>
+                    <a href="#" class="regist btnColor button" style="font-weight:bold; font-size:20px">리뷰 작성</a>
                     <div class="reviewForm row">
                         <div style="width:20%">
-                            <h4>작성자</h4>
-                            <input type="text" name="userId" th:value="${session.loginUser}" readonly
-                                   style="text-align: center;">
+                            <h4>리뷰 작성</h4>
+                            <input type="text" name="userId" th:value="${session.loginUser}" readonly style="text-align: center;">
                             <input name="boardNum_1" id="boardNum2" th:value="${board.boardNum}" type="hidden">
                         </div>
                         <div style="width:65%">
                             <div class="starpoint">
-                                <h4>내 용</h4>
+                                <h4>별점</h4>
                                 <div class="rating" data-star-rating="0">
                                     <span class="star" data-rating="1">&#9733;</span>
                                     <span class="star" data-rating="2">&#9733;</span>
@@ -499,8 +473,8 @@ display: none;
                             <textarea name="reviewContent" placeholder="리뷰를 작성해주세요" style="resize:none;width:450px;"></textarea>
                         </div>
                         <div style="width:15%">
-                            <div id="result" name="starRating">별점 : 0</div>
-                            <a href="#" class="button finish btnColor small" style="margin-bottom:1rem;">등록</a>
+                            <div id="result" name="starRating" style="display: none;">별점 : 0</div>
+                            <a href="#" class="button finish btnColor small" style="margin-bottom:1rem; margin-top: 100px;">등록</a>
                             <a href="#" class="button cancel btnColor small">취소</a>
                         </div>
                     </div>
@@ -551,20 +525,22 @@ display: none;
 
 
 $(document).ready(function() {
+        nowpage = 1;
+		showList(1)
     var trainerId = [[${trainerInfo.trainerId}]];
-    // 초기 로딩 시 데이터 가져오기
+
     $.ajax({
         url: '/matching/check?trainerId='+trainerId,
         type: 'GET',
         success: function(data) {
             if (data) {
                 // 데이터가 있을 때
-                $(".regist").show(); // 댓글 등록 링크를 보여줍니다.
-                $(".reviewForm").hide(); // 댓글 폼을 숨깁니다.
+                $(".regist").show();
+                $(".reviewForm").hide();
             } else {
                 // 데이터가 없을 때
-                $(".regist").hide(); // 댓글 등록 링크를 숨깁니다.
-                $(".reviewForm").hide(); // 댓글 폼을 숨깁니다.
+                $(".regist").hide();
+                $(".reviewForm").hide();
             }
         },
         error: function(error) {
@@ -572,20 +548,66 @@ $(document).ready(function() {
         }
     });
 
-    // 댓글 등록 링크 클릭 시
-    $(".regist").click(function(e) {
-        e.preventDefault(); // 링크의 기본 동작을 중단합니다.
 
-        $(".reviewForm").show(); // 댓글 폼을 보여줍니다.
-        $(this).hide(); // 댓글 등록 링크를 숨깁니다.
+ // 댓글 등록 링크 클릭 시
+$(".regist").click(function(e) {
+        e.preventDefault();
+    $.ajax({
+        url: '/matching/checkReview?boardNum='+boardNum,
+        type: 'GET',
+        success: function(data) {
+        console.log(data);
+            if (data) {
+                // 데이터가 있을 때
+               alert("작성한 댓글이 있습니다. 확인 후 다시 시도해주세요!");
+                showList(1);
+            } else {
+                $(".reviewForm").show();
+                $(this).hide();
+            }
+        },
+        error: function(error) {
+            console.error('Error fetching data:', error);
+        }
     });
-    function showList(pagenum){
+
+
+
+});
+
+
+$(".finish").on("click", function(e) {
+    e.preventDefault();
+    let reviewContent = $("[name='reviewContent']").val();
+    let starRating = $(".rating").attr("data-star-rating");
+    let boardNum = $("[name='boardNum_1']").val();
+
+    // 리뷰 내용과 별점이 작성되지 않았을 때 알림 표시
+    if (!reviewContent || !starRating) {
+        alert("리뷰 내용과 별점을 작성해주세요!");
+        return; // 이후 코드 실행 중단
+    }
+
+    reviewService.add(
+        {
+            "boardNum": boardNum,
+            "userId": loginUser,
+            "reviewContent": reviewContent,
+            "starRating": starRating
+        },
+        function(result) {
+            alert("등록!");
+            showList(1);
+        }
+    );
+});
+function showList(pagenum){
 		reviewService.getList(
 			{boardNum:boardNum, pagenum:pagenum||1},
 			function(reviewCnt, list){
 				let str = "";
 				if(list == null || list.length == 0){
-					str += '<li class="noreview" style="clear:both;">등록된 댓글이 없습니다.</li>';
+					str += '<li class="noreview" style="clear:both; text-align: center">등록된 리뷰가 없습니다.</li>';
 					reviews.html(str);
 					return;
 				}
@@ -604,9 +626,8 @@ $(document).ready(function() {
 					str += '<br>'
 					if(list[i].userId == loginUser){
 						//<a href="3" class="modify">수정</a>
-						str += '<a href="'+list[i].reviewNum+'" class="modify btnColor" style="padding:5px;">수정</a>';
-						str += '<a href="'+list[i].reviewNum+'" class="mfinish btnColor" style="display:none;padding:5px;">수정 완료</a>';
-						str += '<a href="'+list[i].reviewNum+'" class="remove btnColor"  style="padding:5px;">삭제</a>';
+
+						str += '<a href="'+list[i].reviewNum+'" style="margin-left: 5px;" class="remove btnColor button small">삭제</a>';
 					}
 					str += '</div></li>';
 				}
@@ -660,37 +681,6 @@ $(document).ready(function() {
 			},10)
 		})
 	}
-	showList(1);
-    showReviewPage(reviewCnt, pagenum);
-});
-
-
-$(".finish").on("click", function(e) {
-    e.preventDefault();
-    let reviewContent = $("[name='reviewContent']").val();
-    let starRating = $(".rating").attr("data-star-rating");
-    let boardNum = $("[name='boardNum_1']").val();
-
-    // 리뷰 내용과 별점이 작성되지 않았을 때 알림 표시
-    if (!reviewContent || !starRating) {
-        alert("리뷰 내용과 별점을 작성해주세요!");
-        return; // 이후 코드 실행 중단
-    }
-
-    reviewService.add(
-        {
-            "boardNum": boardNum,
-            "userId": loginUser,
-            "reviewContent": reviewContent,
-            "starRating": starRating
-        },
-        function(result) {
-            alert("등록!");
-            showList(1);
-        }
-    );
-});
-
 
 
 	function deleteReview(e){
@@ -700,14 +690,14 @@ $(".finish").on("click", function(e) {
 			reviewNum,
 			function(result){
 				if(result == "success"){
-					alert(reviewNum+"번 댓글 삭제 완료!");
+					alert(reviewNum+"번 리뷰 삭제 완료!");
 					showList(1);
 				}
 			}
 		)
 	}
 	let reviewFlag = false;
-	function modifyReview(e){
+function modifyReview(e){
     e.preventDefault();
     if(!reviewFlag){
         reviewFlag = true;
@@ -753,7 +743,7 @@ $(".finish").on("click", function(e) {
             });
         });
     } else {
-        alert("수정 중인 댓글이 있습니다!");
+        alert("수정 중인 리뷰가 있습니다!");
     }
 }
 	function modifyReviewOk(e){
@@ -764,14 +754,14 @@ $(".finish").on("click", function(e) {
 		let reviewContent = $("."+reviewNum).val();
 
 		if(reviewContent == ""){
-			alert("수정할 댓글 내용을 입력하세요!");
+			alert("수정할 리뷰 내용을 입력하세요!");
 			return;
 		}
 		reviewService.modify(
 			{reviewNum:reviewNum, reviewContent:reviewContent, boardNum:boardNum, userId:loginUser},
 			function(result){
 				if(result == "success"){
-					alert(reviewNum+"번 댓글 수정 완료!");
+					alert(reviewNum+"번 리뷰 수정 완료!");
 					showList(nowpage);
 				}
 			}
@@ -779,7 +769,73 @@ $(".finish").on("click", function(e) {
 	}
 
 
+//좋아요
+$(document).ready(function(){
 
+    //좋아요가 있는지 확인한 값을 heartVal에 저장
+    var heartVal = /*[[${heart != null ? heart.heart : ''}]]*/ '';
+    console.log("like1"+heartVal);
+
+    //heartVal이 1이면 좋아요가 이미 되어있는것 -> like_on.png 출력
+    if(heartVal>0){
+        console.log("like2"+heartVal);
+        $("#heart").prop("src", "/images/like_on.png");	//prop() : 해당 속성을 가져와서 변경
+        $(".heart").prop('name',heartVal);
+    }
+    else{
+        console.log("like3"+heartVal);
+        $("#heart").prop("src", "/images/like_off.png");
+        $(".heart").prop('name',heartVal);
+        }
+
+
+    //좋아요 버튼 클릭 시 실행되는 코드
+    $(".heart").on("click", function(){
+        var that = $(this);
+        $.ajax({
+            url:'/heart/heart',
+            type:'POST',
+            data: {'boardNum': boardNum, 'userId': loginUser, 'boardCategory':'matching'},
+            success: function(data){
+                that.prop('name',data);
+                console.log("data:"+data);
+                if(data==1){
+                    $("#heart").prop("src", "/images/like_on.png");
+                }
+                else{
+                    $("#heart").prop("src", "/images/like_off.png");
+                }
+                console.log("that:"+that);
+            }
+        });
+    });
+});
+//북마크
+	$(document).ready(function(){
+
+		//북마크가 있는지 확인한 값을 bookmarkVal에 저장
+		var bookmarkVal = /*[[${bookmark != null ? bookmark.bookmark : ''}]]*/ '';
+		console.log(bookmarkVal);
+
+		//bookmarkVal이 1이면 북마크가 이미 되어있는것
+		if(bookmarkVal>0){
+			$(".bookmark").addClass('bookmarked');
+		}
+
+		//북마크 버튼 클릭 시 실행되는 코드
+		$(".bookmark").on("click", function(){
+			var that = $(this);
+			that.toggleClass('bookmarked');
+			$.ajax({
+				url:'/bookmark/bookmark',
+				type:'POST',
+				data: {'boardNum': boardNum, 'userId': loginUser, 'boardCategory':'matching'},
+				success: function(data){
+					console.log("data:"+data);
+				}
+			});
+		});
+	});
 
 
 

@@ -338,12 +338,12 @@
                 <table>
                     <tr>
                         <td>
-                            <div><a href="/sidebar/bmi"><img src="images/icon_BMIIMG1.png" alt="bmi"></a></div>
+                            <div><a href="/sidebar/bmi"><img th:src="@{/images/icon_BMIIMG1.png}" alt="bmi"></a></div>
                             <div><a href="/sidebar/bmi">BMI 계산기</a></div>
                         </td>
                         <td>
                             <div>
-                                <a href="/sidebar/healthCenter"><img src="images/icon_mapSearch.png" alt="health"></a>
+                                <a href="/sidebar/healthCenter"><img th:src="@{/images/icon_mapSearch.png}" alt="health"></a>
                             </div>
                             <div><a href="/sidebar/healthCenter">보건소 찾기</a></div>
                         </td>
@@ -421,6 +421,7 @@
                                     <div>TODAY</div>
                                 </td>
                                 <td>
+
                                     <div><input class="menubtn" type="image" src="images/iconchall.png" border="0"
                                                 onfocus='this.blur()'
                                                 id="chall"></div>
@@ -452,58 +453,6 @@
                         </table>
                     </div>
 
-                    <!--   다이어리 없을때       -->
-
-<!--                    <div id="navi_main_content">-->
-<!--                        <table style="padding-top: 82px;">-->
-<!--                            <tbody onclick="menutodaybtn()">-->
-<!--                            <tr>-->
-<!--                                <td style="vertical-align: bottom">[[${session.todaydate}]]</td>-->
-<!--                            </tr>-->
-<!--                            <tr>-->
-<!--                                <td>오늘 작성한 다이어리가 없습니다!</td>-->
-<!--                            </tr>-->
-<!--                            </tbody>-->
-<!--                        </table>-->
-<!--                        <div><a class="subColor" href="#">다이어리 작성하러가기</a></div>-->
-<!--                    </div>-->
-
-
-                    <!--다이어리 뷰 디자인용-->
-                    <!--                    <div id="navi_main_content">-->
-                    <!--                        <table class="diarytable">-->
-                    <!--                            <thead onclick="menutodaybtn()">-->
-                    <!--                            <tr>-->
-                    <!--                                <td><span class="highlight">현재칼로리/목표칼로리</span></td>-->
-                    <!--                                <td><span class="highlight">오늘의 비교</span></td>-->
-                    <!--                            </tr>-->
-                    <!--                            <tr>-->
-                    <!--                                <td>1000kcal/2000kcal</td>-->
-                    <!--                                <td>100kcal</td>-->
-                    <!--                            </tr>-->
-                    <!--                            </thead>-->
-                    <!--                        </table>-->
-                    <!--                        <div class="cal_area">-->
-                    <!--                            <div class="cal_top">-->
-                    <!--                                <div class="foodCal">아침<br>-->
-                    <!--                                    1000kcal-->
-                    <!--                                </div>-->
-                    <!--                                <div class="foodCal">점심<br>-->
-                    <!--                                    1000kcal-->
-                    <!--                                </div>-->
-                    <!--                            </div>-->
-                    <!--                            <div class="cal_bottom">-->
-                    <!--                                <div class="foodCal">저녁<br>-->
-                    <!--                                    1000kcal-->
-                    <!--                                </div>-->
-                    <!--                                <div class="foodCal">간식<br>-->
-                    <!--                                    1000kcal-->
-                    <!--                                </div>-->
-                    <!--                            </div>-->
-                    <!--                        </div>-->
-
-                    <!--                    </div>-->
-                    <!--                </div>-->
                     <table class="navi_bottom">
                         <tr>
                             <td><a class="subColor" href="/sidebar/bmi">BMI 계산기</a></td>

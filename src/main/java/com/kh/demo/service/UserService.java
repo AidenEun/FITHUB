@@ -10,22 +10,12 @@ public interface UserService {
 
     boolean checkId(String userid);
 
-    boolean checkNickname(String usernickname);
+    boolean checkNickname(String userNickname);
 
     Object login(String userid, String userpw);
 
     UserDTO getDetail(String userid);
 
     List<UserDTO> getSignUpListInUser(Criteria cri);
-
-    void updateUserAttendance(String userid);
-
-    int getUserAttendance(String userid);
-
-    void updateUserPoint(String userid);
-
-    Long getUserPoint(String userid);
-
-    void resetUserAttendance(String userid);
 
 }

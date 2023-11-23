@@ -44,7 +44,7 @@ public interface TrainerMatchingService {
 
     SubscribeDTO checkSubs(SubscribeDTO newSubscribe);
 
-    SubscribeDTO clickSubs(SubscribeDTO newSubscribe);
+    String clickSubs(SubscribeDTO newSubscribe);
 
     List<TrainerMatchingBoardDTO> get12matchingSearchList(Criteria cri);
 
@@ -66,4 +66,7 @@ public interface TrainerMatchingService {
     UTMatchingDTO uTtrainerCheck(String trainerId, String userId);
 
     Double getStarRatingAv(Long boardNum);
+
+
+    ReviewDTO CheckReview(Long boardNum, String userId);
 }

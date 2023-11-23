@@ -1,9 +1,6 @@
 package com.kh.demo.controller;
 
-import com.kh.demo.domain.dto.BoardDTO;
-import com.kh.demo.domain.dto.Criteria;
-import com.kh.demo.domain.dto.LikeDTO;
-import com.kh.demo.domain.dto.PageDTO;
+import com.kh.demo.domain.dto.*;
 import com.kh.demo.service.BoardService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -151,6 +148,10 @@ public class InfoBoardController {
                 LikeDTO heart = new LikeDTO();
                 heart = service.likeCheck(boardNum,loginUser);
                 model.addAttribute("heart",heart);
+
+                BookMarkDTO bookmark = new BookMarkDTO();
+                bookmark = service.bookCheck(boardNum,loginUser);
+                model.addAttribute("bookmark",bookmark);
 
             }
         }

@@ -37,11 +37,17 @@ public interface TrainerMatchingMapper {
     void saveMessage(MessageDTO newMessage);
 
 
+
+
     SubscribeDTO getcheckSubs(SubscribeDTO newSubscribe);
+    SubscribeDTO getclickSubs(SubscribeDTO newSubscribe);
 
-    SubscribeDTO getinsertSubs(SubscribeDTO newSubscribe);
+    void getinsertSubs(SubscribeDTO newSubscribe);
 
-    SubscribeDTO getdeleteSubs(SubscribeDTO newSubscribe);
+    void getdeleteSubs(SubscribeDTO newSubscribe);
+
+
+
 
     List<TrainerMatchingBoardDTO> get12matchingSearchList(Criteria cri);
 
@@ -58,4 +64,14 @@ public interface TrainerMatchingMapper {
     List<TrainerMatchingBoardDTO> getAllBoards(Long boardNum);
 
     UTMatchingDTO utCheck(String trainerId, String userId);
+
+
+    SubscribeDTO getrecheckSubs(SubscribeDTO recheckSubs);
+
+
+    void updateMatchingLikeCnt(Long boardNum);
+
+    void updateMatchingBookCnt(Long boardNum);
+
+    ReviewDTO CheckReview(Long boardNum, String userId);
 }

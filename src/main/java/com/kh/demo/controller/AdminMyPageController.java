@@ -5,10 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.kh.demo.domain.dto.*;
-import com.kh.demo.service.AdminMyPageService;
-import com.kh.demo.service.TrainerMyPageService;
-import com.kh.demo.service.UserMyPageService;
-import com.kh.demo.service.UserServiceImpl;
+import com.kh.demo.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +30,8 @@ public class AdminMyPageController {
     @Autowired @Qualifier("UserMyPageServiceImpl")
     private UserMyPageService userMyPageService;
 
+    @Autowired @Qualifier("TrainerMatchingServiceImpl")
+    private TrainerMatchingService MatchingService;
 
     @GetMapping("adminmypage_list")
     public void replaceList(Model model){
@@ -344,6 +343,11 @@ public class AdminMyPageController {
             json.putPOJO("trainerDTO", trainerDTO);
             json.putPOJO("loginUser_userId", loginUser_userId);
             json.putPOJO("profile", trainerMyPageService.getProFileList(trainerDTO.getTrainerId()));
+            SubscribeDTO newSubscribe = new SubscribeDTO();
+            newSubscribe.setUserId(loginUser_userId);
+            newSubscribe.setTrainerId(trainerDTO.getTrainerId());
+            SubscribeDTO isSubscribed = MatchingService.checkSubs(newSubscribe);
+            json.putPOJO("isSubscribed", isSubscribed);
         }
         else if (userInfo instanceof UserDTO) {
             UserDTO userDTO = (UserDTO) userInfo;
@@ -472,5 +476,26 @@ public class AdminMyPageController {
         adminMyPageService.returnMessage(messageContent, receiveId, messageNum);
 
         return ResponseEntity.ok("문의 답변이 완료 되었습니다.");
+    }
+
+    @PostMapping("messageToAdmin")
+    public ResponseEntity<String> messageToAdmin(@RequestBody MessageDTO messageDATA, HttpServletRequest request){
+        String messageContent = messageDATA.getMessageContent();
+        String userId = (String) request.getSession().getAttribute("loginUser");
+
+        adminMyPageService.messageToAdmin(messageContent, userId);
+
+        return ResponseEntity.ok("문의가 완료 되었습니다.");
+    }
+
+    @PostMapping("messageWrite")
+    public ResponseEntity<String> messageWrite(@RequestBody MessageDTO messageDATA, HttpServletRequest request){
+        String messageContent = messageDATA.getMessageContent();
+        String receiveId = messageDATA.getReceiveId();
+        String userId = (String) request.getSession().getAttribute("loginUser");
+
+        adminMyPageService.messageWrite(messageContent, userId, receiveId);
+
+        return ResponseEntity.ok("쪽지 전송이 완료 되었습니다.");
     }
 }

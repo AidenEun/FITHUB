@@ -1,9 +1,6 @@
 package com.kh.demo.service;
 
-import com.kh.demo.domain.dto.BoardDTO;
-import com.kh.demo.domain.dto.Criteria;
-import com.kh.demo.domain.dto.FileDTO;
-import com.kh.demo.domain.dto.LikeDTO;
+import com.kh.demo.domain.dto.*;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
@@ -107,7 +104,7 @@ public interface BoardService {
 	public LikeDTO likeCheck(Long boardNum, String loginUser);
 
 
-
+	public BookMarkDTO bookCheck(Long boardNum, String loginUser);
 }
 
 

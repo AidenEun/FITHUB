@@ -310,5 +310,15 @@ public class AdminMyPageServiceImpl implements AdminMyPageService {
     @Override
     public void saveMessage(MessageDTO newMessage){
         adminMyPageMapper.saveMatching(newMessage);
-    };
+    }
+
+    @Override
+    public void messageToAdmin(String messageContent, String userId) {
+        adminMyPageMapper.insertMessageToAdmin(messageContent, userId);
+    }
+
+    @Override
+    public void messageWrite(String messageContent, String userId, String receiveId) {
+        adminMyPageMapper.messageWrite(messageContent, userId, receiveId);
+    }
 }

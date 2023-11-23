@@ -81,21 +81,6 @@
         height: 30px;
     }
 
-    .write_table:hover {
-        transform: scale(1.04);
-        transition: transform 0.2s;
-        box-shadow: 8px 8px 11px rgba(0, 0, 0, 0.3); /* 그림자 효과 추가 */
-
-    }
-
-    .write_table:active {
-        transform: scale(1.04);
-    }
-
-    .write_table tr:hover {
-        background-color: #ebede1 !important;
-        transition: transform 0.2s;
-    }
 
     .write_table tr td input {
         border: none;
@@ -164,15 +149,9 @@
     .button_table tr td a {
         border: 1px solid gray;
         border-radius: 20px;
-        padding: 15px;
         box-shadow: 5px 5px 8px rgba(0, 0, 0, 0.3); /* 그림자 효과 추가 */
     }
 
-    .button_table tr td a:hover {
-        background-color: #ebede1 !important;
-        transition: transform 0.4s;
-        font-weight: bold;
-    }
     .wrapper.sidebar > .inner > .content{
         width: 70%;
     }
@@ -254,7 +233,7 @@
 
 
                 <!-- 글작성 테이블 -->
-                <table class="write_table" style="border-collapse: collapse;" border="2">
+                <table class="write_table" border="2">
                     <tr>
                         <th>제목</th>
                         <td colspan="3">
@@ -301,7 +280,7 @@
                     <tr>
                         <th colspan="2" class="adrr_text"><input type="text" id="sample4_postcode" name="trainerZipcode"
                                                                  placeholder="우편번호"></th>
-                        <td colspan="2"><input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
+                        <td colspan="2"><div class="button btnColor" onclick="sample4_execDaumPostcode()">우편번호 찾기</div><br>
                         </td>
                     </tr>
                     <tr>
@@ -328,11 +307,8 @@
             <table class="button_table">
                 <tr align="center" valign="middle">
                     <td>
-                        <a href="javascript:sendit()">등록</a> <!-- javascript의 sendit 함수 호출 -->
-                    </td>
-                    <td>
-
-                        <a th:href="${'/matching/matching_list'+cri.listLink}">취소</a>
+                        <a style="border-radius: 4px;" class="button btnColor" href="javascript:sendit()">등록</a> <!-- javascript의 sendit 함수 호출 -->
+                        <a style="border-radius: 4px;" class="button btnColor" th:href="${'/matching/matching_list'+cri.listLink}">취소</a>
                     </td>
                 </tr>
             </table>

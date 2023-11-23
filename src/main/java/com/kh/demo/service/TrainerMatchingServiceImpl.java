@@ -80,7 +80,6 @@ public class TrainerMatchingServiceImpl implements TrainerMatchingService {
     @Override
     public TrainerMatchingBoardDTO boardView(Long boardNum){
         TrainerMatchingBoardDTO list = tmmapper.boardView(boardNum);
-
         return list;
     };
     @Override
@@ -88,6 +87,13 @@ public class TrainerMatchingServiceImpl implements TrainerMatchingService {
         UTMatchingDTO Check = tmmapper.utCheck(trainerId, userId);
         return Check;
     };
+    @Override
+    public ReviewDTO CheckReview(Long boardNum, String userId) {
+        ReviewDTO result = tmmapper.CheckReview(boardNum, userId);
+        return result;
+    };
+
+
 
     @Override
     public ProfileDTO getProfileInfo(String trainerId){
@@ -116,19 +122,6 @@ public class TrainerMatchingServiceImpl implements TrainerMatchingService {
     public void updateViewCount(Long boardNum){
         tmmapper.updateViewCount(boardNum);
     };
-
-/*    @Override
-    public ArrayList<Integer> getReviewCntList(List<TrainerMatchingBoardDTO> list) {
-        ArrayList<Integer> review_cnt_list = new ArrayList<>();
-        for(TrainerMatchingBoardDTO board : list) {
-            review_cnt_list.add(rvmapper.getTotal(board.getBoardNum()));
-        }
-        return review_cnt_list;
-    }*/
-
-
-
-
 
     @Override
     public Long getLastNum(String trainerId){
@@ -186,19 +179,26 @@ public class TrainerMatchingServiceImpl implements TrainerMatchingService {
         return tmmapper.getMachingSearchList(keyword);
     }
 
-    public SubscribeDTO checkSubs(SubscribeDTO newSubscribe){return tmmapper.getcheckSubs(newSubscribe);};
-
-    public SubscribeDTO clickSubs(SubscribeDTO newSubscribe){
+    public SubscribeDTO checkSubs(SubscribeDTO newSubscribe){
         SubscribeDTO result = tmmapper.getcheckSubs(newSubscribe);
-
-        if(result != null){
-            return tmmapper.getdeleteSubs(newSubscribe);
-        }
-        else {
-            return tmmapper.getinsertSubs(newSubscribe);
-        }
-
+        return result;
     };
+    public String clickSubs(SubscribeDTO newSubscribe) {
+        SubscribeDTO result = tmmapper.getclickSubs(newSubscribe);
+
+        if (result != null) {
+            // 구독한 경우 -> 구독 취소 후 재확인
+            tmmapper.getdeleteSubs(newSubscribe);
+            tmmapper.getrecheckSubs(newSubscribe);
+            return "unsubscribed";
+        } else {
+            // 구독하지 않은 경우 -> 구독 처리 후 재확인
+            tmmapper.getinsertSubs(newSubscribe);
+            tmmapper.getrecheckSubs(newSubscribe);
+            return "subscribed";
+        }
+    }
+
 
     @Override
     public boolean modify(TrainerMatchingBoardDTO board) {
@@ -210,8 +210,6 @@ public class TrainerMatchingServiceImpl implements TrainerMatchingService {
         return true;
 
     }
-
-
 
     @Override
     public boolean remove(String loginUser, Long boardNum) {
@@ -237,4 +235,9 @@ public class TrainerMatchingServiceImpl implements TrainerMatchingService {
     };
     @Override
     public List<TrainerDTO> getTrainerNickname(String trainerId){return tmapper.getTrainerNickname(trainerId);}
+
+
+
+
+
 }
