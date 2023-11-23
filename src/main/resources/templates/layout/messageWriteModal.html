@@ -1,0 +1,27 @@
+<th:block th:fragment="messageWriteModal()" xmlns:th="http://www.thymeleaf.org">
+    <div class="message_Write_modal_box">
+        <div class="message_Write_modal_contents">
+
+            <div class="title-container">
+                <button class="messageWriteClose button btnColor">&times;</button>
+                <h1 class="title">쪽지 보내기</h1>
+            </div>
+            <div id="messageWriteFormBox">
+                <h3>받는 사람의 아이디를 입력하세요</h3>
+                <label>
+                    <textarea id="messageReceiveId" name="messageReceiveId"></textarea>
+                </label>
+                <h3>쪽지 내용을 입력하세요</h3>
+                <label>
+                    <textarea id="messageWriteContent" name="messageWriteContent"></textarea>
+                </label>
+                <div class="button-container" style="margin-top: 10px; margin-bottom: 10px;">
+                    <div class="button resetMessageWriteButton btnColor">리셋</div>
+                    <div class="button cancelMessageWriteButton btnColor">취소</div>
+                    <div class="button confirmMessageWriteButton btnColor">확인</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+

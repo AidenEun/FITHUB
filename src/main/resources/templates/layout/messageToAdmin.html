@@ -1,0 +1,23 @@
+<th:block th:fragment="messageToAdminModal()" xmlns:th="http://www.thymeleaf.org">
+    <div class="message_To_Admin_modal_box">
+        <div class="message_To_Admin_modal_contents">
+
+            <div class="title-container">
+                <button class="messageToAdminClose button btnColor">&times;</button>
+                <h1 class="title">문의 하기</h1>
+            </div>
+            <div id="messageToAdminFormBox">
+                <h3>문의할 내용을 입력하세요</h3>
+                <label>
+                    <textarea id="messageToAdminContent" name="messageToAdminContent"></textarea>
+                </label>
+                <div class="button-container" style="margin-top: 10px; margin-bottom: 10px;">
+                    <div class="button resetMessageToAdminButton btnColor">리셋</div>
+                    <div class="button cancelMessageToAdminButton btnColor">취소</div>
+                    <div class="button confirmMessageToAdminButton btnColor">확인</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+
