@@ -142,8 +142,8 @@
 						<th:block th:each="board, iterStat : ${newsList}" th:if="${iterStat.index < 4}">
 							<table style="border : 1px solid lightgrey; margin: 3px;">
 								<tr>
-									<td class="thumbnail">썸네일
-										<a class="get" id="img" th:href="${board.boardNum}">
+									<td class="thumbnail">
+										<a class="get img" th:href="${board.boardNum}">
 											<!--											<img th:src="${board.prodImg}" alt="Image" />-->
 										</a>
 									</td>
@@ -180,7 +180,11 @@
 						<th:block th:each="board, iterStat : ${foodList}" th:if="${iterStat.index < 4}">
 							<table style="border : 1px solid lightgrey; margin: 3px;">
 								<tr>
-									<td class="thumbnail">썸네일</td>
+									<td class="thumbnail">
+										<a class="get img" th:href="${board.boardNum}">
+											<!--											<img th:src="${board.prodImg}" alt="Image" />-->
+										</a>
+									</td>
 								</tr>
 								<tr>
 									<td class="boardTitle" style="height: 30px; ">
@@ -214,7 +218,11 @@
 						<th:block th:each="board, iterStat : ${exerList}" th:if="${iterStat.index < 4}">
 							<table style="border : 1px solid lightgrey; margin: 3px;">
 								<tr>
-									<td class="thumbnail">썸네일</td>
+									<td class="thumbnail">
+										<a class="get img" th:href="${board.boardNum}">
+											<!--											<img th:src="${board.prodImg}" alt="Image" />-->
+										</a>
+									</td>
 								</tr>
 								<tr>
 									<td class="boardTitle" style="height: 30px; ">
@@ -248,7 +256,11 @@
 						<th:block th:each="board, iterStat : ${tipList}" th:if="${iterStat.index < 4}">
 							<table style="border : 1px solid lightgrey; margin: 3px;">
 								<tr>
-									<td class="thumbnail">썸네일</td>
+									<td class="thumbnail">
+										<a class="get img" th:href="${board.boardNum}">
+											<!--											<img th:src="${board.prodImg}" alt="Image" />-->
+										</a>
+									</td>
 								</tr>
 								<tr>
 									<td class="boardTitle" style="height: 30px; ">

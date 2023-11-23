@@ -52,13 +52,11 @@
 		#thumbnail{
 			width: 210px !important;
 			height: 190px !important;
-			background-color: #5a8100;
 			padding: 10px;
 		}
 		#thumbnail #img{
-			width: 190px !important;
-			height: 170px !important;
-			background-color: beige;
+			width: 200px !important;
+			height: 180px !important;
 		}
 		#boardtitle{
 			padding: 0;
@@ -113,6 +111,11 @@
 			color: #F7FAF5 !important;
 			box-shadow: 0 0 2px #5a8100;
 		}
+		.info_list{
+			margin-bottom: 10px;
+			padding-bottom: 10px;
+			border-bottom: 1px solid #ebede1;
+		}
 
 	</style>
 </head>
@@ -138,11 +141,11 @@
 			<div class="button btnColor"><a th:href="${'/info/info_write'+pageMaker.cri.listLink}">작성하기</a></div>
 			<div style="width: 100%">
 				<!-- 게시글 리스트 띄우는 테이블 -->
-				<table id="list" class="info_news_list" style="border-bottom: 1px #304400">
-					<th:block th:if="${list != null and list.size()>0}" th:each="board : ${list}">
+				<th:block th:if="${list != null and list.size()>0}" th:each="board : ${list}">
+					<table id="list" class="info_list">
 						<tr valign="middle">
-							<td id="thumbnail" rowspan="3" style="width: 100%">
-								<div id="img">썸네일</div>
+							<td id="thumbnail" rowspan="3" style="width: 100%;border:1px solid #ebede1;">
+								<div id="img"></div>
 								<!--/*								[[${board.썸네일}]]*/-->
 							</td>
 							<td style="height: 35px; padding: 5px 10px;">
@@ -157,20 +160,22 @@
 								</a>
 							</td>
 						</tr>
-						<tr>
+						<tr style="border-bottom: 1px solid #5a8100 !important;">
 							<td id="cnt" >
 								<span class="reply_cnt" th:text="'댓글 '+${reply_cnt_list[boardStat.index]}" style="margin-right: 10px; margin-left: 5px;">댓글수</span>
 								<span>조회수 [[${board.viewCnt}]]</span>
 							</td>
 						</tr>
-					</th:block>
-					<th:block th:if="${list == null or list.size() == 0}">
+					</table>
+				</th:block>
+				<th:block th:if="${list == null or list.size() == 0}">
+					<table class="info_list">
 						<tr>
 							<td colspan="2" style="text-align: center; font-size: 14px;">등록된
 								게시글이 없습니다.</td>
 						</tr>
-					</th:block>
-				</table>
+					</table>
+				</th:block>
 			</div>
 			<br>
 			<!-- 페이징 처리하는 테이블 -->
