@@ -273,7 +273,7 @@ p {
 									<a class="bookmark button btnColor small" style="float:left; margin-left:10px;">북마크</a>
 									<a class="button reportOpen btnColor small" style="float:left; margin-left:10px;">신고</a>
 								</th:block>
-
+								<hr>
 								<span th:if="${board != null}" style="float: right; margin-left: 10px;" th:switch="${board.boardCategory}">
 									<span th:case="'infoNews'"><a class="button btnColor small" th:href="${'/info/info_news'+cri.listLink}">목록</a></span>
 									<span th:case="'infoExer'"><a class="button btnColor small" th:href="${'/info/info_exercise'+cri.listLink}">목록</a></span>

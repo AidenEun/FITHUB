@@ -28,7 +28,7 @@
 	}
 
 	#header {
-		background-color: #5a8100;
+		background-color: #8FA746;
 	}
 
 	#header nav > ul > li a {
@@ -119,7 +119,7 @@
 <body class="is-preload">
 
 	<!-- Header -->
-	<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin},${session.profile})}"></th:block>
+	<th:block th:replace="~{layout/login_header::login_header()}"></th:block>
 
 	<!-- Main -->
 	<section id="main" class="wrapper sidebar left">

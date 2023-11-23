@@ -143,9 +143,10 @@
         AND trainer_id=#{trainerId}
         AND trainer_check = 'O';
     </select>
+
     <select id="CheckReview">
         SELECT * FROM review
-        WHERE board_num=#{boardNum}
+        WHERE matching_board_num=#{boardNum}
         AND user_id=#{userId}
     </select>
 
