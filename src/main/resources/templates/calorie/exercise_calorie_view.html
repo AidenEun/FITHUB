@@ -279,7 +279,7 @@ left: 29px;
                         </tr>
                         <tr>
                             <th width="30%" class="nametag">칼로리</th>
-                            <td width="70%">[[${exec.execCalories}]]kcal</td>
+                            <td width="70%" name="execCalories" id="execCalories">[[${exec.execCalories}]]kcal</td>
                         </tr>
                     </table>
                     <div id="coment">
@@ -384,6 +384,28 @@ left: 29px;
     </body>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+        window.onload = function () {
+         const execCaloriesText = $("[name='execCalories']").text();
+        const execCalories = parseInt(execCaloriesText.replace('kcal', ''));
+         console.log(execCalories);
+        // 운동별 결과 계산 및 표시
+        calculateAndDisplay("walking",execCalories, 60, 4.5);
+        calculateAndDisplay("running",execCalories, 60, 7);
+        calculateAndDisplay("jumprope",execCalories, 60, 9);
+        calculateAndDisplay("swim",execCalories, 60, 6.1);
+        calculateAndDisplay("bicycle",execCalories, 60, 8);
+    };
+
+    function calculateAndDisplay(activity,execCalories, weight, factor) {
+        console.log(activity,execCalories,weight,factor);
+        var result = ((execCalories / weight / factor) * 60)/2;
+        console.log(result);
+        var resultElement = document.getElementById(activity + "_result");
+        resultElement.textContent = result.toFixed(0); // 소수점 없이 정수로 표시
+    }
+
+
+
         function searchExec() {
             var keyword = $("#search-input").val();
             if (keyword) {

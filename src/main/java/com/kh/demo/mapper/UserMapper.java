@@ -19,20 +19,10 @@ public interface UserMapper {
 	AdminDTO findAdminById(String userId);
 
 
-	UserDTO findByNickname(String usernickname);
+	UserDTO findByNickname(String userNickname);
 
   TrainerDTO findTrainerById(String userId);
 
   int profileUpdateUser(UserDTO user);
-
-	void updateUserAttendance(String userid);
-
-	int getUserAttendance(String userid);
-
-	void updateUserPoint(String userid);
-
-	Long getUserPoint(String userid);
-
-	void resetUserAttendance(String userid);
 
 }

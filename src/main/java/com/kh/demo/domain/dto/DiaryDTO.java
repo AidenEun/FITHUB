@@ -22,5 +22,13 @@ public class DiaryDTO {
     private String diaryContent;
     private String myChallNum;
 //    private String myINGChallNum;
+    private int caloriesGoal;
+    private int weightGoal;
+    private double nowCal;
+    private double todayKGGap;
+    private double bfCal;
+    private double lunchCal;
+    private double dinnerCal;
+    private double snackCal;
 
 }

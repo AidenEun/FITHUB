@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -351,6 +350,8 @@ public class UserMyPageController {
         model.addAttribute("trainerTop5List",trainerTop5List);
 //        System.out.println(diary);
 
+
+
         //오늘의 비교 계산
         double resultweight = Math.round((user.getWeightGoal() - diary.getTodayWeight()) * 100.0) / 100.0;
         //오늘 칼로리 계산
@@ -373,6 +374,8 @@ public class UserMyPageController {
         double lunchCal = 0d;
         double dinnerCal = 0d;
         double snackCal = 0d;
+
+
 
         for (int i = 0; i < todayAlllist.length; i++) {
 //            System.out.println(todayAlllist[i]);
@@ -530,7 +533,7 @@ public class UserMyPageController {
                     }
                 }
             }
-            System.out.println("다이어리 저장 :" + diary);
+//            System.out.println("다이어리 저장 :" + diary);
             return "redirect:/usermypage/diaryView?choicedate=" + choicedate;
         }
         //실패시 다시 캘린더로
@@ -550,7 +553,7 @@ public class UserMyPageController {
     @PostMapping("diaryRemove")
     public String diaryRemove(Long diaryNum, String choicedate) {
         DiaryDTO diary = service.getDiaryByNum(diaryNum);
-        System.out.println("removediary :" + diary.getMyChallNum());
+//        System.out.println("removediary :" + diary.getMyChallNum());
 
         if (diary.getMyChallNum() != null) {
             if (service.removeStamp(diary.getUserId(), diary.getRegdate())) {
@@ -567,6 +570,99 @@ public class UserMyPageController {
         }
         return "redirect:/usermypage/diaryView?choicedate=" + choicedate;
     }
+
+    @PostMapping("todaydiary")
+    @ResponseBody
+    public String todaydiary(@RequestParam("userid") String userid, @RequestParam("todaydate") String todaydate){
+        ObjectNode json = JsonNodeFactory.instance.objectNode();
+        DiaryDTO diary = service.getsideDiaryWithUser(todaydate, userid);
+        //오늘 총 칼로리 계산(음식-운동)
+        if(diary != null) {
+            double totalResult = Math.round(diary.getFoodCalories() - diary.getExerCalories()) * 100.0 / 100.0;
+            diary.setNowCal(totalResult);
+
+            //오늘의 체중비교 계산
+            double resultweight = Math.round((diary.getWeightGoal() - diary.getTodayWeight()) * 100.0) / 100.0;
+            diary.setTodayKGGap(resultweight);
+
+            //목표 칼로리
+            int caloriesGoal = diary.getCaloriesGoal();
+            diary.setCaloriesGoal(caloriesGoal);
+            //각 음식, 운동 num 번호가 있는 배열
+            String bfNumlist = diary.getTodayBreakfast();
+            String lunchNumlist = diary.getTodayLunch();
+            String dinnerNumlist = diary.getTodayDinner();
+            String snackNumlist = diary.getTodaySnack();
+
+            String[] todayAlllist = {bfNumlist, lunchNumlist, dinnerNumlist, snackNumlist};
+
+            double bfCal = 0d;
+            double lunchCal = 0d;
+            double dinnerCal = 0d;
+            double snackCal = 0d;
+
+
+            for (int i = 0; i < todayAlllist.length; i++) {
+                if (todayAlllist[i].isEmpty()) {
+
+                } else {
+                    if (i == 0) {
+                        String[] bfArr = todayAlllist[i].split(",");
+                        for (String data : bfArr) {
+                            List<FoodDTO> bfDTOList = calorieService.findfoodName(data);
+                            for (FoodDTO dtoData : bfDTOList) {
+                                bfCal += Double.parseDouble(dtoData.getFoodCalories());
+
+                            }
+                        }
+                        bfCal = Math.round(bfCal * 100.0) / 100.0;
+                        diary.setBfCal(bfCal);
+                    } else if (i == 1) {
+                        String[] lunchArr = todayAlllist[i].split(",");
+                        for (String data : lunchArr) {
+                            List<FoodDTO> lunchDTOList = calorieService.findfoodName(data);
+                            for (FoodDTO dtoData : lunchDTOList) {
+                                lunchCal += Double.parseDouble(dtoData.getFoodCalories());
+                            }
+                        }
+                        lunchCal = Math.round(lunchCal * 100.0) / 100.0;
+                        diary.setLunchCal(lunchCal);
+
+                    } else if (i == 2) {
+                        String[] dinnerArr = todayAlllist[i].split(",");
+                        for (String data : dinnerArr) {
+                            List<FoodDTO> dinnerDTOList = calorieService.findfoodName(data);
+                            for (FoodDTO dtoData : dinnerDTOList) {
+                                dinnerCal += Double.parseDouble(dtoData.getFoodCalories());
+                            }
+                        }
+                        dinnerCal = Math.round(dinnerCal * 100.0) / 100.0;
+                        diary.setDinnerCal(dinnerCal);
+                    } else if (i == 3) {
+                        String[] snackArr = todayAlllist[i].split(",");
+                        for (String data : snackArr) {
+                            List<FoodDTO> snackDTOList = calorieService.findfoodName(data);
+                            for (FoodDTO dtoData : snackDTOList) {
+                                snackCal += Double.parseDouble(dtoData.getFoodCalories());
+                            }
+                        }
+                        snackCal = Math.round(snackCal * 100.0) / 100.0;
+                        diary.setSnackCal(snackCal);
+                    } else {
+                        System.out.println("해당사항없음 오류");
+                    }
+
+                }
+            }
+            json.putPOJO("diaryDTO", diary);
+            json.putPOJO("todaydate", todaydate);
+        }else {
+            json.putPOJO("diaryDTO", diary);
+            json.putPOJO("todaydate", todaydate);
+        }
+        return json.toString();
+    }
+
 
 }
 
