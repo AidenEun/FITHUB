@@ -114,7 +114,7 @@ function challengeModal(e){
             e.preventDefault(); // 기본 동작 중지
 
             var pageNum = $(this).attr('href');
-            loadPage('/challenge/' + category, pageNum);
+            loadPage('/challenge/' + category, pageNum, category);
         });
     }
 
