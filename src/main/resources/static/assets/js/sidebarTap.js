@@ -140,7 +140,7 @@ function displayMyChallData(myChallDTOList) {
     } else {
         let row = $('<tr>');
         row.append('<td style="text-align: center;">진행 중인 챌린지가 없습니다.</td>');
-        let table = $('<table style="margin-bottom: 10px;">');
+        let table = $('<table style="padding-top: 82px;">');
         table.append(row);
         navi_main_content.append(table);
     }

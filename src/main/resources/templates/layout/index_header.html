@@ -213,6 +213,36 @@
             display: inline;
             box-shadow: inset 0 -10px 0 #ebede1;
         }
+        #menu .damin_main table{
+            margin-top: 60px;
+        }
+        #menu .damin_main table tr {
+            padding-bottom: 27px !important;
+        }
+        #menu .damin_main a.adminBtn{
+            display: inline-block;
+            width: 90%;
+            background: #ebede1;
+            border-radius: 38px;
+            color: #5a8100 !important;
+            box-shadow: 0 0 2px #5a8100 !important;
+            height: 2.55em !important;
+            line-height: 2.55em;
+        }
+        #menu .damin_main a.adminBtn:hover{
+            display: inline-block;
+            width: 100%;
+            background: #FFFFFF;
+            border-radius: 4px !important;
+            box-shadow: 4px 4px 2px 0px rgb(203, 211, 177) !important;
+            color: #5a8100 !important;
+            font-weight: 700 !important;
+            height: 2.75em !important;
+            line-height: 2.75em !important;
+            padding: 0 1.5em !important;
+            transition: ease 0.55s;
+        }
+
 
     </style>
 
@@ -385,7 +415,7 @@
                         <div>
                             <th:block
                                     th:if="${session.admin!=null && (session.trainer == null && session.user == null)} ">
-                                <div style="height: 40px;"><span>[관리자]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                <div style="height: 40px;"><span>[관리자]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                                     <span th:text="${session.admin.adminNickname}+'('+${session.admin.adminId}+')'"></span>
                                     <input type="hidden" name="userid" th:value="${session.admin.adminId}">
                                 </div>
@@ -488,22 +518,23 @@
                     <div class="damin_main">
                         <table>
                             <tr>
-                                <td><a class="subColor" href="/adminmypage/adminmypage_trainer">트레이너 신청서 확인하기</a></td>
+                                <td><a class="adminBtn" href="/adminmypage/adminmypage_trainer">트레이너 신청서 확인하기</a></td>
                             </tr>
                             <tr>
-                                <td><a class="btnColor" href="/adminmypage/adminmypage_board">게시물 관리하기</a></td>
+                                <td><a class="adminBtn" href="/adminmypage/adminmypage_board">게시물 관리하기</a></td>
                             </tr>
                             <tr>
-                                <td><a class="btnColor" href="/adminmypage/adminmypage_usersearch">유저 관리하기</a></td>
+                                <td><a class="adminBtn" href="/adminmypage/adminmypage_usersearch">유저 관리하기</a></td>
                             </tr>
                             <tr>
-                                <td><a class="btnColor" href="/adminmypage/adminmypage_report">신고 관리하기</a></td>
+                                <td><a class="adminBtn" href="/adminmypage/adminmypage_report">신고 관리하기</a></td>
                             </tr>
                             <tr>
-                                <td><a class="btnColor" href="/adminmypage/adminmypage_message">쪽지함 바로가기</a></td>
+                                <td><a class="adminBtn" href="/adminmypage/adminmypage_message">문의함 바로가기</a></td>
                             </tr>
                             <tr>
-                                <td><a class="btnColor" href="/adminmypage/adminmypage_list">관리자 페이지 바로가기</a></td>
+                                <td><a class="adminBtn" href="/adminmypage/adminmypage_list">관리자 페이지 바로가기</a></td>
+
                             </tr>
                         </table>
                     </div>
