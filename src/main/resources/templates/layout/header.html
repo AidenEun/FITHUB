@@ -384,18 +384,21 @@
                                     th:if="${session.admin!=null && (session.trainer == null && session.user == null)} ">
                                 <div style="height: 40px;"><span>[관리자]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                                     <span th:text="${session.admin.adminNickname}+'('+${session.admin.adminId}+')'"></span>
+                                    <input type="hidden" name="userid" th:value="${session.admin.adminId}">
                                 </div>
                             </th:block>
                             <th:block
                                     th:if="${session.trainer!=null && (session.admin == null && session.user == null )}">
                                 <div style="height: 40px;"><span>[트레이너]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                                     <span th:text="${session.trainer.trainerNickname}+'('+${session.trainer.trainerId}+')'"></span>
+                                    <input type="hidden" name="userid" th:value="${session.trainer.trainerId}">
                                 </div>
                             </th:block>
                             <th:block
                                     th:if="${session.user!=null && (session.admin == null && session.trainer == null )}">
                                 <div style="height: 40px;"><span>[일반회원]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                                     <span th:text="${session.user.userNickname}+'('+${session.user.userId}+')'"></span>
+                                    <input type="hidden" name="userid" th:value="${session.user.userId}">
                                 </div>
                             </th:block>
                         </div>
@@ -462,10 +465,10 @@
                         <tr th:if="${session.user != null}">
                             <!--                    <tr>-->
                             <td colspan="2">
-                                <a class="subColor" href="/usermypage/user_applytrainer">트레이너 신청</a>
+                                <a class="subColor" href="/usermypage/user_applytrainer">트레이너 전환 신청</a>
                             </td>
                         </tr>
-                        <tr th:if="${session.user == null && (session.trainer != null || sessoin.admin.trainer != null)}">
+                        <tr th:if="${session.user == null && (session.trainer != null || session.admin != null)}">
                             <td colspan="2">
                                 <a class="subColor" href="/trainermypage/trainer_messagelist">매칭 쪽지함 확인하기</a>
                             </td>
