@@ -225,7 +225,11 @@
                         <!-- 검색 결과를 순회하며 출력 -->
                         <tr th:each="food : ${foods}" id="result_foodlist">
 
-                            <td th:text="${food.foodName}"><a class="get" th:href="${food.foodNum}"></a></td>
+                            <td>
+                                <a class="get3" th:href="${food.foodNum}">
+                                    <span th:text="${food.foodName}"></span>
+                                </a>
+                            </td>
 
                             <td th:text="${food.foodCalories}"></td>
                         </tr>
@@ -271,9 +275,10 @@
     });
 
     $(document).ready(function () {
-        $('.get').click(function (event) {
-            event.preventDefault();
+        $('.get3').click(function (e) {
+            e.preventDefault();
             var foodNum = $(this).attr('href'); // 'foodNum' 값을 가져옴
+            console.log(foodNum);
             // 다음 페이지 URL 구성
             var Url = '/calorie/food_calorie_view?foodNum=' + foodNum;
 

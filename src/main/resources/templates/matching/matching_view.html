@@ -549,31 +549,31 @@ $(document).ready(function() {
     });
 
 
-     // 댓글 등록 링크 클릭 시
-    $(".regist").click(function(e) {
-            e.preventDefault();
-        $.ajax({
-            url: '/matching/checkReview?boardNum='+boardNum,
-            type: 'GET',
-            success: function(data) {
-            console.log(data);
-                if (data) {
-                    // 데이터가 있을 때
-                   alert("작성한 댓글이 있습니다. 확인 후 다시 시도해주세요!");
-                    showList(1);
-                } else {
-                    $(".reviewForm").show();
-                    $(this).hide();
-                }
-            },
-            error: function(error) {
-                console.error('Error fetching data:', error);
+ // 댓글 등록 링크 클릭 시
+$(".regist").click(function(e) {
+        e.preventDefault();
+    $.ajax({
+        url: '/matching/checkReview?boardNum='+boardNum,
+        type: 'GET',
+        success: function(data) {
+        console.log(data);
+            if (data) {
+                // 데이터가 있을 때
+               alert("작성한 댓글이 있습니다. 확인 후 다시 시도해주세요!");
+                showList(1);
+            } else {
+                $(".reviewForm").show();
+                $(this).hide();
             }
-        });
-
-
-
+        },
+        error: function(error) {
+            console.error('Error fetching data:', error);
+        }
     });
+
+
+
+});
 
 
 $(".finish").on("click", function(e) {
@@ -681,7 +681,7 @@ function showList(pagenum){
 			},10)
 		})
 	}
-});
+
 
 	function deleteReview(e){
 		e.preventDefault();
