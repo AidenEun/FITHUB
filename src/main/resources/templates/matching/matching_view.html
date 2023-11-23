@@ -462,7 +462,9 @@ display: none;
                     </tr>
                     <tr>
                         <td>
-                            <a href="#" class="heart" style="float:left; margin-right:5px;"><img id="heart" src="/images/like_off.png" style="width:30px;"></a>
+                                <a href="#" class="like" style="float:left; margin-right:5px;" th:value="${userId}">
+                                    <img id="likeON" src="/images/like_on.png" style="width:30px;">
+                                </a>
                             <a href="#"  class="btnColor">북마크</a>
                         </td>
                         <td>
@@ -662,8 +664,33 @@ $(document).ready(function() {
 	}
 	showList(1);
     showReviewPage(reviewCnt, pagenum);
-});
 
+
+
+
+});
+$('.like').on('click', function(event) {
+    event.preventDefault();
+
+    var $img = $(this).find('img');
+
+    $.ajax({
+        url: '/matching/like_action',
+        method: 'POST',
+        data: { boardNum: boardNum, userId:userId },
+        success: function(response) {
+
+            if (likeOn) {
+                $img.attr('src', '/images/like_on.png');
+            } else {
+                $img.attr('src', '/images/like_off.png');
+            }
+        },
+        error: function(error) {
+            console.error('에러 발생:', error);
+        }
+    });
+});
 
 $(".finish").on("click", function(e) {
     e.preventDefault();
