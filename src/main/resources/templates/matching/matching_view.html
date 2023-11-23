@@ -424,12 +424,9 @@ display: none;
                     <tr>
 
                         <td>
-
                             <a href="#" class="matchingOpen btnColor button" data-trainer-id="${trainerInfo.trainerId}">신청하기</a>
+                            <a href="#" class="heart" style="float:left; margin-right:5px;"><img id="heart" src="/images/like_off.png" style="width:30px;"></a>
                             <a href="#"  class="btnColor button">북마크</a>
-                            <a href="#" class="like" style="float:left; margin-right:5px;" th:value="${userId}">
-                                <img id="likeON" src="/images/like_on.png" style="width:30px;">
-                            </a>
                             <div class="displayNoneDiv writer">[[${board.trainerId}]]</div>
                             <div class="displayNoneDiv boardNum">[[${board.boardNum}]]</div>
                             <div class="displayNoneDiv boardCategory">matching</div>
@@ -667,64 +664,6 @@ function showList(pagenum){
 			},10)
 		})
 	}
-
-	showList(1);
-    showReviewPage(reviewCnt, pagenum);
-
-
-
-
-});
-$('.like').on('click', function(event) {
-    event.preventDefault();
-
-    var $img = $(this).find('img');
-
-    $.ajax({
-        url: '/matching/like_action',
-        method: 'POST',
-        data: { boardNum: boardNum, userId:userId },
-        success: function(response) {
-
-            if (likeOn) {
-                $img.attr('src', '/images/like_on.png');
-            } else {
-                $img.attr('src', '/images/like_off.png');
-            }
-        },
-        error: function(error) {
-            console.error('에러 발생:', error);
-        }
-    });
-});
-
-$(".finish").on("click", function(e) {
-    e.preventDefault();
-    let reviewContent = $("[name='reviewContent']").val();
-    let starRating = $(".rating").attr("data-star-rating");
-    let boardNum = $("[name='boardNum_1']").val();
-
-    // 리뷰 내용과 별점이 작성되지 않았을 때 알림 표시
-    if (!reviewContent || !starRating) {
-        alert("리뷰 내용과 별점을 작성해주세요!");
-        return; // 이후 코드 실행 중단
-    }
-
-    reviewService.add(
-        {
-            "boardNum": boardNum,
-            "userId": loginUser,
-            "reviewContent": reviewContent,
-            "starRating": starRating
-        },
-        function(result) {
-            alert("등록!");
-            showList(1);
-        }
-    );
-});
-
-
 
 
 	function deleteReview(e){
