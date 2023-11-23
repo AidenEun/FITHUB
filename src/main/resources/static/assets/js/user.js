@@ -263,9 +263,9 @@ function isInvalidAdminNickname(nickname) {
     const mixedCaseAdminRegex = /a.*d.*m.*i.*n/i;
     const caseSensitiveAdminRegex = /admin/i;
     const randomCaseAdminRegex = /a(?:(?![aA]).)*d(?:(?![dD]).)*m(?:(?![mM]).)*i(?:(?![iI]).)*n/i;
-    const specialCharRegex = /^[a-zA-Z0-9]*$/;
+    /*const specialCharRegex = /^[a-zA-Z0-9]*$/;*/
 
-    return mixedCaseAdminRegex.test(nickname) || caseSensitiveAdminRegex.test(nickname) || randomCaseAdminRegex.test(nickname) || !specialCharRegex.test(nickname) || /^[!@#$%^&*(),.?":{}|<>]*$/.test(nickname);
+    return mixedCaseAdminRegex.test(nickname) || caseSensitiveAdminRegex.test(nickname) || randomCaseAdminRegex.test(nickname) || /^[!@#$%^&*(),.?\":{}|<>]*$/.test(nickname);
 }
 
 function checkId(){
@@ -347,14 +347,6 @@ function checkNickname() {
         return false;
     }
 
-    /*if(isInvalidAdminId(userId.value)) {
-        *//*result.innerHTML = "사용할 수 없는 아이디입니다!";*//*
-        alert("사용할 수 없는 아이디입니다!");
-        userId.value = '';
-        userId.focus();
-        return false;
-    }*/
-
     xhr.onreadystatechange = function(){
         if(xhr.readyState == 4){
             if(xhr.status == 200){
@@ -378,7 +370,7 @@ function checkNickname() {
     xhr.open("GET", "/user/nickname?usernickname=" + userNickname.value);
     xhr.send();
 
-    return true;
+    return false;
 }
 
 function goToNextPage() {

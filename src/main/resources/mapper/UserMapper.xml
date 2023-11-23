@@ -16,7 +16,7 @@
 
 	<select id="findByNickname">
 		SELECT *
-		FROM user user
+		FROM user
 		WHERE user_nickname = #{userNickname}
 	</select>
 

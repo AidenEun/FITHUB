@@ -121,42 +121,11 @@ public class UserController {
 
     @GetMapping("nickname")
     @ResponseBody
-    public String checkNickname (String usernickname) {
-        if(service.checkNickname(usernickname)) {
-            return "X";
-        } else {
+    public String checkNickname (String userNickname) {
+        if(service.checkNickname(userNickname)) {
             return "O";
-        }
-    }
-
-    @Transactional
-    @PostMapping("attend")
-    @ResponseBody
-    public ResponseEntity<Integer> attend(@RequestParam String userid) {
-        try {
-            // 출석 버튼을 클릭할 때마다 출석 및 포인트 증가
-            service.updateUserAttendance(userid);
-
-            // 출석 후 포인트 업데이트
-            int filledGauges = service.getUserAttendance(userid);
-
-            if (filledGauges >= 7) {
-                service.updateUserPoint(userid);
-                filledGauges = 0;  // 출석 포인트가 7 이상이면 초기화
-                service.resetUserAttendance(userid);  // 출석 초기화
-            }
-
-            // 현재 포인트 가져오기
-            Long userPoint = service.getUserPoint(userid);
-
-            if (userPoint != null) {
-                return ResponseEntity.ok(userPoint.intValue());
-            } else {
-                return ResponseEntity.notFound().build();
-            }
-        } catch (Exception e) {
-            // 예외 처리
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        } else {
+            return "X";
         }
     }
 }

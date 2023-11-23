@@ -47,9 +47,9 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public boolean checkNickname(String usernickname) {
-        UserDTO user = umapper.findByNickname(usernickname);
-        return user != null;
+    public boolean checkNickname(String userNickname) {
+        UserDTO user = umapper.findByNickname(userNickname);
+        return user == null;
     }
 
     @Override
@@ -106,36 +106,6 @@ public class UserServiceImpl implements UserService{
             }
         });
         return userDTOList;
-    }
-
-    @Override
-    @Transactional
-    public void updateUserAttendance(String userid) {
-        umapper.updateUserAttendance(userid);
-    }
-
-    @Override
-    @Transactional
-    public int getUserAttendance(String userid) {
-        return umapper.getUserAttendance(userid);
-    }
-
-    @Override
-    @Transactional
-    public void updateUserPoint(String userid) {
-        umapper.updateUserPoint(userid);
-    }
-
-    @Override
-    @Transactional
-    public Long getUserPoint(String userid) {
-        return umapper.getUserPoint(userid);
-    }
-
-    @Override
-    @Transactional
-    public void resetUserAttendance(String userid) {
-        umapper.resetUserAttendance(userid);
     }
 
 }
