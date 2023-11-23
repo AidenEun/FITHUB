@@ -166,7 +166,15 @@ public class MatchingController {
         return check;
     }
 
+    @GetMapping("checkReview")
+    @ResponseBody
+    public ReviewDTO checkReview(@RequestParam("boardNum") Long boardNum, HttpServletRequest req) {
+        HttpSession session = req.getSession();
+        String userId = (String) session.getAttribute("loginUser");
 
+        ReviewDTO result = MatchingService.CheckReview(boardNum, userId);
+        return result;
+    }
 
 
 

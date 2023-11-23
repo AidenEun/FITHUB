@@ -11,6 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" th:href="@{/assets/css/index.css}" />
     <link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
+    <link rel="stylesheet" th:href="@{/assets/css/common.css}" />
     <link rel="icon" href="/images/fithub-favicon.png" type="image/png">
     <noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
     <style>
@@ -21,6 +22,10 @@
             background-position:  0 75%;
         }
 
+
+	#footer > .inner {
+		padding-top: 0px;
+	}
         .top_img_box{
         width: 100%;
         height: 310px;
@@ -45,7 +50,7 @@
     }
 
     #header {
-        background-color: #5a8100;
+        background-color: #8FA746;
     }
 
     #header nav > ul > li a {
@@ -162,7 +167,7 @@
 
 
     <!-- Header -->
-    <th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin},${session.profile})}"></th:block>
+    <th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin},${session.profile},${session.todaydate})}"></th:block>
 
 <!-- Main -->
 <section id="main" class="wrapper left">
@@ -173,7 +178,6 @@
             <p id="subText">운동 칼로리 조회</p>
         </header>
     </div>
-
     <div class="inner">
 
         <!-- Content -->
@@ -232,7 +236,7 @@
 <script th:src="@{/assets/js/util_sub.js}"></script>
 <script th:src="@{/assets/js/main_sub.js}"></script>
 
-<script th:src="@{/assets/js/sidebar.js}"></script>
+<script th:src="@{/assets/js/sidebarTap.js}"></script>
 </body>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>

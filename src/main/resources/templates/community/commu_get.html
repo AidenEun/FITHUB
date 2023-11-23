@@ -132,7 +132,7 @@
 <body class="is-preload">
 
 <!-- Header -->
-<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin},${session.profile})}"></th:block>
+<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin},${session.profile},${session.todaydate})}"></th:block>
 
 <!-- Modal -->
 <th:block th:replace="~{layout/reportModal::reportModal()}"></th:block>
@@ -241,8 +241,8 @@
 							<div class="displayNoneDiv boardCategory">[[${board.boardCategory}]]</div>
 							<div class="btn_area">
 								<th:block th:if="${board.userId != session.loginUser}">
-									<a href="#" class="heart" style="float:left; margin-right:5px;"><img id="heart" src="/images/like_off.png" style="width:30px;"></a>
-									<a class="bookmark button btnColor small" style="float:left; margin-left:10px;">북마크</a>
+									<a href="#" class="heart" style="float:left; margin-right:5px;"><img id="heart" th:src="'/images/like_'+${heart!=null?'on':'off'}+'.png'" style="width:30px;"></a>
+									<a th:class="${bookmark != null ? 'bookmarked' : ''}+' bookmark button btnColor small'" style="float:left; margin-left:10px;">북마크</a>
 									<a class="button reportOpen btnColor small" style="float:left; margin-left:10px;">신고</a>
 								</th:block>
 								<span th:if="${board != null}" style="float: right;" th:switch="${board.boardCategory}">
@@ -317,7 +317,7 @@
 <script th:src="@{/assets/js/util_sub.js}"></script>
 <script th:src="@{/assets/js/main_sub.js}"></script>
 
-<script th:src="@{/assets/js/sidebar.js}"></script>
+<script th:src="@{/assets/js/sidebarTap.js}"></script>
 <script th:src="@{/assets/js/profile.js}"></script>
 </body>
 
@@ -379,15 +379,13 @@
 
 		//heartVal이 1이면 좋아요가 이미 되어있는것 -> like_on.png 출력
 		if(heartVal>0){
-			console.log(heartVal);
-			$("#heart").prop("src", "/images/like_on.png");	//prop() : 해당 속성을 가져와서 변경
+			//prop() : 해당 속성을 가져와서 변경
 			$(".heart").prop('name',heartVal);
 		}
 		else{
 			console.log(heartVal);
-			$("#heart").prop("src", "/images/like_off.png");
 			$(".heart").prop('name',heartVal);
-		}
+			}
 
 
 		//좋아요 버튼 클릭 시 실행되는 코드
@@ -417,12 +415,9 @@
 
 		//북마크가 있는지 확인한 값을 bookmarkVal에 저장
 		var bookmarkVal = /*[[${bookmark != null ? bookmark.bookmark : ''}]]*/ '';
-		console.log(bookmarkVal);
+		//console.log(bookmarkVal);
 
 		//bookmarkVal이 1이면 북마크가 이미 되어있는것
-		if(bookmarkVal>0){
-			$(".bookmark").addClass('bookmarked');
-		}
 
 		//북마크 버튼 클릭 시 실행되는 코드
 		$(".bookmark").on("click", function(){

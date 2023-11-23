@@ -34,7 +34,7 @@
 
 
 <!-- Header -->
-<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin},${session.profile})}"></th:block>
+<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin},${session.profile,${session.todaydate})}"></th:block>
 
 <!-- Modal -->
 <th:block th:replace="~{layout/profileModal::profileModal}"></th:block>
@@ -131,7 +131,7 @@
 <script th:src="@{/assets/js/main_sub.js}"></script>
 
 
-<script th:src="@{/assets/js/sidebar.js}"></script>
+<script th:src="@{/assets/js/sidebarTap.js}"></script>
 <script th:src="@{/assets/js/profile.js}"></script>
 
 

@@ -477,4 +477,25 @@ public class AdminMyPageController {
 
         return ResponseEntity.ok("문의 답변이 완료 되었습니다.");
     }
+
+    @PostMapping("messageToAdmin")
+    public ResponseEntity<String> messageToAdmin(@RequestBody MessageDTO messageDATA, HttpServletRequest request){
+        String messageContent = messageDATA.getMessageContent();
+        String userId = (String) request.getSession().getAttribute("loginUser");
+
+        adminMyPageService.messageToAdmin(messageContent, userId);
+
+        return ResponseEntity.ok("문의가 완료 되었습니다.");
+    }
+
+    @PostMapping("messageWrite")
+    public ResponseEntity<String> messageWrite(@RequestBody MessageDTO messageDATA, HttpServletRequest request){
+        String messageContent = messageDATA.getMessageContent();
+        String receiveId = messageDATA.getReceiveId();
+        String userId = (String) request.getSession().getAttribute("loginUser");
+
+        adminMyPageService.messageWrite(messageContent, userId, receiveId);
+
+        return ResponseEntity.ok("쪽지 전송이 완료 되었습니다.");
+    }
 }

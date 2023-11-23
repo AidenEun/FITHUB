@@ -7,94 +7,107 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Fit Hub</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="stylesheet" th:href="@{/assets/css/index.css}" />
-    <link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
-    <link rel="stylesheet" th:href="@{/assets/css/common.css}" />
-    <noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+    <link rel="stylesheet" th:href="@{/assets/css/index.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/sidebar.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/common.css}"/>
+    <noscript>
+        <link rel="stylesheet" th:href="@{/assets/css/noscript.css}"/>
+    </noscript>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
         .header_box {
             width: 100%;
             background: linear-gradient(to right, rgba(143, 167, 70, 0.25), rgba(143, 167, 70, 0.3)), url(/images/test.png);
             background-size: cover;
-            background-position:  0 75%;
+            background-position: 0 75%;
         }
-        .top_img_box{
-        width: 100%;
-        height: 310px;
-        margin-bottom: 50px;
-        background-color: red;
-    }
 
-    .top_img_box > img {
-        width: 100%;
-        height: 100%;
-    }
+        .top_img_box {
+            width: 100%;
+            height: 310px;
+            margin-bottom: 50px;
+            background-color: red;
+        }
 
-    #main {
-        padding: 0;
-    }
+        .top_img_box > img {
+            width: 100%;
+            height: 100%;
+        }
 
-    .wrapper {
-        padding: 0;
-        margin-bottom: 100px;
-    }
+        #main {
+            padding: 0;
+        }
 
-    #header {
-        background-color: #5a8100;
-    }
+        .wrapper {
+            padding: 0;
+            margin-bottom: 100px;
+        }
 
-    #header nav > ul > li a {
-        color: white;
-    }
-
-    #header h1 a {
-        color: white;
-    }
-
-    #header .main ul li > a {
-        color: white;
-
-    }
-
-    #footer {
-        background-color: #304400;
-    }
-
-
-
-        #main{
+        #footer > .inner {
             padding-top: 0px;
         }
-        .inner{
-            padding-top: 50px;
+
+        #header {
+            background-color: #8FA746;
         }
-        .inner > .content{
-            width: 1080px;
-            margin : 0 auto;
-            padding: 0px;
+
+        #header nav > ul > li a {
+            color: white;
         }
-        .search-container{
-        padding: 40px;
+
+        #header h1 a {
+            color: white;
+        }
+
+        #header .main ul li > a {
+            color: white;
 
         }
-        .search{
+
+        #footer {
+            background-color: #304400;
+        }
+
+
+        #main {
+            padding-top: 0px;
+        }
+
+        .inner {
+            padding-top: 50px;
+        }
+
+        .inner > .content {
+            width: 1080px;
+            margin: 0 auto;
+            padding: 0px;
+        }
+
+        .search-container {
+            padding: 40px;
+
+        }
+
+        .search {
             display: flex;
         }
-        .search-border{
+
+        .search-border {
             border: 1px solid rgb(200, 200, 200);
             border-radius: 15px;
             margin-bottom: 50px;
         }
-        #search-input{
+
+        #search-input {
             height: 60px;
             border-radius: 10px 0 0 10px;
-            border : 1px solid rgb(200, 200, 200);
+            border: 1px solid rgb(200, 200, 200);
 
         }
-        #search-button{
+
+        #search-button {
             width: 100px;
             height: 60px;
             border-radius: 0 10px 10px 0;
@@ -102,133 +115,151 @@
 
 
         }
-        .search_content{
+
+        .search_content {
             padding: 40px;
             margin: 0px;
             background-color: gainsboro;
-            border-radius:15px;
+            border-radius: 15px;
         }
-        .search_content p{
+
+        .search_content p {
             font-size: 18px;
             font-weight: bold;
             height: 20px;
         }
-        .FITHUB{
+
+        .FITHUB {
             color: blue;
         }
-        .food_info{
+
+        .food_info {
             color: green;
         }
-        .food_search_result{
+
+        .food_search_result {
             display: flex;
             font-size: 25px;
             font-weight: bold;
         }
-        .name_quan_cal tr{
-        height: 40px;
+
+        .name_quan_cal tr {
+            height: 40px;
         }
 
-        .nametag{
-          background-color: rgb(250,237,230);
+        .nametag {
+            background-color: rgb(250, 237, 230);
         }
 
-        #coment{
-         display: flex;
+        #coment {
+            display: flex;
             font-size: 15px;
             font-weight: bold;
         }
-        #nutrient_title{
-         font-size: 20px;
+
+        #nutrient_title {
+            font-size: 20px;
             font-weight: bold;
         }
-        #nutrient{
-        height: 250px;
+
+        #nutrient {
+            height: 250px;
 
 
-        margin-bottom: 30px
-         display: flex;
+            margin-bottom: 30px
+            display: flex;
             justify-content: center;
         }
 
 
-        #exercise_calorie{
-        margin-top: 50px;
-        margin-bottom: 50px;
+        #exercise_calorie {
+            margin-top: 50px;
+            margin-bottom: 50px;
 
         }
-        .exercise_check{
-        display: flex;
+
+        .exercise_check {
+            display: flex;
             font-size: 20px;
             font-weight: bold;
         }
-       #exec_cal_border{
-        height: 250px;
-        background-color:gray;
-        border-radius: 10px;
-        z-index:250;
-        display: flex;
+
+        #exec_cal_border {
+            height: 250px;
+            background-color: gray;
+            border-radius: 10px;
+            z-index: 250;
+            display: flex;
         }
 
-        .exec{
-  background-color: white !important;
-  display: flex; /* Flexbox container 설정 */
-  flex-direction: column;
-  height: 210px;
-  width: 192px;
-  z-index: 300;
-  margin: 20px 20px 20px 0;
-  border-radius: 20px;
-}
-
-.exec:first-child{
-  margin: 20px;
-}
-
-.exec_img{
-  height: 130px;
-  width: 192px;
-  display: inline-block;
-  position: relative;
-}
-
-.exec_img img{
-  display: block;
-  max-width: 100%;
-  max-height: 100%;
-  text-align:center;
-}
-#walking{
-position: relative;
-left: 27px;
-}
-#running{
-position: relative;
-left: 29px;
-}
-#jumprope{
-position: relative;
-left: 28px;
-}
-#swim img{
-border-radius: 20px;
-}
-#bicycle{
-position: relative;
-left: 29px;
-}
-        .exec_time{
-        height: 40px;
-        text-align:center;
+        .exec {
+            background-color: white !important;
+            display: flex; /* Flexbox container 설정 */
+            flex-direction: column;
+            height: 210px;
+            width: 192px;
+            z-index: 300;
+            margin: 20px 20px 20px 0;
+            border-radius: 20px;
         }
-        #nutrient_total{
-        height: 100px;
+
+        .exec:first-child {
+            margin: 20px;
+        }
+
+        .exec_img {
+            height: 130px;
+            width: 192px;
+            display: inline-block;
+            position: relative;
+        }
+
+        .exec_img img {
+            display: block;
+            max-width: 100%;
+            max-height: 100%;
+            text-align: center;
+        }
+
+        #walking {
+            position: relative;
+            left: 27px;
+        }
+
+        #running {
+            position: relative;
+            left: 29px;
+        }
+
+        #jumprope {
+            position: relative;
+            left: 28px;
+        }
+
+        #swim img {
+            border-radius: 20px;
+        }
+
+        #bicycle {
+            position: relative;
+            left: 29px;
+        }
+
+        .exec_time {
+            height: 40px;
+            text-align: center;
+        }
+
+        #nutrient_total {
+            height: 100px;
         }
 
     </style>
 
 
     <!-- Header -->
-    <th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin},${session.profile})}"></th:block>
+    <th:block
+            th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin},${session.profile},${session.todaydate})}"></th:block>
 
     <!-- Main -->
     <section id="main" class="wrapper left">
@@ -252,7 +283,8 @@ left: 29px;
                     </div>
                     <div class="search_content">
                         <p>
-                            <span class="FITHUB">FIT HUB</span> 칼로리 조회에서는 <span class="food_info"> 칼로리 뿐만 아니라 영양소 구성</span>도 함께 나와 다이어트뿐 아니라<br>건강한 식습관 형성에도 도움이 됩니다.
+                            <span class="FITHUB">FIT HUB</span> 칼로리 조회에서는 <span
+                                class="food_info"> 칼로리 뿐만 아니라 영양소 구성</span>도 함께 나와 다이어트뿐 아니라<br>건강한 식습관 형성에도 도움이 됩니다.
                         </p>
 
                     </div>
@@ -275,7 +307,7 @@ left: 29px;
                         </tr>
                         <tr>
                             <th width="30%" class="nametag">칼로리</th>
-                            <td width="70%">[[${exec.execCalories}]]kcal</td>
+                            <td width="70%" name="execCalories" id="execCalories">[[${exec.execCalories}]]kcal</td>
                         </tr>
                     </table>
                     <div id="coment">
@@ -361,51 +393,72 @@ left: 29px;
     </section>
 </head>
 
-    <!-- Footer -->
-    <th:block th:replace="~{layout/footer::footer}"></th:block>
+<!-- Footer -->
+<th:block th:replace="~{layout/footer::footer}"></th:block>
 
-    <!-- Scripts -->
-    <script th:src="@{/assets/js/jquery.min.js}"></script>
-    <script th:src="@{/assets/js/jquery.dropotron.min.js}"></script>
-    <script th:src="@{/assets/js/jquery.scrollex.min.js}"></script>
-    <script th:src="@{/assets/js/browser.min.js}"></script>
-    <script th:src="@{/assets/js/breakpoints.min.js}"></script>
-    <script th:src="@{/assets/js/util.js}"></script>
-    <script th:src="@{/assets/js/main.js}"></script>
+<!-- Scripts -->
+<script th:src="@{/assets/js/jquery.min.js}"></script>
+<script th:src="@{/assets/js/jquery.dropotron.min.js}"></script>
+<script th:src="@{/assets/js/jquery.scrollex.min.js}"></script>
+<script th:src="@{/assets/js/browser.min.js}"></script>
+<script th:src="@{/assets/js/breakpoints.min.js}"></script>
+<script th:src="@{/assets/js/util.js}"></script>
+<script th:src="@{/assets/js/main.js}"></script>
 
-    <script th:src="@{/assets/js/util_sub.js}"></script>
-    <script th:src="@{/assets/js/main_sub.js}"></script>
+<script th:src="@{/assets/js/util_sub.js}"></script>
+<script th:src="@{/assets/js/main_sub.js}"></script>
 
-    <script th:src="@{/assets/js/sidebar.js}"></script>
-    </body>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        function searchExec() {
-            var keyword = $("#search-input").val();
-            if (keyword) {
-                // 검색어를 URL 파라미터로 전달하고, 검색 결과 페이지로 이동합니다.
-                window.location.href = "/calorie/exercise_calorie_search?keyword=" + keyword;
-            } else {
-                alert("검색어를 입력하세요.");
-            }
+<script th:src="@{/assets/js/sidebarTap.js}"></script>
+</body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    window.onload = function () {
+        const execCaloriesText = $("[name='execCalories']").text();
+        const execCalories = parseInt(execCaloriesText.replace('kcal', ''));
+        console.log(execCalories);
+        // 운동별 결과 계산 및 표시
+        calculateAndDisplay("walking", execCalories, 60, 4.5);
+        calculateAndDisplay("running", execCalories, 60, 7);
+        calculateAndDisplay("jumprope", execCalories, 60, 9);
+        calculateAndDisplay("swim", execCalories, 60, 6.1);
+        calculateAndDisplay("bicycle", execCalories, 60, 8);
+    };
+
+    function calculateAndDisplay(activity, execCalories, weight, factor) {
+        console.log(activity, execCalories, weight, factor);
+        var result = ((execCalories / weight / factor) * 60) / 2;
+        console.log(result);
+        var resultElement = document.getElementById(activity + "_result");
+        resultElement.textContent = result.toFixed(0); // 소수점 없이 정수로 표시
+    }
+
+
+    function searchExec() {
+        var keyword = $("#search-input").val();
+        if (keyword) {
+            // 검색어를 URL 파라미터로 전달하고, 검색 결과 페이지로 이동합니다.
+            window.location.href = "/calorie/exercise_calorie_search?keyword=" + keyword;
+        } else {
+            alert("검색어를 입력하세요.");
         }
+    }
 
-        // 예: 검색 버튼 클릭 시 searchFood 함수 호출
-        $("#search-button").click(function() {
-            searchExec();
-        });
-
-
-        $(document).ready(function() {
-    $('.get2').click(function(event) {
-    event.preventDefault();
-      var execNum = $(this).attr('href');
-      // 다음 페이지 URL 구성
-      var Url = '/calorie/exercise_calorie_view?execNum=' + execNum;
-
-      // 페이지 이동
-      window.location.href = Url;
+    // 예: 검색 버튼 클릭 시 searchFood 함수 호출
+    $("#search-button").click(function () {
+        searchExec();
     });
-  });
-    </script>
+
+
+    $(document).ready(function () {
+        $('.get2').click(function (event) {
+            event.preventDefault();
+            var execNum = $(this).attr('href');
+            // 다음 페이지 URL 구성
+            var Url = '/calorie/exercise_calorie_view?execNum=' + execNum;
+
+            // 페이지 이동
+            window.location.href = Url;
+        });
+    });
+</script>
 </html>

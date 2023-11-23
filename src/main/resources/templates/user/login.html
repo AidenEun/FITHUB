@@ -17,6 +17,12 @@
 	<link rel="icon" href="/images/fithub-favicon.png" type="image/png">
 </head>
 <style>
+	.header_box {
+		width: 100%;
+		background: linear-gradient(to right, rgba(143, 167, 70, 0.25), rgba(143, 167, 70, 0.3)), url(/images/board2.jpg);
+		background-size: cover;
+		background-position: 0 47%;
+	}
 
 	#main {
 		padding: 0;
@@ -28,7 +34,7 @@
 	}
 
 	#header {
-		background-color: #5a8100;
+		background-color: #8FA746;
 	}
 
 	#header nav > ul > li a {
@@ -119,7 +125,7 @@
 <body class="is-preload">
 
 	<!-- Header -->
-	<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin},${session.profile})}"></th:block>
+	<th:block th:replace="~{layout/login_header::login_header()}"></th:block>
 
 	<!-- Main -->
 	<section id="main" class="wrapper sidebar left">
@@ -198,21 +204,48 @@
 <script th:src="@{/assets/js/sidebar.js}"></script>
 <script th:src="@{/assets/js/profile.js}"></script>
 <script>
-	function sendit(){
-		const loginForm = document.loginForm;
-		const userid = loginForm.userid;
-		const userpw = loginForm.userpw;
+	function sendit() {
+    const loginForm = document.loginForm;
+    const userid = loginForm.userid;
+    const userpw = loginForm.userpw;
 
-		if(userid.value == ""){
-			alert("아이디를 입력하세요!");
-			return false;
-		}
-		if(userpw.value == ""){
-			alert("비밀번호를 입력하세요!");
-			return false;
-		}
-		return true;
-	}
+    if (userid.value === "") {
+        alert("아이디를 입력하세요!");
+        return false;
+    }
+
+    if (userpw.value === "") {
+        alert("비밀번호를 입력하세요!");
+        return false;
+    }
+
+    // 서버로 아이디와 비밀번호 전송
+    fetch("/user/login", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: `userid=${encodeURIComponent(userid.value)}&userpw=${encodeURIComponent(userpw.value)}`,
+    })
+    .then(response => response.text())
+    .then((data) => {
+        if (data === "success") {
+            alert("로그인 성공!");
+            // 로그인 성공 시 메인 화면으로 이동
+            window.location.href = "/"; // 적절한 URL로 변경
+        } else if (data === "failure") {
+            alert("아이디 또는 비밀번호를 다시 확인해주세요!");
+        } else {
+            alert("로그인 실패!");
+        }
+    })
+    .catch(error => {
+        console.error("로그인 요청 중 에러 발생:", error);
+    });
+
+    // 폼 전송 방지
+    return false;
+}
 
 	document.addEventListener("DOMContentLoaded", function () {
 		var userid = document.getElementById("userid");

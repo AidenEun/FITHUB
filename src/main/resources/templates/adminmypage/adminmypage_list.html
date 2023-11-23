@@ -6,114 +6,115 @@
 -->
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>Fit Hub</title>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<link rel="stylesheet" th:href="@{/assets/css/index.css}" />
-	<noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
-	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
-	<link rel="stylesheet" th:href="@{/assets/css/common.css}" />
+    <title>Fit Hub</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+    <link rel="stylesheet" th:href="@{/assets/css/index.css}"/>
+    <noscript>
+        <link rel="stylesheet" th:href="@{/assets/css/noscript.css}"/>
+    </noscript>
+    <link rel="stylesheet" th:href="@{/assets/css/sidebar.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/common.css}"/>
 
-	<link rel="stylesheet" th:href="@{/assets/css/profileModal.css}"/>
-	<link rel="icon" href="/images/fithub-favicon.png" type="image/png">
+    <link rel="stylesheet" th:href="@{/assets/css/profileModal.css}"/>
+    <link rel="icon" href="/images/fithub-favicon.png" type="image/png">
 </head>
 <style>
-	.adminmypadge_content_box {
-		width: 100%;
-	}
+    .adminmypadge_content_box {
+        width: 100%;
+    }
 
-	.adminmypadge_content_box:last-child{
-		height: 350px;
-	}
+    .adminmypadge_content_box:last-child {
+        height: 350px;
+    }
 
-	.actions {
-		float: right;
-	}
+    .actions {
+        float: right;
+    }
 
-	.adminmypage_box {
-		width: 100%;
-	}
+    .adminmypage_box {
+        width: 100%;
+    }
 
-	.content {
-		width: 30%;
-	}
+    .content {
+        width: 30%;
+    }
 
-	ol, ul {
-		list-style: none;
-		margin: 0;
-		padding: 0;
-	}
+    ol, ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
 
-	.admin_board_list {
-		width: 240px;
-		height: 120px;
-		background-color: transparent;
-    	color: #444 !important;
-    	box-shadow: inset 0 0 0 1px #444;
-		margin-top: 20px;
-		text-align: center;
-		padding: 10px;
-		overflow: hidden;
-		white-space: normal;
-		text-overflow: ellipsis;
-		cursor: pointer;
-	}
+    .admin_board_list {
+        width: 240px;
+        height: 120px;
+        background-color: transparent;
+        color: #444 !important;
+        box-shadow: inset 0 0 0 1px #444;
+        margin-top: 20px;
+        text-align: center;
+        padding: 10px;
+        overflow: hidden;
+        white-space: normal;
+        text-overflow: ellipsis;
+        cursor: pointer;
+    }
 
-	.admin_board_list > div {
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: normal;
-	}
+    .admin_board_list > div {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal;
+    }
 
-	tr{
-		background-color: white;
-	}
+    tr {
+        background-color: white;
+    }
 
-	.category_button {
-		margin-right: 10px;
-	}
+    .category_button {
+        margin-right: 10px;
+    }
 
-	a {
-		border-bottom: none;
-	}
+    a {
+        border-bottom: none;
+    }
 
-	.admin_board_list_box {
-		display: flex;
-		justify-content: space-between;
-	}
+    .admin_board_list_box {
+        display: flex;
+        justify-content: space-between;
+    }
 
-	.long_text {
-		width: 180px;
-		max-width: 180px;
-  		white-space: nowrap;
-  		overflow: hidden;
-		text-overflow: ellipsis;
-	}
+    .long_text {
+        width: 180px;
+        max-width: 180px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 
-	.more_view {
-		float: right;
-	}
+    .more_view {
+        float: right;
+    }
 
-	.header_box{
-		width: 100%;
-		background:
-			linear-gradient(to right, rgba(143, 167, 70, 0.7), rgba(143, 167, 70, 0.3)),
-			url('/images/admintop3.png');
-		background-size: cover;
-		background-position: top;
-		background-repeat: no-repeat;
-	}
+    .header_box {
+        width: 100%;
+        background: linear-gradient(to right, rgba(143, 167, 70, 0.7), rgba(143, 167, 70, 0.3)),
+        url('/images/admintop3.png');
+        background-size: cover;
+        background-position: top;
+        background-repeat: no-repeat;
+    }
 
-	.test12 {
-		width: 1080px;
-		height: 250px;
-		margin: 0 auto;
-		margin-bottom: 4em;
-		color: #fff;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-	}
+    .test12 {
+        width: 1080px;
+        height: 250px;
+        margin: 0 auto;
+        margin-bottom: 4em;
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
 </style>
 <body class="is-preload">
 
@@ -122,198 +123,214 @@
 <!--        location.replace("/");-->
 <!--	</script>-->
 
-	<!-- Header -->
-	<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin},${session.profile})}"></th:block>
+<!-- Header -->
 
-	<!-- Modal -->
-	<th:block th:replace="~{layout/profileModal::profileModal}"></th:block>
+<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin},${session.profile},${session.todaydate})}"></th:block>
 
 
-
-	<!-- Main -->
-	<section id="main" class="wrapper sidebar left">
-
-		<div class="header_box">
-			<header class="test12">
-				<p id="mainText">마이페이지</p>
-				<p id="subText">관리자</p>
-			</header>
-		</div>
-
-		<div class="inner">
+<!-- Modal -->
+<th:block th:replace="~{layout/profileModal::profileModal}"></th:block>
 
 
+<!-- Main -->
+<section id="main" class="wrapper sidebar left">
 
-			<!-- Content -->
-			<div class="content">
-				<div class="adminmypage_box">
-					<h2>신고 접수</h2>
-					<div class="adminmypadge_content_box">
-						<table style="text-align: center; margin-top: 20px;">
-							<thead>
-								<tr style="font-weight: bold;">
-									<td class="long_text">신고 번호</td>
-									<td class="long_text">신고 유저</td>
-									<td class="long_text">게시글 번호</td>
-									<td class="long_text">카테고리</td>
-									<td class="long_text">신고 일자</td>
-								</tr>
-							</thead>
-							<tbody id="data-table">
-								<tr th:if="${reportList != null and reportList.size() > 0}" th:each="reportBoard : ${reportList}" id="result_execlist">
-									<td class="long_text">
-										[[${reportBoard.reportNum}]]
-									</td>
-									<td class="long_text">
-										<a href="#" class="open">[[${reportBoard.userId}]]</a>
-									</td>
-									<td class="long_text">
-										[[${reportBoard.reportBoardnum}]]
-									</td>
-									<td class="long_text">
-										[[${reportBoard.boardCategoryName}]]
-									</td>
-									<td class="long_text">
-										[[${reportBoard.reportDate}]]
-									</td>
-								</tr>
-							</tbody>
-							<tr th:if="${reportList == null or reportList.size() == 0}">
-								<td colspan="5">
-									접수된 신고가 없습니다!
-								</td>
-							</tr>
-						</table>
-					<a href="/adminmypage/adminmypage_report" class="button btnColor more_view">더보기</a>
-					</div>
-				</div>
+    <div class="header_box">
+        <header class="test12">
+            <p id="mainText">마이페이지</p>
+            <p id="subText">관리자</p>
+        </header>
+    </div>
 
-				<div class="adminmypage_box">
-					<h2>트레이너 신청 내역</h2>
-					<div class="adminmypadge_content_box">
-						<table style="text-align: center; margin-top: 20px;">
-							<thead>
-								<tr style="font-weight: bold;">
-									<td class="long_text">신청 번호</td>
-									<td class="long_text">신청 유저</td>
-									<td class="long_text">파트</td>
-									<td class="long_text">경력</td>
-								</tr>
-							</thead>
-							<tbody id="data-table">
-							<tr th:if="${signUpList != null and signUpList.size() > 0}" th:each="signUpBoard : ${signUpList}" id="result_execlist">
-								<td class="long_text">
-									<span href="#" class="signupNum">[[${signUpBoard.signupNum}]]</span>
-								</td>
-								<td class="long_text">
-									<a href="#" class="open">[[${signUpBoard.userId}]]</a>
-								</td>
-								<td class="long_text">
-									[[${signUpBoard.trainerPart}]]
-								</td>
-								<td class="long_text">
-									[[${signUpBoard.trainerCareer}]]
-								</td>
-							</tr>
-							</tbody>
-							<tr th:if="${signUpList == null or signUpList.size() == 0}">
-								<td colspan="4">
-									현재 신청이 없습니다!!
-								</td>
-							</tr>
-						</table>
-					<a href="/adminmypage/adminmypage_trainer" class="button btnColor more_view">더보기</a>
-					</div>
-				</div>
+    <div class="inner">
 
-				<div class="adminmypage_box">
-					<h2>관리자 게시물</h2>
-					<div class="adminmypadge_content_box">
-						<div class="admin_board_list_box">
-							<div>
-								<table style="text-align: center; margin-top: 20px;">
-									<thead>
-										<tr style="font-weight: bold;">
-											<td class="long_text">게시글 번호</td>
-											<td class="long_text">제목</td>
-											<td class="long_text">작성자</td>
-											<td class="long_text">조회수</td>
-											<td class="long_text">좋아요</td>
-										</tr>
-									</thead>
-									<tbody id="data-table">
-									<tr th:if="${boardList != null and boardList.size() > 0}" th:each="adminBoard : ${boardList}" id="result_execlist">
-										<td class="long_text">
-											[[${adminBoard.boardNum}]]
-										</td>
-										<td class="long_text">
-											[[${adminBoard.boardTitle}]]
-										</td>
-										<td class="long_text">
-											<a href="#" class="open">[[${adminBoard.userId}]]</a>
-										</td>
-										<td class="long_text">
-											[[${adminBoard.viewCnt}]]
-										</td>
-										<td class="long_text">
-											[[${adminBoard.likeCnt}]]
-										</td>
-									</tr>
-									<tr th:if="${boardList == null or boardList.size() == 0}">
-										<td colspan="5">
-											등록된 게시글이 없습니다!
-										</td>
-									</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
-					<a href="/adminmypage/adminmypage_board" class="button btnColor more_view">더보기</a>
-					</div>
-				</div>
-			</div>
 
-			<!-- Sidebar -->
-			<div class="sidebar">
-				<section>
-					<div class="boardRanking">
-						<div class="boardRanking_ranking">
-							<table style="width: 90%;">
-								<tr><td><a href="/adminmypage/adminmypage_list" style="color: #5a8100; font-size: 20px;">전체</a></td></tr>
-								<tr><td><a href="/adminmypage/adminmypage_report">신고 접수</a></td></tr>
-								<tr><td><a href="/adminmypage/adminmypage_trainer">트레이너 신청 내역</a></td></tr>
-								<tr><td><a href="/adminmypage/adminmypage_board">관리자 게시물</a></td></tr>
-								<tr><td><a href="/adminmypage/adminmypage_usersearch">유저 검색</a></td></tr>
-								<tr><td><a href="/adminmypage/adminmypage_message">문의함</a></td></tr>
-							</table>
-						</div>
-					</div>
-				</section>
-			</div>
-		</div>
-	</section>
+        <!-- Content -->
+        <div class="content">
+            <div class="adminmypage_box">
+                <h2>신고 접수</h2>
+                <div class="adminmypadge_content_box">
+                    <table style="text-align: center; margin-top: 20px;">
+                        <thead>
+                        <tr style="font-weight: bold;">
+                            <td class="long_text">신고 번호</td>
+                            <td class="long_text">신고 유저</td>
+                            <td class="long_text">게시글 번호</td>
+                            <td class="long_text">카테고리</td>
+                            <td class="long_text">신고 일자</td>
+                        </tr>
+                        </thead>
+                        <tbody id="data-table">
+                        <tr th:if="${reportList != null and reportList.size() > 0}"
+                            th:each="reportBoard : ${reportList}" id="result_execlist">
+                            <td class="long_text">
+                                [[${reportBoard.reportNum}]]
+                            </td>
+                            <td class="long_text">
+                                <a href="#" class="open">[[${reportBoard.userId}]]</a>
+                            </td>
+                            <td class="long_text">
+                                [[${reportBoard.reportBoardnum}]]
+                            </td>
+                            <td class="long_text">
+                                [[${reportBoard.boardCategoryName}]]
+                            </td>
+                            <td class="long_text">
+                                [[${reportBoard.reportDate}]]
+                            </td>
+                        </tr>
+                        </tbody>
+                        <tr th:if="${reportList == null or reportList.size() == 0}">
+                            <td colspan="5">
+                                접수된 신고가 없습니다!
+                            </td>
+                        </tr>
+                    </table>
+                    <a href="/adminmypage/adminmypage_report" class="button btnColor more_view">더보기</a>
+                </div>
+            </div>
 
-	<!-- Footer -->
-	<th:block th:replace="~{layout/footer::footer}"></th:block>
+            <div class="adminmypage_box">
+                <h2>트레이너 신청 내역</h2>
+                <div class="adminmypadge_content_box">
+                    <table style="text-align: center; margin-top: 20px;">
+                        <thead>
+                        <tr style="font-weight: bold;">
+                            <td class="long_text">신청 번호</td>
+                            <td class="long_text">신청 유저</td>
+                            <td class="long_text">파트</td>
+                            <td class="long_text">경력</td>
+                        </tr>
+                        </thead>
+                        <tbody id="data-table">
+                        <tr th:if="${signUpList != null and signUpList.size() > 0}"
+                            th:each="signUpBoard : ${signUpList}" id="result_execlist">
+                            <td class="long_text">
+                                <span href="#" class="signupNum">[[${signUpBoard.signupNum}]]</span>
+                            </td>
+                            <td class="long_text">
+                                <a href="#" class="open">[[${signUpBoard.userId}]]</a>
+                            </td>
+                            <td class="long_text">
+                                [[${signUpBoard.trainerPart}]]
+                            </td>
+                            <td class="long_text">
+                                [[${signUpBoard.trainerCareer}]]
+                            </td>
+                        </tr>
+                        </tbody>
+                        <tr th:if="${signUpList == null or signUpList.size() == 0}">
+                            <td colspan="4">
+                                현재 신청이 없습니다!!
+                            </td>
+                        </tr>
+                    </table>
+                    <a href="/adminmypage/adminmypage_trainer" class="button btnColor more_view">더보기</a>
+                </div>
+            </div>
 
-	<!-- Scripts -->
-	<script th:src="@{/assets/js/jquery.min.js}"></script>
-	<script th:src="@{/assets/js/jquery.dropotron.min.js}"></script>
-	<script th:src="@{/assets/js/jquery.scrollex.min.js}"></script>
-	<script th:src="@{/assets/js/browser.min.js}"></script>
-	<script th:src="@{/assets/js/breakpoints.min.js}"></script>
-	<script th:src="@{/assets/js/util.js}"></script>
-	<script th:src="@{/assets/js/main.js}"></script>
+            <div class="adminmypage_box">
+                <h2>관리자 게시물</h2>
+                <div class="adminmypadge_content_box">
+                    <div class="admin_board_list_box">
+                        <div>
+                            <table style="text-align: center; margin-top: 20px;">
+                                <thead>
+                                <tr style="font-weight: bold;">
+                                    <td class="long_text">게시글 번호</td>
+                                    <td class="long_text">제목</td>
+                                    <td class="long_text">작성자</td>
+                                    <td class="long_text">조회수</td>
+                                    <td class="long_text">좋아요</td>
+                                </tr>
+                                </thead>
+                                <tbody id="data-table">
+                                <tr th:if="${boardList != null and boardList.size() > 0}"
+                                    th:each="adminBoard : ${boardList}" id="result_execlist">
+                                    <td class="long_text">
+                                        [[${adminBoard.boardNum}]]
+                                    </td>
+                                    <td class="long_text">
+                                        [[${adminBoard.boardTitle}]]
+                                    </td>
+                                    <td class="long_text">
+                                        <a href="#" class="open">[[${adminBoard.userId}]]</a>
+                                    </td>
+                                    <td class="long_text">
+                                        [[${adminBoard.viewCnt}]]
+                                    </td>
+                                    <td class="long_text">
+                                        [[${adminBoard.likeCnt}]]
+                                    </td>
+                                </tr>
+                                <tr th:if="${boardList == null or boardList.size() == 0}">
+                                    <td colspan="5">
+                                        등록된 게시글이 없습니다!
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <a href="/adminmypage/adminmypage_board" class="button btnColor more_view">더보기</a>
+                </div>
+            </div>
+        </div>
 
-	<script th:src="@{/assets/js/util_sub.js}"></script>
-	<script th:src="@{/assets/js/main_sub.js}"></script>
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <section>
+                <div class="boardRanking">
+                    <div class="boardRanking_ranking">
+                        <table style="width: 90%;">
+                            <tr>
+                                <td><a href="/adminmypage/adminmypage_list"
+                                       style="color: #5a8100; font-size: 20px;">전체</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="/adminmypage/adminmypage_report">신고 접수</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="/adminmypage/adminmypage_trainer">트레이너 신청 내역</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="/adminmypage/adminmypage_board">관리자 게시물</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="/adminmypage/adminmypage_usersearch">유저 검색</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="/adminmypage/adminmypage_message">문의함</a></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
 
-	<script th:src="@{/assets/js/sidebar.js}"></script>
+<!-- Footer -->
+<th:block th:replace="~{layout/footer::footer}"></th:block>
 
-	<script th:src="@{/assets/js/profile.js}"></script>
+<!-- Scripts -->
+<script th:src="@{/assets/js/jquery.min.js}"></script>
+<script th:src="@{/assets/js/jquery.dropotron.min.js}"></script>
+<script th:src="@{/assets/js/jquery.scrollex.min.js}"></script>
+<script th:src="@{/assets/js/browser.min.js}"></script>
+<script th:src="@{/assets/js/breakpoints.min.js}"></script>
+<script th:src="@{/assets/js/util.js}"></script>
+<script th:src="@{/assets/js/main.js}"></script>
+
+<script th:src="@{/assets/js/util_sub.js}"></script>
+<script th:src="@{/assets/js/main_sub.js}"></script>
+
+<script th:src="@{/assets/js/sidebarTap.js}"></script>
+
+<script th:src="@{/assets/js/profile.js}"></script>
 
 <script>
-	$(".open").on("click", function (e) {
+    $(".open").on("click", function (e) {
         e.preventDefault();
         var userId = $(this).text();
 

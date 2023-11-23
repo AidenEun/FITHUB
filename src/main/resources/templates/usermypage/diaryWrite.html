@@ -230,6 +230,7 @@
     }
     input[type=button].removeBtn:hover{
         background-color: #ebede1 !important;
+        color: #444 !important;
     }
     /*작성, 글쓰기 버튼 컬러 수정*/
     input[type=button].btnColor{
@@ -268,9 +269,9 @@
 
     input[type=button].mychallBtn.viewchallBtn {
         /*border: 1px solid #5a8100 !important;*/
-        color: #F7FAF5 !important;
-        background-color: #5a8100;
-        box-shadow: inset 0 0 0 2px #5a8100;
+        color: #5a8100 !important;
+        background-color: #ebede1;
+        box-shadow: 0 0 2px 1px #5a8100
 
     }
 
@@ -312,7 +313,7 @@
 
 <!-- Header -->
 <!--<th:block th:replace="~{layout/headerNoneModal::header(${session.loginUser})}"></th:block>-->
-<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin},${session.profile})}"></th:block>
+<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin},${session.profile},${session.todaydate})}"></th:block>
 <th:block th:replace="~{layout/searchModal::searchModal()}"></th:block>
 
 <!--<div id="top_main_img">-->
@@ -568,14 +569,14 @@
 <script th:src="@{/assets/js/browser.min.js}"></script>
 <script th:src="@{/assets/js/breakpoints.min.js}"></script>
 
-<script th:src="@{/assets/js/sidebar.js}"></script>
+<script th:src="@{/assets/js/sidebarTap.js}"></script>
 <!--<script th:src="@{/assets/js/profile.js}"></script>-->
 <script th:src="@{/assets/js/searchModal.js}"></script>
 
 
 <script th:src="@{/assets/js/util_sub.js}"></script>
 <script th:src="@{/assets/js/main_sub.js}"></script>
-<script th:src="@{/assets/js/calender.js}"></script>
+<!--<script th:src="@{/assets/js/calender.js}"></script>-->
 <script>
 
 </script>

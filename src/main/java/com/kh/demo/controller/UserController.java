@@ -70,37 +70,37 @@ public class UserController {
     public void replaceLogin(){}
 
     @PostMapping("login")
+    @ResponseBody
     public String login(String userid, String userpw, HttpServletRequest req) {
         Object loginUser = service.login(userid, userpw);
-        LocalDate todaydate = LocalDate.now();
 
-        System.out.println(todaydate);
-        if (loginUser instanceof AdminDTO) {
-            AdminDTO admin = serviceAdmin.getDetail(((AdminDTO) loginUser).getAdminId());
-            req.getSession().setAttribute("loginUser",((AdminDTO) loginUser).getAdminId());
-            req.getSession().setAttribute("admin",admin);
-            req.getSession().setAttribute("todaydate",todaydate);
-            return "redirect:/";
-        }
-        else if (loginUser instanceof TrainerDTO) {
-            TrainerDTO trainer = serviceTrainer.getDetail(((TrainerDTO) loginUser).getTrainerId());
-            req.getSession().setAttribute("loginUser",((TrainerDTO) loginUser).getTrainerId());
-            req.getSession().setAttribute("trainer",trainer);
-            req.getSession().setAttribute("profile", tmpservice.getProFileList(trainer.getTrainerId()));
-            req.getSession().setAttribute("todaydate",todaydate);
-            return "redirect:/";
-        }
-        else if (loginUser instanceof UserDTO) {
-            UserDTO user = service.getDetail(((UserDTO) loginUser).getUserId());
-            req.getSession().setAttribute("loginUser",((UserDTO) loginUser).getUserId());
-            req.getSession().setAttribute("user",user);
-            req.getSession().setAttribute("profile", umpservice.getProFileList(user.getUserId()));
-            req.getSession().setAttribute("todaydate",todaydate);
-            System.out.println("회원:"+user.getUserNickname());
-            return "redirect:/";
-        }
-        else {
-            return "redirect:/";
+        if (loginUser != null) {
+            // 로그인 성공 시 추가 작업을 수행할 수 있습니다.
+            LocalDate todaydate = LocalDate.now();
+
+            if (loginUser instanceof AdminDTO) {
+                AdminDTO admin = serviceAdmin.getDetail(((AdminDTO) loginUser).getAdminId());
+                req.getSession().setAttribute("loginUser", ((AdminDTO) loginUser).getAdminId());
+                req.getSession().setAttribute("admin", admin);
+                req.getSession().setAttribute("todaydate", todaydate);
+            } else if (loginUser instanceof TrainerDTO) {
+                TrainerDTO trainer = serviceTrainer.getDetail(((TrainerDTO) loginUser).getTrainerId());
+                req.getSession().setAttribute("loginUser", ((TrainerDTO) loginUser).getTrainerId());
+                req.getSession().setAttribute("trainer", trainer);
+                req.getSession().setAttribute("profile", tmpservice.getProFileList(trainer.getTrainerId()));
+                req.getSession().setAttribute("todaydate", todaydate);
+            } else if (loginUser instanceof UserDTO) {
+                UserDTO user = service.getDetail(((UserDTO) loginUser).getUserId());
+                req.getSession().setAttribute("loginUser", ((UserDTO) loginUser).getUserId());
+                req.getSession().setAttribute("user", user);
+                req.getSession().setAttribute("profile", umpservice.getProFileList(user.getUserId()));
+                req.getSession().setAttribute("todaydate", todaydate);
+                System.out.println("회원:" + user.getUserNickname());
+            }
+
+            return "success";
+        } else {
+            return "failure";
         }
     }
 
@@ -121,42 +121,11 @@ public class UserController {
 
     @GetMapping("nickname")
     @ResponseBody
-    public String checkNickname (String usernickname) {
-        if(service.checkNickname(usernickname)) {
-            return "X";
-        } else {
+    public String checkNickname (String userNickname) {
+        if(service.checkNickname(userNickname)) {
             return "O";
-        }
-    }
-
-    @Transactional
-    @PostMapping("attend")
-    @ResponseBody
-    public ResponseEntity<Integer> attend(@RequestParam String userid) {
-        try {
-            // 출석 버튼을 클릭할 때마다 출석 및 포인트 증가
-            service.updateUserAttendance(userid);
-
-            // 출석 후 포인트 업데이트
-            int filledGauges = service.getUserAttendance(userid);
-
-            if (filledGauges >= 7) {
-                service.updateUserPoint(userid);
-                filledGauges = 0;  // 출석 포인트가 7 이상이면 초기화
-                service.resetUserAttendance(userid);  // 출석 초기화
-            }
-
-            // 현재 포인트 가져오기
-            Long userPoint = service.getUserPoint(userid);
-
-            if (userPoint != null) {
-                return ResponseEntity.ok(userPoint.intValue());
-            } else {
-                return ResponseEntity.notFound().build();
-            }
-        } catch (Exception e) {
-            // 예외 처리
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        } else {
+            return "X";
         }
     }
 }

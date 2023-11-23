@@ -130,3 +130,10 @@
 .execData.checked:hover{
     color: black;
 }
+#modal_search input[type=button]:hover,.add input[type=button]:hover{
+    background: #ebede1;
+    border-radius: 4px;
+    color: #5a8100 !important;
+    box-shadow: 0 0 2px #5a8100 !important;
+}
+

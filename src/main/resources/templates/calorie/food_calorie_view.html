@@ -12,6 +12,7 @@
     <link rel="stylesheet" th:href="@{/assets/css/index.css}"/>
     <link rel="stylesheet" th:href="@{/assets/css/sidebar.css}"/>
     <link rel="stylesheet" th:href="@{/assets/css/common.css}"/>
+    <link rel="icon" href="/images/fithub-favicon.png" type="image/png">
     <noscript>
         <link rel="stylesheet" th:href="@{/assets/css/noscript.css}"/>
     </noscript>
@@ -45,8 +46,12 @@
             margin-bottom: 100px;
         }
 
+	#footer > .inner {
+		padding-top: 0px;
+	}
+
         #header {
-            background-color: #5a8100;
+            background-color: #8FA746;
         }
 
         #header nav > ul > li a {
@@ -274,7 +279,7 @@
 
     <!-- Header -->
     <th:block
-            th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin},${session.profile})}"></th:block>
+            th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin},${session.profile},${session.todaydate})}"></th:block>
 
     <!-- Main -->
     <section id="main" class="wrapper left">
@@ -318,11 +323,11 @@
                         </tr>
                         <tr>
                             <th width="30%" class="nametag">단위</th>
-                            <td width="70%">[[${food.foodQuantity}]]g</td>
+                            <td width="70%">[[${food.foodQuantity}]]METS</td>
                         </tr>
                         <tr>
                             <th width="30%" class="nametag">칼로리</th>
-                            <td width="70%">[[${food.foodCalories}]]kcal</td>
+                            <td width="70%" name="foodCalorie" id="foodCalorie">[[${food.foodCalories}]]kcal</td>
                         </tr>
                     </table>
                     <div id="coment">
@@ -432,21 +437,26 @@
 <script th:src="@{/assets/js/util_sub.js}"></script>
 <script th:src="@{/assets/js/main_sub.js}"></script>
 
-<script th:src="@{/assets/js/sidebar.js}"></script>
+<script th:src="@{/assets/js/sidebarTap.js}"></script>
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     window.onload = function () {
+         const foodCalorieText = $("[name='foodCalorie']").text();
+        const foodCalorie = parseInt(foodCalorieText.replace('kcal', ''));
+         console.log(foodCalorie);
         // 운동별 결과 계산 및 표시
-        calculateAndDisplay("walking", 60, 2);
-        calculateAndDisplay("running", 60, 6);
-        calculateAndDisplay("jumprope", 60, 10);
-        calculateAndDisplay("swim", 60, 7);
-        calculateAndDisplay("bicycle", 60, 8);
+        calculateAndDisplay("walking",foodCalorie, 60, 4.5);
+        calculateAndDisplay("running",foodCalorie, 60, 7);
+        calculateAndDisplay("jumprope",foodCalorie, 60, 9);
+        calculateAndDisplay("swim",foodCalorie, 60, 6.1);
+        calculateAndDisplay("bicycle",foodCalorie, 60, 8);
     };
 
-    function calculateAndDisplay(activity, foodCalories, factor) {
-        var result = (foodCalories / 60 / factor) * 60;
+    function calculateAndDisplay(activity,foodCalorie, weight, factor) {
+        console.log(activity,foodCalorie,weight,factor);
+        var result = ((foodCalorie / weight / factor) * 60)/2;
+        console.log(result);
         var resultElement = document.getElementById(activity + "_result");
         resultElement.textContent = result.toFixed(0); // 소수점 없이 정수로 표시
     }
