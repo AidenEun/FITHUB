@@ -50,13 +50,13 @@
 			vertical-align: middle;
 		}
 		#thumbnail{
-			width: 210px !important;
-			height: 190px !important;
-			padding: 10px;
-		}
-		#thumbnail #img{
 			width: 200px !important;
 			height: 180px !important;
+		}
+		#thumbnail img{
+			width: 200px !important;
+			height: 180px !important;
+			border: 1px solid #ebede1;
 		}
 		#boardtitle{
 			padding: 0;
@@ -138,7 +138,7 @@
 		<!-- Content -->
 		<div class="content">
 			<div class="cotent_header"><h2>꿀팁</h2></div>
-			<th:block th:if="${session.trainer != null}">
+			<th:block th:if="${session.admin != null}">
 				<div class="button btnColor"><a th:href="${'/info/info_write'+pageMaker.cri.listLink}">작성하기</a></div>
 			</th:block>
 			<div style="width: 100%">
@@ -146,9 +146,10 @@
 				<th:block th:if="${list != null and list.size()>0}" th:each="board : ${list}">
 					<table id="list" class="info_list">
 						<tr valign="middle">
-							<td id="thumbnail" rowspan="3" style="width: 100%;border:1px solid #ebede1;">
-								<div id="img"></div>
-								<!--/*								[[${board.썸네일}]]*/-->
+							<td id="thumbnail" rowspan="3">
+								<a class="get" id="img" th:href="${board.boardNum}">
+									<img th:src="${board.imgURL}" alt="Image" />
+								</a>
 							</td>
 							<td style="height: 35px; padding: 5px 10px;">
 								<a class="get" id="boardtitle" th:href="${board.boardNum}">
