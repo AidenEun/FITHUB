@@ -414,73 +414,102 @@
                     </div>
                 </div>
                 <hr>
+                <th:block th:if="${session.admin == null && (session.trainer != null || session.user!=null)}">
+                    <div class="navi_main">
+                        <div class="icon_area">
+                            <input type="hidden" id="todaydate" th:value="${todaydate}">
+                            <table style="margin: 0px;">
+                                <tr>
+                                    <td>
+                                        <div><input class="menubtn" type="image" th:src="@{/images/iconcal.png}"
+                                                    border="0"
+                                                    onfocus='this.blur()'
+                                                    id="today"></div>
+                                        <div>TODAY</div>
+                                    </td>
+                                    <td>
 
-                <div class="navi_main">
-                    <div class="icon_area">
-                        <input type="hidden" id="todaydate" th:value="${todaydate}">
-                        <table style="margin: 0px;">
+                                        <div><input class="menubtn" type="image" th:src="@{/images/iconchall.png}"
+                                                    border="0"
+                                                    onfocus='this.blur()'
+                                                    id="chall"></div>
+                                        <div>CHALLENGE</div>
+                                    </td>
+                                    <td>
+                                        <div><input class="menubtn" type="image" th:src="@{/images/icondiary.png}"
+                                                    border="0"
+                                                    onfocus='this.blur()'
+                                                    id="diary" onclick="moveDiary()"></div>
+                                        <div>DIARY</div>
+                                    </td>
+                                    <td>
+                                        <div><input class="menubtn" type="image" th:src="@{/images/iconshop.png}"
+                                                    border="0"
+                                                    onfocus='this.blur()'
+                                                    id="shop" onclick="moveShop()"></div>
+                                        <div>SHOP</div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div id="navi_main_content">
+                            <table style="padding-top: 82px;">
+                                <tbody onclick="menutodaybtn()">
+                                <tr>
+                                    <td style="vertical-align: bottom">[[${session.todaydate}]]</td>
+                                </tr>
+                                <tr>
+                                    <td>오늘의 기록을 확인해 보세요!</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <table class="navi_bottom">
                             <tr>
-                                <td>
-                                    <div><input class="menubtn" type="image" th:src="@{/images/iconcal.png}" border="0"
-                                                onfocus='this.blur()'
-                                                id="today"></div>
-                                    <div>TODAY</div>
+                                <td><a class="subColor" href="/sidebar/bmi">BMI 계산기</a></td>
+                                <td><a class="subColor" href="/sidebar/healthCenter">보건소 찾기</a></td>
+                            </tr>
+                            <tr th:if="${session.user != null}">
+                                <!--                    <tr>-->
+                                <td colspan="2">
+                                    <a class="subColor" href="/usermypage/user_applytrainer">트레이너 전환 신청</a>
                                 </td>
-                                <td>
-
-                                    <div><input class="menubtn" type="image" th:src="@{/images/iconchall.png}" border="0"
-                                                onfocus='this.blur()'
-                                                id="chall"></div>
-                                    <div>CHALLENGE</div>
-                                </td>
-                                <td>
-                                    <div><input class="menubtn" type="image" th:src="@{/images/icondiary.png}" border="0"
-                                                onfocus='this.blur()'
-                                                id="diary" onclick="moveDiary()"></div>
-                                    <div>DIARY</div>
-                                </td>
-                                <td>
-                                    <div><input class="menubtn" type="image" th:src="@{/images/iconshop.png}" border="0"
-                                                onfocus='this.blur()'
-                                                id="shop" onclick="moveShop()"></div>
-                                    <div>SHOP</div>
+                            </tr>
+                            <tr th:if="${session.user == null && session.trainer != null}">
+                                <td colspan="2">
+                                    <a class="subColor" href="/trainermypage/trainer_messagelist">매칭 쪽지함 확인하기</a>
                                 </td>
                             </tr>
                         </table>
                     </div>
-                    <div id="navi_main_content">
-                        <table style="padding-top: 82px;">
-                            <tbody onclick="menutodaybtn()">
+                </th:block>
+                <th:block th:if="${session.admin != null && (session.trainer == null && session.user==null)}">
+                    <div class="damin_main">
+                        <table>
                             <tr>
-                                <td style="vertical-align: bottom">[[${session.todaydate}]]</td>
+                                <td><a class="subColor" href="/trainermypage/trainer_messagelist">트레이너 신청서 확인하기</a></td>
                             </tr>
                             <tr>
-                                <td>오늘의 기록을 확인해 보세요!</td>
+                                <td><a class="btnColor" href="/trainermypage/trainer_messagelist">게시물 관리하기</a></td>
                             </tr>
-                            </tbody>
+                            <tr>
+                                <td><a class="btnColor" href="/trainermypage/trainer_messagelist">유저 관리하기</a></td>
+                            </tr>
+                            <tr>
+                                <td><a class="btnColor" href="/trainermypage/trainer_messagelist">신고 관리하기</a></td>
+                            </tr>
+                            <tr>
+                                <td><a class="btnColor" href="/trainermypage/trainer_messagelist">쪽지함 바로가기</a></td>
+                            </tr>
+                            <tr>
+                                <td><a class="btnColor" href="/trainermypage/trainer_messagelist">관리자 페이지 바로가기</a></td>
+                            </tr>
                         </table>
                     </div>
-
-                    <table class="navi_bottom">
-                        <tr>
-                            <td><a class="subColor" href="/sidebar/bmi">BMI 계산기</a></td>
-                            <td><a class="subColor" href="/sidebar/healthCenter">보건소 찾기</a></td>
-                        </tr>
-                        <tr th:if="${session.user != null}">
-                            <!--                    <tr>-->
-                            <td colspan="2">
-                                <a class="subColor" href="/usermypage/user_applytrainer">트레이너 전환 신청</a>
-                            </td>
-                        </tr>
-                        <tr th:if="${session.user == null && (session.trainer != null || session.admin != null)}">
-                            <td colspan="2">
-                                <a class="subColor" href="/trainermypage/trainer_messagelist">매칭 쪽지함 확인하기</a>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
+                </th:block>
             </div>
+
         </th:block>
     </section>
 </th:block>
-
