@@ -68,4 +68,5 @@ public interface TrainerMatchingService {
     Double getStarRatingAv(Long boardNum);
 
 
+    ReviewDTO CheckReview(Long boardNum, String userId);
 }
