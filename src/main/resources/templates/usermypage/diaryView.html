@@ -294,7 +294,7 @@
 <body class="is-preload">
 
 <!-- Header -->
-<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin},${session.profile})}"></th:block>
+<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin},${session.profile},${session.todaydate})}"></th:block>
 
 
 <!--<div id="top_main_img">
@@ -314,16 +314,6 @@
         <section>
             <div class="boardRanking" id="boardRanking">
                 <div class="boardRanking_ranking">
-<!--                    <table style="width: 90%;">-->
-<!--                        <tr><td><a href="/usermypage/user_myinfo">내 정보 수정</a></td></tr>-->
-<!--                        <tr><td><a href="/usermypage/user_diary" style="color: #5a8100; font-size: 20px;">나의 다이어리</a></td></tr>-->
-<!--                        <tr><td><a href="/usermypage/user_challenge">나의 챌린지</a></td></tr>-->
-<!--                        <tr><td><a href="/usermypage/user_subtrainer">구독한 트레이너</a></td></tr>-->
-<!--                        <tr><td><a href="/usermypage/user_subbookmark">북마크</a></td></tr>-->
-<!--                        <tr><td><a href="/usermypage/user_boardlist">내 게시물</a></td></tr>-->
-<!--                        <tr><td><a href="/usermypage/user_messagelist">쪽지함</a></td></tr>-->
-<!--                        <tr><td><a href="/usermypage/user_applytrainer">트레이너 전환 신청</a></td></tr>-->
-<!--                    </table>-->
                     <h3 class="side_ranking">트레이너 구독 순위</h3>
                     <table style="width: 90%;">
                         <tr th:each="trainerTop5List, dataStat: ${trainerTop5List}">
@@ -351,11 +341,9 @@
                     </td>
                 </tr>
                 <tr>
-                    <!-- <td></td> -->
                     <td colspan="2"><input type="text" name="diaryTitle" th:value="${diary.diaryTitle}" readonly></td>
                 </tr>
                 <tr>
-                    <!-- <td></td> -->
                     <td colspan="2">
                         <div class="weight_area box_flex">
                             <div><input type="text" value="목표 체중" readonly></div>
@@ -517,7 +505,7 @@
                             <th:block th:if="${ myChallINGDTOList != null or myChallINGDTOList.size() > 0}">
                                 <tr class="mychall_area">
                                     <td th:each="myINGChallDTO, dataStat : ${myChallINGDTOList}">
-                                        <input type="checkbox" name="myChallNum" onClick="return false;"
+                                        <input onfocus="this.blur()" type="checkbox" name="myChallNum" onClick="return false;"
                                                th:id="'challNum_' + ${myINGChallDTO.challNum}"
                                                th:value="${myINGChallDTO.challNum}"
                                                th:checked="${#strings.contains(sccChallNum,myINGChallDTO.challNum)}">

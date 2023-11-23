@@ -101,7 +101,7 @@
 <body class="is-preload">
 
 <!-- Header -->
-<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin},${session.profile})}"></th:block>
+<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin},${session.profile},${session.todaydate})}"></th:block>
 
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">
@@ -118,7 +118,9 @@
 		<!-- Content -->
 		<div class="content">
 			<div class="cotent_header"><h2>식품</h2></div>
+			<th:block th:if="${session.admin != null}">
 			<a class="button btnColor small" th:href="${'/product/prod_write'+pageMaker.cri.listLink}">등록하기</a>
+			</th:block>
 			<div style="display: flex; width: 100%; flex-wrap:wrap;">
 				<!-- 게시글 리스트 띄우는 테이블 -->
 				<th:block th:if="${list != null and list.size()>0}" th:each="board : ${list}">
@@ -168,7 +170,7 @@
 				</tr>
 			</table>
 			<!-- 검색 -->
-			<form id="searchForm" th:action="@{/product/prod_food}">
+			<!--<form id="searchForm" th:action="@{/product/prod_food}">
 				<div class="search_area flex">
 					<select name="type" style="width: 30%; margin-right:10px;">
 						<option value="" th:selected="${pageMaker.cri.type == null}">검색</option>
@@ -184,7 +186,7 @@
 				</div>
 				<input type="hidden" value="1" name="pagenum">
 				<input type="hidden" value="15" name="amount">
-			</form>
+			</form>-->
 			<!--페이지폼-->
 			<form name="pageForm" id="pageForm" th:action="@{/product/prod_food}">
 				<input type="hidden" name="pagenum" th:value="${pageMaker.cri.pagenum}">
