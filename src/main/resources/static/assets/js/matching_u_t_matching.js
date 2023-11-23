@@ -106,7 +106,6 @@ function matchingModal(data) {
                                             sendApplication(userId, trainerId, boardNum);
                                             console.log(userId)
                                             console.log(trainerId)
-                                            alert(boardNum);
                                         });
 
                 }
