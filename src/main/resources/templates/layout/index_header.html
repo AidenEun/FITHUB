@@ -343,7 +343,8 @@
                         </td>
                         <td>
                             <div>
-                                <a href="/sidebar/healthCenter"><img th:src="@{/images/icon_mapSearch.png}" alt="health"></a>
+                                <a href="/sidebar/healthCenter"><img th:src="@{/images/icon_mapSearch.png}"
+                                                                     alt="health"></a>
                             </div>
                             <div><a href="/sidebar/healthCenter">보건소 찾기</a></div>
                         </td>
@@ -428,12 +429,14 @@
                                     <div>CHALLENGE</div>
                                 </td>
                                 <td>
-                                    <div><input class="menubtn" type="image" src="images/icondiary.png" border="0" onfocus='this.blur()'
+                                    <div><input class="menubtn" type="image" src="images/icondiary.png" border="0"
+                                                onfocus='this.blur()'
                                                 id="diary" onclick="moveDiary()"></div>
                                     <div>DIARY</div>
                                 </td>
                                 <td>
-                                    <div><input class="menubtn" type="image" src="images/iconshop.png" border="0" onfocus='this.blur()'
+                                    <div><input class="menubtn" type="image" src="images/iconshop.png" border="0"
+                                                onfocus='this.blur()'
                                                 id="shop" onclick="moveShop()"></div>
                                     <div>SHOP</div>
                                 </td>
@@ -465,14 +468,13 @@
                             </td>
                         </tr>
                         <tr th:if="${session.user == null && (session.trainer != null || sessoin.admin.trainer != null)}">
-                            <!--                    <tr>-->
                             <td colspan="2">
                                 <a class="subColor" href="/trainermypage/trainer_messagelist">매칭 쪽지함 확인하기</a>
                             </td>
                         </tr>
                     </table>
                 </div>
-
+            </div>
         </th:block>
     </section>
 </th:block>
