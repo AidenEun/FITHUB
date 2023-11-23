@@ -3,7 +3,7 @@
 <mapper namespace="com.kh.demo.mapper.AdminMapper">
 
     <select id="findById">
-        select * from admin where admin_id=#{trainerId}
+        select * from admin where admin_id=#{userid}
     </select>
 
 </mapper>
