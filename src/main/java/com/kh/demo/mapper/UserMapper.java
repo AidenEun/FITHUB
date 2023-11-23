@@ -25,4 +25,17 @@ public interface UserMapper {
 
   int profileUpdateUser(UserDTO user);
 
+	void updateUserAttendance(String userid);
+
+	int getUserAttendance(String userid);
+
+	void updateUserPoint(String userid);
+
+	Long getUserPoint(String userid);
+
+	void resetUserAttendance(String userid);
+
+    List<UserDTO> getUserBoardTotalTop5List();
+
+	List<UserDTO> getUserReplyTotalTop5List();
 }

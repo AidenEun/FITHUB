@@ -25,5 +25,6 @@ public class TrainerDTO {
     private String transferdate;
     private int trainerReportedcnt;
     //재우
-    private  String subDate;
+    private String subDate;
+    private int subscriptionCount;
 }

@@ -11,4 +11,9 @@ public interface TrainerService {
 
     List<TrainerDTO> getTrainerTop5List();
 
+    List<TrainerDTO> getTrainerTopNumList(int i);
+
+    List<TrainerDTO> getTrainerBoardTotalTop5List();
+
+    List<TrainerDTO> getTrainerReplyTotalTop5List();
 }

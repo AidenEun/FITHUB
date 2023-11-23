@@ -435,6 +435,10 @@
 		select max(signup_num) from trainer_signup where user_id=#{userId}
 	</select>
 
+	<select id="getTodayDiary">
+		select * from diary
+		where user_id = 'banana' and regdate = date(now());
+	</select>
 
 </mapper>
 

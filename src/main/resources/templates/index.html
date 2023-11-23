@@ -57,17 +57,102 @@
 				<section class="two_content1">
 					<div class="slide_wrapper">
 						<ul class="slides">
-							<li>1</li>
-							<li>2</li>
-							<li>3</li>
-							<li>4</li>
+							<li>
+								<table>
+									<tr>
+										<td colspan="2"><h3 class="side_ranking">사용자 게시글 Top 5</h3></td>
+									</tr>
+									<tr th:if="${userBoardTotalTop5List != null and userBoardTotalTop5List.size()>0}" th:each="list : ${userBoardTotalTop5List}">
+										<td th:text="${listStat.index + 1}">1</td>
+										<td class="open"><a class="cursorPointer">[[${list.userId}]]</a></td>
+									</tr>
+									<th:block th:if="${userBoardTotalTop5List == null or userBoardTotalTop5List.size() == 0}">
+										<tr>
+											<td colspan="2">등록자가 없습니다.</td>
+										</tr>
+									</th:block>
+								</table>
+							</li>
+							<li>
+								<table>
+									<tr>
+										<td colspan="2"><h3 class="side_ranking">사용자 댓글 Top 5</h3></td>
+									</tr>
+									<tr th:if="${userReplyTotalTop5List != null and userReplyTotalTop5List.size()>0}" th:each="list : ${userReplyTotalTop5List}">
+										<td th:text="${listStat.index + 1}">1</td>
+										<td class="open"><a class="cursorPointer">[[${list.userId}]]</a></td>
+									</tr>
+									<th:block th:if="${userReplyTotalTop5List == null or userReplyTotalTop5List.size() == 0}">
+										<tr>
+											<td colspan="2">등록자가 없습니다.</td>
+										</tr>
+									</th:block>
+								</table>
+							</li>
+							<li>
+								<table>
+									<tr>
+										<td colspan="2"><h3 class="side_ranking">트레이너 게시글 Top 5</h3></td>
+									</tr>
+									<tr th:if="${trainerBoardTotalTop5List != null and trainerBoardTotalTop5List.size()>0}" th:each="list : ${trainerBoardTotalTop5List}">
+										<td th:text="${listStat.index + 1}">1</td>
+										<td class="open"><a class="cursorPointer">[[${list.trainerId}]]</a></td>
+									</tr>
+									<th:block th:if="${trainerBoardTotalTop5List == null or trainerBoardTotalTop5List.size() == 0}">
+										<tr>
+											<td colspan="2">등록자가 없습니다.</td>
+										</tr>
+									</th:block>
+								</table>
+							</li>
+							<li>
+								<table>
+									<tr>
+										<td colspan="2"><h3 class="side_ranking">트레이너 댓글 Top 5</h3></td>
+									</tr>
+									<tr th:if="${trainerReplyTotalTop5List != null and trainerReplyTotalTop5List.size()>0}" th:each="list : ${trainerReplyTotalTop5List}">
+										<td th:text="${listStat.index + 1}">1</td>
+										<td class="open"><a class="cursorPointer">[[${list.trainerId}]]</a></td>
+									</tr>
+									<th:block th:if="${trainerReplyTotalTop5List == null or trainerReplyTotalTop5List.size() == 0}">
+										<tr>
+											<td colspan="2">등록자가 없습니다.</td>
+										</tr>
+									</th:block>
+								</table>
+							</li>
 						</ul>
 					</div>
 				</section>
 
 
 				<section class="two_content2">
-					<div class="two_box2">인기 게시물</div>
+					<div class="two_box2">
+						<table>
+							<tr>
+								<td colspan="5"><h3 class="side_ranking">인기 게시글 Top 5</h3></td>
+							</tr>
+							<tr>
+								<th>순위</th>
+								<th>제목</th>
+								<th>카테고리</th>
+								<th>아이디</th>
+								<th>좋아요</th>
+							</tr>
+							<tr th:if="${userBoardLikeTop5List != null and userBoardLikeTop5List.size()>0}" th:each="list : ${userBoardLikeTop5List}">
+								<td th:text="${listStat.index + 1}">1</td>
+								<td>[[${list.boardTitle}]]</td>
+								<td>[[${list.boardCategory}]]</td>
+								<td class="open"><a class="cursorPointer">[[${list.userId}]]</a></td>
+								<td>[[${list.likeCnt}]]</td>
+							</tr>
+							<th:block th:if="${userBoardLikeTop5List == null or userBoardLikeTop5List.size() == 0}">
+								<tr>
+									<td colspan="5">등록된 게시글이 없습니다.</td>
+								</tr>
+							</th:block>
+						</table>
+					</div>
 				</section>
 			</div>
 		</div>
@@ -108,32 +193,55 @@
 				<div class="three_title"><h2>트레이너 랭킹</h2></div>
 				<div class="swiper slide_one">
 					<div class="swiper-wrapper">
-						<div class="swiper-slide three_swiper_slide">
-							<div></div>
-							<div></div>
-							<div></div>
-						</div>
-						<div class="swiper-slide three_swiper_slide">
-							<div></div>
-							<div></div>
-							<div></div>
-						</div>
-						<div class="swiper-slide three_swiper_slide">
-							<div></div>
-							<div></div>
-							<div></div>
-						</div>
-						<div class="swiper-slide three_swiper_slide">
-							<div></div>
-							<div></div>
-							<div></div>
-						</div>
-						<div class="swiper-slide three_swiper_slide">
-							<div></div>
-							<div></div>
-							<div></div>
-						</div>
-
+						<th:block th:if="${trainerTopNumList != null and trainerTopNumList.size()>0}"></th:block>
+							<div class="swiper-slide three_swiper_slide">
+								<th:block th:each="list, listStat : ${trainerTopNumList}" th:if="${listStat.index < 3}">
+									<div class="three_swiper_slide_box" >
+										<div class="three_swiper_slide_box_num" th:text="${listStat.index + 1}">1</div>
+										<div class="three_swiper_slide_box_img_box"><img class="three_swiper_slide_box_img" src="#"></div>
+										<div class="three_swiper_slide_box_info_box">
+											<div>닉네임: [[${list.trainerNickname}]]</div>
+											<div>아이디: [[${list.trainerId}]]</div>
+											<div>구독자: [[${list.subscriptionCount}]]</div>
+										</div>
+									</div>
+								</th:block>
+							</div>
+							<th:block th:if="${3 < trainerTopNumList.size()}">
+								<div class="swiper-slide three_swiper_slide">
+									<th:block th:each="list, listStat : ${trainerTopNumList}" th:if="${listStat.index >= 3 and listStat.index < 6}">
+										<div class="three_swiper_slide_box">
+											<div class="three_swiper_slide_box_num" th:text="${listStat.index + 1}">1</div>
+											<div class="three_swiper_slide_box_img_box"><img class="three_swiper_slide_box_img" src="#"></div>
+											<div class="three_swiper_slide_box_info_box">
+												<div>닉네임: [[${list.trainerNickname}]]</div>
+												<div>아이디: [[${list.trainerId}]]</div>
+												<div>구독자: [[${list.subscriptionCount}]]</div>
+											</div>
+										</div>
+									</th:block>
+								</div>
+							</th:block>
+							<th:block th:if="${6 < trainerTopNumList.size() and trainerTopNumList.size() <= 9}">
+								<div class="swiper-slide three_swiper_slide">
+									<th:block th:each="list, listStat : ${trainerTopNumList}" th:if="${listStat.index >= 6 and listStat.index < 9}">
+										<div class="three_swiper_slide_box">
+											<div class="three_swiper_slide_box_num" th:text="${listStat.index + 1}">1</div>
+											<div class="three_swiper_slide_box_img_box"><img class="three_swiper_slide_box_img" src="#"></div>
+											<div class="three_swiper_slide_box_info_box">
+												<div>닉네임: [[${list.trainerNickname}]]</div>
+												<div>아이디: [[${list.trainerId}]]</div>
+												<div>구독자: [[${list.subscriptionCount}]]</div>
+											</div>
+										</div>
+									</th:block>
+								</div>
+							</th:block>
+						<th:block th:if="${trainerTopNumList == null or trainerTopNumList.size() == 0}">
+							<div>
+								<div style="text-align: center; font-size: 20px;">등록된 트레이너가 없습니다.</div>
+							</div>
+						</th:block>
 					</div>
 					<div class="swiper-button-next"></div>
 					<div class="swiper-button-prev"></div>
@@ -152,39 +260,62 @@
 				<div class="three_title"><h2>챌린지</h2></div>
 				<div class="swiper slide_two">
 					<div class="swiper-wrapper">
-						<div class="swiper-slide four_swiper_slide">
-							<div></div>
-							<div></div>
-							<div></div>
-						</div>
-						<div class="swiper-slide four_swiper_slide">
-							<div></div>
-							<div></div>
-							<div></div>
-							<div></div>
-							<div></div>
-						</div>
-						<div class="swiper-slide four_swiper_slide">
-							<div></div>
-							<div></div>
-							<div></div>
-							<div></div>
-							<div></div>
-						</div>
-						<div class="swiper-slide four_swiper_slide">
-							<div></div>
-							<div></div>
-							<div></div>
-							<div></div>
-							<div></div>
-						</div>
-						<div class="swiper-slide four_swiper_slide">
-							<div></div>
-							<div></div>
-							<div></div>
-							<div></div>
-							<div></div>
-						</div>
+						<th:block th:if="${challNoticeBoardList != null and challNoticeBoardList.size()>0}"></th:block>
+							<div class="swiper-slide four_swiper_slide">
+								<th:block th:each="list, listStat : ${challNoticeBoardList}" th:if="${listStat.index < 5}">
+									<div class="four_swiper_slide_box">
+										<div class="four_swiper_slide_box_turm">[[${list.challTerm}]] day</div>
+										<div class="four_swiper_slide_box_category">[[${list.challCategory}]]</div>
+										<div class="four_swiper_slide_box_title">[[${list.challName}]]</div>
+										<div class="four_swiper_slide_box_content">[[${list.challContent}]]</div>
+										<div class="button small four_swiper_slide_box_button">신청</div>
+									</div>
+								</th:block>
+							</div>
+							<th:block th:if="${5 < challNoticeBoardList.size()}">
+								<div class="swiper-slide four_swiper_slide">
+									<th:block th:each="list, listStat : ${challNoticeBoardList}" th:if="${listStat.index >= 5 and listStat.index < 10}">
+										<div class="four_swiper_slide_box">
+											<div class="four_swiper_slide_box_turm">[[${list.challTerm}]] day</div>
+											<div class="four_swiper_slide_box_category">[[${list.challCategory}]]</div>
+											<div class="four_swiper_slide_box_title">[[${list.challName}]]</div>
+											<div class="four_swiper_slide_box_content">[[${list.challContent}]]</div>
+											<div class="button small four_swiper_slide_box_button">신청</div>
+										</div>
+									</th:block>
+								</div>
+							</th:block>
+							<th:block th:if="${10 < challNoticeBoardList.size()}">
+								<div class="swiper-slide four_swiper_slide">
+									<th:block th:each="list, listStat : ${challNoticeBoardList}" th:if="${listStat.index >= 10 and listStat.index < 15}">
+										<div class="four_swiper_slide_box">
+											<div class="four_swiper_slide_box_turm">[[${list.challTerm}]] day</div>
+											<div class="four_swiper_slide_box_category">[[${list.challCategory}]]</div>
+											<div class="four_swiper_slide_box_title">[[${list.challName}]]</div>
+											<div class="four_swiper_slide_box_content">[[${list.challContent}]]</div>
+											<div class="button small four_swiper_slide_box_button">신청</div>
+										</div>
+									</th:block>
+								</div>
+							</th:block>
+							<th:block th:if="${15 < challNoticeBoardList.size() and challNoticeBoardList.size() <= 20}">
+								<div class="swiper-slide four_swiper_slide">
+									<th:block th:each="list, listStat : ${challNoticeBoardList}" th:if="${listStat.index >= 15 and listStat.index < 20}">
+										<div class="four_swiper_slide_box">
+											<div class="four_swiper_slide_box_turm">[[${list.challTerm}]] day</div>
+											<div class="four_swiper_slide_box_category">[[${list.challCategory}]]</div>
+											<div class="four_swiper_slide_box_title">[[${list.challName}]]</div>
+											<div class="four_swiper_slide_box_content">[[${list.challContent}]]</div>
+											<div class="button small four_swiper_slide_box_button">신청</div>
+										</div>
+									</th:block>
+								</div>
+							</th:block>
+						<th:block th:if="${challNoticeBoardList == null or challNoticeBoardList.size() == 0}">
+							<div>
+								<div style="text-align: center; font-size: 20px;">등록된 트레이너가 없습니다.</div>
+							</div>
+						</th:block>
 					</div>
 					<div class="swiper-scrollbar"></div>
 				</div>
@@ -198,28 +329,28 @@
 		<section data-scroll id="three" class="wrapper style2">
 			<div class="three_div">
 				<ul class="three_ul">
-					<li class="three_ul_a1 fontSize_24px">뉴스</li>
-					<li class="three_ul_a2">꿀팁</li>
-					<li class="three_ul_a3">정보</li>
-					<li class="three_ul_a4">커뮤니티</li>
-					<li class="three_ul_a5">제품추천</li>
+					<li id="infoNews" class="three_ul_a1 fontSize_24px">뉴스</li>
+					<li id="infoTip" class="three_ul_a2">꿀팁</li>
+					<li id="info" class="three_ul_a3">정보</li>
+					<li id="commu" class="three_ul_a4">커뮤니티</li>
+					<li id="prod" class="three_ul_a5">제품추천</li>
 				</ul>
 			</div>
 			<section class="three_section">
-				<div class="three_section_div" style="max-height: 1400px;">
+				<div class="three_section_div">
 					<div class="three_section_div_box"> 박스</div>
 					<table>
 						<tr>
-							<td class="three_section_td">
-								<div class="three_section_td_list">1</div>
-								<div class="three_section_td_list">1</div>
-								<div class="three_section_td_list">1</div>
-								<div class="three_section_td_list">1</div>
-								<div class="three_section_td_list">1</div>
-								<div class="three_section_td_list">1</div>
-								<div class="three_section_td_list">1</div>
-								<div class="three_section_td_list">1</div>
-								<div class="three_section_td_list">1</div>
+							<td id="three_section_td" class="three_section_td">
+<!--								<div  class="three_section_td_list">-->
+<!--									<div class="three_section_td_list_img"><img alt="이미지" /></div>-->
+<!--									<div class="three_section_td_list_box">-->
+<!--										<div class="three_section_td_list_title">{제목12341234}</div>-->
+<!--										<div class="three_section_td_list_category">카테고리 : <span>{카테고리}</span></div>-->
+<!--										<div class="three_section_td_list_id">by.<span>{아이디}</span></div>-->
+<!--										<div class="three_section_td_list_like_bookmark">좋아요 : <span>{좋아요}</span> 북마크 : <span>{북마크}</span></div>-->
+<!--									</div>-->
+<!--								</div>-->
 							</td>
 						</tr>
 					</table>
@@ -252,7 +383,8 @@
 	<script th:src="@{/assets/js/sidebarTap.js}"></script>
 
 	<script th:src="@{/assets/js/new.js}"></script>
-	<script>
+	<script th:inline="javascript">
+
 		$("#infoController").click(function(){
 			location.href = '/info/info_list';
 		});
@@ -264,6 +396,171 @@
 		$("#challengeController").click(function(){
 			location.href = '/challenge/list';
 		});
+
+
+	$(document).ready(function() {
+		let idx = $(".three_section_div_2").attr("id");
+
+        let category = 'infoNews';
+        loadPage('/infoNews',1);
+
+        $('#infoNews').click(function() {
+         	idx = 1;
+            category = 'infoNews';
+            setTimeout(function(){
+            	loadPage('/infoNews',idx);
+            },400);
+        });
+
+	    $('#infoTip').click(function() {
+         	idx = 1;
+            category = 'infoTip';
+			setTimeout(function(){
+            	loadPage('/infoTip',idx);
+            },400);
+        });
+
+	    $('#info').click(function() {
+         	idx = 1;
+            category = 'info';
+			setTimeout(function(){
+            	loadPage('/info',idx);
+            },400);
+        });
+
+	    $('#commu').click(function() {
+         	idx = 1;
+            category = 'commu';
+			setTimeout(function(){
+            	loadPage('/commu',idx);
+            },400);
+        });
+
+	    $('#prod').click(function() {
+         	idx = 1;
+            category = 'prod';
+            setTimeout(function(){
+	            loadPage('/prod',idx);
+            },400);
+        });
+        // 페이지 데이터를 불러오는 함수
+        function loadPage(url,idx) {
+            $.ajax({
+                url: url,
+                data: { category: category, idx:idx},
+                type: 'POST',
+                dataType: 'json',
+                success: function (data) {
+                    // 게시글 목록 업데이트
+                    if(category === "prod"){
+                    	displayProductData(data);
+					}
+                    else if(category === "commu"){
+                    	displayCommuData(data);
+                    }
+                    else{
+                    	displayData(data);
+                    }
+                },
+                error: function (error) {
+                    console.error('데이터를 가져오는 중 오류 발생: ' + error);
+                }
+            });
+        }
+
+
+		$(".three_section_div_2").on("click", function (e) {
+			e.preventDefault(); // 기본 동작 중지
+			idx = idx*1 + 1;
+
+			loadPage('/' + category, idx);
+		});
+
+
+		function displayData(data) {
+			var tableBody = $('#three_section_td');
+			tableBody.empty();
+
+			if (data.list != null && data.list.length > 0) {
+				data.list.forEach(function (board) {
+					var row = $(`
+						<div class="three_section_td_list">
+							<div class="three_section_td_list_img"><img alt="이미지" /></div>
+							<div class="three_section_td_list_box">
+								<div class="three_section_td_list_title">${board.boardTitle}</div>
+								<div class="three_section_td_list_category">카테고리 : <span>${board.boardCategory}</span></div>
+								<div class="three_section_td_list_id open">by.<span>${board.userId}</span></div>
+								<div class="three_section_td_list_like_bookmark">좋아요 : <span>${board.likeCnt}</span> 북마크 : <span>${board.bookmarkCnt}</span></div>
+							</div>
+						</div>
+					`);
+					tableBody.append(row);
+				});
+			}
+			else {
+				tableBody.append('<div style="text-align: center; font-size: 20px;">등록한 게시물이 없습니다.</div>');
+			}
+		}
+
+		function displayCommuData(data) {
+			var tableBody = $('#three_section_td');
+			tableBody.empty();
+
+			if (data.list != null && data.list.length > 0) {
+				data.list.forEach(function (board) {
+					var row = $(`
+						<div class="three_section_td_list commu">
+							<div class="three_section_td_list_box">
+								<div class="three_section_td_list_title">${board.boardTitle}</div>
+								<div class="three_section_td_list_category">카테고리 : <span>${board.boardCategory}</span></div>
+								<div class="three_section_td_list_id open">by.<span>${board.userId}</span></div>
+								<div class="three_section_td_list_like_bookmark">좋아요 : <span>${board.likeCnt}</span> 북마크 : <span>${board.bookmarkCnt}</span></div>
+							</div>
+						</div>
+					`);
+					tableBody.append(row);
+				});
+			}
+			else {
+				tableBody.append('<div style="text-align: center; font-size: 20px;">등록한 게시물이 없습니다.</div>');
+			}
+		}
+
+
+		function displayProductData(data) {
+			var tableBody = $('#three_section_td');
+			tableBody.empty();
+
+			if (data.list != null && data.list.length > 0) {
+				data.list.forEach(function (board) {
+				var row = $(`
+					<div class="three_section_td_list">
+						<div class="three_section_td_list_img"><img alt="이미지" /></div>
+						<div class="three_section_td_list_box">
+							<div class="three_section_td_list_title">${board.boardTitle}</div>
+							<div class="three_section_td_list_category">카테고리 : <span>${board.category}</span></div>
+							<div class="three_section_td_list_id open">by.<span>${board.adminId}</span></div>
+							<div class="three_section_td_list_like_bookmark">좋아요 : <span>${board.likeCnt}</span> 북마크 : <span>${board.bookmarkCnt}</span></div>
+						</div>
+					</div>
+				`);
+				tableBody.append(row);
+				});
+			}
+			else {
+				tableBody.append('<div style="text-align: center; font-size: 20px;">등록한 게시물이 없습니다.</div>');
+			}
+
+		}
+
+
+
+	});
+
+
+
+
+
 	</script>
 </body>
 </html>

@@ -454,7 +454,23 @@ public class BoardServiceImpl implements BoardService{
 		return bookmarkmapper.bookCheck(boardNum, loginUser);
 	}
 
+	@Override
+	public List<BoardDTO> getUserBoardLikeTop5List() {
+		return bmapper.getUserBoardLikeTop5List();
+	}
 
+	@Override
+	public List<BoardDTO> getindexInfoBoardList(int idx, String category) {
+		System.out.println("category: "+category);
+		if (category.equals("info")) {
+			return bmapper.getFoodExer(idx);
+		} else if (category.equals("commu")) {
+			return bmapper.getCommuList(idx);
+		} else {
+			return bmapper.getCategoryList(category, idx);
+		}
+
+	}
 }
 
 

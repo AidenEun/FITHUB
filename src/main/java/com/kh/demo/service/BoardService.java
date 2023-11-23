@@ -105,6 +105,10 @@ public interface BoardService {
 
 
 	public BookMarkDTO bookCheck(Long boardNum, String loginUser);
+
+	List<BoardDTO> getUserBoardLikeTop5List();
+
+    List<BoardDTO> getindexInfoBoardList(int idx, String category);
 }
 
 

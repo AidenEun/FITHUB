@@ -53,6 +53,7 @@ public interface ProductBoardService {
 	List<ProductBoardDTO> getProdExerList(Criteria cri);
 
 
+    List<ProductBoardDTO> getindexProductBoardList(int idx, String category);
 }
 
 

@@ -111,5 +111,7 @@ public interface UserMyPageMapper {
   
     Long getMatchingTotal(Criteria cri, String userId);
 
+    DiaryDTO getTodayDiary(String loginUser);
+  
     DiaryDTO getDiaryandUser(String todaydate, String userid);
 }

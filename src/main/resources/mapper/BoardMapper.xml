@@ -290,6 +290,36 @@
 		LIMIT 1;
 	</select>
 
+
+	<select id="getUserBoardLikeTop5List">
+		select board.*,count(*) as board_count from `like`,board
+		where `like`.board_num = board.board_num and `like`.board_category = board.board_category
+		GROUP BY board.board_num
+		order by board_count desc limit 5;
+	</select>
+
+	<select id="getFoodExer">
+		select * from board
+		where (board_category = 'infoExer' or board_category = 'infoFood') and
+		<![CDATA[
+			0 < board_num order by board_num desc limit #{idx};
+		]]>
+	</select>
+	<select id="getCommuList">
+		select * from board
+		where (board_category = 'commuFree' or board_category = 'commuExer' or board_category = 'commuGallery' or board_category = 'commuQna') and
+		<![CDATA[
+			0 < board_num order by board_num desc limit #{idx};
+		]]>
+	</select>
+	<select id="getCategoryList">
+		select * from board
+		where  board_category = #{category} and
+		<![CDATA[
+			0 < board_num order by board_num desc limit #{idx};
+		]]>
+	</select>
+
 </mapper>
 
 

@@ -327,6 +327,11 @@ public class ProductBoardServiceImpl implements ProductBoardService{
 		return bmapper.getProdExerList(cri);
 	}
 
+	@Override
+	public List<ProductBoardDTO> getindexProductBoardList(int idx, String category) {
+		return bmapper.getindexProductBoardList(idx);
+	}
+
 
 }
 

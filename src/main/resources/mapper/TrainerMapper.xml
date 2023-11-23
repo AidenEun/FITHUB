@@ -45,8 +45,34 @@
         ORDER BY subscription_count DESC
             LIMIT 5
     </select>
+    <select id="getTrainerTopNumList">
+        SELECT trainer.*, COUNT(subscribe.trainer_id) AS subscription_count
+        FROM trainer
+                 LEFT JOIN subscribe ON trainer.trainer_id = subscribe.trainer_id
+        GROUP BY trainer.trainer_id
+        ORDER BY subscription_count DESC
+            LIMIT #{i}
+    </select>
     <select id="getTrainerNickname">
         select * from trainer where trainer_id=#{trainerId};
+    </select>
+
+
+
+    <select id="getTrainerBoardTotalTop5List">
+        select trainer.*, COUNT(board.user_id) AS board_count
+        from board
+        JOIN trainer ON trainer.trainer_id = board.user_id
+        GROUP BY board.user_id
+        ORDER BY board_count DESC LIMIT 5;
+    </select>
+
+    <select id="getTrainerReplyTotalTop5List">
+        select trainer.*, COUNT(reply.user_id) AS reply_count
+        from reply
+        JOIN trainer ON trainer.trainer_id = reply.user_id
+        GROUP BY reply.user_id
+        ORDER BY reply_count DESC LIMIT 5;
     </select>
 </mapper>
 

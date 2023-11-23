@@ -52,5 +52,24 @@
 	</update>
 
 
+	<select id="getUserBoardTotalTop5List">
+		select user.*, COUNT(board.user_id) AS board_count
+		from board
+		JOIN user ON user.user_id = board.user_id
+		where user.user_category = 'U'
+		GROUP BY board.user_id
+		ORDER BY board_count DESC LIMIT 5;
+	</select>
+
+	<select id="getUserReplyTotalTop5List">
+		select user.*, COUNT(reply.user_id) AS reply_count
+		from reply
+		JOIN user ON user.user_id = reply.user_id
+		where user.user_category = 'U'
+		GROUP BY reply.user_id
+		ORDER BY reply_count DESC LIMIT 5;
+	</select>
+
+
 </mapper>
 
