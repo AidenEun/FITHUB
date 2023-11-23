@@ -66,4 +66,6 @@ public interface TrainerMatchingService {
     UTMatchingDTO uTtrainerCheck(String trainerId, String userId);
 
     Double getStarRatingAv(Long boardNum);
+
+
 }

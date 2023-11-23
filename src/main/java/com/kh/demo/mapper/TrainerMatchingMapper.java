@@ -67,4 +67,5 @@ public interface TrainerMatchingMapper {
 
 
     SubscribeDTO getrecheckSubs(SubscribeDTO recheckSubs);
+
 }

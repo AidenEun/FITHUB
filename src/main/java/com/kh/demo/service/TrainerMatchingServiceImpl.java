@@ -193,6 +193,7 @@ public class TrainerMatchingServiceImpl implements TrainerMatchingService {
         }
     }
 
+
     @Override
     public boolean modify(TrainerMatchingBoardDTO board) {
         int row = tmmapper.updateBoard(board);
@@ -203,8 +204,6 @@ public class TrainerMatchingServiceImpl implements TrainerMatchingService {
         return true;
 
     }
-
-
 
     @Override
     public boolean remove(String loginUser, Long boardNum) {
@@ -230,4 +229,9 @@ public class TrainerMatchingServiceImpl implements TrainerMatchingService {
     };
     @Override
     public List<TrainerDTO> getTrainerNickname(String trainerId){return tmapper.getTrainerNickname(trainerId);}
+
+
+
+
+
 }

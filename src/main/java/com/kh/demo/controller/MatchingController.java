@@ -113,6 +113,8 @@ public class MatchingController {
         model.addAttribute("trainerInfo",trainerInfo);
         model.addAttribute("list", list);
         model.addAttribute("starRatingAv",starRatingAv);
+        model.addAttribute("loginUser",loginUser);
+
 
         if (list == null) {
             return "error";
@@ -351,4 +353,8 @@ public class MatchingController {
 
         return json.toString();
     }
+
+
+
+
 }
