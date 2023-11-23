@@ -1,5 +1,4 @@
-<link xmlns:th="http://www.thymeleaf.org">
-<th:block th:fragment="header(loginUser,user,trainer,admin,profile)">
+<th:block th:fragment="header(loginUser,user,trainer,admin,profile)" xmlns:th="http://www.thymeleaf.org">
     <style>
         .submenu {
             width: 150px;
@@ -168,7 +167,6 @@
         }
 
     </style>
-
     <!--<th:block th:if="${session.loginUser == null}">
         <script>
             alert("로그인 후 이용 가능합니다!!!");
