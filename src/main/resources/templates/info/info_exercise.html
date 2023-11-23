@@ -49,31 +49,31 @@
 			padding: 5px 10px;
 			vertical-align: middle;
 		}
-		#thumbnail{
+		.info_list #thumbnail{
 			width: 200px !important;
 			height: 180px !important;
 		}
-		#thumbnail img{
+		.info_list #thumbnail img{
 			width: 200px !important;
 			height: 180px !important;
 			border: 1px solid #ebede1;
 		}
-		#boardtitle{
+		.info_list #boardtitle{
 			padding: 0;
 		}
-		#boardtitle b{
+		.info_list #boardtitle b{
 			font-size: 15px !important;
 		}
 
-		#boardcontent{
+		.info_list #boardcontent{
 			height: 100px !important;
 			overflow: hidden;
 			text-overflow: ellipsis;
-			display: -webkit-box; /* display: -webkit-box => 해당 영역을 box 형태로 관리 */
-			-webkit-line-clamp: 3; /*-webkit-line-clamp => 해당 영역 내 텍스트의 최대 라인수 */
-			-webkit-box-orient: vertical; /* -webkit-box-orient: vertical => box의 흐름 방향을 수직으로 지정 */
+			display: -webkit-box;
+			-webkit-line-clamp: 4!important;
+			-webkit-box-orient: vertical;
 		}
-		#boardcontent p, #boardcontent span, #boardcontent b{
+		.info_list #boardcontent p, #boardcontent span, #boardcontent b{
 			display: inline;
 			font-size: 14px !important;
 			text-decoration: none !important;
