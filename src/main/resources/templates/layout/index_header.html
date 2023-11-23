@@ -1,5 +1,4 @@
-<link xmlns:th="http://www.thymeleaf.org">
-<th:block th:fragment="header(loginUser,user,trainer,admin,profile,todaydate)">
+<th:block th:fragment="header(loginUser,user,trainer,admin,profile,todaydate)" xmlns:th="http://www.thymeleaf.org">
     <style>
         #menu hr {
             margin-top: 20px;
@@ -295,15 +294,21 @@
             <ul>
                 <li id="login">
                     <th:block th:if="${session.loginUser == null}">
-                        <a class="login" th:href="@{/user/login}" style="color: #fff;">Login</a>
+                        <a class="login" th:href="@{/user/login}" style="color: #fff; margin-right: 25px;">Login</a>
                     </th:block>
                     <th:block th:if="${session.loginUser != null}">
-                        <a class="login" th:href="@{/user/logout}" style="color: #fff;">logout</a>
+                        <a class="login" th:href="@{/user/logout}" style="color: #fff; margin-right: 25px;">logout</a>
                     </th:block>
 
-                    <a class="login" href="/usermypage/user_myinfo" style="color: #fff;">유저</a>
-                    <a class="login" href="/trainermypage/trainer_modify" style="color: #fff;">트레</a>
-                    <a class="login" href="/adminmypage/adminmypage_list" style="color: #fff;">관리</a>
+                    <th:block th:if="${session.admin != null}">
+                        <a class="login" href="/adminmypage/adminmypage_list" style="color: #fff;"> MyPage</a>
+                    </th:block>
+                    <th:block th:if="${session.trainer != null}">
+                        <a class="login" href="/trainermypage/trainer_modify" style="color: #fff;">MyPage</a>
+                    </th:block>
+                    <th:block th:if="${session.user != null}">
+                        <a class="login" href="/usermypage/user_myinfo" style="color: #fff;">MyPage</a>
+                    </th:block>
                 </li>
                 <li class="search">
                     <a class="fa-search" href="#search" style="color: #fff;">Search</a>

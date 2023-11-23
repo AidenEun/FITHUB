@@ -92,11 +92,29 @@
 		display: flex;
 		margin-left: 150px;
 	}
+
+	.agree-txt{
+	    margin-right: 15px;
+    	line-height: 3;
+	}
+
+	.agree-contents{
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.agree-container{
+	    width: 70%;
+		margin: 0 auto;
+		border: 1px solid #e6e6e6;;
+		padding: 30px 10px 10px 30px;
+	}
+
 </style>
 <body class="is-preload">
 
 	<!-- Header -->
-	<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin},${session.profile})}"></th:block>
+	<th:block th:replace="~{layout/login_header::login_header()}"></th:block>
 
 	<!-- Main -->
 	<section id="main" class="wrapper sidebar left">
@@ -188,11 +206,6 @@
 						</thead>
 
 						<tbody style="display: none">
-							<tr style="margin-top: 30px;">
-								<td colspan="2">
-									<div style="float: right;" class="button btnColor" onclick="PrevPage();">이전</div>
-								</td>
-							</tr>
 							<tr>
 								<td style="width: 25%;"><label for="weight">몸무게 (kg)</label></td>
 								<td><input type="text" name="userWeight" id="weight" placeholder="kg은 제외하고 입력하세요"></td>
@@ -213,18 +226,13 @@
 								<td colspan="2"><hr></td>
 							</tr>
 							<tr>
-								<td colspan="2"
-									style="box-sizing: border-box;
-									border: 1.5px solid #5a8100;
-									border-radius: 10px;"
-								>
+								<td colspan="2">
 									<div class="agree-container pt50">
-										<p class="agree-tit">
-											이용약관 동의
-											<em class="retext">*</em>
+										<p class="agree-tit" style="float:left; font-weight: bold; font-size: 22px;">
+											이용약관 동의<em class="retext">*</em>
 										</p>
 
-										<div class="agree-contents">
+										<div class="agree-contents" style="clear: both;">
 											<span class="agree-txt all">전체 동의합니다.</span>
 											<p class="agree-chk">
 												<span class="agree-chkbox">
@@ -236,8 +244,7 @@
 
 										<div class="agree-contents">
 											<span class="agree-txt">
-												본인은 만 14세 이상 입니다.
-												<em>(필수)</em>
+												본인은 만 14세 이상 입니다.<em>(필수)</em>
 											</span>
 											<p class="agree-chk">
 												<span class="agree-chkbox">
@@ -249,50 +256,33 @@
 
 										<div class="agree-contents">
 											<span class="agree-txt">
-												이용약관 동의
-												<em>(필수)</em>
+												이용약관 동의<em>(필수)</em>
+												<a href="/user/useAgree" class="txt" style="text-decoration: none; color: #000;" onmouseover="this.style.textDecoration='underline'; this.style.color='#5a8100'" onmouseout="this.style.textDecoration='none'; this.style.color='#000'">< 내용보기&nbsp;></a>
 											</span>
 											<p class="agree-see agree-chk">
-												<a href="/user/useAgree" class="txt" style="text-decoration: none; color: #000;" onmouseover="this.style.textDecoration='underline'; this.style.color='#5a8100'" onmouseout="this.style.textDecoration='none'; this.style.color='#000'">내용보기&nbsp;></a>
-												<br>
 												<span class="agree-chkbox">
 													<input type="checkbox" name="cc" id="c2">
 													<label for="c2"></label>
 												</span>
 											</p>
-											<!--<p class="agree-chk">
-												<span class="agree-chkbox">
-													<input type="checkbox" name="cc" id="c2">
-													<label for="c2"></label>
-												</span>
-											</p>-->
 										</div>
 
 										<div class="agree-contents">
 											<span class="agree-txt">
-												개인정보처리방침
-												<em>(필수)</em>
+												개인정보처리방침<em>(필수)</em>
+												<a href="/user/policyAgree" class="txt" style="text-decoration: none; color: #000;" onmouseover="this.style.textDecoration='underline'; this.style.color='#5a8100'" onmouseout="this.style.textDecoration='none'; this.style.color='#000'">< 내용보기&nbsp;></a>
 											</span>
 											<p class="agree-see agree-chk">
-												<a href="/user/policyAgree" class="txt" style="text-decoration: none; color: #000;" onmouseover="this.style.textDecoration='underline'; this.style.color='#5a8100'" onmouseout="this.style.textDecoration='none'; this.style.color='#000'">내용보기&nbsp;></a>
-												<br>
 												<span class="agree-chkbox">
 													<input type="checkbox" name="cc" id="c3">
 													<label for="c3"></label>
 												</span>
 											</p>
-											<!--<p class="agree-chk">
-												<span class="agree-chkbox">
-													<input type="checkbox" name="cc" id="c3">
-													<label for="c3"></label>
-												</span>
-											</p>-->
 										</div>
 
 										<div class="agree-contents">
 											<span class="agree-txt">
-												위치정보 이용약관 동의
-												<em>(선택)</em>
+												위치정보 이용약관 동의<em>(선택)</em>
 											</span>
 											<p class="agree-chk">
 												<span class="agree-chkbox">
@@ -307,11 +297,7 @@
 							<tr>
 								<td colspan="2">
 									<div style="float: right;" class="button btnColor" onclick="sendit();">가입 완료</div>
-								</td>
-							</tr>
-							<tr>
-								<td colspan="2">
-									<a style="float: right; width: 122px;" href="/" class="button btnColor">취소</a>
+									<div style="float: right; margin-right: 8px;" class="button btnColor" onclick="PrevPage();">이전</div>
 								</td>
 							</tr>
 						</tbody>

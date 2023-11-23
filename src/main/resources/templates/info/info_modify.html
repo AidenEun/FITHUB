@@ -115,6 +115,11 @@
 			color: #F7FAF5 !important;
 			box-shadow: 0 0 2px #5a8100;
 		}
+
+		.thumbnail {
+			width: 300px;
+			margin-left: 20px;
+		}
 	</style>
 </head>
 <body class="is-preload">
@@ -149,9 +154,11 @@
 
 				<div class="info_category">
 					<h3>카테고리 선택</h3>
-					<div style="margin-right: 10px;" th:class="${(board.boardCategory == 'infoNews' ? 'active' : '') + ' button'}" onclick="selectCategory('infoNews')">뉴스</div>
-					<div style="margin-right: 10px;" th:class="${(board.boardCategory == 'infoFood' ? 'active' : '') + ' button'}" onclick="selectCategory('infoFood')">식단</div>
-					<div style="margin-right: 10px;" th:class="${(board.boardCategory == 'infoExer' ? 'active' : '') + ' button'}" onclick="selectCategory('infoExer')">운동</div>
+					<th:block th:if="${session.admin != null}">
+						<div class="button" style="margin-right: 10px;" onclick="selectCategory('infoNews')">뉴스</div>
+						<div class="button" style="margin-right: 10px;" onclick="selectCategory('infoFood')">식단</div>
+						<div class="button" style="margin-right: 10px;" onclick="selectCategory('infoExer')">운동</div>
+					</th:block>
 					<div th:class="${(board.boardCategory == 'infoTip' ? 'active' : '') + ' button'}" onclick="selectCategory('infoTip')">꿀팁</div>
 				</div>
 
@@ -197,7 +204,7 @@
 						</td>
 					</tr>
 					<tr th:class="${'r'+files2.size()}">
-						<th style="vertical-align: middle">파일 첨부[[${files2.size()+1}]]</th>
+						<th style="vertical-align: top">파일 첨부[[${files2.size()+1}]]</th>
 						<td th:class="${'file'+files2.size()+'_cont'}">
 							<div style="float:left;">
 								<input type="file" name="files2" th:id="${'file'+files2.size()}" style="display:none">

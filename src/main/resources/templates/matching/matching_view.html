@@ -455,7 +455,7 @@ display: none;
                     <a href="#" class="regist btnColor button" style="font-weight:bold; font-size:20px">리뷰 작성</a>
                     <div class="reviewForm row">
                         <div style="width:20%">
-                            <h4>리뷰 작성</h4>
+                            <h4 id="review_btn">리뷰 작성</h4>
                             <input type="text" name="userId" th:value="${session.loginUser}" readonly style="text-align: center;">
                             <input name="boardNum_1" id="boardNum2" th:value="${board.boardNum}" type="hidden">
                         </div>
@@ -520,13 +520,14 @@ display: none;
     const loginUser = /*[[${session.loginUser}]]*/'';
 	let boardNum = $("[name='boardNum_1']").val();
 	const reviews = $(".reviews")
+	const reviewBtn = $(".review_btn")
 	const page = $(".page")
 	let nowpage = 0;
 
 
 $(document).ready(function() {
-        nowpage = 1;
-		showList(1)
+    nowpage = 1;
+    showList(1)
     var trainerId = [[${trainerInfo.trainerId}]];
 
     $.ajax({
@@ -537,7 +538,8 @@ $(document).ready(function() {
                 // 데이터가 있을 때
                 $(".regist").show();
                 $(".reviewForm").hide();
-            } else {
+            }
+            else {
                 // 데이터가 없을 때
                 $(".regist").hide();
                 $(".reviewForm").hide();
@@ -549,98 +551,62 @@ $(document).ready(function() {
     });
 
 
- // 댓글 등록 링크 클릭 시
-$(".regist").click(function(e) {
+
+     // 댓글 등록 링크 클릭 시
+    $(".regist").click(function(e) {
         e.preventDefault();
-    $.ajax({
-        url: '/matching/checkReview?boardNum='+boardNum,
-        type: 'GET',
-        success: function(data) {
-        console.log(data);
-            if (data) {
-                // 데이터가 있을 때
-               alert("작성한 댓글이 있습니다. 확인 후 다시 시도해주세요!");
-                showList(1);
-            } else {
-                $(".reviewForm").show();
-                $(this).hide();
+        $.ajax({
+            url: '/matching/checkReview?boardNum='+boardNum,
+            type: 'GET',
+            success: function(data) {
+            console.log(data);
+                if (data) {
+                    // 데이터가 있을 때
+                   alert("작성한 리뷰가 있습니다. 확인 후 다시 시도해주세요!");
+                    showList(1);
+                }
+                else {
+                    $(".reviewForm").show();
+                    $(".regist").hide();
+                }
+            },
+            error: function(error) {
+                console.error('Error fetching data:', error);
             }
-        },
-        error: function(error) {
-            console.error('Error fetching data:', error);
-        }
+        });
     });
 
 
 
-});
+    $(".finish").on("click", function(e) {
+        e.preventDefault();
+        let reviewContent = $("[name='reviewContent']").val();
+        let starRating = $(".rating").attr("data-star-rating");
+        let boardNum = $("[name='boardNum_1']").val();
 
-
-$(".finish").on("click", function(e) {
-    e.preventDefault();
-    let reviewContent = $("[name='reviewContent']").val();
-    let starRating = $(".rating").attr("data-star-rating");
-    let boardNum = $("[name='boardNum_1']").val();
-
-    // 리뷰 내용과 별점이 작성되지 않았을 때 알림 표시
-    if (!reviewContent || !starRating) {
-        alert("리뷰 내용과 별점을 작성해주세요!");
-        return; // 이후 코드 실행 중단
-    }
-
-    reviewService.add(
-        {
-            "boardNum": boardNum,
-            "userId": loginUser,
-            "reviewContent": reviewContent,
-            "starRating": starRating
-        },
-        function(result) {
-            alert("등록!");
-            showList(1);
+        // 리뷰 내용과 별점이 작성되지 않았을 때 알림 표시
+        if (!reviewContent || !starRating) {
+            alert("리뷰 내용과 별점을 작성해주세요!");
+            return; // 이후 코드 실행 중단
         }
-    );
-});
-function showList(pagenum){
-		reviewService.getList(
-			{boardNum:boardNum, pagenum:pagenum||1},
-			function(reviewCnt, list){
-				let str = "";
-				if(list == null || list.length == 0){
-					str += '<li class="noreview" style="clear:both; text-align: center">등록된 리뷰가 없습니다.</li>';
-					reviews.html(str);
-					return;
-				}
 
-				for(let i=0;i<list.length;i++){
-					//<li style="clear:both;" class="li3">
-					str += '<li style="clear:both;" class="li'+list[i].reviewNum+'">';
-					str += '<div style="display:inline; float:left; width:75%;">';
-					//<strong class="userid3">apple</strong>
-					str += '<strong class="userId'+list[i].reviewNum+'">'+list[i].userId+'</strong>';
-					 str += '<span class="userRating" style="margin-left: 10px;">별점: ' + list[i].starRating + '</span>';
-					//<p class="review3">댓글내용</p>
-					str += '<p class="review'+list[i].reviewNum+'">'+list[i].reviewContent+'</p>';
-					str += '</div><div style="text-align:right;">'
-					str += '<strong>'+reviewService.displayTime(list[i])+'</strong>'
-					str += '<br>'
-					if(list[i].userId == loginUser){
-						//<a href="3" class="modify">수정</a>
-
-						str += '<a href="'+list[i].reviewNum+'" style="margin-left: 5px;" class="remove btnColor button small">삭제</a>';
-					}
-					str += '</div></li>';
-				}
-				reviews.html(str);
-
-				$(".remove").on("click",deleteReview);
-				$(".modify").on("click",modifyReview);
-				$(".mfinish").on("click",modifyReviewOk);
-
-				showReviewPage(reviewCnt, pagenum);
-			}
-		)
-	}
+        reviewService.add(
+            {
+                "boardNum": boardNum,
+                "userId": loginUser,
+                "reviewContent": reviewContent,
+                "starRating": starRating
+            },
+            function(result) {
+                alert("등록!");
+                showList(1);
+                $(".regist").show();
+                $(".reviewForm").hide();
+                $("[name='reviewContent']").val("");
+                $("[class='rating']").val("");
+            }
+        );
+    });
 
 	function showReviewPage(reviewCnt, pagenum){
 		let endPage = Math.ceil(pagenum/5)*5;
@@ -682,6 +648,48 @@ function showList(pagenum){
 		})
 	}
 
+
+
+    function showList(pagenum){
+		reviewService.getList(
+			{boardNum:boardNum, pagenum:pagenum||1},
+			function(reviewCnt, list){
+				let str = "";
+				if(list == null || list.length == 0){
+					str += '<li class="noreview" style="clear:both; text-align: center">등록된 리뷰가 없습니다.</li>';
+					reviews.html(str);
+					return;
+				}
+
+				for(let i=0;i<list.length;i++){
+					//<li style="clear:both;" class="li3">
+					str += '<li style="clear:both;" class="li'+list[i].reviewNum+'">';
+					str += '<div style="display:inline; float:left; width:75%;">';
+					//<strong class="userid3">apple</strong>
+					str += '<strong class="userId'+list[i].reviewNum+'">'+list[i].userId+'</strong>';
+					 str += '<span class="userRating" style="margin-left: 10px;">별점: ' + list[i].starRating + '</span>';
+					//<p class="review3">댓글내용</p>
+					str += '<p class="review'+list[i].reviewNum+'">'+list[i].reviewContent+'</p>';
+					str += '</div><div style="text-align:right;">'
+					str += '<strong>'+reviewService.displayTime(list[i])+'</strong>'
+					str += '<br>'
+					if(list[i].userId == loginUser){
+						//<a href="3" class="modify">수정</a>
+
+						str += '<a href="'+list[i].reviewNum+'" style="margin-left: 5px;" class="remove btnColor button small">삭제</a>';
+					}
+					str += '</div></li>';
+				}
+				reviews.html(str);
+
+				$(".remove").on("click",deleteReview);
+				$(".modify").on("click",modifyReview);
+				$(".mfinish").on("click",modifyReviewOk);
+
+				showReviewPage(reviewCnt, pagenum);
+			}
+		)
+	}
 
 	function deleteReview(e){
 		e.preventDefault();
