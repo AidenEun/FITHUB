@@ -143,8 +143,25 @@
         AND trainer_id=#{trainerId}
         AND trainer_check = 'O';
     </select>
-
-
+    <update id="updateMatchingLikeCnt">
+        UPDATE trainer_matching_board
+        SET like_cnt = (
+        SELECT COUNT(*)
+        FROM `like`
+        WHERE board_category=#{category}
+        AND board_num=#{boardNum}
+        )
+        WHERE category=#{category} AND board_num=#{boardNum};
+    </update>
+    <update id="updateMatchingBookCnt">
+        UPDATE trainer_matching_board
+        SET bookmark_cnt = (
+        SELECT COUNT(*)
+        FROM `bookmark`
+        WHERE board_num=#{boardNum}
+        )
+        WHERE board_num=#{boardNum}
+    </update>
 
 
 

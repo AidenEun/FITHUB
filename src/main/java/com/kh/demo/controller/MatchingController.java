@@ -43,6 +43,9 @@ public class MatchingController {
     @Qualifier("TrainerMatchingServiceImpl")
     private TrainerMatchingService MatchingService;
 
+    @Autowired @Qualifier("BoardServiceImpl")
+    private BoardService service;
+
     @GetMapping("matching_list")
     public void matching_list(Criteria cri, Model model) throws Exception {
         List<TrainerMatchingBoardDTO> list = MatchingService.getmatchingList(cri);
@@ -98,6 +101,13 @@ public class MatchingController {
         HttpSession session = req.getSession();
         String loginUser = (String)session.getAttribute("loginUser");
 
+        LikeDTO heart = new LikeDTO();
+        heart = service.likeCheck(boardNum,loginUser);
+        model.addAttribute("heart",heart);
+
+        BookMarkDTO bookmark = new BookMarkDTO();
+        bookmark = service.bookCheck(boardNum,loginUser);
+        model.addAttribute("bookmark",bookmark);
 
 
         //인기게시글 띄우기
