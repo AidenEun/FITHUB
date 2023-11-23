@@ -53,6 +53,7 @@
 			text-overflow: ellipsis;
 			vertical-align: middle;
 			height: 48px !important;
+			padding: 0px 10px !important;
 		}
 		.content table tr .boardTitle b{
 			line-height: 15px !important;
@@ -71,6 +72,7 @@
 			-webkit-line-clamp: 4;
 			-webkit-box-orient: vertical;
 			text-decoration: none !important;
+			margin-bottom: 10px;
 		}
 		.content table tr .boardContent p, .boardContent span, .boardContent b{
 			display: inline;
@@ -98,8 +100,6 @@
 			padding:0 1.5em !important;
 			width: 86px !important;
 			margin-top: 20px;
-			margin-right: -18px;
-
 		}
 
 		.button.more_view:hover{
@@ -115,9 +115,9 @@
 		  border: none;
 		  border-top: 1px solid transparent; /* 투명한 선으로 만듭니다. */
 		}
-<!--		.thumbnail{-->
-<!--			width: 190px !important;-->
-<!--		}-->
+		.thumbnail{
+			padding: 5px;
+		}
 		.thumbnail img{
 			width: 190px !important;
 			height: 130px !important;
@@ -150,7 +150,7 @@
 				<div style="display: flex; width: 100%; height: 300px;">
 					<th:block th:if="${newsList != null and newsList.size()>0}">
 						<th:block th:each="board, iterStat : ${newsList}" th:if="${iterStat.index < 4}">
-							<table style="border : 1px solid lightgrey; margin: 3px;">
+							<table style="border : 1px solid #ebede1; margin: 3px;">
 								<tr>
 									<td class="thumbnail">
 										<a class="get img" th:href="${board.boardNum}">
@@ -188,7 +188,7 @@
 				<div style="display: flex; width: 100%; height: 300px;">
 					<th:block th:if="${foodList != null and foodList.size()>0}">
 						<th:block th:each="board, iterStat : ${foodList}" th:if="${iterStat.index < 4}">
-							<table style="border : 1px solid lightgrey; margin: 3px;">
+							<table style="border : 1px solid #ebede1; margin: 3px;">
 								<tr>
 									<td class="thumbnail">
 										<a class="get img" th:href="${board.boardNum}">
@@ -226,7 +226,7 @@
 				<div style="display: flex; width: 100%; height: 300px;">
 					<th:block th:if="${exerList != null and exerList.size()>0}">
 						<th:block th:each="board, iterStat : ${exerList}" th:if="${iterStat.index < 4}">
-							<table style="border : 1px solid lightgrey; margin: 3px;">
+							<table style="border : 1px solid #ebede1; margin: 3px;">
 								<tr>
 									<td class="thumbnail">
 										<a class="get img" th:href="${board.boardNum}">
@@ -264,7 +264,7 @@
 				<div style="display: flex; width: 100%; height: 300px;">
 					<th:block th:if="${tipList != null and tipList.size()>0}">
 						<th:block th:each="board, iterStat : ${tipList}" th:if="${iterStat.index < 4}">
-							<table style="border : 1px solid lightgrey; margin: 3px;">
+							<table style="border : 1px solid #ebede1; margin: 3px;">
 								<tr>
 									<td class="thumbnail">
 										<a class="get img" th:href="${board.boardNum}">
