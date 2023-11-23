@@ -263,7 +263,6 @@ function isInvalidAdminNickname(nickname) {
     const mixedCaseAdminRegex = /a.*d.*m.*i.*n/i;
     const caseSensitiveAdminRegex = /admin/i;
     const randomCaseAdminRegex = /a(?:(?![aA]).)*d(?:(?![dD]).)*m(?:(?![mM]).)*i(?:(?![iI]).)*n/i;
-    /*const specialCharRegex = /^[a-zA-Z0-9]*$/;*/
 
     return mixedCaseAdminRegex.test(nickname) || caseSensitiveAdminRegex.test(nickname) || randomCaseAdminRegex.test(nickname) || /^[!@#$%^&*(),.?\":{}|<>]*$/.test(nickname);
 }
