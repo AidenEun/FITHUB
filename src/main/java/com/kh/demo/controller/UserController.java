@@ -70,37 +70,37 @@ public class UserController {
     public void replaceLogin(){}
 
     @PostMapping("login")
+    @ResponseBody
     public String login(String userid, String userpw, HttpServletRequest req) {
         Object loginUser = service.login(userid, userpw);
-        LocalDate todaydate = LocalDate.now();
 
-        System.out.println(todaydate);
-        if (loginUser instanceof AdminDTO) {
-            AdminDTO admin = serviceAdmin.getDetail(((AdminDTO) loginUser).getAdminId());
-            req.getSession().setAttribute("loginUser",((AdminDTO) loginUser).getAdminId());
-            req.getSession().setAttribute("admin",admin);
-            req.getSession().setAttribute("todaydate",todaydate);
-            return "redirect:/";
-        }
-        else if (loginUser instanceof TrainerDTO) {
-            TrainerDTO trainer = serviceTrainer.getDetail(((TrainerDTO) loginUser).getTrainerId());
-            req.getSession().setAttribute("loginUser",((TrainerDTO) loginUser).getTrainerId());
-            req.getSession().setAttribute("trainer",trainer);
-            req.getSession().setAttribute("profile", tmpservice.getProFileList(trainer.getTrainerId()));
-            req.getSession().setAttribute("todaydate",todaydate);
-            return "redirect:/";
-        }
-        else if (loginUser instanceof UserDTO) {
-            UserDTO user = service.getDetail(((UserDTO) loginUser).getUserId());
-            req.getSession().setAttribute("loginUser",((UserDTO) loginUser).getUserId());
-            req.getSession().setAttribute("user",user);
-            req.getSession().setAttribute("profile", umpservice.getProFileList(user.getUserId()));
-            req.getSession().setAttribute("todaydate",todaydate);
-            System.out.println("회원:"+user.getUserNickname());
-            return "redirect:/";
-        }
-        else {
-            return "redirect:/";
+        if (loginUser != null) {
+            // 로그인 성공 시 추가 작업을 수행할 수 있습니다.
+            LocalDate todaydate = LocalDate.now();
+
+            if (loginUser instanceof AdminDTO) {
+                AdminDTO admin = serviceAdmin.getDetail(((AdminDTO) loginUser).getAdminId());
+                req.getSession().setAttribute("loginUser", ((AdminDTO) loginUser).getAdminId());
+                req.getSession().setAttribute("admin", admin);
+                req.getSession().setAttribute("todaydate", todaydate);
+            } else if (loginUser instanceof TrainerDTO) {
+                TrainerDTO trainer = serviceTrainer.getDetail(((TrainerDTO) loginUser).getTrainerId());
+                req.getSession().setAttribute("loginUser", ((TrainerDTO) loginUser).getTrainerId());
+                req.getSession().setAttribute("trainer", trainer);
+                req.getSession().setAttribute("profile", tmpservice.getProFileList(trainer.getTrainerId()));
+                req.getSession().setAttribute("todaydate", todaydate);
+            } else if (loginUser instanceof UserDTO) {
+                UserDTO user = service.getDetail(((UserDTO) loginUser).getUserId());
+                req.getSession().setAttribute("loginUser", ((UserDTO) loginUser).getUserId());
+                req.getSession().setAttribute("user", user);
+                req.getSession().setAttribute("profile", umpservice.getProFileList(user.getUserId()));
+                req.getSession().setAttribute("todaydate", todaydate);
+                System.out.println("회원:" + user.getUserNickname());
+            }
+
+            return "success";
+        } else {
+            return "failure";
         }
     }
 
