@@ -425,8 +425,8 @@ display: none;
 
                         <td>
                             <a href="#" class="matchingOpen btnColor button" style="margin-left:15px;" data-trainer-id="${trainerInfo.trainerId}">신청하기</a>
-                            <a href="#" class="heart" style="float:left; margin-right:5px;"><img id="heart" src="/images/like_off.png" style="width:30px;"></a>
-                            <a href="#"  class="bookmark btnColor button">북마크</a>
+                            <a href="#" class="heart" style="float:left; margin-right:5px;"><img id="heart" th:src="'/images/like_'+${heart!=null?'on':'off'}+'.png'" style="width:30px;"></a>
+                            <a th:class="${bookmark != null ? 'bookmarked' : ''}+' bookmark button btnColor small'" style="float:left; margin-left:10px;">북마크</a>
                             <div class="displayNoneDiv writer">[[${board.trainerId}]]</div>
                             <div class="displayNoneDiv boardNum">[[${board.boardNum}]]</div>
                             <div class="displayNoneDiv boardCategory">matching</div>
@@ -787,12 +787,11 @@ $(document).ready(function(){
     //heartVal이 1이면 좋아요가 이미 되어있는것 -> like_on.png 출력
     if(heartVal>0){
         console.log("like2"+heartVal);
-        $("#heart").prop("src", "/images/like_on.png");	//prop() : 해당 속성을 가져와서 변경
+       	//prop() : 해당 속성을 가져와서 변경
         $(".heart").prop('name',heartVal);
     }
     else{
         console.log("like3"+heartVal);
-        $("#heart").prop("src", "/images/like_off.png");
         $(".heart").prop('name',heartVal);
         }
 
@@ -826,9 +825,6 @@ $(document).ready(function(){
 		console.log(bookmarkVal);
 
 		//bookmarkVal이 1이면 북마크가 이미 되어있는것
-		if(bookmarkVal>0){
-			$(".bookmark").addClass('bookmarked');
-		}
 
 		//북마크 버튼 클릭 시 실행되는 코드
 		$(".bookmark").on("click", function(){
