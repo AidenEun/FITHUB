@@ -1,6 +1,7 @@
 package com.kh.demo.service;
 
 import com.kh.demo.domain.dto.Criteria;
+import com.kh.demo.domain.dto.TrainerDTO;
 import com.kh.demo.domain.dto.UserDTO;
 
 import java.util.List;
@@ -27,5 +28,10 @@ public interface UserService {
     Long getUserPoint(String userid);
 
     void resetUserAttendance(String userid);
+
+    List<UserDTO> getUserBoardTotalTop5List();
+
+    List<UserDTO> getUserReplyTotalTop5List();
+
 
 }

@@ -148,6 +148,11 @@ public class ChallengeServiceImpl implements ChallengeService{
         challMapper.deleteMyChall(mychallNum);
     }
 
+    @Override
+    public List<ChallNoticeBoardDTO> getChallNoticeBoardList(int i) {
+        return challMapper.getChallNoticeBoardList(i);
+    }
+
 
     /*재우*/
 

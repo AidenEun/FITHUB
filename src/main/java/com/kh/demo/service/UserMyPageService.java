@@ -117,4 +117,6 @@ public interface UserMyPageService {
     ResponseEntity<Resource> getThumbnailResource(String sysName) throws Exception;
 
     ResponseEntity<Resource> getThumbnailResource_id(String id)throws Exception;
+
+    DiaryDTO getTodayDiary(String loginUser);
 }

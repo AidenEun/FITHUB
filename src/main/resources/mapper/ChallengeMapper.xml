@@ -199,5 +199,14 @@
         DELETE FROM my_challenge
         WHERE mychall_num = #{mychallNum}
     </delete>
+
+    <select id="getChallNoticeBoardList">
+        select * from chall_notice_board
+        where
+        <![CDATA[
+			0 < chall_num order by chall_num desc limit #{i}
+		]]>
+    </select>
+
 </mapper>
 

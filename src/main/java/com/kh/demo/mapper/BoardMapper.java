@@ -82,7 +82,13 @@ public interface BoardMapper {
 	Long getCommuTotalCnt(Criteria cri);
 
 
+    List<BoardDTO> getUserBoardLikeTop5List();
 
+	List<BoardDTO> getFoodExer(int idx);
+
+	List<BoardDTO> getCommuList(int idx);
+
+	List<BoardDTO> getCategoryList(String category, int idx);
 }
 
 

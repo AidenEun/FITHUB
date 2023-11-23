@@ -103,6 +103,14 @@
 		select * from product_board where board_num=#{boardNum}
 	</select>
 
+	<select id="getindexProductBoardList">
+		select * from product_board where
+		<![CDATA[
+			0 < board_num order by board_num desc limit #{idx}
+		]]>
+
+	</select>
+
 
 </mapper>
 

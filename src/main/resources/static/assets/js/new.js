@@ -240,15 +240,15 @@ var slides = document.querySelector('.slides'),
     }
 
 
-const three_section_div = document.querySelector('.three_section_div');
-const height_max = document.querySelector('.three_section_div_2');
-height_max.addEventListener('click',() =>{
-    // height_max.style.maxHeight += heightMax;
-    let heightMax = 1400;
-    let height_max_idx = height_max.id*1;
-    height_max.id = height_max_idx + 1;
-    height_max.style.maxHeight = heightMax*height_max.id + 'px';
-});
+//const three_section_div = document.querySelector('.three_section_div');
+//const height_max = document.querySelector('.three_section_div_2');
+//height_max.addEventListener('click',() =>{
+//    // height_max.style.maxHeight += heightMax;
+//    let heightMax = 1400;
+//    let height_max_idx = height_max.id*1;
+//    height_max.id = height_max_idx + 1;
+//    height_max.style.maxHeight = heightMax*height_max.id + 'px';
+//});
 
 const three_swiper_slide = document.querySelector('.three_swiper_slide');
 const four_swiper_slide = document.querySelector('.four_swiper_slide');
@@ -257,7 +257,7 @@ const three_section_td = document.querySelector('.three_section_td');
 let observer = new IntersectionObserver((entries) => {
     clearTimeout(timeout);
     console.log(entries[0]);
-    if (entries[0].isIntersecting && entries[0].intersectionRatio >= 0.2) {
+    if (entries[0].isIntersecting && entries[0].intersectionRatio >= 0.15) {
         wrap.classList.add('transition');
         timeout = setTimeout(function(){
             wrap.style.background = "#ebede1";
@@ -268,6 +268,6 @@ let observer = new IntersectionObserver((entries) => {
             wrap.classList.remove('transition');
         },1000);
     }
-}, { threshold: 0.2 });  // intersectionRatio 대신 isIntersectionRation, threshold를 추가
+}, { threshold: 0.15 });  // intersectionRatio 대신 isIntersectionRation, threshold를 추가
 
 observer.observe(three_section_td);

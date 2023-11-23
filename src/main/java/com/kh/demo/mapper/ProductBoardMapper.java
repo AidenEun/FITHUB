@@ -36,7 +36,7 @@ public interface ProductBoardMapper {
 	Long getTotalWithCategory(Criteria cri);
 
 
-
+    List<ProductBoardDTO> getindexProductBoardList(int idx);
 }
 
 

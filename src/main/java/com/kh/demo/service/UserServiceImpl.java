@@ -138,4 +138,14 @@ public class UserServiceImpl implements UserService{
         umapper.resetUserAttendance(userid);
     }
 
+    @Override
+    public List<UserDTO> getUserBoardTotalTop5List() {
+        return umapper.getUserBoardTotalTop5List();
+    }
+
+    @Override
+    public List<UserDTO> getUserReplyTotalTop5List() {
+        return umapper.getUserReplyTotalTop5List();
+    }
+
 }

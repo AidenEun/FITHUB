@@ -67,4 +67,5 @@ public interface ChallengeService {
 
     void deleteMyChall(Long mychallNum);
 
+    List<ChallNoticeBoardDTO> getChallNoticeBoardList(int i);
 }

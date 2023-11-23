@@ -349,6 +349,11 @@ public class UserMyPageServiceImpl implements UserMyPageService{
     }
 
     @Override
+    public DiaryDTO getTodayDiary(String loginUser) {
+        return umpmapper.getTodayDiary(loginUser);
+    }
+
+    @Override
     public boolean user_profile_modify(UserDTO user, MultipartFile profile, String updateCnt) throws IOException {
         int row = umapper.profileUpdateUser(user);
         if (row != 1) {

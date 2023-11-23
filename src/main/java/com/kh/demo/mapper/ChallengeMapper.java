@@ -72,4 +72,5 @@ public interface ChallengeMapper {
 
     void deleteMyChall(Long mychallNum);
 
+    List<ChallNoticeBoardDTO> getChallNoticeBoardList(int i);
 }

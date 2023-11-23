@@ -35,4 +35,7 @@ public interface UserMapper {
 
 	void resetUserAttendance(String userid);
 
+    List<UserDTO> getUserBoardTotalTop5List();
+
+	List<UserDTO> getUserReplyTotalTop5List();
 }
