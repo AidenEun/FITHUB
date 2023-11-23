@@ -392,7 +392,7 @@
                             <a class="subColor" href="/usermypage/user_applytrainer">트레이너 신청</a>
                         </td>
                     </tr>
-                    <tr th:if="${session.user == null && (session.trainer != null || sessoin.admin.trainer != null)}">
+                    <tr th:if="${session.user == null && (session.trainer != null || session.admin.trainer != null)}">
                         <!--                    <tr>-->
                         <td colspan="2">
                             <a class="subColor" href="/trainermypage/trainer_messagelist">매칭 쪽지함 확인하기</a>
