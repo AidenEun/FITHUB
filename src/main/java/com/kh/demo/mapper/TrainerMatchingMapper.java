@@ -68,4 +68,8 @@ public interface TrainerMatchingMapper {
 
     SubscribeDTO getrecheckSubs(SubscribeDTO recheckSubs);
 
+
+    void updateMatchingLikeCnt(Long boardNum);
+
+    void updateMatchingBookCnt(Long boardNum);
 }

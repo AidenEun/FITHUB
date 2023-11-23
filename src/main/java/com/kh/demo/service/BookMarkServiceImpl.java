@@ -4,6 +4,7 @@ import com.kh.demo.domain.dto.*;
 import com.kh.demo.mapper.BoardMapper;
 import com.kh.demo.mapper.BookMarkMapper;
 import com.kh.demo.mapper.ProductBoardMapper;
+import com.kh.demo.mapper.TrainerMatchingMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,8 @@ public class BookMarkServiceImpl implements BookMarkService{
 	@Autowired
 	private ProductBoardMapper pbmapper;
 
-
+	@Autowired
+	private TrainerMatchingMapper tmmapper;
 	@Override
 	public int insertBookmark(BookMarkDTO bookmark) {
 		Long boardNum = bookmark.getBoardNum();
@@ -58,8 +60,9 @@ public class BookMarkServiceImpl implements BookMarkService{
 			pbmapper.updateProductBookCnt(boardNum, boardCategory);
 		}  else if ("prodExer".equals(boardCategory)){
 			pbmapper.updateProductBookCnt(boardNum, boardCategory);
-		}
-		else {
+		} else if ("matching".equals(boardCategory)) {
+			tmmapper.updateMatchingBookCnt(boardNum);
+		}   else {
 			bmapper.updateBoardBookCnt(boardNum, boardCategory);
 		}
 	}
