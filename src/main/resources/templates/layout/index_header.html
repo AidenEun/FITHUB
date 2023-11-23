@@ -289,12 +289,12 @@
                 <table>
                     <tr>
                         <td>
-                            <div><a href="/sidebar/bmi"><img src="images/icon_BMIIMG1.png" alt="bmi"></a></div>
+                            <div><a href="/sidebar/bmi"><img th:src="@{/images/icon_BMIIMG1.png}" alt="bmi"></a></div>
                             <div><a href="/sidebar/bmi">BMI 계산기</a></div>
                         </td>
                         <td>
                             <div>
-                                <a href="/sidebar/healthCenter"><img src="images/icon_mapSearch.png" alt="health"></a>
+                                <a href="/sidebar/healthCenter"><img th:src="@{/images/icon_mapSearch.png}" alt="health"></a>
                             </div>
                             <div><a href="/sidebar/healthCenter">보건소 찾기</a></div>
                         </td>
@@ -366,24 +366,24 @@
                         <table style="margin: 0px;">
                             <tr>
                                 <td>
-                                    <div><input class="btn" type="image" src="images/iconcal.png" border="0"
+                                    <div><input class="btn" type="image" th:src="@{/images/iconcal.png}" border="0"
                                                 onfocus='this.blur()'
                                                 id="today"></div>
                                     <div>TODAY</div>
                                 </td>
                                 <td>
-                                    <div><input class="btn" type="image" src="images/iconchall.png" border="0"
+                                    <div><input class="btn" type="image" th:src="@{/images/iconchall.png}" border="0"
                                                 onfocus='this.blur()'
                                                 id="chall"></div>
                                     <div>CHALLENGE</div>
                                 </td>
                                 <td>
-                                    <div><input type="image" src="images/icondiary.png" border="0" onfocus='this.blur()'
+                                    <div><input type="image" th:src="@{/images/icondiary.png}" border="0" onfocus='this.blur()'
                                                 id="diary" onclick="moveDiary()"></div>
                                     <div>DIARY</div>
                                 </td>
                                 <td>
-                                    <div><input type="image" src="images/iconshop.png" border="0" onfocus='this.blur()'
+                                    <div><input type="image" th:src="@{/images/iconshop.png}" border="0" onfocus='this.blur()'
                                                 id="shop" onclick="moveShop()"></div>
                                     <div>SHOP</div>
                                 </td>
