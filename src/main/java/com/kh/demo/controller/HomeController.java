@@ -77,8 +77,6 @@ public class HomeController {
 //        model.addAttribute("todaydate", todaydate);
 //
 //    }
-    @GetMapping("/user/joinTest")
-    public void joinTest(){}
 
 
 }
