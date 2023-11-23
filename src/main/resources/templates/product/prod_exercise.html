@@ -168,7 +168,7 @@
 				</tr>
 			</table>
 			<!-- 검색 -->
-			<form id="searchForm" th:action="@{/product/prod_exercise}">
+			<!--<form id="searchForm" th:action="@{/product/prod_exercise}">
 				<div class="search_area flex">
 					<select name="type" style="width: 30%; margin-right:10px;">
 						<option value="" th:selected="${pageMaker.cri.type == null}">검색</option>
@@ -184,7 +184,7 @@
 				</div>
 				<input type="hidden" value="1" name="pagenum">
 				<input type="hidden" value="15" name="amount">
-			</form>
+			</form>-->
 			<!--페이지폼-->
 			<form name="pageForm" id="pageForm" th:action="@{/product/prod_exercise}">
 				<input type="hidden" name="pagenum" th:value="${pageMaker.cri.pagenum}">

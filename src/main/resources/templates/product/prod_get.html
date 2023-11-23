@@ -154,6 +154,17 @@
 			height: 2.75em !important;
 			line-height: 2.75em !important;
 		}
+
+		.heart img{
+		position:relative;
+		left: 60px;
+		top:15px;
+		}
+		#bookmark{
+		position:relative;
+		left: 140px;
+		top:8px;
+		}
 	</style>
 </head>
 <body class="is-preload">
@@ -209,10 +220,12 @@
 						<tr>
 							<th>조회수</th>
 							<td>[[${board.viewCnt}]]</td>
-							<th>좋아요</th>
+							<th:block th:if="${board.adminId != session.loginUser}">
+							<th><a href="#" class="heart" style="float:left; margin-right:5px;"><img id="heart" th:src="'/images/like_'+${heart!=null?'on':'off'}+'.png'" style="width:30px;"></a></th>
 							<td width="50px" style="padding:5px;">[[${board.likeCnt}]]</td>
-							<th>북마크</th>
+							<th><a th:class="${bookmark != null ? 'bookmarked' : ''}+' bookmark button btnColor small'" id="bookmark" style="float:left; margin-left:10px;">북마크</a></th>
 							<td width="50px" style="padding:5px;">[[${board.bookmarkCnt}]]</td>
+							</th:block>
 						</tr>
 					</table>
 				</form>
@@ -233,10 +246,6 @@
 								</form>
 							</th:block>
 							<div class="btn_area">
-								<th:block th:if="${board.adminId != session.loginUser}">
-									<a href="#" class="heart" style="float:left; margin-right:5px;"><img id="heart" th:src="'/images/like_'+${heart!=null?'on':'off'}+'.png'" style="width:30px;"></a>
-									<a th:class="${bookmark != null ? 'bookmarked' : ''}+' bookmark button btnColor small'" style="float:left; margin-left:10px;">북마크</a>
-								</th:block>
 								<span th:switch="${board.category}">
 									<span th:case="'prodFood'"><a class="button btnColor small" th:href="${'/product/prod_food'+cri.listLink}">목록</a></span>
 									<span th:case="'prodExer'"><a class="button btnColor small" th:href="${'/product/prod_exercise'+cri.listLink}">목록</a></span>
