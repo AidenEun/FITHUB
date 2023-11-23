@@ -80,7 +80,6 @@ public class TrainerMatchingServiceImpl implements TrainerMatchingService {
     @Override
     public TrainerMatchingBoardDTO boardView(Long boardNum){
         TrainerMatchingBoardDTO list = tmmapper.boardView(boardNum);
-
         return list;
     };
     @Override
@@ -88,6 +87,13 @@ public class TrainerMatchingServiceImpl implements TrainerMatchingService {
         UTMatchingDTO Check = tmmapper.utCheck(trainerId, userId);
         return Check;
     };
+    @Override
+    public ReviewDTO CheckReview(Long boardNum, String userId) {
+        ReviewDTO result = tmmapper.CheckReview(boardNum, userId);
+        return result;
+    };
+
+
 
     @Override
     public ProfileDTO getProfileInfo(String trainerId){

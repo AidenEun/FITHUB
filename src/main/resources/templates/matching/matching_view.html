@@ -424,7 +424,7 @@ display: none;
                     <tr>
 
                         <td>
-                            <a href="#" class="matchingOpen btnColor button" data-trainer-id="${trainerInfo.trainerId}">신청하기</a>
+                            <a href="#" class="matchingOpen btnColor button" style="margin-left:15px;" data-trainer-id="${trainerInfo.trainerId}">신청하기</a>
                             <a href="#" class="heart" style="float:left; margin-right:5px;"><img id="heart" src="/images/like_off.png" style="width:30px;"></a>
                             <a href="#"  class="bookmark btnColor button">북마크</a>
                             <div class="displayNoneDiv writer">[[${board.trainerId}]]</div>
@@ -525,20 +525,22 @@ display: none;
 
 
 $(document).ready(function() {
+        nowpage = 1;
+		showList(1)
     var trainerId = [[${trainerInfo.trainerId}]];
-    // 초기 로딩 시 데이터 가져오기
+
     $.ajax({
         url: '/matching/check?trainerId='+trainerId,
         type: 'GET',
         success: function(data) {
             if (data) {
                 // 데이터가 있을 때
-                $(".regist").show(); // 댓글 등록 링크를 보여줍니다.
-                $(".reviewForm").hide(); // 댓글 폼을 숨깁니다.
+                $(".regist").show();
+                $(".reviewForm").hide();
             } else {
                 // 데이터가 없을 때
-                $(".regist").hide(); // 댓글 등록 링크를 숨깁니다.
-                $(".reviewForm").hide(); // 댓글 폼을 숨깁니다.
+                $(".regist").hide();
+                $(".reviewForm").hide();
             }
         },
         error: function(error) {
@@ -548,83 +550,31 @@ $(document).ready(function() {
 
     // 댓글 등록 링크 클릭 시
     $(".regist").click(function(e) {
-        e.preventDefault(); // 링크의 기본 동작을 중단합니다.
+        e.preventDefault();
 
-        $(".reviewForm").show(); // 댓글 폼을 보여줍니다.
-        $(this).hide(); // 댓글 등록 링크를 숨깁니다.
-    });
-
-	showList(1);
-    showReviewPage(reviewCnt, pagenum);
-});
-
-//좋아요
-$(document).ready(function(){
-
-    //좋아요가 있는지 확인한 값을 heartVal에 저장
-    var heartVal = /*[[${heart != null ? heart.heart : ''}]]*/ '';
-    console.log("like1"+heartVal);
-
-    //heartVal이 1이면 좋아요가 이미 되어있는것 -> like_on.png 출력
-    if(heartVal>0){
-        console.log("like2"+heartVal);
-        $("#heart").prop("src", "/images/like_on.png");	//prop() : 해당 속성을 가져와서 변경
-        $(".heart").prop('name',heartVal);
-    }
-    else{
-        console.log("like3"+heartVal);
-        $("#heart").prop("src", "/images/like_off.png");
-        $(".heart").prop('name',heartVal);
-        }
-
-
-    //좋아요 버튼 클릭 시 실행되는 코드
-    $(".heart").on("click", function(){
-        var that = $(this);
         $.ajax({
-            url:'/heart/heart',
-            type:'POST',
-            data: {'boardNum': boardNum, 'userId': loginUser, 'boardCategory':'matching'},
-            success: function(data){
-                that.prop('name',data);
-                console.log("data:"+data);
-                if(data==1){
-                    $("#heart").prop("src", "/images/like_on.png");
-                }
-                else{
-                    $("#heart").prop("src", "/images/like_off.png");
-                }
-                console.log("that:"+that);
+        url: '/matching/checkReview?boardNum='+boardNum,
+        type: 'GET',
+        success: function(data) {
+        console.log(data);
+            if (data) {
+                // 데이터가 있을 때
+               alert("작성한 댓글이 있습니다. 확인 후 다시 시도해주세요!");
+                showList(1);
+            } else {
+                $(".reviewForm").show();
+                $(this).hide();
             }
-        });
+        },
+        error: function(error) {
+            console.error('Error fetching data:', error);
+        }
     });
+
+
+
 });
-//북마크
-	$(document).ready(function(){
 
-		//북마크가 있는지 확인한 값을 bookmarkVal에 저장
-		var bookmarkVal = /*[[${bookmark != null ? bookmark.bookmark : ''}]]*/ '';
-		console.log(bookmarkVal);
-
-		//bookmarkVal이 1이면 북마크가 이미 되어있는것
-		if(bookmarkVal>0){
-			$(".bookmark").addClass('bookmarked');
-		}
-
-		//북마크 버튼 클릭 시 실행되는 코드
-		$(".bookmark").on("click", function(){
-			var that = $(this);
-			that.toggleClass('bookmarked');
-			$.ajax({
-				url:'/bookmark/bookmark',
-				type:'POST',
-				data: {'boardNum': boardNum, 'userId': loginUser, 'boardCategory':'matching'},
-				success: function(data){
-					console.log("data:"+data);
-				}
-			});
-		});
-	});
 
 $(".finish").on("click", function(e) {
     e.preventDefault();
@@ -819,7 +769,73 @@ function modifyReview(e){
 	}
 
 
+//좋아요
+$(document).ready(function(){
 
+    //좋아요가 있는지 확인한 값을 heartVal에 저장
+    var heartVal = /*[[${heart != null ? heart.heart : ''}]]*/ '';
+    console.log("like1"+heartVal);
+
+    //heartVal이 1이면 좋아요가 이미 되어있는것 -> like_on.png 출력
+    if(heartVal>0){
+        console.log("like2"+heartVal);
+        $("#heart").prop("src", "/images/like_on.png");	//prop() : 해당 속성을 가져와서 변경
+        $(".heart").prop('name',heartVal);
+    }
+    else{
+        console.log("like3"+heartVal);
+        $("#heart").prop("src", "/images/like_off.png");
+        $(".heart").prop('name',heartVal);
+        }
+
+
+    //좋아요 버튼 클릭 시 실행되는 코드
+    $(".heart").on("click", function(){
+        var that = $(this);
+        $.ajax({
+            url:'/heart/heart',
+            type:'POST',
+            data: {'boardNum': boardNum, 'userId': loginUser, 'boardCategory':'matching'},
+            success: function(data){
+                that.prop('name',data);
+                console.log("data:"+data);
+                if(data==1){
+                    $("#heart").prop("src", "/images/like_on.png");
+                }
+                else{
+                    $("#heart").prop("src", "/images/like_off.png");
+                }
+                console.log("that:"+that);
+            }
+        });
+    });
+});
+//북마크
+	$(document).ready(function(){
+
+		//북마크가 있는지 확인한 값을 bookmarkVal에 저장
+		var bookmarkVal = /*[[${bookmark != null ? bookmark.bookmark : ''}]]*/ '';
+		console.log(bookmarkVal);
+
+		//bookmarkVal이 1이면 북마크가 이미 되어있는것
+		if(bookmarkVal>0){
+			$(".bookmark").addClass('bookmarked');
+		}
+
+		//북마크 버튼 클릭 시 실행되는 코드
+		$(".bookmark").on("click", function(){
+			var that = $(this);
+			that.toggleClass('bookmarked');
+			$.ajax({
+				url:'/bookmark/bookmark',
+				type:'POST',
+				data: {'boardNum': boardNum, 'userId': loginUser, 'boardCategory':'matching'},
+				success: function(data){
+					console.log("data:"+data);
+				}
+			});
+		});
+	});
 
 
 
