@@ -3,7 +3,9 @@ package com.kh.demo.controller;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.kh.demo.domain.dto.*;
+import com.kh.demo.service.BoardService;
 import com.kh.demo.service.TrainerMyPageService;
+import com.kh.demo.service.TrainerService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -28,7 +30,12 @@ public class TrainerMyPageController {
     @Qualifier("TrainerMyPageServiceImpl")
     private TrainerMyPageService service;
 
+    @Autowired
+    @Qualifier("TrainerServiceImpl")
+    private TrainerService tservice;
 
+    @Autowired @Qualifier("BoardServiceImpl")
+    private BoardService boardservice;
 
 
     @GetMapping(value = {"trainer_myprofile","trainer_profile","trainer_profile_modify"})
@@ -42,7 +49,14 @@ public class TrainerMyPageController {
         }
 
         TrainerDTO id = service.getUserDetail(trainerId);
+        //인기게시글 띄우기
+        List<BoardDTO> boardTop5List = boardservice.getBoardTop5List();
 
+        // 트레이너 랭킹
+        List<TrainerDTO> trainerTop5List= tservice.getTrainerTop5List();
+
+        model.addAttribute("trainerTop5List",trainerTop5List);
+        model.addAttribute("boardTop5List",boardTop5List);
         List<BoardDTO>  list = service.getBoardMyList(cri, trainerId);
         model.addAttribute("list", list);
         model.addAttribute("trainer", id);

@@ -67,6 +67,104 @@
 		padding-left: 774px;
 	}
 
+
+	.rankBox table tr td {
+        /*text-align: center;*/
+        background: #FFFFFF;
+        overflow: hidden;
+        text-overflow: ellipsis
+    }
+
+    .rankBox table tr td {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 160px;
+    }
+
+
+    .customoverlay {
+        position: relative;
+        bottom: 85px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        border-bottom: 2px solid #ddd;
+        float: left;
+    }
+
+    .customoverlay:nth-of-type(n) {
+        border: 0;
+        box-shadow: 0px 1px 2px #888;
+    }
+
+    .customoverlay a {
+        display: block;
+        text-decoration: none;
+        color: #000;
+        text-align: center;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: bold;
+        overflow: hidden;
+        background: #d95050;
+        background: #d95050 url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png) no-repeat right 14px center;
+    }
+
+    .customoverlay .title {
+        display: block;
+        text-align: center;
+        background: #fff;
+        margin-right: 35px;
+        padding: 10px 15px;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .customoverlay:after {
+        content: '';
+        position: absolute;
+        margin-left: -12px;
+        left: 50%;
+        bottom: -12px;
+        width: 22px;
+        height: 12px;
+        background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')
+    }
+a.btnColor{
+        background: #FFFFFF;
+        border: 1px solid #5a8100;
+        border-radius: 4px;
+        color: #5a8100 !important;
+        box-shadow: 4px 4px 2px 0px rgb(203,211,177);
+
+    }
+    a.btnColor:hover{
+        background: #5a8100;
+        border: 1px solid #5a8100;
+        border-radius: 4px;
+        color: #F7FAF5 !important;
+        box-shadow: 0 0 2px #5a8100;
+
+    }
+	.header_box {
+        width: 100%;
+        background: linear-gradient(to right, rgba(143, 167, 70, 0.25), rgba(143, 167, 70, 0.3)), url(/images/test3.png);
+        background-size: cover;
+        background-position:  0 65%;
+    }
+
+    #side_box table tbody tr:nth-child(2n + 1) {
+        background-color: #FFFFFF;
+    }
+#side_box .rankBox input[type=button].rankBtn {
+    border-radius: 38px !important;
+    border: 1px solid;
+    box-shadow: 4px 4px 2px 0px #5a8100 !important;
+	}
+#side_box .rankBox input[type=button].rankBtn:hover {
+    color: #444 !important;
+    background-color: #ebede1;
+}
+	
 </style>
 <body class="is-preload">
 
@@ -93,9 +191,6 @@
 		<div class="content">
 
 			<div class="trainer_profile_btn_box">
-				<th:block th:if="${session.loginUser} != ${trainer.trainerId}">
-					<a href="#" class="button btnColor small">구독하기</a>
-				</th:block>
 				<th:block th:if="${session.loginUser} == ${trainer.trainerId}">
 					<a href="/trainermypage/trainer_profile_modify" class="button btnColor small">수정하기</a>
 				</th:block>
