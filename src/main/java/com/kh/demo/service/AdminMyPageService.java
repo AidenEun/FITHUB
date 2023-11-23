@@ -98,4 +98,9 @@ public interface AdminMyPageService {
     void returnMessage(String messageContent, String receiveId, Long messageNum);
 
     void saveMessage(MessageDTO newMessage);
+
+    void messageToAdmin(String messageContent, String userId);
+
+    void messageWrite(String messageContent, String userId, String receiveId);
+
 }

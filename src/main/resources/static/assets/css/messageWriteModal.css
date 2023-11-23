@@ -1,0 +1,84 @@
+.message_Write_modal_box{
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0,0,0,0.6) ;
+    display: none;
+    /* display: flex; */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.message_Write_modal_box.active{
+    display: flex;
+}
+
+.message_Write_modal_contents{
+    background-color: #fff;
+    width: 1000px;
+    padding: 20px;
+    border-radius: 5px;
+    position: relative;
+}
+
+.message_Write_modal_contents h1{
+    text-align: center;
+}
+
+.messageWriteClose{
+    cursor: pointer;
+}
+
+.title {
+    margin-top: 30px;
+    margin-bottom: 0px;
+    font-size: 20px;
+}
+
+.title:after {
+    border-bottom: none;
+}
+
+ul {
+    margin: 0;
+}
+
+li {
+    list-style-type: none;
+    margin-bottom: 10px;
+}
+
+li > label {
+    line-height: 1.8;
+}
+
+.title-container {
+    display: flex;
+    align-items: center; /* 수직 정렬 */
+}
+
+.title-container .messageWriteClose {
+    margin-right: 370px; /* 버튼과 제목 사이의 간격 설정 */
+}
+
+.button-container {
+    float: right;
+}
+
+#messageWriteFormBox {
+    margin-top: 10px;
+}
+
+#messageWriteContent {
+    height: 80px;
+    resize: none;
+}
+
+#messageReceiveId {
+    height: 50px;
+    resize: none;
+    margin-bottom: 20px;
+}
