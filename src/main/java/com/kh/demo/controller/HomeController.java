@@ -70,7 +70,7 @@ public class HomeController {
         //트레이너 구독자 랭킹 1-9위
         List<TrainerDTO> trainerTopNumList = tservice.getTrainerTopNumList(9);
         model.addAttribute("trainerTopNumList",trainerTopNumList);
-        System.out.println("trainerTopNumList: "+trainerTopNumList);
+
         //트레이너 게시글 최다작성 랭킹 1-5위
         List<TrainerDTO> trainerBoardTotalTop5List = tservice.getTrainerBoardTotalTop5List();
         model.addAttribute("trainerBoardTotalTop5List",trainerBoardTotalTop5List);
@@ -88,7 +88,7 @@ public class HomeController {
         model.addAttribute("userBoardLikeTop5List",userBoardLikeTop5List);
 
         LocalDate todaydate = LocalDate.now();
-        System.out.println("todaydate: "+todaydate);
+
         model.addAttribute("todaydate", todaydate);
 
         UserDTO user = serviceUser.getDetail(loginUser);
