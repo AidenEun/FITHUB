@@ -8,23 +8,20 @@
             width: 150px;
             position: absolute;
             font-size: 14px;
-            background: #ebede1;
+            background: gainsboro;
             z-index: 5555;
             border-radius: 15px;
             padding: 0;
 
         }
 
-        .submenu li {
+        .submenu > li a {
             list-style-type: none;
-            color: black !important;
+            color: #5a8100 !important;
         }
 
-        .submenu li:hover {
-            background: rgb(203, 211, 177);
-            transition: ease 1s;
-            border-radius: 15px;
-            padding: 0;
+        #header nav > .submenu > li > a {
+            color: red;
         }
 
         /*사이드 탭바 디자인*/
@@ -288,12 +285,10 @@
                 </li>
                 <li class="menu-item"><a href="/matching/matching_list" style="color: white;">트레이너 매칭</a>
                     <ul class="submenu">
-                        <li><a href="/matching/matching_list">트레이너매칭</a></li>
                     </ul>
                 </li>
                 <li class="menu-item"><a href="/challenge/list" style="color: white;">챌린지</a>
                     <ul class="submenu">
-                        <li><a href="/challenge/list">챌린지</a></li>
                     </ul>
                 </li>
                 <li class="menu-item"><a href="/product/prod_list" style="color: white;">제품</a>
@@ -395,7 +390,7 @@
                                 <th:block th:with=" ext=${sar[sar.length-1]}">
                                     <th:block
                                             th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}">
-                                        <img style="width:160px; height:160px;"
+                                        <img style="width:160px; height:160px; border-radius: 100%;"
                                              th:src="@{/usermypage/thumbnail (sysName=${profile.sysName})}">
                                     </th:block>
                                 </th:block>
@@ -403,7 +398,7 @@
                         </th:block>
                         <th:block th:unless="${profile != null}">
 
-                            <img style="width:160px; height:160px; margin-bottom: 10px"
+                            <img style="width:160px; height:160px; border-radius: 100%; margin-bottom: 10px"
                                  th:src="@{/usermypage/thumbnail (sysName='profile_img.png')}">
                         </th:block>
                     </a>

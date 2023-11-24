@@ -166,7 +166,18 @@
 			<section class="section_box">
 				<div class="content one_box1">
 					<div class="one_box1_inner1">
-						<div>다이어리 상세보기 전 내용</div>
+						<div class="one_box1_inner1_box">
+							<div class="one_box1_inner1_today">오늘날짜</div>
+							<div>목표칼로리 : 목표칼로리</div>
+							<div>오늘칼로리 : 오늘칼로리</div>
+							<div>아침 : 아침</div>
+							<div>점심 : 점심</div>
+							<div>저녁 : 저녁</div>
+							<div><span>섭취</span><span>소모</span></div>
+							<div>탄수화물 : 탄수화물</div>
+							<div>단백질 : 단백질</div>
+							<div>지방 : 지방</div>
+						</div>
 						<button class="button small one_button1" >상세보기</button>
 					</div>
 					<div class="one_box1_inner2" style="opacity: 0;">
@@ -178,7 +189,7 @@
 					<h2 class="one_write">다이어리</h2>
 					<p></p>
 					<a href="/usermypage/user_diary" class="button small" >more</a>
-					<div data-scroll class="one_img"><img src="#" alt="이미지">이미지</div>
+					<div data-scroll class="one_img"><img src="../static/images/diary.jpg" alt="이미지"></div>
 				</div>
 			</section>
 		</div>
@@ -198,7 +209,7 @@
 								<th:block th:each="list, listStat : ${trainerTopNumList}" th:if="${listStat.index < 3}">
 									<div class="three_swiper_slide_box" >
 										<div class="three_swiper_slide_box_num" th:text="${listStat.index + 1}">1</div>
-										<div class="three_swiper_slide_box_img_box"><img class="three_swiper_slide_box_img" src="#"></div>
+										<div class="three_swiper_slide_box_img_box"><img class="three_swiper_slide_box_img" style="width:100%;" th:src="@{/usermypage/thumbnail_id (id=${list.trainerId})}"></div>
 										<div class="three_swiper_slide_box_info_box">
 											<div>닉네임: [[${list.trainerNickname}]]</div>
 											<div>아이디: [[${list.trainerId}]]</div>
@@ -212,7 +223,7 @@
 									<th:block th:each="list, listStat : ${trainerTopNumList}" th:if="${listStat.index >= 3 and listStat.index < 6}">
 										<div class="three_swiper_slide_box">
 											<div class="three_swiper_slide_box_num" th:text="${listStat.index + 1}">1</div>
-											<div class="three_swiper_slide_box_img_box"><img class="three_swiper_slide_box_img" src="#"></div>
+											<div class="three_swiper_slide_box_img_box"><img class="three_swiper_slide_box_img" style="width:100%;" th:src="@{/usermypage/thumbnail_id (id=${list.trainerId})}"></div>
 											<div class="three_swiper_slide_box_info_box">
 												<div>닉네임: [[${list.trainerNickname}]]</div>
 												<div>아이디: [[${list.trainerId}]]</div>
@@ -227,7 +238,7 @@
 									<th:block th:each="list, listStat : ${trainerTopNumList}" th:if="${listStat.index >= 6 and listStat.index < 9}">
 										<div class="three_swiper_slide_box">
 											<div class="three_swiper_slide_box_num" th:text="${listStat.index + 1}">1</div>
-											<div class="three_swiper_slide_box_img_box"><img class="three_swiper_slide_box_img" src="#"></div>
+											<div class="three_swiper_slide_box_img_box"><img class="three_swiper_slide_box_img" style="width:100%;" th:src="@{/usermypage/thumbnail_id (id=${list.trainerId})}"></div>
 											<div class="three_swiper_slide_box_info_box">
 												<div>닉네임: [[${list.trainerNickname}]]</div>
 												<div>아이디: [[${list.trainerId}]]</div>
@@ -338,7 +349,7 @@
 			</div>
 			<section class="three_section">
 				<div class="three_section_div">
-					<div class="three_section_div_box"> 박스</div>
+					<div class="three_section_div_box"></div>
 					<table>
 						<tr>
 							<td id="three_section_td" class="three_section_td">
@@ -485,7 +496,7 @@
 				data.list.forEach(function (board) {
 					var row = $(`
 						<div class="three_section_td_list">
-							<div class="three_section_td_list_img"><img alt="이미지" /></div>
+							<div class="three_section_td_list_img"><img alt="이미지" scr= "${board.imgURL}"/></div>
 							<div class="three_section_td_list_box">
 								<div class="three_section_td_list_title">${board.boardTitle}</div>
 								<div class="three_section_td_list_category">카테고리 : <span>${board.boardCategory}</span></div>
@@ -535,7 +546,7 @@
 				data.list.forEach(function (board) {
 				var row = $(`
 					<div class="three_section_td_list">
-						<div class="three_section_td_list_img"><img alt="이미지" /></div>
+						<div class="three_section_td_list_img"><img alt="이미지" scr="board.imgURL"/></div>
 						<div class="three_section_td_list_box">
 							<div class="three_section_td_list_title">${board.boardTitle}</div>
 							<div class="three_section_td_list_category">카테고리 : <span>${board.category}</span></div>
