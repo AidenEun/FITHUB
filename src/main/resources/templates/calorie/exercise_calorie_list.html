@@ -7,159 +7,193 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Fit Hub</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="stylesheet" th:href="@{/assets/css/index.css}" />
-    <link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
-    <link rel="stylesheet" th:href="@{/assets/css/common.css}" />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+    <link rel="stylesheet" th:href="@{/assets/css/index.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/sidebar.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/css/common.css}"/>
     <link rel="icon" href="/images/fithub-favicon.png" type="image/png">
-    <noscript><link rel="stylesheet" th:href="@{/assets/css/noscript.css}" /></noscript>
+    <noscript>
+        <link rel="stylesheet" th:href="@{/assets/css/noscript.css}"/>
+    </noscript>
     <style>
         .header_box {
             width: 100%;
             background: linear-gradient(to right, rgba(143, 167, 70, 0.25), rgba(143, 167, 70, 0.3)), url(/images/test.png);
             background-size: cover;
-            background-position:  0 75%;
+            background-position: 0 75%;
         }
 
 
-	#footer > .inner {
-		padding-top: 0px;
-	}
-        .top_img_box{
-        width: 100%;
-        height: 310px;
-        margin-bottom: 50px;
-        background-color: red;
-        z-index: 99;
-    }
-
-    .top_img_box > img {
-        width: 100%;
-        height: 100%;
-            z-index: 100;
-    }
-
-    #main {
-        padding: 0;
-    }
-
-    .wrapper {
-        padding: 0;
-        margin-bottom: 100px;
-    }
-
-    #header {
-        background-color: #8FA746;
-    }
-
-    #header nav > ul > li a {
-        color: white;
-    }
-
-    #header h1 a {
-        color: white;
-    }
-
-    #header .main ul li > a {
-        color: white;
-
-    }
-
-    #footer {
-        background-color: #304400;
-    }
-
-
-        #main{
+        #footer > .inner {
             padding-top: 0px;
         }
-        .inner{
+
+        .top_img_box {
+            width: 100%;
+            height: 310px;
+            margin-bottom: 50px;
+            background-color: red;
+            z-index: 99;
+        }
+
+        .top_img_box > img {
+            width: 100%;
+            height: 100%;
+            z-index: 100;
+        }
+
+        #main {
+            padding: 0;
+        }
+
+        .wrapper {
+            padding: 0;
+            margin-bottom: 100px;
+        }
+
+        #header {
+            background-color: #8FA746;
+        }
+
+        #header nav > ul > li a {
+            color: white;
+        }
+
+        #header h1 a {
+            color: white;
+        }
+
+        #header .main ul li > a {
+            color: white;
+
+        }
+
+        #footer {
+            background-color: #304400;
+        }
+
+
+        #main {
+            padding-top: 0px;
+        }
+
+        .inner {
             padding-top: 50px;
         }
 
         .top_img_box > img {
             width: 100%;
-        height: 100%;
+            height: 100%;
         }
-        .inner > .content{
+
+        .inner > .content {
             width: 1080px;
-            margin : 0 auto;
+            margin: 0 auto;
             padding: 0px;
         }
-        .search-container{
-        padding: 40px;
+
+        .search-container {
+            padding: 40px;
 
         }
-        .search{
+
+        .search {
             display: flex;
         }
-        .search-border{
+
+        .search-border {
             border: 1px solid rgb(200, 200, 200);
             border-radius: 15px;
             margin-bottom: 50px;
         }
-        #search-input{
+
+        #search-input {
             height: 60px;
             border-radius: 10px 0 0 10px;
-            border : 1px solid rgb(200, 200, 200);
+            border: 1px solid rgb(200, 200, 200);
 
         }
-        #search-button{
+
+        #search-button {
             width: 100px;
             height: 60px;
-            border-radius: 0 10px 10px 0;
-            background-color: gainsboro;
-
+            /*border-radius: 0 10px 10px 0;*/
+            background-color: #FFFFFF;
+            border: 1px solid #5a8100;
+            border-radius: 4px;
+            color: #5a8100 !important;
+            box-shadow: 0px 0px 5px rgb(203, 211, 177);
 
         }
-        .search_content{
+
+        #search-button:hover {
+            border: 1px solid #5a8100;
+            border-radius: 4px;
+            background: #ebede1;
+            box-shadow: none;
+            transition: 0.5s ease-out;
+            font-weight: 100 !important;
+        }
+
+
+        .search_content {
             padding: 40px;
             margin: 0px;
-            background-color: gainsboro;
-             border-radius:15px;
+            background-color: #ebede1;
+            border-radius: 15px;
         }
-        .search_content p{
+
+        .search_content p {
             font-size: 18px;
             font-weight: bold;
             height: 20px;
         }
-        .FITHUB{
+
+        .FITHUB {
             color: blue;
         }
-        .food_info{
+
+        .food_info {
             color: green;
         }
-        .food_raking_title{
+
+        .food_raking_title {
             display: flex;
         }
-        .food_raking_title p{
+
+        .food_raking_title p {
             font-size: 20px;
             margin-right: 5px;
             font-weight: bold;
         }
-        .cal_search_ranking tr td{
+
+        .cal_search_ranking tr td {
             text-align: center;
             color: gray;
         }
-        .cal_search_ranking tr th{
+
+        .cal_search_ranking tr th {
             text-align: center;
             font-weight: bold;
         }
-    .cal_tit{
-        padding-top: 10px;
-        text-align: center;
-      position: relative;
-    }
-    .cal_tit::after {
-  content: '|';
-  position: absolute;
-  right: -5px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: gray;
-}
-        #result_execlist{
+
+        .cal_tit {
+            padding-top: 10px;
+            text-align: center;
+            position: relative;
+        }
+
+        .cal_tit::after {
+            content: '|';
+            position: absolute;
+            right: -5px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: gray;
+        }
+
+        #result_execlist {
             transition: transform 0.2s;
         }
 
@@ -167,58 +201,62 @@
 
 
     <!-- Header -->
-    <th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin},${session.profile},${session.todaydate})}"></th:block>
+    <th:block
+            th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin},${session.profile},${session.todaydate})}"></th:block>
 
-<!-- Main -->
-<section id="main" class="wrapper left">
+    <!-- Main -->
+    <section id="main" class="wrapper left">
 
-    <div class="header_box">
-        <header class="test12">
-            <p id="mainText">칼로리</p>
-            <p id="subText">운동 칼로리 조회</p>
-        </header>
-    </div>
-    <div class="inner">
+        <div class="header_box">
+            <header class="test12">
+                <p id="mainText">칼로리</p>
+                <p id="subText">운동 칼로리 조회</p>
+            </header>
+        </div>
+        <div class="inner">
 
-        <!-- Content -->
-        <div class="content">
-            <div class="search-border">
-                <div class="search-container">
-                    <div class="search">
-                        <input type="text" id="search-input" placeholder="검색어를 입력하세요">
-                        <input type="button" id="search-button" value="검색" onclick="searchExec()">
+            <!-- Content -->
+            <div class="content">
+                <div class="search-border">
+                    <div class="search-container">
+                        <div class="search">
+                            <input type="text" id="search-input" placeholder="검색어를 입력하세요">
+                            <input type="button" id="search-button" value="검색" onclick="searchExec()">
+                        </div>
+                    </div>
+                    <div class="search_content">
+                        <p>
+                            <span class="FITHUB">FIT HUB</span> 칼로리 조회에서는 <span
+                                class="food_info"> 칼로리 뿐만 아니라 영양소 구성</span>도 함께 나와 다이어트뿐 아니라<br>건강한 식습관 형성에도 도움이 됩니다.
+                        </p>
+
                     </div>
                 </div>
-                <div class="search_content">
-                    <p>
-                        <span class="FITHUB">FIT HUB</span> 칼로리 조회에서는 <span class="food_info"> 칼로리 뿐만 아니라 영양소 구성</span>도 함께 나와 다이어트뿐 아니라<br>건강한 식습관 형성에도 도움이 됩니다.
-                    </p>
-
+                <hr>
+                <div class="food_ranking">
+                    <div class="food_raking_title">
+                        <p>운동 칼로리 </p>
+                        <p style="color: red;"> 검색순위 TOP</p>
+                    </div>
+                    <table class="cal_search_ranking">
+                        <tr>
+                            <th style=width="10%" class="cal_tit">순위</th>
+                            <th style=width="40%" class="cal_tit">운동명</th>
+                            <th style=width="15%" class="cal_tit">강도</th>
+                            <th style=width="20%">칼로리</th>
+                        </tr>
+                        <tr th:if="${list != null and list.size()>0}" th:each="exec, iterStat : ${list}"
+                            id="result_execlist">
+                            <td>[[${iterStat.count}]]</td>
+                            <td><a class="get2" th:href="${exec.execNum}">[[${exec.execName}]]</a></td>
+                            <td>[[${exec.execMETS}]]</td>
+                            <td>[[${exec.execCalories}]]</td>
+                        </tr>
+                    </table>
                 </div>
-            </div>
-            <hr>
-            <div class="food_ranking">
-                <div class="food_raking_title">
-                    <p>운동 칼로리 </p><p style="color: red;"> 검색순위 TOP</p>
-                </div>
-                <table class="cal_search_ranking">
-                    <tr>
-                        <th style=width="10%" class="cal_tit">순위</th>
-                        <th style=width="40%" class="cal_tit">운동명</th>
-                        <th style=width="15%" class="cal_tit">강도</th>
-                        <th style=width="20%">칼로리</th>
-                    </tr>
-                    <tr th:if="${list != null and list.size()>0}" th:each="exec, iterStat : ${list}" id="result_execlist">
-                        <td>[[${iterStat.count}]]</td>
-                        <td><a class="get2" th:href="${exec.execNum}">[[${exec.execName}]]</a></td>
-                        <td>[[${exec.execMETS}]]</td>
-                        <td>[[${exec.execCalories}]]</td>
-                    </tr>
-                </table>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 </head>
 
 <!-- Footer -->
@@ -238,34 +276,34 @@
 
 <script th:src="@{/assets/js/sidebarTap.js}"></script>
 </body>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        function searchExec() {
-            var keyword = $("#search-input").val();
-            if (keyword) {
-                // 검색어를 URL 파라미터로 전달하고, 검색 결과 페이지로 이동합니다.
-                window.location.href = "/calorie/exercise_calorie_search?keyword=" + keyword;
-            } else {
-                alert("검색어를 입력하세요.");
-            }
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function searchExec() {
+        var keyword = $("#search-input").val();
+        if (keyword) {
+            // 검색어를 URL 파라미터로 전달하고, 검색 결과 페이지로 이동합니다.
+            window.location.href = "/calorie/exercise_calorie_search?keyword=" + keyword;
+        } else {
+            alert("검색어를 입력하세요.");
         }
+    }
 
-        // 예: 검색 버튼 클릭 시 searchFood 함수 호출
-        $("#search-button").click(function() {
-            searchExec();
-        });
-
-
-        $(document).ready(function() {
-    $('.get2').click(function(event) {
-    event.preventDefault();
-      var execNum = $(this).attr('href');
-      // 다음 페이지 URL 구성
-      var Url = '/calorie/exercise_calorie_view?execNum=' + execNum;
-
-      // 페이지 이동
-      window.location.href = Url;
+    // 예: 검색 버튼 클릭 시 searchFood 함수 호출
+    $("#search-button").click(function () {
+        searchExec();
     });
-  });
-    </script>
+
+
+    $(document).ready(function () {
+        $('.get2').click(function (event) {
+            event.preventDefault();
+            var execNum = $(this).attr('href');
+            // 다음 페이지 URL 구성
+            var Url = '/calorie/exercise_calorie_view?execNum=' + execNum;
+
+            // 페이지 이동
+            window.location.href = Url;
+        });
+    });
+</script>
 </html>
