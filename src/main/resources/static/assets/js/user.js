@@ -139,27 +139,27 @@ function sendit() {
     console.log(user)
 
     fetch("/user/join", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(user)
-    })
-    .then(response => response.json())
-    .then((response) => {
-        console.log(response);
-        // 서버에서의 응답에 따른 처리
-        if (response) {
-            alert("가입이 완료되었습니다!");
-            // 가입이 성공했을 때 추가적인 처리가 필요하다면 여기에 작성
-            location.replace("/user/login")
-        } else {
-            alert("가입에 실패했습니다. 다시 시도해주세요.");
-        }
-    })
-    .catch(error => {
-        console.error("가입 요청 중 에러 발생:", error);
-    });
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(user)
+        })
+        .then(response => response.json())
+        .then((response) => {
+            console.log(response);
+            // 서버에서의 응답에 따른 처리
+            if (response) {
+                alert("가입이 완료되었습니다!");
+                // 가입이 성공했을 때 추가적인 처리가 필요하다면 여기에 작성
+                location.replace("/user/login")
+            } else {
+                alert("가입에 실패했습니다. 다시 시도해주세요.");
+            }
+        })
+        .catch(error => {
+            console.error("가입 요청 중 에러 발생:", error);
+        });
 
 //    joinForm.submit();
     return true;

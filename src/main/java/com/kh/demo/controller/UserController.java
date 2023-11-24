@@ -59,9 +59,9 @@ public class UserController {
     @PostMapping("join")
     @ResponseBody
     public String join(@RequestBody UserDTO user, RedirectAttributes ra) {
+        System.out.println(user);
         if(service.join(user)) {
             ra.addAttribute("joinid",user.getUserId());
-            System.out.println("Controller");
             return "true";
         }
         return "false";

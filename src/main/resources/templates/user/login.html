@@ -200,8 +200,6 @@
 
 <script th:src="@{/assets/js/util_sub.js}"></script>
 <script th:src="@{/assets/js/main_sub.js}"></script>
-
-<script th:src="@{/assets/js/sidebar.js}"></script>
 <script th:src="@{/assets/js/profile.js}"></script>
 <script>
 	function sendit() {
@@ -219,7 +217,6 @@
         return false;
     }
 
-    // 서버로 아이디와 비밀번호 전송
     fetch("/user/login", {
         method: "POST",
         headers: {
