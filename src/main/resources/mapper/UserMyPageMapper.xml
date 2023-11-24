@@ -437,7 +437,7 @@
 
 	<select id="getTodayDiary">
 		select * from diary
-		where user_id = 'banana' and regdate = date(now());
+		where user_id = #{loginUser} and regdate = date(now());
 	</select>
 
 </mapper>
