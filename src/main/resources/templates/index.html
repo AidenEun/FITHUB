@@ -167,16 +167,23 @@
 				<div class="content one_box1">
 					<div class="one_box1_inner1">
 						<div class="one_box1_inner1_box">
-							<div class="one_box1_inner1_today">오늘날짜</div>
-							<div>목표칼로리 : 목표칼로리</div>
-							<div>오늘칼로리 : 오늘칼로리</div>
-							<div>아침 : 아침</div>
-							<div>점심 : 점심</div>
-							<div>저녁 : 저녁</div>
-							<div><span>섭취</span><span>소모</span></div>
-							<div>탄수화물 : 탄수화물</div>
-							<div>단백질 : 단백질</div>
-							<div>지방 : 지방</div>
+							<div class="one_box1_inner1_today">[[${todaydate}]]</div>
+							<th:block th:if="${session.loginUser} != null">
+								<div>목표칼로리 : [[${user.caloriesGoal}]] kcal</div>
+								<div>오늘칼로리 : [[${totalResult != null ? totalResult : 0}]] kcal</div>
+								<div>아침 : [[${foodCalArr != null && foodCalArr[0] != null ? foodCalArr[0] : 0}]] kcal</div>
+								<div>점심 : [[${foodCalArr != null && foodCalArr[1] != null ? foodCalArr[1] : 0}]] kcal</div>
+								<div>저녁 : [[${foodCalArr != null && foodCalArr[2] != null ? foodCalArr[2] : 0}]] kcal</div>
+								<div><span>섭취 : [[${diary != null && diary.foodCalories != null ? diary.foodCalories : 0}]] kcal</span><span>소모 : [[${diary != null && diary.exerCalories != null ? diary.exerCalories : 0}]] kcal</span></div>
+								<div>탄수화물 : [[${diary != null && diary.carbo != null ? diary.carbo : 0}]] g</div>
+								<div>단백질 : [[${diary != null && diary.protein != null ? diary.protein : 0}]] g</div>
+								<div>지방 : [[${diary != null && diary.fat != null ? diary.fat : 0}]] g</div>
+							</th:block>
+							<th:block th:unless="${session.loginUser} != null">
+								<div>
+									<div style="text-align: center; font-size: 20px;">로그인 후 이용 바랍니다.</div>
+								</div>
+							</th:block>
 						</div>
 						<button class="button small one_button1" >상세보기</button>
 					</div>
@@ -189,7 +196,7 @@
 					<h2 class="one_write">다이어리</h2>
 					<p></p>
 					<a href="/usermypage/user_diary" class="button small" >more</a>
-					<div data-scroll class="one_img"><img src="../static/images/diary.jpg" alt="이미지"></div>
+					<div data-scroll class="one_img"><img src="#" alt="이미지"></div>
 				</div>
 			</section>
 		</div>
@@ -496,7 +503,7 @@
 				data.list.forEach(function (board) {
 					var row = $(`
 						<div class="three_section_td_list">
-							<div class="three_section_td_list_img"><img alt="이미지" scr= "${board.imgURL}"/></div>
+							<div class="three_section_td_list_img"><img alt="이미지" scr="${board.imgURL}"/></div>
 							<div class="three_section_td_list_box">
 								<div class="three_section_td_list_title">${board.boardTitle}</div>
 								<div class="three_section_td_list_category">카테고리 : <span>${board.boardCategory}</span></div>
@@ -546,7 +553,7 @@
 				data.list.forEach(function (board) {
 				var row = $(`
 					<div class="three_section_td_list">
-						<div class="three_section_td_list_img"><img alt="이미지" scr="board.imgURL"/></div>
+						<div class="three_section_td_list_img"><img alt="이미지" src="board.imgURL"/></div>
 						<div class="three_section_td_list_box">
 							<div class="three_section_td_list_title">${board.boardTitle}</div>
 							<div class="three_section_td_list_category">카테고리 : <span>${board.category}</span></div>

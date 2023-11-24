@@ -351,6 +351,7 @@
         border-radius: 10px;
         position:relative;
         font-size: 14px;
+        box-shadow: 4px 4px 2px 0px rgb(203,211,177);
     }
 
     /* three */
@@ -461,6 +462,12 @@
     }
     .slides.animated{
         transition: 0.7s ease-out;
+    }
+    .slides.animated tr:first-child td:first-child{
+        background-color: rgb(203,211,177);
+    }
+    .two_content2 .two_box2 tr:first-child{
+        background-color: #ebede1;
     }
     .slides li{
         width: 270px;
@@ -578,9 +585,10 @@ table tbody tr:nth-child(2n + 1) {
 
 .one_box1_inner1_today{
     position: absolute;
-    top: -2%;
-    left: 77%;
+    top: 12px;
+    left: 67%;
     font-size: 16px;
+    width: 110px;
 }
 
 .one_box1_inner1_box>div{
