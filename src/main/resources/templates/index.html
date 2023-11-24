@@ -168,7 +168,7 @@
 					<div class="one_box1_inner1">
 						<div class="one_box1_inner1_box">
 							<div class="one_box1_inner1_today">[[${todaydate}]]</div>
-							<th:block th:if="${session.loginUser} != null">
+							<th:block th:if="${session.LoginUser != null && session.admin == null && (session.trainer != null || session.user!=null)}">
 								<div>목표칼로리 : [[${user.caloriesGoal}]] kcal</div>
 								<div>오늘칼로리 : [[${totalResult != null ? totalResult : 0}]] kcal</div>
 								<div>아침 : [[${foodCalArr != null && foodCalArr[0] != null ? foodCalArr[0] : 0}]] kcal</div>
@@ -188,7 +188,30 @@
 						<button class="button small one_button1" >상세보기</button>
 					</div>
 					<div class="one_box1_inner2" style="opacity: 0;">
-						<div>다이어리 상세보기 내용</div>
+						<div><div class="calender">
+							<div class="calen_header">
+								<div class="year_month highlight"></div>
+								<div class="nav">
+									<button class="nav_btn go_prev" onclick="prevMonth()">&lt;</button>
+									<input type="button" class="go_today btnColor" onclick="goToday()" value="today">
+									<button class="nav_btn go_next" onclick="nextMonth()">&gt;</button>
+								</div>
+							</div>
+							<div class="calen_contents">
+								<div class="weeks">
+									<div class="day">Sun</div>
+									<div class="day">Mon</div>
+									<div class="day">Tue</div>
+									<div class="day">Wed</div>
+									<div class="day">Thu</div>
+									<div class="day">Fri</div>
+									<div class="day">Sat</div>
+								</div>
+								<div class="dates"></div>
+							</div>
+
+
+						</div></div>
 						<button class="button small one_button2" >취소</button>
 					</div>
 				</div>
@@ -399,6 +422,7 @@
 
 
 	<script th:src="@{/assets/js/sidebarTap.js}"></script>
+	<script th:src="@{/assets/js/calender.js}"></script>
 
 	<script th:src="@{/assets/js/new.js}"></script>
 	<script th:inline="javascript">

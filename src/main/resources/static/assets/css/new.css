@@ -595,3 +595,219 @@ table tbody tr:nth-child(2n + 1) {
 .one_box1_inner1_box>div{
     padding-bottom: 2px;
 }
+
+/* 캘린더 스타일 */
+.calender {
+    position: absolute;
+    top:5px;
+    left: 15px;
+    width: 680px;
+    margin: 50px;
+    padding: 52px;
+    margin: 0 auto;
+    /*margin-top: 40px;*/
+    margin-bottom: 40px;
+    box-shadow: 0px 0px 10px 5px rgb(203, 211, 177);
+    /* border: 1px solid green; */
+    border-radius: 15px;
+}
+
+.calender .calen_header {
+    /*display: flex;*/
+    /*justify-content: space-around;*/
+    align-items: center;
+    margin-top: 17px;
+    margin-bottom: 40px;
+    color: #5a8100;
+
+}
+
+.calender .calen_header .year_month {
+    /*padding: 25px 30px 10px;*/
+    display: inline-block;
+    font-size: 30px;
+    padding-left: 28px;
+    padding-right: 28px;
+}
+
+/*.calender .calen_header .nav{*/
+/*    display: flex;*/
+/*    justify-content: space-evenly;*/
+/*}*/
+
+.nav {
+    display: inline-block;
+    position: absolute;
+    right: 50px;
+}
+
+.calender .calen_header .nav .nav_btn {
+    /*box-shadow:none;*/
+    /*padding: 0;*/
+    /*border: 0;*/
+    /*color: #878787 !important;*/
+    /*font-size: 1rem;*/
+    line-height: 32px;
+    /*border-radius: 50%;*/
+    cursor: pointer;
+    background: #FFFFFF;
+    /*border: 1px solid #5a8100;*/
+    border-radius: 4px;
+    color: #5a8100 !important;
+    box-shadow: 4px 4px 2px 0px rgb(203, 211, 177);
+
+}
+
+.calender .calen_header .nav .nav_btn:hover {
+    /* background-color: #f2f2f2; */
+    background-color: rgb(203, 211, 177);
+}
+
+.go_today {
+    cursor: pointer;
+    background: #FFFFFF;
+    border: 1px solid #5a8100;
+    border-radius: 4px;
+    color: #5a8100 !important;
+    box-shadow: 4px 4px 2px 0px rgb(203, 211, 177);
+    width: 75px;
+    padding: 0px 0px !important;
+    letter-spacing: 1px;
+    font-size: 12px;
+    font-weight: 300;
+    height: 37px;
+
+}
+
+
+input[type=button].go_today {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+input[type=button].go_today.btnColor {
+    background: #FFFFFF;
+    /*border: 1px solid #5a8100;*/
+    height: 37px;
+    border-radius: 4px;
+    color: #5a8100 !important;
+    box-shadow: 4px 4px 2px 0px rgb(203, 211, 177);
+
+}
+
+input[type=button].go_today.btnColor:hover {
+    background: rgb(203, 211, 177);
+    /*border: 1px solid #5a8100;*/
+    border-radius: 4px;
+    /*color: #F7FAF5 !important;*/
+    /*box-shadow: 0 0 2px #5a8100;*/
+    border:none;
+
+}
+
+.weeks {
+    display: flex;
+    margin: 25px 0;
+}
+
+.day {
+    width: calc(100% / 7);
+    text-align: center;
+    font-weight: 600;
+}
+
+.dates {
+    display: flex;
+    flex-flow: row wrap;
+    /* height: 500px; */
+    margin-top: 40px;
+    border: 0;
+}
+
+.calen_contents {
+    padding: 10px;
+    box-shadow: 4px 4px 2px 0px rgb(203, 211, 177);
+    border-radius: 4px;
+}
+
+.calen_contents .date {
+    width: calc(100% / 7);
+    position: relative;
+    padding: 15px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.calender .calen_contents .date::before {
+    position: absolute;
+    content: "";
+    height: 47px;
+    width: 47px;
+    top: 50%;
+    left: 50%;
+    z-index: -1;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+
+
+}
+
+.dates .date:hover::before {
+    background-color: #f2f2f2;
+    box-shadow: 4px 4px 2px 0px rgb(203, 211, 177);
+
+}
+
+
+.day:nth-child(7n +1 ),
+.date:nth-child(7n +1) {
+    color: #D13E3E;
+}
+
+.day:nth-child(7n),
+.date:nth-child(7n) {
+    color: #396ee2;
+}
+
+.other {
+    opacity: 0.6;
+    cursor: default;
+}
+
+.today {
+    position: relative;
+    color: #5a8100;
+}
+
+/*.today::before {*/
+/*    position: absolute;*/
+/*    top: 70%;*/
+/*    left: 50%;*/
+/*    transform: translate(-50%, -60%);*/
+/*    z-index: -1;*/
+/*    width: 47px;*/
+/*    height: 47px;*/
+/*    display: block;*/
+/*    background-color: #5a8100;*/
+/*    box-shadow: 4px 4px 2px 0px rgb(203, 211, 177);*/
+/*    border-radius: 50%;*/
+/*    content: '';*/
+
+/*}*/
+
+a {
+    border-bottom: none;
+}
+
+
+.hasdiary{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: rgb(203, 211, 177);
+    opacity: 36%;
+    position: absolute;
+    right: 25px;
+    top: 12px;
+    z-index: -5;
+}
