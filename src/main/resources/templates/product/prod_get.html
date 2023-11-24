@@ -146,23 +146,19 @@
 			font-size: 13px;
 			font-weight: 700 !important;
 		}
-		.btn_area > .bookmarked{
-			background: #ebede1 !important;
-			padding: 0 17.6px !important;
-			box-shadow: 0 0 2px 1px #5a8100 !important;
-			font-weight:700 !important;
-			height: 2.75em !important;
-			line-height: 2.75em !important;
-		}
+
 		.heart img{
 		position:relative;
-		left: 60px;
-		top:15px;
+		left: 25px;
+		top:10px;
 		}
 		#bookmark{
 		position:relative;
-		left: 140px;
-		top:8px;
+		left: 25px;
+		top:13px;
+		}
+		.cnt_area th{
+			width: 100px;
 		}
 	</style>
 </head>
@@ -215,15 +211,15 @@
 							</td>
 						</tr>
 					</table>
-					<table width="100%">
+					<table width="100%" class="cnt_area">
 						<tr>
 							<th>조회수</th>
 							<td>[[${board.viewCnt}]]</td>
 							<th:block th:if="${board.adminId != session.loginUser}">
-							<th><a href="#" class="heart" style="float:left; margin-right:5px;"><img id="heart" th:src="'/images/like_'+${heart!=null?'on':'off'}+'.png'" style="width:30px;"></a></th>
-							<td width="50px" style="padding:5px;">[[${board.likeCnt}]]</td>
-							<th><a th:class="${bookmark != null ? 'bookmarked' : ''}+' bookmark button btnColor small'" id="bookmark" style="float:left; margin-left:10px;">북마크</a></th>
-							<td width="50px" style="padding:5px;">[[${board.bookmarkCnt}]]</td>
+								<th><a href="#" class="heart" ><img id="heart" th:src="'/images/like_'+${heart!=null?'on':'off'}+'.png'" style="width:30px;"></a></th>
+								<td width="50px" style="padding:5px;" id="likeCnt">[[${board.likeCnt}]]</td>
+								<th><a href="#" class="bookmark"><img id="bookmark" th:src="'/images/bookmark'+${bookmark!=null?'ed':''}+'.png'" style="width:35px;"></a></th>
+								<td width="50px" style="padding:5px;" id="bookmarkCnt">[[${board.bookmarkCnt}]]</td>
 							</th:block>
 						</tr>
 					</table>
@@ -301,6 +297,8 @@
 	const replies = $(".replies")
 	const page = $(".page")
 	let nowpage = 0;
+	let likeCnt = /*[[${board.likeCnt}]]*/'';
+	let bookmarkCnt = /*[[${board.bookmarkCnt}]]*/'';
 
 
 	//좋아요
@@ -324,6 +322,7 @@
 		//좋아요 버튼 클릭 시 실행되는 코드
 		$(".heart").on("click", function(){
 			var that = $(this);
+
 			$.ajax({
 				url:'/heart/heart',
 				type:'POST',
@@ -333,11 +332,20 @@
 					console.log("data:"+data);
 					if(data==1){
 						$("#heart").prop("src", "/images/like_on.png");
-					}
-					else{
+
+						 // likeCnt가 0보다 크거나 같을 때에만 값을 변경
+						if (likeCnt >= 0) {
+							likeCnt++;
+							$("#likeCnt").text(likeCnt);
+                   		 }
+					}else{
 						$("#heart").prop("src", "/images/like_off.png");
+						// likeCnt가 0보다 크거나 같을 때에만 값을 변경
+						if (likeCnt > 0) {
+							likeCnt--;
+							$("#likeCnt").text(likeCnt);
+						}
 					}
-					console.log("that:"+that);
 				}
 			});
 		});
@@ -350,18 +358,45 @@
 		var bookmarkVal = /*[[${bookmark != null ? bookmark.bookmark : ''}]]*/ '';
 		console.log(bookmarkVal);
 
-		//bookmarkVal이 1이면 북마크가 이미 되어있는것
+		//bookmarkVal이 1이면 북마크가 이미 되어있는것 -> bookmarked.png 출력
+		if(bookmarkVal>0){
+			//prop() : 해당 속성을 가져와서 변경
+			$(".bookmark").prop('name',bookmarkVal);
+		}
+		else{
+			console.log(bookmarkVal);
+			$(".bookmark").prop('name',bookmarkVal);
+			}
+
 
 		//북마크 버튼 클릭 시 실행되는 코드
 		$(".bookmark").on("click", function(){
 			var that = $(this);
-			that.toggleClass('bookmarked');
 			$.ajax({
 				url:'/bookmark/bookmark',
 				type:'POST',
 				data: {'boardNum': boardNum, 'userId': loginUser, 'boardCategory':category},
 				success: function(data){
+					that.prop('name',data);
 					console.log("data:"+data);
+					if(data==1){
+						$("#bookmark").prop("src", "/images/bookmarked.png");
+
+						 // bookmarkCnt가 0보다 크거나 같을 때에만 값을 변경
+						if (bookmarkCnt >= 0) {
+							bookmarkCnt++;
+							$("#bookmarkCnt").text(bookmarkCnt);
+                   		 }
+
+					}
+					else{
+						$("#bookmark").prop("src", "/images/bookmark.png");
+						// bookmarkCnt가 0보다 크거나 같을 때에만 값을 변경
+						if (bookmarkCnt > 0) {
+							bookmarkCnt--;
+							$("#bookmarkCnt").text(bookmarkCnt);
+						}
+					}
 				}
 			});
 		});

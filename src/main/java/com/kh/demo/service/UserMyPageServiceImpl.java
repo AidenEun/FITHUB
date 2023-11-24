@@ -352,6 +352,7 @@ public class UserMyPageServiceImpl implements UserMyPageService{
     public DiaryDTO getTodayDiary(String loginUser) {
         return umpmapper.getTodayDiary(loginUser);
     }
+  
     public DiaryDTO getsideDiaryWithUser(String todaydate, String userid) {
         return umpmapper.getDiaryandUser(todaydate,userid);
     }
