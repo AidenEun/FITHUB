@@ -77,6 +77,8 @@
     border: 1px solid #dadada;
     margin-right: 20px;
     background: #fff;
+    padding: 38px 24px;
+
 }
 
 .one_box2{
@@ -410,6 +412,10 @@
         border: 1px solid black;
         height: 50px;
         transition: all 0.7s;
+        border-radius: 38px !important;
+        border: 1px solid;
+        box-shadow: 4px 4px 2px 0px #5a8100;
+
     }
     li.three_ul_a1{
         border: 0px;
@@ -568,4 +574,15 @@ table tbody tr:nth-child(2n + 1) {
 
 #five{
     padding-bottom: 125px;
+}
+
+.one_box1_inner1_today{
+    position: absolute;
+    top: -2%;
+    left: 77%;
+    font-size: 16px;
+}
+
+.one_box1_inner1_box>div{
+    padding-bottom: 2px;
 }
