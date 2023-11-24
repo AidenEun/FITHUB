@@ -76,6 +76,7 @@ public class SearchController {
         model.addAttribute("keyword",keyword);
 
 
+
     }
     @GetMapping("searchinfo")
     @ResponseBody

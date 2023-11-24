@@ -151,8 +151,9 @@ public class ChallengeController {
 
 
     @GetMapping("successChall")
+//    @GetMapping("{category}")
     @ResponseBody
-    public String successChall(@RequestParam("pageNum") int pageNum, HttpServletRequest req) throws Exception {
+    public String successChall(@RequestParam("pageNum") int pageNum, HttpServletRequest req/*, @PathVariable("category")String category*/) throws Exception {
         HttpSession session = req.getSession();
         String userId = (String) session.getAttribute("loginUser");
 

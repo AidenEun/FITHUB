@@ -45,21 +45,22 @@
 		table p{
 			margin-bottom: 0;
 		}
-		.content table tr .thumbnail{
-			height: 120px !important;
-		}
+
 		.content table tr .boardTitle{
 			line-height: 15px !important;
 			font-size: 12px !important;
 			overflow: hidden;
 			text-overflow: ellipsis;
 			vertical-align: middle;
+			height: 48px !important;
 		}
 		.content table tr .boardTitle b{
 			line-height: 15px !important;
 			font-size: 12px !important;
 			overflow: hidden !important;
 			text-overflow: ellipsis !important;
+
+
 		}
 		.content table tr .boardContent{
 			height: 100px !important;
@@ -67,7 +68,7 @@
 			overflow: hidden;
 			text-overflow: ellipsis;
 			display: -webkit-box;
-			-webkit-line-clamp: 3;
+			-webkit-line-clamp: 4;
 			-webkit-box-orient: vertical;
 			text-decoration: none !important;
 		}
@@ -96,6 +97,8 @@
 			line-height: 2.75em !important;
 			padding:0 1.5em !important;
 			width: 86px !important;
+			margin-top: 20px;
+			margin-right: -18px;
 
 		}
 
@@ -112,12 +115,19 @@
 		  border: none;
 		  border-top: 1px solid transparent; /* 투명한 선으로 만듭니다. */
 		}
+<!--		.thumbnail{-->
+<!--			width: 190px !important;-->
+<!--		}-->
+		.thumbnail img{
+			width: 190px !important;
+			height: 130px !important;
+		}
 	</style>
 </head>
 <body class="is-preload">
 
 <!-- Header -->
-<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin},${session.profile})}"></th:block>
+<th:block th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin},${session.profile},${session.todaydate})}"></th:block>
 
 <!-- Main -->
 <section id="main" class="wrapper sidebar left">
@@ -144,7 +154,7 @@
 								<tr>
 									<td class="thumbnail">
 										<a class="get img" th:href="${board.boardNum}">
-											<!--											<img th:src="${board.prodImg}" alt="Image" />-->
+											<img th:src="${board.imgURL}" alt="Image" />
 										</a>
 									</td>
 								</tr>
@@ -182,7 +192,7 @@
 								<tr>
 									<td class="thumbnail">
 										<a class="get img" th:href="${board.boardNum}">
-											<!--											<img th:src="${board.prodImg}" alt="Image" />-->
+											<img th:src="${board.imgURL}" alt="Image" />
 										</a>
 									</td>
 								</tr>
@@ -220,7 +230,7 @@
 								<tr>
 									<td class="thumbnail">
 										<a class="get img" th:href="${board.boardNum}">
-											<!--											<img th:src="${board.prodImg}" alt="Image" />-->
+											<img th:src="${board.imgURL}" alt="Image" />
 										</a>
 									</td>
 								</tr>
@@ -258,7 +268,7 @@
 								<tr>
 									<td class="thumbnail">
 										<a class="get img" th:href="${board.boardNum}">
-											<!--											<img th:src="${board.prodImg}" alt="Image" />-->
+											<img th:src="${board.imgURL}" alt="Image" />
 										</a>
 									</td>
 								</tr>

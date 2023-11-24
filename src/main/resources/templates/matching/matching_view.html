@@ -266,7 +266,7 @@ display: none;
 
 <!-- Header -->
 <th:block
-        th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin},${session.profile})}"></th:block>
+        th:replace="~{layout/header::header(${session.loginUser},${session.user},${session.trainer},${session.admin},${session.profile},${session.todaydate})}"></th:block>
 
 <!-- Modal -->
 <th:block th:replace="~{layout/matchingModal::matchingModal()}"></th:block>
@@ -425,8 +425,8 @@ display: none;
 
                         <td>
                             <a href="#" class="matchingOpen btnColor button" style="margin-left:15px;" data-trainer-id="${trainerInfo.trainerId}">신청하기</a>
-                            <a href="#" class="heart" style="float:left; margin-right:5px;"><img id="heart" src="/images/like_off.png" style="width:30px;"></a>
-                            <a href="#"  class="bookmark btnColor button">북마크</a>
+                            <a href="#" class="heart" style="float:left; margin-right:5px;"><img id="heart" th:src="'/images/like_'+${heart!=null?'on':'off'}+'.png'" style="width:30px;"></a>
+                            <a th:class="${bookmark != null ? 'bookmarked' : ''}+' bookmark button btnColor small'" style="float:left; margin-left:10px;">북마크</a>
                             <div class="displayNoneDiv writer">[[${board.trainerId}]]</div>
                             <div class="displayNoneDiv boardNum">[[${board.boardNum}]]</div>
                             <div class="displayNoneDiv boardCategory">matching</div>
@@ -473,7 +473,6 @@ display: none;
                             <textarea name="reviewContent" placeholder="리뷰를 작성해주세요" style="resize:none;width:450px;"></textarea>
                         </div>
                         <div style="width:15%">
-                            <div id="result" name="starRating" style="display: none;">별점 : 0</div>
                             <a href="#" class="button finish btnColor small" style="margin-bottom:1rem; margin-top: 100px;">등록</a>
                             <a href="#" class="button cancel btnColor small">취소</a>
                         </div>
@@ -705,55 +704,55 @@ $(document).ready(function() {
 		)
 	}
 	let reviewFlag = false;
-function modifyReview(e){
-    e.preventDefault();
-    if(!reviewFlag){
-        reviewFlag = true;
-        let reviewNum = $(this).attr("href");
+    function modifyReview(e){
+        e.preventDefault();
+        if(!reviewFlag){
+            reviewFlag = true;
+            let reviewNum = $(this).attr("href");
 
-        // 해당 리뷰 정보 가져오기
-        reviewService.getReview(reviewNum, function(review) {
-            const reviewTag = $(".review" + reviewNum);
+            // 해당 리뷰 정보 가져오기
+            reviewService.getReview(reviewNum, function(review) {
+                const reviewTag = $(".review" + reviewNum);
 
-            // 리뷰 정보로부터 필요한 데이터 가져오기 (예: userId, reviewContent, starRating)
-            const userId = review.userId;
-            const reviewContent = review.reviewContent;
-            const starRating = review.starRating;
+                // 리뷰 정보로부터 필요한 데이터 가져오기 (예: userId, reviewContent, starRating)
+                const userId = review.userId;
+                const reviewContent = review.reviewContent;
+                const starRating = review.starRating;
 
-            // 수정할 폼 생성 및 초기화
-            let form = '<form class="' + reviewNum + ' mdf">';
-            form += '<input type="text" class="userId" value="' + userId + '"><br>';
-            form += '<textarea class="reviewContent">' + reviewContent + '</textarea><br>';
-            form += '<input type="text" class="starRating" value="' + starRating + '"><br>';
-            form += '<button class="submitEdit">수정 완료</button></form>';
+                // 수정할 폼 생성 및 초기화
+                let form = '<form class="' + reviewNum + ' mdf">';
+                form += '<input type="text" class="userId" value="' + userId + '"><br>';
+                form += '<textarea class="reviewContent">' + reviewContent + '</textarea><br>';
+                form += '<input type="text" class="starRating" value="' + starRating + '"><br>';
+                form += '<button class="submitEdit">수정 완료</button></form>';
 
-            reviewTag.html(form);
-            $(this).hide();
-            $(this).next().show();
+                reviewTag.html(form);
+                $(this).hide();
+                $(this).next().show();
 
-            // 수정 완료 버튼 이벤트 처리
-            $(".submitEdit").on("click", function(event) {
-                event.preventDefault();
+                // 수정 완료 버튼 이벤트 처리
+                $(".submitEdit").on("click", function(event) {
+                    event.preventDefault();
 
-                // 수정된 데이터 가져오기
-                const editedReview = {
-                    "userId": $(".userId").val(),
-                    "reviewContent": $(".reviewContent").val(),
-                    "starRating": $(".starRating").val(),
-                    // 다른 필드들도 필요하다면 추가
-                };
+                    // 수정된 데이터 가져오기
+                    const editedReview = {
+                        "userId": $(".userId").val(),
+                        "reviewContent": $(".reviewContent").val(),
+                        "starRating": $(".starRating").val(),
+                        // 다른 필드들도 필요하다면 추가
+                    };
 
-                // 업데이트 요청 보내기
-                reviewService.update(editedReview, function(result) {
-                    alert("수정 완료!");
-                    showList(nowpage);
+                    // 업데이트 요청 보내기
+                    reviewService.update(editedReview, function(result) {
+                        alert("수정 완료!");
+                        showList(nowpage);
+                    });
                 });
             });
-        });
-    } else {
-        alert("수정 중인 리뷰가 있습니다!");
+        } else {
+            alert("수정 중인 리뷰가 있습니다!");
+        }
     }
-}
 	function modifyReviewOk(e){
 		e.preventDefault();
 		reviewFlag = false;
@@ -777,58 +776,54 @@ function modifyReview(e){
 	}
 
 
-//좋아요
-$(document).ready(function(){
+    //좋아요
+    $(document).ready(function(){
 
-    //좋아요가 있는지 확인한 값을 heartVal에 저장
-    var heartVal = /*[[${heart != null ? heart.heart : ''}]]*/ '';
-    console.log("like1"+heartVal);
+        //좋아요가 있는지 확인한 값을 heartVal에 저장
+        var heartVal = /*[[${heart != null ? heart.heart : ''}]]*/ '';
+        console.log("like1"+heartVal);
 
-    //heartVal이 1이면 좋아요가 이미 되어있는것 -> like_on.png 출력
-    if(heartVal>0){
-        console.log("like2"+heartVal);
-        $("#heart").prop("src", "/images/like_on.png");	//prop() : 해당 속성을 가져와서 변경
-        $(".heart").prop('name',heartVal);
-    }
-    else{
-        console.log("like3"+heartVal);
-        $("#heart").prop("src", "/images/like_off.png");
-        $(".heart").prop('name',heartVal);
+        //heartVal이 1이면 좋아요가 이미 되어있는것 -> like_on.png 출력
+        if(heartVal>0){
+            console.log("like2"+heartVal);
+            //prop() : 해당 속성을 가져와서 변경
+            $(".heart").prop('name',heartVal);
         }
-
-
-    //좋아요 버튼 클릭 시 실행되는 코드
-    $(".heart").on("click", function(){
-        var that = $(this);
-        $.ajax({
-            url:'/heart/heart',
-            type:'POST',
-            data: {'boardNum': boardNum, 'userId': loginUser, 'boardCategory':'matching'},
-            success: function(data){
-                that.prop('name',data);
-                console.log("data:"+data);
-                if(data==1){
-                    $("#heart").prop("src", "/images/like_on.png");
-                }
-                else{
-                    $("#heart").prop("src", "/images/like_off.png");
-                }
-                console.log("that:"+that);
+        else{
+            console.log("like3"+heartVal);
+            $(".heart").prop('name',heartVal);
             }
+
+
+        //좋아요 버튼 클릭 시 실행되는 코드
+        $(".heart").on("click", function(){
+            var that = $(this);
+            $.ajax({
+                url:'/heart/heart',
+                type:'POST',
+                data: {'boardNum': boardNum, 'userId': loginUser, 'boardCategory':'matching'},
+                success: function(data){
+                    that.prop('name',data);
+                    console.log("data:"+data);
+                    if(data==1){
+                        $("#heart").prop("src", "/images/like_on.png");
+                    }
+                    else{
+                        $("#heart").prop("src", "/images/like_off.png");
+                    }
+                    console.log("that:"+that);
+                }
+            });
         });
     });
-});
-//북마크
-	$(document).ready(function(){
+    //북마크
+        $(document).ready(function(){
 
 		//북마크가 있는지 확인한 값을 bookmarkVal에 저장
 		var bookmarkVal = /*[[${bookmark != null ? bookmark.bookmark : ''}]]*/ '';
 		console.log(bookmarkVal);
 
 		//bookmarkVal이 1이면 북마크가 이미 되어있는것
-		if(bookmarkVal>0){
-			$(".bookmark").addClass('bookmarked');
-		}
 
 		//북마크 버튼 클릭 시 실행되는 코드
 		$(".bookmark").on("click", function(){
@@ -846,7 +841,7 @@ $(document).ready(function(){
 	});
 
 
-
+});
 
     document.addEventListener("DOMContentLoaded", function () {
         const stars = document.querySelectorAll(".rating .star");
