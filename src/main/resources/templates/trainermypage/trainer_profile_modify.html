@@ -105,10 +105,10 @@
 							<th:block th:with="sar=${profile.orgName.split('[.]')}">
 								<th:block th:with="ext=${sar[sar.length-1]}">
 									<th:block th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}">
-										<img style="width:100%;" th:src="@{/trainermypage/thumbnail (sysName=${profile.sysName})}" class="thumbnail">
+										<img style="width:160px; height: 160px; border-radius: 100%;" th:src="@{/trainermypage/thumbnail (sysName=${profile.sysName})}" class="thumbnail">
 									</th:block>
 									<th:block th:unless="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}">
-										<img style="width:100%;" th:src="@{/trainermypage/thumbnail (sysName='profile_img.png')}" class="thumbnail">
+										<img style="width:160px; height: 160px; border-radius: 100%;" th:src="@{/trainermypage/thumbnail (sysName='profile_img.png')}" class="thumbnail">
 									</th:block>
 								</th:block>
 							</th:block>
