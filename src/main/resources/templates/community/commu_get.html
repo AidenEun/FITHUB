@@ -119,14 +119,7 @@
 		.displayNoneDiv{
 			display: none;
 		}
-		.bookmarked{
-			background: #ebede1 !important;
-			padding: 0 17.6px !important;
-			box-shadow: 0 0 2px 1px #5a8100 !important;
-			font-weight:700 !important;
-			height: 2.75em !important;
-			line-height: 2.75em !important;
-		}
+
 	</style>
 </head>
 <body class="is-preload">
@@ -182,9 +175,9 @@
 							<th>조회수</th>
 							<td style="padding:5px 25px !important">[[${board.viewCnt}]]</td>
 							<th>좋아요</th>
-							<td width="50px" style="padding:5px;">[[${board.likeCnt}]]</td>
+							<td width="50px" style="padding:5px;" id="likeCnt">[[${board.likeCnt}]]</td>
 							<th>북마크</th>
-							<td width="50px" style="padding:5px;">[[${board.bookmarkCnt}]]</td>
+							<td width="50px" style="padding:5px;" id="bookmarkCnt">[[${board.bookmarkCnt}]]</td>
 						</tr>
 						<tr style="height:300px;">
 							<th>내 용</th>
@@ -242,7 +235,7 @@
 							<div class="btn_area">
 								<th:block th:if="${board.userId != session.loginUser}">
 									<a href="#" class="heart" style="float:left; margin-right:5px;"><img id="heart" th:src="'/images/like_'+${heart!=null?'on':'off'}+'.png'" style="width:30px;"></a>
-									<a th:class="${bookmark != null ? 'bookmarked' : ''}+' bookmark button btnColor small'" style="float:left; margin-left:10px;">북마크</a>
+									<a href="#" class="bookmark" style="float:left; margin-left: 8px; margin-right:5px;"><img id="bookmark" th:src="'/images/bookmark'+${bookmark!=null?'ed':''}+'.png'" style="width:35px;"></a>
 									<a class="button reportOpen btnColor small" style="float:left; margin-left:10px;">신고</a>
 								</th:block>
 								<span th:if="${board != null}" style="float: right;" th:switch="${board.boardCategory}">
@@ -370,7 +363,12 @@
 		}
 	})
 
+
+
 	//좋아요
+	let likeCnt = /*[[${board.likeCnt}]]*/'';
+	let bookmarkCnt = /*[[${board.bookmarkCnt}]]*/'';
+
 	$(document).ready(function(){
 
 		//좋아요가 있는지 확인한 값을 heartVal에 저장
@@ -391,6 +389,7 @@
 		//좋아요 버튼 클릭 시 실행되는 코드
 		$(".heart").on("click", function(){
 			var that = $(this);
+
 			$.ajax({
 				url:'/heart/heart',
 				type:'POST',
@@ -400,11 +399,20 @@
 					console.log("data:"+data);
 					if(data==1){
 						$("#heart").prop("src", "/images/like_on.png");
-					}
-					else{
+
+						 // likeCnt가 0보다 크거나 같을 때에만 값을 변경
+						if (likeCnt >= 0) {
+							likeCnt++;
+							$("#likeCnt").text(likeCnt);
+                   		 }
+					}else{
 						$("#heart").prop("src", "/images/like_off.png");
+						// likeCnt가 0보다 크거나 같을 때에만 값을 변경
+						if (likeCnt > 0) {
+							likeCnt--;
+							$("#likeCnt").text(likeCnt);
+						}
 					}
-					console.log("that:"+that);
 				}
 			});
 		});
@@ -415,20 +423,47 @@
 
 		//북마크가 있는지 확인한 값을 bookmarkVal에 저장
 		var bookmarkVal = /*[[${bookmark != null ? bookmark.bookmark : ''}]]*/ '';
-		//console.log(bookmarkVal);
+		console.log(bookmarkVal);
 
-		//bookmarkVal이 1이면 북마크가 이미 되어있는것
+		//bookmarkVal이 1이면 북마크가 이미 되어있는것 -> bookmarked.png 출력
+		if(bookmarkVal>0){
+			//prop() : 해당 속성을 가져와서 변경
+			$(".bookmark").prop('name',bookmarkVal);
+		}
+		else{
+			console.log(bookmarkVal);
+			$(".bookmark").prop('name',bookmarkVal);
+			}
+
 
 		//북마크 버튼 클릭 시 실행되는 코드
 		$(".bookmark").on("click", function(){
 			var that = $(this);
-			that.toggleClass('bookmarked');
 			$.ajax({
 				url:'/bookmark/bookmark',
 				type:'POST',
 				data: {'boardNum': boardNum, 'userId': loginUser, 'boardCategory':boardCategory},
 				success: function(data){
+					that.prop('name',data);
 					console.log("data:"+data);
+					if(data==1){
+						$("#bookmark").prop("src", "/images/bookmarked.png");
+
+						 // bookmarkCnt가 0보다 크거나 같을 때에만 값을 변경
+						if (bookmarkCnt >= 0) {
+							bookmarkCnt++;
+							$("#bookmarkCnt").text(bookmarkCnt);
+                   		 }
+
+					}
+					else{
+						$("#bookmark").prop("src", "/images/bookmark.png");
+						// bookmarkCnt가 0보다 크거나 같을 때에만 값을 변경
+						if (bookmarkCnt > 0) {
+							bookmarkCnt--;
+							$("#bookmarkCnt").text(bookmarkCnt);
+						}
+					}
 				}
 			});
 		});
