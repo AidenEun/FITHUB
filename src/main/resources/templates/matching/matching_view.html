@@ -15,6 +15,7 @@
         <link rel="stylesheet" th:href="@{/assets/css/noscript.css}"/>
     </noscript>
     <link rel="stylesheet" th:href="@{/assets/css/common.css}"/>
+    <link rel="icon" href="/images/fithub-favicon.png" type="image/png">
 
     <!-- Modal -->
     <link rel="stylesheet" th:href="@{/assets/css/matchingModal.css}"/>
@@ -426,7 +427,7 @@ display: none;
                         <td>
                             <a href="#" class="matchingOpen btnColor button" style="margin-left:15px;" data-trainer-id="${trainerInfo.trainerId}">신청하기</a>
                             <a href="#" class="heart" style="float:left; margin-right:5px;"><img id="heart" th:src="'/images/like_'+${heart!=null?'on':'off'}+'.png'" style="width:30px;"></a>
-                            <a th:class="${bookmark != null ? 'bookmarked' : ''}+' bookmark button btnColor small'" style="float:left; margin-left:10px;">북마크</a>
+                            <a href="#" class="bookmark" style="float:left; margin-left: 8px; margin-right:5px;"><img id="bookmark" th:src="'/images/bookmark'+${bookmark!=null?'ed':''}+'.png'" style="width:35px;"></a>
                             <div class="displayNoneDiv writer">[[${board.trainerId}]]</div>
                             <div class="displayNoneDiv boardNum">[[${board.boardNum}]]</div>
                             <div class="displayNoneDiv boardCategory">matching</div>
@@ -777,6 +778,7 @@ $(document).ready(function() {
 
 
     //좋아요
+
     $(document).ready(function(){
 
         //좋아요가 있는지 확인한 값을 heartVal에 저장
@@ -810,6 +812,7 @@ $(document).ready(function() {
                     }
                     else{
                         $("#heart").prop("src", "/images/like_off.png");
+
                     }
                     console.log("that:"+that);
                 }
@@ -817,24 +820,40 @@ $(document).ready(function() {
         });
     });
     //북마크
-        $(document).ready(function(){
+	$(document).ready(function(){
 
 		//북마크가 있는지 확인한 값을 bookmarkVal에 저장
 		var bookmarkVal = /*[[${bookmark != null ? bookmark.bookmark : ''}]]*/ '';
 		console.log(bookmarkVal);
 
-		//bookmarkVal이 1이면 북마크가 이미 되어있는것
+		//bookmarkVal이 1이면 북마크가 이미 되어있는것 -> bookmarked.png 출력
+		if(bookmarkVal>0){
+			//prop() : 해당 속성을 가져와서 변경
+			$(".bookmark").prop('name',bookmarkVal);
+		}
+		else{
+			console.log(bookmarkVal);
+			$(".bookmark").prop('name',bookmarkVal);
+			}
+
 
 		//북마크 버튼 클릭 시 실행되는 코드
 		$(".bookmark").on("click", function(){
 			var that = $(this);
-			that.toggleClass('bookmarked');
 			$.ajax({
 				url:'/bookmark/bookmark',
 				type:'POST',
 				data: {'boardNum': boardNum, 'userId': loginUser, 'boardCategory':'matching'},
 				success: function(data){
+					that.prop('name',data);
 					console.log("data:"+data);
+					if(data==1){
+						$("#bookmark").prop("src", "/images/bookmarked.png");
+					}
+					else{
+						$("#bookmark").prop("src", "/images/bookmark.png");
+
+					}
 				}
 			});
 		});

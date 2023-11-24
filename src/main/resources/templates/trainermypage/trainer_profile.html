@@ -14,7 +14,7 @@
 	<link rel="stylesheet" th:href="@{/assets/css/sidebar.css}" />
 	<link rel="stylesheet" th:href="@{/assets/css/common.css}" />
 	<link rel="stylesheet" th:href="@{/assets/css/profileModal.css}"/>
-
+	<link rel="icon" href="/images/fithub-favicon.png" type="image/png">
 </head>
 <style>
 	.header_box {
@@ -207,13 +207,13 @@ a.btnColor{
 							<th:block th:with="sar=${profile.orgName.split('[.]')}">
 								<th:block th:with="ext=${sar[sar.length-1]}">
 									<th:block th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}">
-											<img style="width:100%;" th:src="@{/trainermypage/thumbnail (sysName=${profile.sysName})}">
+											<img style="width:160px; height: 160px; border-radius: 100%;" th:src="@{/trainermypage/thumbnail (sysName=${profile.sysName})}">
 									</th:block>
 								</th:block>
 							</th:block>
 						</th:block>
 						<th:block th:unless="${profile != null}">
-								<img style="width:100%;" th:src="@{/trainermypage/thumbnail (sysName='profile_img.png')}">
+								<img style="width:160px; height: 160px; border-radius: 100%;" th:src="@{/trainermypage/thumbnail (sysName='profile_img.png')}">
 						</th:block>
 						</div>
 					</div>

@@ -8,23 +8,20 @@
             width: 150px;
             position: absolute;
             font-size: 14px;
-            background: #ebede1;
+            background: rgba(247, 250, 245, 0.9);
             z-index: 5555;
             border-radius: 15px;
             padding: 0;
 
         }
 
-        .submenu li {
+        .submenu > a li {
             list-style-type: none;
-            color: black !important;
+            color: #5a8100 !important;
         }
 
-        .submenu li:hover {
-            background: rgb(203, 211, 177);
-            transition: ease 1s;
-            border-radius: 15px;
-            padding: 0;
+        #header nav > .submenu > a > li {
+            color: red;
         }
 
         /*사이드 탭바 디자인*/
@@ -262,44 +259,42 @@
             <ul>
                 <li class="menu-item"><a href="/info/info_list" style="color: white;">정보</a>
                     <ul class="submenu">
-                        <li><a href="/info/info_list">전체</a></li>
-                        <li><a href="/info/info_news">뉴스</a></li>
-                        <li><a href="/info/info_food">식단</a></li>
-                        <li><a href="/info/info_exercise">운동</a></li>
-                        <li><a href="/info/info_tip">꿀팁</a></li>
+                        <a href="/info/info_list"><li>전체</li></a>
+                        <a href="/info/info_news"><li>뉴스</li></a>
+                        <a href="/info/info_food"><li>식단</li></a>
+                        <a href="/info/info_exercise"><li>운동</li></a>
+                        <a href="/info/info_tip"><li>꿀팁</li></a>
 
                     </ul>
                 </li>
                 <li class="menu-item"><a href="/calorie/food_calorie_list" style="color: white;">칼로리</a>
                     <ul class="submenu">
-                        <li><a href="/calorie/food_calorie_list">음식칼로리</a></li>
-                        <li><a href="/calorie/exercise_calorie_list">운동칼로리</a></li>
+                        <a href="/calorie/food_calorie_list"><li>음식칼로리</li></a>
+                        <a href="/calorie/exercise_calorie_list"><li>운동칼로리</li></a>
                     </ul>
                 </li>
                 <li class="menu-item"><a href="/community/commu_list" style="color: white;">커뮤니티</a>
                     <ul class="submenu">
-                        <li><a href="/community/commu_free">자유게시판</a></li>
-                        <li><a href="/community/commu_food">식단</a></li>
-                        <li><a href="/community/commu_exercise">운동</a></li>
-                        <li><a href="/community/commu_gallery">갤러리</a></li>
-                        <li><a href="/community/commu_qna">고민 Q&A</a></li>
+                        <a href="/community/commu_free"><li>자유게시판</li></a>
+                            <a href="/community/commu_food"><li>식단</li></a>
+                        <a href="/community/commu_exercise"><li>운동</li></a>
+                        <a href="/community/commu_gallery"><li>갤러리</li></a>
+                        <a href="/community/commu_qna"><li>고민 Q&A</li></a>
 
                     </ul>
                 </li>
                 <li class="menu-item"><a href="/matching/matching_list" style="color: white;">트레이너 매칭</a>
                     <ul class="submenu">
-                        <li><a href="/matching/matching_list">트레이너매칭</a></li>
                     </ul>
                 </li>
                 <li class="menu-item"><a href="/challenge/list" style="color: white;">챌린지</a>
                     <ul class="submenu">
-                        <li><a href="/challenge/list">챌린지</a></li>
                     </ul>
                 </li>
                 <li class="menu-item"><a href="/product/prod_list" style="color: white;">제품</a>
                     <ul class="submenu">
-                        <li><a href="/product/prod_food">식품</a></li>
-                        <li><a href="/product/prod_exercise">운동도구</a></li>
+                        <a href="/product/prod_food"><li>식품</li></a>
+                        <a href="/product/prod_exercise"><li>운동도구</li></a>
                     </ul>
                 </li>
             </ul>
@@ -395,7 +390,7 @@
                                 <th:block th:with=" ext=${sar[sar.length-1]}">
                                     <th:block
                                             th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}">
-                                        <img style="width:160px; height:160px;"
+                                        <img style="width:160px; height:160px; border-radius: 100%;"
                                              th:src="@{/usermypage/thumbnail (sysName=${profile.sysName})}">
                                     </th:block>
                                 </th:block>
@@ -403,7 +398,7 @@
                         </th:block>
                         <th:block th:unless="${profile != null}">
 
-                            <img style="width:160px; height:160px; margin-bottom: 10px"
+                            <img style="width:160px; height:160px; border-radius: 100%; margin-bottom: 10px"
                                  th:src="@{/usermypage/thumbnail (sysName='profile_img.png')}">
                         </th:block>
                     </a>

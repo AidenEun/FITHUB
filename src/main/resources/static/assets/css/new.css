@@ -154,7 +154,7 @@
 
 
 
-   
+
 
     /* two */
 
@@ -174,11 +174,11 @@
 
     .two_content1{
         width: 25%;
-        margin-right: 100px;   
-    }    
+        margin-right: 100px;
+    }
     .two_content2{
         width: 60%;
-    }  
+    }
 
     .two_box1 , .two_box2{
         height: 400px;
@@ -286,7 +286,7 @@
 		-webkit-align-items: -webkit-stretch;
 		-ms-align-items: -ms-stretch;
 		align-items: stretch;
-        
+
 
         text-align: center;
         font-size: 18px;
@@ -441,7 +441,7 @@
         margin-bottom: 35px;
     }
 
-    
+
 
 
 

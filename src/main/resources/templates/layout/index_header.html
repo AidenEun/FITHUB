@@ -4,28 +4,20 @@
             margin-top: 20px;
             margin-bottom: 0px;
         }
-
         .submenu {
             width: 150px;
             position: absolute;
             font-size: 14px;
-            background: #ebede1;
+            background: rgba(247, 250, 245, 0.9);
             z-index: 5555;
             border-radius: 15px;
             padding: 0;
 
         }
 
-        .submenu li {
+        .submenu > li a {
             list-style-type: none;
-            color: black !important;
-        }
-
-        .submenu li:hover {
-            background: rgb(203, 211, 177);
-            transition: ease 1s;
-            border-radius: 15px;
-            padding: 0;
+            color: #5a8100 !important;
         }
 
         /*사이드 탭바 디자인*/
@@ -397,7 +389,7 @@
                                 <th:block th:with=" ext=${sar[sar.length-1]}">
                                     <th:block
                                             th:if="${ext == 'jpg' or ext == 'jpeg' or ext == 'png' or ext == 'gif' or ext == 'webp'}">
-                                        <img style="width:160px; height:160px;"
+                                        <img style="width:160px; height:160px; border-radius: 100%;"
                                              th:src="@{/usermypage/thumbnail (sysName=${profile.sysName})}">
                                     </th:block>
                                 </th:block>
@@ -405,7 +397,7 @@
                         </th:block>
                         <th:block th:unless="${profile != null}">
 
-                            <img style="width:160px; height:160px; margin-bottom: 10px"
+                            <img style="width:160px; height:160px; border-radius: 100%; margin-bottom: 10px"
                                  th:src="@{/usermypage/thumbnail (sysName='profile_img.png')}">
                         </th:block>
                     </a>
