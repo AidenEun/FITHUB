@@ -437,7 +437,7 @@
                     </div>
                 </div>
                 <hr>
-                <th:block th:if="${session.admin == null && (session.trainer != null || session.user!=null)}">
+                <th:block th:if="${session.LoginUser != null && session.admin == null && (session.trainer != null || session.user!=null)}">
                     <div class="navi_main">
                         <div class="icon_area">
                             <input type="hidden" id="todaydate" th:value="${todaydate}">
