@@ -494,9 +494,10 @@
 
 			if (data.list != null && data.list.length > 0) {
 				data.list.forEach(function (board) {
+					console.log(board)
 					var row = $(`
 						<div class="three_section_td_list">
-							<div class="three_section_td_list_img"><img alt="이미지" scr= "${board.imgURL}"/></div>
+							<div class="three_section_td_list_img"><img alt="이미지" src="${board.imgURL}"/></div>
 							<div class="three_section_td_list_box">
 								<div class="three_section_td_list_title">${board.boardTitle}</div>
 								<div class="three_section_td_list_category">카테고리 : <span>${board.boardCategory}</span></div>
