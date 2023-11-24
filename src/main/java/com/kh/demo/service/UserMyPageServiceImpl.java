@@ -329,11 +329,11 @@ public class UserMyPageServiceImpl implements UserMyPageService{
             if (ext.equals("jpg") || ext.equals("jpeg") || ext.equals("png") || ext.equals("gif") || ext.equals("webp")){
                 sysName.add(profile.getSysName());
             } else {
-                sysName.add("profile_img");
+                sysName.add("profile_img.png");
             }
         }
         else {
-            sysName.add("profile_img");
+            sysName.add("profile_img.png");
         }
         //경로에 관련된 객체(자원으로 가지고 와야 하는 파일에 대한 경로)
         Path path = Paths.get(saveFolder + sysName.get(0));

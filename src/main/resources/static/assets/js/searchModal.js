@@ -102,7 +102,7 @@ function calsearch() {
             tableBody.before(tableHead);
         } else {
             var row = $('<tr>');
-            row.append('<td colspan="2">검색된 결과가 없습니다</td>');
+            row.append('<td colspan="2">검색된 결과가 없습니다<br>관리자에게 요청해주세요!</td>');
             tableBody.append(row);
         }
 
@@ -152,7 +152,7 @@ function displayExecData(execList) {
         tableBody.before(tableHead);
     } else {
         var row = $('<tr>');
-        row.append('<td colspan="2">검색된 결과가 없습니다</td>');
+        row.append('<td colspan="2">검색된 결과가 없습니다<br>관리자에게 요청해주세요!</td>');
         tableBody.append(row);
     }
 
