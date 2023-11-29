@@ -84,7 +84,7 @@
 						<sup class="new" th:if="${newly_board[boardStat.index] == 'O'}">New</sup>
 					</td>
 					<td>
-						<a class="get" th:href="${board.boardNum}">
+						<a th:href="'/community/commu_get?boardNum='+${board.boardNum}">
 							[[${board.boardTitle}]]
 							<span class="reply_cnt" th:text="'['+${reply_cnt_list[boardStat.index]}+']'"></span>
 						</a>
