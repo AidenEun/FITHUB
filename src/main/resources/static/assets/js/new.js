@@ -268,6 +268,6 @@ let observer = new IntersectionObserver((entries) => {
             wrap.classList.remove('transition');
         },1000);
     }
-}, { threshold: 0.15 });  // intersectionRatio 대신 isIntersectionRation, threshold를 추가
+}, { threshold: 0.15 });
 
 observer.observe(three_section_td);

@@ -3,7 +3,6 @@ package com.kh.demo.mapper;
 import com.kh.demo.domain.dto.*;
 import org.apache.ibatis.annotations.Mapper;
 
-import java.util.HashMap;
 import java.util.List;
 
 @Mapper
@@ -93,7 +92,7 @@ public interface UserMyPageMapper {
 
     List<ChallNoticeBoardDTO> getMyChallengeCategoryTerm(Criteria cri, String userId, String challCategory, String challTerm);
 
-    List<ChallNoticeBoardDTO> getSuccessMyChallenge(String userId);
+    List<ChallNoticeBoardDTO> getSuccessMyChallenge(Criteria cri, String userId);
 
     Long getSuccessMyChallengeTotal(String userId);
 

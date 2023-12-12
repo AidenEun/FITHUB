@@ -93,7 +93,7 @@ public interface UserMyPageService {
 
     Long getChallengeTotal(Criteria cri, String userId, String challCategory, String challTerm);
 
-    List<ChallNoticeBoardDTO> getSuccessMyChallenge(String userId);
+    List<ChallNoticeBoardDTO> getSuccessMyChallenge(Criteria cri, String userId);
 
     Long getSuccessMyChallengeTotal(Criteria cri, String userId);
 

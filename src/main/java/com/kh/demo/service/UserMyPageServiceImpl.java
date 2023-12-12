@@ -481,8 +481,8 @@ public class UserMyPageServiceImpl implements UserMyPageService{
     }
 
     @Override
-    public List<ChallNoticeBoardDTO> getSuccessMyChallenge(String userId) {
-        return umpmapper.getSuccessMyChallenge(userId);
+    public List<ChallNoticeBoardDTO> getSuccessMyChallenge(Criteria cri, String userId) {
+        return umpmapper.getSuccessMyChallenge(cri, userId);
 
     }
 

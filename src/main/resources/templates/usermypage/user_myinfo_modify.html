@@ -139,7 +139,7 @@
 					</tr>
 				</table>
 				<div class="btn_box">
-					<a href="javascript:document.myuserForm.submit()" class="button btnColor small" >수정완료</a>
+					<a href="javascript:sendit()" class="button btnColor small" >수정완료</a>
 					<a th:href="@{/usermypage/user_myinfo}" class="button btnColor small">취소</a>
 				</div>
 			</form>
@@ -184,7 +184,7 @@
 <script th:src="@{/assets/js/main_sub.js}"></script>
 
 <script th:src="@{/assets/js/sidebarTap.js}"></script>
-<script>
+<script th:inline="javascript">
 	function togglePassword() {
 		var passwordInput = document.getElementById("inputPw");
 		var viewPwBtn = document.getElementById("viewPwBtn");
@@ -201,6 +201,69 @@
 		inputPwConfirm.type = (inputPwConfirm.type === "password") ? "text" : "password";
 
 		viewPwReBtn.classList.toggle("active");
+	}
+
+
+
+	const myuserForm = document.myuserForm;
+	function sendit(){
+		if(!myuserForm.userNickname.value){
+			alert("닉네임을 입력해주세요!");
+			myuserForm.userNickname.focus();
+			return false;
+		}
+
+	   const userPw = myuserForm.userPw;
+	   const userPwRe = myuserForm.userPwRe;
+		if(userPw.value != userPwRe.value){
+				alert("비밀번호가 다릅니다!");
+				userPw.focus();
+				return false;
+		}
+
+
+		const userTel = myuserForm.userTel;
+		if(!userTel.value){
+			alert("전화번호를 입력하세요!");
+			userTel.focus();
+			return false;
+		}
+
+		const userMail = myuserForm.userMail;
+		if(!userMail.value){
+			alert("이메일을 입력하세요!");
+			userMail.focus();
+			return false;
+		}
+
+		const userWeight = myuserForm.userWeight;
+		if(!userWeight.value){
+			alert("몸무게를 입력하세요!");
+			userWeight.focus();
+			return false;
+		}
+
+		const userHeight = myuserForm.userHeight;
+		if(!userHeight.value){
+			alert("키를 입력하세요!");
+			userHeight.focus();
+			return false;
+		}
+		const weightGoal = myuserForm.weightGoal;
+		if(!weightGoal.value){
+			alert("목표체중을 입력하세요!");
+			weightGoal.focus();
+			return false;
+		}
+
+		const caloriesGoal = myuserForm.caloriesGoal;
+		if(!caloriesGoal.value){
+			alert("목표칼로리를 입력하세요!");
+			caloriesGoal.focus();
+			return false;
+		}
+
+		myuserForm.submit();
 	}
 </script>
 </body>

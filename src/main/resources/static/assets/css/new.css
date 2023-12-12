@@ -598,17 +598,12 @@ table tbody tr:nth-child(2n + 1) {
 
 /* 캘린더 스타일 */
 .calender {
-    position: absolute;
-    top:5px;
-    left: 15px;
+    position: fixed;
     width: 680px;
     margin: 50px;
-    padding: 52px;
     margin: 0 auto;
-    /*margin-top: 40px;*/
     margin-bottom: 40px;
     box-shadow: 0px 0px 10px 5px rgb(203, 211, 177);
-    /* border: 1px solid green; */
     border-radius: 15px;
 }
 
@@ -725,7 +720,6 @@ input[type=button].go_today.btnColor:hover {
 }
 
 .calen_contents {
-    padding: 10px;
     box-shadow: 4px 4px 2px 0px rgb(203, 211, 177);
     border-radius: 4px;
 }
@@ -810,4 +804,9 @@ a {
     right: 25px;
     top: 12px;
     z-index: -5;
+}
+
+.one_img img{
+    width: 200px;
+    height: 200px;
 }
