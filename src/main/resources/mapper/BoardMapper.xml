@@ -291,6 +291,13 @@
 	</select>
 
 
+<!--	<select id="getUserBoardLikeTop5List">-->
+<!--		select board.*,count(*) as board_count from `like`,board-->
+<!--		where `like`.board_num = board.board_num and `like`.board_category = board.board_category-->
+<!--		GROUP BY board.board_num-->
+<!--		order by board_count desc limit 5;-->
+<!--	</select>-->
+
 	<select id="getUserBoardLikeTop5List">
 		select board.*,count(*) as board_count from `like`,board
 		where `like`.board_num = board.board_num and `like`.board_category = board.board_category

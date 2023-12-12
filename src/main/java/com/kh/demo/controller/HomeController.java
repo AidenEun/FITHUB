@@ -91,10 +91,11 @@ public class HomeController {
 
         model.addAttribute("todaydate", todaydate);
 
+        TrainerDTO trainer = serviceTrainer.getDetail(loginUser);
         UserDTO user = serviceUser.getDetail(loginUser);
 //        DiaryDTO diary = umpservice.getDiaryDetail(todayDiary.getRegdate(), loginUser);
 
-        if (user != null) {
+        if (user != null || trainer!= null) {
             DiaryDTO diary = umpservice.getTodayDiary(loginUser);
             if (diary != null) {
                 //오늘의 비교 계산
@@ -256,6 +257,7 @@ public class HomeController {
             model.addAttribute("diary", diary);
         }
         model.addAttribute("user", user);
+        model.addAttribute("trainer",trainer);
 
         List<ChallNoticeBoardDTO> challNoticeBoardList = challService.getChallNoticeBoardList(20);
         model.addAttribute("challNoticeBoardList",challNoticeBoardList);
@@ -304,7 +306,7 @@ public class HomeController {
         int limit = idx*9;
         List<BoardDTO> list = boardservice.getindexInfoBoardList(limit, category);
 
-        System.out.println("list: "+list);
+
         json.putPOJO("list", list);
 
         return json.toString();
@@ -316,7 +318,7 @@ public class HomeController {
         int limit = idx*9;
         List<BoardDTO> list = boardservice.getindexInfoBoardList(limit, category);
 
-        System.out.println("list: "+list);
+
         json.putPOJO("list", list);
 
         return json.toString();
@@ -329,7 +331,7 @@ public class HomeController {
         int limit = idx*9;
         List<BoardDTO> list = boardservice.getindexInfoBoardList(limit, category);
 
-        System.out.println("list: "+list);
+
         json.putPOJO("list", list);
 
         return json.toString();
@@ -338,10 +340,10 @@ public class HomeController {
     @ResponseBody
     public String commu(@RequestParam("idx") int idx , @RequestParam("category") String category) throws Exception{
         ObjectNode json = JsonNodeFactory.instance.objectNode();
-        int limit = idx*9;
+        int limit = idx*12;
         List<BoardDTO> list = boardservice.getindexInfoBoardList(limit, category);
 
-        System.out.println("list: "+list);
+
         json.putPOJO("list", list);
 
         return json.toString();
@@ -353,7 +355,7 @@ public class HomeController {
         int limit = idx*9;
         List<ProductBoardDTO> list = pboardservice.getindexProductBoardList(limit, category);
 
-        System.out.println("list: "+list);
+
         json.putPOJO("list", list);
 
         return json.toString();

@@ -95,7 +95,7 @@ table tr {
     padding: 5px 10px !important;
 }
 
-.changePage {
+.changePage , .changePage_modal{
     font-size: 16px;
     padding: 5px 10px;
 }

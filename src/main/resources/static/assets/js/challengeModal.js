@@ -59,7 +59,7 @@ function challengeModal(e){
 }
 
     // 페이지 데이터를 불러오는 함수
-    function loadPage(url, pageNum,category) {
+    function loadPage(url, pageNum, category) {
         $.ajax({
             url: url,
             data: { pageNum: pageNum, category: category },
@@ -106,7 +106,7 @@ function challengeModal(e){
             str += '<a class="changePage" href="' + (endPage + 1) + '"><code>&gt;</code></a>';
         }
 
-        var page = $('.pagination');
+        var page = $('.pagination_modal');
         page.html('<tr align="center" valign="middle"><td>' + str + '</td></tr>');
 
         // 페이지 버튼 클릭 이벤트를 연결

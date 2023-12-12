@@ -410,7 +410,12 @@
 		chall_notice_board.chall_term=
 		(select count(regdate) from stamp
 		where user_id=#{userId} and chall_notice_board.chall_num=stamp.chall_num and
-		(regdate between date(my_challenge.sub_regdate) and date_sub(date(date_add(my_challenge.sub_regdate,interval chall_notice_board.chall_term day)),interval 1 day)));
+		(regdate between date(my_challenge.sub_regdate) and date_sub(date(date_add(my_challenge.sub_regdate,interval chall_notice_board.chall_term day)),interval 1 day)))
+		and
+		<![CDATA[
+			0 < my_challenge.mychall_num order by my_challenge.sub_regdate desc limit #{cri.startrow},#{cri.amount}
+		]]>
+
 	</select>
 
 	<select id="getSuccessMyChallengeTotal">

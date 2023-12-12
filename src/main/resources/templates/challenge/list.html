@@ -400,6 +400,7 @@ const challCategoryForm = $("#challCategoryForm");
 $("#challCategoryForm a").on("click",challCategory);
 function challCategory(){
 
+	challCategoryForm.find('[name="noticePagenum"]').val(1);
 	challCategoryForm.submit();
 }
 

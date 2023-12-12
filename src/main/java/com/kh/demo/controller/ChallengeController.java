@@ -78,10 +78,6 @@ public class ChallengeController {
         if (challTerm == null) {
             challTerm = "challengeAll";
         }
-        System.out.println("noticePagenum: "+noticePagenum);
-        System.out.println("noticeAmount: "+noticeAmount);
-        System.out.println("challCategory: "+challCategory);
-        System.out.println("challTerm: "+challTerm);
         Criteria cri = new Criteria(pagenum,amount);
         cri.setType(type);
         cri.setKeyword(keyword);
@@ -160,7 +156,7 @@ public class ChallengeController {
         ObjectNode json = JsonNodeFactory.instance.objectNode();
         Criteria cri = new Criteria(pageNum, 5);
 
-        List<ChallNoticeBoardDTO> list = umpService.getSuccessMyChallenge(userId);
+        List<ChallNoticeBoardDTO> list = umpService.getSuccessMyChallenge(cri, userId);
         PageDTO pageDTO = new PageDTO(umpService.getSuccessMyChallengeTotal(cri, userId), cri);
         json.putPOJO("list", list);
         json.putPOJO("pageDTO", pageDTO);

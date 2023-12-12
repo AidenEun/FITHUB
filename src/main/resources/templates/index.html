@@ -168,8 +168,10 @@
 					<div class="one_box1_inner1">
 						<div class="one_box1_inner1_box">
 							<div class="one_box1_inner1_today">[[${todaydate}]]</div>
-							<th:block th:if="${session.LoginUser != null && session.admin == null && (session.trainer != null || session.user!=null)}">
-								<div>목표칼로리 : [[${user.caloriesGoal}]] kcal</div>
+							<th:block th:if="${session.loginUser != null && session.admin == null}">
+								<th:block th:if="${user != null}">
+									<div>목표칼로리 : [[${user.caloriesGoal != null ? user.caloriesGoal : 0}]] kcal</div>
+								</th:block>
 								<div>오늘칼로리 : [[${totalResult != null ? totalResult : 0}]] kcal</div>
 								<div>아침 : [[${foodCalArr != null && foodCalArr[0] != null ? foodCalArr[0] : 0}]] kcal</div>
 								<div>점심 : [[${foodCalArr != null && foodCalArr[1] != null ? foodCalArr[1] : 0}]] kcal</div>
@@ -178,6 +180,11 @@
 								<div>탄수화물 : [[${diary != null && diary.carbo != null ? diary.carbo : 0}]] g</div>
 								<div>단백질 : [[${diary != null && diary.protein != null ? diary.protein : 0}]] g</div>
 								<div>지방 : [[${diary != null && diary.fat != null ? diary.fat : 0}]] g</div>
+							</th:block>
+							<th:block th:unless="${session.admin == null}">
+								<div>
+									<div style="text-align: center; font-size: 20px;">관리자로 로그인하였습니다.</div>
+								</div>
 							</th:block>
 							<th:block th:unless="${session.loginUser} != null">
 								<div>
@@ -219,7 +226,7 @@
 					<h2 class="one_write">다이어리</h2>
 					<p></p>
 					<a href="/usermypage/user_diary" class="button small" >more</a>
-					<div data-scroll class="one_img"><img src="#" alt="이미지"></div>
+					<div data-scroll class="one_img"><img src="/images/diary_img.png" alt="이미지"></div>
 				</div>
 			</section>
 		</div>
@@ -234,7 +241,7 @@
 				<div class="three_title"><h2>트레이너 랭킹</h2></div>
 				<div class="swiper slide_one">
 					<div class="swiper-wrapper">
-						<th:block th:if="${trainerTopNumList != null and trainerTopNumList.size()>0}"></th:block>
+						<th:block th:if="${trainerTopNumList != null and trainerTopNumList.size()>0}">
 							<div class="swiper-slide three_swiper_slide">
 								<th:block th:each="list, listStat : ${trainerTopNumList}" th:if="${listStat.index < 3}">
 									<div class="three_swiper_slide_box" >
@@ -278,6 +285,7 @@
 									</th:block>
 								</div>
 							</th:block>
+						</th:block>
 						<th:block th:if="${trainerTopNumList == null or trainerTopNumList.size() == 0}">
 							<div>
 								<div style="text-align: center; font-size: 20px;">등록된 트레이너가 없습니다.</div>
@@ -301,7 +309,7 @@
 				<div class="three_title"><h2>챌린지</h2></div>
 				<div class="swiper slide_two">
 					<div class="swiper-wrapper">
-						<th:block th:if="${challNoticeBoardList != null and challNoticeBoardList.size()>0}"></th:block>
+						<th:block th:if="${challNoticeBoardList != null and challNoticeBoardList.size()>0}">
 							<div class="swiper-slide four_swiper_slide">
 								<th:block th:each="list, listStat : ${challNoticeBoardList}" th:if="${listStat.index < 5}">
 									<div class="four_swiper_slide_box">
@@ -352,9 +360,10 @@
 									</th:block>
 								</div>
 							</th:block>
+						</th:block>
 						<th:block th:if="${challNoticeBoardList == null or challNoticeBoardList.size() == 0}">
 							<div>
-								<div style="text-align: center; font-size: 20px;">등록된 트레이너가 없습니다.</div>
+								<div style="text-align: center; font-size: 20px;">등록된 챌린지가 없습니다.</div>
 							</div>
 						</th:block>
 					</div>
@@ -578,7 +587,7 @@
 				data.list.forEach(function (board) {
 				var row = $(`
 					<div class="three_section_td_list">
-						<div class="three_section_td_list_img"><img alt="이미지" src="board.imgURL"/></div>
+						<div class="three_section_td_list_img"><img alt="이미지" src="${board.imgURL}"/></div>
 						<div class="three_section_td_list_box">
 							<div class="three_section_td_list_title">${board.boardTitle}</div>
 							<div class="three_section_td_list_category">카테고리 : <span>${board.category}</span></div>
